@@ -1,0 +1,424 @@
+= Color and Logo Management
+:toc:
+
+[[color_and_logo_management]
+You can change the logo and base colors of the Zimbra Web Client themes
+without having to customize individual {product-name} themes.  This
+can be done from the administration console or the CLI.
+
+With Touch Client, you can change the logo but modification to theme colors
+is not currently supported.
+
+== Changing Theme Color and Logos on the Zimbra Web Client
+
+Base colors for themes, and custom logos can be configured as a global
+setting or as a domain setting.
+
+* When the global settings are changed, the changes apply to themes on all
+servers.
+
+* When the domain settings are changed, the base color and logos for themes
+on the domain are changed.
+
+If global settings and domain-level settings for theme base colors or logos
+are not identical, the domain values are displayed for the domain.
+
+[IMPORTANT]
+If the logo and base colors are customized in multi-domain {product-name}
+environments, you must set a virtual host as the base color: logo
+attributes are displayed based on the Host header sent by the browser.
+
+[NOTE]
+Various Zimbra themes are included with {product-name}.  Some of
+these themes - such as lemongrass, Hot Rod, and Waves - have been designed
+with graphics or color codes that do not change when you modify the base
+color.  You might want to disable those themes from user’s Theme
+preferences selection.
+
+=== Customizing Base Theme Colors
+
+The following base colors in Zimbra Web Client themes can be changed:
+
+* The primary background color displayed in the client.
+
+This color is the background of the page. Variants of the color are used
+for buttons, background color of the Content and panes, tabs, and
+selection highlight. In the following image, the background color
+displays with the logo, the variant of the background color displays in
+the login area.
+
+* The secondary color is the color used for the toolbar.
+* The selection color is the color displayed for a selected item such as
+a message or an item in the Overview pane.
+* The foreground color is the text color displayed. The default text
+color is black. The text color usually does not need to be changed.
+
+=== Replacing the ZWC Logo
+
+You can replace the log with your company’s logo globally or per domain.
+
+*_Note:_* *_License Policy for Logo Replacement_*
+
+_The Zimbra Public License does not allow removing the Zimbra logo in
+the Zimbra Web Client. Only Network Edition customers can replace Zimbra
+logos that display in the Zimbra Web Client. Therefore, only customers
+of the Network Edition should use these instructions. Additional
+information about the license usage can be found at http:/
+www.zimbra.com/license/index.html._
+
+==== Graphics to Replace
+
+The following logo files can be changed. Your logos must be the same
+size as the specified here or the image might not display correctly.
+These graphic files can be saved on another server or in a directory
+that is not overwritten when {product-name} is upgraded.
+
+* Company logo that displays on the login and splash screens for Zimbra
+Web Client and the {product-name} administration console. The
+dimension of the graphic must be exactly 300 x 30.
+* Small company logo in the upper-left of the Zimbra Web Client
+application and the administration console. The dimension of the graphic
+must be exactly 170 x 35.
+* Company Web address that links from the company logos.
+
+==== Graphics not replaced
+
+The icon that displays in the Advanced search toolbar and the
+favicon.ico that displays in the URL browser address field cannot be
+changed at this time.
+
+=== Using the Admin Console to Modify Theme Colors and Logo
+
+On the administration console, the Global Settings and the Domains
+settings include a Themes page that can be configured to customize the
+color scheme and to add a company logo and logo URL. You upload your
+company logo to be used on the Zimbra Web Clientand administration
+console pages.
+
+==== Changing Base Theme Colors
+
+You can either select colors from popup view of predefined colors, or
+enter the six -digit hexadecimal color value for an exact color match to
+set theme colors for the following categories:
+
+* Foreground, which is the text color.
+* Background, which is the primary background color displayed in the
+client.
+* Secondary, which is the color used for the toolbar and selection
+headers in the pane.
+* Selection, which is the color displayed for a selected item such as a
+message, right-click, or drop down menu selection.
+
+[NOTE]
+Changes to theme settings require the server theme cache to be flushed.  To
+flush a server, go to *Home > Configure > Servers* to get the list of
+servers.  Right-click on a server and select *Flush Cache* from the popup
+menu.
+
+Use the *Customize the theme colors* container to set colors for your
+theme categories:
+
+*Admin Console: Home*> *Configure*> *Global Settings*> *Themes* or
+
+*Home*> *Configure*> *Domains*> <account.domain> > *Themes*
+
+1.  Click on the field alongside the theme category to be modified, then
+use the popup color selector to define the color for your selection.
+
+You can either click directly on a color, or use the entry field to
+write the hexadecimal value of the color. In either case, your selection
+will be displayed in the field.
+
+If you opt out of your color selections, click *reset all theme colors*
+to discard your settings.
+
+1.  Navigating away from this page results in query for save of the
+settings. Click *Yes* (to save) or *No* (to discard your settings).
+
+==== Adding Your Logo
+
+You can replace the {product-name} logo with your company’s logo
+globally or per domain from the appropriate Themes page. Your logos must
+be the same size as specified in the
+
+Graphics to Replace
+
+section or the images might not display correctly. The graphic files are
+saved on another server or in a directory that is not overwritten when
+{product-name} is upgraded.
+
+*_Note:_ *_When you configure the_*Customize the logo of the
+themes*_section in_****_the Global Settings > Theme page, all fields in
+this section must be completed to display the graphics correctly._
+
+The Zimlet icon that displays in the Advanced search toolbar and the
+favicon.ico that displays in the URL browser address field are not
+changed.
+
+Use the *Customize the logo of the themes* container to a logo to
+accompany the theme:
+
+*Admin Console: Home*> *Configure*> *Global Settings*> *Themes* or
+
+*Home*> *Configure*> *Domains* <account.domain> > *Themes*
+
+*Logo Settings*
+
+*Option* *Description*
+
+Logo URL of the themes The company web address to be linked
+
+from the logo.
+
+Application logo banner URL of the themes
+
+The company logo that displays on the login and splash screens for the
+Zimbra Web Client and admin console. the dimension of the graphic must
+be exactly 450x100.
+
+Application logo banner preview (200x35)
+
+Login logo banner URL of the themes
+
+Login logo banner preview (440x60)
+
+The company logo in the upper-left of the Zimbra Web Client application
+and the administration console. the dimension of the graphics must be
+exactly 120x35.
+
+=== Using the CLI to Change Theme Colors and Logo
+
+To change the Zimbra Web Client theme base colors and logos, use the
+following zmprov command.
+
+*CLI:* zmprov change Theme Colors
+
+The color code is entered as a six-digit hexadecimal code.
+
+*Color Attributes*
+
+The following attributes are configured either as a global config
+setting or as a domain setting:
+
+[cols=",",options="header",]
+|====================================================================
+|*Color Attributes* |*Description*
+|zimbraSkinBackground |The hex color value for the primary background
+|Color |color displayed in the client.
+|====================================================================
+
+*{product-name}* *Network Edition* *305*
+
+*Administrator Guide*
+
+*Color Attributes* *Description*
+
+[cols=",",options="header",]
+|======================================================================
+|zimbraSkinSecondary |The hex color value for the toolbar and
+|Color |selected tabs
+|zimbraSkinSelection |The hex color value for the color of the selected
+|Color |item.
+|zimbraSkinForeground |The hex color value for the text. This usually
+|Color. |does not need to be changed as the default is
+|[multiblock cell omitted] |black.
+|[multiblock cell omitted] |[multiblock cell omitted]
+|======================================================================
+
+*Changing base colors for themes*
+
+Before you begin, identify the six-digit hexadecimal base color values
+for the various elements you are changing. You will be using these in
+your command entries.
+
+*CLI:* Global Setting:
+
+zmprov modifyConfig <attribute-name> [“#HEX_6digit_colorcode”]
+
+*CLI:* Domain Setting:
+
+zmprov modifyDomain <domain> <attribute-name> [“#HEX_6digit_colorcode”]
+
+*Modifying a domain*
+
+The examplein this section demonstrates how to change to the following
+base colors:
+
+* Background color = Coral, #ff7F50
+* Secondary color = turquoise, #ADEAEA
+* Selection color = yellow, #FFFF00.
+
+1.  Specify the skin colors:
+
+*CLI:* Log in as a Zimbra user and use parameters to modify the domain:
+
+zmprov modifyDomain domainexample.com zimbraSkinBackgroundColor
+“#FF7F50” zimbraSkinSecondaryColor “#ADEAEA” zimbraSkinSelectionColor
+“#FFFF00”
+
+The quote marks, “”, are required so the use of the # sign does not
+comment out the text that follows.
+
+1.  Use parameters provided in the zmmailboxdctl commands to apply the
+changes:
+
+{product-name} themes for that domain now display these colors.
+
+*306* *Network Edition* *{product-name}*
+
+*Color and Logo Management*
+
+*Adding Your Logos*
+
+You add the company logo information and URL by modifying these the
+following attributes for logos:
+
+[cols=",",options="header",]
+|=======================================================================
+|*Logo Settings* |[multiblock cell omitted]
+|*Attribute* |*Description*
+
+|*zimbraSkinLogoURL* |the company Web address that you want
+
+|[multiblock cell omitted] |linked from the logo
+
+|*zimbraSkinLogoLogin* |The company logo file name that is displayed
+
+|*Banner.* |on the login and splash screens for the ZWC
+
+|[multiblock cell omitted] |and the {product-name} administration
+
+|[multiblock cell omitted] |console
+
+|*zimbraSkinLogoAppBanner* |The logo graphic file name for the graphic
+in
+
+|[multiblock cell omitted] |the upper-left of the ZWC application and
+the
+
+|[multiblock cell omitted] |administration console.
+
+|[multiblock cell omitted] |[multiblock cell omitted]
+|=======================================================================
+
+*To add logos for a domain*
+
+If logo files are saved in the {product-name} server, they must be
+in a subdirectory of /opt/zimbra/jetty/webapps/zimbra.
+
+If the logos are hosted on another machine, enter the full URL when
+identifying the logo.
+
+*CLI:* Use steps in this section to update the logo(s) displayed over a
+domain:
+
+1.  Change the URL link:
+
+su - zimbra
+
+zmprov modifyDomain [http://_urlexample.com_]
+
+1.  Modify the logo display:
+
+To change the logo displayed in the login and splash screens:
+
+zmprov modifyDomain [/zimbra/loginlogo_name.png]
+
+To change the logo displayed on the Zimbra Web Client main page:
+
+zmprov modifyDomain [/zimbra/_loginlogo_name.png_]
+
+1.  Stop/start the server:
+
+zmcontrol stop zmcontrol start
+
+*{product-name}* *Network Edition* *307*
+
+*Administrator Guide*
+
+*Changing the Logo on the Touch Client*
+
+Use information in this section to find out how to prepare and place
+your logo image file(s) for replacement of the default Zimbra images in
+the user interfaces.
+
+*_Note:_* _Not currently supported:_ Logo modification for the Zimbra
+Web Client.
+
+You can globally replace the {product-name} logo with your
+company's logo by replacing the image files in specific paths, as
+described in the following topics:
+
+* Company log for {product-abbrev} Touch Client Login and Splash Screens.
+* Watermark for Bottom-right Display in Email Message.
+* Bookmark Image for Springboard.
+
+*_Note:_ *_These image files will not survive an upgrade. Therefore, be
+sure to_****_keep a backup and repeat the replacement process after an
+upgrade_
+
+*Company log for {product-abbrev} Touch Client Login and Splash Screens*
+
+The image displays on white background.
+
+[cols=",,",options="header",]
+|=======================================================================
+|[multiblock cell omitted] |*For Low DPI Devices* |*For High DPI
+Devices*
+|Size Requirement: |300 x 65 |600 x 130
+
+|File location: |/skins/_base/logos/ | /skins/_base/logos/
+
+|[multiblock cell omitted] |TouchLonginBanner.png
+|TouchLonginBanner@2x.png
+
+|[multiblock cell omitted] |[multiblock cell omitted]
+|[multiblock cell omitted]
+|=======================================================================
+
+*Watermark for Bottom-right Display in Email Message*
+
+[cols=",,",options="header",]
+|=======================================================================
+|[multiblock cell omitted] |*For Low DPI Devices* |*For High DPI
+Devices*
+|Size Requirement: |200 x 45 |400 x 90
+
+|File location: |/skins/_base/logos/ | /skins/_base/logos/
+
+|[multiblock cell omitted] |TouchWatermarkBanner.pn
+|TouchWatermarkBanner@2x.
+
+|[multiblock cell omitted] |g |pn
+
+|[multiblock cell omitted] |[multiblock cell omitted]
+|[multiblock cell omitted]
+|=======================================================================
+
+*Bookmark Image for Springboard*
+
+[cols=",,",options="header",]
+|=======================================================================
+|[multiblock cell omitted] |*For Low DPI Devices*
+|[multiblock cell omitted]
+|Size Requirement: |Mobile phone: 57 x 57 |[multiblock cell omitted]
+
+|File Location: |/img/logo/Icon.png with your |[multiblock cell omitted]
+
+|Size Requirement: |company logo |[multiblock cell omitted]
+
+|[multiblock cell omitted] |Tablet: 72 x 72 |[multiblock cell omitted]
+
+|File Location: |[multiblock cell omitted] |[multiblock cell omitted]
+
+|[multiblock cell omitted] |/img/logo/Icon~ipad.png
+|[multiblock cell omitted]
+|=======================================================================
+
+*For High DPI Devices*
+
+Mobile phone: 114 x 114
+
+/img/logo/Icon@2x.png
+
+Tablet: 144 x 144 /img/logo/Icon~iPad@2x.png

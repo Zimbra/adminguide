@@ -1,0 +1,175 @@
+= Zimbra Mailbox Server
+:toc:
+
+The Zimbra mailbox server is a dedicated server that manages all the
+mailbox content, including messages, contacts, calendar, and
+attachments.
+
+The Zimbra mailbox server has dedicated volumes for backup and log
+files. Each Zimbra mailbox server can see only its own storage volumes.
+Zimbra mailbox servers cannot see, read, or write to another server.
+
+== Mailbox Server
+
+Each account is configured on one mailbox server, and this account is
+associated with a mailbox that contains email messages, attachments,
+calendar, contacts and collaboration files for that account.
+
+Each mailbox server has its own standalone message store, data store,
+and index store for the mailboxes on that server. The following is an
+overview of each store and their directory location.
+
+=== Message Store
+
+All email messages are stored in MIME format in the Message Store,
+including the message body and file attachments.
+
+By default, the message store is located on each mailbox server under
+`/opt/zimbra/store`. Each mailbox has its own directory named after its
+internal mailbox ID. Mailbox IDs are unique per server, not system-wide.
+
+Messages with multiple recipients are stored as a single -copy on the
+message store. On UNIX systems, the mailbox directory for each user
+contains a hard link to the actual file.
+
+When {product-name} is installed, one index volume and one message
+volume are configured on each mailbox server. Each mailbox is assigned to a
+permanent directory on the current index volume. When a new message is
+delivered or created, the message is saved in the current message volume.
+
+To manage your email storage resources, you can configure storage
+volumes for older messages by implementing a Hierarchical Storage
+Management (HSM) policy. See <<managing_configuration, Managing Configuration>>.
+
+=== Data Store
+
+The Data Store is a MariaDB database where internal mailbox IDs are
+linked with user accounts. All the message metadata including tags,
+conversations, and pointers indicate where the messages are stored in
+the file system. The MariaDB database files are located in
+`/opt/zimbra/db`.
+
+Each account (mailbox) resides only on one server. Each server has its
+own standalone data store containing data for the mailboxes on that
+server.
+
+* The data store maps the mailbox IDs to the users’ OpenLDAP
+accounts.The primary identifier within the {product-name} database
+is the mailbox ID, rather than a user name or account name. The mailbox
+ID is only unique within a single mailbox server.
+* Metadata including user’s set of tag definitions, folders, contacts,
+calendar appointments, tasks, Briefcase folders, and filter rules are in
+the data store database.
+* Information about each mail message, including whether it is read or
+unread, and which tags are associated is stored in the data store
+database.
+
+=== Index Store
+
+The index and search technology is provided through Apache Lucene. Each
+email message and attachment is automatically indexed when the message
+arrives. An index file is associated with each account. Index files are
+located in `/opt/zimbra/index`.
+
+The tokenizing and indexing process is not configurable by
+administrators or users.
+
+image::images/Tokenization.jpg[Index Store]
+
+The process is as follows:
+
+1.  The Zimbra MTA routes the incoming email to the mailbox server that
+contains the account’s mailbox.
+2.  The mailbox server parses the message, including the header, the
+body, and all readable file attachments such as PDF files or Microsoft
+Word documents, in order to tokenize the words.
+3.  The mailbox server passes the tokenized information to Lucene to
+create the index files.
+
+[NOTE]
+Tokenization is the method for indexing by each word.  Certain common
+patterns, such as phone numbers, email addresses, and domain names are
+tokenized as shown in the Message Tokenization illustration.
+
+== Web Application Server
+
+The Jetty web application server runs web applications (webapps) on any
+store server. It provides one or more web application services.
+
+=== Mailstore Services
+
+Mailstore services provides the back-end access to mailbox/account data.
+Webapps for the mailstore include:
+
+* Mailstore (mail server) = `/opt/zimbra/jetty/webapps/service`
+* Zimlets = `/opt/zimbra/jetty/webapps/zimlet`
+
+=== User Interface Services
+
+User Interface services provide front-end user interface access to the
+mailbox account data and Administration Console, including:
+
+* Zimbra Web Client = `/opt/zimbra/jetty/webapps/zimbra`
+* Zimbra administrator console = `/opt/zimbra/jetty/webapps/zimbraAdmin`
+* Zimlets = `/opt/zimbra/jetty/webapps/zimlet`
+
+== Web Application Server Split
+
+The Web Application Server Split functionality provides an option to
+separate the mailstore services (mail server) and the user interface
+services (web client server).
+
+For example, a web client server running ‘zimbra,zimbraAdmin’ webapps
+serving the static UI content like html/css pages, and mail server
+running ‘service’ webapp serving all the SOAP requests. These servers
+are running in split mode.
+
+The Web Application Server Split benefits include:
+
+* Splitting the web client server from the mail server makes the
+customization process more agile, allowing the roll out of new or
+updated web UI customization without having to restart the mail servers.
+This means zero down time.
+* If you want to customize the Zimbra web client or Zimbra
+Administration Console, you can take the web client server offline and
+run customization or maintenance, while not having to take down the mail
+server.
+* The web client server is completely decoupled from mailbox accounts.
+This means any web client server can service any account request.
+
+=== Installation and Configuration of the Web Application Server Split
+
+For installation and configuration of the Web Application Server Split,
+see the {product-name} Multi-Server Installation Guide.
+
+== Backing Up the Mailbox Server
+
+{product-name} includes a configurable backup manager that resides on
+every {product-name} server and performs both backup and restore
+functions. You do not have to stop the {product-name} server in order
+to run the backup process. The backup manager can be used to restore a
+single user, rather than having to restore the entire system in the event
+that one user’s mailbox becomes corrupted. Full and incremental backups are
+in `/opt/zimbra/backup`. See <<backup_and_restore, Backup and Restore>>.
+
+Each Zimbra mailbox server generates redo logs that contain current and
+archived transactions processed by the message store server since the
+last incremental backup. When the server is restored, after the backed
+up files are fully restored, any redo logs in the archive and the
+current redo log in use are replayed to bring the system to the point
+before the failure.
+
+== Mailbox Server Logs
+
+A {product-name} deployment consists of various third-party
+components with one or more mailbox servers. Each of the components may
+generate its own logging output. Local logs are in `/opt/zimbra/log`.
+
+Selected {product-name} log messages generate SNMP traps, which you
+can capture using any SNMP monitoring software. See
+<<monitoring_zcs_servers, Monitoring {product-abbrev} Servers>>.
+
+[NOTE]
+System logs, redo logs, and backup sessions should be on separate disks to
+minimize the possibility of unrecoverable data loss in the event that one
+of those disks fails.

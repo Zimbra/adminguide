@@ -1,0 +1,54 @@
+[[introduction]]
+= Introduction
+
+{product-name} is a full-featured messaging and collaboration
+solution that includes email, address book, calendaring, tasks, and Web
+document authoring.
+
+== Audience
+
+This guide is intended for system administrators responsible for
+installing, maintaining, and supporting the server deployment of
+{product-name}.
+
+Readers of this guide should have the following recommended knowledge
+and skill sets:
+
+* Familiarity with the associated technologies and standards Linux
+operating system, and open source concepts
+* Industry practices for mail system management
+
+== Third-Party Components
+
+Where possible, {product-name} adheres to existing industry
+standards and open source implementations for backup management, user
+authentications, operating platform, and database management. However,
+Zimbra only supports the specific implementations described in the
+{product-name} architecture overview in the Product Overview
+chapter as officially tested and certified for the {product-name}.
+This document might occasionally note when other tools are available in
+the marketplace, but such mention does not constitute an endorsement or
+certification.
+
+== Support and Contact Information
+
+Visit https://www.zimbra.com[*www.zimbra.com*] to join the community and to be a part of
+building the best open source messaging solution. We appreciate your
+feedback and suggestions.
+
+* Contact sales@zimbra.com to purchase {product-name}
+* Network Edition customers can contact support at support@zimbra.com
+* Explore the https://forums.zimbra.org/[Zimbra Forums] for answers to installation or configurations problems
+* Join the https://forums.zimbra.org/[Zimbra Forums], to participate and learn more about the {product-name}
+
+For additional product information, the following resources are available:
+
+* https://wiki.zimbra.com[Zimbra Wiki]
+* https://wiki.zimbra.com/wiki/SecurityCenter[Security Center]
+
+Let us know what you like about the product and what you would like to
+see in the product. Post your ideas to the Zimbra Forum.
+
+If you encounter problems with this software, go to
+http://bugzilla.zimbra.com to submit a bug report. Make sure to provide
+enough detail so that the bug can be easily duplicated.

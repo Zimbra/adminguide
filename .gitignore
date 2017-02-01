@@ -1,0 +1,23 @@
+# Build related      #
+######################
+build/
+
+# eBook build output #
+######################
+*.html
+*.epub
+*.mobi
+*.pdf
+*.zip
+*.gz
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.projectile

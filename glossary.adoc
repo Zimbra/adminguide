@@ -1,0 +1,276 @@
+[glossary]
+= Glossary
+
+The Glossary lists terms and acronyms used in this document, and includes
+both industry terms and application-specific terms.  If a general industry
+concept or practice has been implemented in a specific way within the
+product, that is noted as well.
+
+[glossary]
+A record::
+    A (Address) records map the hostname to the numeric IP address.  For
+    zimbra, the A record is the IP address for the zimbra server.
+
+Account Policy::
+    Class of Service as exposed in Zimbra administration console.
+
+AD::
+    Microsoft Active Directory Server.  Used in {product-name} as an
+    optional choice for authentication and GAL, along with OpenLDAP for all
+    other {product-name} functions.
+
+Alias::
+    An "`also known as`" email address, which should be routed to a user at a
+    different email address.
+
+Attribute::
+    Contains object-related data for directory server entries.  Attributes
+    store information such as a server host name or email forwarding
+    address.
+
+Authentication::
+    Process by which user-supplied login information is used to validate
+    that user’s authority to enter a system.
+
+Blacklist::
+    Anti-spam term, indicates a known bad IP address.  This could be one
+    that has been hijacked by spammers, or also one from a poorly
+    maintained but legitimate site that allows mail relaying from
+    unauthorized parties.
+
+BLOB::
+    Binary Large Object.
+
+Class of Service (COS)::
+    Describes an object in the {product-name} LDAP data schema, which
+    contains settings for things like user mail quotas.  Each
+    {product-name} account includes a COS, and the account inherits all the
+    settings from the selected COS.
+
+CLI::
+    Command-Line Interface.  Used to refer to the collective set of
+    {product-name} command-line tools, such as zmprov.
+
+Cluster::
+    A type of network configuration for high availability, using clusters
+    of servers (nodes).  If one server fails or drops off the network, a
+    spare takes over.
+
+Contacts::
+    Within {product-name}, Contacts are a user-interface feature
+    listing that user’s personal collection of address and contact
+    information.
+
+Conversation::
+    Within {product-name}, Conversations are a user-interface feature
+    that presents email threads (emails sharing the same subject line) as
+    a single Conversation listing.  Users can expand the Conversation to
+    view all emails within it.
+
+DHTML::
+    Dynamic HTML.  A technology employed in the Zimbra Web Client.
+
+DNS::
+    Domain Name System is an Internet directory service.  DNS is how domain
+    names are translated into IP addresses and DNS also controls email
+    delivery.  Correctly configured DNS is required for Postfix to route
+    messages to remote destinations
+
+Edge MTA::
+    Generic term used to refer to any mail transfer agent that is the first
+    line of defense in handling incoming email traffic.  Functions that may
+    occur on the Edge MTA include spam filtering.
+
+Entry::
+    An item in the directory server, such as an account or mail host.
+
+Failover::
+    Takeover process where a spare server machine detects that a main
+    server is unavailable, and the spare takes over processing for that
+    server.
+
+FQDN::
+    Fully qualified domain name.  The hostname and the path to the host.
+    For example, www.Zimbra.com is a fully qualified domain name.  www is
+    the host, Zimbra is the second-level domain, and .com is the top level
+    domain.
+
+GAL::
+    Global Address List, the Outlook version of a company directory.  Lists
+    contact information, including email addresses, for all employees
+    within an organization.
+
+Global Configuration::
+    A {product-name} object containing default settings for servers
+    and Class of Service.
+
+High Availability::
+    Abbreviated as HA, high availability refers to the availability of
+    resources in a computer system in the wake of component failures in the
+    system.
+
+HTTP::
+    HyperText Transfer Protocol, used along with SOAP for UI integration.
+
+IMAP::
+    Internet Message Access Protocol is a method of accessing mail from a
+    remote message store as if the users were local.
+
+Store::
+
+    Within {product-name}, a directory area that stores all the
+    indexing information for mail messages on a particular mailbox server.
+
+Indexing::
+    The process of parsing incoming email messages for search words.
+
+Java::
+    Java is an industry standard object-oriented programming language.
+    Used for the core {product-name} application server.
+
+JavaScript::
+    Scripting largely developed by Netscape that can interact with HTML
+    source code.  Technology used in the Zimbra Web Client.
+
+LDAP::
+    Lightweight Directory Access Protocol, an industry standard protocol
+    used for authentication.
+
+Zimbra administration console::
+    The {product-name} administrator interface.
+
+Zimbra Web Client::
+    The {product-name} end-user interface.
+
+LMTP::
+    Local Mail Transfer Protocol, used for transferring messages from
+    Postfix MTA to the {product-name} server for final delivery.
+
+Mailbox Server::
+    Alternative term for {product-name} server.
+
+MAPI::
+    Messaging Application Programming Interface.  A system built into
+    Microsoft Windows to enable different email applications to work
+    together.
+
+Message Store::
+    Within {product-name}, a directory area that stores the mail
+    messages on a particular mailbox server.
+
+MDA::
+    Mail Delivery Agent, sometimes known as a mail host.  The
+    {product-name} server functions as an MDA.
+
+Metadata::
+    Data that describes other data, rather than actual content.  Within
+    {product-name}, metadata consists of user folders, threads,
+    message titles and tags, and pointers.
+
+MIME::
+    Multipurpose Internet Mail Extensions, a specification for formatting
+    non-ASCII Internet message content such as image files.  Format used to
+    store messages in Message Store.
+
+MTA::
+    Message Transfer Agent.  MTA is a program that delivers mail and
+    transports it between machines.  A {product-name} deployment
+    assumes both the Postfix MTA and an edge MTA.
+
+MX Record::
+    Mail eXchange.  An MX record is an entry in a domain name database that
+    identifies the mail server that is responsible for handling emails for
+    that domain name.  The email system relies on DNS MX records to
+    transmit emails between domains.  When mail is processed, the MX record
+    is checked before the A record for the destination address.
+
+OOTO::
+
+    Common shorthand for “out of the office”, used when sending vacation
+    messages.
+
+Open Source::
+
+    Refers to software created by groups of users for non-commercial
+    distribution, where source code is published rather than proprietary.
+
+OS::
+    Operating system, such as Linux, UNIX, or Microsoft Windows.
+
+POP::
+    Post Office Protocol is used to retrieve email from a remote server
+    over TCP/IP and save it to the local computer.
+
+Provisioning::
+    The process of creating accounts or other data, usually in batch or
+    automated fashion.
+
+RBH::
+    Real-time black hole.  Usually refers to web sites that, as a public
+    service, provide lists of known bad IP addresses from which mail should
+    be blocked, because the servers are either known to be spammers, or are
+    unsecured and exploited by spammers.
+
+Redo Logs::
+    Detailed transaction log for the .  server, used for replay and
+    replication.
+
+SAN::
+    Storage Array Network.  A high-availability data storage area.
+
+Schema::
+    Describes the data structures in use for by directory services at a
+    particular organizational site.
+
+SMTP::
+    Simple Mail Transfer Protocol.  Used in {product-name}
+    deployments between the Edge MTA and the Postfix MTA.
+
+SNMP::
+    Simple Network Monitoring Protocol.  Used by monitoring software to
+    pick up critical errors from system logs.
+
+SOAP::
+    Simple Object Access Protocol, an XML-based messaging protocol used for
+    sending requests for Web services.  The {product-name} servers
+    use SOAP for receiving and processing requests, which can come from
+    {product-name} command-line tools or {product-name} user
+    interfaces.
+
+Spam::
+
+    Unsolicited commercial email.  Spammers refer to their output as "`bulk
+    business email`".
+
+SQL::
+    Structured Query Language, used to look up messages in the Message
+    Store.
+
+SSL::
+    Secure Sockets Layer.
+
+Tags::
+    A Zimbra Web Client feature.  Users can define tags and apply them to
+    mail messages for searching.
+
+TCO::
+    Total Cost of Ownership.  {product-name} reduces total cost of
+    ownership (TCO) by reducing requirements for server hardware, OS
+    licensing fees, supporting application license fees, disk storage
+    requirements, and personnel (IT, help desk, consulting).
+
+TLS::
+    Transport Layer Security.
+
+UCE::
+    Unsolicited commercial email, also known as spam.
+
+Virtual Alias::
+    A type of mail alias recognized in the Postfix MTA.
+
+Whitelist::
+    Anti-spam term for a known good mail or IP address.  Mail coming from
+    such an address may be "`automatically trusted`".
+
+XML::
+    eXtended Markup Language.

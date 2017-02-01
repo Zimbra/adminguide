@@ -1,0 +1,118 @@
+:document-title: Administrator Guide
+:product-name: Zimbra Collaboration
+:product-abbrev: ZCS
+= {product-name} {document-title}
+v8.7, April 2016
+:icons: font
+:title-logo-image: images/zimbra-logo.jpg
+:showlinks:
+:source-highlighter: coderay
+:toc: left
+
+:leveloffset: +1
+
+<<<
+
+include::legal.adoc[]
+
+<<<
+
+include::introduction.adoc[]
+
+<<<
+
+include::productoverview.adoc[]
+
+<<<
+
+include::licensing.adoc[]
+
+<<<
+
+include::mailboxserver.adoc[]
+
+<<<
+
+include::ldap.adoc[]
+
+<<<
+
+include::mta.adoc[]
+
+<<<
+
+include::proxy.adoc[]
+
+<<<
+
+include::adminconsole.adoc[]
+
+<<<
+
+include::configuration.adoc[]
+
+<<<
+
+include::cos.adoc[]
+
+<<<
+
+include::customizingaccounts.adoc[]
+
+<<<
+
+include::provisioning.adoc[]
+
+<<<
+
+include::managingaccounts.adoc[]
+
+<<<
+
+include::delegatedadmin.adoc[]
+
+<<<
+
+include::monitoring.adoc[]
+
+<<<
+
+include::backuprestore.adoc[]
+
+<<<
+
+include::mobile.adoc[]
+
+<<<
+
+include::archive.adoc[]
+
+<<<
+
+include::legalrequests.adoc[]
+
+<<<
+
+include::colorandlogo.adoc[]
+
+<<<
+
+include::zimlets.adoc[]
+
+<<<
+
+include::cmdlineutils.adoc[]
+
+<<<
+
+include::spnego.adoc[]
+
+<<<
+
+include::crontab.adoc[]
+
+<<<
+
+include::glossary.adoc[]
+
+:leveloffset: -1

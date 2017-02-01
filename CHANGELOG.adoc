@@ -1,0 +1,11 @@
+Zimbra Administration Guide ChangeLog
+=====================================
+
+:website: https://www.zimbra.com
+
+Version 8.7
+-----------
+.Additions and changes
+- Initial public source version
+.Bug fixes
+- Numerous changes in formatting for asciidoc conversion.

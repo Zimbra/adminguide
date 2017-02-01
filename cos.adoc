@@ -1,0 +1,450 @@
+[[class_of_service_and_accounts]]
+= Class of Service and Accounts
+:toc:
+
+The Class of Service (COS) assigned to an account determines the default
+attributes for user accounts, and the features to be enabled or denied.
+Each account is assigned a COS. The COS controls mailbox quotas, message
+lifetime, password restrictions, attachment blocking, and server pool
+usage.
+
+A COS is a global object and is not restricted to a particular domain or
+set of domains.
+
+You can create and edit the classes of services from the Administration
+Console:
+
+.Admin Console
+****
+*Configure > Class of Service >* _select account:_
+*Manage > Accounts*.
+
+****
+
+== Managing Account Usages with a COS
+
+A default COS is created when Zimbra is installed. You can modify the
+default COS and create new ones.
+
+From a COS, you can manage the following functions:
+
+* Features and preferences that users can access.
+
+* Themes and Zimlets that users can access.
+
+* Advanced settings including attachment settings, quotas, and password log
+in policies.
+
+* Web Client Versions (Advanced, Standard, and Mobile clients).
+
+* Web Services and Desktop Clients (EWS, MAPI and more).
+
+* Offline Mode.
+
+* Retention policies.
+
+As an example, you could create an Executive COS that is configured to
+enable all features, provide unlimited mailbox quotas, and never purges
+messages. And another General-Employee COS may also be created, which
+enables only the mail feature, sets the mailbox quota, and purges messages
+every 60 days. Grouping accounts to a specific COS allows you update or
+change account features in bulk. As such, when the COS is changed, all
+accounts assigned to the COS are changed.
+
+If a COS is not explicitly set for a new account, or if the COS assigned to
+a user no longer exists, the Zimbra default COS is automatically assigned.
+
+You can create a domain COS and have all accounts that are created on that
+domain automatically assigned to this COS. You can create different COSs
+and specify which ones are available for the domain. If a domain does not
+have a COS defined, and you do not specify a COS, the original default COS
+is automatically assigned when an account is created.
+
+Some COS settings can be overridden either by global settings or by user
+settings. For example:
+
+* Whether outgoing messages are saved to *Sent* can be changed from the
+Zimbra Web Client in the user’s preferences.
+
+* Attachment blocking set as a global setting can override the COS setting.
+
+[NOTE]
+Some COS settings assigned to an account are not enforced for IMAP clients.
+
+== Selecting Features and Preferences
+
+All the features available for a COS are displayed in its *Features*
+page. From there, you can select or deselect the features you do not want
+included in the COS.
+
+[NOTE]
+Changes made at the account level override the rules in the COS assigned to
+the account.
+
+You can define the initial preferences for saving and viewing messages,
+in the *Preferences* page. You can also select a specific locale for the
+ZWC view. If alocale is not specified, the browser locale is the
+default.
+
+For a description of the features and preferences, see
+<<customizing_accounts, Customizing Accounts>>.
+
+=== Disabling Preferences
+
+By default, Preferences are enabled, and your users can modify the default
+preferences that are configured for their accounts.
+
+As the Administrator, you can disable Preferences. As a result, the
+Preferences page will not display in users mailboxes: they therefore cannot
+modify the default configuration for features that are set up for their
+accounts.
+
+[[setting_default_time_zone]]
+=== Setting Default Time Zone
+
+The default time zone setting displayed in an account’s Preferences folder
+is used to localize the time for received messages and calendar activities
+in the standard web client.
+
+When the standard web client is used, the time zone on the computer is not
+used to set the time a message is received or for calendar
+activities. Rather, the time zone setting in the *Preferences > Calendar
+Options* is used.
+
+When using the Advanced web client, the time zone setting on the computer
+is used as the time stamp for received messages and for calendar
+activities, not the time zone setting on the *General Information* page.
+
+Because the advanced web client and the standard web client do not use the
+same time zone source to render messages, you might notice that a message
+displayed on multiple clients will be stamped with different times. You can
+avoid this by setting the computer time zone and the web client time zone
+set to the same time.
+
+== Using Server Pools
+
+In an environment with multiple mailbox servers, the COS is used to assign
+a new account to a mailbox server. When you configure the COS, you select
+which servers to add to the server pool. Within each pool of servers, a
+random algorithm assigns new mailboxes to any available server.
+
+You can assign an account to a particular mailbox server when you create an
+account in the New Account Wizard, Mail Server field. Uncheck *auto* and
+enter the mailbox server in the Mail Server field.
+
+== Setting Account Quota
+
+An account quota is the storage limit allowed for an account. Email
+messages, address books, calendars, tasks, and Briefcase files contribute
+to the volume of the quota. Account quotas can be set for a COS or for
+individual accounts from the Administration Console.
+
+If you set the quota to 0, accounts do not have a quota.
+
+=== Viewing Account Quotas
+
+.Admin Console
+****
+To view account quotas for all accounts on a domain:
+
+*Home > Configure > Domains >* _domain_, *Mailbox Quota*.
+****
+
+==== Notifying Users When Maximum Quota is Near
+
+Users can be notified that their mailboxes are nearing their quota. The
+quota percentage can be set and the warning message text can be
+modified: Go to the Quotas container for a specified Class of Service:
+
+.Admin Console
+****
+
+*Home > Configure > Class of Service >* _COSname_, *Advanced*, *Quotas* container
+****
+
+When the displayed/configured threshold is reached, a quota warning message
+is sent to the user.
+
+=== Setting Quotas in Domains
+
+You can set a maximum mailbox quota for a domain. The default for the
+domain mailbox quota is unlimited. The domain quota is the maximum amount
+of storage that can be used by all mailboxes within the domain.
+
+You can set an aggregate quota as well. The sum of the quotas for all
+accounts in the domain can exceed the size of the aggregate.
+
+An aggregate quota policy for how to handle messages that are sent or
+received once the aggregate quota has been reached can be set up. The
+policy options include:
+
+* Continue to allow messages to be sent and received as usual.
+* Do not allow messages to be sent.
+* Do not allow messages to be sent or received.
+
+Notifications can be automatically sent when the quota is within a
+configured percentage of the aggregate quota. A cron tab job runs daily to
+check the aggregate quota percentage and if the percentage has been
+reached, the quota warning email is sent.
+
+[NOTE]
+When a domain quota is set, the effective quota for an account is the
+minimum quota setting of either the domain or account.
+
+.Admin Console
+****
+To configure domain quotas, go to the *Domain Quota Setting* container for
+a specified domain:
+
+*Home > Configure > Domains*,_domain_ *Advanced*, *Domain Quota Setting*
+container
+****
+
+=== Managing Excess Quota
+
+You can set how message delivery is handled when a Zimbra user’s mailbox
+exceeds the configured quota. The default behavior is for the MTA to
+temporarily send the message to the deferred queue. When the mailbox has
+sufficient space, the message is delivered. You can change this behavior to
+either have messages bounce back to the sender instead of being sent to the
+deferred queue first or you can configure to send the message to the
+mailbox even if the quota has been exceeded
+
+.CLI
+****
+To bounce messages instead of sending them to the deferred queue:
+
+[source,bash]
+----
+zmprov mcf zimbraLmtpPermanentFailureWhenOverQuota TRUE
+----
+
+To send the message to the mailbox even if the quota has been exceeded:
+[source,bash]
+----
+zmlocalconfig -e zimbraMailAllowReceiveButNotSendWhenOverQuota=TRUE
+----
+
+When this attribute is set to TRUE, a mailbox that exceeds its quota is
+still allowed to receive new mail and calendar invites. This quote bypass
+is only implemented for messages. All other mail items are still affected
+by the quota
+****
+
+== Managing Passwords
+
+If you use internal authentication, you can quickly change an account's
+password from the Account’s toolbar. The user must be told the new password
+to log on.
+
+[IMPORTANT]
+If Microsoft Active Directory (AD) is used for user authentication, you
+must disable the Change Password feature in the COS. The AD password policy
+is not managed by Zimbra.
+
+If you want to make sure users change a password that you create, you can
+enable *Must Change Password* for the account. The user must change the
+password the next time he logs on.
+
+Password restrictions can be set either at the COS level or at the account
+level. You can configure settings to require users to create strong
+passwords and change their passwords regularly, and you can set the
+parameters to lock out accounts when incorrect passwords are entered.
+
+=== Directing Users to Your Change Password Page
+
+If your ZWC authentication is configured as external auth, you can
+configure {product-name} to direct users to *your password change
+page* when users change their passwords. You can either set this URL as
+a global setting or a per domain setting.
+
+.CLI
+****
+
+Set the `zimbraChangePasswordURL` attribute to the URL of your password
+change page.
+
+In ZWC. *Change Password* in *Preferences > General* links to this URL,
+and when passwords expire, users are sent to this page.
+
+Modifying the password for the domain:
+[source,bash]
+----
+zmprov md exampledomain.com zimbraChangePasswordURL http://www.mysite.com
+----
+****
+
+=== Configuring a Password Policy
+
+If internal authentication is configured for the domain, you can require
+users to create strong passwords to guard against simple password
+harvest attacks Users can be locked out of their accounts if they fail
+to sign in after the maximum number of attempts configured.
+
+.Admin Console
+****
+To set password policy, use the *Password* container for a specified
+Class of Service:
+
+*Home > Configure > Class of Service >* _COS name_, *Advanced*, *Password* container
+
+The password settings that can be configured are listed below.
+
+.Password Options
+[cols="2",options="header",]
+|=======================================================================
+|Password Options |Description
+
+|Minimum/Maximum password length |
+Specifies the required length of a password. The default minimum and
+maximum are 6 and 64 characters, respectively.
+
+|Minimum/Maximum password age |
+Configures the password expiration date. Users can change their passwords
+at any time between the minimum and maximum. They must change it when the
+maximum password age is reached.
+
+1+| The following settings require users to add complexity to their
+passwords.
+
+|Minimum upper case characters |
+Uppercase A - Z
+
+|Minimum lower case characters|
+Lowercase a - z
+
+|Minimum punctuation symbols|
+Non-alphanumeric, for example !, $, #, &, %
+
+|Minimum numeric characters |
+Base 10 digits 0 - 9
+
+|Minimum number of unique passwords history|
+Number of unique new passwords that a user must create before an old
+password can be reused.
+
+|Password locked |
+Users cannot change their passwords.  This should be set if authentication is
+external.
+
+|Must change password|
+User is required to change password at first sign in.
+
+|Change password |
+When enabled, users can change their password at any time within the
+password age settings from their account Preferences tab.
+
+|=======================================================================
+****
+
+== Managing Login Policies
+
+You can set the maximum number of failed login attempts before the account
+is locked out for the specified lockout time. This type of policy is used
+to prevent password attacks.
+
+.Admin Console
+****
+To set user login policy, use the *Filed Login Policy* container for a
+specified Class of Service:
+
+*Home > Configure > Class of Service >* _COS name_, Advanced*, *Failed
+*Login Policy* container
+
+.Login Policy Options
+[cols="2",options="header",]
+|=======================================================================
+|Login Policy Options |Description
+
+|Enable failed login lockout|
+This enables “failed login lockout” feature.  You can configure the
+following settings.
+
+|Number of consecutive failed logins allowed|
+Number of failed login attempts before the account is locked out. The
+default is 10. If set to 0, the account is never locked out.
+
+|Time to lockout the account |
+Amount of time the account is locked out. If this is set to 0, the account
+is locked out until the correct password is entered, or the administrator
+manually changes the account status and creates a new password.  The
+default is 1 hour.
+
+|Time window in which the failed logins must occur within to lock the account |
+Duration of time after which the number of consecutive failed login
+attempts is cleared from the log.  The default is 0, the user can continue
+attempts to authenticate, no matter how many consecutive failed login
+attempts have occurred.
+
+|=======================================================================
+****
+
+[[about_two_factor_auth]]
+=== About 2 Factor Authentication
+
+With the 2 Factor Authentication (FA) feature—new in Release 8.7—you can
+apply additional security policies to COS and/or user accounts to provide
+another layer of authentication during attempts to access the system. This
+feature must be enabled or disabled in the Admin Console, to manage 2FA
+functions applicable to user mailboxes.
+
+image:images/2FADiagram.png[2 Factor Authentication]
+
+See also <<two_factor_auth, Two Facor Authentication>> for practical
+guidelines.
+
+== Managing Session Timeout Policies
+
+You can set the period of time to allot for user sessions, as based on
+various conditions.
+
+.Admin Console
+****
+To set session timeout policy, use the *Timeout Policy* container for a
+specified Class of Service:
+
+*Home > Configure> Class of Service >* _COS name_, *Advanced*, *Timeout
+Policy* container
+
+.Session Timeout Policy Options
+[cols="2",options="header",]
+|=======================================================================
+|Session Timeout Policy Options |Description
+
+|Admin console auth token lifetime |
+Sets a browser cookie that contains the admin auth token.  Administrators
+can open the Administration Console without having to log on again until
+the auth token expires.  The default is 12 hours.
+
+|Auth token lifetime |
+Sets a browser cookie that contains the ZWC auth token.  User can open ZWC
+without having to log on again until the auth token expires.  The default
+is 2 days.  When it expires, the log in page is displayed and the user must
+log in to continue.
+
+|Session idle lifetime |
+How long a user session remains active, if no activity occurs. Activity
+includes any clickable mouse action, such as viewing folder contents or
+clicking a button. The default is unlimited.
+
+|=======================================================================
+
+You can manually expire a user’s web client session from the
+Administration Console Expire Sessions link.  This forces the current session
+of the account to expire immediately.
+
+****
+
+== Managing Default External COS
+
+The defaultExternal COS is assigned to external virtual accounts that are
+created when external users accepts a {product-abbrev} provisioned users'
+invitation to share their calendar or briefcase items.
+
+This account is not provisioned on the server, but the external user can
+sign in to ZWC, create a display name and set a password to view the shared
+items. The only folders available are for the content they have access to.
+
+The defaultExternal COS is configured with the following general features:
+Change password, Change UI themes, HTML compose, Export and Search. None of
+the major features are configured.

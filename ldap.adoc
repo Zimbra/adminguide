@@ -1,0 +1,548 @@
+[[zimbra_ldap_service]]
+= Zimbra LDAP Service
+:toc:
+
+LDAP directory services provide a centralized repository for information
+about users and devices that are authorized to use your Zimbra service.
+The central repository used for Zimbra’s LDAP data is the OpenLDAP
+directory server.
+
+[NOTE]
+{product-name} supports integration with Microsoft’s Active Directory
+Server.  Contact support for information on specific directory
+implementation scenarios.
+
+The LDAP server is installed when {product-abbrev} is installed.  Each
+server has its own LDAP entry that includes attributes specifying operating
+parameters.  In addition, a global configuration object sets defaults for
+any server whose entry does not specify every attribute.
+
+A subset of these attributes can be modified through the Zimbra
+administration console and others through the zmprov commands.
+
+== LDAP Traffic Flow
+
+The LDAP Directory Traffic figure shows traffic between the Zimbra-LDAP
+directory server and the other servers in the {product-name} system.  The
+Zimbra MTA and the {product-name} mailbox server read from, or write to,
+the LDAP database on the directory server.
+
+The Zimbra clients connect through the Zimbra server, which connects to
+LDAP.
+
+image::images/ldap_traffic_flow.png[LDAP Traffic Flow]
+
+== LDAP Directory Hierarchy
+
+LDAP directories are arranged in an hierarchal tree-like structure with two
+types of branches, the mail branches and the config branch.  Mail branches
+are organized by domain.  Entries belong to a domain, such as accounts,
+groups, aliases, are provisioned under the domain DN in the directory.  The
+config branch contains admin system entries that are not part of a domain.
+Config branch entries include system admin accounts, global config, global
+grants, COS, servers, mime types, and zimlets.
+
+The Zimbra LDAP Hierarchy figure shows the Zimbra LDAP hierarchy.  Each
+type of entry (object) has certain associated object classes.
+
+image::images/ldap_directory_hierarchy.png[LDAP Directory Hierarchy]
+
+An LDAP directory entry consists of a collection of attributes and has a
+globally unique distinguished name (`dn`).  The attributes allowed for an
+entry are determined by the _object classes_ associated with that entry.
+The values of the object class attributes determine the schema rules the
+entry must follow.
+
+An entry’s object class that determines what kind of entry it is, is called
+a structural object class and cannot be changed.  Other object classes are
+called auxiliary and may be added to or deleted from the entry.
+
+Use of auxiliary object classes in LDAP allows for an object class to be
+combined with an existing object class.  For example, an entry with
+structural object class *inetOrgPerson*, and auxiliary object class
+*zimbraAccount*, would be an account.  An entry with the structural object
+class *zimbraServer* would be a server in the Zimbra system that has one or
+more Zimbra packages installed.
+
+== {product-name} LDAP Schema
+
+At the core of every LDAP implementation is a database organized using a
+schema.
+
+The Zimbra LDAP schema extends the generic schema included with OpenLDAP
+software.  It is designed to coexist with existing directory installations.
+
+All attributes and object classes specifically created for {product-name}
+are prefaced by "`zimbra,`" such as `zimbraAccount` object class or
+`zimbraAttachmentsBlocked` attribute.
+
+The following schema files are included in the OpenLDAP implementation:
+
+* core.schema
+* cosine.schema
+* inetorgperson.schema
+* zimbra.schema
+* amavisd.schema
+* dyngroup.schema
+* nis.schema
+
+[NOTE]
+You cannot modify the Zimbra schema.
+
+
+=== {product-name} Objects
+
+[cols="25,50a,25s",options="header",]
+|=======================================================================
+|Object |Description |Object class
+
+|Accounts |
+Represents an account on the Zimbra mailbox server that can be logged into.
+Account entries are either administrators or user accounts.  The object
+class name is *zimbraAccount*.  This object class extends the
+*zimbraMailRecipient* object class.  All accounts have the following
+properties: A name in the format of user@example.domain A unique ID that
+never changes and is never reused A set of attributes, some of which are
+user-modifiable (preferences) and others that are only configurable by
+administrators All user accounts are associated with a domain, so a domain
+must be created before creating any accounts.  |zimbraAccount
+
+|Class of Service (COS) |
+Defines the default attributes an account has and what features are allowed
+or denied.  The COS controls features, default preference settings, mailbox
+quotas, message lifetime, password restrictions, attachment blocking, and
+server pools for creation of new accounts.  |zimbraCOS
+
+|Domains |
+Represents an email domain such as *example.com* or *example.org*.  A
+domain must exist before email addressed to users in that domain can be
+delivered.  |zimbraDomain
+
+|Distribution Lists|
+Also known as mailing lists, are used to send mail to all members of a list
+by sending a single email to the list address.  |zimbraDistributionList
+
+|Dynamic Groups|
+Are like distribution lists.  The difference is members of a dynamic group
+are dynamically computed by a LDAP search.  The LDAP search filter is
+defined in an attribute on the dynamic group entry.
+
+[NOTE]
+Both distribution lists and dynamic groups can be used as grantee or target
+in the delegated administrator framework.
+
+|zimbraGroup
+
+|Servers |
+Represents a particular server in the Zimbra system that has one or more of
+the Zimbra software packages installed.  Attributes describe server
+configuration information, such as which services are running on the
+server.  |zimbraServer
+
+|Global Configuration |
+Specifies default values for the following objects: server and domain.  If
+the attributes are not set for other objects, the values are inherited from
+the global settings.  Global configuration values are required and are set
+during installation as part of the Zimbra core package.  These become the
+default values for the system.  |zimbraGlobalConfig
+
+|Alias |
+Represents an alias of an account, distribution list or a dynamic group.
+The *zimbraAliasTarget* attribute points to target entry of this alias
+entry.  |zimbraAlias
+
+|Zimlet |
+Defines Zimlets that are installed and configured in Zimbra.
+|zimbraZimletEntry
+
+|Calendar Resource |
+Defines a calendar resource such as conference rooms or equipment that can
+be selected for a meeting.  A calendar resource is an account with
+additional attributes on the *zimbraCalendarResource* object class.
+|zimbraCalendarResource
+
+|Identity |
+Represents a persona of a user.  A persona contains the user’s identity
+such as display name and a link to the signature entry used for outgoing
+emails.  A user can create multiple personas.  Identity entries are created
+under the user’s LDAP entry in the DIT.  |zimbraIdentity
+
+|Data Source|
+Represents an external mail source of a user.  Two examples of data source
+are POP3 and IMAP.  A data source contains the POP3/IMAP server name, port,
+and password for the user’s external email account.  The data source also
+contains persona information, including the display name and a link to the
+signature entry for outgoing email messages sent on behalf of the external
+account.  Data Source entries are created under the user’s LDAP entry in
+the DIT.  |zimbraDataSource
+
+|Signature |
+Represents a user’s signature.  A user can create multiple signatures.
+Signature entries are created under the user’s LDAP entry in the DIT.
+|zimbraSignature
+
+|=======================================================================
+
+== Account Authentication
+
+Supported authentication mechanisms are Internal, External LDAP, and
+External Active Directory.  The authentication method type is set on a
+per-domain basis.  If `zimbraAuthMech` attribute is not set, the default is
+to use internal authentication.
+
+The internal authentication method uses the Zimbra schema running on the
+OpenLDAP server.
+
+The `zimbraAuthFallbackToLocal` attribute can be enabled so that the system
+falls back to the local authentication if external authentication fails.
+The default is FALSE.
+
+=== Internal Authentication Mechanism
+
+The internal authentication method uses the Zimbra schema running on the
+OpenLDAP directory server.  For accounts stored in the OpenLDAP server, the
+`userPassword` attribute stores a salted-SHA1 (SSHA) digest of the user’s
+password.  The user’s provided password is computed into the SSHA digest
+and then compared to the stored value.
+
+=== External LDAP and External AD Authentication Mechanism
+
+External LDAP and external Active Directory authentication can be used if
+the email environment uses another LDAP server or Microsoft Active
+Directory for authentication and Zimbra- LDAP for all other
+{product-name}-related transactions.  This requires that users exist in
+both OpenLDAP and in the external LDAP server.
+
+The external authentication methods attempt to bind to the specified LDAP
+server using the supplied user name and password.  If this bind succeeds,
+the connection is closed and the password is considered valid.
+
+The `zimbraAuthLdapURL` and `zimbraAuthLdapBindDn` attributes are required
+for external authentication.
+
+* `zimbraAuthLdapURL` attribute `ldap://ldapserver:port/` identifies the IP
+  address or host name of the external directory server, and port is the
+  port number.  You can also use the fully qualified host name instead of
+  the port number.
++
+For example:
++
+    ldap://server1:3268
+    ldap://exch1.acme.com
++
+If it is an SSL connection, use `ldaps:` instead of `ldap*:`.  The SSL
+certificate used by the server must be configured as a trusted certificate.
+
+* `zimbraAuthLdapBindDn` attribute is a format string used to determine
+  which DN to use when binding to the external directory server.
++
+During the authentication process, the user name starts out in the
+format: *user@domain.com*
++
+The user name might need to be transformed into a valid LDAP bind `DN`
+(distinguished name) in the external directory.  In the case of Active
+Directory, that bind `dn` might be in a different domain.
+
+=== Custom Authentication
+
+You can implement a custom authentication to integrate external
+authentication to your proprietary identity database.  When an
+authentication request comes in, Zimbra checks the designated auth
+mechanism for the domain.  If the auth mechanism is set to custom
+authentication, Zimbra invokes the registered custom auth handler to
+authenticate the user.
+
+To set up custom authentication, prepare the domain for the custom auth and
+register the custom authentication handler.
+
+==== Preparing a domain for custom auth
+
+To enable a domain for custom auth, set the domain attribute,
+*zimbraAuthMet to custom:\{registered-custom-auth-handler-name}*.
+
+.CLI
+****
+In the following example, “sample” is the name under which custom
+authentication is registered.
+
+.Enable a domain for custom authentication
+============================================================
+[source, bash]
+----
+zmprov modifydomain {domain|id} zimbraAuthMech custom:sample
+----
+============================================================
+****
+
+==== Register a custom authentication handler
+
+To register a custom authentication handler, invoke:
+
+[source, java]
+----
+ZimbraCustomAuth.register( handlerName, handler )
+----
+
+in the init method of the extension.
+
+* Class: *com.zimbra.cs.account.ldap.ZimbraCustomAuth*
+* Method: `public synchronized static void register (String handlerName, ZimbraCustomAuth handler)`
++
+Definitions:
++
+** *handlerName* is the name under which this custom auth handler
+    isregistered to Zimbra’s authentication infrastructure.  This name is
+    set in the domain’s zimbraAuthMech attribute of the domain.
+** *handler* is the object on which the authenticate method is invoked
+    forthis custom auth handler.  The object has to be an instance of
+    `ZimbraCustomAuth` (or subclasses of it).
+
+.Registering a custom authentication handler
+===================================================================
+[source, java]
+----
+public class SampleExtensionCustomAuth implements ZimbraExtension {
+
+  public void init() throws ServiceException {
+  /*
+   * Register to Zimbra's authentication infrastructure
+   * custom:sample should be set for domain attribute zimbraAuthMech
+   */
+   ZimbraCustomAuth.register("sample", new SampleCustomAuth());
+  }
+...
+}
+----
+===================================================================
+
+==== How Custom Authentication Works
+
+When an authentication request comes in, if the domain is specified to use
+custom auth, the authenticating framework invokes the authenticate method
+on the `ZimbraCustomAuth` instance passed as the handler parameter to
+`ZimbraCustomAuth.register()`.
+
+The account object for the principal to be authenticated and the clear-text
+password entered by the user are passed to
+`ZimbraCustomAuth.authenticate()`.
+
+All attributes of the account can be retrieved from the account object.
+
+=== Kerberos5 Authentication Mechanism
+
+Kerberos5 Authentication Mechanism authenticates users against an external
+Kerberos server.
+
+1.  Set the domain attribute `zimbraAuthMech` to kerberos5.
+2.  Set the domain attribute `zimbraAuthKerberos5Realm` to the Kerberos5
+    realm in which users in this domain are created in the Kerberos
+    database.
+    When users log in with an email password and the domain,
+    `zimbraAuthMech` is set to kerberos5, the server constructs the
+    Kerberos5 principal by
+    `\{localpart-of-the-email}@\{value-of-zimbraAuthKerberos5Realm}` and
+    uses that to authenticate to the kerberos5 server.
+
+To specify Kerberos5 for an individual account set the account’s
+`zimbraForeignPrincipal` as `kerberos5:\{kerberos5-principal}`.  For
+example: kerberos5:user1@MYREALM.COM.
+
+== Global Address List
+
+The Global Address List (GAL) is a company directory of users, usually
+within the organization itself, that is available to all users of the email
+system.  {product-name} uses the company directory to look up user
+addresses from within the company.
+
+For each {product-name} domain you can configure GAL to use:
+
+* External LDAP server
+* {product-name} internal LDAP server
+* Both external LDAP server and OpenLDAP in GAL searches
+
+The {product-name} Web Client can search the GAL.  When the user searches
+for a name, that name is turned into an LDAP search filter similar to the
+following example, where the string `%s` is the name the user is searching
+for.
+
+.CLI
+****
+.Searching the GAL
+====
+[source]
+----
+(|(cn = %s*)(sn=%s*)(gn=%s*)(mail=%s*))
+  (zimbraMailDeliveryAddress = %s*)
+  (zimbraMailAlias=%s*)
+  (zimbraMailAddress = %s*)
+----
+====
+****
+
+=== GAL Attributes in {product-name}
+
+The <<attributes_mapped_to_zimbra_collaboration_contact, Attributes Mapped
+to {product-name} Contact>> table maps generic GAL search attributes to
+their {product-name} contact fields.
+
+LDAP attributes are mapped to GAL entry fields.  For example, the LDAP
+attribute displayName and cn can be mapped to GAL entry field fullName.
+The mapping is configured in the zimbraGalLdapAttrMap attribute.
+
+[[attributes_mapped_to_zimbra_collaboration_contact]]
+.Attributes Mapped to {product-name} Contact
+[cols="m,",options="header"]
+|===============================================================
+|Standard LDAP Attribute |{product-name} Contact Field
+|co |workCountry
+|company |Company
+|givenName/gn |firstName
+|sn |lastName
+|cn |fullName
+|initials |initials
+|l |workCity
+|street, streetaddress |workStreet
+|postalCode |workPostalCode
+|telephoneNumber |workPhone
+|mobile |mobile
+|pager |pager
+|facisimileTelephoneNumber |faxNumber
+|st |workState
+|title |jobTitle
+|mail |email
+|objectClass |Not currently mapped
+|===============================================================
+
+=== {product-name} GAL Search Parameters
+
+GAL is configured on a per-domain basis.  To configure the attributes, you
+can run the GAL Configuration Wizard from the Administration Console.
+
+=== Modifying Attributes
+
+Additions, changes and deletions to the GAL attributes are made through the
+Zimbra Administration Console or from the `zmprov` commands.
+
+Users can modify attributes for their account in the directory when users
+change their options from the Zimbra Web Client, they also modify the
+attributes when they change their preferences.
+
+== Flushing LDAP Cache
+
+When you modify the following type of entries in the Zimbra LDAP server,
+you might need to flush the LDAP cache to make the change available on the
+server.
+
+* Themes
+* Locales
+* Account
+* Groups
+* COS
+* Domains
+* Global configuration
+* Server
+* Zimlet configuration
+
+=== Flush the Cache for Themes and Locales
+
+When you add or change theme (skin) property files and locale resource
+files for {product-abbrev} on a server, you must flush the cache to make
+the new content available.
+
+.CLI
+****
+.To flush skins:
+[source, bash]
+----
+zmprov flushCache skin
+----
+
+.To flush locales
+[source, bash]
+----
+zmprov flushCache locale
+----
+****
+
+=== Flush Accounts, Groups, COS, Domains, and Servers
+
+When you modify the account, COS, groups, domain, and server attributes,
+the change is effective immediately on the server to which the modification
+is done.  On the other servers, the LDAP entries are automatically updated
+after a period of time if the attributes are cached.
+
+The default {product-abbrev} setting to update the server is 15 minutes.
+The caching period is configured on local config key.
+
+.CLI
+****
+.To change the setting:
+[source, bash]
+----
+zmlocalconfig ldap_cache_<object>_maxage
+----
+
+.To enable changes immediately:
+[source, bash]
+----
+zmprov flushCache [account|cos|domain|group|server] [name|id]
+----
+****
+
+If you do not specify a name or ID along with the type, all entries in
+cache for that type are flushed and the cache is reloaded.
+
+[NOTE]
+Some server attributes require a server restart even after the cache is
+flushed.  For example, settings like bind port or number of processing
+threads.
+
+=== Flush Global Attributes
+
+When you modify global config attributes, the changes are effective
+immediately on the server to which the modification is done.  On other
+mailbox servers, you must flush the cache to make the changes available or
+restart the server.  LDAP entries for global config attributes do not
+expire.
+
+Some global config attributes are computed into internal representations
+only once per server restart.  For efficiency reasons, changes to those
+attributes are not effective until after a server restart, even after the
+cache is flushed.  Also, some global configuration settings and server
+settings that are inherited from global config are only read once at server
+startup, for example port or number of processing threads.  Modifying these
+types of attributes requires a server restart.
+
+.CLI
+****
+To flush the cache for global config changes on all servers:
+
+1.  Modify the setting on the local server
++
+[source, bash]
+----
+zmprov mcf zimbraImapClearTextLoginEnabled TRUE
+----
++
+The change is only effective on the server
+*zimbra_zmprov_default_soap_server, port zimbra_admin-service_port*.
+
+2.  Flush the global config cache on all other servers, `zmprov flushCache`
+must be issued on all servers, one at a time.
++
+For example:
++
+[source, bash]
+----
+zmprov –s server-2 flushcache config zmprov –s server-3 flushcache config
+----
+
+3.  To determine if the action requires a restart
++
+[source, bash]
+----
+zmprov desc -a <attributename>
+----
++
+The `requiresRestart` value is added to the output if a restart is required.
+****

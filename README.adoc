@@ -1,0 +1,67 @@
+[float]
+image:https://www.zimbra.com/wp-content/uploads/2016/06/zimbra-logo-color-282-1.png[Zimbra,link=https://www.zimbra.com] Zimbra Administration Guide
+===================================================================================================================================================
+
+This repository contains the code necessary to build the Zimbra
+Administration Guide.
+
+This guide is intended for system administrators responsible for
+installing, maintaining, and supporting the server deployment of
+Zimbra.
+
+Building the Documentation
+--------------------------
+
+The Zimbra Administration Guide is written using
+link:http://asciidoc.org/[AsciiDoc]. Specifically, it is intended to be
+processed with link:http://asciidoctor.org/[Asciidoctor].
+
+As a prerequisite to building the documentation, you will need to have
+already installed and configured
+link:http://asciidoctor.org/[Asciidoctor]. Check the
+link:http://asciidoctor.org/docs/user-manual/#installation-quick-start[Installation
+Quick Start] in the
+link:http://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] for
+information on how to get started.
+
+Once you have Asciidoctor installed and working, you can build the
+documentation into HTML files like so:
+
+[source,bash]
+----
+asciidoctor -b html5 -o admin_guide.html index.adoc
+----
+
+Each section of the document is contained in its own file. You may use the
+`index.adoc` file to generate the entire document.
+
+
+Additional Information
+----------------------
+
+Visit https://www.zimbra.com[*www.zimbra.com*] to join the community and to
+be a part of building the best open source messaging solution. We
+appreciate your feedback and suggestions.
+
+Join the https://forums.zimbra.org/[Zimbra Forums], to participate and
+learn more about Zimbra.
+
+For additional product information check the https://wiki.zimbra.com[Zimbra Wiki].
+
+License
+-------
+image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[CC BY-SA] Synacor, Inc., 2016
+
+(C) 2016-2017 by Synacor, Inc.
+
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
+International License unless another license agreement between you and
+Synacor, Inc. provides otherwise. To view a copy of this license, visit
+http://creativecommons.org/licenses/by-sa/4.0 or send a letter to Creative
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+Synacor, Inc., 2016 +
+40 La Riviere Drive, Suite 300 +
+Buffalo, New York 14202
+
+http://www.synacor.com

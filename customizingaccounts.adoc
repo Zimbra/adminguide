@@ -1,0 +1,877 @@
+[[customizing_accounts]]
+= Customizing Accounts
+:toc:
+
+This chapter describes the features and user preferences that can be
+configured for an account, either from the assigned COS or in an individual
+account.
+
+[NOTE]
+Mailbox features are enabled for Zimbra Web Client users.  When IMAP or POP
+clients are used, users might not have these features available.
+
+== Messaging and Collaboration Applications
+
+Your COS configuration and assignment of a COS to accounts determines the
+default settings for account features and the restrictions to be applied to
+groups of accounts.  Individual accounts can be configured differently, and
+any changes you make override the COS setting.  When you update the COS, the
+changes are not reflected in accounts that have COS overrides.
+
+=== Email Messaging Features
+
+You configure which email messaging features are enabled.  Users can then
+manage many of the enabled features as preferences.
+
+By default, users manage their own preferences, but you can
+administratively elect not to allow user modifications to their account
+preferences.  Currently supported ZWC Email Messaging Features are listed
+and described in <<table_email_features,Email Features>>.
+
+[[table_email_features]]
+.Email Features
+[cols=",a",options="header",]
+|=======================================================================
+|Email Messaging Feature |Description
+
+|Mail |
+Enables the email application.  Enabled by default.
+
+See *COS* _name_ *> Features*, *Major Features* container in the Admin
+Console.
+
+|Conversations |
+Messages can be grouped into conversations by a common thread.  The default
+is to thread messages in a conversation by the References header.  If there
+is no References header, the Subject is used to determine the conversation
+thread.
+
+To change the default, update attribute `zimbraMailThreadingAlgorithm` from
+the COS or for individual accounts.
+
+See zmprov (Provisioning).  If this feature is enabled, conversation view
+is the default.  You can change the default on the COS Preferences page.
+Users can also change the default.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|HTML compose |
+Users can compose email messages with an HTML editor.  They can specify
+default font settings as a preference.
+
+See *COS* _name_ > *Preferences*, *Composing Mail* container in the Admin
+Console.
+
+|Draft auto save interval |
+Frequency of saving draft messages.The default is every 30 seconds.  Users
+cannot change the frequency, but they can turn off the save draft feature.
+
+See *COS* _name_ *> Preferences*, *Composing Mail* container in the Admin
+Console.
+
+| Mail send later |
+When enabled, users can choose *Send Later* to send a message at a later
+time.  The user configures the data and time for sending.  Messages are
+saved in the Draft folder.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+| Message priority |
+When enabled, users can set the priority of the message.  The recipient
+viewing from ZWC sees the priority flag if it is high or low.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|Enable Attachment indexing |
+Attachments are indexed.  Indexed attachments can be searched.
+
+See *COS* _name_ *> Advanced*, *Attachment Settings* container in the Admin
+Console.
+
+|Allow the user to specify a forwarding address |
+You can specify a default forwarding address that the user can use.  Users
+can change the forwarding address from their account Preferences tab.
+
+You can also specify forwarding addresses that are hidden from the user.  A
+copy of a message sent to the account is immediately forwarded to the
+designated forwarding address.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|Out of office reply |
+
+Users can create an email message that automatically replies to incoming
+messages.  By default a message is sent to each recipient only once every
+seven days, regardless of how many messages that person sends to the
+address.  This setting can be changed in the COS Preferences page, *Out of
+office cache lifetime* field.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|New mail notification |
+Allows users the option to specify an address to be notified of new mail.
+They can turn this feature on or off and designate an address from their
+account Preferences tab.
+
+[NOTE]
+See zmprov (Provisioning) in Appendix A CLI commands, for information about
+how to change the email template.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|Persona |
+When enabled, users can create additional account names to manage different
+roles.  Account aliases can be selected for the *From* name of messages
+sent from that persona account and a specific signature can be set for the
+persona account.  The number of personas that can be created is
+configurable depending on your requirements.  The minimum is 0, and the
+default is 20.
+
+You can change this from the CLI: `zmprov mc zimbraIdentityMaxNumEntries`.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|Maximum length of mail signature |
+The maximum number of characters that can be in a signature.  The default is
+1024 characters.
+
+The number of signatures users can create is configured in
+`zimbraSignatureMaxNumEntries`.
+
+See *COS* _name_ *> Preferences*, *Composing Mail* container in the Admin
+Console.
+
+|Advanced search |
+Allows users to build a complex search by date, domain, status, tags, size,
+attachment, Zimlets, and folders.
+
+See *COS* _name_ *> Features*, *Search Features* container in the Admin
+Console.
+
+|Saved searches |
+Users can save a search that they have previously executed or built.
+
+See *COS* _name_ *> Features*, *Search Features* container in the Admin
+Console.
+
+|Initial search preference |
+When enabled, the default search mailbox can be changed.
+
+See *COS* _name_ *> Features*, *General Options* container in the Admin
+Console.
+
+|External POP access |
+When enabled, users can retrieve their POP accounts’ email messages
+directly from their ZWC account.  They add the external account address to
+their account settings.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|External IMAP Access|
+When enabled, users can retrieve their IMAP accounts’ email messages
+directly from their ZWC account.  They can add the external account address
+to their account settings.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|Aliases for this account|
+You can create an aliases for the account.  Users cannot change this.
+
+|Mail filters |
+Users can define a set of rules and corresponding actions to apply to
+incoming and outgoing mail and calendar appointments.  When an incoming
+email message matches the conditions of a filter rule, the corresponding
+actions associated with that rule are applied.
+
+[NOTE]
+Spam check on a received message is completed before users’ mail filters
+are run.  Message identified as spam are moved to the junk folder.  To
+avoid having mail incorrectly marked as spam, users can create a spam
+whitelist from the Preferences Mail folder to identify email addresses that
+should not be marked as spam.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|Flagging |
+Users can create flags and assign them to messages, contacts, and files in
+Briefcase folders.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|Enable keyboard shortcuts |
+Users can use keyboard shortcuts within their mailbox.  The shortcut list
+can be printed from the Preferences Shortcuts folder.
+
+See *COS* _name_ *> Preferences*, *General Options* container in the Admin
+Console.
+
+|Global Address List (GAL) access |
+Users can access the company directory to find names for their email
+messages.
+
+See *COS* _name_ *> Features*, *General Features* container in the Admin
+Console.
+
+|Autocomplete from GAL |
+When enabled, users enter a few letters in their compose header and names
+listed in the GAL are displayed ranked by usage.  See also
+<<autocomplete_ranks_names,Autocomplete Ranks Names>>.
+
+See *COS* _name_ *> Features*, *General Features* container in the Admin
+Console.
+
+|Offline support for Advanced (Ajax) client |
+When enabled, users can use the offline mode to access their data without
+network connectivity when using the Zimbra Web Client.  See also
+<<offline_mode,Offline Mode>>.
+
+See *COS* _name_ *> Features*, *General Features* container in the Admin
+Console.
+
+|IMAP access |
+Users can use third party mail applications to access their mailbox using
+the IMAP protocol.
+
+You can set the polling interval from the *COS/Account Advanced* page,
+*Data Source > IMAP* polling interval section.  The polling interval is not
+set by default.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|POP3 access |
+
+Users can use third party mail applications to access their mailbox using
+the POP protocol.  When they retrieve their POP email messages, the
+messages and attachments are saved on the Zimbra server.
+
+Users can configure from their *Preferences > Mail* page
+
+* How messages are download
+
+* Whether to include their junk messages.  Junk messages are downloaded to
+  their Inbox.
+
+* How to delete messages from their POP account.
+
+You can set the polling interval from the *COS/Account Advanced* page,
+*Data Source > POP3* polling interval section.  The polling interval is not
+set by default.
+
+See *COS* _name_ *> Features*, *Mail Features* container in the Admin
+Console.
+
+|=======================================================================
+
+[[autocomplete_ranks_names]]
+==== Autocomplete Ranks Names
+
+The autocomplete feature displays names ranked with the most frequently
+recalled contact listed at the top.  If the contact name that appears first
+should not be listed at the top, the user can click *Forget* and the
+contact names are re-ranked.
+
+==== Email Preferences that Users Manage
+
+The default behavior for many of the preferences listed in this section can
+be set from either the COS or the Accounts Preferences page.  Users can
+modify the following mail preferences from their account Preferences Mail
+page.
+
+* How often, in minutes, that the Web Client checks for new messages,
+  *Check for new mail every...*
+
+* Set or change email message alerts.  Alerts can be set up to play a
+sound, highlight the Mail tab when a message arrives, and flash the
+browser.
+
+* Set the display language for ZWC.  If more than one language locale is
+installed on {product-name}, users can select the locale that is
+different from the browser language settings.
+
+* Whether to save copies of outbound messages to the Sent folder.
+
+* Whether to save a local copy of a message that is forwarded or to have it
+deleted from their mailbox.
+
+* Whether to compose messages in a separate window.
+
+* Whether to view mail as HTML for messages that include HTML or to view
+messages as plain text.
+
+* Whether to send a read receipt when it is requested.
+
+* Adjust the default font size for printed messages.  The default is 12
+points.
+
+* Users can set up their own Spam mail options of whitelist and blacklist
+email addresses that is used to filter incoming message from their
+Preferences Mail folder.  The default maximum number of whitelist and
+blacklist addresses is 100 on each list.  This value can be changed using
+CLI `zmprov` for accounts and COS.  The attributes are
+`zimbraMailWhitelistMaxNumEntries` and `zimbraMailBlacklistMaxNumEntries`.
+
+* Users can modify the following mail preferences from their *Preferences Signatures* page.
+** Whether to automatically append a signature to outgoing messages.
+** Preferences for how messages that are replied to or forwarded are composed.
+
+==== Using Import and Export to Save User’s Data
+
+The *Preferences Import/Export* page lets users export all of their account
+data, including mail, contacts, calendar, and tasks.  They can export
+specific items in their account and save the data to their computer or
+other location.
+
+The account data is saved as a tar-gzipped (tgz) archive file so that it
+can be imported to restore their account.  Individual contacts are saved as
+.csv files, and individual calendar files are saved as .ics files.  The
+data are copied, not removed from the user’s account.
+
+The exported account data file can be viewed with an archive program such
+as WinRAR archiver.  Any of these files can be imported into their account
+from the same page.
+
+You can turn the Import/Export feature off from the *COS* or *Account
+Features* page, *General Features* section.
+
+==== Setting Up RSS Polling Intervals
+
+Users can subscribe to Websites that provide RSS and podcast feeds and
+receive updated information directly to their mailboxes.  The maximum
+number of feeds that can be returned is 50.  RSS feeds count against users’
+account quota.
+
+The default is to update the RSS data every 12 hours.  Users can
+right-click on an RSS feed folder to manually load new feed.
+
+You can change the polling interval from the Administration Console the
+Class of Server or Account Advanced page, Data Source>RSS polling
+interval section.
+
+== Address Book Features
+
+The Zimbra Address Book allows users to create multiple contact lists
+and add contact names automatically when mail is received or sent.  Users
+can import contacts into their Address Book.
+
+[IMPORTANT]
+--
+To allow users to share their mail folders, address books, and calendars,
+enable Sharing on the Features page:
+
+*Home > Configure > Class of Service*,_COSname_,*Features*, *General
+Features* container
+--
+
+.Address Book Features
+[cols=",,",options="header",]
+|=======================================================================
+|Feature |Description |COS/Account Tabs
+
+|Address Book |
+Users can create personal contacts lists.  By default, a Contacts list and
+Emailed Contacts list are created.  |
+Features
+
+|Address book size limit |
+Maximum number of contacts a user can have in all address books.  0 means
+unlimited.  |
+Advanced
+
+|=======================================================================
+
+Users can modify the following Address Book preferences from their account
+*Preferences Address Book* page.
+
+.Admin Console
+****
+To set default behavior:
+
+*Home > COS* or *Accounts > Preferences* page.
+
+* Enable auto adding of contacts to automatically add contacts to their
+Emailed Contact list when they send an email to a new address.
+
+* Enable the ability to use the Global Access List when using the contact
+picker to look up names.
+
+* Enable the options to include the GAL addresses and names in shared
+address books when using autocomplete to address a message.
+
+****
+
+== Calendar Features
+
+Zimbra Calendar lets users schedule appointments and meetings, establish
+recurring activities, create multiple calendars, share calendars with
+others, and delegate manager access to their calendars.  They can subscribe
+to external calendars and view their calendar information from Zimbra Web
+Client.  They can also use search for appointments in their calendars.
+
+[IMPORTANT]
+--
+To allow users to share their calendars, address books,
+and Briefcase files, enable Sharing in the Features page:
+
+*Home > Configure > Class of Service*, _COS name_, *Features*, *General
+ Features* container
+--
+
+Table 20: Calendar Features
+
+[cols=",a,",options="header",]
+|=======================================================================
+|Calendar Feature |Description |COS/Account Tabs
+
+|Calendar |
+Lets users maintain their calendar, schedule meetings, delegate access to
+their calendar, create multiple personal calendars, and more.  |
+Features
+
+|Group Calendar |
+When Group Calendar is not checked, users can create personal appointments
+and accept invitations to meetings only.  The Find Attendees, Schedule and
+Find Resources tabs are not displayed.  |
+Features
+
+|Nested Calendars |
+Calendars can be nested within {product-name} folders like Mail,
+Contact, and Calendar folders.  The administrator creates a nested list of
+calendars using CLI.  A nested calendar grouping can be imported through
+migration as well.  The CLI command to define the grouping is
+
+[source,bash]
+zmmailbox -z -m user1 cf -V appointment /<Calendar Name>/<sub-calendar name>
+
+This creates a calendar nested under the Calendar Name folder.  |
+
+|Time zone |
+Sets the time zone to use for Calendar scheduling.  Domain admins set this
+in the Accounts, General Information page.  | Preferences
+
+|Forward calendar invitation to specific addresses |
+
+You can specify email addresses to forward a user’s calendar invitations.
+Users can also specify forwarding address from the Preferences Calendar
+folder.
+
+The account the invitation is forwarded to must have admin privileges on
+the shared calendar to reply to the invitation.  |
+Accounts Forwarding
+
+|=======================================================================
+
+=== Troubleshooting Calendar Appointment Problems
+
+.CLI
+****
+Use the `zmcalchk` command to check for discrepancy between different
+users’ calendars for the same meeting, and send an email notification
+regarding the discrepancies.
+
+You can also use this command to notify the organizer and/or all attendees
+when an appointment is out of sync.
+****
+
+=== Changing Remote Calendar Update Interval
+
+Remote calendars are updated every 12 hours, by default.  The frequency can
+be modified at the Admin Console.
+
+.Admin Console
+****
+To modify the frequency of calendar updates:
+
+*Home > Class of Service* or *Account Advanced* page, *Data Source > Calendar polling interval*
+****
+
+=== Disabling Attendee Edits to Appointments
+
+Attendees can edit appointments in their calendars, but their changes do
+not affect anyone else.  If the appointment organizer makes changes, these
+changes overwrite the attendees edits.  You can modify the COS attribute
+`zimbraPrefCalendarApptAllowAtendeeEdit` to prevent attendees from editing
+appointments in their calendar.
+
+.CLI
+****
+[source,bash]
+----
+zmprov mc <cosname> zimbraPrefCalendarApptAllowAtendeeEdit=FALSE
+----
+****
+
+=== Setting Other User Calendar Preferences
+
+Users can modify the Calendar preferences listed in the Calendar
+Preference table.  You can set the default behavior in the COS or
+Accounts Preferences page.
+
+[cols=",a",options="header",]
+|=======================================================================
+|Calendar Preference |Description
+
+|Time zone |
+Time zone displayed in the user’s Preferences.  See
+<<setting_default_time_zone,Setting Default Time Zone>>.  If the time zone
+is configured in the COS, the time zone configured in the domain is
+ignored.
+
+|Number of minutes before an appoitment to show reminder |
+Sets the minutes before the meeting to send a reminder notice.
+
+|Initial calendar view |
+
+Sets the default view.  Options are Day, Work Week, 7-Day Week, Month, List, or Schedule.
+
+| First day of the week |
+Sets the default first day of a user’s work week.
+
+|Default appointment visibility |
+Options are Public or Private.  Sets the default visibility options on the
+new appointment page.
+
+The default is Public, appointments details can be viewed by others.
+
+When the default is Private, all incoming calendar invites are marked as
+private on the user’s calendar and details are hidden.
+
+
+|Use iCal delegation model for shared calendars for CalDAV |
+
+Apple iCal can be configured to access users’ calendars using the CalDAV
+protocol.  When enabled, shared calendars are displayed in users’ iCal
+account’s Delegation tab and they can delegate access to their calendars.
+
+For automatic polling, the polling interval can be set up in the
+*COS/Account Advanced* page, *Data Source > CalDAV polling interval* field.
+
+|Enable past due reminders |
+Users log into the ZWC, the reminder notifications for the last two weeks
+pop up for meeting reminders that were not dismissed.  When this is
+disabled, {product-name} silently dismisses the old reminders.
+
+|Enable toaster notification for new calendar events |
+A popup displays in ZWC when new calendar events are received.
+
+|Allow sending cancellation email to organizer |
+
+When users receive an invitation they cannot attend at the scheduled time,
+they have the option to click *Propose New Time* and select another time.
+The meeting organizer receives an email with the proposed time.
+
+|Automatically add invites with PUBLISH method |
+A calendar invitation email should have `method=REQUEST` in the calendar
+object but some third-party email clients incorrectly set `method=PUBLISH`.
+These emails are not processed as invitations by default.  You can relax the
+rules by enabling this option.
+
+|Automatically add forwarded invites to calendar |
+Invites that have been forward to users are automatically added to the
+forwarded recipient’s calendar.
+
+|Flash browser title on appointment reminder |
+When appointment reminders pop up, the browser flashes until the user
+closes the pop-up.
+
+|Enable audible appointment notification |
+When an appointment reminder pops up, users can be notified by a beep on
+their computer.  Users must have either QuickTime or Windows Media
+installed.
+
+|Auto-decline invites from users who are denied from inviting this user |
+Users can configure who can send them calendar invites.  When enabled, an
+auto-reply message is sent to those users to let them know they do not have
+permission to invite the user.
+
+|Automatically add appointments when invited |
+When enabled, appointments are automatically added to user’s default
+calendar and declined appointments display on the ZWC calendar in a faded
+view.
+
+[NOTE]
+When viewing appointments from mobile devices users do not see the deleted
+invite information in a faded view and they might not know that the invite
+was deleted.
+
+|Notify of changes made via delegated access|
+Users that delegated their calendar are notified of changes made to an
+appointment by a delegated access grantee.
+
+|Always show the mini-calendar |
+The mini-calendar automatically displays in the Calendar view.
+
+|Use the QuickAdd dialog when creating new appointments |
+When is enabled, the QuickAdd dialog displays when users double-click or
+drag on the calendar.
+
+|Show time zone list in appointment view |
+When enabled, a time zones list displays in their appointment dialog,
+giving them the opportunity to change time zones while making appointments.
+
+|=======================================================================
+
+=== Setting Up Zimbra Tasks
+
+Zimbra Tasks lets users create to-do lists and manage tasks through to
+completion.
+
+[IMPORTANT]
+To allow users to share their Task lists, enable Sharing in the Features
+page.  Task lists can be shared with individuals, groups, and the public.
+
+.Admin Console
+****
+To enable or disable the Tasks feature:
+
+*Home > COS* or *Accounts > Preferences* page.
+****
+
+== Zimbra Web Client User Interface Themes
+
+The appearance of the Zimbra Web Client user interface can be changed.  A
+number of Zimbra themes are included with {product-abbrev}, and you can
+create others.  You can select a theme to be the default and the themes
+that users can select to customize their user experience.  To develop
+themes, see <<color_and_logo_management,Color and Logo Management>>.
+
+The following theme usage options can be configured either from COS or
+by individual accounts.
+
+* *Limit users to one theme*
++
+On the Features page, remove the check mark from *Change UI Themes*.  The
+ZWC theme is the theme listed in Current UI theme field on the Themes page.
+
+* *Let users access any of the installed Zimbra themes*
++
+If the *Change UI Themes* is checked, users can access any of the themes
+that are listed in the Available UI themes list.
+
+[[two_factor_auth]]
+== Two Factor Authentication
+
+The Two Factor Authentication (2FA) function allows you to configure a
+secondary set of security requirements that may be applicable to any or
+all critical mailboxes or users in the environment.  You can set 2FA for
+user accounts and/or class of service.
+
+=== 2FA for New User Account
+
+In the Wizard setup for a new user account, you will find settings for
+2FA with other *Advanced* options.
+
+.Admin Console
+****
+*Home* page, *3.  Add Accounts > 1.  Add Account >* _Next_ until *Advanced*,
+scroll down to *Two Factor Authentication*
+
+image::images/User_NewAcct_2FASettings.png[New Account Two Factor Authentication]
+
+See <<two_factor_authentication_parameters, Two Factor Authentication
+Parameters>> for parameter descriptions.
+****
+
+=== 2FA for Existing User Account
+
+For an existing user account, you can apply 2FA settings from the
+*Advanced* options.
+
+.Admin Console
+****
+*Home > Manage > Accounts*
+
+.  Locate the editable configurations for the account:
++
+--
+Select an Account from the table, and select *Edit* from the *Gear*
+icon.  The *General Information* screen is now displayed.
+--
+
+.  Locate the *Two Factor Authentication* container:
++
+--
+Select *Advanced* from the left panel alongside the *General Information*
+screen.
+
+At the screen, scroll down to the *Two Factor Authentication*
+container.
+--
+
+image::images/User_EditAcct_2FASettings.png[Edit Account Two Factor Authentication]
+
+See <<two_factor_authentication_parameters, Two Factor Authentication
+Parameters>> for parameter descriptions.
+****
+
+=== 2FA for Class of Service
+
+Parameters you can use to set up 2FA for a Class of Service are included
+with other Advanced features.
+
+To apply 2FA to a class of service, use the *Two Factor Authentication*
+container to set parameters.
+
+.Admin Console
+****
+*Home > Configure > Class of Service >* _COSname_ *> Advanced > Two Factor Authentication*
+
+image::images/COS_2FAContainer.png[Class of Service Two Factor Authentication]
+
+See <<two_factor_authentication_parameters, Two Factor Authentication
+Parameters>> for parameter descriptions.
+****
+
+[[two_factor_authentication_parameters]]
+.Two Factor Authentication Parameters
+[cols=",",options="header",]
+|=======================================================================
+|Parameters |Description
+
+|Enable two factor authentication |
+Enable (check) or disable (un-check) this function for the selected COS
+account.
+
+|Require two-step authentication |
+Enable (check) or disable (un-check) mandatory use of this function for the
+selected COS account.
+
+|Number of one-time codes to generate |
+Value to assign maximum number of 6-digit passcodes that may be viewed/used
+by the account when attempting to access the system.  The passcode is
+presented to the account once the initial login credentials are accepted.
+
+Each passcode has a 15-second life cycle.
+
+|Enable application passcodes |
+For legacy application that do not support two-factor authentication, you
+can generate exceptions codes for them.
+
+|=======================================================================
+
+== Other Configuration Settings for Accounts
+
+=== Enable Sharing
+
+When the Sharing feature is enabled, users can share any of their folders,
+including their mail folders, calendars, address books, task lists, and
+Briefcase folders.
+
+A users specifies the type of access permissions to give the grantee.  A
+users can share with internal users who can be given complete manager
+access, external guests who must use a password to view the folder content,
+as well as public access so that anyone who has the URL can view the
+folder’s content.
+
+When internal users share a mail folder, a copy of the shared folder is
+put in the grantee’s folder list on the Overview pane.  Users can manage
+their shared folders from their ZWC Preferences Sharing page.
+
+=== Configure SMS Notification
+
+The ZWC *Preferences > Notification* page lets users configure an email
+address or SMS alert to their mobile device to receive a reminder message
+for a task or a meeting on their calendar.  Notification by SMS is disabled
+by default.
+
+SMS notification can be configured by domain, COS or for individual
+accounts.  SMS notification set in a COS overrides SMS notifications set on
+a domain.  In the Administration Console, this is set on the domain, COS or
+account’s Feature page.
+
+Users select a region and a carrier when setting up their SMS alert.  The
+list of SMS/email gateways is in *ZmSMS.properties*.  You can customize
+this list to add SMS/email gateways that are not listed.
+
+=== Configure Attachment Viewing
+
+You can set attachment viewing rules as a global setting, by COS, or for a
+specific account.  The global setting takes precedence over COS and account
+Settings.  You can select from four options.
+
+.Attachment Viewing Features
+[cols=",a,",options="header",]
+|=======================================================================
+|Feature Name |Description |COS/Account Tabs
+
+|Disable attachment viewing from web mail UI |
+Attachments cannot be viewed.  This can also be set as a global
+setting.  |Advanced
+
+|Attachments can be viewed in HTML only |
+Attachments received in another format are opened in HTML view. |Advanced
+
+|Attachments can be viewed in their original format only |
+[NOTE]
+Users might not be able to open attachments that require a specific
+application that is not on their computer.
+|Advanced
+
+|Attachments can be viewed in HTML and their original format |
+Users can select to open either in the original format or as HTML.
+|Advanced
+
+|=======================================================================
+
+=== Display a Warning When Users Try to Navigate Away
+
+Users can click the Back and Forward arrows in the browser, or close their
+browser without logging out of their account.
+
+* If this preference is checked, users are asked to confirm that they want
+to navigate away from their account.
+
+
+* If this preference is not checked, the question is not asked.
+
+=== Enabling the Check Box for the Web Client
+
+If *Show selection checkbox for selecting email, contact, voicemail items
+in a list view for batch operations* is enabled, when users view email
+messages,contacts, and tasks lists in the Content pane, a check box
+displays for each item.  Users can select items and then perform an action
+such as mark as read/unread, move to a specific folder, drag and drop to a
+folder, delete, and tag for all those selected items.
+
+=== Preferences Import/Export
+
+The Preferences Import/Export page lets users export all of their account
+data, including mail, contacts, calendar, tasks, and Briefcase folders.
+They can export specific items in their account and save the data to their
+computer or other location.  The account data is saved as a tar-gzipped
+(tgz) archive file so that it can be easily imported to restore their
+account.  Individual contacts are saved as .csv files, and individual
+calendar files are saved as .ics files.  The data are not removed from
+their accounts.  The exported account data file can be viewed with an
+archive program such as WinRAR archiver.  Any of these files can be
+imported into their account from the same page.
+
+If you do not want users to the Import/Export capability, you can disable
+the feature from the COS or Admin Features page.
+
+=== Adding Words to Spell Dictionary
+
+If ZWC users frequently use words, abbreviations or acronyms that are
+marked as spelling errors during a ZWC spell check, you can update the COS
+or domain attribute `zimbraPrefSpellIgnoreWord` with the words that should
+be ignored when spell check is run.
+
+.CLI
+****
+To configure words to ignore for a domain:
+[source,bash]
+----
+zmprov md domainexample.com +zimbraPrefSpellIgnoreWord <word> +zimbraPrefSpellIgnoreWord <word2>
+----
+****
