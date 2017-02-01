@@ -4,7 +4,6 @@ build/
 
 # eBook build output #
 ######################
-*.html
 *.epub
 *.mobi
 *.pdf
