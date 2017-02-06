@@ -53,6 +53,10 @@ include::configuration.adoc[]
 
 <<<
 
+include::ephemeraldata.adoc[]
+
+<<<
+
 include::cos.adoc[]
 
 <<<
