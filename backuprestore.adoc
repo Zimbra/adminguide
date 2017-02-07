@@ -376,7 +376,7 @@ old backups deleted at 12:00 a.m. every day.
 +
 [source, bash]
 ----
-zmschedulebackup -R f “0 1 * * 7” i “0 1 * * 1-6” d 1m “0 0 * * *”
+zmschedulebackup -R f "0 1 * * 7" i "0 1 * * 1-6" d 1m "0 0 * * *"
 ----
 
 * Add an additional full backup time to your current schedule. This
@@ -384,7 +384,7 @@ example adds a full backup on Thursday at 1 a.m.
 +
 [source, bash]
 ----
-zmschedulebackup -A f “0 1 * * 4”
+zmschedulebackup -A f "0 1 * * 4"
 ----
 * Review your backup schedule. The schedule is displayed.
 +
@@ -587,7 +587,7 @@ zmbackupquery -lb full-20070712.155951.123
 * To find a full backup sessions since a specific date:
 [source,bash]
 ----
-zmbackupquery --type full --from “2007/01/01 12:45:45”
+zmbackupquery --type full --from "2007/01/01 12:45:45"
 ----
 * To find all full backup sessions in the backup directory:
 [source,bash]
@@ -598,7 +598,7 @@ zmbackupquery --type full
 time window
 [source,bash]
 ----
-zmbackupquery -a user1@example.com --type full --from “2007/ 07/05 12:01:15” --to “2007/07/12 17:01:45”
+zmbackupquery -a user1@example.com --type full --from "2007/07/05 12:01:15" --to "2007/07/12 17:01:45"
 ----
 ****
 
@@ -754,7 +754,7 @@ The mysqldump is a backup of your MySQL database at a specific time.
 Data changes that occur later than the dump file are written to the
 binary log.To recover to a specific point in time, binary logging must
 be enabled. See the Zimbra wiki article, MySQL Backup and Restore at
-http://wiki.zimbra.com/wiki/ MySQL_Backup_and_Restore.
+https://wiki.zimbra.com/wiki/MySQL_Backup_and_Restore.
 
 The MySQL dump files are gzipped and placed in the backup target
 directory, or to +/opt/zimbra/backup+, if no directory is specified.
@@ -766,7 +766,7 @@ mySQL database backup file that is saved.
 * Enable mysqldump to run automatically with your backups, type
 [source, bash]
 ----
-zmlocalconfig edit mysql_backup_retention=<N>.
+zmlocalconfig edit mysql_backup_retention=<N>
 ----
 *N* is the number of copies of the mySQL database backups that
 areretained.
@@ -815,7 +815,7 @@ zmprov mcf zimbraBackupMinFreeSpace <value>
 * By server:
 [source, bash]
 ----
-zmprov ms <server hostname> zimbraBackupMinFreeSpace <value>
+zmprov ms <zmhostname> zimbraBackupMinFreeSpace <value>
 ----
 
 Backup sessions run if the free disk space is at least the value you
@@ -924,7 +924,7 @@ zmrestore -a account@company.com-restoreToTime <arg>
 ----
 Two common ways to write the <timearg> are
 
-* +“YYYY/MM/DD hh:mm:ss”+
+* +"YYYY/MM/DD hh:mm:ss"+
 * +YYYYMMDD.hhmmss+
 ====
 
@@ -1090,7 +1090,7 @@ Otherwise, the emails would be overwritten during the restore process.
 +
 [source,bash]
 ----
-zmrestore -a (account@abc.com account@abc.com)
+zmrestore -a account@abc.com
 ----
 
 .  For each account that was restored, put the account back into active mode
@@ -1114,7 +1114,7 @@ mailbox willhave to be reindexed after the restore.
 +
 [source,bash]
 ----
-zmrestore <all or account> --exclude-search-index
+zmrestore -a <all|account> --exclude-search-index
 ----
 
 * *Blobs*. This is a useful option when all blobs for the mailbox being
@@ -1354,7 +1354,7 @@ zmlocalconfig -f -e zimbra_ldap_password=<password>
 +
 [source,bash]
 ----
-zmrestoreoffline -sys -a all -c -br.
+zmrestoreoffline -sys -a all -c -br
 ----
 +
 You might run a command such as nohup here also. To watch the progress,
@@ -1562,7 +1562,7 @@ You can now run the +zmplayredo+ command to replay changes from 8:00:00.
 
 [source,bash]
 ----
-zmplayredo --fromTime ‘2008/10/17 08:00:00:000*’*
+zmplayredo --fromTime "2008/10/17 08:00:00:000"
 ----
 
 All data is brought forward to the current time and the standby site is

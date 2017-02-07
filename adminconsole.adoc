@@ -34,7 +34,7 @@ the following URL pattern.
 [cols=",",options="header",]
 |====================================================
 |Parameter |Description
-|server,domain |The Zimbra server name or IP address.
+|server.domain.com |The Zimbra server name or IP address.
 |7071 |The default HTTP listen port.
 |====================================================
 
@@ -85,13 +85,13 @@ authenticated, or if authentication has expired:
 Global:
 [source,bash]
 ----
-zmprov mcf zimbraAdminConsoleLoginURL <https:/example.com>
+zmprov mcf zimbraAdminConsoleLoginURL <https://example.com>
 ----
 
 Domain:
 [source,bash]
 ----
-zmprov md <domain> zimbraAdminConsoleLoginURL<https:// example.com
+zmprov md <domain> zimbraAdminConsoleLoginURL <https://example.com>
 ----
 ****
 
@@ -102,13 +102,13 @@ To specify a URL to redirect administrators, for logging out:
 Global:
 [source,bash]
 ----
-zmprov mcf zimbraAdminConsoleLogoutURL <https:/example.com>
+zmprov mcf zimbraAdminConsoleLogoutURL <https://example.com>
 ----
 
 Domain:
 [source,bash]
 ----
-zmprov md <domain> zimbraAdminConsoleLogoutURL<https:// example.com
+zmprov md <domain> zimbraAdminConsoleLogoutURL <https://example.com>
 ----
 ****
 
@@ -996,7 +996,7 @@ marks at the beginning and end of the message to be displayed.
 Creating a global message or domain-specific message.
 [source,bash]
 ----
-zmprov md domainexample.com zimbraAdminConsoleLoginMessage "message to display"
+zmprov md <domain> zimbraAdminConsoleLoginMessage "message to display"
 ----
 ****
 
@@ -1005,7 +1005,7 @@ zmprov md domainexample.com zimbraAdminConsoleLoginMessage "message to display"
 Creating a multiple-message display:
 [source,bash]
 ----
-zmprov md domainexample.com +zimbraAdminConsoleLoginMessage "second message to display"
+zmprov md <domain> +zimbraAdminConsoleLoginMessage "second message to display"
 ----
 ****
 
@@ -1030,7 +1030,7 @@ the beginning and end of an individual message to be deleted.
 Removing a specific message:
 [source,bash]
 ----
-zmprov md domainexample.com -zimbraAdminConsoleLoginMessage "message to display"
+zmprov md <domain> -zimbraAdminConsoleLoginMessage "message to display"
 ----
 ****
 
@@ -1039,7 +1039,7 @@ zmprov md domainexample.com -zimbraAdminConsoleLoginMessage "message to display"
 Removing all messages:
 [source,bash]
 ----
-zmprov md domainexample.com zimbraAdminConsoleLoginMessage '
+zmprov md <domain> zimbraAdminConsoleLoginMessage ''
 ----
 ****
 
