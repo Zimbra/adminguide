@@ -6,9 +6,9 @@
 Command Line Interface (CLI) can be used to create, modify and delete
 certain features and functions of the {product-name}.  The Administration
 Console is the main tool for maintaining the {product-name}, but some
-functions can only be changed from the CLI utility.
+functions can only be changed from CLI utilities.
 
-The CLI utility can be used for the following purposes:
+The CLI utilities can be used for the following purposes:
 
 * Provisioning accounts
 * Backup and Restore
@@ -29,16 +29,16 @@ command-line conventions.  Use the following general guidelines with the
 CLI:
 
 * CLI commands are run as the zimbra user: +
-`su - zimbrA`
+`su - zimbra`
 
 * The CLI commands are case-sensitive.  You must type them in lower case.
 
 * Press *ENTER* after you type a command.
 
 * To display usage information about a command, type the CLI command with
-  `- h`.
+  `-h`.
 +
-Example: `zmprov - h` lists all the options available for the `zmprov`
+Example: `zmprov -h` lists all the options available for the `zmprov`
 utility.
 
 * Each operation is invoked through command-line options.  Many have a
@@ -85,13 +85,13 @@ The table below lists the CLI commands in `/opt/zimbra/bin`.
 |CLI |Description
 
 |`antispam-mysqladmin` |
-Send admin commands to anti=spam MySQL server
+anti-spam SQL server admin utility
 
 |`antispam-mysql` |
-Enters interactive command-line MySQL session with the mailbox mysql
+anti-spam SQL client
 
 |`antispam-mysql.server` |
-Start, stop the SQL instance for the mailbox package
+Start, stop the anti-spam SQL instance
 
 |`ldap` |
 Start, stop, or find the status of Zimbra LDAP
@@ -100,16 +100,16 @@ Start, stop, or find the status of Zimbra LDAP
 Perform a search on an LDAP server
 
 |`logmysqladmin` |
-Send myslqadmin commands to the logger mysql
+Send mysqladmin commands to the logger SQL instance
 
 |`mysql` |
-Enters interactive command-line MySQL session with the mailbox mysql
+Enters interactive command-line for the mailbox SQL instance
 
 |`mysql.server` |
-Start, stop the SQL instance for the mailbox package
+Start, stop the mailbox SQL instance
 
 |`mysqladmin` |
-Send admin commands to MySQL
+Send admin commands to the mailbox SQL instance
 
 |`postconf` |
 
@@ -134,7 +134,7 @@ Start, stop, reload, status for anti-spam service
 Start, stop, reload, status for the anti-virus service
 
 |`zmantispamdbpasswd` |
-Changes anti-spam MySQL database password
+Changes anti-spam SQL database password
 
 |`zmapachectl` |
 Start, stop, reload, or check status of Apache service (for spell check)
@@ -178,10 +178,10 @@ Manage self-signed and commercial certificates
 |`zmclamdctl` |
 Start, stop, or find the status of Clam AV
 
-|`zmcleaniplanetics` | Clean iPlanet ICS calendar files
+|`zmcleaniplanetics` |
+Clean iPlanet ICS calendar files
 
-
-|`zmcontrol (Start/Stop/Restart Service) |
+|`zmcontrol` |
 Start, stop, restart, status of the Zimbra servers.  Also can use to find
 the Zimbra version installed
 
@@ -200,7 +200,7 @@ specifying individual servers.
 General information about the server environment is displayed
 
 |`zmgsautil` |
-Global Address Book (GAL) synchronization command line utility.
+Global Address Book (GAL) synchronization utility.
 Create, delete the GAL sync account and initiate manual syncs.
 
 |`zmhostname` |
@@ -247,8 +247,9 @@ Performs mailbox management tasks
 Start, stop, reload, or find the status of the mailbox components
 (zmmailboxd, MySQL, convert)
 
-|`zmmboxsearch` (Cross Mailbox Search) |
-Search across mailboxes to find messages and attachments
+|`zmmboxsearch` |
+(Cross Mailbox Search) Search across mailboxes to find messages and
+attachments
 
 |`zmmboxmove` |
 7.1.3 and later.  Used to move selected mailboxes from one Zimbra server to
@@ -264,10 +265,10 @@ another.
 Start, stop, and restart
 
 |`zmmetadump` |
-Support tool that dumps an item’s metadata in a human-readable form
+Support tool that dumps an item's metadata in a human-readable form
 
 |`zmmilterctl` |
-Start, stop, and restart the zimbra milter server if enabled
+Start, stop, and restart the Zimbra milter server if enabled
 
 |`zmmtaconfigdctl` |
 Beginning in {product-abbrev} 7.0, this command is not used.  Use `zmconfigdctl`.
@@ -276,23 +277,23 @@ Beginning in {product-abbrev} 7.0, this command is not used.  Use `zmconfigdctl`
 Start, stop, or find the status of the MTA
 
 |`zmmypasswd` |
-Change MySQL passwords
+Change SQL passwords
 
 |`zmmysqlstatus` |
 Status of mailbox SQL instance
 
 |`zmnginxconf` |
-Command line utility to output the reverse proxy configuration
+Output the reverse proxy configuration
 
 |`zmnginxctl` |
-Start, stop, and restart the zimbra reverse proxy
+Start, stop, and restart the Zimbra reverse proxy
 
 |`zmplayredo` |
 Performs data restore using backed up snapshots taken periodically.  Users
 who use snapshots to backup and restore their information from a standby
 site use this command.
 
-|`zmprov` (Provisioning) |
+|`zmprov` |
 Performs all provisioning tasks in Zimbra LDAP, including creating
 accounts, domains, distribution lists and aliases
 
@@ -308,7 +309,7 @@ Purges POP/IMAP routing information from one or more memcached servers
 
 |`zmpython` |
 Ability to write Python scripts that access Zimbra Java libraries.  It sets
-the {product-abbrev} class path and starts the Jython interpreter.
+the Zimbra class path and starts the Jython interpreter.
 
 |`zmredodump` |
 Support tool for dumping contents of a redolog file for debugging purposes
@@ -319,9 +320,9 @@ Performs full restores and incremental restores for a designated mail host
 |`zmrestoreldap` |
 Restore accounts from the LDAP backup
 
-|`zmrestoreoffline` (Offline Restore) |
-Performs full restore when the Zimbra server (i.e., the mailboxd process)
-is down
+|`zmrestoreoffline` |
+(Offline Restore) Performs full restore when the Zimbra server (i.e.,
+the mailboxd process) is down
 
 |`zmsaslauthdctl`  |
 Start, stop, or find the status of saslauthd (authentication)
@@ -333,7 +334,7 @@ Schedule backups and add the command to your cron table
 Used for other zm scripts, do not use
 
 |`zmskindeploy` |
-Deploy skins for accounts from the command line
+Deploy skins
 
 |`zmsoap` |
 Print mail, account, and admin information in the SOAP format
@@ -342,8 +343,7 @@ Print mail, account, and admin information in the SOAP format
 Start, stop, or find the status of the spell check server
 
 |`zmsshkeygen` |
-Generate Zimbra’s SSH encryption keys
-
+Generate Zimbra's SSH encryption keys
 
 |`zmstat-chart` |
 Generate charts from zmstat data collected in a directory
@@ -378,7 +378,7 @@ HTTP, HTTPS or mixed
 Used to train the anti-spam filter to recognize what is spam or ham
 
 |`zmtzupdate` |
-Provides mechanism to process time zone changes from the command line
+Provides mechanism to process time zone changes
 
 |`zmupdateauthkeys` |
 Used to fetch the ssh encryption keys created by `zmsshkeygen`
@@ -441,20 +441,20 @@ type `zmprov -h`.  The task area divided into the following sections:
 |`--file` (`-f`) |use file as input stream
 |`--server` (`-s`) |{host}[:{port}] server hostname and optional port
 |`--ldap` (`-l`) |provision via LDAP instead of SOAP
-|`--log property file` (`-L`) |log 4j property file, valid only with `-l`
+|`--logpropertyfile` (`-L`) |log4j property file, valid only with `-l`
 |`--account {name}` (`-a`) |account name to auth as
 |`--password {pass}` (`-p`) |password for account
 |`--passfile {file}` (`-P`) |read password from file
 |`--zadmin` (`-z`) |
 use Zimbra admin name/password from localconfig for admin/password
-|`--authtoken (authtoken)` (`-y`) |
+|`--authtoken {authtoken}` (`-y`) |
 use auth token string (has to be in JSON format) from command line
-|`--authtoken (authtoken file)` (`-Y`) |
-use auth token string (has to be in JSON format) from command line
+|`--authtokenfile {authtoken-file}` (`-Y`) |
+use auth token string (has to be in JSON format) from a file
 |`--verbose` (`-v`) |
 verbose mode (dumps full exception stack trace)
-|`--debug` (`-d/`) |debug mode (dumps SOAP messages)
-|`--master` (`m`) |use LDAP master.  This only valid with `-l`
+|`--debug` (`-d`) |debug mode (dumps SOAP messages)
+|`--master` (`-m`) |use LDAP master.  This only valid with `-l`
 |`--replace` (`-r`)|
 allow replacement of safe-guarded multi-value attribute configured in
 localconfig key `zmprov_saveguarded_attrs`
@@ -522,20 +522,20 @@ zmprov cps joe@domain.com test123
 This command does not check the password age or history.
 
 |`createAccount (ca)` |
-{name@domain} {password} [attribute1 value1 etc] |
+{name@domain} {password} [attr1 value1]... |
 [source,bash]
 ----
 zmprov ca joe@domain.com test123 displayName JSmith
 ----
 
 |`createDataSource (cds)` |
-{name@domain} {ds-type} {ds-name} zimbraDataSourceEnabled {TRUE \| FALSE} zimbraDataSourceFolderId {folder-id} [attr1 value1 [attr2 value2...]] |
+{name@domain} {ds-type} {ds-name} zimbraDataSourceEnabled {TRUE \| FALSE} zimbraDataSourceFolderId {folder-id} [attr1 value1 [attr2 value2]...] |
 
 |`createIdentity (cid)` |
-{name@domain} {identity-name} [attr1 value1 [attr2 value2...]] |
+{name@domain} {identity-name} [attr1 value1 [attr2 value2]...] |
 
-|`createSignature (csig)`|
-{name@domain} {signature-name} [attr1 value1 [attr2 value2...]] |
+|`createSignature (csig)` |
+{name@domain} {signature-name} [attr1 value1 [attr2 value2]...] |
 
 |`deleteAccount (da)` |
 {name@domain \| id \| adminName} |
@@ -563,7 +563,7 @@ zmprov ga joe@domain.com
 {name@domain \| id} |
 
 |`getAllAccounts (gaa)` |
-[-v] [{domain}] |
+[-v] [domain] |
 Must include `-l`/`--ldap`
 
 [source,bash]
@@ -581,29 +581,29 @@ zmprov gaaa
 ----
 
 |`getDataSources (gds)` |
-{name@domain \| id} [arg 1 [arg 2...]] |
+{name@domain \| id} [arg1 [arg2]...] |
 
 |`getIdentities (gid)` |
-{name@domain \| id} [arg 1 [arg 2...]] |
+{name@domain \| id} [arg1 [arg2]...] |
 
 |`getSignatures (gsig)` |
-{name@domain \| id} [arg 1 [arg 2...]] |
+{name@domain \| id} [arg1 [arg2]...] |
 
 |`modifyAccount (ma)` |
-{name@domain \| id \| adminName} [attribute1 value1 etc] |
+{name@domain \| id \| adminName} [attr1 value1]... |
 [source,bash]
 ----
 zmprov ma joe@domain.com zimbraAccountStatus maintenance
 ----
 
 |`modifyDataSource (mds)` |
-{name@domain \| id} {ds-name \| ds-id} [attr 1 value 1 [attr2 value 2...]] |
+{name@domain \| id} {ds-name \| ds-id} [attr1 value1 [attr2 value2]...] |
 
 |`modifyIdentity (mid)` |
-{name@domain \| id} {identity-name} [attr 1 value 1 [attr2 value 2...]] |
+{name@domain \| id} {identity-name} [attr1 value1 [attr2 value 2]...] |
 
-|`modifySignature (msig)`|
-{name@domain \| id} {signature-name \| signature-id} [attr 1 value 1 [attr 2 value 2...]] |
+|`modifySignature (msig)` |
+{name@domain \| id} {signature-name \| signature-id} [attr1 value1 [attr2 value2]...] |
 
 |`removeAccountAlias (raa)` |
 {name@domain \| id \| adminName} {alias@domain} |
@@ -624,7 +624,7 @@ After you rename an account, you should run a full backup for that account.
 
 [source,bash]
 ----
-zmbackup -f -<servername.com> -a <newaccountname@servername.com>
+zmbackup -f -s <servername.com> -a <newaccountname@servername.com>
 ----
 
 |`setAccountCOS (sac)` |
@@ -656,20 +656,20 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 |Commnad |Syntax
 
 |`createCalendarResource (ccr)` |
-{name@domain} [attr1 value1 [attr2 value2...]]
+{name@domain} [attr1 value1 [attr2 value2]...]
 
 |`deleteCalendarResource (dcr)` |
 {name@domain \| id}
 
 |`getAllCalendarResources (gacr)` |
-[-v] [{domain}]
+[-v] [domain]
 
 
 |`getCalendarResource (gcr)` |
 {name@domain \| id}
 
 |`modifyCalendarResource (mcr)` |
-{name@domain \| id} [attr1 value1 {attr2 value2...]]
+{name@domain \| id} [attr1 value1 {attr2 value2]...]
 
 |`purgeAccountCalendarCache (pacc)` |
 {name@domain} [...]
@@ -712,10 +712,10 @@ This lists each COS, the COS ID and the number of accounts assigned to each
 COS
 
 |`createAliasDomain (cad)` |
-{alias-domain-name} {local-domain-name \| id} [attr1 value1 [attr2 value2...]] |
+{alias-domain-name} {local-domain-name \| id} [attr1 value1 [attr2 value2]...] |
 
 |`createDomain (cd)` |
-{domain} [attribute1 value1 etc] |
+{domain} [attr1 value1]... |
 [source,bash]
 ----
 zmprov cd mktng.domain.com zimbraAuthMech zimbra
@@ -736,13 +736,13 @@ zmprov gd mktng.domain.com
 ----
 
 |`getDomainInfo (gdi)` |
-name \| id \| virtualHostname {value} [attr1 [attr2...]] |
+name \| id \| virtualHostname {value} [attr1 [attr2]...] |
 
 |`getAllDomains (gad)` |
 [-v] |
 
 |`modifyDomain (md)` |
-{domain \| id} [attribute1 value1 etc] |
+{domain \| id} [attr1 value1]... |
 [source,bash]
 ----
 zmprov md domain.com zimbraGalMaxResults 500
@@ -770,7 +770,7 @@ updated when a domain is renamed.
 {src-cos-name \| id} {dest-cos-name} |
 
 |`createCos (cc)` |
-{name} [attribute1 value1 etc] |
+{name} [attr1 value1]... |
 [source,bash]
 ----
 zmprov cc Executive zimbraAttachmentsBlocked FALSE zimbraAuthTokenLifetime 60m zimbraMailQuota 100M zimbraMailMessageLifetime 0
@@ -798,7 +798,7 @@ zmprov gac -v
 ----
 
 |`modifyCos (mc)` |
-{name \| id} [attribute1 value1 etc] |
+{name \| id} [attr1 value1]... |
 [source,bash]
 ----
 zmprov mc Executive zimbraAttachmentsBlocked TRUE
@@ -822,7 +822,7 @@ zmprov rc Executive Business
 |Commnad |Syntax |Example/Notes
 
 |`createServer (cs)` |
-{name} [attribute1 value1 etc] |
+{name} [attr1 value1]... |
 
 |`deleteServer (ds)` |
 {name \| id} |
@@ -846,7 +846,7 @@ zmprov gas
 ----
 
 |`modifyServer (ms)` |
-{name \| id} [attribute1 value1 etc] |
+{name \| id} [attr1 value1]... |
 [source,bash]
 ----
 zmprov ms domain.com zimbraVirusDefinitionsUpdateFrequency 2h
@@ -881,16 +881,16 @@ attr1 value1 |
 Modifies the LDAP settings.
 
 |`createXMPPComponent (csc)` |
-{short-name} {domain} {server} {classname} {category} {type} [attr value1 [attr2 value2...]] |
+{short-name} {domain} {server} {classname} {category} {type} [attr1 value1 [attr2 value2]...] |
 
 |`deleteXMPPComponent (dxc)` |
 {xmpp-component-name} |
 
 |`getXMPPComponent (gxc)` |
-{name@domain} [attr1 [attr2 value2]] |
+{name@domain} [attr1 [attr2]...] |
 
 |`modifyXMPPComponent (mxc)` |
-{name@domain} [attr1 [attr2 value2]] |
+{name@domain} [attr1 value1 [attr2 value2]...] |
 
 |=======================================================================
 
@@ -940,7 +940,7 @@ zmprov gdl list@domain.com
 ----
 
 |`modifyDistributionList (mdl)` |
-{list@domain \| id} attr1 value1 {attr2 value2...} |
+{list@domain \| id} attr1 value1 [attr2 value2]... |
 [source,bash]
 ----
 zmprov md list@domain.com
@@ -968,16 +968,13 @@ zmprov md list@domain.com
 |=======================================================================
 |Commnad |Syntax |Example/Notes
 
-|`getMailboxInfo--- (gmi)` |
+|`getMailboxInfo (gmi)` |
 {account} |
 
-|`getQuotaUsage--- (gqu)` |
+|`getQuotaUsage (gqu)` |
 {server} |
 
-|`reIndexMailbox (rim)` |
-{name@domain \| id} {start \| status \| cancel} [{reindex-by} {value1} [value2...]] |
-
-|RecalculateMailbox Counts (rmc) |
+|`recalculateMailboxCounts (rmc)` |
 {name@domain \| id} |
 
 When unread message count and quota usage are out of sync with the data
@@ -991,7 +988,7 @@ run in off peak hours and used on one mailbox
 at a time.
 
 |`reIndexMailbox (rim)` |
-{start \| status \| cancel} [{types \| ids} {type or id} [type or id...]] |
+{name@domain \| id} {start \| status \| cancel} [type \| id]... |
 
 |`compactIndexMailbox (cim)` |
 {name@domain \| id} {start \| status} |
@@ -1004,6 +1001,11 @@ at a time.
 
 |`selectMailbox (sm)` |
 {account-name} [{zmmailbox commands}] |
+
+|`unlockMailbox (ulm)` |
+{name@domain \| id} [hostname] |
+
+Only specify the hostname parameter when unlocking a mailbox after a failed move attempt.
 
 |=======================================================================
 
@@ -1027,7 +1029,7 @@ at a time.
 Prints all attribute names (account, domain, COS, servers, etc.).
 
 |`flushCache (fc)` |
-[-a] {acl \| locale \| skin \| uistrings \| license \| all \| account \| config \| glo \| balgrant \| cos \| domain \| galgroup \| group \| mime \| server \| zimlet \| <extension-cache-type>} [name1 \| id1 [name2 \| i d2...]] |
+[-a] {acl \| locale \| skin \| uistrings \| license \| all \| account \| config \| glo \| balgrant \| cos \| domain \| galgroup \| group \| mime \| server \| zimlet \| <extension-cache-type>} [name1 \| id1 [name2 \| i d2]...] |
 
 Flush cached LDAP entries for a type.  See <<zimbra_ldap_service,Zimbra LDAP Service>>.
 
@@ -1057,7 +1059,7 @@ Generates preAuth values for comparison.
 |=======================================================================
 |Commnad |Syntax |Example/Notes
 
-|`addAccount Logger (aal)` |
+|`addAccountLogger (aal)` |
 {name@domain \| id} {logging-category} {debug \| info \| warn \| error} |
 Creates custom logging for a single account.
 
@@ -1102,14 +1104,14 @@ logging categories.
 [-v] {ldap-query} [limit] [offset] [sortBy {attribute}] [sortAscending 0 \| 1] [domain {domain}] |
 
 |`searchCalendarResources (scr)` |
-[-v] domain attr op value {attr op value...] |
+[-v] domain {attr op value} [attr op value]... |
 
 |=======================================================================
 
 [[share_provisioning_cmds]]
 ==== Share Provisioning Commands
 
-*zmprov—Share Provisioning Commands*
+.`zmprov` -- Share Provisioning Commands
 
 [cols=",,a",options="header",]
 |=======================================================================
@@ -1128,7 +1130,7 @@ logging categories.
 |Commnad |Syntax |Example/Notes
 
 |`createUCService (cucs)` |
-{name} [attr1 value1 [attr2 value2...]] |
+{name} [attr1 value1 [attr2 value2]...] |
 
 |`deleteUCService (ducs)` |
 {name \| id} |
@@ -1137,10 +1139,10 @@ logging categories.
 [-v] |
 
 |`getUCService (gucs)` |
-[-e] {name \| id} [attr1 [attr2...]] |
+[-e] {name \| id} [attr1 [attr2]...] |
 
 |`modifyUCService (mucs)` |
-{name \| id} [attr1 value1 [attr2 value2...]] |
+{name \| id} [attr1 value1 [attr2 value2]...] |
 
 |`renameUCService (rucs)` |
 {name \| id} {newName} |
@@ -1175,7 +1177,7 @@ certificates for.
 
 |=======================================================================
 
-==== Examples—using zmprov
+==== Examples -- using zmprov
 
 .Creating an account with a password that is assigned to the default COS
 ====
@@ -1214,7 +1216,7 @@ procedure.
 
 .Bulk provisioning
 ====
-See the Zimbra wiki page http://wiki.zimbra.com/wiki/Bulk_Provisioning[Bulk_Provisioning].
+See the Zimbra wiki page https://wiki.zimbra.com/wiki/Bulk_Provisioning[Bulk_Provisioning].
 ====
 
 .Adding an alias to an account
@@ -1245,7 +1247,7 @@ zmprov adlm listname@domain.com member@domain.com
 You can add multiple members to a list from the Administration Console.
 ====
 
-.Changing the administrator’s password
+.Changing the administrator's password
 ====
 
 Use this command to change any password.  Enter the address of the password
@@ -1257,7 +1259,7 @@ zmprov sp admin@domain.com password
 ----
 ====
 
-.Creating a domain that authenticates against zimbra OpenLDAP
+.Creating a domain that authenticates against Zimbra OpenLDAP
 ====
 [source,bash]
 ----
@@ -1524,7 +1526,7 @@ same function being carried out.
 
 [source,bash]
 ----
-zmarchiveconfig [args] [cmd] [cmd-args...]
+zmarchiveconfig [args] [cmd] [cmd-args]...
 ----
 
 ==== Description
@@ -1752,7 +1754,7 @@ zmbackup -i -a all -s server1.domain.com
 ----
 ====
 
-.Perform full backup of only *user1*’s mailbox on *server1*.
+.Perform full backup of only *user1*'s mailbox on *server1*.
 ====
 [source,bash]
 ----
@@ -1762,7 +1764,7 @@ zmbackup -f -a user1@domain.com -s server1
 Hostname does not need full domain if account is used.
 ====
 
-.Perform incremental backup of *user1*’s mailbox on *server1*
+.Perform incremental backup of *user1*'s mailbox on *server1*
 ====
 [source,bash]
 ----
@@ -1830,7 +1832,7 @@ calendar and sends an email notification regarding inconsistencies.  For
 example, it checks if all attendees and organizers of an event on the
 calendar agree on start/stop times and occurrences of a meeting.
 
-See the output of *zmmailbox help appointmen*t for details on
+See the output of `zmmailbox help appointment` for details on
 time-specs.
 
 ==== Syntax
@@ -1873,11 +1875,11 @@ The default schedule is as follows:
 Each crontab entry is a single line composed of five fields separated by a
 blank space.  Specify the fields as follows:
 
-* minute — 0 through 59
-* hour — 0 through 23
-* day of month — 1 through 31
-* month — 1 through 12
-* day of week — 0 through 7 (0 or 7 is Sunday, or use names)
+* minute -- 0 through 59
+* hour -- 0 through 23
+* day of month -- 1 through 31
+* month -- 1 through 12
+* day of week -- 0 through 7 (0 or 7 is Sunday, or use names)
 
 Type an asterisk (`*`) in the fields you are not using.
 
@@ -1942,7 +1944,7 @@ location is added for incremental scheduled backups, it is ignored.
 |`account` |`-a` |
 Account specific.  The default is all accounts.
 
-|`--mail-report`| |
+|`--mail-report` | |
 Send an email report to the admin user.
 
 |`--server` | |
@@ -2309,8 +2311,8 @@ zmrestore -a user1@domain.com -ca -pre new_
 
 === zmrestoreoffline (Offline Restore)
 
-Run `zmresotreoffline` when the Zimbra server (i.e., the mailbox process)
-is down.  The MySQL database for the server and the OpenLDAP directory
+Run `zmrestoreoffline` when the Zimbra server (i.e., the mailbox process)
+is down.  The SQL database for the server and the OpenLDAP directory
 server must be running before you start the `zmrestoreoffline` command.
 
 ==== Syntax
@@ -2631,7 +2633,7 @@ zmpurgeoldmbox -a <account email> [-s <server to purge>]
 |`--account` |`-a` |
 `<arg>` Email address of account to purge.
 
-|`--help` |`-h`|
+|`--help` |`-h` |
 Displays the usage options for this command
 
 |`--server` |`-s` |
@@ -2733,7 +2735,7 @@ same as the password on the LDAP master server.
 ==== Syntax
 [source,bash]
 ----
-opt/zimbra/bin/zmldappasswd [-h] [-r] [-p] [-l] new password
+/opt/zimbra/bin/zmldappasswd [-h] [-r] [-p] [-l] new-password
 ----
 
 ==== Description
@@ -2775,7 +2777,7 @@ included, the `zimbra_ldap_password` is changed.*
 
 === zmlocalconfig
 
-Use `zmlocalconfig` to set or get the local configuration for a zimbra
+Use `zmlocalconfig` to set or get the local configuration for a Zimbra
 server.  Use `zmlocalconfig -i` to see a list of supported properties that
 can be configured by an administrator.
 
@@ -2821,8 +2823,7 @@ Shows the values for only those keys listed in the `[args]` that have been
 changed from their defaults.
 
 |`--path` |`-p` |
-Shows which configuration file will be
-used.
+Shows which configuration file will be used.
 
 |`--quiet` |`-q` |
 Suppress logging.
@@ -2865,7 +2866,7 @@ tags, or saved searches at the same time.
 ==== Syntax
 [source,bash]
 ----
-zmmailbox [args] [cmd] [cmd-args ...]
+zmmailbox [args] [cmd] [cmd-args]...
 ----
 
 ==== Description
@@ -2890,11 +2891,11 @@ Account name to auth as `{name}`.
 |`-z` |`--zadmin` |
 Use zimbra admin name/password from localconfig for admin/password.
 
-|`-y` |`--authtoken (authtoken)` |
+|`-y` |`--authtoken {authtoken}` |
 Use authtoken string (has to be in JSON format) from command line.
 
-|`-Y` |`--authtoken (authtoken file)` |
-Use authtoken string (has to be in JSON format) from command line.
+|`-Y` |`--authtoken {authtoken-file}` |
+Use authtoken string (has to be in JSON format) from a file.
 
 |`-m` |`--mailbox {name}` |
 Mailbox to open.  Can be used as both authenticated and targeted unless
@@ -3018,7 +3019,8 @@ zmmailbox -z --admin-priv -m foo@example.com emptyDumpster
 ====
 [source,bash]
 ----
-zmmailbox -z mbox> sm --admin-priv foo@domain.com
+zmmailbox -z
+mbox> sm --admin-priv foo@domain.com
 ----
 ====
 
@@ -3040,7 +3042,7 @@ $ zmmailbox --auth bar@example.com -p password -m foo@example.com
 ====
 [source,bash]
 ----
-zmmailbox -z-m user@example.com gms
+zmmailbox -z -m user@example.com gms
 ----
 ====
 
@@ -3071,7 +3073,7 @@ data.  Type as:
 
 [source,bash]
 ----
-zmmailbox -z-m user@example.com gru "?fmt=zip&meta=1" > /<filename.zip>
+zmmailbox -z -m user@example.com gru "?fmt=zip&meta=1" > <filename.zip>
 ----
 ====
 
@@ -3082,17 +3084,17 @@ protocol options: HTTP, HTTPS, Mixed, Both and Redirect.  The default
 setting is HTTPS.
 
 [IMPORTANT]
-The `zmtlsctl` setting also impacts the ZCO’s *Use Secure Connection*
+The `zmtlsctl` setting also impacts the ZCO's *Use Secure Connection*
 setting.  ZCO users in a self-signed environment will encounter warnings
 about connection security unless the root CA certificate is added to Window
 Certificate Store.  See the Zimbra Wiki article
-http://wiki.zimbra.com/wiki/ZCO_Connection_Security[ZCO Connection
+https://wiki.zimbra.com/wiki/ZCO_Connection_Security[ZCO Connection
 Security] for more information.
 
 * *HTTP*.  HTTP only, the user would browse to http://zimbra.domain.com.
 
 * *HTTPS.* HTTPS only (default), the user would browse to
-https:/zimbra.domain.com.  http:// is denied.
+https://zimbra.domain.com.  http:// is denied.
 
 * *Mixed* If the user goes to http:// it will switch to https:// for the
 login only,then will revert to http:// for normal session traffic.  If the
@@ -3104,7 +3106,7 @@ the entire session.
 * *Redirect* Like mixed if the user goes to http:// it will switch to
 https:// but they will stay https:// for their entire session.
 
-All modes use SSL encryption for back-end administrative traffic.
+All modes use TLS encryption for back-end administrative traffic.
 
 [IMPORTANT]
 Only `zimbraMailMode` *HTTPS* can ensure that no listener will be available
@@ -3119,7 +3121,7 @@ during {product-abbrev} installation in /opt/zimbra/ssl/zimbra/server/server.crt
 ZCO users, secure ZCO profiles will display Certificate Trust dialogs
 unless the root CA certificate is deployed to the server.  For more
 information about ZCO certificates, see the Zimbra Wiki page
-http://wiki.zimbra.com/wiki/ZCO_Connection_Security[ZCO Connection
+https://wiki.zimbra.com/wiki/ZCO_Connection_Security[ZCO Connection
 Security].
 
 ==== Syntax
@@ -3215,10 +3217,8 @@ Check to see if a valid license is installed.
 |`--help` |`-h` |
 Shows the help for the usage options for this tool.
 
-|`--install` |`--i` |
+|`--install` |`-i` |
 `<arg>` Installs the specified license file.
-
-`[arg]` -- This is the Zimbra license file that you received.
 
 |`--ldap` |`-l` |
 Install on LDAP only.
@@ -3231,7 +3231,7 @@ Displays the license information.
 === zmmetadump
 
 The `zmmetadump` command is a support tool that dumps the contents of an
-item’s metadata in a human readable form.
+item's metadata in a human readable form.
 
 ==== Syntax
 [source,bash]
@@ -3317,8 +3317,8 @@ Stops the replay on occurrence of any error.
 
 Time is specified in the local time zone.  The year, month, date, hour,
 minute, second, and optionally millisecond should be specified.
-Month/date/hour/ minute/second are 0 -padded to 2 digits, millisecond to
-3 digits.  The hour must be specified in a 24- hour format.
+Month/date/hour/ minute/second are 0-padded to 2 digits, millisecond to
+3 digits.  The hour must be specified in a 24-hour format.
 
 
 === zmproxyconfgen
@@ -3369,7 +3369,7 @@ be written.
 
 |`--server` |`-s` |
 `<arg>` Specifies a valid server object.  Configuration is generated based
-on the specified server’s attributes.  The default is to generate
+on the specified server's attributes.  The default is to generate
 configuration based on global configuration values.
 
 |`--templatedir` |`-t` |
@@ -3395,7 +3395,7 @@ server port.
 ==== Syntax
 [source,bash]
 ----
-ProxyPurgeUtil [-v] [-i] -a account [-L accountlist] [cache1] [cache2...]]
+ProxyPurgeUtil [-v] [-i] -a account [-L accountlist] [cache1] [cache2]...]
 ----
 
 ==== Description
@@ -3472,7 +3472,7 @@ Activates the quiet mode.  Used to only print the log filename and errors,
 if any.  Useful for verifying integrity of redologs with minimal output.
 
 |`--show-blob` | |
-Shows blob content.  The specified item’s blob is printed with `<START OF
+Shows blob content.  The specified item's blob is printed with `<START OF
 BLOB>` and `<END OF BLOB>` marking the start and end of the blob.
 
 |=======================================================================
@@ -3485,7 +3485,7 @@ ZWC deployment, and restarts the web server so that it recognizes the new
 skin.
 
 For more information about this tool, see
-http://wiki.zimbra.com/index.php?title=About_Creating_{product-abbrev}_Themes.
+https://wiki.zimbra.com/index.php?title=About_Creating_{product-abbrev}_Themes.
 
 ==== Syntax
 [source,bash]
@@ -3501,7 +3501,7 @@ format.
 ==== Syntax
 [source,bash]
 ----
-zmsoap [options] <path1 [<path2>...]
+zmsoap [options] {path1} [path2]...
 ----
 
 ==== Description
@@ -3549,7 +3549,7 @@ or `admin`.
 Prints the SOAP request and other status information.
 
 |`path` | |
-`<[path...]>` Displays the element or attribute path and value.  Roughly
+`<[path]...>` Displays the element or attribute path and value.  Roughly
 follows the XPath syntax as: `[/]element1[/element2][/@attr][=value]`.
 
 |=======================================================================
@@ -3563,7 +3563,7 @@ are saved to `/opt/zimbra/zmstat/`.
 
 You must enable zmstat to collect the performance charts data:
 
-. Enter `zmprov ms {hostname} zimbraServerEnable : stats`.
+. Enter `zmprov ms {hostname} zimbraServerEnable stats`.
 . Restart the server, Enter:
 +
 [source,bash]
@@ -3687,7 +3687,7 @@ unresponsive.  The default value is 30 seconds.
 Use `zmtrainsa` to train the anti-spam filter.  This command is run
 automatically every night to train the SpamAssasin filter from messages
 users mark as "junk" / "not junk" from their mailbox.  See
-<<spamassassin_sa_update_tool,SpamAssassin’s sa-update tool>>, which is
+<<spamassassin_sa_update_tool,SpamAssassin's sa-update tool>>, which is
 included with SpamAssassin.  This tool updates SpamAssassin rules from the
 SA organization.  The tool is installed into `/opt/zimbra/common/bin`.
 
@@ -3699,7 +3699,7 @@ folder is Junk.  For ham, the default folder is Inbox.
 ==== Syntax
 [source,bash]
 ----
-zmtrainsa <user> spam|ham [folder]
+zmtrainsa <user> <spam|ham> [folder]
 ----
 
 === zmtzupdate
@@ -3817,12 +3817,12 @@ Turns off the current secondary message volume.
 
 Use `zmzimletctl` to manage Zimlets and to list all zimlets on the server.
 Additional information is provided in <<zimlets,Zimlets>>.  Most Zimlet
-deployment can be completed from the zimbra Administration Console.
+deployment can be completed from the Zimbra Administration Console.
 
 ==== Syntax
 [source,bash]
 ----
-zmzimletctl {-l} {command} <zimlet.zip|config.xml|zimlet>
+zmzimletctl [-l] {command} [<zimlet.zip>|<config.xml>|<zimlet>]
 ----
 
 ==== Description
@@ -3837,7 +3837,7 @@ zimlet files on the Server, grants, access to the members of the default
 COS, and turns on the Zimlet.
 
 |`undeploy` | |
-`<zimlet>` Uninstall a zimlet from the zimbra server.
+`<zimlet>` Uninstall a zimlet from the Zimbra server.
 
 |`install` | |
 `<zimlet.zip>` Installs the Zimlet files on the host.
