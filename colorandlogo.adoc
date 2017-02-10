@@ -118,7 +118,7 @@ theme categories:
 
 Admin Console: ::
 *Home > Configure > Global Settings > Themes* or +
-*Home > Configure > Domains > _domain_ > Themes*
+*Home > Configure > Domains -> _domain_ -> Themes*
 
 1.  Click on the field alongside the theme category to be modified, then
 use the popup color selector to define the color for your selection.
@@ -156,9 +156,9 @@ changed.
 Use the *Customize the logo of the themes* container to a logo to
 accompany the theme:
 
-Admin Console ::
+Admin Console: ::
 *Home > Configure > Global Settings > Themes* or +
-*Home > Configure > Domains > _domain_ > Themes*
+*Home > Configure > Domains -> _domain_ -> Themes*
 
 .Logo Settings
 
@@ -193,7 +193,7 @@ global config setting or as a domain settings.  Color values are
 entered as a six-digit hexadecimal codes.
 
 .Color Attributes
-[cols=",",options="header",]
+[cols="m,",options="header",]
 |====================================================================
 |Attribute |Description
 
@@ -218,13 +218,13 @@ Before you begin, identify the six-digit hexadecimal base color values
 for the various elements you are changing. You will be using these in
 your command entries.
 
-*CLI:* Global Setting:
+.Global Settings
 [source,bash]
 ----
 zmprov modifyConfig <attribute-name> [“#HEX_6digit_colorcode”]
 ----
 
-*CLI:* Domain Setting:
+.Domain Settings
 [source,bash]
 ----
 zmprov modifyDomain <domain> <attribute-name> [“#HEX_6digit_colorcode”]
@@ -240,11 +240,17 @@ base colors:
 * Selection color = yellow, #FFFF00
 
 1. Specify the skin colors:
-*CLI:* Log in as a Zimbra user and use parameters to modify the domain:
+Log in as the `zimbra` user and use `zmprov` to modify the domain:
 +
-  zmprov modifyDomain domainexample.com zimbraSkinBackgroundColor "#FF7F50" zimbraSkinSecondaryColor "#ADEAEA" zimbraSkinSelectionColor "#FFFF00"
+[source,bash]
+----
+zmprov modifyDomain example.com \
+ zimbraSkinBackgroundColor "#FF7F50" \
+ zimbraSkinSecondaryColor "#ADEAEA" \
+ zimbraSkinSelectionColor "#FFFF00"
+----
 +
-The quote marks, "", are required so the use of the # sign does not
+The quote marks, `""`, are required so the use of the `#` sign does not
 comment out the text that follows.
 +
 2. Use the zmmailboxdctl command to apply the changes by restarting
@@ -261,7 +267,7 @@ You add the company logo information and URL by modifying these the
 following attributes for logos:
 
 .Logo Settings
-[cols=",",options="header",]
+[cols="m,",options="header",]
 |=======================================================================
 |Attribute |Description
 
@@ -286,7 +292,7 @@ in a subdirectory of `/opt/zimbra/jetty/webapps/zimbra`.
 If the logos are hosted on another machine, enter the full URL when
 identifying the logo.
 
-*CLI:* Use steps in this section to update the logo(s) displayed over a
+Use steps in this section to update the logo(s) displayed over a
 domain:
 
 1.  Change the URL link:
@@ -314,8 +320,7 @@ your logo image file(s) for replacement of the default Zimbra images in
 the user interfaces.
 
 [NOTE]
-_Not currently supported:_ Logo modification for the Zimbra
-Web Client.
+_Not currently supported:_ Logo modification for the Zimbra Web Client.
 
 You can globally replace the {product-name} logo with your
 company's logo by replacing the image files in specific paths, as
@@ -341,8 +346,8 @@ The image displays on white background.
 |Size Requirement: |300 x 65 |600 x 130
 
 |File location: |
-/skins/_base/logos/TouchLonginBanner.png |
-/skins/_base/logos/TouchLonginBanner@2x.png
+`/skins/_base/logos/TouchLonginBanner.png` |
+`/skins/_base/logos/TouchLonginBanner@2x.png`
 
 |=======================================================================
 
@@ -355,8 +360,8 @@ The image displays on white background.
 |Size Requirement: |200 x 45 |400 x 90
 
 |File location: |
-/skins/_base/logos/TouchWatermarkBanner.png |
-/skins/_base/logos/TouchWatermarkBanner@2x.png
+`/skins/_base/logos/TouchWatermarkBanner.png` |
+`/skins/_base/logos/TouchWatermarkBanner@2x.png`
 
 |=======================================================================
 
@@ -369,13 +374,13 @@ The image displays on white background.
 |Size Requirement: |Mobile phone: 57 x 57 |Mobile phone: 114 x 114
 
 |File Location: |
-/img/logo/Icon.png |
-/img/logo/Icon@2x.png
+`/img/logo/Icon.png` |
+`/img/logo/Icon@2x.png`
 
 |Size Requirement: |Tablet: 72 x 72 |Tablet: 144 x 144
 
 |File Location: |
-/img/logo/Icon~ipad.png |
-/img/logo/Icon~iPad@2x.png
+`/img/logo/Icon~ipad.png` |
+`/img/logo/Icon~\iPad@2x.png`
 
 |=======================================================================

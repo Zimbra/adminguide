@@ -26,68 +26,60 @@ complete message.
 
 === Setting Up Legal Intercept
 
-.CLI
-****
 Specify the intercept address where the intercepted messages are sent.
 
 * If enabling intercept by COS:
 +
 [source,bash]
 ----
-zmprov mc <cosname> zimbraInterceptAddress <account@intercept_example.gov>
+zmprov mc <cosname> zimbraInterceptAddress <account@intercept.example.com>
 ----
 
 * If enabling intercept for an account:
 +
 [source,bash]
 ----
-zmprov ma <accountname@example.com> zimbraInterceptAddress <account@intercept_example.gov>
+zmprov ma <accountname@example.com> zimbraInterceptAddress <account@intercept.example.com>
 ----
 
 If you are going to use the default intercept message template and From
 address (postmaster@<youraddress.com>), legal intercept is set up.
-****
 
 === Setting Up Legal Intercept to Forward Message Header
 
-.CLI
-****
 To forward the header information, not the complete message for an account:
 [source,bash]
 ----
-zmprov mc <accountname@example.com> zimbraInterceptSendHeadersOnly TRUE
+zmprov ma <accountname@example.com> zimbraInterceptSendHeadersOnly TRUE
 ----
-****
 
 === Modifying the Intercept Cover Email Message
 
 An email message is automatically created to forward copies of the
 intercepted messages as attachments. The default message includes:
 
-* *From* address is Postmaster@<address.com>
+* *From* address is "`postmaster@<example.com>`"
 
-* *Subject* line "`Intercept message for <account@address.com
+* *Subject* line "`Intercept message for <account@example.com>
 <interceptedmessage subject>`"
 
-* *Message* "`Intercept message for <account@address.com>.Operation=<type
-of message>, folder=<foldername>, folder ID=<#>`".
+* *Message* "`Intercept message for <account@example.com>. +
+Operation=<type of message>, folder=<foldername>, folder ID=<#>`".
 
 The cover email message can be modified. Use the following parameters to
 modify the email message.
 
-[cols=",",options=""]
+[cols="s,",options=""]
 |=======================================================================
-|*ACCOUNT_DOMAIN*  |Domain of the account being intercepted.
-|*ACCOUNT_ADDRESS* |Address being intercepted
-|*MESSAGE_SUBJECT* |Subject of the message being intercepted.
-|*OPERATION*       |Operation that the user is performing, "`add message`", "`send message`", or "`save draft`".
-|*FOLDER_NAME*     |Name of the folder to which the message was saved.
-|*FOLDER_ID*       |ID of the folder to which the message was saved.
-|*NEWLINE*         |Used for formatting multi-line message bodies.
+|ACCOUNT_DOMAIN  |Domain of the account being intercepted.
+|ACCOUNT_ADDRESS |Address being intercepted
+|MESSAGE_SUBJECT |Subject of the message being intercepted.
+|OPERATION       |Operation that the user is performing, "`add message`", "`send message`", or "`save draft`".
+|FOLDER_NAME     |Name of the folder to which the message was saved.
+|FOLDER_ID       |ID of the folder to which the message was saved.
+|NEWLINE         |Used for formatting multi-line message bodies.
 |=======================================================================
 
-.CLI
-****
 Use steps in this section to change the from name, the subject line, or
 text in the message body:
 
@@ -95,30 +87,31 @@ text in the message body:
 +
 [source,bash]
 ----
-zmprov mc <accountname@example.com> zimbraInterceptFrom <newname@example.com>
+zmprov ma <accountname@example.com> zimbraInterceptFrom '<newname@example.com>'
 ----
 
 * To change the text of the *Subject* line:
 +
 [source,bash]
 ----
-zmprov mc <accountname@example.com> zimbraInterceptSubject <Intercepted message subject text> parameter <text> parameter
+zmprov ma <accountname@example.com> zimbraInterceptSubject \
+ '<Intercepted message subject text> parameter <text> parameter'
 ----
 
-* To change the text in the message body:
+* To change the text in the *message body*:
 +
 [source,bash]
 ----
-zmprov mc <accountname@example.com> zimbraInterceptBody <Intercepted message text> parameter <text> parameter
+zmprov ma <accountname@example.com> zimbraInterceptBody \
+ '<Intercepted message text> parameter <text> parameter'
 ----
 
 [NOTE]
-To modify by account, type `zmprov ma`.
-****
+To modify by COS, type `zmprov mc {cosname} ...`.
 
 == Creating Mailbox Snapshots for Legal Discovery
 
-You can create a query for the user’s mailbox using the REST URL format to
+You can create a query for the user's mailbox using the REST URL format to
 search for specific types of email messages and attachments and have these
 messages zipped and saved to your computer. This zip file can be forwarded
 to a requesting law enforcement agency.
@@ -146,7 +139,7 @@ account called user1.
 +
 You can use any search operators that are used for searching in
 {product-abbrev}. For example, you can search by folder (in:folder_name),
-by sender’s name (from:<someone>), and you can use multiple search
+by sender's name (from:<someone>), and you can use multiple search
 terms. See the Search Tips wiki page for keyword examples,
 https://wiki.zimbra.com/wiki/Search_Tips.
 

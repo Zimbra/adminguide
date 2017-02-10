@@ -11,13 +11,13 @@ configuration to ensure the best results.
 
 The Zimbra MTA server includes the following programs:
 
-[cols="25,75",options="header",]
+[cols="1,3",options="header",]
 |=======================================================================
 |*MTA Server Programs* |*Purpose/Description*
 |Postfix MTA |
 Mail routing, mail relay, and attachment blocking
 
-|Clam AntiVirus |
+|Clam Anti-Virus |
 Scanning email messages and attachments in email messages for viruses
 
 |Spam Assassin |
@@ -81,13 +81,13 @@ filtering might be duplicated between an edge MTA and the Zimbra MTA.
 
 === Postfix Configuration Files
 
-Zimbra modified Postfix files—main.cf and master.cf—specifically to work
+Zimbra modified Postfix files -- main.cf and master.cf -- specifically to work
 with {product-abbrev}:
 
-* *main.cf.* Modified to include the LDAP tables. The `zmconfigd` in
+* *main.cf* -- Modified to include the LDAP tables. The `zmconfigd` in
 the Zimbra MTA pulls data from the Zimbra LDAP and modifies the Postfix
 configuration files.
-* *master.cf.* Modified to use Amavisd-New.
+* *master.cf* -- Modified to use Amavisd-New.
 
 [IMPORTANT]
 Changes made to postfix configuration files will be overwritten with every
@@ -143,22 +143,18 @@ location of the Postfix server in the Zimbra MTA package.
 To use the Administration Console to configure Relay MTA for external
 delivery:
 
-.Admin Console
-****
-*Home> Global Settings> MTA* page, *Network* container.
+Admin Console: ::
+*Home > Configure > Global Settings > MTA -> Network*
 
 [IMPORTANT]
-To prevent mail loops, use caution when setting the
-relay host.
+To prevent mail loops, use caution when setting the relay host.
 
 image::images/sending_non_local_mail_to_different_server.png[MTA Settings]
-
-****
 
 == Anti-Virus and Anti-Spam Protection
 
 The Amavisd-New utility is the interface between the Zimbra MTA and Clam
-AntiVirus (ClamAV) and SpamAssassin scanners.
+Anti-Virus (ClamAV) and SpamAssassin scanners.
 
 === Anti-Virus Protection
 
@@ -172,13 +168,10 @@ updates from ClamAV.
 
 You can change anti-virus settings at the Administration Console.
 
-.Admin Console
-****
-*Home> Configure> Global Settings> AS/AV* page, *Antivirus Settings* container.
+Admin Console: ::
+*Home > Configure > Global Settings > AS/AV -> Anti-virus Settings*
 
 image::images/anti_virus_protection.png[Anti-Virus Protection]
-
-****
 
 [NOTE]
 Updates are obtained via HTTP from the ClamAV website.
@@ -191,8 +184,6 @@ an email, it is scanned using ClamAV prior to sending the message. If
 ClamAV detects a virus, it will block attaching the file to the message.
 By default, scanning is configured for a single node installation.
 
-.CLI
-****
 To enable scanning, using a single node:
 
 [source, bash]
@@ -208,11 +199,10 @@ To enable scanning in a multi-node environment:
 +
 [source, bash]
 ----
-zmprov ms <mta server> zimbraClamAVBindAddress <mta server>
-zmprov mcfzimbraAttachmentsScanURL clam://<mta server>:3310/
+zmprov ms <mta_server> zimbraClamAVBindAddress <mta_server>
+zmprov mcf zimbraAttachmentsScanURL clam://<mta_server>:3310/
 zmprov mcf zimbraAttachmentsScanEnabled TRUE
 ----
-****
 
 === Anti-Spam Protection
 
@@ -222,19 +212,19 @@ database. You can also use the Postscreen function to provide additional
 protection against mail server overload. Both strategies are described
 in the following topics:
 
-* <<spam_assassin_methods, Spam Assassin Methods for Avoiding Spam>>
-* <<postscreen_methods, Postscreen Methods for Avoiding Spam>>
+* <<spam_assassin_methods,Spam Assassin Methods for Avoiding Spam>>
+* <<postscreen_methods,Postscreen Methods for Avoiding Spam>>
 
 [[spam_assassin_methods]]
 ==== Spam Assassin Methods for Avoiding Spam
 
 Usage guidelines are provided in the following topics:
 
-* <<spam_assassin_score, Managing the Spam Assassin Score>>
-* <<training_spam_filter, Training the Spam Filter>>
-* <<config_final_destination_spam, Configuring Final Destination for Spam>>
-* <<setting_up_trusted_netorks, Setting Up Trusted Networks>>
-* <<enabling_milter_server, Enabling a Milter Server>>
+* <<spam_assassin_score,Managing the Spam Assassin Score>>
+* <<training_spam_filter,Training the Spam Filter>>
+* <<config_final_destination_spam,Configuring Final Destination for Spam>>
+* <<setting_up_trusted_netorks,Setting Up Trusted Networks>>
+* <<enabling_milter_server,Enabling a Milter Server>>
 
 [NOTE]
 For information about how to customize SpamAssassin, see
@@ -245,35 +235,29 @@ https:// wiki.zimbra.com/wiki/Anti-spam_strategies.
 aswell as a Bayes database to score messages with a numerical range.
 Zimbra uses a percentage value to determine "`spaminess`" based on a
 SpamAssassin score of 20 as 100%. Any message tagged between 33%-75% is
-considered spam and delivered to the user’s junk folder. Messages tagged
+considered spam and delivered to the user's junk folder. Messages tagged
 above 75% are always considered spam and discarded.
 
 You can change the spam percentage settings, and the subject prefix at
 the Administration Console.
 
-.Admin Console
-****
-*Admin Console: Home> Configure> Global Settings> AS/AV* page, *Spam
-checking Settings* container.
+Admin Console: ::
+*Home > Configure > Global Settings > AS/AV -> Spam checking Settings*
 
 image::images/spam_assassin.png[Spam Assassin Settings]
 
 By default, Zimbra uses the Berkeley DB database for spam training. You
 can also use a MariaDB database.
-****
 
-.CLI
-****
 To use the MariaDB method on the MTA servers:
 [source, bash]
 ----
 zmlocalconfig -e antispam_mariadb_enabled=TRUE
 ----
 When this is enabled, Berkeley DB database is not enabled.
-****
 
 [[training_spam_filter]]
-*Training the Spam Filter:* The effectiveness of the anti-spam filter is
+*Training the Spam Filter* -- The effectiveness of the anti-spam filter is
 dependenton user input to differentiate spam or ham. The SpamAssassin
 filter learns from messages that users specifically mark as spam by
 sending them to their junk folder or not spam by removing them from
@@ -293,7 +277,6 @@ enable spam/ham training on another MTA, as one host should have this
 enabled to run `zmtrainsa --cleanup`.
 
 To set this on a new MTA server:
-
 [source, bash]
 ----
 zmlocalconfig -e zmtrainsa_cleanup_host=TRUE
@@ -310,13 +293,13 @@ get accurate scores. To determine whether to mark messages as spam at least
 200 known spams and 200 known hams must be identified.
 
 [[spamassassin_sa_update_tool]]
-SpamAssassin’s sa-update tool is included with SpamAssassin. This tool
+SpamAssassin's sa-update tool is included with SpamAssassin. This tool
 updates SpamAssassin rules from the SA organization. The tool is
 installed into `/opt/zimbra/common/bin`.
 
 [[config_final_destination_spam]]
-*Configuring Final Destination for Spam:* You can configure Amavis
-behavior tohandle a spam item’s final destination by using the following
+*Configuring Final Destination for Spam* -- You can configure Amavis
+behavior tohandle a spam item's final destination by using the following
 attribute:
 
 `zimbraAmavisFinalSpamDestiny`
@@ -324,8 +307,6 @@ attribute:
 The default is `D_DISCARD` (which will not deliver the email to the
 addressee).
 
-.CLI
-****
 Setting final spam destiny attributes:
 [source, bash]
 ----
@@ -333,30 +314,29 @@ zmprov mcf "zimbraAmavisFinalSpamDestiny" D_PASS
 zmprov ms serverhostname.com D_PASS
 ----
 
-Configurable attribute values are:
+.Configurable attribute values
+[cols="1m,3a",options="header",]
+|====
+|Value | Description
 
-`D_PASS`
-
+|D_PASS |
 Deliver the email to the recipient. The email is likely to be placed in
-the recipient’s junk folder (although some sites disable junk).
+the recipient's junk folder (although some sites disable junk).
 
-`D_BOUNCE`
-
+|D_BOUNCE |
 The email is bounced back to the sender. Because this setting can create
-backscatter—as the “sender” is not the person who actually sent the
-email—it is not advised.
+backscatter -- as the "sender" is not the person who actually sent the
+email -- it is not advised.
 
-`D_REJECT`
-
+|D_REJECT|
 Reject the email. This setting reduces the chance of backscatter:
 
 * If the sender is valid, the MTA will notify this person about the rejection.
 * If the sender is not valid, the associated MTA will discard the email (i.e. email that was sent by a spammer spoofing someone else).
 
-`D_DISCARD`
-
+|D_DISCARD |
 The email is silently discarded (not delivered).
-****
+|====
 
 [[setting_up_trusted_netorks]]
 *Setting Up Trusted Networks:* The {product-abbrev} configuration allows
@@ -368,31 +348,28 @@ setting. The server setting overrides the global setting.
 To use the Administration Console to set up MTA trusted networks as a
 global setting:
 
-.Admin Console
-****
-*Home> Configure> Global Settings> MTA* page, *Network* container.
+Admin Console: ::
+*Home > Configure > Global Settings > MTA -> Network*
 
 image::images/mta_network.png[MTA Trusted Networks]
 
 When using the Administration Console to set up MTA trusted networks on
 a per server basis, first ensure that MTA trusted networks have been set
 up as global settings.
-****
 
-.Admin Console
-****
-*Home> Configure> Servers>* <Edit> *MTA* page, *Network* container.
+Admin Console: ::
+*Home > Configure > Servers -> _server_ -> MTA -> Network*
 
 image::images/mta_network_2.png[MTA Trusted Networks]
 
-Enter the network addresses separated by commas and/or a space. Continue
+Enter the network addresses separated by _commas_ and/or a _space_. Continue
 long lines by starting the next line with space, similar to the
 following examples:
 
-* 127.0.0.0/8, 168.100.189.0/24
-* No commas: 127.0.0.0/8 168.100.189.0/24 10.0.0.0/8 [::1]/128 [fe80::%eth0]/64
-
-****
+----
+127.0.0.0/8, 168.100.189.0/24
+127.0.0.0/8 168.100.189.0/24 10.0.0.0/8 [::1]/128 [fe80::%eth0]/64
+----
 
 [[enabling_milter_server]]
 *Enabling a Milter Server:* Milter server can be enabled to enforce
@@ -407,28 +384,21 @@ Only enable a Milter Server on a server where an MTA is running.
 For global configuration, enable the milter server from the
 Administration Console:
 
-.Admin Console
-****
-*Home> Configure> Global Settings> MTA* page, *Milter Server* container.
+Admin Console: ::
+*Home > Configure > Global Settings > MTA -> Milter Server*
 
 image::images/mta_milter.png[MTA Milter Server]
 
 Use the Administration Console to enable a specific milter server, and
 to set bind addressing for individual servers.
-****
 
-.Admin Console
-****
-*Home> Configure> Servers>* <Edit> *MTA* page, *Milter Server* container.
+Admin Console: ::
+*Home > Configure > Servers -> _server_ -> MTA -> Milter Server*
 
 image::images/mta_milter_2.png[MTA Milter Server]
-****
 
 [[postscreen_methods]]
 ==== Postscreen Methods for Avoiding Spam
-
-[[about_postscreen]]
-*About Postscreen:*
 
 Zimbra Postscreen is the 8.7 enhancement to the {product-name}
 anti-spam strategy, to provide additional protection against mail server
@@ -455,11 +425,12 @@ clients that have passed a number of tests. When an SMTP client IP address
 is whitelisted, Postscreen immediately passes the connection to a Postfix
 SMTP server process. This minimizes the overhead for legitimate mail.
 
-In a typical scenario that uses Postscreen service, it is reasonable to
-expect potentially malicious email entities—such as bots and zombies—to be
-mixed in with friendly candidates in email loads. This concept is
-illustrated in the following diagram, in which undesirable entities are
-depicted in red; good email candidates are green.
+In a typical scenario that uses Postscreen service, it is reasonable
+to expect potentially malicious email entities -- such as bots and
+zombies -- to be mixed in with friendly candidates in email
+loads. This concept is illustrated in the following diagram, in which
+undesirable entities are depicted in red; good email candidates are
+green.
 
 image::images/postscreen.png[Postscreen]
 
@@ -471,10 +442,8 @@ Postscreen security, then allowed to talk directly with the SMTP daemon,
 which scans the Email (as usual) with the AS/AV. By default, all bots or
 zombies are rejected.
 
-.CLI
-****
 Use Zimbra CLI attributes to set parameters for Postscreen operations. For
-any <<postscreen_attributes, Postscreen Attributes>> that provide the
+any <<postscreen_attributes,Postscreen Attributes>> that provide the
 ignore, enforce, or drop instruction, use guidelines as follows:
 
 * _ignore_ -- Ignore this result. Allow other tests to complete. Repeat this
@@ -486,18 +455,17 @@ mailwith a 550 SMTP reply, and log the hello/sender/recipient
 information. Repeat this test with subsequent client connections.
 
 * _drop_ -- Drop the connection immediately with a 521 SMTP reply.
-Repeatthis test with subsequent client connections.
-****
+Repeat this test with subsequent client connections.
 
 [[postscreen_attribtutes]]
 *Postscreen Attributes:*
 
 Go to the `zmprov mcf` prompt (release 8.7+) to use Postscreen commands.
-You can see example usages of these attributes in <<enabling_postscreen,
-Enabling Postscreen>>.
+You can see example usages of these attributes in
+<<enabling_postscreen,Enabling Postscreen>>.
 
-`zimbraMtaPostscreenAccessList`
-
+* `zimbraMtaPostscreenAccessList` -- Default = permit_mynetworks
++
 Postconf postscreen_access_list setting, which is the permanent white/
 blacklist for remote SMTP client IP addresses. Postscreen(8) searches this
 list immediately after a remote SMTP client connects. Specify a comma- or
@@ -505,49 +473,40 @@ whitespace -separated list of commands (in upper or lower case) or lookup
 tables. The search stops upon the first command that fires for the client
 IP address.
 
-Default = permit_mynetworks
-
-`zimbraMtaPostscreenBareNewlineAction`
-
+* `zimbraMtaPostscreenBareNewlineAction` -- Default = ignore
++
 The action that postscreen(8) is to take when a remote SMTP client sends a
-bare newline character, that is, a newline not preceded by carriage return—
+bare newline character, that is, a newline not preceded by carriage return --
 as either ignore, enforce, or drop.
 
-Default = ignore
-
-`zimbraMtaPostscreenBareNewlineEnable`
-
+* `zimbraMtaPostscreenBareNewlineEnable` -- Default = no
++
 Enable (yes) or disable (no) "`bare newline`" SMTP protocol tests in the
 postscreen(8) server. These tests are expensive: a remote SMTP client must
 disconnect after it passes the test, before it can talk to a real Postfix
 SMTP server.
 
-Default = no
-
-`zimbraMtaPostscreenBareNewlineTTL`
-
+* `zimbraMtaPostscreenBareNewlineTTL` -- Default = 30d
++
 The amount of time allowable for postscreen(8) to use the result of a
 successful "`bare newline`" SMTP protocol test. During this time, the client
 IP address is excluded from this test. The default setting is lengthy
 because a remote SMTP client must disconnect after it passes the test,
 before it can talk to a real Postfix SMTP server.
-
++
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
 (minutes), h (hours), d (days), w (weeks).
 
-Default = 30d
-
-`zimbraMtaPostscreenBlacklistAction`
-
+* `zimbraMtaPostscreenBlacklistAction` -- Default = ignore
++
 The action that postscreen(8) is to take when a remote SMTP client is
 permanently blacklisted with the postscreen_access_list parameter, as
 either ignore, enforce, or drop.
 
-Default = ignore
-
-`zimbraMtaPostscreenCacheCleanupInterval`
-
+* `zimbraMtaPostscreenCacheCleanupInterval` -- Default = 12h
++
+--
 The amount of time allowable between postscreen(8) cache cleanup runs.
 Cache cleanup increases the load on the cache database and should therefore
 not be run frequently. This feature requires that the cache database
@@ -560,39 +519,35 @@ entries that were retained and dropped. A cleanup run is logged as
 stop`, or no requests for `$max_idle` seconds.
 
 Time units: s (seconds), m (minutes), h (hours), d (days), w (weeks).
-Default = 12h
+--
 
-`zimbraMtaPostscreenCacheRetentionTime`
-
+* `zimbraMtaPostscreenCacheRetentionTime` -- Default = 7d
++
 The amount of time that postscreen(8) is allowed to cache an expired
 temporary whitelist entry before it is removed. This prevents clients from
 being logged as "`NEW`" just because their cache entry expired an hour
 ago. It also prevents the cache from filling up with clients that passed
 some deep protocol test once and never came back.
-
++
 Time units: s (seconds), m (minutes), h (hours), d (days), w (weeks).
-Default = 7d
 
-`zimbraMtaPostscreenCommandCountLimit`
-
+* `zimbraMtaPostscreenCommandCountLimit` -- Default = 20
++
 Value to set the limit on the total number of commands per SMTP session for
 postscreen(8)'s built-in SMTP protocol engine. This SMTP engine defers or
 rejects all attempts to deliver mail, therefore there is no need to enforce
 separate limits on the number of junk commands and error commands.
 
-Default = 20
-
-`zimbraMtaPostscreenDnsblAction`
-
+* `zimbraMtaPostscreenDnsblAction` -- Default = ignore
++
 The action that postscreen(8) is to take when a remote SMTP client's
 combined DNSBL score is equal to or greater than a threshold (as defined
 with the `postscreen_dnsbl_sites` and `postscreen_dnsbl_threshold`
 parameters), as either ignore, enforce, or drop.
 
-Default = ignore
-
-`zimbraMtaPostscreenDnsblSites`
-
+* `zimbraMtaPostscreenDnsblSites`
++
+--
 Optional list of DNS white/blacklist domains, filters and weight
 factors. When the list is non-empty, the dnsblog(8) daemon will query
 these domains with the IP addresses of remote SMTP clients, and
@@ -631,147 +586,125 @@ To use example.com as a high-confidence blocklist, and to block mail
 with example.net and example.org only when both agree:
 ----
 postscreen_dnsbl_threshold = 2
-
 postscreen_dnsbl_sites = example.com*2, example.net, example.org
 ----
+
 To filter only DNSBL replies containing 127.0.0.4:
 ----
 postscreen_dnsbl_sites = example.com=127.0.0.4
 ----
+--
 
-`zimbraMtaPostscreenDnsblThreshold`
-
+* `zimbraMtaPostscreenDnsblThreshold` -- Default = 1
++
 Value to define the inclusive lower bound for blocking a remote SMTP
 client, based on its combined DNSBL score as defined with the
 postscreen_dnsbl_sites parameter.
 
-Default = 1
-
-`zimbraMtaPostscreenDnsblTTL`
-
+* `zimbraMtaPostscreenDnsblTTL` -- Default = 1h
++
 The amount of time allowable for postscreen(8) to use the result from a
 successful DNS-based reputation test before a client IP address is required
 to pass that test again.
-
++
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
 (minutes), h (hours), d (days), w (weeks).
 
-Default = 1h
-
-`zimbraMtaPostscreenDnsblWhitelistThreshold`
-
+* `zimbraMtaPostscreenDnsblWhitelistThreshold` -- Default = 0
++
 Allow a remote SMTP client to skip "`before`" and "`after 220 greeting`"
 protocol tests, based on its combined DNSBL score as defined with the
 `postscreen_dnsbl_sites` parameter.
-
++
 Specify a negative value to enable this feature. When a client passes the
 postscreen_dnsbl_whitelist_threshold without having failed other tests, all
 pending or disabled tests are flagged as completed with a time-to-live
 value equal to `postscreen_dnsbl_ttl`. When a test was already completed, its
 time-to-live value is updated if it was less than `postscreen_dnsbl_ttl`.
 
-Default = 0
-
-`zimbraMtaPostscreenGreetAction`
-
+* `zimbraMtaPostscreenGreetAction` -- Default = ignore
++
 The action that postscreen(8) is to take when a remote SMTP client speaks
 before its turn within the time specified with the `postscreen_greet_wait`
 parameter, as either ignore, enforce, or drop.
 
-Default = ignore
-
-`zimbraMtaPostscreenGreetTTL`
-
+* `zimbraMtaPostscreenGreetTTL` -- Default = 1d
++
 The amount of time allowed for postscreen(8) to use the result from a
 successful PREGREET test. During this time, the client IP address is
 excluded from this test. The default is relatively short, because a good
 client can immediately talk to a real Postfix SMTP server.
-
++
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
 (minutes), h (hours), d (days), w (weeks).
 
-Default = 1d
-
-`zimbraMtaPostscreenNonSmtpCommandAction`
-
+* `zimbraMtaPostscreenNonSmtpCommandAction` -- Default = drop
++
 The action that postscreen(8) takes when a remote SMTP client sends
 non-SMTP commands as specified with the postscreen_forbidden_ commands
 parameter, as either ignore, enforce, or drop.
 
-Default = drop
-
-`zimbraMtaPostscreenNonSmtpCommandEnable`
-
+* `zimbraMtaPostscreenNonSmtpCommandEnable` -- Default = no
++
 Enable (yes) or disable (no) "non- SMTP command" tests in the postscreen(8)
 server. These tests are expensive: a client must disconnect after it passes
 the test, before it can talk to a real Postfix SMTP server.
 
-Default = no
-
-`zimbraMtaPostscreenNonSmtpCommandTTL`
-
+* `zimbraMtaPostscreenNonSmtpCommandTTL` -- Default = 30d
++
 The amount of time allowable for postscreen(8) to use the result from a
 successful "`non_smtp_command`" SMTP protocol test. During this time, the
 client IP address is excluded from this test. The default is long because a
 client must disconnect after it passes the test, before it can talk to a
 real Postfix SMTP server.
-
++
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
 (minutes), h (hours), d (days), w (weeks).
 
-Default = 30d
-
-`zimbraMtaPostscreenPipeliningAction`
-
+* `zimbraMtaPostscreenPipeliningAction` -- Default = enforce
++
 The action that postscreen(8) is to take when a remote SMTP client sends
 multiple commands instead of sending one command and waiting for the server
 to respond, as either ignore, enforce, or drop.
 
-Default = enforce
-
-`zimbraMtaPostscreenPipeliningEnable`
-
+* `zimbraMtaPostscreenPipeliningEnable` -- Default = no
++
 Enable (yes) or disable (no) "`pipelining`" SMTP protocol tests in the
 postscreen(8) server. These tests are expensive: a good client must
 disconnect after it passes the test, before it can talk to a real Postfix
 SMTP server.
 
-Default = no
-
-`zimbraMtaPostscreenPipeliningTTL`
-
+* `zimbraMtaPostscreenPipeliningTTL` -- Default = 30d
++
 Time allowable for postscreen(8) to use the result from a successful
 "`pipelining`" SMTP protocol test. During this time, the client IP address is
 excluded from this test. The default is lengthy because a good client must
 disconnect after it passes the test, before it can talk to a real Postfix
 SMTP server.
-
++
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
 (minutes), h (hours), d (days), w (weeks).
 
-Default = 30d
-
-`zimbraMtaPostscreenWatchdogTimeout`
-
+* `zimbraMtaPostscreenWatchdogTimeout` -- Default = 10s
++
 Time allowable for a postscreen(8) process to respond to a remote SMTP
 client command, or to perform a cache operation, before it is terminated by
 a built-in watchdog timer. This is a safety mechanism that prevents
 postscreen(8) from becoming non-responsive due to a bug in Postfix itself
 or in system software. To avoid false alarms and unnecessary cache
 corruption this limit cannot be set under 10s.
-
++
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
 (minutes), h (hours), d (days), w (weeks).
 
-Default = 10s
-
-`zimbraMtaPostscreenWhitelistInterfaces`
-
+* `zimbraMtaPostscreenWhitelistInterfaces`
++
+--
 A list of local postscreen(8) server IP addresses where a non-whitelisted
 remote SMTP client can obtain postscreen(8)'s temporary whitelist
 status. This status is required before the client can talk to a Postfix
@@ -813,23 +746,23 @@ Example:
 # Don't whitelist connections to the backup IP address.
 postscreen_whitelist_interfaces = !168.100.189.8, static:all
 ----
+--
 
-`zimbraMtaPostscreenDnsblMinTTL`
-
-The minimum amount of time that postscreen(8) is allowed—resulting from a
-successful DNS -based reputation test—before a client IP address is
+* `zimbraMtaPostscreenDnsblMinTTL` -- Default = 60s
++
+The minimum amount of time that postscreen(8) is allowed -- resulting from a
+successful DNS -based reputation test -- before a client IP address is
 required to pass that test again. If the DNS reply specifies a larger TTL
 value, that value will be used unless it would be larger than
 postscreen_dnsbl_max_ttl.
-
++
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
 (minutes), h (hours), d (days), w (weeks).
 
-Default = 60s
-
-`zimbraMtaPostscreenDnsblMaxTTL`
-
+* `zimbraMtaPostscreenDnsblMaxTTL` -- Default = postscreen dnsbl ttl
++
+--
 The maximum amount of time allowable for postscreen(8) to use the result
 from a successful DNS-based reputation test before a client IP address is
 required to pass that test again. If the DNS reply specifies a shorter TTL
@@ -840,8 +773,9 @@ Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
 (minutes), h (hours), d (days), w (weeks).
 
-Default = postscreen dnsbl ttl. Note that the default seeting is
-backwards-compatible with Postscreen versions earlier than 3.1.
+Note that the default setting is backwards-compatible with Postscreen
+versions earlier than 3.1.
+--
 
 [[enabling_postscreen]]
 *Enabling Postscreen:*
@@ -861,26 +795,26 @@ zmprov mcf zimbraMtaPostscreenCacheCleanupInterval 12h
 zmprov mcf zimbraMtaPostscreenCacheRetentionTime 7d
 zmprov mcf zimbraMtaPostscreenCommandCountLimit 20
 zmprov mcf zimbraMtaPostscreenDnsblAction enforce
-zmprov mcf zimbraMtaPostscreenDnsblSites
-'b.barracudacentral.org=127.0.0.2_7' zimbraMtaPostscreenDnsblSites
-'dnsbl.inps.de=127.0.0.2*7'
-zimbraMtaPostscreenDnsblSites*'zen.spamhaus.org=127.0.0.[10;11]*8'
-zimbraMtaPostscreenDnsblSites *'zen.spamhaus.org=127.0.0.[4..7]*6'
-zimbraMtaPostscreenDnsblSites *'zen.spamhaus.org=127.0.0.3*4'
-zimbraMtaPostscreenDnsblSites *'zen.spamhaus.org=127.0.0.2*3'
-zimbraMtaPostscreenDnsblSites *'list.dnswl.org=127.0.[0..255].0*-2'
-zimbraMtaPostscreenDnsblSites *'list.dnswl.org=127.0.[0..255].1*-3'
-zimbraMtaPostscreenDnsblSites *'list.dnswl.org=127.0.[0..255].2*-4'
-zimbraMtaPostscreenDnsblSites *'list.dnswl.org=127.0.[0..255].3*-5'
-zimbraMtaPostscreenDnsblSites *'bl.mailspike.net=127.0.0.2*5'
-zimbraMtaPostscreenDnsblSites *'bl.mailspike.net=127.0.0.[10;11;12]*4'
-zimbraMtaPostscreenDnsblSites *'wl.mailspike.net=127.0.0.[18;19;20]*-2'
-zimbraMtaPostscreenDnsblSites *'dnsbl.sorbs.net=127.0.0.10*8'
-zimbraMtaPostscreenDnsblSites *'dnsbl.sorbs.net=127.0.0.5*6'
-zimbraMtaPostscreenDnsblSites *'dnsbl.sorbs.net=127.0.0.7*3'
-zimbraMtaPostscreenDnsblSites *'dnsbl.sorbs.net=127.0.0.8*2'
-zimbraMtaPostscreenDnsblSites *'dnsbl.sorbs.net=127.0.0.6*2'
-zimbraMtaPostscreenDnsblSites **'dnsbl.sorbs.net=127.0.0.9*2'
+zmprov mcf \
+  zimbraMtaPostscreenDnsblSites 'b.barracudacentral.org=127.0.0.2_7' \
+  zimbraMtaPostscreenDnsblSites 'dnsbl.inps.de=127.0.0.2*7' \
+  zimbraMtaPostscreenDnsblSites 'zen.spamhaus.org=127.0.0.[10;11]*8' \
+  zimbraMtaPostscreenDnsblSites 'zen.spamhaus.org=127.0.0.[4..7]*6' \
+  zimbraMtaPostscreenDnsblSites 'zen.spamhaus.org=127.0.0.3*4' \
+  zimbraMtaPostscreenDnsblSites 'zen.spamhaus.org=127.0.0.2*3' \
+  zimbraMtaPostscreenDnsblSites 'list.dnswl.org=127.0.[0..255].0*-2' \
+  zimbraMtaPostscreenDnsblSites 'list.dnswl.org=127.0.[0..255].1*-3' \
+  zimbraMtaPostscreenDnsblSites 'list.dnswl.org=127.0.[0..255].2*-4' \
+  zimbraMtaPostscreenDnsblSites 'list.dnswl.org=127.0.[0..255].3*-5' \
+  zimbraMtaPostscreenDnsblSites 'bl.mailspike.net=127.0.0.2*5' \
+  zimbraMtaPostscreenDnsblSites 'bl.mailspike.net=127.0.0.[10;11;12]*4' \
+  zimbraMtaPostscreenDnsblSites 'wl.mailspike.net=127.0.0.[18;19;20]*-2' \
+  zimbraMtaPostscreenDnsblSites 'dnsbl.sorbs.net=127.0.0.10*8' \
+  zimbraMtaPostscreenDnsblSites 'dnsbl.sorbs.net=127.0.0.5*6' \
+  zimbraMtaPostscreenDnsblSites 'dnsbl.sorbs.net=127.0.0.7*3' \
+  zimbraMtaPostscreenDnsblSites 'dnsbl.sorbs.net=127.0.0.8*2' \
+  zimbraMtaPostscreenDnsblSites 'dnsbl.sorbs.net=127.0.0.6*2' \
+  zimbraMtaPostscreenDnsblSites 'dnsbl.sorbs.net=127.0.0.9*2'
 zmprov mcf zimbraMtaPostscreenDnsblTTL 5m
 zmprov mcf zimbraMtaPostscreenDnsblThreshold 8
 zmprov mcf zimbraMtaPostscreenDnsblTimeout 10s
@@ -912,23 +846,15 @@ The following real-world example demonstrates return of a 550 error from
 Postscreen during a test session:
 
 ----
-Mar 1 02:03:26 edge01 postfix/postscreen[23154]: DNSBL rank 28 for
-[112.90.37.251]:20438
+Mar 1 02:03:26 edge01 postfix/postscreen[23154]: DNSBL rank 28 for [112.90.37.251]:20438
 
-Mar 1 02:03:26 edge01 postfix/postscreen[23154]: CONNECT from
-[10.210.0.161]:58010 to [10.210.0.174]:25
+Mar 1 02:03:26 edge01 postfix/postscreen[23154]: CONNECT from [10.210.0.161]:58010 to [10.210.0.174]:25
 
-Mar 1 02:03:26 edge01 postfix/postscreen[23154]: WHITELISTED
-[10.210.0.161]:58010
+Mar 1 02:03:26 edge01 postfix/postscreen[23154]: WHITELISTED [10.210.0.161]:58010
 
-Mar 1 02:03:27 edge01 postfix/postscreen[23154]: NOQUEUE: reject: RCPT
-from [112.90.37.251]:20438: 550 5.7.1 Service unavailable; client
-[112.90.37.251] blocked using zen.spamhaus.org;
-from=<hfxdgdsggfvfg@gmail.com>, to=<support@zimbra.com>, proto=ESMTP,
-helo=<gmail.com>
+Mar 1 02:03:27 edge01 postfix/postscreen[23154]: NOQUEUE: reject: RCPT from [112.90.37.251]:20438: 550 5.7.1 Service unavailable; client [112.90.37.251] blocked using zen.spamhaus.org; from=<hfxdgdsggfvfg@gmail.com>, to=<support@zimbra.com>, proto=ESMTP, helo=<gmail.com>
 
-Mar 1 02:03:27 edge01 postfix/postscreen[23154]: DISCONNECT
-[112.90.37.251]:20438
+Mar 1 02:03:27 edge01 postfix/postscreen[23154]: DISCONNECT [112.90.37.251]:20438
 ----
 
 == Receiving and Sending Mail
@@ -980,5 +906,5 @@ attempts are made for messages in the hold queue.
 The *corrupt* queue stores damaged unreadable messages.
 
 You can monitor the mail queues for delivery problems from the
-Administration Console. See <<monitoring_zcs_servers,Monitoring
-{product-abbrev} Servers>>.
+Administration Console. See
+<<monitoring_zcs_servers,Monitoring {product-abbrev} Servers>>.

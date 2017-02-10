@@ -8,15 +8,15 @@ the mobile device and an account on the mailbox server.
 [NOTE]
 
 Zimbra also has the Touch Client available. For more information, go to
-www.zimbra.com for the latest revision of this guide and see the Zimbra Web
+https://www.zimbra.com for the latest revision of this guide and see the Zimbra Web
 Client User Guide.
 
 The ActiveSync protocol is used to configure and sync the Zimbra mailbox
-server with the native client that is used on a user’s device.
+server with the native client that is used on a user's device.
 
 Zimbra Mobile is compatible with iPhone, iPod Touch, Windows Mobile 5
 (WM5), and 6 (WM6) devices, and many other phones that support the
-ActiveSync™ protocol.
+ActiveSync protocol.
 
 == Mobile Device Security Policies
 
@@ -54,33 +54,24 @@ server. Older devices do not respond to security policies.
 You can manage mobile device policies from the Administration Console as a
 Class of Service or for individual accounts.
 
-.Admin Console
-****
-. To set mobile policies from a COS, go to the *Configure > Class of
-Service* and double-click the COS you want to configure.
+Admin Console: ::
+*Home > Configure > Class of Service -> _COS_ -> Mobile Access -> General* +
+*Home > Manage > Accounts -> _account_ -> Mobile Access -> General*
 
-. To enable mobile devices to sync to {product-abbrev}, check *Mobile Access >
-General > Enable Mobile Sync*.
+. To set mobile policies for an Account or COS, open the desired
+object and select *Mobile Access* in the left hand pane.
 
-. Check *Enable Mobile Policy* to set up mobile security policies that
-enforce security rules.
+. To enable mobile devices to sync to {product-abbrev}, check
+*General -> Enable Mobile Sync*.
 
-. If old devices that do not support device security policies can be used,
-check *Allow non-provisionable devices*.
+. To set up mobile security policies that enforce security rules, check
+*General -> Enable Mobile Policy*.
 
-.  If device does not acknowledge all policies that are downloaded, but you
-want to allow the device to download messages, check *Allow partial policy
-enforcement on devices*.
+. Configure other desired settings.
+See <<mobile_device_security_policies,Mobile Device Security Policies>>
+for a description of the settings you can configure.
 
-. The refresh interval for policy refresh on a device is 24 hours. You can
-change this.
-
-. Configure the appropriate policies in the other sections. See
-<<mobile_device_security_policies,Mobile Device Security Policies>> for a
-description of the settings you can configure.
-
-.  Click *Save*.
-****
+. Click *Save*.
 
 [[mobile_device_security_policies]]
 == Mobile Device Security Policies
@@ -88,19 +79,18 @@ description of the settings you can configure.
 The following attributes can be configured from the Administration Console
 to establish mobile policies.
 
-[cols=",",options="header",]
+[cols="1,2",options="header",]
 |=======================================================================
 |Setting |Description
-2+|*General Settings*
+2+^|*General*
 
-|*Enable Mobile Sync* |
+|Enable Mobile Sync |
 In order for mobile devices to sync to {product-name} Server, *Enable
 Mobile Sync* must be checked. Users have two-way, over the air
 synchronization of mail, contacts, and calendar data between mobile devices
 and the Zimbra server.
 
-|*Enable Mobile Policy* |
-
+|Enable Mobile Policy |
 Check this box to set up mobile security policies that enforce security
 rules on compliant mobile devices.  You can enforce general security
 policies including password rules and set up local wipe capability on
@@ -111,192 +101,191 @@ request to the server, mobile devices that are capable of enforcing
 security policies automatically set up the rules you implement and
 immediately enforces them.
 
-|*Allow non-provisionable devices* |
+|Allow non-provisionable devices |
 If this is enabled, old devices that do not support device security policy
 enforcement can still access the server.
 
-|*Allow partial policy enforcement on device* |
+|Allow partial policy enforcement on device |
 If a device does not acknowledges all policies that are downloaded, {product-abbrev}
 still allows the device to continue downloading messages.
 
-|*Refresh Interval (hours)* |
+|Refresh Interval (hours) |
 Specifies the amount of time in minutes before {product-abbrev} enforces the policy
 refresh on the device by sending "449 Retry after Provision" response to
-Sync request.
-
+Sync request. +
 Default is 24 hours.
 
-2+|*Password Settings*
+2+^|*Password Settings*
 
-|*Require password* |
+|Require password |
 User must create a password on the mobile device.
 
-|*Minimum password length* |
+|Minimum password length |
 Minimum number of characters for the password.  Default is 4. The maximum
 length is 16 characters.
 
-|*Require alphanumeric password* |
+|Require alphanumeric password |
 Requires that the password include both numeric and alpha characters.
 
-|*Minimum complex characters required* |
+|Minimum complex characters required |
 Minimum number of complex characters that must be in the password. This is
 any character that is not a letter. Default is 0 (none).
 
-|*Allow simple password* |
+|Allow simple password |
 Simple passwords can be created. A simple device password is a password
 that has a specific pattern, such as 2468, 1111. Not enabled by default.
 
-|*Enable password recovery* |
+|Enable password recovery |
 Device password is stored n the server and can be recovered. Enabled by
 default.
 
-|*Allow device encryption* |
+|Allow device encryption |
 If enabled, device encryption is enabled on the mobile phone. Enabled by
 default
 
-|*Require device encryption* |
+|Require device encryption |
 If enabled, encryption must be implement on the device to synchronize with
 the server. Not enabled by default.
 
-|*Password re-entry required after inactivity (min)* |
+|Password re-entry required after inactivity (min) |
 Length of time the device remains inactive before the password must be
 entered to reactivate the device.  Default is 15 minutes.
 
-|*Failed attempts allowed* |
+|Failed attempts allowed |
 Specifies the number of failed log in attempts to the device before the
 device automatically initiates a local wipe. The device does not need to
 contact the server for this to happen. Default is 4.
 
-|*Expiration (days)* |
+|Expiration (days) |
 Length of time in days that a password can be used.  After this number of
 days, a new password must be created. Default is 0, the password does not
 expire.
 
-|*Passwords stored to prevent reuse* |
+|Passwords stored to prevent reuse |
 Number of unique passwords that a user must create before an old password
 can be used. Default is 8.
 
-2+|*S/MIME Settings*
+2+^|*S/MIME Settings*
 
-|*Enable S/MIME public key encryption and signing* |
+|Enable S/MIME public key encryption and signing |
 In order to use S/MIME encryption on a mobile device this must be
 checked. The S/MIME feature must also be enabled in the COS Features page.
 
-|*Require device to send signed messages* |
+|Require device to send signed messages |
 Device must send signed S/MIME messages. Not enabled by default.
 
-|*Require S/MIME algorithm for signing* |
+|Require S/MIME algorithm for signing |
 
 Algorithm must be used when signing a message. Not enabled by default.
 
-|*Require device to send encrypted messages* |
+|Require device to send encrypted messages |
 Specifies whether S/MIME messages must be encrypted. Not enabled by
 default.
 
-|*Require S/MIME algorithm for encrypting* |
+|Require S/MIME algorithm for encrypting |
 A required algorithm must be used when signing a message. Not enabled by
 default.
 
-|*Algorithm negotiation* |
+|Algorithm negotiation |
 How a messaging application on the device can negotiate the encryption
 algorithm if a recipient's certificate does not support the specified
 encryption algorithm. Select from *Block Negotiation*; *Strong* *Algorithm
 Only*, or *Allow Any Algorithm*. Default is Allow Any Algorithm.
 
-|*Allow S/MIME software certificates* |
+|Allow S/MIME software certificates |
 Allow S/MIME software certificates. Default is to allow.
 
-2+|*Sync Settings*
+2+^|*Sync Settings*
 
-|*Past calendar items sync'd* |
+|Past calendar items sync'd |
 Maximum range of calendar days that can be synchronized to the device.
 Default is two weeks.
 
-|*Past email items sync'd* |
+|Past email items sync'd |
 Maximum number of days of email items to synchronize to the device. Default
 is 3 days.
 
-|*Limit plain text message size (KB)* |
+|Limit plain text message size (KB) |
 Maximum size at which email messages are truncated when synchronized to the
 device. Default is to not set a maximum size.
 
-|*Allow direct push while roaming* |
+|Allow direct push while roaming |
 Mobile device must synchronize manually while roaming. Default is not to.
 
-|*Allow HTML formatted messages* |
+|Allow HTML formatted messages |
 Enables HTML email on the device. If this is disabled, all email is
 converted to plain text before synchronization occurs. Default is to enable
 HTML formatting.
 
-|*Limit HTML message size (KB)* |
+|Limit HTML message size (KB) |
 Maximum size at which HTML-formatted email messages are synchronized to the
 devices. The value is specified in KB. Default is to not set a maximum
 size.
 
-2+|*Device Settings*
+2+^|*Device Settings*
 
-|*Allow removable storage* |
+|Allow removable storage |
 Mobile device can access information stored on a storage card. Default is
 TRUE.
 
-|*Allow camera* |
+|Allow camera |
 Specifies that the camera on the device can be used.  Default is TRUE.
 
-|*Allow Wi-Fi* |
+|Allow Wi-Fi |
 Specifies that wireless Internet access is allowed on the device.  Default
 is TRUE.
 
-|*Allow Infrared* |
+|Allow Infrared |
 Specifies that an infrared connection is allowed on the device. Default is
 TRUE.
 
-|*Allow sharing* |
+|Allow sharing |
 Specifies that the mobile device can be used as a modem to connect a
 computer to the Internet. Default is TRUE.
 
-|*Allow remote desktop* |
+|Allow remote desktop |
 Specifies that the mobile device can initiate a remote desktop
 connection. Default is TRUE.
 
-|*Allow desktop sync* |
+|Allow desktop sync |
 Specifies that the mobile device can synchronize with a desktop computer
 through a cable. Default is TRUE.
 
-|*Allow bluetooth* |
+|Allow bluetooth |
 By default Bluetooth capabilities are allowed on the device. Select from
 *Allow*, *Disable*, *Hands-Free Only*.
 
-2+|*Device Applications*
+2+^|*Device Applications*
 
-|*Allow browser* |
+|Allow browser |
 Microsoft® Pocket Internet Explorer is allowed on the mobile device by
 default. This does not affect third-party browsers.
 
-|*Allow consumer mail* |
+|Allow consumer mail |
 Users can configure a personal email account on the mobile device. This
 parameter does not control access to emails using third-party mobile device
 email programs.
 
-|*Allow POP or IMAP mail* |
+|Allow POP or IMAP mail |
 Users can configure a POP3 or IMAP4 email account on the device. This
 parameter doe not control access by third-party email programs.
 
-|*Allow text messaging* |
+|Allow text messaging |
 Allow users to use text messaging on the device.
 
-|*Allow unsigned applications* |
+|Allow unsigned applications |
 Allows unsigned applications to be used on the device.
 
-|*Allow unsigned install packages* |
+|Allow unsigned install packages |
 Allows unsigned installation packages on the device.
 
-2+|*Approved Application Lists*
+2+^|*Approved Application Lists*
 
-|*Approved Applications* |
+|Approved Applications |
 This setting stores a list of approved applications that can be run on the
 mobile device.
 
-|*Blocked Applications* |
+|Blocked Applications |
 This setting specifies a list of applications that cannot be run.
 
 |=======================================================================
@@ -370,37 +359,38 @@ Mobile sync is enabled either in the COS profiles for the account or on
 individual accounts. In most cases, no additional plug-ins are required.
 
 Users might need to configure the following on their in the mobile device
-to sync to their Zimbra account if they don’t have auto discover.
+to sync to their Zimbra account if they don't have auto discover.
 
-* *Server name (address)*. Enter the fully qualified host name of the
-user’s{product-name} mailbox server.
+* *Server name (address)* -- Enter the fully qualified host name of the
+user's{product-name} mailbox server.
 
-* *User name*. Enter the user’s primary {product-name} account name.
+* *User name* -- Enter the user's primary {product-name} account name.
 
-* *Domain*. Enter the user’s {product-name} domain name (DNS).
+* *Domain* -- Enter the user's {product-name} domain name (DNS).
 
-* *SSL certificate* from the server might have to be added to the device
-astrusted if SSL is used when the certification is self-signed.
+* *SSL certificate* -- the server might have to be added to the device
+as trusted if TLS is used when the certification is self-signed.
 
 Users can sync their {product-abbrev} account to their mobile device. They
 can send email, create appointments, and add contacts to their address
 book.
 
 For details about specific device setup, see the Mobile Device Setup pages
-on the Zimbra Wiki.
+on the https://wiki.zimbra.com[Zimbra Wiki].
 
 === Change Mobile Device Password Policy
 
 If a mobile device is locked by the {product-name} mobile password
 policy, the PIN requirement must be removed to resync the device.
 
-.Admin Console
-****
-Open the user account to be modified.
+Admin Console: ::
+*Home > Manage > Accounts -> _account_ -> Mobile Access*
 
-.  On the *Mobile Access* page, uncheck *Force pin on device*.
+. Open the user account to be modified.
 
-.  After the password policy has been disabled, the user must resync
+. On the *Mobile Access* page, uncheck *Force pin on device*.
+
+. After the password policy has been disabled, the user must resync
 the device:
 +
 * If the device is a WM6 device, the user syncs to the account. After the
@@ -411,8 +401,6 @@ device and *turn off the device PIN.*
 the account. After the sync, instruct the user to go to the
 *Settings > General* properties and *turn off Passcode Lock*.
 
-****
-
 [NOTE]
 If the iPhone/iPod Touch is prior to 3.0, there is an Apple software bug
 that prevents downloading new device policies to take effect. The user must
@@ -420,7 +408,7 @@ delete the {product-name} account from the iPhone/iPod Touch, turn
 the PIN off, and then re-setup sync with the {product-name}. Because
 the password requirement was turned off, a PIN is not asked for.
 
-== User’s Mobile Device Self-Care Features
+== User's Mobile Device Self-Care Features
 
 Users can directly manage the following device functions.
 

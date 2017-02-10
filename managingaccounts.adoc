@@ -3,17 +3,15 @@
 
 == Status of User Accounts
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Manage > Accounts*
 
 The status of an account determines whether a user can log in and
-receivemail.  The account status is displayed on the *Accounts Content*
+receivemail.  The account status is displayed on the *Accounts*
 pane of the Administration Console.
-****
-
 
 .Status - User Accounts
-[cols=",",options="header",]
+[cols="1,5",options="header",]
 |=======================================================================
 |Status |Description
 
@@ -54,35 +52,33 @@ The administrator can remove the locked out status at any time.
 
 == Deleting an Account
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Manage > Accounts*
 
 You can delete accounts from the Administration Console.  This removes
-theaccount from the server, deletes the messages in the message store, and
+the account from the server, deletes the messages in the message store, and
 changes the number of accounts used against your license.
-****
 
 [TIP]
 Before you delete an account, run a full backup of that account to save
-the account information.  See also the <<backup_and_restore,Backup and Restore>>.
+the account information.  See also <<backup_and_restore,Backup and Restore>>.
 
 == Viewing an Accounts Mailbox
 
 You can view a selected account’s mailbox content, including all folders,
 calendar entries, and tags from the Administration Console.
 
-.Admin Console
-****
-Select an account and from the gear icon, select *View Mail*.  The user’s
-ZWC account opens in a new browser window.
-****
+Admin Console: ::
+*Home > Manage > Accounts -> _account_*
 
+Select an _account_, from the *Gear* icon select *View Mail*.  The user's
+ZWC account opens in a new browser window.
 
 This feature can be used to assist users who are having trouble with
 their mail account as you and the account user can be logged on to the
 account at the same time.
 
-Any View Mail action to access an account is logged to the _audit.log_
+Any View Mail action to access an account is logged to the `audit.log`
 file.
 
 == Using an Email Alias
@@ -110,48 +106,48 @@ automatically manages adding and deleting members in the list.  For more
 information about dynamic distribution lists, see
 <<using_dynamic_distribution_lists,Using Dynamic Distribution Lists>>.
 
-You can see which distribution lists a user is a member of from the user’s
-account Member of page.  When a Zimbra user’s email address is added to a
-distribution list, the user’s account Member Of page is updated with the
+You can see which distribution lists a user is a member of from the user's
+account Member of page.  When a Zimbra user's email address is added to a
+distribution list, the user's account Member Of page is updated with the
 distribution list name.  When a distribution list is deleted, the
-distribution list name is automatically removed from the account’s Member
+distribution list name is automatically removed from the account's Member
 Of page.
 
 === Setting Subscription Policies for Distribution Lists
 
-Subscription policies can be set up to manage a distribution list’s
+Subscription policies can be set up to manage a distribution list's
 membership.  Owners of the list manage the subscription policy from the
 Properties page of a distribution list.
 
-[cols=",a",options="header",]
+[cols="1,3a",options="header",]
 |=======================================================================
 |Distribution Option |Description
 
 |New Subscription Requests |
 
-* *Automatically accept*. Membership is open to anyone who subscribes.
+* *Automatically accept* -- Membership is open to anyone who subscribes.
 
-* *Require list owner approval*.  To subscribe, users send an email to the
+* *Require list owner approval* --  To subscribe, users send an email to the
 owner of the distribution list and the owner replies to this email request.
 
-* *Automatically reject*. No one can be added to this distribution list.
+* *Automatically reject* -- No one can be added to this distribution list.
 
 |Unsubscription Requests |
 
-* *Automatically accept*.  Anyone can remove their name from the list.
+* *Automatically accept* --  Anyone can remove their name from the list.
 
-* *Require list owner approval*. To be removed from the distribution list,
+* *Require list owner approval* -- To be removed from the distribution list,
 users send an email to the owner.  The owner must accept the email request
 to remove the name.
 
-* *Automatically reject.* Users cannot remove themselves from the list.
+* *Automatically reject* -- Users cannot remove themselves from the list.
 
 |=======================================================================
 
 === Management Options for Owners of Distribution Lists
 
 You can add owners to distribution lists and they manage the list from
-their ZWC account’s Address Book, Distribution List folder.  Owners of a
+their ZWC account's Address Book, Distribution List folder.  Owners of a
 list can right click a distribution list and click the *Edit Group* link to
 edit a list.
 
@@ -168,13 +164,12 @@ owners can configure include:
 
 === Creating a Distribution List
 
-.Admin Console
-****
 Use steps in this section to create a distribution list:
 
+Admin Console: ::
 *Home > Manage > Distribution Lists*
 
-. At the *Gear* icon, click *New*.
+. From the *Gear* icon, click *New*.
 
 . On the *Members* page, add the distribution list name.  Do not use
 spaces.  The other fields are optional.
@@ -188,7 +183,7 @@ section, type a complete mail address.
 . Click *Next* to configure the *Properties* page.
 +
 .Distribution Properties Options
-[cols=",",options="header",]
+[cols="1,3a",options="header",]
 |=======================================================================
 |Distribution Properties Options |Description
 
@@ -218,7 +213,6 @@ Select from:
 * Require list owner approval
 * Automatically reject
 
-
 |Unsubscription Requests |
 Select from:
 
@@ -240,7 +234,6 @@ email addresses in the *Owners* page.
 
 . Click *Finish*.  The distribution list is enabled and the URL is
 created.
-****
 
 === Managing Access to Distribution Lists
 
@@ -258,12 +251,12 @@ grant.
 You can grant the right on individual distribution lists and configure
 specific users that are allowed to access the distribution list.
 
-You can restrict access to a distribution list from the CLI `zmprov grant
-rights` (`grr`) command.
+You can restrict access to a distribution list from the CLI
+`zmprov grantRight` (`grr`) command.
 
 [NOTE]
-For more information about how granting rights works, see Delegated
-Administration.
+For more information about how granting rights works, 
+see <<Delegated Administration>>.
 
 ==== Who Can View Members of a Distribution List
 
@@ -273,8 +266,6 @@ Users can click on this to expand the distribution list.  A list of the
 addresses in the distribution list is displayed.  Users can select
 individual addresses from the expanded list.
 
-.CLI
-****
 Restricting who can view addresses in a distribution list to
 individuals or to a domain:
 --
@@ -300,7 +291,6 @@ zmprov grr domain <domain_name> dom <example.com> viewDistList
 zmprov grr dl <dll_name@example.com> usr <user1@example.com>
 ----
 --
-****
 
 ==== Who Can Send to a Distribution List
 
@@ -312,10 +302,9 @@ stating that they are not authorized to send messages to the recipient
 distribution list.
 
 [NOTE]
-The *Milter Server* must be enabled from *Global Settings > MTA*.
+The *Milter Server* must be enabled from
+*Home > Configure > Global Settings > MTA*.
 
-.CLI
-****
 Restricting who can send messages to a distribution list to individuals or
 to a domain:
 
@@ -334,10 +323,7 @@ distribution lists.
 ----
 zmprov grr domain <domain_name> dom <example.com> sendToDistList
 ----
-****
 
-.CLI
-****
 Restricting access and to remove the restriction to individual distribution
 lists for different user types.
 
@@ -438,7 +424,6 @@ Revoke access
 ----
 zmprov rvr dl <dlname@example.com> gst <someone@foo.com> "" sendToDistList
 ----
-****
 
 ==== Enabling View of Distribution List Members for AD Accounts
 
@@ -446,10 +431,8 @@ To view Active Directory distribution list members in messages or in the
 address book, the GAL group handler for Active Directory must be configured
 in the {product-abbrev} GALsync account for each Active Directory.
 
-.CLI
-****
 Use steps in this section to update the GALsync account for each Active
-Directory.This configuration requires that you know the GALsync account
+Directory. This configuration requires that you know the GALsync account
 name and all data sources on that GALsync account.
 
 . Display the Zimbra ID of the GAL sync account:
@@ -463,7 +446,7 @@ To find the name:
 +
 [source,bash]
 ----
-zmprov ga {zimbraId-of-the-GAL-sync-account} | grep "# name"
+zmprov ga {zimbraId-of-the-GAL-sync-account} name
 ----
 
 . Display data sources for the GALsync account:
@@ -477,9 +460,9 @@ zmprov gds {gal-sync-account-name-for-the-domain}
 +
 [source,bash]
 ----
-zmprov mds {gal-sync-account-name-for-the-domain} {AD-data-source-name} zimbraGalLdapGroupHandlerClass com.zimbra.cs.gal.ADGalGroupHandler
+zmprov mds {gal-sync-account-name-for-the-domain} {AD-data-source-name} \
+ zimbraGalLdapGroupHandlerClass com.zimbra.cs.gal.ADGalGroupHandler
 ----
-****
 
 [[using_dynamic_distribution_lists]]
 == Using Dynamic Distribution Lists
@@ -488,7 +471,7 @@ Dynamic distribution lists automatically manage the membership.  Users are
 added and removed from the distribution list automatically.  When you
 create a dynamic distribution list, a member URL is specified.  This member
 URL is used to identify who should be members of the list.  You can view
-this URL from the Administration Console distribution list’s Properties
+this URL from the Administration Console distribution list's Properties
 page.
 
 You can create dynamic distribution lists from the Administration Console
@@ -511,11 +494,10 @@ the new rule.
 You can create a dynamic distribution list with the admin console or with
 the CLI, as described in this section.
 
-.Admin Console
-****
+Admin Console: ::
 *Home > Manage > Distribution Lists*.
 
-. In the *Gear* icon, click *New*.
+. From the *Gear* icon, click *New*.
 
 . On the *Members* page, add the dynamic distribution list name.  Do not
 use spaces.  Do not add members to the list.
@@ -523,7 +505,7 @@ use spaces.  Do not add members to the list.
 . Click *Next* to configure the *Properties* page.
 +
 .Dynamic Distribution Lists Options
-[cols=",a",options="header",]
+[cols="1,4a",options="header",]
 |=======================================================================
 |Option |Description
 
@@ -577,8 +559,8 @@ ldap:///??sub?(&(objectClass=zimbraAccount)(ZimbraAccountStatus=active))
 
 .All users with the title manager
 ====
-The title is taken from the account’s *Contact Information Job Title*
-field.  In this example, this field would be set to “Manager”.
+The title is taken from the account's *Contact Information Job Title*
+field.  In this example, this field would be set to "Manager".
 ----
 ldap:///??sub?(&(objectClass=zimbraAccount)(title=Manager))
 ----
@@ -610,59 +592,57 @@ If you use the CLI to modify a dynamic distribution list originally created
 on the Administration Console, you must set `zimbraIsACLGroup` *FALSE* for
 that dynamic distribution list.
 
-****
+---
 
-.CLI
-****
-Use the `zmprov` command to manage dynamic distribution lists.  In the
+Use the CLI `zmprov` command to manage dynamic distribution lists.  In the
 command, `ldap:///??sub?` is the URL.  You can add any combination of
 filters to this to create different types of dynamic distribution lists.
 
-
-*Creating a dynamic distribution list of all new and existing accounts*
-
+. Creating a dynamic distribution list of all new and existing accounts
++
 All users, GAL account names, and spam/ham account names are included.
 When user accounts are deleted, they are removed from the list.
-
++
 [source,bash]
 ----
-zmprov cddl <all@domain.com> memberURL 'ldap:///??sub?(objectClass=zimbraAccount)' zimbraIsACLGroup FALSE
+zmprov cddl <all@domain.com> zimbraIsACLGroup FALSE \
+  memberURL 'ldap:///??sub?(objectClass=zimbraAccount)'
 ----
 
-*Creating a COS and Assign Users*
-
+. Creating a COS and Assign Users
++
 If you create COSs and assign users to the COS based on specific criteria,
 such as all managers, you can quickly modify a dynamic distribution list to
 be used for a specific COS.
-
-Examples of creating dynamic distribution lists for specific user types:
-
++
 .A dynamic distribution list that includes all users that have active accounts in a specific COS
 ====
 [source,bash]
 ----
-zmprov cddl <allusers@domain.com> memberURL 'ldap:///??sub?(&(objectClass-zimbraAccount) (zimbraCOSId=513e02e-9abc-4acf-863a-6dccf38252e3) (zimbraAccountStatus=active) )' zimbraIsACLGroup FALSE
+zmprov cddl <allusers@domain.com>  zimbraIsACLGroup FALSE \
+  memberURL 'ldap:///??sub?(&(objectClass-zimbraAccount) (zimbraCOSId=513e02e-9abc-4acf-863a-6dccf38252e3) (zimbraAccountStatus=active))'
 ----
 ====
-
++
 .A dynamic distribution list that includes all users based on job titles
 ====
 To use this, the account's Contact Information *Job Title* field must
 include the title.  In this example it would be set to "Manager".
 [source,bash]
 ----
-zmprov cddl <allmanagers@domain.com> memberURL 'ldap:///??sub?(&(objectClass-zimbraAccount) (zimbraCOSId=513e02e-9abc-4acf-863a-6dccf38252e3) (title=Manager) )' zimbraIsACLGroup FALSE
+zmprov cddl <allmanagers@domain.com> zimbraIsACLGroup FALSE' \
+  memberURL ldap:///??sub?(&(objectClass-zimbraAccount) (zimbraCOSId=513e02e-9abc-4acf-863a-6dccf38252e3) (title=Manager))'
 ----
 ====
-
++
 .A dynamic distribution list for all delegated administrators
 ====
 [source,bash]
 ----
-zmprov cddl <alldelegatedadmins@domain.com> memberURL 'ldap:///??sub?(&(objectClass-zimbraAccount) (zimbraCOSId=513e02e-9abc-4acf-863a-6dccf38252e3) (zimbraIsDelegatedADminAccount=TRUE) )' zimbraIsACLGroup FALSE
+zmprov cddl <alldelegatedadmins@domain.com> zimbraIsACLGroup FALSE \
+  memberURL 'ldap:///??sub?(&(objectClass-zimbraAccount) (zimbraCOSId=513e02e-9abc-4acf-863a-6dccf38252e3) (zimbraIsDelegatedADminAccount=TRUE))'
 ----
 ====
-****
 
 == Moving a Mailbox
 
@@ -670,7 +650,7 @@ Mailboxes can be moved between Zimbra servers that share the same LDAP
 server.
 
 You can move a mailbox from either the Administration Console or use the
-CLI command - `zmmboxmove` - to reposition a mailbox from one server to
+CLI command `zmmboxmove` to reposition a mailbox from one server to
 another, without taking down the servers.
 
 The destination server manages the mailbox move process.  The move runs in
@@ -715,18 +695,15 @@ search indexes, blobs, and HSM blobs when mailboxes are moved.  The
 following configuration options can be set on either the exporting server
 or the destination server:
 
-* `zimbraMailboxMoveSkipSearchIndex`
-+
+* `zimbraMailboxMoveSkipSearchIndex` --
 If you do not include the search index data, the mailbox will have to be
 reindexed after the move.
 
-* `zimbraMailboxMoveSkipBlobs`
-+
+* `zimbraMailboxMoveSkipBlobs` --
 Blobs associated with the mailbox, including primary and secondary
 volumes (HSM) are excluded.
 
-* `zimbraMailboxMoveSkipHsmBlobs`
-+
+* `zimbraMailboxMoveSkipHsmBlobs` --
 This is useful when HSM blobs already exist for the mailbox being moved.
 Set this if `zimbraMailboxMoveSkipBlobs` is not configured, but you want to
 skip blobs on HSM volumes.

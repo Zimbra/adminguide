@@ -55,10 +55,11 @@ through the browser based web client.
 == Zimbra Components
 
 Zimbra architecture includes open-source integrations using industry
-standard protocols. The third-party software listed in <<table_tps,
-Third-Party Software>> is bundled with Zimbra software and installed as
-part of the installation process. These components have been tested and
-configured to work with the software.
+standard protocols. The third-party software listed in
+<<table_tps,Third-Party Software>>
+is bundled with Zimbra software and installed as part of the
+installation process. These components have been tested and configured
+to work with the software.
 
 [[table_tps]]
 .Third-Party Software
@@ -123,14 +124,14 @@ enabled to run on all systems.
 The components for the mailbox server (including Jetty). The Zimbra mailbox
 server includes the following components:
 
-* *Data store*. A MariaDB database.
+* *Data store* -- A MariaDB database.
 
-* *Message store*. Location of all email messages and file attachments.
+* *Message store* -- Location of all email messages and file attachments.
 
-* *Index store*. Index and search technology is provided through
+* *Index store* -- Index and search technology is provided through
 Lucene. Index files are maintained for each mailbox.
 
-* *Web application services*. The Jetty web application server runs web
+* *Web application services* -- The Jetty web application server runs web
 applications (webapps) on any store server. It provides one or more web
 application services.
 
@@ -197,7 +198,7 @@ and Discovery, contact Zimbra sales.
 
 |=======================================================================
 
-== Mail Flow—Multi-Server Configuration
+== Mail Flow -- Multi-Server Configuration
 
 The configuration for each deployment is dependent on numerous variables
 such as the number of mailboxes, mailbox quotas, performance requirements,
@@ -247,10 +248,11 @@ The directories not listed in the following table are
 libraries used for building the core Zimbra software or
 miscellaneous third-party tools.
 
-.System Directory Tree
+// TODO: update for 8.7 changes with /opt/zimbra/common
+.System Directory Tree under `/opt/zimbra`
 [cols="30m,70",options="header",grid="rows"]
 |=======================================================================
-|`opt/zimbra` File | Description
+|File | Description
 
 |backup/ |
 Backup target contains full and incremental backup data
@@ -372,7 +374,7 @@ book, and task functions.
 |Client Type |Description
 
 |Advanced Web Client |
-includes Ajax capability and offers a full set of web collaboration
+Includes Ajax capability and offers a full set of web collaboration
 features. This web client works best with newer browsers and fast Internet
 connections.
 
@@ -381,11 +383,11 @@ A good option when Internet connections are slow or users prefer HTML-based
 messaging for navigating within their mailbox
 
 |Mobile Client |
-(Native Mail Client): Used to configure and sync the Zimbra mailbox server
+(Native Mail Client) Used to configure and sync the Zimbra mailbox server
 with the native mail client on a mobile device.
 
 |Touch Client |
-(Mobile Web App) provides an experience for touch-capable mobile
+(Mobile Web App) Provides an experience for touch-capable mobile
 devices. Its features are a subset of the features found in the Zimbra Web
 Client, including Mail, Contacts and Calendar.
 
@@ -397,7 +399,7 @@ version.
 
 When users sign in, they view the advanced Zimbra Web Client, unless they
 use the menu on the login screen to change to the standard version.  If ZWC
-detects the screen resolution to be 800 x 600, users are automatically
+detects the screen resolution to be 800x600, users are automatically
 redirected to the standard Zimbra Web Client. Users can still choose the
 advanced ZWC but see a warning message suggesting the use of the standard
 ZWC for better screen view.
@@ -419,7 +421,7 @@ Outlook on a Mac device. To enable EWS client access, see the Class of
 Service section. EWS is a separately licensed add-on feature.
 
 * *Messaging Application Programming Interface (MAPI)* synchronizes
-toMicrosoft Outlook 2016/2013/2010/2007/2003 with full delegate, offline
+to Microsoft Outlook 2016/2013/2010/2007/2003 with full delegate, offline
 access and support for S/MIME. Use the Zimbra Connector for Outlook to
 connect to {product-name} when using Microsoft Outlook on a Windows
 device. To enable MAPI (Microsoft Outlook) Connector, see the Class of
@@ -432,7 +434,7 @@ Authoring and Versioning (CardDAV) clients.
 [[offline_mode]]
 == Offline Mode
 
-Zimbra Offline Mode allows access to data—without network connectivity—
+Zimbra Offline Mode allows access to data -- without network connectivity --
 when using the Zimbra Web Client (ZWC).
 
 For example, if there is no server connectivity or if server connectivity
@@ -452,8 +454,8 @@ following topics:
 
 [NOTE]
 To view current and detailed security news and alerts, please refer to
-https://wiki.zimbra.com[Zimbra Wiki]
-https://wiki.zimbra.com/wiki/SecurityCenter[Security Center].
+https://wiki.zimbra.com/wiki/Security_Center[Security Center] on the
+https://wiki.zimbra.com/[Zimbra Wiki].
 
 === Identity and Access Management
 
@@ -478,16 +480,16 @@ user store: the passwords are stored as salted hash that is compared
 against that of the entered password, for rejection (no match) or
 acceptance (matched). If external directory (LDAP or Active Directory) is
 preferred, the appropriate login credentials can be stored in this external
-LDAP directory. See also <<zimbra_ldap_service, Zimbra LDAP Service>> for
-more details.
+LDAP directory. See also
+<<zimbra_ldap_service,Zimbra LDAP Service>> for more details.
 
 |Two Factor Authentication |
 A second layer of identify security that is configured at the Admin Console
 to enable or disable passcode generation to mobile devices associated with
 {product-name}. When enabled, user or COS accounts must use the generated
 passcode to gain access to their client services. See also
-<<about_two_factor_auth, About 2 Factor Authentication>> and
-<<two_factor_auth, Two Factor Authentication>>.
+<<about_two_factor_auth,About 2 Factor Authentication>> and
+<<two_factor_auth,Two Factor Authentication>>.
 
 |Authorized Access |
 User accounts are defined by various attributes, permission levels, and
@@ -526,7 +528,7 @@ With S/MIME for end-to-end encryption, data stored in a {product-name}
 message store is encrypted until decryption occurs with the appropriate
 private key.
 
-|Anti-virus and Antispam |
+|Anti-virus and Anti-spam |
 Both malware and spam are challenged by the {product-name} native
 functionality and third-party plugins: Amavisd-new, ClamAV, and Spam
 Assassin.
