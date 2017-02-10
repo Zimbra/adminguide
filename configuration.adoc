@@ -8,7 +8,7 @@ from either the Administration Console or using the CLI utility.
 
 *Help* is available from the Administration Console about how to perform
 tasks from the Administration Console. If the task is only available from
-the CLI, see <<cli_commands, Zimbra CLI Commands>> for a description of how
+the CLI, see <<cli_commands,Zimbra CLI Commands>> for a description of how
 to use the CLI utility.
 
 == Global Configuration
@@ -24,7 +24,7 @@ global settings.
 
 Admin Console: ::
 To configure global settings, navigate to: +
-*Configure > Global Settings*
+*Home > Configure > Global Settings*
 
 Configured global settings are:
 
@@ -96,7 +96,7 @@ The maximum size of a file that can be uploaded into Briefcase.
 
 [NOTE]
 The maximum message size for an email message and attachments that can be
-sent is configured in the *Global Settings > MTA* page, *Messages* section.
+sent is configured in the *Home > Configure > Global Settings > MTA* page, *Messages* section.
 
 |Admin Help URL +
 Delegated Admin Help URL|
@@ -116,12 +116,13 @@ for individual accounts. When attachment settings are configured in Global
 Settings, the global rule takes precedence over COS and Account settings.
 
 Admin Console: ::
-*Home > Configure > Global Settings > Advanced*
+*Home > Configure > Global Settings > Attachments*
 
 [cols=","]
 image:images/administration_console_email_attachment_rules.png[Attachment Rules] +
-See <<_blocking_email_attachments_by_file_type, Blocking Email Attachments
-by File type>> for information about this section of the screen.
+See
+<<_blocking_email_attachments_by_file_type,Blocking Email Attachments by File type>>
+for information about this section of the screen.
 
 .Global Settings Advanced
 [cols=",",options="header",]
@@ -158,7 +159,7 @@ If you do not want to send a notification to the recipient when messages
 are blocked, you can disable this option.
 
 Admin Console: ::
-*Global Settings > Attachments*
+*Home > Configure > Global Settings > Attachments*
 
 [[mta_configuration]]
 == MTA Configuration
@@ -257,7 +258,8 @@ CLI.
 Use the IMAP and POP pages to enable global access.
 
 Admin Console: ::
-*Home > Configure > Global Settings > IMAP* or *POP*
+*Home > Configure > Global Settings > IMAP* +
+*Home > Configure > Global Settings > POP*
 
 [NOTE]
 When you make changes to the IMAP or POP settings, you must restart
@@ -294,7 +296,8 @@ sharing.
 
 A domain can be renamed and all account, distribution list, alias and
 resource addresses are changed to the new domain name. The CLI utility is
-used to changing the domain name. See <<_renaming_a_domain, Renaming a Domain>>.
+used to changing the domain name.
+See <<_renaming_a_domain,Renaming a Domain>>.
 
 [NOTE]
 Domain settings override global settings.
@@ -412,7 +415,7 @@ Use the *GAL Mode Settings* tool with your domain configuration to define
 the Global Address List.
 
 Admin Console: ::
-*Home > 2 Set up Domain > 1 Create Domain..., GAL Mode Settings*
+*Home > 2 Set up Domain > 1 Create Domain... -> GAL Mode Settings*
 
 image:images/administration_console_gal.png[GAL Mode Settings]
 
@@ -429,7 +432,7 @@ image:images/administration_console_gal.png[GAL Mode Settings]
 configure multiple external LDAP hosts for GAL. All other directory
 services use the Zimbra LDAP service (configuration, mail routing, etc.).
 When you configure an external GAL, you can configure different search
-settings and sync settings.You might want to configure different search
+settings and sync settings. You might want to configure different search
 settings if your LDAP environment is set up to optimize LDAP searching by
 setting up an LDAP cache server, but users also will need to be able to
 sync to the GAL.
@@ -504,11 +507,11 @@ When {product-abbrev} is configured with more than one server, you can add an ad
 GAL sync account for each server.
 
 Admin Console: ::
-*Configure > Domains*
+*Home > Configure > Domains*
 
 . Select the domain to add another GAL sync account.
 
-. In the gear box, select *Configure GAL*.
+. In the *Gear* icon, select *Configure GAL*.
 
 . Click *Add a GAL account*.
 
@@ -535,11 +538,11 @@ To change the account name delete the existing GAL sync account and
 configure a new GAL for the domain.
 
 Admin Console: ::
-*Configure > Domains*
+*Home > Configure > Domains*
 
 . Select the domain where you want to change the GAL sync account name.
 
-. In the gear box, select *Configure GAL* to open the configuration wizard
+. In the *Gear* icon, select *Configure GAL* to open the configuration wizard
 and change the GAL mode to internal. Do not configure any other
 fields. Click *Finish*.
 
@@ -560,7 +563,7 @@ and password information provided when users log in.
 Set the authentication method on a per-domain basis.
 
 Admin Console: ::
-*Home > 2 Set up Domain > 1 Create Domain..., Authentication Mode*
+*Home > 2 Set up Domain > 1 Create Domain... -> Authentication Mode*
 
 .New Domain -- Authentication Mode
 [cols=",a",options="header",]
@@ -595,7 +598,7 @@ user login. Zimbra Web Client users can log in without having to specify
 the domain name as part of their user name.
 
 Admin Console: ::
-*Home > 2 Set up Domain > 1 Create Domain..., Virtual Hosts*
+*Home > 2 Set up Domain > 1 Create Domain... -> Virtual Hosts*
 
 .New Domain -- Virtual Hosts
 [cols=",",options="header",]
@@ -701,7 +704,7 @@ must own the domain name and verify your ownership before you can add it as
 an alias.
 
 Admin Console: ::
-*Configure > Domains*: from the *Gear* icon select, *Add a Domain Alias*.
+*Home > Configure > Domains*, from the *Gear* icon select, *Add a Domain Alias*.
 
 === Enabling Support for Domain Disclaimers
 
@@ -896,7 +899,7 @@ The Notes text box can be used to record details you want to save.
 === Change MTA Server Settings
 
 Admin Console: ::
-*Home > Configure > Servers > _zmhostname_ > MTA*
+*Home > Configure > Servers -> _server_ -> MTA*
 
 The *MTA* page show the following settings:
 
@@ -924,7 +927,7 @@ to specify which specific IP addresses you want a particular server to
 bind to.
 
 Admin Console: ::
-*Home > Configure > Servers > _zmhostname_ > IP Address Bindings*
+*Home > Configure > Servers -> _server_ -> IP Address Bindings*
 
 .IP Address Bindings
 [cols=",",options="header",]
@@ -1053,7 +1056,7 @@ include the certificate subject, issuer, validation days and subject
 alternative name.
 
 Admin Console: ::
-*Home > Certificates > _zmhostname_*
+*Home > Configure > Certificates -> _zmhostname_*
 
 Certificates display for different Zimbra services such as LDAP, mailboxd, MTA and proxy.
 
@@ -1190,7 +1193,7 @@ the DKIM DNS text record.
 record.
 
 . Verify that the public key matches the private key, See the
-<<dkim_identifiers, Identifiers>> table for `-d`, `-s`, and `-x`
+<<dkim_identifiers,Identifiers>> table for `-d`, `-s`, and `-x`
 descriptions.
 +
 --
@@ -1201,12 +1204,12 @@ descriptions.
 
 [[dkim_identifiers]]
 .Identifiers
-[cols=",",options="header",]
+[cols="1m,2",options="header",]
 |====================================================
 |Parameter |Description
-|`-d` |Domain name
-|`-s` |Selector name
-|`-x` |Configuration file name.
+|-d |Domain name
+|-s |Selector name
+|-x |Configuration file name.
 
 |====================================================
 --
@@ -1288,8 +1291,8 @@ requirements.
 . From the *Gear* icon, select *Save* to use your settings.
 +
 --
-.Anti Spam
-[cols=",",options="header",]
+.Anti-Spam
+[cols="1,2",options="header",]
 |=======================================================================
 |Option |Description
 
@@ -1436,7 +1439,7 @@ zmlocalconfig -e postfix_enable_smtpd_policyd=no
 ----
 
 Admin Console: ::
-*Global Settings > MTA*
+*Home > Configure > Global Settings > MTA*
 
 Define the policy restriction.Setting Email Recipient
 RestrictionsRealtimeBlackhole Lists and Realtime Right-Hand Side
@@ -1468,7 +1471,7 @@ As part of recipient restrictions, you can also use the
 `reject_rbl_client <rbl hostname>` option.
 
 Admin Console: ::
-*Home > Configure > Global Settings > MTA*, *DNS Checks*
+*Home > Configure > Global Settings > MTA -> DNS Checks*
 
 Use the DNS tools in MTA configuration to define the restriction lists.
 
@@ -1560,7 +1563,7 @@ requirements.
 . From the *Gear* icon, select *Save* to use your settings.
 
 .Anti Virus
-[cols=",",options="header",]
+[cols="1,2",options="header",]
 |=======================================================================
 |Option |Description
 
@@ -1724,8 +1727,8 @@ You must have a {product-abbrev} license that is enabled for S/MIME.
 === Enable S/MIME Feature
 
 Admin Console: ::
-*Home > Configure > Class of Service*, _COS name_, *Features* page +
-*Home > Manage > Accounts*, _account name_, *Features* page
+*Home > Configure > Class of Service -> _COS_ -> Features* +
+*Home > Manage > Accounts -> _account_ -> Features*
 
 The S/MIME feature can be enabled from either the COS or Account
 FeaturesTab.
@@ -1754,8 +1757,8 @@ Zimbra server to lookup and retrieve certificates from the external LDAP,
 on behalf of the client.
 
 Admin Console: ::
-*Global Settings > S/MIME* +
-*Domains > S/MIME*
+*Home > Configure > Global Settings > S/MIME* +
+*Home > Configure > Domains -> _domain_ -> S/MIME*
 
 You can configure the external LDAP server settings from either the *Global
 Settings > S/MIME* tab or the *Domains > S/MIME* tab.
@@ -1878,7 +1881,7 @@ cron table. From the Administration Console, when you select a server, you
 can manually start a HSM session, monitor HSM sessions, and abort HSM
 sessions that are in progress from the Volumes page.
 
-You can manually start an HSM session from the server's gear icon menu.
+You can manually start an HSM session from the server's *Gear* icon.
 
 When you abort a session and then restart the process, the HSM session
 looks for entries in the primary store that meet the HSM age criteria.  Any
@@ -1932,7 +1935,7 @@ You can configure when email messages should be deleted from an accounts
 folders, and the trash and junk folders by COS or for individual accounts.
 
 .Email Lifetime Options
-[cols=",",options="header",]
+[cols="1,2",options="header",]
 |=======================================================================
 |Email Lifetime Option |Description
 
@@ -1955,7 +1958,7 @@ Default = 30 days.
 === Purging Email Messages
 
 By default, the server purges email messages that have exceeded their
-lifetime every minute.You can change the duration of time that the server
+lifetime every minute. You can change the duration of time that the server
 should "rest" between purging mailboxes.
 
 Use the global Sleep Time setting to define duration, in minutes, between
@@ -1995,7 +1998,7 @@ Use the global Retention Policy page to set global retention or deletion
 policies.
 
 Admin Console: ::
-*Home > Configure > Global Settings*, *Retention Policy* page
+*Home > Configure > Global Settings > Retention Policy*
 
 image:images/GlobalRetentionPolicy.jpg[Global Retention Policy]
 
@@ -2005,7 +2008,7 @@ Use the COS Retention Policy page to set retention or deletion for the
 selected COS.
 
 Admin Console: ::
-*Home > Configure > Class of Service*, _COS name_, *Retention Policy* page
+*Home > Configure > Class of Service -> _COS_ -> Retention Policy*
 
 image:images/COSRetentionPolicy.jpg[COS Retention Policy]
 
@@ -2078,10 +2081,9 @@ zmmailbox -z -m <user@example.com> -A dumpsterDeleteItem <item-ids>
 ----
 
 Admin Console: ::
-*Home > Configure > Class of Service* _COS name_, *Features* page,
-*General Features* section.
+*Home > Configure > Class of Service -> _COS_ -> Features -> General Features*
 
-. Enable (check) the Dumpster folder checkbox.
+. Enable (check) the *Dumpster folder* checkbox.
 . To set *Visibility lifetime in dumpster for end user*, go to the COS's,
 *Advanced* page, *Timeout Policy* section.
 . To set *Retention lifetime in dumpster before purging*, go to the COS's
@@ -2098,17 +2100,13 @@ dumpster. This can be set on a COS or for individual accounts. When *Can
 purge dumpster folder* is enabled, any deletion policies set up on the
 accounts' folders are ignored.
 
-Configure legal hold on a COS account:
+Configure legal hold:
 
 Admin Console: ::
-*Configure > Class of Service > Features* page +
-deselect *Can purge dumpster folder*
+*Home > Configure > Class of Service -> _COS_ -> Features* +
+*Home > Manage > Accounts -> _account_ -> Features*
 
-Configure legal hold on individual accounts:
-
-Admin Console: ::
-*Manage > Accounts*, select the _account_ +
-*Disable* the feature on the *Features* page.
+Deselect *Can purge dumpster folder* on the *Features* page.
 
 == Customized Admin Extensions
 

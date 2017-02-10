@@ -59,10 +59,10 @@ immediately to everyone in the default COS. If a Zimlet is not deployed to
 another COS directly, the COS displays the Zimlets but they are not
 enabled.
 
-.Admin Console
-****
-*Configure > Zimlets*; go to *Gear* icon and select *Deploy*.
+Admin Console: ::
+*Home > Configure > Zimlets*, from the *Gear* icon select *Deploy*
 
+// divide definition above from list below
 . Browse to the Zimlet you want to deploy, then click *Deploy*.
 +
 The Zimlet deploys to the server. A dialog displays indicating the server
@@ -71,20 +71,18 @@ name where the Zimlet is deployed and the status of the deployment.
 . Click *Finish*.
 +
 Verify the Zimlet is enabled by viewing the Zimlets page.
-****
 
 === Enable, Disable, or Make Zimlets Mandatory
 
-You can enable or disable Zimlets, or make them mandatory. You can also use
-the toggle feature to enable or disable an installed Zimlet.
+You can enable, disable, or make Zimlets mandatory. You can also use
+the toggle feature to choose if an installed Zimlet will be made
+available for users to choose from.
 
-.Admin Console
-****
-On a class of service Zimlets page, select the default Zimlets you want
-to enable, disable, or make mandatory to users in the COS.
+Admin Console: ::
+*Home > Configure > Class of Service -> _COS_ -> Zimlets*
 
 .Zimlet Operational Status Settings.
-[cols=",",options="header",]
+[cols="1,4",options="header",]
 |=======================================================================
 |Setting |Description
 
@@ -104,20 +102,18 @@ All deployed Zimlets will be enabled.
 Users can enable or disable optional Zimlets from their account’s
 *Preferences > Zimlets* page. If you select a Zimlet as mandatory, it
 cannot be disabled by the user.
-****
 
 === Undeploying a Zimlet
 
 When a Zimlet is undeployed, it is removed from all COSs and then removed
 from the LDAP.
 
-.Admin Console
-****
-*Configure > Zimlets*; select the Zimlet to undeploy.
+Admin Console: ::
+*Home > Configure > Zimlets*
 
-. From the Gear icon menu select *Undeploy*.
+. Select a _Zimlet_ to undeploy.
+. From the *Gear* icon menu select *Undeploy*.
 . Click *Yes* to confirm.
-****
 
 === Adding Proxy-Allowed Domains to a Zimlet
 
@@ -126,9 +122,10 @@ accessed through a Zimlet. For the Zimlets that are included in {product-abbrev}
 allowed domains are already configured. If you download and deploy other
 Zimlets, you can add additional proxy domain names.
 
-.Admin Console
-****
-*Configure > Class of Service*; select the COS to edit.
+Admin Console: ::
+*Home > Configure > Class of Service*
+
+. Select the _COS_ to edit.
 
 . In the *Advanced* page, scroll down to the *Proxy Allowed Domains*
 section.
@@ -136,7 +133,6 @@ section.
 . Click *Add Domain* to add domains.
 
 . Click *Save*.
-****
 
 === Upgrading a Zimlet
 
@@ -144,14 +140,12 @@ Use the same steps as deploying a new Zimlet to upgrade a customized
 Zimlet. The new Zimlet zip file should have the same name as the existing
 Zimlet zip file.
 
-.Admin Console
-****
-*Configure > Zimlets;* from theGear icon menu select *Deploy*.
+Admin Console: ::
+*Home > Configure > Zimlets*, from the *Gear* icon select *Deploy*
 
 . Check *Flush Zimlet cache,* so that the upgraded zimlet will be used.
-. Browse to the Zimlet you want to upgrade, then click *Deploy*.
+. Browse to the _Zimlet_ you want to upgrade, then click *Deploy*.
 . Click *Finish*.
-****
 
 == Managing Zimlets from the Command Line Interface
 
@@ -185,23 +179,17 @@ When deploying a Zimlet, the COS attributes, `zimbraProxyAllowedDomains`,
 must be set for the domain address that the Zimlet might call to get
 information.
 
-.CLI
-****
 To set the `zimbraProxyAllowedDomains` attribute, type:
 [source,bash]
 ----
-zmprov mc <COSname> +zimbraProxyAllowedDomains <*.domain.com>
+zmprov mc <COSname> +zimbraProxyAllowedDomains '*.example.com'
 ----
 
-The `*` must be added before the `domain.com`.
+The `*` must be added before the `example.com`.
 
 This must be applied to all COSs that have your Zimlet enabled.
-****
 
 === Deploying a Zimlet and Granting Access to a COS
-
-.CLI
-****
 
 Use steps in this section to deploy a Zimlet to one or more COSs other than
 the default:
@@ -212,16 +200,8 @@ the default:
 +
 [source,bash]
 ----
-zmzimletctl deploy <path-to-zimlet.zip>
-----
-+
-.Deploy a Zimlet
-====
-[source,bash]
-----
 zmzimletctl deploy /tmp/<zimlet>.zip
 ----
-====
 
 . To deploy the zimlet to additional COSs, run:
 +
@@ -243,17 +223,13 @@ on each COS and add the allowed domains.
 +
 [source,bash]
 ----
-zmprov mc <COSname1> +zimbraProxyAllowedDomains <*.domain.com>
-
-zmprov mc <COSname2> +zimbraProxyAllowedDomains <*.domain.com>
+zmprov mc <COSname1> +zimbraProxyAllowedDomains '*.example.com'
+zmprov mc <COSname2> +zimbraProxyAllowedDomains '*.example.com'
 ----
-****
 
 === Viewing Installed Zimlets
 
-.CLI
-****
-Use the zmzimletctl command to view currently installed zimlets:
+Use the `zmzimletctl` command to view currently installed zimlets:
 
 [source,bash]
 ----
@@ -262,7 +238,6 @@ zmzimletctl listZimlets all
 
 The output from this command displays the Zimlets installed on the server,
 installed in LDAP, and those available by COS.
-****
 
 === Changing Zimlet Configurations
 
@@ -272,8 +247,6 @@ The Zimlet configuration template allows you to make changes on the
 configuration template and then install the new configuration file on the
 Zimbra server.
 
-.CLI
-****
 Use steps in this section to change a Zimlet configuration:
 
 . Extract the configuration template:
@@ -299,7 +272,6 @@ you changed the name of the configuration template, replace
 ----
 zmzimletctl configure config_template.xml
 ----
-****
 
 === Upgrading a Zimlet
 
@@ -310,8 +282,6 @@ used to deploy a new Zimlet.
 The new Zimlet zip file should be named identically to the existing Zimlet
 zip file.
 
-.CLI
-****
 Use steps in this section upgrade a zimlet:
 
 . Copy the Zimlet zip file to the `/opt/zimbra/zimlets-extra` directory,
@@ -334,7 +304,6 @@ your Zimlet includes a .jsp file, the .jsp file is also copied to the
 ----
 zmprov flushCache zimlet
 ----
-****
 
 === Using the Zimbra Gallery
 
@@ -345,4 +314,4 @@ the Extensions from the Zimbra Gallery section.
 === Developing Customized Zimlets
 
 To develop your own custom Zimlets, see the Zimlet Developers Guide on
-the Zimbra Wiki at https://wiki.zimbra.com/wiki/Main_Page.
+the Zimbra Wiki at https://wiki.zimbra.com.

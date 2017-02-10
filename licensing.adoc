@@ -51,13 +51,13 @@ need to purchase a subscription or a perpetual license.
 |License Types |Purpose
 
 |Trial |
-Free of charge: Trial license from the Zimbra website (www.zimbra.com). The
+Free of charge: Trial license from the Zimbra website (https://www.zimbra.com). The
 trial license allows you to create up to 50 users. It expires in 60 days.
 
 |Trial extended |
 Free of charge: Allows you to create up to 50 users and is valid for an
 extended period of time. Obtainable from Zimbra Sales by contacting
-sales@zimbra.com or calling 1-650-427-5701.
+sales@zimbra.com or calling 1-972-407-0688.
 
 |Subscription |
 Purchased: Applicable to a specific {product-name} system and encrypted
@@ -108,8 +108,11 @@ account, the license account limit reflects the change
 
 All network edition installations require license activation. New
 installations have a 10 day grace period from the license issue date before
-requiring activation. Your license can be activated by selecting *Configure
-> Global Settings > License > Activate License*.
+requiring activation. Your license can be activated in the Administration Console.
+
+Admin Console: ::
+*Home > Configure > Global Settings > License*, from the *Gear* icon select
+*Activate License*
 
 Upgraded {product-name} versions require an immediate activation to
 maintain network feature functionality.
@@ -119,7 +122,7 @@ maintain network feature functionality.
 Licenses are automatically activated if the {product-name} server has a
 connection to the Internet and can communicate with the Zimbra License
 server. If you are unable to automatically activate your license, see
-<<manual_license_activation, Manual License Activation>>.
+<<manual_license_activation,Manual License Activation>>.
 
 [[manual_license_activation]]
 === Manual License Activation
@@ -185,7 +188,7 @@ of accounts that can be created.
 
 Current license information, including the number of accounts purchased,
 the number of accounts used, and the expiration date, can be viewed from
-*Global Settings > License*.
+*Home > Configure > Global Settings > License*.
 
 == Managing Licenses
 
@@ -195,7 +198,8 @@ License* link on the toolbar activates the license.
 
 Current license information, including the license ID, the issue date,
 expiration date, number of accounts purchased, and the number of accounts
-used can be viewed from *Global Settings > License*.
+used can be viewed from
+*Home > Configure > Global Settings > License*.
 
 === License Information
 
@@ -208,7 +212,9 @@ license.
 
 Current license information, including the license ID, the issue date,
 expiration date, number of accounts purchased, and the number of accounts
-used can be viewed from the *Global Settings > License* page.
+used can be viewed from
+*Home > Configure > Global Settings > License*.
+
 
 When the number of accounts created is equal to the number of accounts
 purchased you will not be able to create new accounts. You can purchase
@@ -234,8 +240,7 @@ functions that are no longer available upon license expiration:
 * Backup/Restore
 * Zimbra Mobile (ActiveSync)
 * Zimbra Touch Client
-* Exchange Web Services (EWS)
-** EWS is a separately licensed add-on
+* Exchange Web Services (EWS) -- _a separately licensed add-on_
 * High-Fidelity Document Preview
 * Zimbra Connector for Outlook
 * Zimbra Connector for Blackberry
@@ -266,26 +271,24 @@ Administration Console, a reminder notice is displayed.
 
 When you renew or change the Zimbra license, you update {product-name}
 mailbox servers with the new license information. This operation be
-performed from either the Administration Console or the CLI.
+performed from either the CLI or the Administration Console.
 
-.CLI
-****
 [source, bash]
 ----
 zmlicense
 ----
-****
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Configure > Global Settings > License*
+
 Updating a license:
 
 . Save the license on the computer you use to access the Administration
 Console.
 
-. Log on to the Administration Console, go to *Global Settings > License*
-and on the toolbar click *Update License*. The License Installation Wizard
-opens.
+. Log on to the Administration Console, go to
+*Home > Configure > Global Settings > License*, from the *Gear* icon select
+*Update License*. The License Installation Wizard opens.
 
 . Browse to select the license file and click *Next*. The license file is
 now uploaded.
@@ -297,4 +300,3 @@ an immediate activation to maintain network feature functionality.
 
 Your license information is updated automatically. The cached account
 license count is automatically refreshed on each mailbox server.
-****

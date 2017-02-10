@@ -20,9 +20,9 @@ created. You can perform administration tasks from the Administration
 Console or the command line.
 
 * *Delegated Administrators* are granted customized administrator roles
-bythe global administrator to manage different tasks from the
-Administration Console. See also <<delegated_administration, Delegated
-Administration>> for more details.
+by the global administrator to manage different tasks from the
+Administration Console.
+See also <<delegated_administration,Delegated Administration>> for more details.
 
 == Logging in to the Administration Console
 
@@ -53,32 +53,24 @@ From the Administration Console, use the *Change Password* screen to set
 the new password string, and to define policy for user password
 modifications.
 
-.Admin Console
-****
-*Home> Manage> Accounts*; select/highlight user account
+Admin Console: ::
+*Home > Manage > Accounts*
 
-or
-
-From the *Gear* icon, select *Change Password* from the popup menu.
+Double click select _user account_ *or* from the *Gear* icon, select
+*Change Password* from the popup menu.
 
 image::images/administration_console_password.png[Change Password]
-****
 
-.CLI
-****
 [source,bash]
 ----
 zmprov sp adminname@domain.com password
 ----
-****
 
 === Customizing the Login and Logout Pages
 
 A different login and logout page can be configured either as a global
 setting or as a domain setting.
 
-.CLI
-****
 To specify a URL to redirect administrators if their login is not
 authenticated, or if authentication has expired:
 
@@ -93,10 +85,7 @@ Domain:
 ----
 zmprov md <domain> zimbraAdminConsoleLoginURL <https://example.com>
 ----
-****
 
-.CLI
-****
 To specify a URL to redirect administrators, for logging out:
 
 Global:
@@ -110,7 +99,6 @@ Domain:
 ----
 zmprov md <domain> zimbraAdminConsoleLogoutURL <https://example.com>
 ----
-****
 
 == Managing Tasks
 
@@ -198,11 +186,11 @@ the Navigation Pane.
 
 The Navigation pane options are described in the following topics:
 
-* <<home_ui, Home UI>>.
-* <<monitor_ui, Monitor UI>>.
-* <<manage_ui, Manage UI>>.
-* <<configure_ui, Configure UI>>.
-* <<global_settings_ui, Global Settings UI>>.
+* <<home_ui,Home UI>>.
+* <<monitor_ui,Monitor UI>>.
+* <<manage_ui,Manage UI>>.
+* <<configure_ui,Configure UI>>.
+* <<global_settings_ui,Global Settings UI>>.
 * <<tools_and_migration_ui,Tools and Migration UI>>.
 * <<search_ui,Search UI>>.
 
@@ -226,7 +214,7 @@ image::images/administration_console_home_ui.png[Home UI]
 <9> Navigation Pane
 
 .Home UI
-[cols=",a",options="header",]
+[cols="1,3a",options="header",]
 |=======================================================================
 |Topic |Description
 |Summary |
@@ -244,30 +232,28 @@ Length.
 | 1 Get Started |
 Displays the steps essential to getting started with your {product-name}
 operations, and provides quick inks to the functions in this UI:
---
-.  Install Licenses
+
+. Install Licenses
 . Configure Back-ups
 . Install Certificates
 . Configure Default COS
---
 
 | 2 Set up Domain |
 Displays the steps you use to establish the domain(s) to be managed by the
 Collaborator. Each step is a link to the function in this UI:
---
+
 . Create Domain
 . Configure GAL...
 . Configure Authentication
---
 
 |3 Add Accounts |
 Displays the steps for adding accounts for management by the
 Collaborator. Each step is a link to the function in this UI:
---
+
 . Add Account
 . Manage Accounts
 . Migration and Co-existence
---
+
 |=======================================================================
 
 [[monitor_ui]]
@@ -297,7 +283,7 @@ monitored servers and services listed in the following table.
 Adobe Flash Player must be activated to enable views of the dynamic charts.
 
 .Monitor UI
-[cols=",a",options="header",]
+[cols="1,3a",options="header",]
 |=======================================================================
 |Option |Description
 |Server Status |
@@ -308,14 +294,14 @@ Collaborator.
 System-wide Information page, for Advanced Statistics, which allows you to
 set up a new monitoring chart using parameters from the selection fields
 available from this page: Server, Group, Start, end, and Counters.
-+
+
 From this Advanced Statistics page, you can also elect to perform the
 following operations:
---
+
 * Hide Chart Settings
 * Update Chart
 * Remove Chart
---
+
 |Message Count |
 System-wide Information page, for Message Counts, to examine charts
 depicting counts over the last 48, 30, 60, and 365 days. The information
@@ -389,7 +375,7 @@ image::images/administration_manage_ui.png[Manage UI]
 <8> Navigation Pane
 
 .Manage UI
-[cols=",a",options="header",]
+[cols="1,3a",options="header",]
 |=======================================================================
 |*Option* |*Description*
 |Accounts (count) |
@@ -467,7 +453,7 @@ image::images/administration_console_configure_ui.png[Configure UI]
 <7> Configure Navigation Pane
 
 .Configure UI
-[cols=",a",options="header",]
+[cols="1,3a",options="header",]
 |=======================================================================
 |*Option* |*Description*
 |Class of Service |
@@ -595,7 +581,7 @@ can change the settings at any time from Global Settings at the
 Administration Console.
 
 .Global Settings UI
-[cols=",a",options="header",]
+[cols="1,3a",options="header",]
 |=======================================================================
 |*Option* |*Description*
 |General Information |
@@ -605,8 +591,8 @@ Administration Console.
 * Configure the number of threads that can be used toget the content from
 the remote data sources.
 
-For more information, see <<general_information_configuration, General
-Information Configuration>>
+For more information,
+see <<general_information_configuration,General Information Configuration>>
 --
 
 | Attachments |
@@ -617,7 +603,8 @@ Information Configuration>>
 * Convert attachments to HTML for viewing.
 --
 
-For more information, see <<attachments_configuration, Attachments Configuration>>.
+For more information,
+see <<attachments_configuration,Attachments Configuration>>.
 
 | MTA |
 --
@@ -627,7 +614,8 @@ For more information, see <<attachments_configuration, Attachments Configuration
 * Add X-Originating-IP message headers.
 --
 
-For more information, see <<mta_configuration, MTA Configuration>>.
+For more information,
+see <<mta_configuration,MTA Configuration>>.
 
 |IMAP |
 Enable IMAP service. Changes to these settings do not take effect until the
@@ -650,7 +638,8 @@ not take effect until the server is restarted.
 Change to theme settings require the server theme cache to be flushed, by
 using the Flush Cache toolbar button at Server settings.
 
-For more information, see <<color_and_logo_management, Color and Logo Management>>.
+For more information,
+see <<color_and_logo_management,Color and Logo Management>>.
 
 |Advanced |
 --
@@ -683,7 +672,7 @@ edit, or delete an ACE.
 
 |Backup/Restore |
 Set parameters for backup-for standard or auto- grouped mode. For more
-information see the <<backup_and_restore, Backup and Restore>>.
+information see <<backup_and_restore,Backup and Restore>>.
 
 | HSM |
 (hierarchical storage management): Configure aging of message before it is
@@ -716,7 +705,7 @@ image::images/administration_console_tools_and_migration_ui.png[Tools and Migrat
 <7> _Tools and Migration_ Navigation Pane
 
 .Tools and Migration
-[cols=",",options="header",]
+[cols="1,3",options="header",]
 |=======================================================================
 |Option |Description
 
@@ -725,22 +714,20 @@ Access Zimbra utilities, which provides downloadable zip packages - for
 general administration use, and to synchronize an individual end user -
 containing migration wizards for various platforms, and Outlook connectors.
 Additional information is provided in
-<<downloadable_wizards_and_connectors, Downloadable Wizards and
-Connectors>>.
+<<downloadable_wizards_and_connectors,Downloadable Wizards and Connectors>>.
 
 | Software Updates |
 Find out if your system needs a Zimbra Server update or not, and use this
 page to view polling and email contact information pertinent to software
 updates for your system.
 
-See also <<checking_for_updates, Checking for {product-name} Software
-Updates>>.
+See also <<checking_for_updates,Checking for {product-name} Software Updates>>.
 
 | Account Migration |
 View tabular details about account migrations, as detected by your
 system. This page lists total imports, and status of each. This page also
 provides the name(s) of the owners for each account migration listed. See
-also <<migrating_accounts, Migrating Accounts from a Zimbra Server>>.
+also <<migrating_accounts,Migrating Accounts from a Zimbra Server>>.
 
 |Client Upload |
 Use this page to browse for the latest version of software to be uploaded
@@ -755,7 +742,8 @@ pane to view backup history as associated with the
 selected administrator. The history lists labels, start and end times.
 and success or failure for each backup occurrence; each of these are
 associated with the identical, displayed directory path to the backup
-target. Additional information is provided in <<backup_and_restore, Backup and Restore>>.
+target. Additional information is provided in
+<<backup_and_restore,Backup and Restore>>.
 
 |=======================================================================
 
@@ -845,7 +833,7 @@ image::images/administration_console_search_ui.png[Search UI]
 
 
 .Search UI
-[cols=",",options="header",]
+[cols="1,3",options="header",]
 |===========================================================
 |*Option* |*Description*
 |All Result |
@@ -941,7 +929,7 @@ Each row in a table enables actions you can perform if you require
 additional information and/or access to configuration for the selected
 table entry.
 
-[cols=",,a"]
+[cols="1,2,2a"]
 |====================================================
 |Action at Table Row |Result |
 
@@ -991,23 +979,17 @@ multiple messages to be displayed.
 When creating a message with your command entry, always place double quote
 marks at the beginning and end of the message to be displayed.
 
-.CLI
-****
 Creating a global message or domain-specific message.
 [source,bash]
 ----
 zmprov md <domain> zimbraAdminConsoleLoginMessage "message to display"
 ----
-****
 
-.CLI
-****
 Creating a multiple-message display:
 [source,bash]
 ----
 zmprov md <domain> +zimbraAdminConsoleLoginMessage "second message to display"
 ----
-****
 
 === Removing Message(s) of the Day
 
@@ -1025,23 +1007,17 @@ the beginning and end of an individual message to be deleted.
 * Use single quote marks with the attribute to remove all messages.
 --
 
-.CLI
-****
 Removing a specific message:
 [source,bash]
 ----
 zmprov md <domain> -zimbraAdminConsoleLoginMessage "message to display"
 ----
-****
 
-.CLI
-****
 Removing all messages:
 [source,bash]
 ----
 zmprov md <domain> zimbraAdminConsoleLoginMessage ''
 ----
-****
 
 == Functional Reference
 
@@ -1091,7 +1067,7 @@ The following table provides a high-level view of the operations derived
 from the Gear icon, which vary for particular functions.
 
 .Gear Icon Operations
-[cols=",,a",options="header"]
+[cols="1,1,3a",options="header"]
 |=======================================================================
 |Navigation Pane Topic |Selections |Options image:images/gear_icon.png[Gear Icon]
 .2+|*Home Monitor*
@@ -1189,8 +1165,7 @@ image::images/administration_console_popup_menus.png[Popup Options]
 A wide range of Configuration options are logically grouped into containers
 in the Administration Console. Applicable configuration options inside
 these containers are listed in the
-<<high_level_view_of_administration_console_ui, High-level View of
-Administration Console UI>>
+<<high_level_view_of_administration_console_ui,High-level View of Administration Console UI>>
 
 By default, all containers in a page are opened (expanded). You can opt to
 close (collapse) containers - which can free up additional space in a page

@@ -14,22 +14,21 @@ Before adding a user account, determine which features and access
 privileges should be assigned.  You can either assign a class of service
 (COS) with the features enabled when you create the account or you can
 configure the features for the individual accounts.  For a description of
-the features, see <<class_of_service_and_accounts,Class of Service and
-Accounts>>.
+the features, see
+<<class_of_service_and_accounts,Class of Service and Accounts>>.
 
 If the COS you assign has the correct functionality for the account, you do
 not need to perform any additional configuration.
 
 Creating an account sets up the appropriate entries on the Zimbra LDAP
 directory server.  When the user logs in for the first time or when an
-email is delivered to the user’s account, the mailbox is created on the
+email is delivered to the user's account, the mailbox is created on the
 mailbox server.
 
-.Admin Console
-****
-For basic user account setup:
+Basic user account setup:
 
-*Home > Add Accounts >* click *Add Account*
+Admin Console: ::
+*Home -> 3 Add Accounts -> 1. Add Account*
 
 . In the *Account Name* section, enter the account name and the last
   name as a minimum to configure the account.
@@ -41,7 +40,6 @@ The default COS is assigned to the account.
 You can continue to configure features and functionality for the
 individual account.  Changes you make to the account override the COS
 that is assigned to the account.
-****
 
 == Migrating Accounts and Importing Account Email
 
@@ -50,7 +48,7 @@ Wizard from the Administration Console.  You can import accounts from
 either a generic IMAP server or from another {product-abbrev} server.
 
 [NOTE]
-Only accounts on {product-abbrev} 7.2 or later can be migrated to {product-abbrev} 8.0.
+Only accounts on {product-abbrev} 7.2 or later can be migrated to {product-abbrev} 8.
 
 You can also import account names to provision from an XML file that you
 create.
@@ -78,32 +76,32 @@ accounts you provisioned.
 
 If you running a split domain configuration, you can set the SMTP host and
 port in the wizard.  For more information about split domains, see the wiki
-article about split domains at http://wiki.zimbra.com/wiki/Split_Domain.
+article about split domains at https://wiki.zimbra.com/wiki/Split_Domain.
 
 === Migrating Accounts from a Zimbra Server
 
-.Admin Console
-****
-To migrate accounts from a server running {product-abbrev} 7.2.0 or later to {product-abbrev} 8.0.
+To migrate accounts from a server running {product-abbrev} 7.2 or later to {product-abbrev} 8.
 
-*Home > Add Accounts >* click *Migration and Co-existence.*
+Admin Console: ::
+*Home -> 3 Add Accounts -> 3. Migration and Co-existence*
 
+// list
 . In the *Type of mail server* field, select *{product-name}.*
 
-.  If you are provisioning accounts, select *Yes* to import the account's
+. If you are provisioning accounts, select *Yes* to import the account's
 records.  If you are not going to import the data at this time, in the
 *Would you like to import mail*, select *No*.
 
-.  Click *Next*.
+. Click *Next*.
 
-.  On the *Overview* dialog, Import from another Zimbra LDAP directory is
+. On the *Overview* dialog, Import from another Zimbra LDAP directory is
 selected.  Click *Next*.
 
-.  On the *Bulk provisioning options* page, select whether to generate
+. On the *Bulk provisioning options* page, select whether to generate
 random passwords or to assign the same password for each account.
 +
 .Bulk Provisioning Features
-[cols=",",options="header",]
+[cols="1,2",options="header",]
 |=======================================================================
 |Bulk Provisioning Feature |Description
 
@@ -137,7 +135,7 @@ For split domain configurations, set the SMTP Host name and port.
 the server.
 +
 .Directory Connection Options
-[cols=",a",options="header",]
+[cols="1,2a",options="header",]
 |=======================================================================
 |Directory Connection Options |Description
 
@@ -154,7 +152,7 @@ Enter the maximum number of accounts to import at one time.  The default is
 0, which means that no limits are set.
 
 |Server name, LDAP URL, Port, and Use of SSL |
-* The LDAP URL is entered as `ldap://<ldapdirectory.example.com>`.
+* The LDAP URL is entered as: `ldap://<ldapdirectory.example.com>`
 * The default port is 389, but you can change this.
 * Check SSL if this is used.
 
@@ -168,8 +166,8 @@ Enter the password for the server.
 |LDAP filter |
 In this field enter the LDAP search filter to run.  Here you can define
 search criteria to collect the type of account information you want to
-import.  The default filter in the field is (*objectclass-zimbraAccount*).
-This filter includes the emailaddress, the account ID, and attributes for
+import.  The default filter in the field is (*objectclass=zimbraAccount*).
+This filter includes the email address, the account ID, and attributes for
 the account.
 
 |LDAP search base |
@@ -191,33 +189,30 @@ provisioned on the {product-name} server.
 passwords.  The .csv file is deleted when you close the wizard.  If you do
 not download the file, you cannot access the report later.
 
-****
-
 === Migrating Accounts from Generic IMAP Servers
-
-.Admin Console
-****
 
 Use steps in this section to provision accounts on the Zimbra server.
 
-*Home> Add Accounts >* click *Migration and Co-existence.*
+Admin Console: ::
+*Home -> 3 Add Accounts -> 3. Migration and Co-existence*
 
+// list
 . In the *Type of mail server* field, select *Generic IMAP Server*.
 
-. If you are provisioning accounts, select *Yes* to import the account’s
+. If you are provisioning accounts, select *Yes* to import the account's
 records.  If you are not going to import the data at this time, in the
 Would you like to import mail, select *No*.
 
 . Click *Next*.
 
-.  On the *Overview* dialog, Import from another LDAP directory is
+. On the *Overview* dialog, Import from another LDAP directory is
 selected.  Click *Next*.
 
 . On the *Bulk provisioning options* page, select whether to generate
 random passwords or to assign the same password for each account.
 +
 .Bulk Provisioning Features
-[cols=",",options="header",]
+[cols="1,2",options="header",]
 |=======================================================================
 |Bulk Provisioning Feature |Description
 
@@ -250,7 +245,7 @@ For split domain configurations, set the SMTPHost name and port.
 the server.
 +
 .Directory Connection Options
-[cols=",a",options="header",]
+[cols="1,2a",options="header",]
 |=======================================================================
 |Directory Connection Options |Description
 
@@ -267,7 +262,7 @@ Enter the maximum number of accounts to import at one time.  The default is
 0, which means that no limits are set.
 
 |Server name, LDAP URL, Port, and Use of SSL |
-* The LDAP URL is entered as `ldap://<ldapdirectory.example.com>`.
+* The LDAP URL is entered as: `ldap://<ldapdirectory.example.com>`
 * The default port is 389, but you can change this.
 * Check SSL if this is used.
 
@@ -281,8 +276,8 @@ Enter the password for the server.
 |LDAP filter |
 In this field enter the LDAP search filter to run.  Here you can define
 search criteria to collect the type of account information you want to
-import.  The default filter in the field is (*objectclass-zimbraAccount*).
-This filter includes the emailaddress, the account ID, and attributes for
+import.  The default filter in the field is (*objectclass=zimbraAccount*).
+This filter includes the email address, the account ID, and attributes for
 the account.
 
 |LDAP search base |
@@ -304,21 +299,19 @@ provisioned on the {product-name} server.
 passwords.  The .csv file is deleted when you close the wizard.  If you do
 not download the file, you cannot access the report later.
 
-****
-
 === Migrating Accounts using an XML File
 
-.Admin Console
-****
 Use steps in this section to create an XML file with the account
 information and save it to a computer you can access.
 
-*Home > Add Accounts >* click *Migration and Co-existence.*
+Admin Console: ::
+*Home -> 3 Add Accounts -> 3. Migration and Co-existence*
 
+// list
 . In the *Type of mail server* field, select the type of server your are
 migrating from.
 
-. If you are provisioning accounts, select *Yes* to import the account’s
+. If you are provisioning accounts, select *Yes* to import the account's
 records.  If you are not going to import the data at this time, in the
 Would you like to import mail, select *No*.
 
@@ -341,12 +334,8 @@ server.
 passwords.  The .csv file is deleted when you close the wizard.  If you do
 not download the file, you cannot access the report later.
 
-****
-
 === Importing Email for Selected Accounts
 
-.Admin Console
-****
 Use steps in this section to specify the list of accounts whose mail you
 want to import by either selecting the accounts to import data or by using
 an XML file to select the accounts.
@@ -355,9 +344,11 @@ an XML file to select the accounts.
 Ensure that accounts are provisioned on the {product-abbrev} server before attempting
 this procedure.
 
-*Home > Add Accounts >* click *Migration and Co-existence.*
+Admin Console: ::
+*Home -> 3 Add Accounts -> 3. Migration and Co-existence*
 
-. In the *Typ*e *of mail server* field, select the type of server your are
+// list
+. In the *Type of mail server* field, select the type of server your are
 importing the data from.
 
 . In the *Would you like to import account records* menu, select *No*.
@@ -396,8 +387,6 @@ IMAP host name, port and administrator login information.
 
 . Review the data import options.  If the information is correct, click
 *Next*.
-
-****
 
 === XML File Examples
 
@@ -509,13 +498,13 @@ provisioning methods.
 When an external LDAP authentication mechanism - such as external LDAP
 authentication, preauth, or SPNEGO - is configured for a {product-abbrev} domain, you
 can set up {product-abbrev} to automatically create user accounts on {product-abbrev}.  Primary email
-address and account attributes are mapped from an external directory.You
+address and account attributes are mapped from an external directory. You
 can configure how and when new accounts should be created from the external
 directory data.
 
 Three modes are supported for auto-provisioning configuration.
 
-[cols=",",options="header",]
+[cols="1,5",options="header",]
 |=======================================================================
 |Mode |Description
 
@@ -525,8 +514,8 @@ mode, you configure how often the external directory is polled for new
 users, the maximum number of users to process at each interval, and which
 domains are scheduled for account auto provision on specified servers.
 
-Guidelines are provided in <<eager_mode_configuration,Eager Mode
-Configuration>>.
+Guidelines are provided in
+<<eager_mode_configuration,Eager Mode Configuration>>.
 
 | Lazy |
 If a user logs into ZWC the first time through one of the authentication
@@ -534,8 +523,8 @@ mechanisms supported for auto provisioning, and if the user does not exist
 in the {product-abbrev} directory, a new account is automatically created in {product-abbrev} for
 this user.
 
-Guidelines are provided in <<lazy_mode_configuration,Lazy Mode
-Configuration>>.
+Guidelines are provided in
+<<lazy_mode_configuration,Lazy Mode Configuration>>.
 
 |Manual |
 Auto provisioning does not occurs: instead, the administrator manually
@@ -543,8 +532,8 @@ searches from the configured external auto-provisioning LDAP source and
 selects an entry from the search result to create the corresponding Zimbra
 account for the external entry.
 
-Guidelines are provided in <<manual_mode_configuration,Manual Mode
-Configuration>>.
+Guidelines are provided in
+<<manual_mode_configuration,Manual Mode Configuration>>.
 
 |=======================================================================
 
@@ -553,7 +542,7 @@ alongside the @ symbol) is mapped from a user attribute on the external
 directory that you define in `zimbraAutoProvAccountNameMap`.  Other account
 information, such as first and last name, phone numbers, and address, is
 populated from the attributes mapped from the external directory based on
-`zimbraAutoProvAttrMap`.  You can review the external directory’s
+`zimbraAutoProvAttrMap`.  You can review the external directory's
 attributes to determine those that should be mapped to a Zimbra attribute.
 
 The COS assignment for auto-provisioned accounts is identical to the way
@@ -566,7 +555,7 @@ that are created.
 
 You can configure a *Welcome* email message to be sent to newly created
 accounts.  The subject and body of this email can be configured with
-`AutoProvNotification*` attributes on the domain.
+`AutoProvNotification` attributes on the domain.
 
 === Auto-Provisioning Attributes
 
@@ -575,88 +564,70 @@ to configure auto provisioning of new accounts with an external LDAP
 directory.
 
 `zimbraAutoProvMode`::
-
-    Set auto provision mode as either EAGER, LAZY, and/or MANUAL.  Multiple
-    auto-provisioning modes can be enabled on a domain.
+Set auto provision mode as either EAGER, LAZY, and/or MANUAL.
+Multiple auto-provisioning modes can be enabled on a domain.
 
 `zimbraAutoProvAuthMech`::
-
-    Set type of authentication mechanism - as either LDAP, PREAUTH, KRB^,
-    or SPNEGO - to enable for LAZY mode.  Once a user authenticates via the
-    specified authentication mechanism, and if the user account does not
-    yet exist in the Zimbra directory, an account will be automatically
-    created in the Zimbra directory.
+Set type of authentication mechanism - as either LDAP, PREAUTH, KRB5,
+or SPNEGO - to enable for LAZY mode.  Once a user authenticates via
+the specified authentication mechanism, and if the user account does
+not yet exist in the Zimbra directory, an account will be
+automatically created in the Zimbra directory.
 
 `zimbraAutoProvLdapURL`::
-
-    Set the LDAP URL of the external LDAP source for auto provisioning
+Set the LDAP URL of the external LDAP source for auto provisioning
 
 `zimbraAutoProvLdapStartTlsEnabled`::
-
-    Enable (TRUE) or disable (FALSE) the StartTLS protocol when accessing
-    the external LDAP server for auto provisioning.
-+
+Enable (TRUE) or disable (FALSE) the StartTLS protocol when accessing
+the external LDAP server for auto provisioning. +
 Default = FALSE.
 
 `zimbraAutoProvLdapAdminBindDn`::
-
-    Defines the LDAP search bind DN for auto provisioning.
+Defines the LDAP search bind DN for auto provisioning.
 
 `zimbraAutoProvLdapAdminBindPassword`::
-
-   Set the LDAP search admin bind password for auto provisioning.
+Set the LDAP search admin bind password for auto provisioning.
 
 `zimbraAutoProvLdapSearchBase`::
-
-    Set the LDAP search base for auto provisioning, used in conjunction
-    with zimbra `zimbraAutoProvLdapSearchFilter`.
-+
+Set the LDAP search base for auto provisioning, used in conjunction
+with zimbra `zimbraAutoProvLdapSearchFilter`. +
 If not set, LDAP root DSE will be used.
 
 `zimbraAutoProvLdapSearchFilter`::
-
-    Defines the LDAP search filter template for account auto provisioning.
-    For LAZY mode, either `zimbraAutoProvLdapSearchFilter`
-+
-or
-+
+Defines the LDAP search filter template for account auto provisioning.
+For LAZY mode, either `zimbraAutoProvLdapSearchFilter` or
 `zimbraAutoProvLdapBindDn` must be set.
 +
 If both are set, `zimbraAutoProvLdapSearchFilter` will take precedence.
-See <<auto_provisioning_placeholders,Place Holders>> for supported
+See <<auto_provisioning_placeholders,Placeholders>> for supported
 placeholders.
 
 `zimbraAutoProvLdapBindDn`::
-
-    Defines the LDAP external DN template for account auto provisioning.  For
-    LAZY mode, either `zimbraAutoProvLdapSearchFilter`
-+
-or
-+
+Defines the LDAP external DN template for account auto provisioning.
+For LAZY mode, either `zimbraAutoProvLdapSearchFilter` or
 `zimbraAutoProvLdapBindDn` must be set.
 +
-If both are set, `zimbraAutoProvLdapSearchFilter` will take precedence.
-See <<auto_provisioning_placeholders,Place Holders>> for supported
-placeholders.
+If both are set, `zimbraAutoProvLdapSearchFilter` will take
+precedence.  See <<auto_provisioning_placeholders,Placeholders>> for
+supported placeholders.
 
 `zimbraAutoProvAccountNameMap`::
-
-    Defines the attribute name in the external directory that contains
-    local part of the account name.  This is the name used to create the
-    Zimbra account.  If this is not specified, the local part of the
-    account name is the principal user used to authenticated to Zimbra.
+Defines the attribute name in the external directory that contains
+local part of the account name.  This is the name used to create the
+Zimbra account.  If this is not specified, the local part of the
+account name is the principal user used to authenticated to Zimbra.
 
 `zimbraAutoProvAttrMap`::
-
-    Defines the attribute map for mapping attribute values from the
-    external entry to Zimbra account attributes.  Values are in the format
-    of `{external attribute}={zimbra attribute}`.  If this is not set, no
-    attributes from the external directory are populated in Zimbra account.
+Defines the attribute map for mapping attribute values from the
+external entry to Zimbra account attributes.  Values are in the format
+of `{external attribute}={zimbra attribute}`.  If this is not set, no
+attributes from the external directory are populated in Zimbra
+account.
 +
 [IMPORTANT]
 --
-Invalid mapping configuration will cause the account creation to fail.  Bad
-mapping may be due to conditions such as:
+Invalid mapping configuration will cause the account creation to fail.
+Bad mapping may be due to conditions such as:
 
 * Invalid external attribute name.
 * Invalid Zimbra attribute name.
@@ -667,79 +638,75 @@ attribute=integer).
 --
 
 `zimbraAutoProvNotificationFromAddress`::
-
-    Defines the email address to put in the *From* header for the Welcome
-    email sent to the newly created account.  If not set, no notification
-    email is sent to the newly created account.
+Defines the email address to put in the *From* header for the Welcome
+email sent to the newly created account.  If not set, no notification
+email is sent to the newly created account.
 
 `zimbraAutoProvNotificationSubject`::
-
-    Template used to construct the subject of the notification message sent
-    to the user when the user's account is auto provisioned.
+Template used to construct the subject of the notification message
+sent to the user when the user's account is auto provisioned.
 +
 Supported variables: `${ACCOUNT_ADDRESS}`, `${ACCOUNT_DISPLAY_NAME}`
 
 `zimbraAutoProvNotificationBody`::
-
-    Template used to construct the subject of the notification message sent
-    to the user when the user’s account is auto provisioned.
+Template used to construct the subject of the notification message
+sent to the user when the user's account is auto provisioned.
 +
 Supported variables: `${ACCOUNT_ADDRESS}`, `${ACCOUNT_DISPLAY_NAME}`
 
 `zimbraAutoProvListenerClass`::
-
-    Domain setting to define the class name of auto provision listener.
-    The class must implement the
-    `com.zimbra.cs.account.Account.AutoProvisionListener` interface.  The
-    singleton listener instance is invoked after each account is auto
-    created in Zimbra.  Listener can be pluthe gged in as a server
-    extension to handle tasks like updating the account auto provision
-    status in the external LDAP directory.
+Domain setting to define the class name of auto provision listener.
+The class must implement the
+`com.zimbra.cs.account.Account.AutoProvisionListener` interface.  The
+singleton listener instance is invoked after each account is auto
+created in Zimbra.  Listener can be plugged in as a server
+extension to handle tasks like updating the account auto provision
+status in the external LDAP directory.
 +
-At each eager provision interval, {product-abbrev} does an LDAP search based on the
-value configured in `zimbraAutoProvLdapSearchFilter`.  Returned entries
-from this search are candidates to be auto provisioned in this batch.  The
-`zimbraAutoProvLdapSearchFilter` should include an assertion that will only
-hit entries in the external directory that have not yet been provisioned in
-{product-abbrev}, otherwise it's likely the same entries will be repeated pulled in to
-{product-abbrev}.  After an account is auto provisioned in {product-abbrev},
+At each eager provision interval, {product-abbrev} does an LDAP search
+based on the value configured in `zimbraAutoProvLdapSearchFilter`.
+Returned entries from this search are candidates to be auto
+provisioned in this batch.  The `zimbraAutoProvLdapSearchFilter`
+should include an assertion that will only hit entries in the external
+directory that have not yet been provisioned in {product-abbrev},
+otherwise it's likely the same entries will be repeated pulled in to
+{product-abbrev}.  After an account is auto provisioned in
+{product-abbrev},
 `com.zimbra.cs.account.Account.AutoProvisionListener.postCreate
-(Domain domain, Account acct, String external DN)` will be called by the
-auto provisioning framework.  Customer can implement the
-AutoProvisionListener interface in a {product-abbrev} server extension and get their
-`AutoProvisionListener.postCreate()` get called.  The implementation of
-customer's post Create method can be, for example, setting an attribute
-in the external directory on the account just provisioned in {product-abbrev}.  The
-attribute can be included as a condition in the
-`zimbraAutoProvLdapSearchFilter`, so the entry won't be returned again by
-the LDAP search in the next interval.
+(Domain domain, Account acct, String external DN)` will be called by
+the auto provisioning framework.  Customer can implement the
+AutoProvisionListener interface in a {product-abbrev} server extension
+and get their `AutoProvisionListener.postCreate()` get called.  The
+implementation of customer's post Create method can be, for example,
+setting an attribute in the external directory on the account just
+provisioned in {product-abbrev}.  The attribute can be included as a
+condition in the `zimbraAutoProvLdapSearchFilter`, so the entry won't
+be returned again by the LDAP search in the next interval.
 
 `zimbraAutoProvBatchSize`::
-
-    Domain | Global setting to define the maximum number of accounts to
-    process in each interval for EAGER auto provision.
+Domain | Global setting to define the maximum number of accounts to
+process in each interval for EAGER auto provision.
 
 `zimbraAutoProvScheduledDomains`::
-
-    Server attribute that lists the domains scheduled for EAGER auto
-    provision on this server.  Scheduled domains must have EAGER mode
-    enabled in `zimbraAutoProvMode`.  Multiple domains can be scheduled on a
-    server for EAGER auto provision.  Also, a domain can be scheduled on
-    multiple servers for EAGER auto provision.
+Server attribute that lists the domains scheduled for EAGER auto
+provision on this server.  Scheduled domains must have EAGER mode
+enabled in `zimbraAutoProvMode`.  Multiple domains can be scheduled on
+a server for EAGER auto provision.  Also, a domain can be scheduled on
+multiple servers for EAGER auto provision.
 
 `zimbraAutoProvPollingInterval`::
-
-    Domain | Global setting to define the interval between successive
-    polling and provisioning accounts in EAGER mode.  The actual interval
-    might take longer since it can be affected by two other factors:
-    `zimbraAutoProvBatchSize` and number of domains configured in
-    `zimbraAutoProvScheduledDomains`.
+Domain | Global setting to define the interval between successive
+polling and provisioning accounts in EAGER mode.  The actual interval
+might take longer since it can be affected by two other factors:
+`zimbraAutoProvBatchSize` and number of domains configured in
+`zimbraAutoProvScheduledDomains`.
 +
-At each interval, the auto provision thread iterates through all domains in
-`zimbraAutoProvScheduledDomains` and auto creates accounts up to
-`domain.zimbraAutoProvBatchSize`.  If that process takes longer than
-`zimbraAutoProvPollingInterval` than the next iteration starts immediately
-instead of waiting for `zimbraAutoProvPollingInterval` amount of time.
+At each interval, the auto provision thread iterates through all
+domains in `zimbraAutoProvScheduledDomains` and auto creates accounts
+up to `domain.zimbraAutoProvBatchSize`.  If that process takes longer
+than `zimbraAutoProvPollingInterval` than the next iteration starts
+immediately instead of waiting for `zimbraAutoProvPollingInterval`
+amount of time.
 +
 * If set to 0 when server starts up, the auto provision thread will not
 start.
@@ -748,28 +715,26 @@ provision thread will be shutdown.
 * If changed from 0 to a non-0 value while server is running, the auto
 provision thread will be started.
 
-=== Place holders
+[[auto_provisioning_placeholders]]
+=== Placeholders
 
-Table 22: Place holders for use with auto provisioning attributes
-
-[cols=",,",options="header",]
+.Placeholders for use with auto provisioning attributes
+[cols="1,2,2",options="header",]
 |=======================================================================
 |Tag |Description |Result
 
-|%/n |User name and the @ symbol  |This returns _user1@domain.com_
+|%/n |User name and the @ symbol  |This returns _user1@example.com_
 
 |%u |User name without the @ symbol  |This returns _user1_.
 
-|%d |Domain  |This returns _domain_._com_
+|%d |Domain  |This returns _example.com_
 
-|%D |Domain as dc |This returns _domain,dc=com_
+|%D |Domain as dc |This returns _example,dc=com_
 
 |=======================================================================
 
 [[eager_mode_configuration]]
 === Eager Mode Configuration
-.CLI
-****
 
 With Eager mode, {product-abbrev} polls the external directory for accounts to auto
 provision.  You configure how often the external directory is polled for
@@ -778,26 +743,29 @@ domains to be scheduled for account auto-provisioning on specified servers.
 
 . Log in to the {product-abbrev} server as zimbra and type zmprov at the command
 prompt.
++
+[source,bash]
+----
+zmprov
+----
 
 . Enable EAGER mode on the domain.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvMode EAGER
+md <example.com> zimbraAutoProvMode EAGER
 ----
 
 . Set the maximum number of accounts to process in each interval
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvBatchSize <#>
+md <example.com> zimbraAutoProvBatchSize <#>
 ----
 
 . Configure the interval (in minutes) between polling and provisioning of
 accounts.  This must be set to a non-0 value for the auto provisioning
-thread to start.
-+
-Default =15 minutes.
+thread to start. Default = 15 minutes.
 +
 [source,bash]
 ----
@@ -811,7 +779,8 @@ A domain can be scheduled on multiple servers.
 +
 [source,bash]
 ----
-ms <server.com> +zimbraAutoProvScheduledDomains <domain1.com> +zimbraAutoProvScheduledDomains <domain2.com>
+ms <server.com> +zimbraAutoProvScheduledDomains <domain1.com> \
+  +zimbraAutoProvScheduledDomains <domain2.com>
 ----
 
 . Configure the external LDAP settings:
@@ -820,7 +789,7 @@ ms <server.com> +zimbraAutoProvScheduledDomains <domain1.com> +zimbraAutoProvSch
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapURL “ldap:// xxx.xxx.xxx.xxx:<port>
+md <example.com> zimbraAutoProvLdapURL "ldap://xxx.xxx.xxx.xxx:<port>"
 ----
 +
 The LDAP port is typically 389.
@@ -829,17 +798,17 @@ The LDAP port is typically 389.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapStartTlsEnabled TRUE
+md <example.com> zimbraAutoProvLdapStartTlsEnabled TRUE
 ----
 
 .. LDAP admin bind DN for auto provision:
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapAdminBindDn "cn=admin, dc=autoprov, dc=company, dc=com"
+md <example.com> zimbraAutoProvLdapAdminBindDn "cn=admin, dc=autoprov, dc=company, dc=com"
 ----
 
-.. Administrator’s LDAP search bind password for auto provision.
+.. Administrator's LDAP search bind password for auto provision.
 +
 [source,bash]
 ----
@@ -852,10 +821,10 @@ Example using the LDAP search filter:
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapSearchFilter “(uid=<%placeholder>)”
+md <example.com> zimbraAutoProvLdapSearchFilter "(uid=<%placeholder>)"
 ----
 +
-Refer to <<auto_provisioning_placeholders,Place Holders>> for supported
+Refer to <<auto_provisioning_placeholders,Placeholders>> for supported
 placeholders.
 
 ..  LDAP search base for auto provisioning
@@ -866,12 +835,11 @@ LDAP directory root, `rootDSE`, is the starting point.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapSearchBa
-
-md <domain.com> zimbraAutoProvLdapBindDn <“placeholder1”>
+md <example.com> zimbraAutoProvLdapSearchBase "dc=autoprov,dc=company,dc=com"
+md <example.com> zimbraAutoProvLdapBindDn <"placeholder1">
 ----
 +
-Refer to <<auto_provisioning_placeholders,Place Holders>> for supported
+Refer to <<auto_provisioning_placeholders,Placeholders>> for supported
 placeholders.
 
 . (Optional) Define the attribute name that is mapped to the local part of
@@ -881,7 +849,7 @@ account name is the principal user name used to authenticate to {product-abbrev}
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvAccountNameMap < value>
+md <example.com> zimbraAutoProvAccountNameMap <value>
 ----
 
 . (Optional) Map the attribute values from the external entry to the {product-abbrev}
@@ -898,7 +866,7 @@ description on the {product-abbrev} account, type
 +
 [source,bash]
 ----
-md <domain.com> +zimbraAutoProvAttrMap sn=displayName +zimbraAutoProvAttrMap description=description
+md <example.com> +zimbraAutoProvAttrMap sn=displayName +zimbraAutoProvAttrMap description=description
 ----
 
 . (Optional) If you want to send a Welcome email to new accounts, enter the
@@ -906,7 +874,7 @@ _from_ address of the originator.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvNotificationFromAddress <name@domain.com>
+md <example.com> zimbraAutoProvNotificationFromAddress <name@example.com>
 ----
 
 .  To exit zmprov, type
@@ -915,11 +883,8 @@ md <domain.com> zimbraAutoProvNotificationFromAddress <name@domain.com>
 ----
 exit
 ----
-****
 
 === Lazy Mode Configuration
-.CLI
-****
 Lazy mode auto provisioning automatically creates a new account after a
 user authenticates from an external authentication mechanisms (LDAP,
 preauth, Kerberos 5, and/or Spnego).
@@ -931,7 +896,7 @@ prompt.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvMode LAZY
+md <example.com> zimbraAutoProvMode LAZY
 ----
 
 . Select the external authentication mechanism for the LAZY mode: LDAP,
@@ -948,7 +913,7 @@ md <example.com> zimbraAutoProvAuthMech <type> +zimbraAutoProvAuthMech <type2>
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapURL "ldap:// xxx.xxx.xxx.xxx:<port>"
+md <example.com> zimbraAutoProvLdapURL "ldap://xxx.xxx.xxx.xxx:<port>"
 ----
 +
 The LDAP port is usually 389.
@@ -957,7 +922,7 @@ The LDAP port is usually 389.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapStartTlsEnabled TRUE
+md <example.com> zimbraAutoProvLdapStartTlsEnabled TRUE
 ----
 
 ..  LDAP Admin bind DN for auto provision in the format
@@ -965,12 +930,12 @@ md <domain.com> zimbraAutoProvLdapStartTlsEnabled TRUE
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapAdminBindDn <"bindDN">
+md <example.com> zimbraAutoProvLdapAdminBindDn <"bindDN">
 ----
 +
 For example, `"cn=admin, dc=autoprov, dc=company, dc=com"`
 
-..  Administrator’s LDAP search bind password for auto provision.
+..  Administrator's LDAP search bind password for auto provision.
 +
 [source,bash]
 ----
@@ -984,10 +949,10 @@ Example: using LDAP search filter:
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapSearchFilter <"placeholder">
+md <example.com> zimbraAutoProvLdapSearchFilter <"placeholder">
 ----
 +
-Refer to <<auto_provisioning_placeholders,Place Holders>> for supported
+Refer to <<auto_provisioning_placeholders,Placeholders>> for supported
 placeholders.
 +
 [NOTE]
@@ -1001,7 +966,7 @@ the LDAP directory root, `rootDSE`, is the starting point.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapSearchBase <"location">
+md <example.com> zimbraAutoProvLdapSearchBase <"location">
 ----
 +
 For example, `"dc=autoprov,dc=company,dc-com"`
@@ -1011,10 +976,11 @@ provisioning.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvLdapBindDn "uid=%<placeholder1>, %<placeholder2>"
+md <example.com> zimbraAutoProvLdapBindDn "uid=%<placeholder1>, %<placeholder2>"
 ----
 +
-Refer to <<auto_provisioning_placeholders,Place Holders>> for supported placeholders.
+Refer to <<auto_provisioning_placeholders,Placeholders>> for supported
+placeholders.
 
 . (Optional) Identify the attribute name on the external entry that
 contains the local part of the account name to be provisioned in {product-abbrev}.  If
@@ -1023,7 +989,7 @@ user used to authenticate to {product-abbrev}.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvAccountNameMap <value>
+md <example.com> zimbraAutoProvAccountNameMap <value>
 ----
 
 . (Optional) Map the attribute values from the external entry to the {product-abbrev}
@@ -1037,7 +1003,7 @@ the {product-abbrev} account, type as
 +
 [source,bash]
 ----
-md <domain.com> +zimbraAutoProvAttrMap sn=displayName +zimbraAutoProvAttrMap description=description
+md <example.com> +zimbraAutoProvAttrMap sn=displayName +zimbraAutoProvAttrMap description=description
 ----
 
 . (Optional)  If you want to send a *Welcome* email to new accounts, enter
@@ -1045,16 +1011,13 @@ the _from_ address of the originator.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvNotificationFromAddress <name@domain.com>
+md <example.com> zimbraAutoProvNotificationFromAddress <name@example.com>
 ----
 
 . Exit zmprov, type `exit`.
-****
 
 === Manual Mode Configuration
 
-.CLI
-****
 Use the Manual Mode setting to disable auto provisioning with an external
 LDAP server.
 
@@ -1065,9 +1028,8 @@ command prompt.
 +
 [source,bash]
 ----
-md <domain.com> zimbraAutoProvMode MANUAL
+md <example.com> zimbraAutoProvMode MANUAL
 ----
-****
 
 == Managing Resources
 
@@ -1114,24 +1076,24 @@ if these are set up.
 
 When the meeting invite is sent, an email is sent to the resource account,
 and, based on the scheduling policy, if the resource is free the meeting is
-automatically entered in the resource’s calendar and the resource is shown
+automatically entered in the resource's calendar and the resource is shown
 as Busy.
 
 === Set Up the Scheduling Policy
 
-The scheduling policy establishes how the resource’s calendar is
+The scheduling policy establishes how the resource's calendar is
 maintained.  The following resource scheduling values can be set up:
 
-* *Auto decline all recurring appointments*.  This value is enabled when
+* *Auto decline all recurring appointments* -- This value is enabled when
 theresource can be scheduled for only one meeting at a time.  No recurring
 appointments can be scheduled for this resource.
 
-* *Auto accept if available, auto-decline on conflict*.  When this option
+* *Auto accept if available, auto-decline on conflict* -- When this option
 isselected, the resource account automatically accepts appointments unless
 the resource is already scheduled.  The free/busy times can be viewed.  You
 can modify the auto-decline rule to accept some meetings that conflict.
 
-* *Manual accept, auto decline on conflict*.  When this option is selected,
+* *Manual accept, auto decline on conflict* -- When this option is selected,
 theresource account automatically declines all appointments that conflict.
 Appointment requests that do not conflict are marked as tentative in the
 resource calendar and must be manually accepted.  If you set this up,
@@ -1139,7 +1101,7 @@ configure the forwarding address so a copy of the invite is sent to the
 account that can manually accept the invitation.  You can modify the
 auto-decline rule to accept some meetings that conflict.
 
-* *Auto accept always*.  The resource account automatically accepts
+* *Auto accept always* -- The resource account automatically accepts
 allappointments that are scheduled.  In this case, free/busy information is
 not maintained, thus more than one meeting could schedule the resource at
 the same time.  Because the resource always accepts the invitation, the
@@ -1147,18 +1109,18 @@ suggested use for this policy would be for a frequently used location off
 premises that you want the location address to be included in the invite to
 attendees.
 
-* *No auto accept or decline*.  The resource account is manually managed.
-Adelegated user must log into the resource account and accept or decline
+* *No auto accept or decline* -- The resource account is manually managed.
+A delegated user must log into the resource account and accept or decline
 all requests.
 
-*Conflict Rules* For accounts that include the auto decline on conflict
-value, youcan set up a threshold, either as a number of conflicts or as a
+*Conflict Rules* -- For accounts that include the auto decline on conflict
+value, you can set up a threshold, either as a number of conflicts or as a
 percentage of all the recurring appointments to partially accept recurring
 appointments.
 
 *Maximum allowed number of conflicts* and/or *Maximum allowed percent of
 conflicts* are configured to allow a recurring resource to be scheduled
-even if itis not available for all the requested recurring appointment
+even if it is not available for all the requested recurring appointment
 dates.
 
 The resource accepts appointments even if there are conflicts until either
@@ -1170,7 +1132,7 @@ series to work, both fields must be set to nonzero values.
 
 You can log on to the resource account and set preferences for the
 resource.  The *Resource Accounts Preference > Calendar* can be configured
-to let users manage the Resource’s Calendar.  You can configure the
+to let users manage the Resource's Calendar.  You can configure the
 following options to manage the resource.
 
 * An address to forward invites.  If the forwarding address was set up when
@@ -1178,7 +1140,7 @@ the account was provisioned, you can change the address
 
 * Who can use this resource.  In the Permissions section, Invites, select
 *Allow only the following internal users to invite me to meetings* and add
-*theappropriate users' email addresses to the list.
+the appropriate users' email addresses to the list.
 
 You can share the resource calendar with a user and give the user Manager
 rights.  Users delegated as Manager have full administrative rights for
