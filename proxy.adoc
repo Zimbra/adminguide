@@ -26,14 +26,14 @@ Benefits for using Zimbra Proxy include:
 * URL Rewriting
 
 For more information, see the wiki page
-http://wiki.zimbra.com/wiki/Zimbra_Proxy_Guide[Zimbra_Proxy_Guide].
+https://wiki.zimbra.com/wiki/Zimbra_Proxy_Guide[Zimbra_Proxy_Guide].
 
 == Zimbra Proxy Components
 
 Zimbra Proxy is designed to provide a HTTP/POP/IMAP proxy that is quick,
 reliable, and scalable. Zimbra Proxy includes the following:
 
-[cols=",",options="header",]
+[cols="1,2",options="header",]
 |=======================================================================
 |Component |Description
 
@@ -82,7 +82,7 @@ connecting directly to {product-name} Mailbox.
 == Changing the Zimbra Proxy Configuration
 
 When Zimbra proxy is configured, the Zimbra proxy config performs keyword
-substitution as necessary with values from the . LDAP configuration and
+substitution as necessary with values from the LDAP configuration and
 localconfig.
 
 If changes are required after the Zimbra Proxy is set up, modify the Zimbra
@@ -177,8 +177,6 @@ master.
 Use steps in this section if your configuration includes a
 separate proxy server.
 
-.CLI
-****
 . On each Zimbra mailbox server that you want to proxy with, enable the
 proxy for IMAP/POP proxy.
 +
@@ -190,21 +188,21 @@ proxy for IMAP/POP proxy.
 This configures the following:
 +
 --
-[cols=",",options="header",]
+[cols="m,",options="header",]
 |====================================================
 |Port Attributes |Setting
 
-|`zimbraImapBindPort` |7143
-|`zimbraImapProxyBindPort` |143
-|`zimbraImapSSLBindPort` |7993
-|`zimbraImapSSLProxyBindPort` |993
-|`zimbraPop3BindPort` |7110
-|`zimbraPop3ProxyBindPort` |110
-|`zimbraPop3SSLBindPort` |7995
-|`zimbraPop3SSLProxyBindPort` |995
-|`zimbralmapCleartextLoginEnabled` |TRUE
-|`zimbraReverseProxyLookupTarget` |TRUE
-|`zimbraPop3CleartextLoginEnabled` |TRUE
+|zimbraImapBindPort |7143
+|zimbraImapProxyBindPort |143
+|zimbraImapSSLBindPort |7993
+|zimbraImapSSLProxyBindPort |993
+|zimbraPop3BindPort |7110
+|zimbraPop3ProxyBindPort |110
+|zimbraPop3SSLBindPort |7995
+|zimbraPop3SSLProxyBindPort |995
+|zimbralmapCleartextLoginEnabled |TRUE
+|zimbraReverseProxyLookupTarget |TRUE
+|zimbraPop3CleartextLoginEnabled |TRUE
 
 |=======================================================================
 --
@@ -215,12 +213,9 @@ This configures the following:
 ----
 zmcontrol restart
 ----
-****
 
 *Set Up the Proxy Node*
 
-.CLI
-****
 On each proxy node that has the proxy service installed, enable the proxy
 for the web.
 [source,bash]
@@ -230,30 +225,27 @@ for the web.
 
 This configures the following:
 
-[cols=",",options="header",]
+[cols="m,",options="header",]
 |====================================================
 |*Port Attribute* |*Setting*
 
-|`zimbraImapBindPort` |7143
-|`zimbraImapProxyBindPort` |143
-|`zimbraImapSSLBindPort` |7993
-|`zimbraImapSSLProxyBindPort` |993
-|`zimbraPop3BindPort` |7110
-|`zimbraPop3ProxyBindPort` |110
-|`zimbraPop3SSLBindPort` |7995
-|`zimbraPop3SSLProxyBindPort` |995
-|`zimbraReverseProxyMailEnabled` |TRUE
+|zimbraImapBindPort |7143
+|zimbraImapProxyBindPort |143
+|zimbraImapSSLBindPort |7993
+|zimbraImapSSLProxyBindPort |993
+|zimbraPop3BindPort |7110
+|zimbraPop3ProxyBindPort |110
+|zimbraPop3SSLBindPort |7995
+|zimbraPop3SSLProxyBindPort |995
+|zimbraReverseProxyMailEnabled |TRUE
 |====================================================
 
-****
 
-*Setting Up a Single Node*
+==== Set Up a Single Node
 
 Use steps in this section if Zimbra proxy is installed with {product-name}
 on the same server.
 
-.CLI
-****
 . Enable the proxy for the web.
 +
 [source,bash]
@@ -264,22 +256,22 @@ on the same server.
 This configures the following:
 +
 --
-[cols=",",options="header",]
+[cols="m,",options="header",]
 |====================================================
 |Port Attribute |Setting
 
-|`zimbraImapBindPort` |7143
-|`zimbraImapProxyBindPort` |143
-|`zimbraImapSSLBindPort` |7993
-|`zimbraImapSSLProxyBindPort` |993
-|`zimbraPop3BindPort` |7110
-|`zimbraPop3ProxyBindPort` |110
-|`zimbraPop3SSLBindPort` |7995
-|`zimbraPop3SSLProxyBindPort` |995
-|`zimbraImapCleartextLoginEnabled` |TRUE
-|`zimbraReverseProxyLookupTarget` |TRUE
-|`zimbraPop3CleartextLoginEnabled` |TRUE
-|`zimbraReverseProxyMailEnabled` |TRUE
+|zimbraImapBindPort |7143
+|zimbraImapProxyBindPort |143
+|zimbraImapSSLBindPort |7993
+|zimbraImapSSLProxyBindPort |993
+|zimbraPop3BindPort |7110
+|zimbraPop3ProxyBindPort |110
+|zimbraPop3SSLBindPort |7995
+|zimbraPop3SSLProxyBindPort |995
+|zimbraImapCleartextLoginEnabled |TRUE
+|zimbraReverseProxyLookupTarget |TRUE
+|zimbraPop3CleartextLoginEnabled |TRUE
+|zimbraReverseProxyMailEnabled |TRUE
 |====================================================
 --
 
@@ -289,7 +281,6 @@ This configures the following:
 ----
 zmcontrol restart
 ----
-****
 
 == Configuring Zimbra HTTP Proxy
 
@@ -297,8 +288,8 @@ Zimbra Proxy can also reverse proxy HTTP requests to the right back-end
 server.
 
 For example, users can use a web browser to connect to the proxy server at
-http://mail.example.com. The connection from users whose mailboxes live on
-mbs1. example.com is proxied to mbs1.example.com by the proxy running on
+https://mail.example.com. The connection from users whose mailboxes live on
+mbs1.example.com is proxied to mbs1.example.com by the proxy running on
 the mail.example.com server, REST and CalDAV clients, Zimbra Connector for
 Outlook, Zimbra Connector for BES, and Zimbra Mobile Sync devices are also
 supported by the proxy.
@@ -307,7 +298,7 @@ supported by the proxy.
 When ZCB is configured in {product-name}, the proxy configuration
 must be changed from the directions here. See the Zimbra wiki article
 Installing Blackberry Enterprise Server in a Zimbra Proxy Environment at
-http://wiki.zimbra.com/wiki/Installing_Blackberry_Enterprise_Server_%28ZCB/BES%29_in_a_Zimbra_Proxy_Environment.
+https://wiki.zimbra.com/wiki/Installing_Blackberry_Enterprise_Server_%28ZCB/BES%29_in_a_Zimbra_Proxy_Environment.
 
 HTTP reverse proxy routes requests as follows:
 
@@ -339,8 +330,6 @@ configured in the LDAP master.
 Use steps in this section if your configuration includes a separate proxy
 server.
 
-.CLI
-****
 . On each Zimbra mailbox server that you want to proxy with, enable the
 proxy for the web.
 +
@@ -352,15 +341,15 @@ proxy for the web.
 This configures the following:
 +
 --
-[cols=",",options="header",]
+[cols="m,",options="header",]
 |====================================================
 |Attribute |Setting
 
-|`zimbraMailReferMode` |reverse-proxied.
-|`zimbraMailPort` |8080 (to avoid port conflicts)
-|`zimbraMailSSLPort` |8443 (to avoid port conflicts)
-|`zimbraReverseProxyLookupTarget` |TRUE
-|`zimbraMailMode` |HTTP
+|zimbraMailReferMode |reverse-proxied.
+|zimbraMailPort |8080 (to avoid port conflicts)
+|zimbraMailSSLPort |8443 (to avoid port conflicts)
+|zimbraReverseProxyLookupTarget |TRUE
+|zimbraMailMode |HTTP
 |====================================================
 --
 
@@ -378,12 +367,9 @@ REST URLs, email, and Briefcase folders.
 ----
 zmprov modifyDomain <domain.com> zimbraPublicServiceHostname <hostname.domain.com>
 ----
-****
 
 *Setting Up Proxy Node*
 
-.CLI
-****
 On each proxy node that has the proxy service installed, enable the proxy
 for the web.
 
@@ -394,33 +380,30 @@ for the web.
 
 This configures the following:
 
-[cols=",",options="header",]
+[cols="m,",options="header",]
 |=================================================================
 |Attribute |Setting
 
-|`zimbraMailReferMode` |
+|zimbraMailReferMode |
 reverse-proxied.
 To set the proxy server mail mode, add the -x option to the command, with
 the specific mode as either http, https, both, redirect, or mixed.
 
-|`zimbraMailProxyPort` |80 (to avoid port conflicts).
-|`zimbraMailSSLProxyPort` |443 (to avoid port conflicts).
-|`zimbraReverseProxyHttpEnabled` |TRUE (to indicate that Web proxy is enabled).
-|`zimbraReverseProxyMailMode` |HTTP (default)
+|zimbraMailProxyPort |80 (to avoid port conflicts).
+|zimbraMailSSLProxyPort |443 (to avoid port conflicts).
+|zimbraReverseProxyHttpEnabled |TRUE (to indicate that Web proxy is enabled).
+|zimbraReverseProxyMailMode |HTTP (default)
 
 |=================================================================
 
 To set the proxy server mail mode, add the `-x` option to the command
 with the specific mode: *http*, *https*, *both*, *redirect*, *mixed*.
-****
 
-*Set Up a Single Node for HTTP Proxy*
+==== Setting Up a Single Node for HTTP Proxy
 
 Use steps in this section if Zimbra proxy is installed along with {product-abbrev} on
 the same server.
 
-.CLI
-****
 . On each zimbra mailbox server that you want to proxy with, enable
 the proxy for the web.
 +
@@ -432,7 +415,7 @@ the proxy for the web.
 This configures the following:
 +
 --
-[cols=",",options="header",]
+[cols="m,",options="header",]
 |===============================================================
 |*Attribute* |*Setting*
 
@@ -468,7 +451,6 @@ URLs, email and Briefcase folders.
 ----
 zmprov modifyDomain <domain.com> zimbraPublicServiceHostname <hostname.domain.com>
 ----
-****
 
 *Set Up Proxy to use Clear Text for Upstream Connections*
 
@@ -524,8 +506,6 @@ localconfig `zimbra_http_originating_ip` header attribute. When a user logs
 in, this IP address and the user’s address are verified in the Zimbra
 mailbox log.
 
-.CLI
-****
 Set each proxy IP address in the attribute. For example, if you have two
 proxy servers:
 
@@ -550,8 +530,6 @@ zimbra_http originating_ip_header = X-Forwarded-For
 ----
 --
 
-****
-
 == Configuring Zimbra Proxy for Kerberos Authentication
 
 Use steps in this section if you use the Kerberos5 authenticating
@@ -559,10 +537,8 @@ mechanism, and want to configure it for the IMAP and POP proxy.
 
 [NOTE]
 Make sure that your Kerberos5 authentication mechanism is correctly
-configured. See <<zimbra_ldap_service, Zimbra LDAP Service>>
+configured. See <<zimbra_ldap_service,Zimbra LDAP Service>>
 
-.CLI
-****
 . On each proxy node, set the zimbraReverseProxyDefaultRealm server
 attribute to the realm name corresponding to the proxy server. For example:
 +
@@ -595,4 +571,3 @@ zmprov ms proxyl.isp.net zimbraReverseProxyPop3SaslGssapiEnabled TRUE
 ----
 zmproxyctl restart
 ----
-****

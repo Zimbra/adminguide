@@ -8,13 +8,11 @@ Zimbra servers.
 == How to read the crontab
 
 Each entry in a crontab file consists of six fields, specified in the
-following order
-
-=== minute hour day month weekday command
+following order: minute, hour, day, month, weekday, command
 
 The fields are separated by blank spaces or tabs.
 
-[cols=",",options="header",]
+[cols="1,4",options="header",]
 |=======================================================================
 |Field |Description
 
@@ -29,12 +27,12 @@ The fields are separated by blank spaces or tabs.
 
 When an asterisk (*) is displayed, it means all possible values for the
 field. For example, an asterisk in the hour time field would be
-equivalent to “every hour”.
+equivalent to "every hour".
 
 == {product-abbrev} Cron Jobs
 
-You can view the {product-abbrev} crontab by logging on as zimbra and typing `crontab
--l`.
+You can view the {product-abbrev} crontab by logging on as zimbra and typing
+`crontab -l`.
 
 === Scheduled jobs
 The following cron jobs are scheduled to run for {product-abbrev}:
@@ -57,7 +55,7 @@ Status logging job runs every 2 minutes.
 
 Full and increment backups are scheduled to run according to the schedule
 defined by `zmschedulebackup` command. By default the full backup is
-sched-uled for 1:00 a.m., every Saturday. The incremental backups are
+scheduled for 1:00 a.m., every Saturday. The incremental backups are
 scheduled for 1:00 a.m., Sunday through Friday.
 
 By default, backups older then a month are deleted on the first of each
@@ -80,29 +78,29 @@ are put in quarantine. Messages older than seven days are deleted at
 
 The `ANALYZE TABLE` statement is run on all tables in the database to
 update the statistics for all indexes. This is done to make sure that the
-MySQL query opti-mizer picks the correct es when executing SQL
-statements. This script is run 1:30 a.m.on Sunday.
+SQL query optimizer picks the correct indexes when executing SQL
+statements. This script is run 1:30 a.m. on Sunday.
 
 ==== Report on any database inconsistencies
 
-`zmdbintegrityreport` is run weekly to check the MySQL database for
-corruptionand will notify the administrator if any corruption is found.
+`zmdbintegrityreport` is run weekly to check the SQL database for
+corruption and will notify the administrator if any corruption is found.
 When this is run, it may consume a significant amount of I/O. If you find
 that it is an issue, you may want to change the frequency with which
-`zmdbintegrityreport` is run by editing the {product-abbrev} crontab entry.  This report
-runs at 11:00 p.m. Sundays.
+`zmdbintegrityreport` is run by editing the {product-abbrev} crontab entry.
+This report runs at 11:00 p.m. Sundays.
 
 Large sites may opt to disable this by setting:
 [source,bash]
 ----
-zmlocalconfig -e zmdbintegrityre-port_disabled=TRUE
+zmlocalconfig -e zmdbintegrityreport_disabled=TRUE
 ----
 
 If you choose to disable this, it is recommended that the integrity report
 be run by hand during the normal maintenance windows and prior to running
 any {product-abbrev} upgrades.
 
-==== Monitor for multiple mysqld tp prevent corruption
+==== Monitor for multiple mysqld to prevent corruption
 
 A script is executed to see if mysqld process is running to detect cases
 where corruption is likely to be caused. An email is generated if it finds
@@ -112,20 +110,20 @@ more than 1 mysqld process running. The script runs every 5 minutes.
 
 ==== process logs
 
-*zmlogprocess* runs every 10 minutes to parse logs and produce MTA
-metrics(as/av, volume, count, etc).
+`zmlogprocess` runs every 10 minutes to parse logs and produce MTA
+metrics (as/av, volume, count, etc).
 
 ==== Daily reports
 
-When the logger package is installed, a daily mail report is automatically
-sched-uled in the crontab. The report runs every morning at 11:30 and is
-sent to the administrator’s email address.
+When the `logger` package is installed, a daily mail report is automatically
+scheduled in the crontab. The report runs every morning at 11:30 and is
+sent to the administrator's email address.
 
 === Jobs for crontab.mta
 
 ==== Queue logging
 
-The zmqueue report status via the syslog is reviewed. This is logger
+The `zmqueue` report status via the syslog is reviewed. This is logger
 data. The status is updated every 10 minutes.
 
 ==== Spam training
@@ -142,7 +140,7 @@ Zimbra MTA. The job runs at 11:00 p.m.
 
 ==== Spam Bayes auto-expiry
 
-Spam bayes auto-expiry maintains the spam-assassin Bayes database. This
+Spam bayes auto-expiry maintains the spamassassin Bayes database. This
 keeps the database to manageable size ensuring spam processing remains as
 quick as possible. This runs every day at 11:20 p.m.
 
@@ -152,7 +150,7 @@ This job is used to clean up the amavisd temp files. It runs at 5:15
 a.m. and at 8:15 p.m.
 
 == Single Server Crontab -l Example
-.Output of `contab -l`
+.Output of `crontab -l`
 ====
 ----
 # ZIMBRASTART -- DO NOT EDIT ANYTHING BETWEEN THIS LINE AND ZIMBRAEND
@@ -229,13 +227,13 @@ crontab.mta
 #
 # Dspam cleanup
 #
-0 1 * * * [ -d /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.sig ] && find /opt/ zimbra/dspam/var/dspam/data/z/i/zimbra/zimbra.sig/ -type f -name \*sig -mtime +7 -exec rm {} \; > /dev/null 2>&1
-8 4 * * * [ -f /opt/zimbra/data/dspam/system.log ] && /opt/zimbra/dspam/bin/dspa m_logrotate -a 60 -l /opt/zimbra/data/dspam/system.log
-8 8 * * * [ -f /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.log ] && /opt/zimbra a/dspam/bin/dspam_logrotate -a 60 -l /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.log
+0 1 * * * [ -d /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.sig ] && find /opt/zimbra/dspam/var/dspam/data/z/i/zimbra/zimbra.sig/ -type f -name \*sig -mtime +7 -exec rm {} \; > /dev/null 2>&1
+8 4 * * * [ -f /opt/zimbra/data/dspam/system.log ] && /opt/zimbra/dspam/bin/dspam_logrotate -a 60 -l /opt/zimbra/data/dspam/system.log
+8 8 * * * [ -f /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.log ] && /opt/zimbra/dspam/bin/dspam_logrotate -a 60 -l /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.log
 #
 # Spam Bayes auto-expiry
 #
-20 23 * * * /opt/zimbra/libexec/sa-learn -p /opt/zimbra/conf/salocal.cf --dbpath /opt/zimbra/data/amavisd/.spamassassin --siteconfigpath /opt/zimbra/conf/spamas sassin --force-expire --sync > /dev/null 2>&1
+20 23 * * * /opt/zimbra/libexec/sa-learn -p /opt/zimbra/conf/salocal.cf --dbpath /opt/zimbra/data/amavisd/.spamassassin --siteconfigpath /opt/zimbra/conf/spamassassin --force-expire --sync > /dev/null 2>&1
 #
 # Clean up amavisd/tmp
 #

@@ -11,7 +11,7 @@ domains.
 
 Two frequently used delegated administrator roles, domain administrator and
 distribution list administrator, are already defined. You can add
-administrators to these pre-defined roles with no other configuration
+administrators to these predefined roles with no other configuration
 necessary.
 
 == Target Types for Granting Administrative Rights
@@ -26,8 +26,8 @@ type of access control entries you can grant on the target.
 When selecting a target type for a target consider the following:
 
 * Target. Which specific target are you granting rights? For example, if
-the target type you select is “domain”, which domain do you mean? You
-specify a specific domain’s name (Target Name = example.com). Access
+the target type you select is "domain", which domain do you mean? You
+specify a specific domain's name (Target Name = example.com). Access
 Control Entries (ACE) are granted on that target. An ACE is stored in an
 LDAP attribute on the target entry.
 
@@ -43,9 +43,9 @@ granted rights are effective. For example, the right to set the password is
 applicable only to accounts and calendar resources, but if this right is
 included in the domain targets list of rights, it is effective for all
 accounts or calendar resource in the domain.
-+
+
 .Targets for rights
-[cols=",",options="header",]
+[cols="1,3",options="header",]
 |=======================================================================
 |Target Type |Description of Target Scope
 
@@ -67,8 +67,7 @@ and calendar resources that are direct or indirect members of this
 distribution list.
 
 |Domain |
-
-Applicable to a specific domain, not to any sub- domains.
+Applicable to a specific domain, not to any sub-domains.
 
 Sub-domains must be explicitly marked as targets.
 
@@ -97,18 +96,19 @@ Zimlet entry
 == Rights
 
 Rights are the functions that a delegated administrator can or cannot
-perform on a named target. Right can be either system-defined or attribute.
+perform on a named target. A right is either system-defined or granted
+at the attribute level.
 
 === System-defined rights
 
 Types of system defined rights include:
 
-* Preset rights (*preset*). For example, createAccount creates an account;
-renameDomain, renames the domain.
+* Preset rights (*preset*). For example, `createAccount` creates an account;
+`renameDomain`, renames the domain.
 +
 Preset rights are associated with a fixed target type. For example,
-createAccount is a right only on a domain; renameAccount is a right on an
-account; see Server is a right on a server
+`createAccount` is a right only on a domain; `renameAccount` is a right on an
+account; `getServer` is a right on a server
 +
 No other rights are required to administer that action on the target.
 +
@@ -130,8 +130,8 @@ and view an attribute value. For example, the `modifyAccount` right allows
 the domain administrator to modify all attributes of the account.
 
 * Get attribute rights (`getAttrs`) let the domain administrator view an
-attribute value. For example, the getAccount right shows all the attributes
-for a user’s account.
+attribute value. For example, the `getAccount` right shows all the attributes
+for a user's account.
 
 The specific attribute being granted is configured on the target and the
 type of permission, read (get) or write (set), is specified.
@@ -143,7 +143,7 @@ grant.
 ==== Combo Rights
 
 Combo rights can be assigned to any target type and can include preset
-rights and attribute rights.You can use combo right to grant multiple
+rights and attribute rights. You can use combo right to grant multiple
 attribute rights quickly on targets.
 
 ==== Negative Rights
@@ -162,7 +162,7 @@ the target and sub-targets on which the right is granted.
 An admin group is granted domain administrator rights, including the right
 to create accounts on Domain1. AdminA is in this admin group, but you want
 AdminA to have all domain administrator rights, except the right to create
-accounts. You would grant a negative *createAccount* right to AdminA on the
+accounts. You would grant a negative `createAccount` right to AdminA on the
 target Domain1.
 
 For grants on the same level, negative rights always take precedence.  For
@@ -174,8 +174,8 @@ any account in this domain because the negative right takes precedence.
 For grants on different levels, the most specific grant takes
 precedence. For example, AdminA is granted the negative right to view
 accounts in GroupDistributionList1, which User1 is a member. AdminA is also
-granted the positive right to view account directly on User1’s account. In
-this case, AdminA can view User1’s account as the grant on the account
+granted the positive right to view account directly on User1's account. In
+this case, AdminA can view User1's account as the grant on the account
 target is more specific than the grant on the distribution list.
 
 === Using the Rights List
@@ -195,13 +195,9 @@ are listed.
 * For the other system rights, a list of attributes associated with the
 right are listed
 
-.CLI
-****
-*Viewing Combo Rights*
-
 You can use `zmprov` commands to view combo rights.
 
-* Direct sub rights of a combo right
+* Direct sub-rights of a combo right
 +
 [source,bash]
 ----
@@ -220,7 +216,7 @@ zmprov gr adminConsoleDLRights -e
 You can use `zmprov` commands to view system defined rights for a specific
 topic:
 
-.`zmprov` Commands
+.Viewing Combo Rights with zmprov
 [cols="a,a",options="header",]
 |=======================================================================
 |To View This |Use This `zmprov` Command
@@ -293,7 +289,6 @@ zmprov gar -t zimlet
 ----
 
 |=======================================================================
-****
 
 == Implementing Delegated Administration
 
@@ -317,7 +312,7 @@ account using the Administrator Wizard.
 modify rights to an existing delegated administrator or administrator group
 account.
 
-* Add, modify and delete rights directly in a target’s Access Control List
+* Add, modify and delete rights directly in a target's Access Control List
 page.
 
 === Administrator Groups and Administrators
@@ -334,7 +329,7 @@ which flags it as a delegated administrator DL. After the admin group
 administrator is created and configured with rights and admin views, you
 add administrator user accounts to the admin group.
 
-.. *Admin Account* is a user account that has Administrator enabled onthe
+.. *Admin Account* is a user account that has Administrator enabled on the
 account.
 
 . Configure the admin views for the account. You select the views from the
@@ -363,24 +358,23 @@ rights, modify rights or delete rights on existing administrator accounts.
 
 When you want to add a specific grantee or specific rights on a target you
 can edit the target directly. Each target has an ACL page which lists the
-granted ACLs. You can add, edit or delete the target’s grants.  The
+granted ACLs. You can add, edit or delete the target's grants.  The
 administration account (grantee) is updated to reflect the change.
 
 == Revoking Rights
 
 Global administrators can revoke any rights granted to an administrator.
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Manage > Accounts*
 
-Open the administrator account and click *Configure Grants*.
+Open the desired administrator account and click *Configure Grants*.
 
-. Select the right to revoke and click *Delete*.
+. Select the _right_ to revoke and click *Delete*.
 . When the dialog asks if are sure, click *Yes*.
 
 Delegated administrators can revoke rights if the right was created with
 the *Can Grant the right to other admins* enabled.
-****
 
 === Temporarily Revoke Delegated Admin Rights
 
@@ -402,16 +396,16 @@ automatically. You can assign administrator accounts to these groups.
 
 === Domain Administration Group
 
-The `zimbradomainadmins delegated` admin group grants all the rights
+The `zimbradomainadmins` delegated admin group grants all the rights
 necessary to support {product-name} domain administration for
 accounts, aliases, distribution lists and resources.
 
-Administrators who are part of the qzimbradomainadmins` group can create
+Administrators who are part of the `zimbradomainadmins` group can create
 and manage accounts including setting the account quota, aliases,
 distribution lists, and resources accounts in their domain.
 
 When domain administrators log onto the Administration Console, only the
-functions they are authorized to manage are displayed on the console’s
+functions they are authorized to manage are displayed on the console's
 Navigation pane.
 
 ==== Create Link from Zimbra Web Client Account to Admin Console
@@ -421,18 +415,15 @@ Console. To facilitate easy log in, when a delegated administrator account
 is created, their ZWC account can have a link to the Administration
 Console.
 
-.CLI
-****
-The link is created from the zmprov CLI
+The link is created from the `zmprov` CLI
 [source,bash]
 ----
-zmprov md <server.domainexample.com> zimbraWebClientAdminReference <https:// server.domainexample.com:7071/>
+zmprov md {server.example.com} zimbraWebClientAdminReference {https://server.example.com:7071/}
 ----
-****
 
 === Distribution List Administration Group
 
-The `zimbradladmin delegated` admin group grants all the rights necessary
+The `zimbradladmin` delegated admin group grants all the rights necessary
 to log on to the Administration Console and manage distribution lists.
 
 Administrators who are part of this group can
@@ -450,7 +441,7 @@ the rights to manage individual domains to the administrator account or
 administrator group.
 
 For example, to set up domanadministrator1@example.com to manage
-domainexample1 and domainexample2.com. Create a new administrator account
+domainexample1.com and domainexample2.com. Create a new administrator account
 on one of the domains to be managed.
 
 . Create the administrator account on one of the domains to be managed
@@ -467,7 +458,7 @@ grants associated with the views you select.
 +
 * On the Configure Grants page, click *Add*
 * Select the target type as *domain*
-* Enter the target’s domain name (domainexample2.com)
+* Enter the target's domain name (domainexample2.com)
 * For Right Type, select System Defined Right
 * For Right Name type, adminConsoleAccountRights. *Is Positive Right*
 should be selected.
@@ -492,36 +483,36 @@ rights, add the user to the list and make that user an administrator.
 
 . Create a new distribution list:
 +
-* *Check Admin Group*
+* Check *Admin Group*
 * Add the user who will be the administrator as a member of the DL.
-* *Go to the Admin Views page and check Distribution List View* so theadmin
+* Go to the *Admin Views* page and check *Distribution List View* so the admin
 can view the distribution list.
 * Click *Save*.
 
 . In the *Configure Grants* page, add the following rights.
 +
 .Rights
-[cols="4",options="header",]
+[cols="1m,1,1,1",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 4+|The following right let the administrator manage distribution lists.
 
-|`listdistributionlist` |dl |DL email address |SD Right
+|listDistributionList |dl |DL email address |SD Right
 
-|`adddistributionlist alias` |dl |DL email address |SD Right
+|addDistributionListAlias |dl |DL email address |SD Right
 
-|`adddistributionlist member` |dl |DL email address |SD Right
+|addDistributionListMember |dl |DL email address |SD Right
 
-|`modifyDistributionlist` |dl |DL email address |SD Right
+|modifyDistributionList |dl |DL email address |SD Right
 
-|`getdistributionlist membership` |dl |DL email address |SD Right
+|getDistributionListMembership |dl |DL email address |SD Right
 
-|`RemoveDistributionlistmember` |dl |DL email address |SD Right
+|removeDistributionListMember |dl |DL email address |SD Right
 
 4+|This domain right displays user account list that the administrator can
 select from to add to a distribution list.
 
-|`listAccount` |domain |DL email address |SD Right
+|listAccount |domain |DL email address |SD Right
 
 |=======================================================================
 
@@ -541,11 +532,11 @@ account name.
 you have chosen. For Change Password rights, do not configure these
 grants. Select *Skip*. Click *Add* to add the following right:
 +
-[cols="4",options="header",]
+[cols="1m,1,1,1",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`setAccountPassword` |domain |domain address |SD Right
+|setAccountPassword |domain |domain name |SD Right
 
 |=======================================================================
 
@@ -554,12 +545,12 @@ grants. Select *Skip*. Click *Add* to add the following right:
 View Mail access right can be granted on accounts, domains, and
 distribution lists.
 
-[cols=",,,a",options="header",]
+[cols="1m,1,1,1a",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`adminLoginAs` |
-*Either*: account, domain, dl|
+|adminLoginAs |
+account, domain, dl|
 account, domain, or distribution list address|
 SD Right footnote:[To deny the View Mail right on the target, check the box for *Is
 Negative Right (Deny)*]
@@ -580,24 +571,22 @@ account or domain administrator admin group.
 Add the System Defined Rights to each COS in the domain.
 
 .System Defined Rights for COS
-[cols="4",options="header",]
+[cols="1m,1,1,1",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`listCos` |cos |COS name |SD Right
+|listCos |cos |COS name |SD Right
 
-|`getCos` |cos |COS name |SD Right
+|getCos |cos |COS name |SD Right
 
-|`assignCos` |cos |COS name |SD Right
+|assignCos |cos |COS name |SD Right
 
-4+|This domain right displays the COS information in the user account’s
+4+|This domain right displays the COS information in the user account's
 General Information page.
 
-|`zimbraCOSId` |domain |domain address |
-Attribute Right
-
-Verb: *Write*
-
+|zimbraCOSId |domain |domain name |
+Attribute Right +
+Verb: *Write* +
 AR Target: *account*
 
 |=======================================================================
@@ -613,11 +602,11 @@ cross mailbox search request.
 The Archiving and Discovery feature must be installed for this feature to
 work.
 
-[cols=",,,",options="header",]
+[cols="1m,1,1,1",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`adminConsoleCrossMailboxSearchRights` |
+|adminConsoleCrossMailboxSearchRights |
 (combo) |
 server name where cross mailbox searches can be run |
 SD Right
@@ -629,13 +618,13 @@ accounts so that the admin can create the target mailbox to receive the
 search results. If you do not want this role to have the ability to create
 accounts, grant the following negative right as well.
 
-[cols=",,,a",options="header",]
+[cols="1m,1,1,1a",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`CreateAccount` |
+|CreateAccount |
 domain |
-domain address |
+domain name |
 SD Right footnote:[To deny the Create Account right on the target, check the box for *Is Negative Right (Deny)*]
 
 |=======================================================================
@@ -643,11 +632,11 @@ SD Right footnote:[To deny the Create Account right on the target, check the box
 If you want this admin to also view the target mailbox with the results of
 the cross mailbox search, grant the right to view that mailbox only.
 
-[cols=",,,a",options="header",]
+[cols="1m,1,1,1a",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`adminLoginAs` |
+|adminLoginAs |
 account |
 cross mailbox search target account name |
 SD Right footnote:[To deny the View Mail right on the target, check the box for *Is Negative Right (Deny)*]
@@ -659,18 +648,18 @@ SD Right footnote:[To deny the View Mail right on the target, check the box for 
 This role creates a delegated administrator role that can create, deploy
 and view Zimlets.
 
-[cols=",,,",options="header",]
+[cols="1m,1,1,1",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`adminConsoleZimletRights` |
+|adminConsoleZimletRights |
 server, domain |
-server name or domain address |
+server name or domain name |
 SD Right
 
-|`adminConsoleAccountsZimletsTabRights` |
+|adminConsoleAccountsZimletsTabRights |
 server, domain |
-server name or domain address |
+server name or domain name |
 SD Right
 
 |=======================================================================
@@ -680,13 +669,13 @@ SD Right
 This role creates a delegated administrator that can create and manage
 resources.
 
-[cols=",,,",options="header",]
+[cols="1m,1,1,1",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`adminConsoleResourceRights` |
+|adminConsoleResourceRights |
 combo |
-server name or domain address |
+server name or domain name |
 SD Right
 
 |=======================================================================
@@ -697,13 +686,13 @@ This role creates a delegated administrator that can access all the
 searches saved in the Administration Console Navigation pane, Search
 section.
 
-[cols=",,,",options="header",]
+[cols="1m,1,1,1",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`adminConsoleSavedSearchRights` |
+|adminConsoleSavedSearchRights |
 combo |
-server name or domain address |
+server name or domain name |
 SD Right
 
 |=======================================================================
@@ -714,11 +703,11 @@ This role creates a delegated administrator that can access the Server
 Status page. In addition to granting this right, you must also select the
 Admin View, *Global Server Status View*.
 
-[cols=",,,",options="header",]
+[cols="1m,1,1,1",options="header",]
 |=======================================================================
 |Right Name |Target Type |Target |Right Type
 
-|`adminConsoleServerStatusRights` |
+|adminConsoleServerStatusRights |
 global ||
 SD Right
 
