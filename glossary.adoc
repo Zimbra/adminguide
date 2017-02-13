@@ -84,6 +84,9 @@ Edge MTA::
 Entry::
     An item in the directory server, such as an account or mail host.
 
+Ephemeral Data::
+    Data which is short lived or fast changing in nature. Login timestamps, authentication tokens, etc.
+
 Failover::
     Takeover process where a spare server machine detects that a main
     server is unavailable, and the spare takes over processing for that

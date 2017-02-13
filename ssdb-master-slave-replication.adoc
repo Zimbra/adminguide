@@ -1,0 +1,351 @@
+= SSDB Master-Slave Replication
+
+One way to ensure that `SSDB` remains highly-available is to set-up
+master-slave replication and configure a system that will allow the
+backup `SSDB` instance to automatically take-over in the event that
+the primary instance goes down.  This document will describe one
+technique for accomplishing that goal.
+
+
+== Required Packages
+
+* http://ssdb.io/[SSDB]
+* http://www.keepalived.org/[Keepalived]
+
+== Overview
+
+`SSDB` will be installed on two servers.  It will be configured such
+that one server is the designated master and the other server is the
+designated slave that will constantly replicate changes from the
+master server.
+
+`Keepalived` will also be installed on these two servers.  Each
+`Keepalived` instance will monitor the other.  In the event that the
+master server goes down, `Keepalived` will detect that failure and
+promote the slave, or backup, server to master.  `Keepalived` will
+maintain a https://en.wikipedia.org/wiki/Virtual_IP_address[Virtual
+IP address] on whichever server is the current master.
+
+The {product-name} will be configured such that the
+`zimbraEphemeralBackendURL` will bind to the _Virtual IP address_ that is
+being maintained by `Keepalived`.  Once the installation and
+configuration has been completed, follow the instructions in
+link:ephemeraldata.adoc[Ephemeral Data] to update the `zimbraEphemeralBackendURL` accordingly.
+
+== Prerequisites
+
+Install `SSDB` and `Keepalived` on two servers in accordance with the
+procedure that is applicable to the Linux distribution that you are
+using.
+
+== Configuration
+
+The following configuration steps assume that you have installed
+`SSDB` to `/var/lib/ssdb` and that all `SSDB` configuration files are
+located in that same directory.  It further assumes that the internal
+host addresses are on the `192.168.56/24` network.
+
+- `192.168.56.111` - The IP address of the initial master `SSDB`
+  server
+- `192.168.56.112` - The IP address of the initial slave `SSDB` server
+- `192.168.56.120` - The virtual IP address that will be maintained by
+  `Keepalived`.
+
+
+=== SSDB Configuration, Designated (Initial) Master
+
+The IP address of this machine is `192.168.56.111`.
+
+`ssdb_master.conf`
+
+The key configuration items in the following block are:
+
+- `server/ip` - Binding to all available IP addresses
+- `server/port` - Binding to standard `SSDB` port
+- `server/deny`, `server/allow` - Restrict `SSDB` access to `localhost` and the internal (host) addresses.`
+
+
+-------------------------------------------
+# ssdb-server config
+# MUST indent by TAB!
+
+# relative to path of this file, directory must exists
+work_dir = ./var
+pidfile = ./var/ssdb.pid
+
+server:
+        ip: 0.0.0.0
+        port: 8888
+        deny: all
+        allow: 127.0.0.1
+        allow: 192.168.56
+
+replication:
+        binlog: yes
+        # Limit sync speed to *MB/s, -1: no limit
+        sync_speed: -1
+        slaveof:
+                # sync|mirror, default is sync
+                #type: sync
+
+logger:
+        level: debug
+        output: log.txt
+        rotate:
+                size: 1000000000
+
+leveldb:
+        # in MB
+        cache_size: 500
+        # in KB
+        block_size: 32
+        # in MB
+        write_buffer_size: 64
+        # in MB/s
+        compaction_speed: 1000
+        # yes|no
+        compression: yes
+-------------------------------------------
+
+`ssdb_slave.conf`
+
+The key configuration items in the following block are:
+
+- `server/ip` - Binding to `localhost`
+- `server/port` - Binding to standard `SSDB` port
+- `slaveof/type` - `sync`
+- `slaveof/host` - `192.168.56.112` is the other `SSDB` server
+- `slaveof/port` - `8888` - The standard `SSDB` port
+
+
+-------------------------------------------
+# ssdb-server config
+
+# relative to path of this file, must exist
+work_dir = ./var_slave
+pidfile = ./var_slave/ssdb.pid
+
+server:
+        ip: 127.0.0.1
+        port: 8888
+
+replication:
+        binlog: yes
+        # Limit sync speed to *MB/s, -1: no limit
+        sync_speed: -1
+        slaveof:
+                # sync|mirror, default is sync
+                type: sync
+                host: 192.168.56.112
+                port: 8888
+
+logger:
+        level: debug
+        output: log_slave.txt
+        rotate:
+                size: 1000000000
+
+leveldb:
+        # in MB
+        cache_size: 500
+        # in KB
+        block_size: 32
+        # in MB
+        write_buffer_size: 64
+        # in MB
+        compaction_speed: 200
+        # yes|no
+        compression: no
+-------------------------------------------
+
+=== SSDB Configuration, Designated (Initial) Slave
+
+The IP address of this machine is `192.168.56.112`.
+
+The `ssdb_master.conf` file is identical to that of the designated
+master server.
+
+The `ssdb_slave.conf` file is almost identical to that of the
+designated master server.  Only the following items differ;
+
+- `slaveof/host` - `192.168.56.111` is the other `SSDB` server
+
+=== Keepalived configuration, Designated (Initial) Master
+
+
+`/etc/keepalived/keepalived.conf`
+
+The key configuration items to note are:
+
+- `state` -  State is set to `BACKUP` for _both_ the designated
+  (initial) master and backup servers.  In this scenario, the
+  `priority` is used to negotiate which server will assume `MASTER`
+  status initially.
+- `nopreempt` - In the event that the master server fails and the
+  backup server is promoted to master, this configuration directive
+  will keep the original master from reclaiming that role.  This is
+  required because it will likely be stale.  In this case, when it comes
+  back up, it will remain in backup mode and will begin replicating
+  information from the new master.
+- `interface` - In this example, `enp0s8` is the interface identifier
+  for which the `virtual_ipaddress` will be defined.  You will choose
+  a value that is appropriate to your installation.
+- `priority` - The designated initial master must have a higher
+  priority than the designated initial backup.
+- `advert_int` - For the purposes of this documentation, the default value of
+   1 second was use.  If you install `Keepalived` `1.2.21` or newer, you
+   can specify a floating-point value here; e.g., `0.1` (seconds).
+  This will allow `Keepalived` to detect a master failure faster.
+- `notify` - This is the path to a script that will be called for
+  state transitions.  The full contents of the script is shown below
+- `virtual_ipaddress` - This is the virtual IP address that is
+  maintained by `Keepalived`.
+
+-------------------------------------------
+vrrp_instance VRRP1 {
+        state BACKUP
+        nopreempt
+        interface enp0s8
+        virtual_router_id 41
+        priority 200
+		advert_int 1
+        notify /var/lib/ssdb/notify.sh
+
+        authentication {
+                auth_type PASS
+                auth_pass 1234
+        }
+        virtual_ipaddress {
+                192.168.56.120 dev enp0s8 label enp0s8:vip
+        }
+}
+-------------------------------------------
+
+
+`/var/lib/ssdb/notify.sh`
+
+This is the script that is called by `Keepalived` during state
+transitions.  Note that the value assigned to `USER` should be the
+username that owns the `SSDB` process.
+
+[source,bash]
+-------------------------------------------
+#!/bin/bash
+# This must be run as root.
+
+ENDSTATE=$3
+NAME=$2
+TYPE=$1
+
+LOG=/var/log/keepalived-state-transition.log
+LOG_ERROR=0
+LOG_WARNING=1
+LOG_INFO=2
+LOG_DEBUG=3
+LOG_LEVEL=$LOG_INFO
+
+KPCFG=/etc/keepalived/keepalived.conf
+USER=<SSDB-user-name>
+PREFIX=/var/lib/ssdb
+
+
+function log {
+    lvl=$1
+    msg="$2"
+    if [ $lvl -le $LOG_LEVEL ]
+    then
+        now=$(date)
+        echo "$now [$lvl] $msg" >> $LOG
+    fi
+}
+
+function log_error {
+    log $LOG_ERROR "$1"
+}
+function log_warning {
+    log $LOG_WARNING "$1"
+}
+function log_info {
+    log $LOG_INFO "$1"
+}
+function log_debug {
+    log $LOG_DEBUG "$1"
+}
+
+function backup {
+    log_info "Transitioning to BACKUP state"
+    runuser -l $USER -c "${PREFIX}/ssdb-server ${PREFIX}/ssdb.conf -s stop"
+    runuser -l $USER -c "cp ${PREFIX}/ssdb_slave.conf ${PREFIX}/ssdb.conf"
+    runuser -l $USER -c "${PREFIX}/ssdb-server -d ${PREFIX}/ssdb.conf"
+
+}
+
+function fault {
+    log_error "keepalived is in FAULT state"
+}
+
+function master {
+    log_info "Transitioning to MASTER state"
+    runuser -l $USER -c "${PREFIX}/ssdb-server ${PREFIX}/ssdb.conf -s stop"
+    runuser -l $USER -c "cp ${PREFIX}/ssdb_master.conf ${PREFIX}/ssdb.conf"
+    runuser -l $USER -c "${PREFIX}/ssdb-server -d ${PREFIX}/ssdb.conf"
+}
+
+
+case $ENDSTATE in
+    "BACKUP") # Perform action for transition to BACKUP state
+        backup
+        exit 0
+        ;;
+    "FAULT")  # Perform action for transition to FAULT state
+        fault
+        exit 0
+        ;;
+    "MASTER") # Perform action for transition to MASTER state
+        master
+        exit 0
+        ;;
+    *)    echo "Unknown state ${ENDSTATE} for VRRP ${TYPE} ${NAME}"
+        exit 1
+        ;;
+esac
+-------------------------------------------
+
+=== Keepalived configuration, Designated (Initial) Backup
+
+
+`/etc/keepalived/keepalived.conf`
+
+This file is almost identical to the same file on the master node.
+Exceptions:
+
+- `priority` - It is given a lower initial priority.
+- It does not contain the `nopreempt` option.  Once the backup server
+  has become master due to a failure of the original master, the
+  system should allow for some human intervention before restoring
+  the original server to master status.
+
+-------------------------------------------
+vrrp_instance VRRP1 {
+        state BACKUP
+        interface enp0s8
+        virtual_router_id 41
+        priority 100
+        advert_int 1
+        notify /var/lib/ssdb/notify.sh
+
+        authentication {
+                auth_type PASS
+                auth_pass 1234
+        }
+        virtual_ipaddress {
+                192.168.56.120 dev enp0s8 label enp0s8:vip
+        }
+}
+-------------------------------------------
+
+The `/var/lib/ssdb/notify.sh` for the backup server is identical to
+the master.
+
+
+
