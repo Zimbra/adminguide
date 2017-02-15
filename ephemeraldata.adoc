@@ -31,6 +31,7 @@ Mail systems with large numbers of active users have been found to overload LDAP
 Configuring an already running {product-name} installation
 to utilize `SSDB` instead of `LDAP` for short lived data storage
 through the following process:
+
 1. Install `SSDB` and note the ip address and port configured since you will
    need this data for the next steps.
 2. Configure the {product-name} to utilize `SSDB`.
