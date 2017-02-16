@@ -37,7 +37,7 @@ through the following process:
 2. Configure the {product-name} to utilize `SSDB`.
 3. Migrate any existing short-lived data to `SSDB` using the `/opt/zimbra/bin/zmmigrateattrs` command.
 
-==== Migration Procedure
+== Migration Procedure
 
 1. Access the command prompt on one of the machines in the installation.
 2. Configure the {product-name} to use `SSDB`:
@@ -58,3 +58,4 @@ zmprov mcf zimbraEphemeralDataURL ssdb:<ip address|hostname>:port # substituting
 sudo su - zimbra
 # Specify -r for a dry run
 /opt/zimbra/bin/zmmigrateattrs zimbraAuthTokens zimbraCsrfTokenData zimbraLastLogonTimestamp -n 4
+----
