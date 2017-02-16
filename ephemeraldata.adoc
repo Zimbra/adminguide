@@ -33,7 +33,8 @@ to utilize `SSDB` instead of `LDAP` for short lived data storage
 through the following process:
 
 1. Install `SSDB` and note the ip address and port configured since you will
-   need this data for the next steps.
+   need this data for the next steps. Refer to
+   <<_ssdb_configuration_options>> for more information.
 2. Configure the {product-name} to utilize `SSDB`.
 3. Migrate any existing short-lived data to `SSDB` using the `/opt/zimbra/bin/zmmigrateattrs` command.
 
