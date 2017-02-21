@@ -45,7 +45,8 @@ through the following process:
 
 You may use either an ip address or a hostname for the host portion of the
 configuration item.  In this case you will need to ensure it resolves to the
-proper ip address on all machines in the cluster.
+proper ip address on all machines in the cluster. If the value does not resolve to a functioning
+backend, the value of __zimbraEphemeralBackendURL__ will not be changed.
 
 ----
 sudo su - zimbra
