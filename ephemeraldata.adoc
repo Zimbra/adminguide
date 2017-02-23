@@ -49,7 +49,7 @@ proper ip address on all machines in the cluster.
 
 ----
 sudo su - zimbra
-zmprov mcf zimbraEphemeralDataURL ssdb:<ip address|hostname>:port # substituting your server values
+zmprov mcf zimbraEphemeralBackendURL ssdb:<ip address|hostname>:port # substituting your server values
 ----
 
 [start=3]
