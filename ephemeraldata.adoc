@@ -58,7 +58,7 @@ zmprov mcf zimbraEphemeralBackendURL ssdb:<ip address|hostname>:port # substitut
 
 ----
 sudo su - zimbra
-/opt/zimbra/bin/zmmigrateattrs zimbraAuthTokens zimbraCsrfTokenData zimbraLastLogonTimestamp -n 4
+/opt/zimbra/bin/zmmigrateattrs -n 4
 ----
 
 == Additional Notes on Ephemeral Data
@@ -66,6 +66,7 @@ sudo su - zimbra
 === Advanced Migration Options
 
 The `zmmigrateattrs` tool provides several migration options, to be used with careful consideration:
+
 - By default, ephemeral data is deleted from LDAP as soon as it is migrated to `SSDB`. The `-k` or `--keep-old` option will cause this data to remain in LDAP. This makes it possible to revert the ephemeral backend back to LDAP immediately after migration with no data loss. However, this data will otherwise remain in LDAP and quickly become obsolete.
 
 - The `-r` or `--dry-run` option outputs the changes to be made for each account to the console, without actually performing the migration.
@@ -73,7 +74,7 @@ The `zmmigrateattrs` tool provides several migration options, to be used with ca
 - The `-a` or `--account` option allows for migration of a comma-separated list of specific accounts. This should be used only for testing or debugging.
 - The `-d` or `--debug` option enables debug logging.
 
-If no attribute names are explicitly passed in as arguments, migration will occur for all known ephemeral attributes.
+If no attribute names are explicitly passed in as arguments, migration will occur for all known ephemeral attributes, as in the example above.
 
 === Migration Limitations
 
@@ -85,8 +86,8 @@ Due to changes in the way multi-valued ephemeral data is stored, the attributes 
 
 === Migration In-Progress Flag
 
-The `zmmigrateattrs` script sets a flag in `SSDB` at the beginning of the migration process and unsets it when migration completes. When this flag is set, the server will look for an account's ephemeral data in both the `SSDB` and LDAP backends, as the data may reside in either one. In the event of an error during migration, the flag will remain set until migration is re-ran successfully. For testing or debugging purposes, this flag can be set or unset via command line using the `--set-flag` and `--unset-flag` options of `zmmigrateattrs`.
+The `zmmigrateattrs` script sets a flag in `SSDB` at the beginning of the migration process and unsets it when migration completes. When this flag is set, the server will look for an account's ephemeral data in both the `SSDB` and LDAP backends, as the data may reside in either one. In the event of an error during migration, the flag will remain set until migration is re-run successfully. For testing or debugging purposes, this flag can be set or unset via command line using the `--set-flag` and `--unset-flag` options of `zmmigrateattrs`.
 
 === Migration CSV Output
 
-Each run of `zmmigrateattrs` generates a CSV file in `/opt/zimbra/data/tmp/` directory. The file contains migration info for every migrated account. Migration errors are logged in a separate CSV file in the same directory.
+Each run of `zmmigrateattrs` generates a CSV file in `/opt/zimbra/data/tmp/` directory. The file contains migration info for every migrated account. If any migrations fail, a cutdown CSV file report detailing only the errors is also created in the same directory. The name(s) of the file(s) are logged at the end of the run.
