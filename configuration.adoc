@@ -1701,7 +1701,14 @@ zmcontrol restart
 S/MIME is a standard to send secure email messages. S/MIME messages use
 digital signature to authenticate and encrypt messages.
 
-=== Prerequisites
+Currently, there are two versions of S/MIME feature
+
+. The old client based solution which requires Java 1.6 SE deployed on client machine
+. The new server based solution which does not require Java on client machine. The server performs all the cryptographic operations.
+
+=== Setting up client based S/MIME feature
+
+==== Prerequisites
 
 * To use S/MIME, users must have a PKI certificate and a private key.  The
 private key must be installed in the user's local certificate store on
@@ -1720,11 +1727,11 @@ how to install certificates.
 * Users computers must have Java 1.6 SE deployed to use S/MIME. If they do
 not, they see an error asking them to install it.
 
-=== S/MIME License
+==== S/MIME License
 
 You must have a {product-abbrev} license that is enabled for S/MIME.
 
-=== Enable S/MIME Feature
+==== Enable S/MIME Feature
 
 Admin Console: ::
 *Home > Configure > Class of Service -> _COS_ -> Features* +
@@ -1737,7 +1744,7 @@ FeaturesTab.
 . In the Features tab S/MIME features section, check *Enable S/MIME*.
 . Click *Save*.
 
-=== Importing S/MIME Certificates
+==== Importing S/MIME Certificates
 
 Users can send encrypted messages to recipients if they have the
 recipients' public-key certificate stored in one of the following:
@@ -1750,7 +1757,7 @@ The certificates should be published into the LDAP directory so that they
 can be retrieved from the GAL. The format of the S/MIME certificates must
 be X.509 Base64 encoded DER.
 
-==== Configure External LDAP Lookup for Certificates
+===== Configure External LDAP Lookup for Certificates
 
 If you use an external LDAP to store certificates, you can configure the
 Zimbra server to lookup and retrieve certificates from the external LDAP,
@@ -1802,6 +1809,101 @@ Example, "userSMIMECertificate, UserCertificate"
 . Click *Save*.
 
 To set up another external LDAP server, click *Add Configuration*.
+
+=== Setting up server based S/MIME feature
+
+==== Prerequisites
+
+Same as the previous S/MIME version except that the Java is not required on client machine
+
+==== S/MIME License
+
+Same as the previous S/MIME version
+
+==== Enable S/MIME Feature
+
+Same as the previous S/MIME version
+
+==== Importing S/MIME Certificates
+
+Same as the previous S/MIME version except that the recipients' public-key certificate no longer need to be stored into Local OS or browser keystore.
+The certificate can be published to all other places mentioned in previous S/MIME version.
+
+==== List of LDAP attributes introduced in new S\MIME feature
+
+. zimbraSmimeOCSPEnabled
+
+* Used by server at the time of validating the user as well as public certificates
+* If TRUE, the revocation check will be performed during certificate validation
+* If FALSE, the revocation check will not be performed during certificate validation
+
+. zimbraSmimePublicCertificateExtensions
+
+* The supported public certificate file extensions separated by comma
+* Contains the list of supported formats for userCertificate LDAP attribute
+* Default values: cer,crt,der,spc,p7b,p7r,sst,sto,pem
+* Zimbra web client retrieves from server the supported file formats/extensions for public certificate upload
+
+. zimbraSmimeUserCertificateExtensions
+
+* The supported public certificate file extensions separated by comma.
+* Contains the list of supported formats for userSmimeCertificate LDAP attribute
+* Default values: p12,pfx
+* Zimbra web client retrieves from server the supported file formats/extensions for user certificate upload
+
+==== Process for Adding the CA certificate to the mailbox truststore for S/MIME
+
+S/MIME uses the mailbox trust store path and its password defined in localconfig.xml
+
+The key names are:
+
+* mailboxd_truststore
+* mailboxd_truststore_password
+
+If the key is not defined in localconfig.xml, by default the values of mailboxd_truststore and mailboxd_truststore_password are:
+
+* <zimbra_java_home>/jre/lib/security/cacerts
+* changeit
+
+CA certificate can be imported to mailbox trust store by executing following command:
+
+keytool -import -alias <alias> -keystore <mailboxd_truststore path> -trustcacerts -file <CA_Cert>
+
+== Admin SIEVE Filter
+
+* The admin SIEVE feature enables the system administrator to define one SIEVE rule executed before and one SIEVE rule executed after the end user-defined filter rule.
+* The system-admin-defined SIEVE rule will be combined with the end-user-defined SEIVE rule, and then combined one big SIEVE rule will be applied to both incoming and outgoing messages. But, the scope of the variables is local within each script (zimbraMailAdminSieveScriptBefore, zimbraMailSieveScript, zimbraMailAdminSieveScriptAfter) OR (zimbraMailAdminOutgoingSieveScriptBefore, zimbraMailOutgoingSieveScript, zimbraMailAdminOutgoingSieveScriptAfter)
+* The system-admin-defined SIEVE rule will be hidden from the end user.  From the ZWC UI, the end user can only see and edit his/her own SIEVE rule.  Only the system administrator can view and edit the system-admin-defined SIEVE rule.
+
+=== List of SIEVE LDAP attributes
+
+. zimbraMailAdminSieveScriptBefore
+
+* For any incoming message, the system operator can apply a specific SIEVE filter rule to every mailbox before the user-defined filter rule is performed.
+* The contents of the rule itself may vary from person to person or system-wide/server-wide/domain-wide/CoS-wide though.
+* Usually the SPAM evaluation headers, such as "X-Spam", "X-Spam-Number", "X-Spam-Score", "X-Spam-Level", are defined system-widely. It makes more sense to check the system-specific headers by admin instead of end user.
+
+. zimbraMailAdminSieveScriptAfter
+
+* For any incoming message, the system operator can apply a specific SIEVE filter rule to every mailbox after the user-defined filter rule is performed.
+
+. zimbraMailAdminOutgoingSieveScriptBefore
+
+* For any outgoing message, the system operator can apply a specific SIEVE filter rule to every mailbox before the user-defined filter rule is performed.
+
+. zimbraMailAdminOutgoingSieveScriptAfter
+
+* For any outgoing message, the system operator can apply a specific SIEVE filter rule to every mailbox after the user-defined filter rule is performed.
+
+. zimbraSieveFeatureVariablesEnabled
+
+* TRUE - Enable SIEVE variable feature in user sieve script
+* FALSE - Disable SIEVE variable feature in user sieve script
+
+. zimbraAdminSieveFeatureVariablesEnabled
+
+* TRUE - Enable SIEVE variable feature in admin sieve script
+* FALSE - Disable SIEVE variable feature in admin sieve script
 
 == Storage Management
 
