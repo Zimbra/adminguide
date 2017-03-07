@@ -1701,12 +1701,12 @@ zmcontrol restart
 S/MIME is a standard to send secure email messages. S/MIME messages use
 digital signature to authenticate and encrypt messages.
 
-Currently, there are two versions of S/MIME feature
+Currently, there are two different methods for providing the S/MIME feature
 
-. The old client based solution which requires Java 1.6 SE deployed on client machine
-. The new server based solution which does not require Java on client machine. The server performs all the cryptographic operations.
+. The old client based solution which requires Java 1.6 SE deployed on the client machine
+. The new server based solution which does not require Java on the client machine. The server performs all the cryptographic operations. (Recommended)
 
-=== Setting up client based S/MIME feature
+=== Setting up for using the S/MIME feature using the client base solution
 
 ==== Prerequisites
 
@@ -1810,26 +1810,26 @@ Example, "userSMIMECertificate, UserCertificate"
 
 To set up another external LDAP server, click *Add Configuration*.
 
-=== Setting up server based S/MIME feature
+=== Setting up for using the S/MIME feature using the server base solution
 
 ==== Prerequisites
 
-Same as the previous S/MIME version except that the Java is not required on client machine
+Same as for the client based S/MIME solution except that Java is not required on the client machine. The private key is also not required to be on the client machine's local/browser certificate store.
 
 ==== S/MIME License
 
-Same as the previous S/MIME version
+Same as for the client based S/MIME solution
 
 ==== Enable S/MIME Feature
 
-Same as the previous S/MIME version
+Same as for the client based S/MIME solution
 
 ==== Importing S/MIME Certificates
 
-Same as the previous S/MIME version except that the recipients' public-key certificate no longer need to be stored into Local OS or browser keystore.
+Same as for the client based S/MIME solution except that the recipients' public-key certificate no longer need to be stored into Local OS or browser keystore.
 The certificate can be published to all other places mentioned in previous S/MIME version.
 
-==== List of LDAP attributes introduced in new S\MIME feature
+==== List of LDAP attributes introduced to support the server based S/MIME solution
 
 . zimbraSmimeOCSPEnabled
 
@@ -1839,40 +1839,42 @@ The certificate can be published to all other places mentioned in previous S/MIM
 
 . zimbraSmimePublicCertificateExtensions
 
-* The supported public certificate file extensions separated by comma
-* Contains the list of supported formats for userCertificate LDAP attribute
+* The supported public certificate file extensions separated by commas
+* Contains the list of supported formats for the userCertificate LDAP attribute
 * Default values: cer,crt,der,spc,p7b,p7r,sst,sto,pem
-* Zimbra web client retrieves from server the supported file formats/extensions for public certificate upload
+* Zimbra web client retrieves the supported file formats/extensions for public certificate upload from the server
 
 . zimbraSmimeUserCertificateExtensions
 
-* The supported public certificate file extensions separated by comma.
-* Contains the list of supported formats for userSmimeCertificate LDAP attribute
+* The supported public certificate file extensions separated by commas
+* Contains the list of supported formats for the userSmimeCertificate LDAP attribute
 * Default values: p12,pfx
-* Zimbra web client retrieves from server the supported file formats/extensions for user certificate upload
+* Zimbra web client retrieves the supported file formats/extensions for user certificate upload from the server
 
 ==== Process for Adding the CA certificate to the mailbox truststore for S/MIME
 
-S/MIME uses the mailbox trust store path and its password defined in localconfig.xml
+S/MIME uses the mailbox trust store path and its password which are defined in localconfig.xml
 
 The key names are:
 
 * mailboxd_truststore
 * mailboxd_truststore_password
 
-If the key is not defined in localconfig.xml, by default the values of mailboxd_truststore and mailboxd_truststore_password are:
+If the mailboxd_truststore key is not defined in localconfig.xml, by default the value of mailboxd_truststore is:
 
 * <zimbra_java_home>/jre/lib/security/cacerts
-* changeit
 
-CA certificate can be imported to mailbox trust store by executing following command:
+A CA certificate can be imported to the mailbox trust store by executing the following command:
 
-keytool -import -alias <alias> -keystore <mailboxd_truststore path> -trustcacerts -file <CA_Cert>
+[source,bash]
+----
+keytool -import -alias -keystore <mailboxd_truststore path> -trustcacerts -file <CA_Cert>
+----
 
 == Admin SIEVE Filter
 
 * The admin SIEVE feature enables the system administrator to define one SIEVE rule executed before and one SIEVE rule executed after the end user-defined filter rule.
-* The system-admin-defined SIEVE rule will be combined with the end-user-defined SEIVE rule, and then combined one big SIEVE rule will be applied to both incoming and outgoing messages. But, the scope of the variables is local within each script (zimbraMailAdminSieveScriptBefore, zimbraMailSieveScript, zimbraMailAdminSieveScriptAfter) OR (zimbraMailAdminOutgoingSieveScriptBefore, zimbraMailOutgoingSieveScript, zimbraMailAdminOutgoingSieveScriptAfter)
+* The system-admin-defined SIEVE rule will be combined with the end-user-defined SIEVE rule into a single rule. This rule will be applied to both incoming and outgoing messages. But, the scope of the variables is local within each script (zimbraMailAdminSieveScriptBefore, zimbraMailSieveScript, zimbraMailAdminSieveScriptAfter) OR (zimbraMailAdminOutgoingSieveScriptBefore, zimbraMailOutgoingSieveScript, zimbraMailAdminOutgoingSieveScriptAfter)
 * The system-admin-defined SIEVE rule will be hidden from the end user.  From the ZWC UI, the end user can only see and edit his/her own SIEVE rule.  Only the system administrator can view and edit the system-admin-defined SIEVE rule.
 
 === List of SIEVE LDAP attributes
