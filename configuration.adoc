@@ -1871,42 +1871,6 @@ A CA certificate can be imported to the mailbox trust store by executing the fol
 keytool -import -alias -keystore <mailboxd_truststore path> -trustcacerts -file <CA_Cert>
 ----
 
-== Admin SIEVE Filter
-
-* The admin SIEVE feature enables the system administrator to define one SIEVE rule executed before and one SIEVE rule executed after the end user-defined filter rule.
-* The system-admin-defined SIEVE rule will be combined with the end-user-defined SIEVE rule into a single rule. This rule will be applied to both incoming and outgoing messages. But, the scope of the variables is local within each script (zimbraMailAdminSieveScriptBefore, zimbraMailSieveScript, zimbraMailAdminSieveScriptAfter) OR (zimbraMailAdminOutgoingSieveScriptBefore, zimbraMailOutgoingSieveScript, zimbraMailAdminOutgoingSieveScriptAfter)
-* The system-admin-defined SIEVE rule will be hidden from the end user.  From the ZWC UI, the end user can only see and edit his/her own SIEVE rule.  Only the system administrator can view and edit the system-admin-defined SIEVE rule.
-
-=== List of SIEVE LDAP attributes
-
-. zimbraMailAdminSieveScriptBefore
-
-* For any incoming message, the system operator can apply a specific SIEVE filter rule to every mailbox before the user-defined filter rule is performed.
-* The contents of the rule itself may vary from person to person or system-wide/server-wide/domain-wide/CoS-wide though.
-* Usually the SPAM evaluation headers, such as "X-Spam", "X-Spam-Number", "X-Spam-Score", "X-Spam-Level", are defined system-widely. It makes more sense to check the system-specific headers by admin instead of end user.
-
-. zimbraMailAdminSieveScriptAfter
-
-* For any incoming message, the system operator can apply a specific SIEVE filter rule to every mailbox after the user-defined filter rule is performed.
-
-. zimbraMailAdminOutgoingSieveScriptBefore
-
-* For any outgoing message, the system operator can apply a specific SIEVE filter rule to every mailbox before the user-defined filter rule is performed.
-
-. zimbraMailAdminOutgoingSieveScriptAfter
-
-* For any outgoing message, the system operator can apply a specific SIEVE filter rule to every mailbox after the user-defined filter rule is performed.
-
-. zimbraSieveFeatureVariablesEnabled
-
-* TRUE - Enable SIEVE variable feature in user sieve script
-* FALSE - Disable SIEVE variable feature in user sieve script
-
-. zimbraAdminSieveFeatureVariablesEnabled
-
-* TRUE - Enable SIEVE variable feature in admin sieve script
-* FALSE - Disable SIEVE variable feature in admin sieve script
-
 == Storage Management
 
 === Managing Storage Volumes
