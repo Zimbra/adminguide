@@ -1706,7 +1706,7 @@ Currently, there are two different methods for providing the S/MIME feature
 . The old client based solution which requires Java 1.6 SE deployed on the client machine
 . The new server based solution which does not require Java on the client machine. The server performs all the cryptographic operations. (Recommended)
 
-=== Setting up for using the S/MIME feature using the client base solution
+=== Setting up for using the S/MIME feature using the client based solution
 
 ==== Prerequisites
 
@@ -1810,7 +1810,7 @@ Example, "userSMIMECertificate, UserCertificate"
 
 To set up another external LDAP server, click *Add Configuration*.
 
-=== Setting up for using the S/MIME feature using the server base solution
+=== Setting up for using the S/MIME feature using the server based solution
 
 ==== Prerequisites
 
