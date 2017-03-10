@@ -136,8 +136,6 @@ installed.
 The upgrade process begins and the archiving package is installed. At
 this point, the Discovery feature is installed and can be used.
 
-.CLI
-****
 To enable archiving, switch user to *zimbra* and enable archiving on the
 MTA server.
 [source,bash]
@@ -150,7 +148,6 @@ Restart the server.
 ----
 zmcontrol restart
 ----
-****
 
 === Installing zimbra-archiving in a Multi-Server Environment
 
@@ -161,11 +158,11 @@ Before beginning the install process, record the following information.
 You need this information when you install the archiving server. Run the
 `zmlocalconfig -s` command to find the information.
 
-LDAP Admin Password `_ _ _ _ _ _ _ _ _ _ _ _`
-
-LDAP Hostname `_ _ _ _ _ _ _ _ _ _ _ _`
-
-LDAP Port `_ _ _ _ _ _ _ _ _ _ _ _`
+----
+LDAP Admin Password _____________________
+LDAP Hostname       _____________________
+LDAP Port           _____________________
+----
 
 Refer to the Multiple-Server Installation chapter in the {product-name}
 Multi-Server Installation guide for detailed steps on installing the
@@ -177,10 +174,10 @@ software. Run the `./install.sh` command to begin the install process.
 
 . Type *y* and press *Enter* to install the following packages:
 +
-* zimbra-store
-* zimbra-archiving
+* `zimbra-store`
+* `zimbra-archiving`
 +
-The zimbra-core package is installed by default.
+The `zimbra-core` package is installed by default.
 
 . Type *y* and press *Enter* to modify the system.
 
@@ -205,20 +202,15 @@ the Administration Console.
 
 === Enable Archiving
 
-.Admin Console
-****
-Go to the *Global Settings > MTA* page; at the Archiving Configuration
-section, check *Enable archiving*.
-****
+Admin Console: ::
+*Home > Configure > Global Settings > MTA*,
+from *Archiving Configuration* check *Enable archiving*
 
-.CLI
-****
 Restart {product-abbrev} from the command line
 [source,bash]
 ----
 zmcontrol restart
 ----
-****
 
 === Creating a Dedicated Archive COS
 
@@ -226,10 +218,8 @@ You can configure attributes in the COS to set mailbox features, quotas,
 and passwords, turn off spam and virus checks, and hide the archive
 accounts from GAL.
 
-.Admin Console
-****
-
-Go to *Configure > Class of Service*; from the Gear icon menu select *New*.
+Admin Console: ::
+*Home > Configure > Class of Service*, from the *Gear* icon select *New*
 
 . Change *Features* and *Preferences* as required for an Archiving COS.
 
@@ -255,7 +245,6 @@ accounts, modify the two template fields. See the
 section for more information.
 
 . Click *Finish*.
-****
 
 [[setting_up_an_archive_account_name]]
 === Setting Up an Archive Account Name
@@ -266,11 +255,11 @@ COS, these attributes can be changed from the Administration Console, COS
 or individual account’s Archiving page.
 
 * *Account date template*. Sets the date format used in the name
-template.The default is yyyyMMdd. Adding the date to the account name makes
+template. The default is `yyyyMMdd`. Adding the date to the account name makes
 it easier to roll off older data from the system to backups.
 
 * *Account name template*. Sets up how the archive mailbox name is
-created.The default value is `${USER} ${DATE}@${DOMAIN}.archive`.
+created. The default value is `${USER} ${DATE}@${DOMAIN}.archive`.
 
 The archive account address would be similar to the following example:
 
@@ -323,11 +312,11 @@ You can create an archive mailbox with or without an assigned COS. You
 can also forward archive email to a third-party.
 
 [NOTE]
-Accounts with archiving enabled are counted against the number of Zimbra
-licenses purchased for archiving. To see current license information, go to
-the Administration Console, *Global Settings > License* page. Archive
-mailboxes are listed in the Administration Console along with the live
-accounts.
+Accounts with archiving enabled are counted against the number of
+Zimbra licenses purchased for archiving.  Archive mailboxes are listed
+in the Administration Console along with the live accounts. To see
+current license information, go to the Administration Console: +
+*Home > Configure > Global Settings > License*.
 
 === Creating an archive mailbox and assigning a COS
 
@@ -341,14 +330,11 @@ account and set to TRUE.
 * When a message is received in a mailbox with archiving enabled, a copy of
 the message is sent to the archive mailbox.
 
-.CLI
-****
-Log on as zimbra, and use the zmarchiveconfig command:
+Log on as `zimbra`, and use the `zmarchiveconfig` command:
 [source,bash]
 ----
 zmarchiveconfig enable <account@example.com> archive-cos <archive>
 ----
-****
 
 === Creating an Archive Mailbox with No COS or Password
 
@@ -362,28 +348,24 @@ set by default.
 * Hide in GAL is enabled, so the archive account does not display in the
   GAL
 
-.CLI
-****
-Log on as zimbra, and use the `zmarchiveconfig` command:
+Log on as `zimbra`, and use the `zmarchiveconfig` command:
 [source,bash]
 ----
 zmarchiveconfig enable <user@example.com>
 ----
-****
 
 === Enabling Archive Forwarding to a Third-party Archiving Server
 
 If the archive account is not maintained within {product-name},
 you do not need to set a password, COS, or other attributes.
 
-.CLI
-****
-Log on as zimbra, and use the `zmarchiveconfig` command:
+Log on as `zimbra`, and use the `zmarchiveconfig` command:
 [source,bash]
 ----
-zmarchiveconfig enable <account@example.com> archive-address account-archive@offsiteserver.com archive-create false
+zmarchiveconfig enable <account@example.com> \
+ archive-address account-archive@offsite.com \
+ archive-create false
 ----
-****
 
 == Searching Across Mailboxes
 
@@ -403,8 +385,10 @@ mailbox search tool.
 
 The discovery tool, *Search Mail*, is added to *Tools and Migration* on the
 Navigation pane when the archiving package is added. To set up a cross
-mailbox search, in Search Mail, go to the gear icon and select New. You
-configure the following information.
+mailbox search you configure the following information.
+
+Admin Console: ::
+*Home > Tools and Migration > Search Mail*, from the *Gear* icon select *New*
 
 * *Server name*. The server name to be searched.
 

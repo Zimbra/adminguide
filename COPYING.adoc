@@ -5,11 +5,11 @@ image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[CC BY-SA] Synacor, Inc
 This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
 International License unless another license agreement between you and
 Synacor, Inc. provides otherwise. To view a copy of this license, visit
-http://creativecommons.org/licenses/by-sa/4.0 or send a letter to Creative
+https://creativecommons.org/licenses/by-sa/4.0 or send a letter to Creative
 Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 Synacor, Inc., 2016 +
 40 La Riviere Drive, Suite 300 +
 Buffalo, New York 14202
 
-http://www.synacor.com
+https://www.synacor.com

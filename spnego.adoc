@@ -112,48 +112,42 @@ The command to type follows:
 ktpass -out {keytab-file-to-produce} -princ {Service-Principal-Name}@\{the-kerberos-realm} -mapUser {AD-user} -mapOp set -pass {AD-user-password} -crypto RC4-HMAC-NT -pType KRB5_NT_PRINCIPAL
 ----
 +
-[cols=","]
+[cols="1m,4"]
 |=======================================================================
-|`Ktpass -out` |
-The key is written to this output file.
-
+|ktpass -out |
+The key is written to this output file. +
 Enter the directory location and keytab file name. The keytab file name is
-`jetty.keytab`.
-
+`jetty.keytab`. +
 For example, `C:\Temp\spengo\jetty.keytab`
 
-|`-princ` |
-This is the principal name.
-
+|-princ |
+This is the principal name. +
 Enter the service Principal Name as used in *Step 2* in Setting up the
-Microsoft Windows Active Directory Domain Controller section. For example,
-HTTP/mail1.example.com@COMPANY.COM
+Microsoft Windows Active Directory Domain Controller section. +
+For example, HTTP/mail1.example.com@COMPANY.COM
 
-|`-mapUser` |
-This maps `–princ` value to this user account.
-
+|-mapUser |
+This maps `–princ` value to this user account. +
 Enter the AD service account user name entered in the *User Logon Name
 (pre-Windows2000)* set in *Step 1.b* in Setting up the Microsoft Windows
 Active Directory Domain Controller section.
 
-|`-mapOp` |
+|-mapOp |
 This sets the mapping. The value for this parameter is *set*
 
-|`-pass` |
+|-pass |
 This is the password to use.
 
 Enter the password entered in the *User Logon Name (pre-Windows2000)* set
 in *Step 1.c* in Setting up the Microsoft Windows Active Directory Domain
 Controller section.
 
-|`-crypto` |
-This is the cryptosystem to use.
-
+|-crypto |
+This is the cryptosystem to use. +
 Enter *RC4-HMAC-NT*
 
-|`-pType` |
-Enter *KRB5_NT_PRINCIPAL*
-
+|-pType |
+Enter *KRB5_NT_PRINCIPAL* +
 To avoid warning messages from the toolkit enter this value.
 
 |=======================================================================
@@ -203,11 +197,11 @@ Only one Kerberos REALM is supported per {product-abbrev} installation.
 . Modify the following global config attributes, with the `zmprov mcf`
 command.
 +
-[cols=",",options=""]
+[cols="1m,2",options=""]
 |=======================================================================
-|`zimbraSpnegoAuthEnabled` |Set to TRUE.
+|zimbraSpnegoAuthEnabled |Set to TRUE.
 
-|`zimbraSpnegoAuthErrorURL` |
+|zimbraSpnegoAuthErrorURL |
 This is the URL users are redirected to when spnego auth fails. Setting it
 to `/zimbra/?ignoreLoginURL=1` will redirect user to the regular Zimbra
 login page, where user will be prompted for their zimbra user name and
@@ -230,12 +224,12 @@ To modify the global config attributes, type:
 . On each Zimbra server, modify the following global config attributes with
 the `zmprov ms` command.
 +
-[cols=",",options="",]
+[cols="1m,2",options="",]
 |=======================================================================
-|`zimbraSpnegoAuthTargetName` |
+|zimbraSpnegoAuthTargetName |
 This is the user logon name from Step 1 B, User Logon Name.
 
-|`zimbraSpnegoAuthPrincipal` |
+|zimbraSpnegoAuthPrincipal |
 Enter the user logon name set in `zimbraSpnegoAuthTargetName` and the
 address set in global config `zimbraSpnegoAuthRealm`
 

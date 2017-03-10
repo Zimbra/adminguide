@@ -7,8 +7,8 @@ software. After the installation, you can manage the following components
 from either the Administration Console or using the CLI utility.
 
 *Help* is available from the Administration Console about how to perform
-tasksfrom the Administration Console. If the task is only available from
-the CLI, see <<cli_commands, Zimbra CLI Commands>> for a description of how
+tasks from the Administration Console. If the task is only available from
+the CLI, see <<cli_commands,Zimbra CLI Commands>> for a description of how
 to use the CLI utility.
 
 == Global Configuration
@@ -22,17 +22,14 @@ for the following objects: server, account, COS, and domain. If these
 attributes are set in the server, the server settings override the
 global settings.
 
-.Admin Console
-****
-To configure global settings:
-
-*Configure > Global Settings* page.
-****
+Admin Console: ::
+To configure global settings, navigate to: +
+*Home > Configure > Global Settings*
 
 Configured global settings are:
 
 * Default domain
-* Maximum number of results returned for GAL searches. Default =100.
+* Maximum number of results returned for GAL searches. Default = 100.
 * User views of email attachments and attachment types not permitted.
 * Configuration for authentication process, Relay MTA for external
 delivery, DNS lookup, and protocol checks.
@@ -51,12 +48,11 @@ the number of accounts created.
 [[general_information_configuration]]
 == General Information Configuration
 
-.Admin Console
-****
-Use the *General Information* screen to view and set global parameters
-forservers that have been installed and enabled.
-
+Admin Console: ::
 *Home > Configure > Global Settings*
+
+Use the *General Information* screen to view and set global parameters
+for servers that have been installed and enabled.
 
 [NOTE]
 Settings defined at the server(s) override those configured in the General
@@ -66,7 +62,6 @@ image:images/administration_console_general_information_configuration.png[Genera
 
 . Modify parameters, as appropriate for your requirements.
 . From the *Gear* icon, select *Save* to use your settings.
-****
 
 .General Information Parameters
 [cols=",a",options="header",]
@@ -75,42 +70,38 @@ image:images/administration_console_general_information_configuration.png[Genera
 
 |Most results returned by GAL search |
 The maximum number of GAL results returned from a user search. This value
-can be set by domain: the domain setting overrides the global setting.
-
+can be set by domain: the domain setting overrides the global setting. +
 Default = 100.
 
 |Default domain |
-Domain that users’ logins are authenticated against.
+Domain that users' logins are authenticated against.
 
 
 |Number of scheduled tasks that can run simultaneously|
 Number of threads used to fetch content from remote data
 sources.
 * If set too low, users do not get their mail from external sources pulled down often enough.
-* If set too high, the server may be consumed with downloading this mail and not servicing “main” user requests.
-
+* If set too high, the server may be consumed with downloading this mail and not servicing "main" user requests. +
 Default = 20
 
 |Sleep time between subsequent mailbox purges |
 
-The duration of time that the server should “rest” between purging
+The duration of time that the server should "rest" between purging
 mailboxes.  If the message purge schedule is set to 0, messages are not
-purged, even if the mail, trash and spam message life time is set.
-
+purged, even if the mail, trash and spam message life time is set. +
 Default = message purge is scheduled to run every 1 minute.
 
-|Maximum size of an uploaded file for Briefcase files (kb)|
+|Maximum size of an uploaded file for Briefcase files (KB)|
 The maximum size of a file that can be uploaded into Briefcase.
 
 [NOTE]
 The maximum message size for an email message and attachments that can be
-sent is configured in the Global Settings MTA page, Messages section.
+sent is configured in the *Home > Configure > Global Settings > MTA* page, *Messages* section.
 
-|Admin Help URL .2+|To use the {product-name} Help, you can designate
-the URL that is linked from the Administration Console
-Help
-
-|Delegated Admin Help URL
+|Admin Help URL +
+Delegated Admin Help URL|
+To use the {product-name} Help, you can designate the URL that is
+linked from the Administration Console Help
 
 |=======================================================================
 
@@ -124,17 +115,14 @@ handling attachments to an email message. You can also set rules by COS and
 for individual accounts. When attachment settings are configured in Global
 Settings, the global rule takes precedence over COS and Account settings.
 
-.Admin Console
-****
-*Home > Configure > Global Settings > Advanced*
+Admin Console: ::
+*Home > Configure > Global Settings > Attachments*
 
 [cols=","]
-|=======================================================================
-|image:images/administration_console_email_attachment_rules.png[Attachment Rules] |
-See <<blocking_email_attachements_by_file_type, Blocking Email Attachments
-by File type>> for information about this section of the screen.
-|=======================================================================
-****
+image:images/administration_console_email_attachment_rules.png[Attachment Rules] +
+See
+<<_blocking_email_attachments_by_file_type,Blocking Email Attachments by File type>>
+for information about this section of the screen.
 
 .Global Settings Advanced
 [cols=",",options="header",]
@@ -170,10 +158,8 @@ sender are notified that the message was blocked.
 If you do not want to send a notification to the recipient when messages
 are blocked, you can disable this option.
 
-.Admin Console
-****
-*Global Settings > Attachments* page.
-****
+Admin Console: ::
+*Home > Configure > Global Settings > Attachments*
 
 [[mta_configuration]]
 == MTA Configuration
@@ -182,12 +168,10 @@ Use options from the MTA page to enable or disable authentication and
 configure a relay hostname, the maximum message size, enable DNS lookup,
 protocol checks, and DNS checks.
 
-.Admin Console
-****
+Admin Console: ::
 *Home > Configure > Global Settings > MTA*
 
 image:images/administation_console_mta_configuration.png[MTA Configuration]
-****
 
 .MTA Page Options
 [cols=",a"]
@@ -239,7 +223,7 @@ here.
 
 |Messages |
 
-* Set the *Maximum messages size* for a message and it’s attachments that
+* Set the *Maximum messages size* for a message and it's attachments that
 can be sent.
 +
 [TIP]
@@ -258,8 +242,8 @@ suspect SMTP clients).
 * To reject unsolicited commercial email (UCE), for spam control.
 
 |DNS checks |
-* To reject mail if the client’s IP address is unknown, the hostname in the
-greeting is unknown, or if the sender’s domain is unknown.
+* To reject mail if the client's IP address is unknown, the hostname in the
+greeting is unknown, or if the sender's domain is unknown.
 
 * Add other email recipient restrictions to the *List of RBLs* field.
 
@@ -273,18 +257,16 @@ CLI.
 
 Use the IMAP and POP pages to enable global access.
 
-.Admin Console
-****
-*Home > Configure > Global Settings > IMAP* or *POP*
-****
+Admin Console: ::
+*Home > Configure > Global Settings > IMAP* +
+*Home > Configure > Global Settings > POP*
 
 [NOTE]
 When you make changes to the IMAP or POP settings, you must restart
 {product-name} before the changes take effect.
 
 IMAP and POP3 polling intervals can be set from the Administration Console
-COS Advanced page.
-
+COS Advanced page. +
 Default = No polling interval.
 
 [NOTE]
@@ -292,7 +274,7 @@ If IMAP/POP proxy is set up, ensure that the port numbers are configured
 correctly.
 
 With POP3, users can retrieve their mail stored on the Zimbra server and
-download new mail to their computer. The user’s POP configuration in their
+download new mail to their computer. The user's POP configuration in their
 *Preference > Mail* page determines how their messages are downloaded and
 saved.
 
@@ -314,7 +296,8 @@ sharing.
 
 A domain can be renamed and all account, distribution list, alias and
 resource addresses are changed to the new domain name. The CLI utility is
-used to changing the domain name. See <<renaming_a_domain, Renaming a Domain>>.
+used to changing the domain name.
+See <<_renaming_a_domain,Renaming a Domain>>.
 
 [NOTE]
 Domain settings override global settings.
@@ -323,14 +306,12 @@ Domain settings override global settings.
 
 Use the *New Domain* Wizard to set options described in this section.
 
-.Admin Console
-****
-*Home > Set up Domain > Create Domain*
+Admin Console: ::
+*Home > 2 Set up Domain > 1. Create Domain...*
 
 image:images/administration_console_create_domain.png[Create Domain]
-****
 
-.New Domain — General Information
+.New Domain -- General Information
 [cols=",a",options="header"]
 |=======================================================================
 |Option |Description
@@ -338,7 +319,7 @@ image:images/administration_console_create_domain.png[Create Domain]
 |Domain name * +
 Public service host name |
 Enter the host name of the REST URL. This is commonly used for sharing. See
-<<setting_up_a_public_service_host_name,Setting up a Public Service Host>>
+<<_setting_up_a_public_service_host_name,Setting up a Public Service Host>>
 
 |Public service protocol |
 Select HTTP or HTTPS from the drop-down field.
@@ -361,7 +342,7 @@ is delivered. Changing the status can affect the status for accounts on the
 domain also. The domain status is displayed on the *Domain > General*
 page. Domain status can be set as follows:
 
-* *Active*. Active is the normal status for domains.Accounts can be created
+* *Active*. Active is the normal status for domains. Accounts can be created
 and mail can be delivered.
 +
 --
@@ -372,22 +353,22 @@ account status overrides the domain status.
 
 * *Closed*. When a domain status is marked as closed,Login for accounts on
 the domain is disabled and messages are bounced. The closed status
-overrides an individual account’s status setting.
+overrides an individual account's status setting.
 
 * *Locked*. When a domain status is marked as locked,users cannot log in to
 check their email, but email is still delivered to the accounts.  If an
-account’s status setting is marked as maintenance or closed, the account’s
+account's status setting is marked as maintenance or closed, the account's
 status overrides the domain status setting.
 
 * *Maintenance*. When the domain status is markedas maintenance, users
-cannot log in and their email is queued at the MTA. If an account’ status
-setting is marked as closed, the account’s status overrides the domain
+cannot log in and their email is queued at the MTA. If an account's status
+setting is marked as closed, the account's status overrides the domain
 status setting.
 
 * *Suspended*. When the domain status is marked assuspended, users cannot
 log in, their email is queued at the MTA, and accounts and distribution
-lists cannot be created, deleted, or modified. If an account’s status
-setting is marked as closed, the account’s status overrides the domain
+lists cannot be created, deleted, or modified. If an account's status
+setting is marked as closed, the account's status overrides the domain
 status setting.
 |=======================================================================
 
@@ -401,7 +382,7 @@ calendars.
 When users share a {product-name} folder, the default is to create
 the URL with the Zimbra server hostname and the Zimbra service host
 name. This is displayed as
-*http://server.domain.com/service/home/username/sharedfolder*. The
+*https://server.domain.com/service/home/username/sharedfolder*. The
 attributes are generated as follows:
 
 * Hostname is server.zimbraServiceHostname
@@ -410,7 +391,7 @@ attributes are generated as follows:
 
 When you configure a public service host name, this name is used instead of
 the server/service name, as
-*http://publicservicename.domain.com/home/username/sharedfolder*. The
+*https://publicservicename.domain.com/home/username/sharedfolder*. The
 attributes to be used are:
 
 * +zimbraPublicServiceHostname+
@@ -418,13 +399,13 @@ attributes to be used are:
 * +zimbraPublicServicePort+
 
 You can use another FQDN as long as the name has a proper DNS entry to
-point at ‘server’ both internally and externally.
+point at 'server' both internally and externally.
 
 === Global Address List (GAL) Mode Configuration
 
 The Global Address List (GAL) is your company-wide listing of users that is
 available to all users of the email system. GAL is a commonly used feature
-in mail systems that enables users to look up another user’s information by
+in mail systems that enables users to look up another user's information by
 first or last name, without having to know the complete email address.
 
 GAL is configured on a per-domain basis. The GAL mode setting for each
@@ -433,14 +414,12 @@ domain determines where the GAL lookup is performed.
 Use the *GAL Mode Settings* tool with your domain configuration to define
 the Global Address List.
 
-.Admin Console
-****
-*Home > 2 Set up Domain > 1 Create Domain, GAL Mode Settings*
+Admin Console: ::
+*Home > 2 Set up Domain > 1 Create Domain... -> GAL Mode Settings*
 
 image:images/administration_console_gal.png[GAL Mode Settings]
-****
 
-.New Domain—GAL Mode Settings
+.New Domain -- GAL Mode Settings
 [cols=",a",options="header"]
 |=======================================================================
 |Option |Description
@@ -453,7 +432,7 @@ image:images/administration_console_gal.png[GAL Mode Settings]
 configure multiple external LDAP hosts for GAL. All other directory
 services use the Zimbra LDAP service (configuration, mail routing, etc.).
 When you configure an external GAL, you can configure different search
-settings and sync settings.You might want to configure different search
+settings and sync settings. You might want to configure different search
 settings if your LDAP environment is set up to optimize LDAP searching by
 setting up an LDAP cache server, but users also will need to be able to
 sync to the GAL.
@@ -465,8 +444,7 @@ for GAL lookups.
 |Most results returned by GAL search |
 Maximum number of search results that can be returned in one GAL search.
 If this value is undefined here, the system will use the value defined in
-Global Settings.
-
+Global Settings. +
 Default = 100 results.
 
 |GAL sync account name* |
@@ -476,9 +454,9 @@ Read-only field that displays the galsync name and associated domain.
 Read-only field that displays the name of the internal GAL.
 
 |Internal GAL polling interval |
-Define how often — as days, hours, minutes, or seconds — the GAL sync
+Define how often -- as days, hours, minutes, or seconds -- the GAL sync
 account is to sync with the LDAP server.  With the first sync to the LDAP
-server, all GAL contacts from the LDAP are added to the galsync account’s
+server, all GAL contacts from the LDAP are added to the galsync account's
 address book. On subsequent syncs, the account is updated with information
 about new contacts, modified contacts, and deleted contacts.
 
@@ -493,7 +471,7 @@ GAL sync account gives users faster access to auto complete names from the
 GAL.
 
 When a GAL sync account is created on a server, GAL requests are directed
-to the server’s GAL sync account instead of the domain’s GAL sync
+to the server's GAL sync account instead of the domain's GAL sync
 account. The GalSyncResponse includes a token which encodes the GAL sync
 account ID and current change number. The client stores this and then uses
 it in the next GalSyncRequest. Users perform GAL sync with the GAL sync
@@ -504,7 +482,7 @@ some reason, the traditional LDAP-based search is run.
 The GAL sync accounts are system accounts and do not use a Zimbra license.
 
 When you configure the GAL sync account, you define the GAL datasource and
-the contact data is syncd from the datasource to the GAL sync accounts’
+the contact data is syncd from the datasource to the GAL sync accounts'
 address books. If the mode *Both* is selected, an address book is created
 in the account for each LDAP data source.
 
@@ -528,13 +506,12 @@ associated with this feature is *zmgsautil.*
 When {product-abbrev} is configured with more than one server, you can add an additional
 GAL sync account for each server.
 
-.Admin Console
-****
-In the Administration Console, select *Configure > Domains*.
+Admin Console: ::
+*Home > Configure > Domains*
 
 . Select the domain to add another GAL sync account.
 
-. In the gear box, select *Configure GAL*.
+. In the *Gear* icon, select *Configure GAL*.
 
 . Click *Add a GAL account*.
 
@@ -550,7 +527,6 @@ source name for both the internal GAL and the external GAL.
 sync with the LDAP server to update.
 
 . Click *Finish*.
-****
 
 ==== Changing GAL sync account name
 
@@ -561,24 +537,22 @@ created, you cannot rename the account because syncing the data fails.
 To change the account name delete the existing GAL sync account and
 configure a new GAL for the domain.
 
-.Admin Console
-****
-In the Administration Console, select *Configure > Domains*.
+Admin Console: ::
+*Home > Configure > Domains*
 
 . Select the domain where you want to change the GAL sync account name.
 
-. In the gear box, select *Configure GAL* to open the configuration wizard
+. In the *Gear* icon, select *Configure GAL* to open the configuration wizard
 and change the GAL mode to internal. Do not configure any other
 fields. Click *Finish*.
 
-. In the domain’s account Content pane, delete the domain’s galsync
+. In the domain's account Content pane, delete the domain's galsync
 account.
 
 . Select the domain again and select Configure GAL to reconfigure the
 GAL. In the GAL sync account name field, enter the name for the account.
 Complete the GAL configuration and click *Finish*. The new account is
 displayed in the Accounts Content pane.
-****
 
 === Authentication Modes
 
@@ -588,11 +562,10 @@ and password information provided when users log in.
 
 Set the authentication method on a per-domain basis.
 
-.Admin Console
-****
-*Home > 2 Set up Domain > 1. create Domain, Authentication Mode*
+Admin Console: ::
+*Home > 2 Set up Domain > 1 Create Domain... -> Authentication Mode*
 
-.New Domain — Authentication Mode
+.New Domain -- Authentication Mode
 [cols=",a",options="header",]
 |=======================================================================
 |Option |Description
@@ -614,7 +587,6 @@ identify the Active Directory domain name and URL.
 
 
 |=======================================================================
-****
 
 === Virtual Hosts
 
@@ -625,11 +597,10 @@ When you create a virtual host, this becomes the default domain for a
 user login. Zimbra Web Client users can log in without having to specify
 the domain name as part of their user name.
 
-.Admin Console
-****
-*Home > 2 Set up Domain > 1. Create Domain, Virtual Hosts*
+Admin Console: ::
+*Home > 2 Set up Domain > 1 Create Domain... -> Virtual Hosts*
 
-.New Domain — Virtual Hosts
+.New Domain -- Virtual Hosts
 [cols=",",options="header",]
 |=======================================================================
 |*Option* |*Description*
@@ -637,11 +608,10 @@ the domain name as part of their user name.
 |Add virtual host |
 Alphanumeric string to identify the virtual host(s) for this domain. The
 virtual host requires a valid DNS configuration with an A record.  To
-delete a virtual host from the domain, click Remove alongside the host name
+delete a virtual host from the domain, click *Remove* alongside the host name
 displayed in this wizard screen.
 
 |=======================================================================
-****
 
 To open the Zimbra Web Client log in page, users enter the virtual host
 name as the URL address. For example, *https://mail.company.com*.
@@ -670,13 +640,13 @@ license.
 
 When multiple Classes of Service (COS) are available, you can select which
 classes of service can be configured and how many accounts on the domain
-can be assigned to the COS. This is configured in the domain’s Account
+can be assigned to the COS. This is configured in the domain's Account
 Limits page. The number of COS account types used is tracked.  The limits
 for all COSs cannot exceed the number set for the maximum accounts for the
 domain.
 
 The number of COS assigned to accounts is tracked. You can see the number
-assigned/number remaining from any account’s General Information page.
+assigned/number remaining from any account's General Information page.
 
 === Renaming a Domain
 
@@ -694,16 +664,13 @@ After the domain has been renamed
 
 * Update external references that you have set up for the old domain name
 to the new domain name. This may include automatically generated emails
-that were sent to the administrator’s mailbox such as backup ses-sion
+that were sent to the administrator's mailbox such as backup ses-sion
 notifications. Immediately run a full backup of the new domain
 
-.CLI
-****
 [source,bash]
 ----
 zmprov -l rd [olddomain.com] [newdomain.com]
 ----
-****
 
 ==== Domain Rename Process
 
@@ -736,10 +703,8 @@ A domain alias is a domain name just like your primary domain name. You
 must own the domain name and verify your ownership before you can add it as
 an alias.
 
-.Admin Console
-****
-*Configure > Domains*: from the *Gear* icon select, *Add a Domain Alias*.
-****
+Admin Console: ::
+*Home > Configure > Domains*, from the *Gear* icon select, *Add a Domain Alias*.
 
 === Enabling Support for Domain Disclaimers
 
@@ -747,55 +712,51 @@ Disclaimers are set per-domain. When upgrading, an existing global
 disclaimer is converted to domain specific disclaimers on every domain to
 preserve behavior with previous releases.
 
-.CLI
-****
-
 Per domain disclaimer support can be enabled using the following steps:
 
-. Create a new domain (e.g. example.com), and account (e.g.
+. Create a new domain (e.g. example.com) and account (e.g.
 user2@example.com).
 +
 [source,bash]
 ----
-zimbra@server-064:~$ zmprov cd example.com cb9a4846-6df1-4c18-8044-4c1d4c21ccc5
-zimbra@server-064:~$ zmprov ca user2@example.com test123 95d4caf4-c474-4397-83da-aa21de792b6a
-zimbra@server-064:~$ zmprov -l gaa user1@server-064.eng.example.com user2@example.com
+$ zmprov cd example.com cb9a4846-6df1-4c18-8044-4c1d4c21ccc5
+$ zmprov ca user2@example.com test123 95d4caf4-c474-4397-83da-aa21de792b6a
+$ zmprov -l gaa user1@example.com user2@example.com
 ----
 
 . Enable the use of disclaimers
 +
 [source,bash]
 ----
-zimbra@server-064:~$ zmprov mcf zimbraDomainMandatoryMailSignatureEnabled TRUE
-zimbra@server-064:~$ zmprov gcf zimbraDomainMandatoryMailSignatureEnabled zimbraDomainMandatoryMailSignatureEnabled: TRUE
+$ zmprov mcf zimbraDomainMandatoryMailSignatureEnabled TRUE
+$ zmprov gcf zimbraDomainMandatoryMailSignatureEnabled
+zimbraDomainMandatoryMailSignatureEnabled: TRUE
 ----
 
 . Add disclaimers to the new domain
 +
 [source,bash]
 ----
-zimbra@server-064:~$ zmprov md example.com
+$ zmprov md example.com
 zimbraAmavisDomainDisclaimerText "text disclamer"
 zimbraAmavisDomainDisclaimerHTML "HTML disclaimer"
 
-zimbra@server-064:~$ zmprov gd example.com
-zimbraAmavisDomainDisclaimerText
-zimbraAmavisDomainDisclaimerHTML
+$ zmprov gd example.com zimbraAmavisDomainDisclaimerText zimbraAmavisDomainDisclaimerHTML
 # name example.com
 zimbraAmavisDomainDisclaimerHTML: HTML disclaimer
 zimbraAmavisDomainDisclaimerText: text disclamer
 
-zimbra@server-064:~$ zmprov gd server-064.eng.example.com
+$ zmprov gd eng.example.com
+# name eng.example.com
 zimbraAmavisDomainDisclaimerText
 zimbraAmavisDomainDisclaimerHTML
-# name server-064.eng.example.com
 ----
 
 ..  On the first MTA:
 +
 [source,bash]
 ----
-zimbra@server-064:~$ ./libexec/zmaltermimeconfig -e example.com
+/opt/zimbra/libexec/zmaltermimeconfig -e example.com
 
 Enabled disclaimers for domain: example.comm
 Generating disclaimers for domain example.com.
@@ -806,7 +767,7 @@ Generating disclaimers for domain example.com.
 --
 [source,bash]
 ----
-./libexec/zmaltermimeconfig
+/opt/zimbra/libexec/zmaltermimeconfig
 ----
 * To test, send an email from the account (e.g. user2@example.com) in
 html and plain text format
@@ -820,43 +781,39 @@ plain text disclaimer.
 +
 [source,bash]
 ----
-/libexec/zmaltermimeconfig -d example.com
+/opt/zimbra/libexec/zmaltermimeconfig -d example.com
 ----
 +
 .  On all additional MTAs:
 +
 [source,bash]
 ----
-/libexec/zmaltermimeconfig
+/opt/zimbra/libexec/zmaltermimeconfig
 ----
 --
-****
 
 === Disabling Disclaimers for Intra-domain Emails
 
 You can enable the option for emails between individuals in the same domain
 to not have a disclaimer attached.
 
-Set the attribute `attachedzimbraAmavisOutboundDisclaimersOnly` to TRUE.
+Set the attribute `attachedzimbraAmavisOutboundDisclaimersOnly` to `TRUE`.
 
-To preserve backward-compatibility, this attribute defaults to FALSE.
+To preserve backward-compatibility, this attribute defaults to `FALSE`.
 
 === Disabling the Disclaimer Feature
 
 It is possible to completely remove support for disclaimers by setting the
-related attribute to FALSE
+related attribute to `FALSE`.
 
-.CLI
-****
 [source,bash]
 ----
 zmprov mcf zimbraDomainMandatoryMailSignatureEnabled FALSE
 ----
-****
 
 === Zimlets on the Domain
 
-All Zimlets that are deployed are displayed in the domain’s *Zimlets*
+All Zimlets that are deployed are displayed in the domain's *Zimlets*
 page. If you do not want all the deployed Zimlets made available for users
 on the domain, select from the list the Zimlets that are available for the
 domain. This overrides the Zimlet settings in the COS or for an account.
@@ -870,7 +827,7 @@ registered on the LDAP server.
 In the Administration Console, you can view the current status of all the
 servers that are configured with Zimbra software, and you can edit or
 delete existing server records. You cannot add servers directly to
-LDAP. The {product-name} Installation program must be used to add new
+LDAP. The {product-name} installation program must be used to add new
 servers because the installer packages are designed to register the new
 host at the time of installation.
 
@@ -889,7 +846,7 @@ and enabling DNS lookup if required. Enable the Milter Server and set the
 bind address.
 
 * Enabling POP and IMAP and setting the port numbers for a server. If
-IMAP/POP proxy is set up, making sure that the port numbers are config-ured
+IMAP/POP proxy is set up, making sure that the port numbers are configured
 correctly.
 
 * Index and message volumes configuration. Setting HSM policies.
@@ -917,45 +874,41 @@ information:
 * Server hostname
 
 * LMTP information including advertised name, bind address, and number of
-threads that can simultaneously process data source imports.
-+
+threads that can simultaneously process data source imports. +
 Default = 20 threads.
 
 * Purge setting. The server manages the message purge schedule. You
-configure the duration of time that the server should “rest” between
+configure the duration of time that the server should "rest" between
 purg-ing mailboxes from the Administration Console, Global settings or
-Server settings, or General Information page.
-+
+Server settings, or General Information page. +
 Default = message purge is scheduled to run each minute.
 
-.CLI
-****
 When installing a reverse proxy the communication between the proxy server
 and the backend mailbox server must be in plain text. Checking *This server
 is a reverse proxy lookup target* automatically sets the following
 parameters:
 
 ----
-zimbraImapCleartextLoginEnabled=TRUE
-zimbraReverseProxyLookupTarget=TRUE
-zimbraPop3CleartextLoginEnabled=TRUE
+zimbraImapCleartextLoginEnabled TRUE
+zimbraReverseProxyLookupTarget TRUE
+zimbraPop3CleartextLoginEnabled TRUE
 ----
 
 The Notes text box can be used to record details you want to save.
-****
 
 === Change MTA Server Settings
 
-.Admin Console
-****
-The *MTA* page shows the following settings:
+Admin Console: ::
+*Home > Configure > Servers -> _server_ -> MTA*
+
+The *MTA* page show the following settings:
 
 * Authentication enabled.
 +
 Enables SMTP client authentication, so users can authenticate. Only
 authenticated users or users from trusted networks are allowed to relay
 mail. TLS authentication when enabled, forces all SMTP auth to use
-Transaction Level Security (similar to SSL) to avoid passing passwords in
+Transport Layer Security (successor to SSL) to avoid passing passwords in
 the clear.
 
 * Network settings, including Web mail MTA hostname, Web mail MTA time-out,
@@ -966,7 +919,6 @@ ability to enable DNS lookup for the server.
 +
 If *Enable Milter Server* is checked, the milter enforces the rules that
 are set up for who can send email to a distribution list on the server.
-****
 
 === Setting Up IP Address Binding
 
@@ -974,8 +926,8 @@ If the server has multiple IP addresses, you can use IP address binding
 to specify which specific IP addresses you want a particular server to
 bind to.
 
-*Admin Console: Home>Configure>Servers* <host name>; right-click for
-popup menu andselect *Edit> IP Address Bindings*
+Admin Console: ::
+*Home > Configure > Servers -> _server_ -> IP Address Bindings*
 
 .IP Address Bindings
 [cols=",",options="header",]
@@ -1013,8 +965,7 @@ its own creator.
 You can use the Certificate Installation Wizard to generate a new
 self-signed certificate. This is useful when you use a self-signed
 certificate and want to change the expiration date. Self-signed
-certificates are normally used for testing.
-+
+certificates are normally used for testing. +
 Default = 1825 days (5 years)
 
 * A *commercial certificate* is issued by a certificate authority (CA) that
@@ -1028,7 +979,7 @@ Server is used in your production environment.
 
 [IMPORTANT]
 ZCO users in a self-signed environment will encounter warnings about
-connection security unless the root CA certificate is added to the client’s
+connection security unless the root CA certificate is added to the client's
 Window Certificate Store. See the
 https://wiki.zimbra.com/wiki/Main_Page[Zimbra Wiki] article
 https://wiki.zimbra.com/wiki/ZCO_Connection_Security[ZCO Connection
@@ -1036,19 +987,17 @@ Security] for more information.
 
 === Installing Certificates
 
-To generate the CSR, you complete a form with details about the domain,
-company, and country, and then generate a CSR with the RSA private key.
-You save this file to your computer and submit it to your commercial
-certificate authorizer.
+To generate the Certificate Signing Request (CSR) you complete a form
+with details about the domain, company, and country, and then generate
+a CSR with the RSA private key.  You save this file to your computer
+and submit it to your commercial certificate authorizer.
 
 To obtain a commercially signed certificate, use the Zimbra Certificates
 Wizard in the Administration Console to generate the RSA Private Key and
-Certificate Signing Request (CSR).
+CSR.
 
-.Admin Console
-****
+Admin Console: ::
 *Home > 1 Get Started > 3. Install Certificates*
-
 
 Use guidelines from the Install Certificates table to set parameters for
 your certificates.
@@ -1090,7 +1039,6 @@ the server name to one of the SAN names.
 
 |=======================================================================
 
-****
 
 Download the CSR from the Zimbra server and submit it to a Certificate
 Authority, such as VeriSign or GoDaddy. They issue a digitally signed
@@ -1107,11 +1055,10 @@ You can view the details of certificates currently deployed. Details
 include the certificate subject, issuer, validation days and subject
 alternative name.
 
-.Admin Console
-****
-*Home > Certificates* and select a service host name.  Certificates display
-fordifferent Zimbra services such as LDAP, mailboxd, MTA and proxy.
-****
+Admin Console: ::
+*Home > Configure > Certificates -> _zmhostname_*
+
+Certificates display for different Zimbra services such as LDAP, mailboxd, MTA and proxy.
 
 === Maintaining Valid Certificates
 
@@ -1133,8 +1080,6 @@ IP address.
 Each domain must be issued a signed commercial certificate that attests
 that the public key contained in the certificate belongs to that domain.
 
-.CLI
-****
 Configure the Zimbra Proxy Virtual Host Name and IP Address.
 [source,bash]
 ----
@@ -1144,15 +1089,13 @@ zmprov md <domain> +zimbraVirtualHostName {domain.example.com} +zimbraVirtualIPA
 [NOTE]
 The virtual domain name requires a valid DNS configuration with an A
 record.
-****
 
 Edit the certificate for the domain:
 
-.Admin Console
-****
+Admin Console: ::
 *Home > 1 Get Started > 3. Install Certificates*
 
-Copy the domain’s issued signed commercial certificate’s and private key
+Copy the domain's issued signed commercial certificate's and private key
 files to the *Domain Certificate* section for the selected domain.
 
 image:images/certificate_domain_load.jpg[Certificate Domain Load]
@@ -1161,7 +1104,7 @@ image:images/certificate_domain_load.jpg[Certificate Domain Load]
 order, starting with your domain certificate. This allows the full
 certificate chain to be validated.
 
-. Remove any password authentication from the private key before the
+. Remove any password (passphrase) from the private key before the
 certificate is saved.
 +
 See your commercial certificate provider for details about how to remove
@@ -1170,7 +1113,6 @@ the password.
 . Click *Upload*.
 +
 The domain certificate is deployed to `/opt/zimbra/conf/domaincerts`
-****
 
 == Using DKIM to Authenticate Email Message
 
@@ -1178,7 +1120,7 @@ Domain Keys Identified Mail (DKIM) defines a domain-level authentication
 mechanism that lets your organization take responsibility for transmitting
 an email message in a way that can be verified by a recipient. Your
 organization can be the originating sending site or an intermediary. Your
-organization’s reputation is the basis for evaluating whether to trust the
+organization's reputation is the basis for evaluating whether to trust the
 message delivery.
 
 You can add a DKIM digital signature to outgoing email messages,
@@ -1214,8 +1156,6 @@ other undesirable behavior.
 
 DKIM signing to outgoing mail is done at the domain level.
 
-.CLI
-****
 To set up DKIM you must run the CLI zmdkimkeyutil to generate the DKIM keys
 and selector. You then update the DNS server with the selector which is the
 public key.
@@ -1233,7 +1173,7 @@ that must be added for the domain to your DNS server.
 +
 Optional. To specify the number of bits for the new key, include `*-b*` in
 the command line, `-b <\####>`. If you do not add the `-b`, the default
-setting is 1024 bits.
+setting is 2048 bits.
 +
 ----
 DKIM Data added to LDAP for domain example.com with selector B534F5FC-EAF5-11E1-A25D-54A9B1B23156
@@ -1253,27 +1193,26 @@ the DKIM DNS text record.
 record.
 
 . Verify that the public key matches the private key, See the
-<<dkim_identifiers,, Identifiers>> table for `-d`, `-s`, and `-x`
+<<dkim_identifiers,Identifiers>> table for `-d`, `-s`, and `-x`
 descriptions.
 +
 --
 [source,bash]
 ----
-/opt/zimbra/opendkim/sbin/opendkim-testkey -d <example.com> -s <0E9F184A-9577-11E1-AD0E-2A2FBBAC6BCB> -x /opt/zimbra/conf/opendkim.conf
+/opt/zimbra/common/sbin/opendkim-testkey -d <example.com> -s <0E9F184A-9577-11E1-AD0E-2A2FBBAC6BCB> -x /opt/zimbra/conf/opendkim.conf
 ----
 
 [[dkim_identifiers]]
 .Identifiers
-[cols=",",options="header",]
+[cols="1m,2",options="header",]
 |====================================================
 |Parameter |Description
-|`-d` |Domain name
-|`-s` |Selector name
-|`-x` |Configuration file name.
+|-d |Domain name
+|-s |Selector name
+|-x |Configuration file name.
 
 |====================================================
 --
-****
 
 === Update DKIM Data for a Domain
 
@@ -1284,17 +1223,15 @@ Good practice is to leave the previous TXT record in DNS for a period of
 time so that email messages that were signed with the previous key can
 still be verified.
 
-.CLI
-****
 Log in to the {product-abbrev} server and as zimbra:
 [source,bash]
 ----
-opt/zimbra/libexec/zmdkimkeyutil -u -d <example.com>
+/opt/zimbra/libexec/zmdkimkeyutil -u -d <example.com>
 ----
 
 Optional. To specify the number of bits for the new key, include *-b* in
 the command line, `-b <\####>`. If you do not add the `-b`, the default
-setting is 1024 bits.
+setting is 2048 bits.
 
 . Work with your service provider to update your DNS for the domain with
 the DKIM DNS text record.
@@ -1307,9 +1244,8 @@ table for `-d`, `-s`, and `-x` descriptions.
 +
 [source,bash]
 ----
-/opt/zimbra/opendkim/sbin/opendkim-testkey -d <example.com> -s <0E9F184A-9577-11E1-AD0E-2A2FBBAC6BCB> -x /opt/zimbra/conf/opendkim.conf
+/opt/zimbra/common/sbin/opendkim-testkey -d <example.com> -s <0E9F184A-9577-11E1-AD0E-2A2FBBAC6BCB> -x /opt/zimbra/conf/opendkim.conf
 ----
-****
 
 === Remove DKIM Signing from {product-abbrev}
 
@@ -1319,39 +1255,32 @@ good practice is to leave the previous TXT record in DNS for a period of
 time so that email messages that were signed with the previous key can
 still be verified.
 
-.CLI
-****
 Use the following command syntax to remove the file:
 [source,bash]
 ----
 /opt/zimbra/libexec/zmdkimkeyutil -r -d example.com
 ----
-****
 
 === Retrieve DKIM Data for a Domain
 
-.CLI
-****
 Use the following command syntax to view the stored DKIM information for
 the domain, selector, private key, public signature and identity:
 [source,bash]
 ----
 /opt/zimbra/libexec/zmdkimkeyutil -q -d example.com
 ----
-****
 
 == Anti-spam Settings
 
 {product-abbrev} uses SpamAssassin to control spam. SpamAssassin uses predefined rules
 as well as a Bayes database to score messages. Zimbra evaulates spaminess
 based on percentage. Messages tagged between 33%-75% are considered spam
-and delivered to the user’s junk folder. Messages tagged above 75% are not
+and delivered to the user's junk folder. Messages tagged above 75% are not
 sent to the user and are discarded.
 
 You can change the anti-spam settings.
 
-.Admin Console
-****
+Admin Console: ::
 *Home > Configure > Global Settings > AS/AV*
 
 image:images/as_av.jpg[Anti-Spam Settings]
@@ -1362,21 +1291,19 @@ requirements.
 . From the *Gear* icon, select *Save* to use your settings.
 +
 --
-.Anti Spam
-[cols=",",options="header",]
+.Anti-Spam
+[cols="1,2",options="header",]
 |=======================================================================
 |Option |Description
 
 |Kill percent |
 Percent that scored mail to be considered as spam, and therefore not to be
-delivered.
-
+delivered. +
 Default = 75%
 
 |Tag percent |
 Percent that scores mail to be considered as spam, which should be
-delivered to the Junk folder.
-
+delivered to the Junk folder. +
 Default = 33%
 
 |Subject prefix |
@@ -1384,10 +1311,9 @@ Text string to be added to the subject line, for messages tagged as spam.
 
 |=======================================================================
 --
-****
 
 When a message is tagged as spam, the message is delivered to the
-recipient’s junk folder. Users can view the number of unread messages that
+recipient's junk folder. Users can view the number of unread messages that
 are in their junk folder and can open the junk folder to review the
 messages marked as spam. If you have the anti-spam training filters
 enabled, when users add or remove messages in the junk folder, their action
@@ -1447,9 +1373,6 @@ items from their junk folder.
 If you do not want users to train the spam filter you can disable this
 function.
 
-.CLI
-****
-
 . Modify the global configuration attributes, `ZimbraSpamIsSpamAccount` and
 `ZimbraSpamIsNotSpamAccount`
 
@@ -1463,7 +1386,6 @@ zmprov mcf ZimbraSpamIsNotSpamAccount ''
 
 When these attributes are modified, messages marked as spam or not spam are
 not copied to the spam training mailboxes.
-****
 
 === Manually Training Spam Filters
 
@@ -1489,8 +1411,6 @@ For information about creating domain aliases, see the
 https://wiki.zimbra.com[Zimbra wiki] article
 https://wiki.zimbra.com/wiki/Managing_Domains[Managing Domains].
 
-.CLI
-****
 . Set the Postfix LC key.
 +
 [source,bash]
@@ -1506,29 +1426,24 @@ zmprov mcf +zimbraMtaRestriction "check_policy_service unix:private/policy"
 ----
 
 The `postfix_policy_time_limit` key is set because by default the Postfix
-spawn (8) daemon kills its child process after 1000 seconds. This is too
+spawn(8) daemon kills its child process after 1000 seconds. This is too
 short for a policy daemon that might run as long as an SMTP client is
 connected to an SMTP process.
-****
 
 === Disabling Postfix Policy Daemon
 
-.CLI
-****
 Disable the SMTPD policy.
 [source,bash]
 ----
 zmlocalconfig -e postfix_enable_smtpd_policyd=no
 ----
-****
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Configure > Global Settings > MTA*
+
 Define the policy restriction.Setting Email Recipient
 RestrictionsRealtimeBlackhole Lists and Realtime Right-Hand Side
 Blocking/Black Lists can be turned on or off in the MTA.
-
-*Global Settings > MTA* page
 
 For protocol checks, the following three RBLs can be enabled:
 
@@ -1538,10 +1453,7 @@ For protocol checks, the following three RBLs can be enabled:
   `reject_non_fqdn_hostname`
 
 * Sender address must be fully qualified - reject_non_fqdn_sender
-****
 
-.CLI
-****
 Hostname in greeting violates RFC - `reject_invalid_host`
 [source,bash]
 ----
@@ -1557,38 +1469,26 @@ The following RBLs can also be set.
 
 As part of recipient restrictions, you can also use the
 `reject_rbl_client <rbl hostname>` option.
-****
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Configure > Global Settings > MTA -> DNS Checks*
+
 Use the DNS tools in MTA configuration to define the restriction lists.
-
-*Home > Configure > MTA > DNS*
 
 image:images/dns_checks.jpg[DNS Checks]
 
-****
-
-For a list of current RBL’s, see the
-http://en.wikipedia.org/wiki/Comparison_of_DNS_blacklists[Comparison of DNS
+For a list of current RBL's, see the
+https://en.wikipedia.org/wiki/Comparison_of_DNS_blacklists[Comparison of DNS
 blacklists] article.
 
 
 === Adding RBLs with the CLI
 
-.CLI
-****
-Log in to the server and go to the Zimbra directory.
-[source,bash]
-----
-su -zimbra
-----
-
 . View the current RBLs.
 +
 [source,bash]
 ----
-zmprov gacf | grep zimbraMtaRestriction
+zmprov gacf zimbraMtaRestriction
 ----
 
 . Add new RBLs: list the existing RBLs and the new Add, in the same command
@@ -1603,47 +1503,42 @@ zmprov mcf zimbraMtaRestriction [RBL type]
 =================================
 [source,bash]
 ----
-zmprov mcf zimbraMtaRestriction reject_invalid_hostname
-zimbraMtaRestriction reject_non-fqdn_hostname zimbraMtaRestriction
-reject_non_fqdn_sender zimbraMtaRestriction “reject_rbl_client
-cbl.abuseat.org” zimbraMtaRestriction “reject_rbl_client bl.spamcop.net”
-zimbraMtaRestriction “reject_rbl_client dnsbl.sorbs.net”
-zimbraMtaRestriction “reject_rbl_client sbl.spamhaus.org”
+zmprov mcf \
+ zimbraMtaRestriction reject_invalid_hostname \
+ zimbraMtaRestriction reject_non-fqdn_hostname \
+ zimbraMtaRestriction reject_non_fqdn_sender \
+ zimbraMtaRestriction "reject_rbl_client cbl.abuseat.org" \
+ zimbraMtaRestriction "reject_rbl_client bl.spamcop.net" \
+ zimbraMtaRestriction "reject_rbl_client dnsbl.sorbs.net" \
+ zimbraMtaRestriction "reject_rbl_client sbl.spamhaus.org"
 ----
 =================================
-****
 
 === Setting Global Rule for Messages Marked as Both Spam and Whitelist
 
 When you use a third-party application to filter messages for spam before
 messages are received by {product-abbrev}, the {product-abbrev} global rule is to send all messages
-that are marked by the third- party as spam to the junk folder. This
+that are marked by the third-party as spam to the junk folder. This
 includes messages that are identified as spam and also identified as
 whitelisted.
 
 If you do not want messages that are identified as whitelisted to be sent
 to the junk folder, you can configure `zimbraSpamWhitelistHeader` and
-`zimbraSpamWhitelistHeaderValue` to pass these messages to the user’s
+`zimbraSpamWhitelistHeaderValue` to pass these messages to the user's
 mailbox. This global rule is not related to the Zimbra MTA spam filtering
-rules. Messages are still passed through a user’s filter rules.
+rules. Messages are still passed through a user's filter rules.
 
-.CLI
-****
 To search the message for a whitelist header:
 [source,bash]
 ----
 zmprov mcf zimbraSpamWhitelistHeader <X-Whitelist-Flag>
 ----
-****
 
-.CLI
-****
 To set the value:
 [source,bash]
 ----
 zmprov mcf zimbraSpamWhitelistHeaderValue <value_of_third-party_white-lists_messages>
 ----
-****
 
 == Anti-virus Settings
 
@@ -1657,8 +1552,7 @@ days.
 From the Admin Console, you can specify ho aggressively spam is to be
 filtered in your {product-name}.
 
-.Admin Console
-****
+Admin Console: ::
 *Home > Configure > Global Settings > AS/AV*
 
 image:images/as_av.jpg[AS/AV]
@@ -1669,7 +1563,7 @@ requirements.
 . From the *Gear* icon, select *Save* to use your settings.
 
 .Anti Virus
-[cols=",",options="header",]
+[cols="1,2",options="header",]
 |=======================================================================
 |Option |Description
 
@@ -1686,8 +1580,6 @@ To alert that a mail message had a virus and was not delivered.
 
 |=======================================================================
 
-****
-
 During {product-name} installation, the administrator notification
 address for anti- virus alerts is configured. The default is to set up
 the admin account to receive the notification. When a virus has been
@@ -1698,7 +1590,7 @@ Updates are obtained via HTTP from the ClamAV website.
 
 == Zimbra Free/Busy Calendar Scheduling
 
-The Free/Busy feature allows users to view each other’s calendars for
+The Free/Busy feature allows users to view each other's calendars for
 efficiently scheduling meetings. You can set up free/busy scheduling across
 {product-abbrev} and Microsoft Exchange servers.
 
@@ -1768,7 +1660,7 @@ Domain Free/Busy Interop page or on the Class of Service (COS) Advanced
 page. Set at the global level this applies to all accounts talking to
 Exchange.
 
-* In the Account’s Free/Busy Interop page, configure the foreign principal
+* In the Account's Free/Busy Interop page, configure the foreign principal
 email address for the account. This sets up a mapping from the
 {product-name} account to the corresponding object in the AD.
 
@@ -1785,8 +1677,6 @@ interoperability is configured on each server.
 [NOTE]
 Each server must be running {product-abbrev} 8.0.x or later.
 
-.CLI
-****
 . Enter the server host names and ports.
 +
 [source,bash]
@@ -1805,7 +1695,6 @@ zmcontrol restart
 ----
 
 . Repeat these steps at all other servers.
-****
 
 == Setting Up S/MIME
 
@@ -1815,7 +1704,7 @@ digital signature to authenticate and encrypt messages.
 === Prerequisites
 
 * To use S/MIME, users must have a PKI certificate and a private key.  The
-private key must be installed in the user’s local certificate store on
+private key must be installed in the user's local certificate store on
 Windows and Apple Mac and in the browser certificate store if they use the
 Firefox browser. See the appropriate computer or browser documentation for
 how to install certificates.
@@ -1837,22 +1726,23 @@ You must have a {product-abbrev} license that is enabled for S/MIME.
 
 === Enable S/MIME Feature
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Configure > Class of Service -> _COS_ -> Features* +
+*Home > Manage > Accounts -> _account_ -> Features*
+
 The S/MIME feature can be enabled from either the COS or Account
 FeaturesTab.
 
 . Select the COS or account to edit.
-. In the Features tab S/MME features section, check *Enable S/MIME*.
+. In the Features tab S/MIME features section, check *Enable S/MIME*.
 . Click *Save*.
-****
 
 === Importing S/MIME Certificates
 
 Users can send encrypted messages to recipients if they have the
-recipients’ public-key certificate stored in one of the following:
+recipients' public-key certificate stored in one of the following:
 
-* Recipient’s contact page in their Address Book.
+* Recipient's contact page in their Address Book.
 * Local OS or browser keystore.
 * External LDAP directory.
 
@@ -1866,8 +1756,9 @@ If you use an external LDAP to store certificates, you can configure the
 Zimbra server to lookup and retrieve certificates from the external LDAP,
 on behalf of the client.
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Configure > Global Settings > S/MIME* +
+*Home > Configure > Domains -> _domain_ -> S/MIME*
 
 You can configure the external LDAP server settings from either the *Global
 Settings > S/MIME* tab or the *Domains > S/MIME* tab.
@@ -1880,7 +1771,7 @@ Global Settings override Domain settings
 
 . In the *Configuration Name* field, enter a name to identify the external
 LDAP server. Example, *companyLDAP_1*
-. In the *LDAP URL* field, enter the LDAP server’s URL. Example,
+. In the *LDAP URL* field, enter the LDAP server's URL. Example,
 *ldap://host.domain:3268*
 . To use DN to bind to the external server, in the *S/MIME LDAP Bind DN*
 field, enter the bind DN. Example, *administrator@domain*
@@ -1904,14 +1795,13 @@ for expansion:
 * %n - search key with @ (or without, if no @ was specified)
 * %u - with @ removed (For example, mail=%n)
 . In the *S/MIME Ldap Attribute* field, enter attributes in the external
-LDAP server that contain users’ S/MIME certificates. Multiple attributes
+LDAP server that contain users' S/MIME certificates. Multiple attributes
 can be separated by a comma (,).
 +
 Example, "userSMIMECertificate, UserCertificate"
 . Click *Save*.
 
 To set up another external LDAP server, click *Add Configuration*.
-****
 
 == Storage Management
 
@@ -1934,7 +1824,7 @@ volume. You cannot change which volume the account is assigned.
 
 As volumes become full, you can create a new current index volume for new
 accounts. You can add new volumes, set the volume type, and set the
-compression threshold
+compression threshold.
 
 Index volumes not marked current are still actively in use for the accounts
 assigned to them. Any index volume that is referenced by a mailbox as its
@@ -1991,7 +1881,7 @@ cron table. From the Administration Console, when you select a server, you
 can manually start a HSM session, monitor HSM sessions, and abort HSM
 sessions that are in progress from the Volumes page.
 
-You can manually start an HSM session from the server’s gear icon menu.
+You can manually start an HSM session from the server's *Gear* icon.
 
 When you abort a session and then restart the process, the HSM session
 looks for entries in the primary store that meet the HSM age criteria.  Any
@@ -2004,8 +1894,6 @@ or per server to specify the maximum number of items to move during a
 single HSM operation. The default value is 10000. If the limit is exceeded
 the HSM operation is repeated until all qualifying items are moved.
 
-.CLI
-****
 Global batch size modification:
 [source,bash]
 ----
@@ -2015,13 +1903,12 @@ zmprov mcf zimbraHsmBatchSize <num>
 Modifying batch size on a server:
 [source,bash]
 ----
-zmprov ms `hostname` zimbraHsmBatchSize <num>
+zmprov ms `zmhostname` zimbraHsmBatchSize <num>
 ----
-****
 
 == Email Retention Management
 
-You can configure retention policies for user account’s email, trash, and
+You can configure retention policies for user account's email, trash, and
 junk folders. The basic email retention policy is to set the email, trash
 and spam message lifetime in the COS or for individual accounts.
 
@@ -2048,26 +1935,22 @@ You can configure when email messages should be deleted from an accounts
 folders, and the trash and junk folders by COS or for individual accounts.
 
 .Email Lifetime Options
-[cols=",",options="header",]
+[cols="1,2",options="header",]
 |=======================================================================
 |Email Lifetime Option |Description
 
 |Email message lifetime |
 Number of days a message can remain in a folder before it is purged. This
-includes data in RSS folders.
-
-Default = 0
-
-Minimum configuration = 30 days
+includes data in RSS folders. +
+Default = 0 +
+Minimum = 30 days
 
 |Trashed message lifetime |
-Number of days a message remains in the Trash folder before it is purged.
-
+Number of days a message remains in the Trash folder before it is purged. +
 Default = 30 days.
 
-|Spam messageDefault = lifetime|
-Number of days a message can remain in the Junk folder before it is purged.
-
+|Spam message lifetime|
+Number of days a message can remain in the Junk folder before it is purged. +
 Default = 30 days.
 
 |=======================================================================
@@ -2075,14 +1958,13 @@ Default = 30 days.
 === Purging Email Messages
 
 By default, the server purges email messages that have exceeded their
-lifetime every minute.You can change the duration of time that the server
+lifetime every minute. You can change the duration of time that the server
 should "rest" between purging mailboxes.
 
 Use the global Sleep Time setting to define duration, in minutes, between
 mailbox purges.
 
-.Admin Console
-****
+Admin Console: ::
 *Home > Configure > Global Settings > General Information*
 
 image:images/GeneralInformation.jpg[Purge Interval]
@@ -2093,7 +1975,6 @@ purged of messages that meet the message lifetime setting, the server waits
 
 If the message purge schedule is set to 0, messages are not purged even if
 the mail, trash and spam message lifetime is set.
-****
 
 [NOTE]
 Because users cannot view message lifetime settings, you will
@@ -2105,7 +1986,7 @@ Retention and deletion policies can be configured as a global setting or
 as a COS setting. Users can select these policies to apply to their
 message folders in their account. They can also set up their own
 retention and deletion policies. Users enable a policy you set up or
-create their own policies from their folders’ Edit Properties dialog
+create their own policies from their folders' Edit Properties dialog
 box.
 
 === Global Retention Policy
@@ -2116,25 +1997,20 @@ Administration Console.
 Use the global Retention Policy page to set global retention or deletion
 policies.
 
-.Admin Console
-****
-*Home > Configure > Global Settings > Retention Policy*.
+Admin Console: ::
+*Home > Configure > Global Settings > Retention Policy*
 
 image:images/GlobalRetentionPolicy.jpg[Global Retention Policy]
-
-****
 
 === COS Retention Policy
 
 Use the COS Retention Policy page to set retention or deletion for the
 selected COS.
 
-.Admin Console:
-****
-*Home > Configure > Global Settings > Retention Policy*
+Admin Console: ::
+*Home > Configure > Class of Service -> _COS_ -> Retention Policy*
 
 image:images/COSRetentionPolicy.jpg[COS Retention Policy]
-****
 
 Ensure that the *Enable COS-level policies instead of inheriting from the
 policy defined in Global Settings* is enabled.
@@ -2142,7 +2018,7 @@ policy defined in Global Settings* is enabled.
 The retention policy is not automatically enforced on a folder. If users
 option an item in a folder that has not met the threshold of the retention
 policy, the following message is displayed, *You are deleting a message
-that is within its folder’s retention period. Do you wish to delete the
+that is within its folder's retention period. Do you wish to delete the
 message?*
 
 When the threshold for the deletion policy is reached, items are deleted
@@ -2179,47 +2055,39 @@ The *Retention lifetime in dumpster before purging setting* sets retention
 lifetime for items in dumpster. Items in dumpster older than the threshold
 are purged and cannot be retrieved.
 
-Administrators can access the individual dumpster’s content, including
+Administrators can access the individual dumpster's content, including
 spam, and they can delete data at any time before the message lifetime is
 reached.
 
 ==== Searching for an item in the dumpster folder
 
-.CLI
-****
 [source,bash]
 ----
-zmmailbox -z -m <user@example.com> s --dumpster -l <#> --types <message,contact,document> <search-field>
+zmmailbox -z -m <user@example.com> search --dumpster -l <#> --types <message,contact,document> <search-field>
 ----
 
-The search field can be a date range: 'before:mm/dd/yyyy and after:mm/dd/
-yyyy' or emails from or to a particular person: 'from: Joe', etc.
-****
+The search field can be a date range: 'before:mm/dd/yyyy and
+after:mm/dd/yyyy' or emails from or to a particular person:
+'from:Joe', etc.
 
 ==== Deleting items in the dumpster folder
 
 Items in the dumpster folder can be deleted with the CLI or from the
 Administration Console:
 
-.CLI
-****
 [source,bash]
 ----
 zmmailbox -z -m <user@example.com> -A dumpsterDeleteItem <item-ids>
 ----
-****
 
-.Admin Console
-****
-*Home > Configure > Class of Service* <COS name>, Features* page, *General
-*Features* section.
+Admin Console: ::
+*Home > Configure > Class of Service -> _COS_ -> Features -> General Features*
 
-. Enable (check) the Dumpster folder checkbox.
-. To set *Visibility lifetime in dumpster for end user*, go to the COS’s,
+. Enable (check) the *Dumpster folder* checkbox.
+. To set *Visibility lifetime in dumpster for end user*, go to the COS's,
 *Advanced* page, *Timeout Policy* section.
-. To set *Retention lifetime in dumpster before purging*, go to the COS’s
+. To set *Retention lifetime in dumpster before purging*, go to the COS's
 *Advanced* page, *Email Retention Policy* section.
-****
 
 === Configure Legal Hold on an Account
 
@@ -2227,23 +2095,18 @@ If the dumpster folder feature is enabled, you can set up a legal hold to
 preserve all items in user accounts.
 
 When dumpster is enabled, *Can purge dumpster folder* is also enabled.
-Disabling this feature turns off purging of items in the user’s
-dumpster. This can be set by a COS or for individual accounts. When *Can
-purge dumpster* *folder* is enabled, any deletion policies set up on the
-accounts’ folders areignored.
+Disabling this feature turns off purging of items in the user's
+dumpster. This can be set on a COS or for individual accounts. When *Can
+purge dumpster folder* is enabled, any deletion policies set up on the
+accounts' folders are ignored.
 
-.Admin Console
-****
-Configure legal hold on a COS account:
+Configure legal hold:
 
-*Configure > Class of Service > Features* page and deselect *Can purge
-dumpster folder*.
+Admin Console: ::
+*Home > Configure > Class of Service -> _COS_ -> Features* +
+*Home > Manage > Accounts -> _account_ -> Features*
 
-Configure legal hold on individual accounts:
-
-*Manage > Accounts*; select the account, then *Disable* the feature on
-the *Features* page.
-****
+Deselect *Can purge dumpster folder* on the *Features* page.
 
 == Customized Admin Extensions
 
@@ -2254,7 +2117,7 @@ extend existing objects with new properties, and customize existing views.
 For the most up-to-date and comprehensive information about how to create
 an extended Administration Console UI module, go to the Zimbra wiki
 Extending Admin UI article located at
-http://wiki.zimbra.com/wiki/Extending_Admin_UI[Extending_Admin_UI].
+https://wiki.zimbra.com/wiki/Extending_Admin_UI[Extending_Admin_UI].
 
 All Zimbra extensions currently incorporated at the Administration Console
 UI are listed in the content pane as view only.
@@ -2264,13 +2127,11 @@ Modules).
 
 === Deploying New Administration Console UI Modules
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Configure > Admin Extensions*
 
 Save the module Zip file to the computer you use to access the
 Administration Console.
-
-*Home > Configure > Admin Extensions*
 
 . From the *Gear* icon, select *Deploy* to present the *Deploying a Zimlet
 or an extension* dialog.
@@ -2279,7 +2140,6 @@ or an extension* dialog.
 +
 The file is uploaded and the extension is immediately deployed on the
 server.
-****
 
 === Removing An Admin Extension Module
 
@@ -2287,14 +2147,12 @@ Deleting an Admin Extension results in removal of the selected extension
 and all associated files. This action does not delete the originating zip
 file.
 
-.Admin Console
-****
-Use steps in this section to remove custom Admin Extensions.
-
+Admin Console: ::
 *Home > Configure > Admin Extensions*
+
+Use steps in this section to remove custom Admin Extensions.
 
 . Select the module to remove, and select *Undeploy* from the *Gear*
 icon. A confirmation query is presented.
 
 . At the confirmation query, click *Yes* to proceed.
-****

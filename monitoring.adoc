@@ -43,51 +43,41 @@ did not configure this when you installed {product-name}, do so now.
 === Enabling Server Statistics
 
 Enable server statistics to show both system- wide and server specific data
-about the inbound message volume, inbound message count, anti-spam/
-antivirus activity and disk usage for messages processed in the last 48
+about the inbound message volume, inbound message count, anti-spam/anti-virus
+activity and disk usage for messages processed in the last 48
 hours, 30 days, 60 days, and the last year.
 
 . On each server, as root, type `/opt/zimbra/libexec/zmsyslogsetup`.  This
-enables the server to display statistics.
+updates the syslog configuration to enable gathering server statistics.
 
-. On the logger monitor host, you must enable *syslog* to log
-statistics from remote machines.
-
-. Edit the /etc/sysconfig/syslog file, add `-r` to the SYSLOGD_OPTIONS
-setting, `SYSLOGD_options="-r -m 0"`
-
-. Stop the syslog daemon.  Type `/etc/init.d/syslogd stop`.
-
-. Start the syslog daemon.  Type `/etc/init.d/syslogd start`.
+. On the logger monitor host, you must configure *syslog* to accept
+syslog messages from remote machines.
+See https://wiki.zimbra.com/wiki/Configuring-Logger-Host for details.
 
 [NOTE]
 These steps are not necessary for a single-node installation.
 
 === Reviewing Server Status
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Monitor*
 
-The *Monitor > Server Status* page lists all servers and services, their
-status,and when the server status was last checked.  The servers include
+The *Server Status* page lists all servers and services, their
+status, and when the server status was last checked.  The servers include
 the MTA, LDAP, and mailbox server.  The services include MTA, LDAP,
 Mailbox, SNMP, Anti-Spam, Anti-Virus, Spell checker, and Logger.
 
-****
-
 To start a server if it is not running, use the `zmcontrol` CLI command.  You
-can stop and start services from the Administration Console,
+can stop and start services from the Administration Console.
 
 === Enabling or Disabling Server Services
 
-.Admin Console
-****
+Admin Console: ::
+*Home > Configure > Servers -> _server_*
 
-Server services are enabled or disabled from the *Configure > Servers*
+Server services are enabled or disabled from the *Servers -> _server_*
 page.  Select *Services* in the Navigation pane and select to enable or
 disable services.
-
-****
 
 === Viewing Server Performance Statistics
 
@@ -104,17 +94,17 @@ mailbox quota details.
 
 The following display system-wide information:
 
-* *Message Count* - counts message transactions.  A transaction is defined
-aseither the SMTP receipt of a message per person (by Postfix) or a LMTP
+* *Message Count* -- counts message transactions.  A transaction is defined
+as either the SMTP receipt of a message per person (by Postfix) or a LMTP
 delivery of it (by mailboxd) per person.  For example, if a message is sent
 to three people, six transactions are displayed.  Three for SMTP to Postfix
 and three for LMTP to mailboxd.  The message count is increased by six.
 
-* *Message Volume* - displays the aggregate size in bytes of transactions
+* *Message Volume* -- displays the aggregate size in bytes of transactions
 sentand received per hour and per day.  Graphs show the total inbound data
 by volume in bytes.
 
-* *Anti-Spam/Anti-Virus Activity* - displays the number of messages that
+* *Anti-Spam/Anti-Virus Activity* -- displays the number of messages that
 werechecked for spam or viruses and the number of messages that were tagged
 as spam or deemed to contain a virus.  The AS/AV count is increased by one
 per message scanned.  One message sent to three people counts as only one
@@ -132,26 +122,23 @@ the number of recipients who received messages.
 
 Server-specific statistics also include the following details:
 
-* *Disk* - for a selected server displays the disk used and the disk
+* *Disk* -- for a selected server displays the disk used and the disk
 spaceavailable.  The information is displayed for the last hour, day,
 month, and year.
 
-* *Session* - displays information about the active Web client,
+* *Session* -- displays information about the active Web client,
 administratorand IMAP sessions.  You can see how many active sessions are
 opened, who is logged on, when the session was created and the last time
 the session was accessed.
 
-* *Mailbox Quota* - displays information about each account sorted
+* *Mailbox Quota* -- displays information about each account sorted
 bymailbox size in descending order.  See
 <<monitoring_mailbox_quotas,Monitoring Mailbox Quotas>>.
 
 === Configuring Logger Mail Reports
 
-The Logger generates a report about mail activity daily at 11:30 p.m.  and
-sends it to the administrator’s email address.
-
-.CLI
-****
+The Logger generates a report about mail activity daily at 11:30 p.m. and
+sends it to the administrator's email address.
 
 You can configure the number of accounts to include in the report.  The
 default is 25 sender and 25 recipient accounts.
@@ -169,7 +156,6 @@ zmlocalconfig -e zimbra_mtareport_max_recipients=<number>
 ----
 zmlocalconfig -e zimbra_mtareport_max_senders=<number>
 ----
-****
 
 == Configuring Disk Space Notifications
 
@@ -179,9 +165,7 @@ email notification is sent to the administrator account when disk space is
 low.  The default is to send a warning alert when the threshold reaches 85%
 and a critical alert when the threshold reaches 95%.
 
-.CLI
-****
-You can change these values.  Use zmlocalconfig to configure the
+You can change these values.  Use `zmlocalconfig` to configure the
 disk warning thresholds.
 
 * Warning alerts
@@ -201,57 +185,56 @@ zmdisklog_critical_threshold
 When starting services with zmcontrol, if the threshold is exceeded, a
 warning is displayed before the services are started.  You should clean up
 your disk to free up space.
-****
 
 == Monitoring Servers
 
-The {product-name} server collects many performance-related
+The {product-name} server collects many performance related
 statistics that can help you diagnose problems and load issues.
 
-.Admin Console
-****
-The *Monitor > Advanced Statistics* page includes advanced graphing
-optionsthat lets you generate various charts based on statistical
-information for the CPU, IO, mailboxd, MTA queue, MySQL and other
+Admin Console: ::
+*Home > Monitor > Advanced Statistics*
+
+The *Advanced Statistics* page includes advanced graphing
+options that lets you generate various charts based on statistical
+information for the CPU, IO, mailboxd, MTA queue, MariaDB and other
 components.
 
 To chart the graphics in Advanced Statistics, select one of these groups
 and then select from the list of specific counters for the type of
 information to display.
-****
 
 The information covers a wide array of data:
 
-* *cpu.csv*: CPU utilization.  This group contains counters to keep track
+* *cpu.csv* -- CPU utilization.  This group contains counters to keep track
 ofCPU usage (iowait, idle, system, user, time etc.).  CPU information can
 be tracked both at the server level and the process level.
 
-* *df.csv:* Captures disk usage.  Disk utilization is tracked for each
+* *df.csv* -- Captures disk usage.  Disk utilization is tracked for each
 diskpartition.
 
-* *fd.csv*: file descriptor count.  Keeps track of system file descriptor
+* *fd.csv* -- file descriptor count.  Keeps track of system file descriptor
 usageover time.  This is primarily used to track down "out-of-file
 descriptor" errors.
 
-* *mailboxd.csv*: {product-name} server and JVM statistics.
+* *mailboxd.csv* -- {product-name} server and JVM statistics.
 Mailboxdstores almost all of its statistics here.  Interesting numbers to
 keep track of are heap_used, heap_free, imap_conn, soap_sessions,
 pop_conn, db_conn_count.
 
-* *mtaqueue.csv*: Postfix queue.  This measures the mail queue size
+* *mtaqueue.csv* -- Postfix queue.  This measures the mail queue size
 innumber of messages and the size in bytes.
 
-* *proc.csv*: Process statistics for Zimbra processes.  For example
-mailboxd/java, MySQL, OpenLDAP, etc.)
+* *proc.csv* -- Process statistics for Zimbra processes.  For example
+mailboxd/java, MariaDB, OpenLDAP, etc.)
 
-* *soap.csv*: SOAP request processing time.
+* *soap.csv* -- SOAP request processing time.
 
-* *threads.csv*: JVM thread counts.  Counts the number of threads with
+* *threads.csv* -- JVM thread counts.  Counts the number of threads with
 acommon name prefix.
 
-* *vm.csv*: Linux VM statistics (from the vmstat command).
+* *vm.csv* -- Linux VM statistics (from the vmstat command).
 
-* *io-x.csv* and *io.csv* store data from the `iostat(1)` command (io-x.csv
+* *io-x.csv* and *io.csv* -- store data from the `iostat(1)` command (`io-x.csv`
 with `iostat -x`).
 
 == Configuring Denial of Service Filter Parameters
@@ -275,18 +258,22 @@ to see if the DoSFilter was applied.
 
 .`sync.log` entry showing the DoSFilter
 ====
-
+[source,subs="quotes"]
+----
 2013-01-15 15:52:20,426 WARN [qtp1635701107-91:https://x.x.x.x/
-Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5ddddd3NR&DeviceType=iPhone&Cmd=FolderSync][name=zsupport2@domain.com;mid=64;ip=71.194.89.54;Cmd=FolderSync;DeviceID=Appl5K0113UN3NR;Version=12.1;] sync - *Service exception com.zimbra.common.service.ServiceException: error while proxying request to target server: HTTP/1.1 503 Service Unavailable*
-ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5K0113UN3NR&DeviceType=iPhone&Cmd=FolderSync:1358286740426:c5ca7f36bb0a038f Code:service.PROXY_ERROR Arg:(url, STR,"http://mail.domain.com:80/ service/soap/SyncRequest"
-
+Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5ddddd3NR&DeviceType=iPhone&Cmd=FolderSync][name=zsupport2@domain.com;mid=64;ip=10.1.2.3;Cmd=FolderSync;DeviceID=Appl5K0113UN3NR;Version=12.1;] sync - *Service exception com.zimbra.common.service.ServiceException: error while proxying request to target server: HTTP/1.1 503 Service Unavailable*
+ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5K0113UN3NR&DeviceType=iPhone&Cmd=FolderSync:1358286740426:c5ca7f36bb0a038f Code:service.PROXY_ERROR Arg:(url, STR,"http://mail.domain.com:80/service/soap/SyncRequest"
+----
 ====
 
 * `/opt/zimbra/log/zmmailboxd.out`
 
 .`zmmailboxd.out` entry showing the DoSFilter
 ====
+[source,subs="quotes"]
+----
 2013-01-15 15:57:32.537:WARN:oejs.*DoSFilter:DOS ALERT*:ip=127.0.1.1,session=null,user=null
+----
 ====
 
 === Customizing DoSFilter Configuration
@@ -299,7 +286,7 @@ override the global settings.
 You can modify these settings, but the default configuration is
 recommended.
 
-[cols=",a",options="header",]
+[cols="2,3a",options="header",]
 |=======================================================================
 |Attribute |Description
 
@@ -315,7 +302,7 @@ considered.  The default is -1.
 
 [source,bash]
 ----
-zmprov mcf zimbraHttpDosFilterDelayMillis [x]
+zmprov mcf zimbraHttpDosFilterDelayMillis {x}
 ----
 
 |*DoSFilter Maximum Requests Per Second* +
@@ -326,11 +313,11 @@ excess of this are throttled.  The default is 30 and the minimum is 1.
 
 [source,bash]
 ----
-zmprov mcf zimbraHttpDosFilterMaxRequestsPerSec [X]
+zmprov mcf zimbraHttpDosFilterMaxRequestsPerSec {x}
 ----
 
 |*DoSFilter IP Addresses Whitelist* +
-`zmprov mcf zimbraHttpThrottleSafeIPs [x.x.x.x,192.168.x.x]` |
+`zmprov mcf zimbraHttpThrottleSafeIPs {x.x.x.x,192.168.x.x}` |
 
 IP addresses to ignore when applying the DosFilter.  This attribute does
 not have a default value, however the following loopback IPs are
@@ -343,7 +330,7 @@ The IP addresses should be comma separated.
 
 [source,bash]
 ----
-zmprov mcf zimbraHttpThrottleSafeIPs [addresses]
+zmprov mcf zimbraHttpThrottleSafeIPs {addresses}
 ----
 
 |=======================================================================
@@ -359,19 +346,14 @@ zmmailboxdctl restart
 
 === Tuning Considerations for {product-abbrev} 8.0.3 and later
 
-* *{product-abbrev} Member Servers*: {product-abbrev} servers under the control of a single
+* *{product-abbrev} Member Servers* -- {product-abbrev} servers under the control of a single
 masterLDAP server are automatically whitelisted by IP address.  These hosts
 are discovered using a *GetAllServersRequest*.  Type as `zmprov gas`.
 
-* *External Provisioning Hosts/SOAP API*: External provisioning hosts can
+* *External Provisioning Hosts/SOAP API* -- External provisioning hosts can
 beadded to the IP whitelist to ensure that the DoSFilter does not block
 some requests.  For example, a mailbox reindex might make several calls per
 second that can trigger the DoSFilter.
-
-[NOTE]
-For {product-abbrev} servers at 8.0.0 to 8.0.2, see the Denial of Service workaround
-located at
-http://www.zimbra.com/forums/announcements/60397-zcs-dosfilter-workaround-zcs-8-0-1-8-0-2-a.html.
 
 == Working with Mail Queues
 
@@ -403,12 +385,12 @@ The *corrupt* queue stores damaged unreadable messages.
 
 === Change the Bounce Queue Lifetime
 
-* The MTA server’s bounce queue lifetime is set for five days.  To change
+* The MTA server's bounce queue lifetime is set for five days.  To change
 the default queue lifetime setting
 +
 [source,bash]
 ----
-zmlocalconfig -e bounce_queue_lifetime=[#]
+zmlocalconfig -e bounce_queue_lifetime={#}
 ----
 
 * To permanently have messages bounced back to the sender, instead of being
@@ -459,8 +441,11 @@ Administration Console.
 
 === Viewing Mail Queues
 
+Admin Console: ::
+*Home > Monitor > Mail Queues*
+
 If you are having problems with mail delivery, you can view the mail queues
-from the Administration Console - *Monitor > Mail Queues* page - to see if
+from the *Mail Queues* page in the Administration Console to see if
 you can fix the mail delivery problem.  When you open mail queues, the
 content of the deferred, incoming, active, hold, and corrupt queues at that
 point in time can be viewed.  You can view the number of messages and where
@@ -506,22 +491,22 @@ Deferred, Incoming and Active queues.
 == Monitoring Mailbox Quotas
 
 Mailbox quotas apply to email messages, attachments, calendar appointments,
-and tasks in a user’s account.  When an account quota is reached, all mail
+and tasks in a user's account.  When an account quota is reached, all mail
 messages are rejected.  Users must delete mail from their account to get
 below their quota limit - this includes emptying their Trash, or you can
 increase their quota.
 
 === Viewing Quota
 
-You can check mailbox quotas for individual accounts from Server Statistics
+You can check mailbox quotas for individual accounts from *Server Statistics*
 on the Administration Console.  Mailbox Quota gives you an instant view of
 the Mailbox Size and Quota Used information for each account.
 
-.Admin Console
-****
-*Monitor > Server Statistics* page.
+Admin Console: ::
+*Home > Monitor > Server Statistics*
 
-. Select the server for which you want to view statistics.
+// begin list
+. Select the *_server_* for which you want to view statistics.
 
 . In the Navigation pane, select *Mailbox Quota*.  The Mailbox Quota page
 displays with the following information:
@@ -529,7 +514,6 @@ displays with the following information:
 are configured either in the COS or by account.
 * Mailbox Size column shows the disk space used.
 * Quota Used column shows what percentage of quota is used.
-****
 
 === Increase or Decrease Quota
 
@@ -537,14 +521,14 @@ From a COS or Account, you can configure a quota threshold that, when
 reached, sends a message alerting users that they are about to reach their
 mailbox quota.
 
-.Admin Console
-****
-*Configure > Class of Service > Advanced* page.
+Admin Console: ::
+*Home > Configure > Class of Service -> _COS_ -> Advanced* +
+*Home > Manage > Accounts -> _account_ -> Advanced*
 
+// list
 . Scroll down to the Quota section.
 . Modify the quota settings.
 . Click *Save*.
-****
 
 == Viewing MobileSync Statistics
 
@@ -558,24 +542,24 @@ To protect against dictionary-based and distributed attacks, you can
 configure the `zmauditwatch`.  The script attempts to detect more advanced
 attacks by looking at where the authentication failures are coming from and
 how frequently they are happening for all accounts on a Zimbra mailbox
-server and sends an email alert to the administrator’s mailbox.
+server and sends an email alert to the administrator's mailbox.
 
 The types of authentication failures checked include:
 
-* *IP/Account hash check*.  The default is to send an email alert if
+* *IP/Account hash check* -- The default is to send an email alert if
 10authenticating failures from an IP/account combination occur within a 60
 second window.
 
-* *Account check*.  The default is to send an email alert if 15
+* *Account check* -- The default is to send an email alert if 15
 authenticationfailures from any IP address occur within a 60 second window.
 This check attempts to detect a distributed hijack based attack on a single
 account.
 
-* *IP check*.  The default is to send an email alert if 20 authentication
+* *IP check* -- The default is to send an email alert if 20 authentication
 failuresto any account occur within a 60 second window.  This check
 attempts to detect a single host based attack across multiple accounts.
 
-* *Total authentication failure check*.  The default is to send an email
+* *Total authentication failure check* -- The default is to send an email
 alert if1000 auth failures from any IP address to any account occurs within
 60 seconds.  The default should be modified to be 1% of the active accounts
 on the mailbox server.
@@ -602,47 +586,47 @@ are used for analysis and troubleshooting.
 Local logs containing Zimbra activity are in the `/opt/zimbra/log`
 directory.
 
-* *audit.log*.  This log contains authentication activity of users
+* *audit.log* -- This log contains authentication activity of users
 andadministrators and login failures.  In addition, it logs admin activity
 to be able to track configuration changes.
 
-* *clamd.log*.  This log contains activity from the antivirus application
+* *clamd.log* -- This log contains activity from the anti-virus application
 clamd.
 
-* *freshclam.log*.  This log contains log information related to the
+* *freshclam.log* -- This log contains log information related to the
 updating ofthe clamd virus definitions.
 
-* *mailbox.log*.  This log is a mailboxd log4j server log containing the
+* *mailbox.log* -- This log is a mailboxd log4j server log containing the
 logs from the mailbox server.  This includes the mailbox store, LMTP
 server, IMAP and POP servers, and Index server.
 
-* *myslow.log*.  This slow query log consists of all SQL statements from
+* *myslow.log* -- This slow query log consists of all SQL statements from
 themailbox server that took more then `long_query_time` seconds to execute.
 +
 [NOTE]
 `long_query_time` is defined in `/opt/zimbra/conf/my.cnf`.
 
-* *spamtrain.log*.  This log contains output from `zmtrainsa` during
+* *spamtrain.log* -- This log contains output from `zmtrainsa` during
 regularly scheduled executions from the cron.
 
-* *sync.log*.  This log contains information about {product-name}
+* *sync.log* -- This log contains information about {product-name}
 mobilesync operations.
 
 Other logs include:
 
-* */opt/zimbra/jetty/logs/*.  This is where Jetty-specific activity is
+* */opt/zimbra/jetty/logs/* -- This is where Jetty-specific activity is
 logged.
 
-* */opt/zimbra/db/data*.  `<hostname>.err`.  This is the message store
+* */opt/zimbra/db/data/<hostname>.err* -- This is the message store
 database error log.
 
-* */opt/zimbra/logger/db/data.* `<hostname>.err`.  This is the Logger
+* */opt/zimbra/logger/db/data/<hostname>.err* -- This is the Logger
 database error log.
 
 {product-name} activity logged to System syslog
 
-* */var/log/zimbra.log.* The Zimbra syslog details the activities of the
-ZimbraMTA (Postfix, amavisd, antispam, antivirus), Logger, Authentication
+* */var/log/zimbra.log* -- The Zimbra syslog details the activities of the
+ZimbraMTA (Postfix, amavisd, anti-spam, anti-virus), Logger, Authentication
 (cyrus-sasl), and Directory (OpenLDAP).  By default LDAP activity is logged
 to `zimbra.log`.
 
@@ -664,7 +648,7 @@ globally or by server:
 
 [source,bash]
 ----
-zmprov mcf zimbraLogToSysLog True
+zmprov mcf zimbraLogToSysLog TRUE
 ----
 
 === Using log4j to Configure Logging
@@ -673,7 +657,7 @@ The {product-name} server uses `log4j`, a Java logging package as the
 log manager.  By default, the {product-name} server has `log4j`
 configured to log to the local file system.  You can configure `log4j` to
 direct output to another location.  Go to the
-http://logging.apache.org/log4j/2.x/[Log4j website] for information about
+https://logging.apache.org/log4j/2.x/[Log4j website] for information about
 using `log4j`.
 
 {product-abbrev} does not check the log4j changes.  To remove all account loggers and
@@ -695,7 +679,7 @@ example, to see debug details for POP activity, you would type
 
 The following categories are predefined in `log4j`:
 
-[cols=",",options="",]
+[cols="2m,3",options="",]
 |====================================================
 |zimbra.account |Account operations
 |zimbra.acl |ACL operations
@@ -733,13 +717,13 @@ The following categories are predefined in `log4j`:
 Changes to the log level take affect immediately.
 
 .Logging Events
-[cols=",,,,",options="header",]
+[cols="1s,1,1,1,6",options="header",]
 |=======================================================================
 |Level |Local? |Syslog |SNMP Trap |When Used
 
 |FATAL |Y |Y |Y |
 Designates very severe error events that the application to abort or impact
-a large number of users.  For example, being unable to contact the MySQL
+a large number of users.  For example, being unable to contact the MariaDB
 database.
 
 |ERROR |Y |Y |N |
@@ -751,7 +735,7 @@ corrupt index or being unable to delete a message from a mailbox.
 Designates potentially harmful situations but are usually recoverable or
 can be ignored.  For example, user log in failed.
 
-|INFO* |Y |N |N* |
+|INFO |Y |N |N |
 Designates information messages that highlight the progress of the
 application, basic transaction-level logging.  For example, server
 start-ups, mailbox creation/deletion, account creation.
@@ -767,14 +751,15 @@ generate traps.
 === Protocol Trace
 
 Protocol trace is available in the following logging categories:
-
-* zimbra.smtp
-* zimbra.lmtp
-* zimbra.soap
-* zimbra.imap
-* zimbra.imap-client
-* zimbra.pop
-* zimbra.pop-client
+----
+zimbra.smtp
+zimbra.lmtp
+zimbra.soap
+zimbra.imap
+zimbra.imap-client
+zimbra.pop
+zimbra.pop-client
+----
 
 === Reviewing mailbox.log Records
 
@@ -795,7 +780,7 @@ messages for unrelated accounts.  See <<command_line_utilities,Command-Line
 Utilities>>, the `zmprov` miscellaneous section.
 
 *Reading records in the log* The example below is a record showing that
-onJune 25, 2007, the zimbra server with an IP address of 127.0.0.1 was in
+on June 25, 2007, the zimbra server with an IP address of 127.0.0.1 was in
 the process of deleting backups that were created on Monday, June 18, 2007
 at 8 seconds after midnight Pacific Daylight Time (PDT) or older than that
 date.
@@ -815,12 +800,14 @@ signals that some type of error was detected.
 
 .Handler Exception
 ====
-007-06-25 00:00:10,379 INFO [btpool0-1064] [name=nriers@example.com;
-mid=228;ip=72.255.38.207;ua=zimbra Desktop/0.38;] SoapEngine - *handler exception*
+[source,subs="quotes"]
+----
+007-06-25 00:00:10,379 INFO [btpool0-1064] [name=nriers@example.com;mid=228;ip=10.2.3.4;ua=zimbra Desktop/0.38;] SoapEngine - *handler exception*
+----
 ====
 
 Sometimes a stack trace is displayed after the exceptions notification.  A
-stack trace reports the threads and monitors in the zimbra’s *mailboxd*
+stack trace reports the threads and monitors in the zimbra's *mailboxd*
 service.  This information aids in debugging, because the trace shows where
 the error occurred.  The last few entries in the stack often indicate the
 origin of the problem.  When the *caused by* descriptor is included in the
@@ -829,41 +816,28 @@ was caused by 501, bad address syntax.
 
 .Stack Trace
 ====
-com.example.cs.mailbox.MailServiceException: *Invalid address*: Jon R at
-com.example.cs.mailbox.*MailServiceException.internal_SEND_FAILURE*
+[source,subs="quotes"]
+----
+com.example.cs.mailbox.MailServiceException: *Invalid address*: Jon R
+at com.example.cs.mailbox.*MailServiceException.internal_SEND_FAILURE* (MailServiceException.java:412)
+at com.example.cs.mailbox.*MailServiceException.SEND_ABORTED_ADDRESS_FAILURE* MailServiceException.java:416)
+...
+at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:442)
 
-(MailServiceException.java:412)
-
-at
-com.example.cs.mailbox.*MailServiceException.SEND_ABORTED_ADDRESS_FAILURE*
-MailServiceException.java:416) +
-. +
-. +
-. +
-at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThread
-Pool.java:442)
-
-*Caused by* :
-com.example.cs.mailbox.MailSender$SafeSendFailedException:501 Bad
-address syntax
-
-; chained exception is: com.sun.mail.smtp.SMTPAddressFailedException:
-501 Bad address syntax at
-com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1196) at
-com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:584) at
-javax.mail.Transport.send0(Transport.java:169)
-
-at javax.mail.Transport.send(Transport.java:98) at
-
-com.example.cs.mailbox.MailSender.sendMessage(MailSender.java:409) at
-com.example.cs.mailbox.MailSender.sendMimeMessage(MailSender.java:26 2)
-
-&#8230;  30 more
+*Caused by*: com.example.cs.mailbox.MailSender$SafeSendFailedException: 501 Bad address syntax; chained exception is: com.sun.mail.smtp.SMTPAddressFailedException: 501 Bad address syntax
+at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1196)
+at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:584)
+at javax.mail.Transport.send0(Transport.java:169)
+at javax.mail.Transport.send(Transport.java:98)
+at com.example.cs.mailbox.MailSender.sendMessage(MailSender.java:409)
+at com.example.cs.mailbox.MailSender.sendMimeMessage(MailSender.java:262)
+... 30 more
+----
 ====
 
 ==== Mailbox log files
 
-The mailbox.log files rotate daily.  The mailbox log files are saved in
+The `mailbox.log` files rotate daily.  The mailbox log files are saved in
 `/opt/zimbra/log`.  Previous `mailbox.log` file names include the date the
 file was made.  The log without a date is the current log file.  You can
 back up and remove these files.
@@ -872,7 +846,6 @@ back up and remove these files.
 
 To review the `mailbox.log` for errors, search for the email address or the
 service that is experiencing the problem.  Also, search for WARN or ERROR
-
 log levels, read the text of the message.  When you find the error, review
 the records, tracing the events that happened before the problem was
 recorded.
@@ -885,15 +858,20 @@ out-of-memory error on June 17, 2007.
 
 .Startup message
 ====
+[source,subs="quotes"]
+----
 2007-06-25 01:56:18,725 INFO [main] [] soap - Servlet SoapServlet starting up
+----
 ====
 
 Look for errors before the startup message.
 
 .Error message
 ====
-2007-06-17 20:11:34,194 FATAL [btpool0-3335]
-[name=samd@example.com;aname=abcadmin@example.com;mid=142;ip=66.92.25.194;ua=zimbraConnectorForBES/5.0.207;] system - handler exception java.lang.OutOfMemoryError: PermGen space
+[source,subs="quotes"]
+----
+2007-06-17 20:11:34,194 FATAL [btpool0-3335] [name=samd@example.com;aname=abcadmin@example.com;mid=142;ip=10.3.4.5;ua=zimbraConnectorForBES/5.0.207;] system - handler exception java.lang.OutOfMemoryError: PermGen space
+----
 ====
 
 ==== Mail Delivery Problem
@@ -904,57 +882,54 @@ rejected as the address must be a fully-qualified address.
 
 .Mail delivery problem
 ====
+[source,subs="quotes"]
+----
 2007-06-25 10:47:43,008 INFO [*LmtpServer*-250]
-[name=bigen@example.com;mid=30;msgid=<1291804360.35481182793659172.J
-avaMail.root@dogfood.example.com>;] *lmtp - rejecting message*
-*bigen@example.com: exception occurred*
-
-com.zimbra.cs.mailbox.MailServiceException: redirect to too failed +
-at com.zimbra.cs.mailbox.MailServiceException.internal_SEND_FAILURE (MailServiceException.java:412) +
-at com.zimbra.cs.mailbox.MailServiceException.SEND_FAILURE(MailServiceException.java:424) +
-at com.zimbra.cs.filter.zimbraMailAdapter.executeActions(zimbraMailAdapter.java:286) +
-at org.apache.jsieve.SieveFactory.evaluate(SieveFactory.java:151) +
-at com.zimbra.cs.filter.RuleManager.applyRules(RuleManager.java:177) +
-at com.zimbra.cs.lmtpserver.zimbraLmtpBackend.deliverMessageToLocal Mailboxes(zimbraLmtpBackend.java:325) +
-at com.zimbra.cs.lmtpserver.zimbraLmtpBackend.deliver(zimbraLmtpBackend.java:140) +
-at com.zimbra.cs.lmtpserver.LmtpHandler.doDATA(LmtpHandler.java:441) +
-at com.zimbra.cs.lmtpserver.LmtpHandler.processCommand(LmtpHandler.java:205) +
-at com.zimbra.cs.tcpserver.ProtocolHandler.processConnection(ProtocolHandler.java:231) +
-at com.zimbra.cs.tcpserver.ProtocolHandler.run(ProtocolHandler.java:198) +
-at EDU.oswego.cs.dl.util.concurrent.PooledExecutor$Worker.run(Unknown Source) +
-at java.lang.Thread.run(Thread.java:619) +
+[name=bigen@example.com;mid=30;msgid=<1291804360.35481182793659172.JavaMail.root@example.com>;] *lmtp - rejecting message bigen@example.com: exception occurred*
+com.zimbra.cs.mailbox.MailServiceException: redirect to too failed
+at com.zimbra.cs.mailbox.MailServiceException.internal_SEND_FAILURE (MailServiceException.java:412)
+at com.zimbra.cs.mailbox.MailServiceException.SEND_FAILURE(MailServiceException.java:424)
+at com.zimbra.cs.filter.zimbraMailAdapter.executeActions(zimbraMailAdapter.java:286)
+at org.apache.jsieve.SieveFactory.evaluate(SieveFactory.java:151)
+at com.zimbra.cs.filter.RuleManager.applyRules(RuleManager.java:177)
+at com.zimbra.cs.lmtpserver.zimbraLmtpBackend.deliverMessageToLocalMailboxes(zimbraLmtpBackend.java:325)
+at com.zimbra.cs.lmtpserver.zimbraLmtpBackend.deliver(zimbraLmtpBackend.java:140)
+at com.zimbra.cs.lmtpserver.LmtpHandler.doDATA(LmtpHandler.java:441)
+at com.zimbra.cs.lmtpserver.LmtpHandler.processCommand(LmtpHandler.java:205)
+at com.zimbra.cs.tcpserver.ProtocolHandler.processConnection(ProtocolHandler.java:231)
+at com.zimbra.cs.tcpserver.ProtocolHandler.run(ProtocolHandler.java:198)
+at EDU.oswego.cs.dl.util.concurrent.PooledExecutor$Worker.run(Unknown Source)
+at java.lang.Thread.run(Thread.java:619)
 
 *Caused by:*
-com.zimbra.cs.mailbox.MailSender$SafeSendFailedException:504 <too>: +
-Recipient address rejected: need fully-qualified address ; +
-chained exception is: com.sun.mail.smtp.SMTPAddressFailedException: 504 <too>: +
-Recipient address rejected: need fully-qualified address
-
-at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1196) +
-at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:584) +
-at javax.mail.Transport.send0(Transport.java:169) +
-at javax.mail.Transport.send(Transport.java:120) +
-at com.zimbra.cs.filter.zimbraMailAdapter.executeActions(zimbraMailAdapter.java:281) +
-
-&#8230; 10 more
+com.zimbra.cs.mailbox.MailSender$SafeSendFailedException: 504 <too>: Recipient address rejected: need fully-qualified address ;
+chained exception is: com.sun.mail.smtp.SMTPAddressFailedException: 504 <too>: Recipient address rejected: need fully-qualified address
+at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1196)
+at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:584)
+at javax.mail.Transport.send0(Transport.java:169)
+at javax.mail.Transport.send(Transport.java:120)
+at com.zimbra.cs.filter.zimbraMailAdapter.executeActions(zimbraMailAdapter.java:281)
+... 10 more
+----
 ====
 
 ==== Account Error - Login error
 
 `mailbox.log` logs any successful or unsuccessful login attempts from IMAP,
 POP3 or ZWC.  When you are looking for a login error, start by looking for
-"Auth."  This example shows that someone from IP address 10.10.131.10 was
+"Auth."  This example shows that someone from IP address 10.4.5.6 was
 trying to log in as admin on the Zimbra Web Client, using Firefox in a
 Windows OS.  Permission was denied because it was not an admin account.
 
 .Account Error - Login error
 ====
-2007-06-25 09:16:11,483 INFO [btpool0-251]
-[ip=10.10.131.10;ua=zimbraWebClient - FFX.X (Win);] SoapEngine - *handler exception*
-
-com.zimbra.common.service.ServiceException: permission denied: not an admin account +
-at com.zimbra.common.service.ServiceException.PERM_DENIED(ServiceException.java:205) +
+[source,subs="quotes"]
+----
+2007-06-25 09:16:11,483 INFO [btpool0-251] [ip=10.4.5.6;ua=zimbraWebClient - FFX.X (Win);] SoapEngine - *handler exception*
+com.zimbra.common.service.ServiceException: permission denied: not an admin account
+at com.zimbra.common.service.ServiceException.PERM_DENIED(ServiceException.java:205)
 at com.zimbra.cs.service.admin.*Auth*.handle(*Auth*.java:103)
+----
 ====
 
 ==== Account Errors - IMAP or POP related
@@ -965,15 +940,16 @@ occurred while trying to connect siress@example.com.
 
 .Account Error - IMAP error
 ====
-mailbox.log.2007-06-19:2007-06-19 15:33:56,832 FATAL [*ImapServer*-2444]
-[name=sires@example.com;ip=127.0.0.1;] system - Fatal error occurred
-while handling connection
+[source,subs="quotes"]
+----
+mailbox.log.2007-06-19:2007-06-19 15:33:56,832 FATAL [*ImapServer*-2444] [name=sires@example.com;ip=127.0.0.1;] system - Fatal error occurred while handling connection
+----
 ====
 
 == Reading a Message Header
 
 Each email message includes a header that shows the path of an email from
-its origin to destination.  This information is used to trace a message’s
+its origin to destination.  This information is used to trace a message's
 route when there is a problem with the message.  The Zimbra email message
 header can be viewed from the Zimbra Web Client Message view.  Right-click
 on a message and select *Show Original*.
@@ -981,20 +957,20 @@ on a message and select *Show Original*.
 
 The following lines are in the message header:
 
-* *Date* - The date and time the message was sent.  When you specify time,
+* *Date* -- The date and time the message was sent.  When you specify time,
 you can specify range by adding start and stop time to search for messages.
 
-* *From* - The name of the sender and the email address
+* *From* -- The name of the sender and the email address
 
-* *To* - The name of the recipient and the email address.  Indicates
+* *To* -- The name of the recipient and the email address.  Indicates
 primary recipients.
 
-* *Message-ID* - Unique number used for tracing mail routing
+* *Message-ID* -- Unique number used for tracing mail routing
 
-* *In-Reply-To* - Message ID of the message that is a reply to.  Used to
+* *In-Reply-To* -- Message ID of the message that is a reply to.  Used to
 linkrelated messages together.
 
-* *Received: from* - The name and IP address the message was sent from.The
+* *Received: from* -- The name and IP address the message was sent from. The
 header displays Received: from information from the MTA to the LMTP and
 from the local host.
 
@@ -1026,13 +1002,10 @@ messages that are not indexed, searches may not find all results.
 Run a sanity check on a specific mailbox index using the `zmprov
 verifyIndex` command.
 
-.CLI
-****
 [source,bash]
 ----
 zmprov verifyIndex <user@example.com>
 ----
-****
 
 If problems are detected, a failure status is returned and a repair can
 be performed on the index.
@@ -1041,13 +1014,10 @@ be performed on the index.
 
 Use the `reIndexMailbox` command to repair and reindex a corrupt index.
 
-.CLI
-****
 [source,bash]
 ----
 zmprov reIndexMailbox <user@example.com> start
 ----
-****
 
 This returns a status of _started_.
 
@@ -1081,8 +1051,8 @@ alert system.
 
 The MariaDB database is automatically checked weekly to verify the health
 of the database.  This check takes about an hour.  If any errors are found,
-a report is sent to the administrator’s account.  The report name that runs
-the MySQL check is *zmbintegrityreport,* and the crontab is automatically
+a report is sent to the administrator's account.  The report name that runs
+the MariaDB check is *zmbintegrityreport,* and the crontab is automatically
 configured to run this report once a week.
 
 [NOTE]
@@ -1097,7 +1067,7 @@ the frequency with which zmbintegrityreport is run.  See
 When {product-name} is installed, the {product-name} software update
 utility is automatically configured to check for the latest {product-name}
 version once a day and if there is an update, to send notification to the
-address that is configured in the Administration Console’s *Server
+address that is configured in the Administration Console's *Server
 Updates*.
 
 The dates and times {product-name} checked for updates is saved to the
@@ -1108,23 +1078,23 @@ available*.
 
 You can configure the following:
 
-* *Server that checks for updates*.  Available servers are listed and only
+* *Server that checks for updates* -- Available servers are listed and only
 one server is configured.  The selected server checks for updates and the
 result of the update response from www.zimbra.com is stored in LDAP.
 
-* *Check for updates every x*.  The default is to check once a day.  You
+* *Check for updates every x* -- The default is to check once a day.  You
 can change the frequency interval to check every x hours, minutes, or
 seconds.  A cron job is configured to check for new updates.  If the
 frequency interval is less than 2 hours, the crontab file must be modified.
 
-* *Updates URL*.  This address is the URL that the server connects to
+* *Updates URL* -- This address is the URL that the server connects to
 when checking for updates.  When a {product-name} server checks for
 updates, it transmits its version, platform, and build number to Zimbra.
 Normally, this URL is not changed.
 
 * To be notified of updates, check the *Send notification email when
 updates are available* and enter the send to and send from addresses.  The
-default address is the administrator’s address.
+default address is the administrator's address.
 
 * A generic email is created.  The subject and content of the email can be
 changed.
@@ -1140,13 +1110,14 @@ upload the newer ZCO msi file to the {product-abbrev} server from the Administra
 Console.  The file is uploaded to the
 `/opt/zimbra/jetty/webapps/zimbra/downloads` directory.
 
-. Download the new ZCO file to a computer that you can access from the
-Administration Console
-+
-[NOTE]
-*Tools and Migration > Client Upload*.
+Admin Console: ::
+*Home > Tools and Migration > Client Upload*
+
+. Download the new ZCO file to a computer that you can access from
+*Client Upload* in the Administration Console
 
 . Click *Browse* to locate the ZCO file to upload.
+
 . Restart {product-abbrev}:
 +
 [source,bash]
@@ -1163,7 +1134,7 @@ or run
 
 The `downloads/index.html` file is updated with the latest ZCO client
 version.  This new file can be downloaded from the ZCO link on the
-Administration Console *Tools and Migration > Download* page.
+Administration Console *Home > Tools and Migration > Download* page.
 
 [NOTE]
 If you do not restart the server, the ZCO download link on the Zimbra
@@ -1182,7 +1153,6 @@ Subject: Service <service_name> started on <zimbra_host>
 
 Service status change: <zimbra_host> <service> changed from stopped to running
 ----
-
 
 ==== Server Stop Notification Message
 ----
@@ -1232,8 +1202,7 @@ Subject: ZCS: SSL Certificates approaching expiration!
 The Administration Console and CLI Certificate Tools guide provides
 instructions on how to replace you self-signed or commercial certificate.
 
-http://wiki.zimbra.com/
-index.php?title=Administration_Console_and_CLI_Certificate_Tools SSL Certificate expiration checked with $0 on <zimbra_host>.
+https://wiki.zimbra.com/index.php?title=Administration_Console_and_CLI_Certificate_Tools SSL Certificate expiration checked with $0 on <zimbra_host>.
 ----
 
 === Daily report notification
@@ -1250,9 +1219,9 @@ Subject: Daily mail report for <day>
 
 === Database integrity check notification
 
-The MySQL database can be checked by running the zmdbintegrityreport
+The MariaDB database can be checked by running the zmdbintegrityreport
 automatically scheduled in the crontab to run on a weekly basis.  A report
-is sent to the administrator’s mailbox.
+is sent to the administrator's mailbox.
 
 ----
 Subject: Database Integrity check report for <zimbra_host>

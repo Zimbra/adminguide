@@ -50,5 +50,5 @@ Let us know what you like about the product and what you would like to
 see in the product. Post your ideas to the Zimbra Forum.
 
 If you encounter problems with this software, go to
-http://bugzilla.zimbra.com to submit a bug report. Make sure to provide
+https://bugzilla.zimbra.com to submit a bug report. Make sure to provide
 enough detail so that the bug can be easily duplicated.
