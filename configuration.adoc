@@ -1701,7 +1701,14 @@ zmcontrol restart
 S/MIME is a standard to send secure email messages. S/MIME messages use
 digital signature to authenticate and encrypt messages.
 
-=== Prerequisites
+Currently, there are two different methods for providing the S/MIME feature
+
+. The old client based solution which requires Java 1.6 SE deployed on the client machine
+. The new server based solution which does not require Java on the client machine. The server performs all the cryptographic operations. (Recommended)
+
+=== Setting up for using the S/MIME feature using the client based solution
+
+==== Prerequisites
 
 * To use S/MIME, users must have a PKI certificate and a private key.  The
 private key must be installed in the user's local certificate store on
@@ -1720,11 +1727,11 @@ how to install certificates.
 * Users computers must have Java 1.6 SE deployed to use S/MIME. If they do
 not, they see an error asking them to install it.
 
-=== S/MIME License
+==== S/MIME License
 
 You must have a {product-abbrev} license that is enabled for S/MIME.
 
-=== Enable S/MIME Feature
+==== Enable S/MIME Feature
 
 Admin Console: ::
 *Home > Configure > Class of Service -> _COS_ -> Features* +
@@ -1737,7 +1744,7 @@ FeaturesTab.
 . In the Features tab S/MIME features section, check *Enable S/MIME*.
 . Click *Save*.
 
-=== Importing S/MIME Certificates
+==== Importing S/MIME Certificates
 
 Users can send encrypted messages to recipients if they have the
 recipients' public-key certificate stored in one of the following:
@@ -1750,7 +1757,7 @@ The certificates should be published into the LDAP directory so that they
 can be retrieved from the GAL. The format of the S/MIME certificates must
 be X.509 Base64 encoded DER.
 
-==== Configure External LDAP Lookup for Certificates
+===== Configure External LDAP Lookup for Certificates
 
 If you use an external LDAP to store certificates, you can configure the
 Zimbra server to lookup and retrieve certificates from the external LDAP,
@@ -1802,6 +1809,67 @@ Example, "userSMIMECertificate, UserCertificate"
 . Click *Save*.
 
 To set up another external LDAP server, click *Add Configuration*.
+
+=== Setting up for using the S/MIME feature using the server based solution
+
+==== Prerequisites
+
+Same as for the client based S/MIME solution except that Java is not required on the client machine. The private key is also not required to be on the client machine's local/browser certificate store.
+
+==== S/MIME License
+
+Same as for the client based S/MIME solution
+
+==== Enable S/MIME Feature
+
+Same as for the client based S/MIME solution
+
+==== Importing S/MIME Certificates
+
+Same as for the client based S/MIME solution except that the recipients' public-key certificate no longer need to be stored into Local OS or browser keystore.
+The certificate can be published to all other places mentioned in previous S/MIME version.
+
+==== List of LDAP attributes introduced to support the server based S/MIME solution
+
+. zimbraSmimeOCSPEnabled
+
+* Used by server at the time of validating the user as well as public certificates
+* If TRUE, the revocation check will be performed during certificate validation
+* If FALSE, the revocation check will not be performed during certificate validation
+
+. zimbraSmimePublicCertificateExtensions
+
+* The supported public certificate file extensions separated by commas
+* Contains the list of supported formats for the userCertificate LDAP attribute
+* Default values: cer,crt,der,spc,p7b,p7r,sst,sto,pem
+* Zimbra web client retrieves the supported file formats/extensions for public certificate upload from the server
+
+. zimbraSmimeUserCertificateExtensions
+
+* The supported public certificate file extensions separated by commas
+* Contains the list of supported formats for the userSmimeCertificate LDAP attribute
+* Default values: p12,pfx
+* Zimbra web client retrieves the supported file formats/extensions for user certificate upload from the server
+
+==== Process for Adding the CA certificate to the mailbox truststore for S/MIME
+
+S/MIME uses the mailbox trust store path and its password which are defined in localconfig.xml
+
+The key names are:
+
+* mailboxd_truststore
+* mailboxd_truststore_password
+
+If the mailboxd_truststore key is not defined in localconfig.xml, by default the value of mailboxd_truststore is:
+
+* <zimbra_java_home>/jre/lib/security/cacerts
+
+A CA certificate can be imported to the mailbox trust store by executing the following command:
+
+[source,bash]
+----
+keytool -import -alias -keystore <mailboxd_truststore path> -trustcacerts -file <CA_Cert>
+----
 
 == Storage Management
 
