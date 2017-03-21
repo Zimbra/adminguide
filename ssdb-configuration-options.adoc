@@ -561,7 +561,7 @@ how many client threads can simultaneously perform ephemeral API operations.
 By default this is set to 0, which results an unlimited pool size.
 
 `zimbraSSDBResourcePoolTimeout` controls the amount of time a thread will
-wait for a resource before before throwing an exception. The default is 0,
+wait for a resource before throwing an exception. The default is 0,
 which results in no timeout. This attribute has no effect when the pool size
 is 0, as threads will never have to wait for resources to be freed in order
 to perform ephemeral data operations.
