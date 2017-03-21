@@ -549,6 +549,29 @@ One such product is https://github.com/twitter/twemproxy[twemproxy]
 from https://github.com/twitter[Twitter]. 
 
 
+== LDAP Attributes
+
+The the SSDB backend makes use of a resource pool to manage access to the
+`SSDB` server; threads attempting ephemeral data operations must first 
+acquire a resource from this pool. To that end, two LDAP attributes have
+been introduced to control the pool configuration.
+
+`zimbraSSDBResourcePoolSize` controls the size of the pool. This determines
+how many client threads can simultaneously perform ephemeral API operations.
+By default this is set to 0, which results an unlimited pool size.
+
+`zimbraSSDBResourcePoolTimeout` controls the amount of time a thread will
+wait for a resource before before throwing an exception. The default is 0,
+which results in no timeout. This attribute has no effect when the pool size
+is 0, as threads will never have to wait for resources to be freed in order
+to perform ephemeral data operations.
+
+A non-zero timeout value is recommended when the pool size is finite. 
+Otherwise, a lost `SSDB` connection may cause mailboxd threads to remain
+blocked indefinitely, even after the connection is re-established. 
+In general, the resource pool should be sized such that the mailbox server
+is not starved for resources.
+
 
 == Conclusion
 
@@ -559,5 +582,3 @@ replication does allow requests to be load-balanced across both
 masters; however, each master is also constantly replicating from the
 other, so `SSDB` must do additional work to maintain
 consistency.
-
-
