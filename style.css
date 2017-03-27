@@ -46,7 +46,6 @@ header {
 
 main {
     width:75%;
-    max-width: 1170px;
     margin: 0 auto;
 }
 
@@ -56,7 +55,6 @@ header div.logo{
     padding-right: 0px;
     padding-top: 10px;
     padding-bottom: 10px;
-    max-width: 1170px;
     position: relative;
 }
 
@@ -69,7 +67,6 @@ header div.header-bottom {
     padding-right: 0px;
     padding-top: 0px;
     padding-bottom: 10px;
-    max-width: 1170px;
 }
 
 .doclist ul {
