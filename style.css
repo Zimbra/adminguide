@@ -1,0 +1,112 @@
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+html body {
+    text-rendering: optimizeLegibility;
+    color: #747474;
+    background-color: #ffffff;
+    font: 13px/20px 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+body a {
+    color: #0087c3;
+    text-decoration: none;
+}
+
+h1 {
+    margin-top: 0em;
+    margin-bottom: 0em;
+    font-family: 'Open Sans';
+    font-size: 30px;
+    letter-spacing: 0px;
+    line-height: 46.667px;
+    color: #50586b;
+    text-align: center !important;
+}
+
+h2 {
+    color: #50586b;
+    font-size: 24px;
+}
+
+h3 {
+    color: #50586b;
+    font-size: 16px;
+}
+
+i {
+    margin-right: 10px;
+}
+
+header {
+    height: 150px;
+}
+
+main {
+    width:75%;
+    max-width: 1170px;
+    margin: 0 auto;
+}
+
+header div.logo{
+    margin: 0 auto;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: 1170px;
+    position: relative;
+}
+
+header div.header-bottom {
+    background-color: #0087c3 !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    border-bottom: none;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    max-width: 1170px;
+}
+
+.doclist ul {
+    list-style-position: inside !important;
+    margin: 15px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.doclist ul li a{
+    vertical-align: top;
+}
+
+div.content {
+    display: inline-block;
+}
+
+section.doclist {
+    font-size: 14px;
+    color: #737989;
+}
+
+div.versionset {
+    box-sizing: border-box;
+    background-color: #ffffff;
+    position: relative;
+    box-shadow: 0 1px 5px rgba(0,0,0, 0.15);
+    padding: 15px 60px;
+    margin: 45px auto;
+    border: solid 1px #dddddd;
+}
+
+.material-icons.blue0087c3 { color: #0087c3; }
+
+footer {
+    font-size: 8px;
+    letter-spacing: .1px;
+    line-height: 24px;
+    text-align: center
+}
