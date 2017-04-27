@@ -1,0 +1,93 @@
+= Ephemeral Data
+
+There are 3 main types of ephemeral data stored in LDAP during normal operation of the {product-name}.
+
+      - Last Logon Time Stamps (zimbraLastLogonTimestamp)
+      - Auth Tokens (zimbraAuthTokens)
+      - CSRF Tokens (zimbraCsrfTokenData)
+
+Historically the only option for storage of these types of ephemeral data was in LDAP.
+Starting with version 8.8.0 the ability to save these types of ephemeral data using an external server has been implemented.  Note: This document does not cover how to install and maintain the ephemeral storage server.
+
+Configuring the storage location of ephemeral data is done through the following LDAP attribute:
+
+|====================
+| Attribute | Format | Description
+| zimbraEphemeralBackendURL | [backend name]:[params] | Ephemeral Backend URL Configuration
+|====================
+
+The two currently supported Ephemeral Data backends are:
+
+|====================
+| Backend | Format | Description
+| LDAP    | ldap://default |  Default configuration
+| SSDB    | ssdb:127.0.0.1:8888 | SSDB server and port
+|====================
+
+Mail systems with large numbers of active users have been found to overload LDAP as noted in  https://bugzilla.zimbra.com/show_bug.cgi?id=104858[Bugzilla 104858].
+
+== Post {product-name} Install Configuration
+
+Configuring an already running {product-name} installation
+to utilize `SSDB` instead of `LDAP` for short lived data storage
+through the following process:
+
+1. Install `SSDB` and note the ip address and port configured since you will
+   need this data for the next steps. Refer to
+   <<_ssdb_configuration_options>> for more information.
+2. Configure the {product-name} to utilize `SSDB`.
+3. Migrate any existing short-lived data to `SSDB` using the `/opt/zimbra/bin/zmmigrateattrs` command.
+
+== Migration Procedure
+
+1. Access the command prompt on one of the machines in the installation.
+2. Configure the {product-name} to use `SSDB`:
+
+You may use either an ip address or a hostname for the host portion of the
+configuration item.  In this case you will need to ensure it resolves to the
+proper ip address on all machines in the cluster. If the value does not resolve to a functioning
+backend, the value of `zimbraEphemeralBackendURL` will not be changed.
+
+----
+sudo su - zimbra
+zmprov mcf zimbraEphemeralBackendURL ssdb:<ip address|hostname>:port # substituting your server values
+----
+
+[start=3]
+. Migrate any existing attributes from LDAP -> SSDB
+
+----
+sudo su - zimbra
+/opt/zimbra/bin/zmmigrateattrs -n 4
+----
+
+== Additional Notes on Ephemeral Data
+
+=== Advanced Migration Options
+
+The `zmmigrateattrs` tool provides several migration options, to be used with careful consideration:
+
+- By default, ephemeral data is deleted from LDAP as soon as it is migrated to `SSDB`. The `-k` or `--keep-old` option will cause this data to remain in LDAP. This makes it possible to revert the ephemeral backend back to LDAP immediately after migration with no data loss. However, this data will otherwise remain in LDAP and quickly become obsolete.
+
+- The `-r` or `--dry-run` option outputs the changes to be made for each account to the console, without actually performing the migration.
+- The `-n` or `--num-threads` option specifies how many threads will be used for migration. Omitting this will result in migration happening synchronously.
+- The `-a` or `--account` option allows for migration of a comma-separated list of specific accounts. This should be used only for testing or debugging.
+- The `-d` or `--debug` option enables debug logging.
+
+If no attribute names are explicitly passed in as arguments, migration will occur for all known ephemeral attributes, as in the example above.
+
+=== Migration Limitations
+
+Ephemeral data migration is a one-way process. The `zmmigrateattrs` script does not support migrating data from `SSDB` back into LDAP, nor does it support migrating data between different instances of `SSDB`. This means that if the value of `zimbraEphemeralBackendURL` is reverted back to LDAP after migration, prior authentication data will become inaccessible, and all user sessions will be invalidated. If migration to a new `SSDB` backend becomes necessary, the data should be replicated to the new location prior to changing the value of `zimbraEphemeralBackendURL`.
+
+=== Changes to zmprov
+
+Due to changes in the way multi-valued ephemeral data is stored, the attributes `zimbraAuthTokens` and `zimbraCsrfTokenData` are no longer returned as part of the `zmprov ga <account>` response. The value of `zimbraLastLogonTimestamp` is returned as before.
+
+=== Migration In-Progress Flag
+
+The `zmmigrateattrs` script sets a flag in `SSDB` at the beginning of the migration process and unsets it when migration completes. When this flag is set, the server will look for an account's ephemeral data in both the `SSDB` and LDAP backends, as the data may reside in either one. In the event of an error during migration, the flag will remain set until migration is re-run successfully. For testing or debugging purposes, this flag can be set or unset via command line using the `--set-flag` and `--unset-flag` options of `zmmigrateattrs`.
+
+=== Migration CSV Output
+
+Each run of `zmmigrateattrs` generates a CSV file in `/opt/zimbra/data/tmp/` directory. The file contains migration info for every migrated account. If any migrations fail, a cutdown CSV file report detailing only the errors is also created in the same directory. The name(s) of the file(s) are logged at the end of the run.

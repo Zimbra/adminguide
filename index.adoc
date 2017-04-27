@@ -53,6 +53,16 @@ include::configuration.adoc[]
 
 <<<
 
+include::ephemeraldata.adoc[]
+
+<<<
+
+<<<
+
+include::ssdb-configuration-options.adoc[]
+
+<<<
+
 include::cos.adoc[]
 
 <<<
