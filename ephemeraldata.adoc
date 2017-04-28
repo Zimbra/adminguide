@@ -96,6 +96,6 @@ Each run of `zmmigrateattrs` generates a CSV file in `/opt/zimbra/data/tmp/` dir
 
 === Account Deletion Behavior
 
-Ephemeral data deletion behavior differs slightly between SSDB an LDAP backends. With SSDB as the backend, account deletion results in
+Ephemeral data deletion behavior differs slightly between SSDB and LDAP backends. With SSDB as the backend, account deletion results in
 the `zimbraLastLogonTimestamp` attribute being explicitly deleted from SSDB. `zimbraAuthTokens` and `zimbraCsrfTokenData`, however, are
 left to be expired by SSDB when the token lifetimes are reached (default of 2 days). Conversely, ephemeral data in LDAP is wiped immediately as part of the account deletion process.
