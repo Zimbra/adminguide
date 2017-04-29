@@ -82,7 +82,9 @@ Ephemeral data migration is a one-way process. The `zmmigrateattrs` script does 
 
 === Changes to zmprov
 
-Due to changes in the way multi-valued ephemeral data is stored, the attributes `zimbraAuthTokens` and `zimbraCsrfTokenData` are no longer returned as part of the `zmprov ga <account>` response. The value of `zimbraLastLogonTimestamp` is returned as before.
+Due to changes in the way multi-valued ephemeral data is stored, the attributes `zimbraAuthTokens` and `zimbraCsrfTokenData` are no longer returned as part of the `zmprov ga <account>` response. The value of `zimbraLastLogonTimestamp` is returned as before, although
+only if the -l flag is not used, as adding the -l flag will restrict the server to accessing attributes in LDAP only.
+It is still possible to modify these attributes using the `zmprov ma <account>` command, regardless of the ephemeral backend. In order to do this, the provided attribute value must match its LDAP format: `tokenId|expiration|serverVersion` for auth tokens; `data:crumb:expiration` for CSRF tokens.
 
 === Migration In-Progress Flag
 
@@ -91,3 +93,9 @@ The `zmmigrateattrs` script sets a flag in `SSDB` at the beginning of the migrat
 === Migration CSV Output
 
 Each run of `zmmigrateattrs` generates a CSV file in `/opt/zimbra/data/tmp/` directory. The file contains migration info for every migrated account. If any migrations fail, a cutdown CSV file report detailing only the errors is also created in the same directory. The name(s) of the file(s) are logged at the end of the run.
+
+=== Account Deletion Behavior
+
+Ephemeral data deletion behavior differs slightly between SSDB and LDAP backends. With SSDB as the backend, account deletion results in
+the `zimbraLastLogonTimestamp` attribute being explicitly deleted from SSDB. `zimbraAuthTokens` and `zimbraCsrfTokenData`, however, are
+left to be expired by SSDB when the token lifetimes are reached (default of 2 days). Conversely, ephemeral data in LDAP is wiped immediately as part of the account deletion process.
