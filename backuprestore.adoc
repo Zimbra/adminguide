@@ -1525,3 +1525,29 @@ zmplayredo --fromTime "2008/10/17 08:00:00:000"
 All data is brought forward to the current time and the standby site is
 set up and running. Data from 8:30:00 to 8:35:00 is lost but that is
 expected when the restore process is being carried out.
+
+
+== Notes on Ephemeral Data
+
+As of ZCS 8.8, ephemeral data is not backed up as part of the backup process.
+Since auth tokens are ephemeral attributes, the implication is that clients
+accessing accounts restored after deletion will need to re-authenticate;
+auth tokens generated prior to the backup will no longer work.
+
+The Jira ticket ZMS-614 has been opened to track the potential future development
+of ephemeral data backups.
+
+==== Backups with SSDB Backend
+
+If SSDB is used as the ephemeral backend, a backup will not include any ephemeral
+attributes. All authentication data is lost, including the last logon timestamp.
+As a result, the "Last Login" column in Accounts section of the admin console
+will display "Never logged in" for restored accounts. If a specific need for this
+data arises, all authentication events are logged in the audit.log file. Customers
+considering migrating to an SSDB backend should be aware of this limitation.
+
+==== Backups with LDAP backend
+
+If the ephemeral backend is LDAP, a backup will not include auth tokens or CSRF
+tokens, but it will include the last logon timestamp. Upon account restore,
+the appropriate "Last Login" value in the admin console will be restored.
