@@ -24,6 +24,10 @@ include::mailboxserver.adoc[]
 
 <<<
 
+include::imapd.adoc[]
+
+<<<
+
 include::ldap.adoc[]
 
 <<<
