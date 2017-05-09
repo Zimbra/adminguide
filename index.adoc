@@ -110,6 +110,10 @@ include::cmdlineutils.adoc[]
 
 <<<
 
+include::remote_imap.adoc[]
+
+<<<
+
 include::spnego.adoc[]
 
 <<<
