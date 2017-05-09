@@ -5,7 +5,6 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<meta name="author" content="v8.7, April 2016">
 <title>Zimbra Collaboration Administrator Guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -514,12 +513,10 @@ table.CodeRay td.code>pre{padding:0}
 <body class="article toc2 toc-left">
 <div id="header">
 <h1>Zimbra Collaboration Administrator Guide</h1>
-<div class="details">
-<span id="author" class="author">v8.7, April 2016</span><br>
-</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#_zimbra_collaboration_administrator_guide">Zimbra Collaboration Administrator Guide</a></li>
 <li><a href="#_license">License</a></li>
 <li><a href="#introduction">Introduction</a>
 <ul class="sectlevel2">
@@ -562,6 +559,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_mailbox_server_logs">Mailbox Server Logs</a></li>
 </ul>
 </li>
+<li><a href="#_zimbra_imapd_server">Zimbra IMAPD Server</a></li>
 <li><a href="#zimbra_ldap_service">Zimbra LDAP Service</a>
 <ul class="sectlevel2">
 <li><a href="#_ldap_traffic_flow">LDAP Traffic Flow</a></li>
@@ -724,6 +722,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_restoring_data">Restoring Data</a></li>
 <li><a href="#_general_steps_for_disaster_recovery">General Steps for Disaster Recovery</a></li>
 <li><a href="#_using_snapshots_to_backup_and_restore">Using snapshots to Backup and Restore</a></li>
+<li><a href="#_notes_on_ephemeral_data">Notes on Ephemeral Data</a></li>
 </ul>
 </li>
 <li><a href="#_zimbra_mobile">Zimbra Mobile</a>
@@ -768,6 +767,12 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#cli_commands">Zimbra CLI Commands</a></li>
 </ul>
 </li>
+<li><a href="#_multi_node_configuration_with_standalone_imapd">Multi-Node Configuration with Standalone IMAPD</a>
+<ul class="sectlevel3">
+<li><a href="#_imapd_server_selection">IMAPD Server selection</a></li>
+<li><a href="#_client_request_flow">Client Request Flow</a></li>
+</ul>
+</li>
 <li><a href="#_configuring_spnego_single_sign_on">Appendix B: Configuring SPNEGO Single Sign-On</a>
 <ul class="sectlevel2">
 <li><a href="#_configuration_process">Configuration Process</a></li>
@@ -798,13 +803,19 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
+<h2 id="_zimbra_collaboration_administrator_guide">Zimbra Collaboration Administrator Guide</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
 <h2 id="_license">License</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><span class="image"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="CC BY-SA"></span> Synacor, Inc., 2016</p>
+<p><span class="image"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="CC BY-SA"></span> Synacor, Inc., 2017</p>
 </div>
 <div class="paragraph">
-<p>&#169; 2016 by Synacor, Inc. Zimbra Collaboration Administrator Guide</p>
+<p>&#169; 2017 by Synacor, Inc. Zimbra Collaboration Administrator Guide</p>
 </div>
 <div class="paragraph">
 <p>This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
@@ -814,7 +825,7 @@ Synacor, Inc. provides otherwise. To view a copy of this license, visit
 Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
 </div>
 <div class="paragraph">
-<p>Synacor, Inc., 2016<br>
+<p>Synacor, Inc., 2017<br>
 40 La Riviere Drive, Suite 300<br>
 Buffalo, New York 14202</p>
 </div>
@@ -2490,6 +2501,20 @@ of those disks fails.
 </div>
 </div>
 <div class="sect1">
+<h2 id="_zimbra_imapd_server">Zimbra IMAPD Server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Zimbra IMAPD server is an optionally installed dedicated server that handles IMAP(S) traffic.
+It can be installed on the same node as a <strong>mailbox server</strong> or on a separate node.
+When installed on the same node as a <strong>mailbox server</strong> the mailbox&#8217;s internal IMAPD process is disabled.</p>
+</div>
+<div class="paragraph">
+<p>In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the <strong>mailbox</strong> processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="zimbra_ldap_service">Zimbra LDAP Service</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2959,14 +2984,14 @@ forthis custom auth handler.  The object has to be an instance of
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">SampleExtensionCustomAuth</span> <span class="directive">implements</span> ZimbraExtension {
+<pre class="CodeRay highlight"><code data-lang="java">public class SampleExtensionCustomAuth implements ZimbraExtension {
 
-  <span class="directive">public</span> <span class="type">void</span> init() <span class="directive">throws</span> ServiceException {
-  <span class="comment">/*
+  public void init() throws ServiceException {
+  /*
    * Register to Zimbra's authentication infrastructure
    * custom:sample should be set for domain attribute zimbraAuthMech
-   */</span>
-   ZimbraCustomAuth.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">sample</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> SampleCustomAuth());
+   */
+   ZimbraCustomAuth.register("sample", new SampleCustomAuth());
   }
 ...
 }</code></pre>
@@ -3869,7 +3894,7 @@ addressee).</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov mcf &quot;zimbraAmavisFinalSpamDestiny&quot; D_PASS
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov mcf "zimbraAmavisFinalSpamDestiny" D_PASS
 zmprov ms serverhostname.com D_PASS</code></pre>
 </div>
 </div>
@@ -7669,7 +7694,7 @@ marks at the beginning and end of the message to be displayed.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov md &lt;domain&gt; zimbraAdminConsoleLoginMessage &quot;message to display&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov md &lt;domain&gt; zimbraAdminConsoleLoginMessage "message to display"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7677,7 +7702,7 @@ marks at the beginning and end of the message to be displayed.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov md &lt;domain&gt; +zimbraAdminConsoleLoginMessage &quot;second message to display&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov md &lt;domain&gt; +zimbraAdminConsoleLoginMessage "second message to display"</code></pre>
 </div>
 </div>
 </div>
@@ -7721,7 +7746,7 @@ the beginning and end of an individual message to be deleted.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov md &lt;domain&gt; -zimbraAdminConsoleLoginMessage &quot;message to display&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov md &lt;domain&gt; -zimbraAdminConsoleLoginMessage "message to display"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9276,8 +9301,8 @@ zimbraDomainMandatoryMailSignatureEnabled: TRUE</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">$ zmprov md example.com
-zimbraAmavisDomainDisclaimerText &quot;text disclamer&quot;
-zimbraAmavisDomainDisclaimerHTML &quot;HTML disclaimer&quot;
+zimbraAmavisDomainDisclaimerText "text disclamer"
+zimbraAmavisDomainDisclaimerHTML "HTML disclaimer"
 
 $ zmprov gd example.com zimbraAmavisDomainDisclaimerText zimbraAmavisDomainDisclaimerHTML
 # name example.com
@@ -10290,7 +10315,7 @@ For information about creating domain aliases, see the
 <p>Define the MTA restriction.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov mcf +zimbraMtaRestriction &quot;check_policy_service unix:private/policy&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov mcf +zimbraMtaRestriction "check_policy_service unix:private/policy"</code></pre>
 </div>
 </div>
 </li>
@@ -10348,7 +10373,7 @@ Blocking/Black Lists can be turned on or off in the MTA.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov mcf -zimbraMtaRestriction &quot;check_policy_service unix:private/policy&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov mcf -zimbraMtaRestriction "check_policy_service unix:private/policy"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10426,10 +10451,10 @@ entry. For 2-word RBL names, surround the name with quotes in your entry.</p>
  zimbraMtaRestriction reject_invalid_hostname \
  zimbraMtaRestriction reject_non-fqdn_hostname \
  zimbraMtaRestriction reject_non_fqdn_sender \
- zimbraMtaRestriction &quot;reject_rbl_client cbl.abuseat.org&quot; \
- zimbraMtaRestriction &quot;reject_rbl_client bl.spamcop.net&quot; \
- zimbraMtaRestriction &quot;reject_rbl_client dnsbl.sorbs.net&quot; \
- zimbraMtaRestriction &quot;reject_rbl_client sbl.spamhaus.org&quot;</code></pre>
+ zimbraMtaRestriction "reject_rbl_client cbl.abuseat.org" \
+ zimbraMtaRestriction "reject_rbl_client bl.spamcop.net" \
+ zimbraMtaRestriction "reject_rbl_client dnsbl.sorbs.net" \
+ zimbraMtaRestriction "reject_rbl_client sbl.spamhaus.org"</code></pre>
 </div>
 </div>
 </div>
@@ -11788,7 +11813,9 @@ zmprov mcf zimbraEphemeralBackendURL ssdb:&lt;ip address|hostname&gt;:port # sub
 <div class="sect3">
 <h4 id="_changes_to_zmprov">Changes to zmprov</h4>
 <div class="paragraph">
-<p>Due to changes in the way multi-valued ephemeral data is stored, the attributes <code>zimbraAuthTokens</code> and <code>zimbraCsrfTokenData</code> are no longer returned as part of the <code>zmprov ga &lt;account&gt;</code> response. The value of <code>zimbraLastLogonTimestamp</code> is returned as before.</p>
+<p>Due to changes in the way multi-valued ephemeral data is stored, the attributes <code>zimbraAuthTokens</code> and <code>zimbraCsrfTokenData</code> are no longer returned as part of the <code>zmprov ga &lt;account&gt;</code> response. The value of <code>zimbraLastLogonTimestamp</code> is returned as before, although
+only if the -l flag is not used, as adding the -l flag will restrict the server to accessing attributes in LDAP only.
+It is still possible to modify these attributes using the <code>zmprov ma &lt;account&gt;</code> command, regardless of the ephemeral backend. In order to do this, the provided attribute value must match its LDAP format: <code>tokenId|expiration|serverVersion</code> for auth tokens; <code>data:crumb:expiration</code> for CSRF tokens.</p>
 </div>
 </div>
 <div class="sect3">
@@ -11801,6 +11828,14 @@ zmprov mcf zimbraEphemeralBackendURL ssdb:&lt;ip address|hostname&gt;:port # sub
 <h4 id="_migration_csv_output">Migration CSV Output</h4>
 <div class="paragraph">
 <p>Each run of <code>zmmigrateattrs</code> generates a CSV file in <code>/opt/zimbra/data/tmp/</code> directory. The file contains migration info for every migrated account. If any migrations fail, a cutdown CSV file report detailing only the errors is also created in the same directory. The name(s) of the file(s) are logged at the end of the run.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_account_deletion_behavior">Account Deletion Behavior</h4>
+<div class="paragraph">
+<p>Ephemeral data deletion behavior differs slightly between SSDB and LDAP backends. With SSDB as the backend, account deletion results in
+the <code>zimbraLastLogonTimestamp</code> attribute being explicitly deleted from SSDB. <code>zimbraAuthTokens</code> and <code>zimbraCsrfTokenData</code>, however, are
+left to be expired by SSDB when the token lifetimes are reached (default of 2 days). Conversely, ephemeral data in LDAP is wiped immediately as part of the account deletion process.</p>
 </div>
 <div style="page-break-after: always;"></div>
 <div style="page-break-after: always;"></div>
@@ -12217,61 +12252,61 @@ PREFIX=/var/lib/ssdb
 
 function log {
     lvl=$1
-    msg=&quot;$2&quot;
+    msg="$2"
     if [ $lvl -le $LOG_LEVEL ]
     then
         now=$(date)
-        echo &quot;$now [$lvl] $msg&quot; &gt;&gt; $LOG
+        echo "$now [$lvl] $msg" &gt;&gt; $LOG
     fi
 }
 
 function log_error {
-    log $LOG_ERROR &quot;$1&quot;
+    log $LOG_ERROR "$1"
 }
 function log_warning {
-    log $LOG_WARNING &quot;$1&quot;
+    log $LOG_WARNING "$1"
 }
 function log_info {
-    log $LOG_INFO &quot;$1&quot;
+    log $LOG_INFO "$1"
 }
 function log_debug {
-    log $LOG_DEBUG &quot;$1&quot;
+    log $LOG_DEBUG "$1"
 }
 
 function backup {
-    log_info &quot;Transitioning to BACKUP state&quot;
-    runuser -l $USER -c &quot;${PREFIX}/ssdb-server ${PREFIX}/ssdb.conf -s stop&quot;
-    runuser -l $USER -c &quot;cp ${PREFIX}/ssdb_slave.conf ${PREFIX}/ssdb.conf&quot;
-    runuser -l $USER -c &quot;${PREFIX}/ssdb-server -d ${PREFIX}/ssdb.conf&quot;
+    log_info "Transitioning to BACKUP state"
+    runuser -l $USER -c "${PREFIX}/ssdb-server ${PREFIX}/ssdb.conf -s stop"
+    runuser -l $USER -c "cp ${PREFIX}/ssdb_slave.conf ${PREFIX}/ssdb.conf"
+    runuser -l $USER -c "${PREFIX}/ssdb-server -d ${PREFIX}/ssdb.conf"
 
 }
 
 function fault {
-    log_error &quot;keepalived is in FAULT state&quot;
+    log_error "keepalived is in FAULT state"
 }
 
 function master {
-    log_info &quot;Transitioning to MASTER state&quot;
-    runuser -l $USER -c &quot;${PREFIX}/ssdb-server ${PREFIX}/ssdb.conf -s stop&quot;
-    runuser -l $USER -c &quot;cp ${PREFIX}/ssdb_master.conf ${PREFIX}/ssdb.conf&quot;
-    runuser -l $USER -c &quot;${PREFIX}/ssdb-server -d ${PREFIX}/ssdb.conf&quot;
+    log_info "Transitioning to MASTER state"
+    runuser -l $USER -c "${PREFIX}/ssdb-server ${PREFIX}/ssdb.conf -s stop"
+    runuser -l $USER -c "cp ${PREFIX}/ssdb_master.conf ${PREFIX}/ssdb.conf"
+    runuser -l $USER -c "${PREFIX}/ssdb-server -d ${PREFIX}/ssdb.conf"
 }
 
 
 case $ENDSTATE in
-    &quot;BACKUP&quot;) # Perform action for transition to BACKUP state
+    "BACKUP") # Perform action for transition to BACKUP state
         backup
         exit 0
         ;;
-    &quot;FAULT&quot;)  # Perform action for transition to FAULT state
+    "FAULT")  # Perform action for transition to FAULT state
         fault
         exit 0
         ;;
-    &quot;MASTER&quot;) # Perform action for transition to MASTER state
+    "MASTER") # Perform action for transition to MASTER state
         master
         exit 0
         ;;
-    *)    echo &quot;Unknown state ${ENDSTATE} for VRRP ${TYPE} ${NAME}&quot;
+    *)    echo "Unknown state ${ENDSTATE} for VRRP ${TYPE} ${NAME}"
         exit 1
         ;;
 esac</code></pre>
@@ -13922,7 +13957,7 @@ the shared calendar to reply to the invitation.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmmailbox -z -m user1 cf -V appointment &quot;/Calendar Name/Sub Calendar&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmmailbox -z -m user1 cf -V appointment "/Calendar Name/Sub Calendar"</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -15174,27 +15209,27 @@ email accounts without importing mail:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="tag">&lt;ZCSImport&gt;</span>
-<span class="tag">&lt;ImportUsers&gt;</span>
-<span class="tag">&lt;User&gt;</span>
-<span class="tag">&lt;sn&gt;</span>Sample<span class="tag">&lt;/sn&gt;</span>
-<span class="tag">&lt;givenName&gt;</span>Sam<span class="tag">&lt;/givenName&gt;</span>
-<span class="tag">&lt;displayName&gt;</span>Sam Sample<span class="tag">&lt;/displayName&gt;</span>
-<span class="tag">&lt;RemoteEmailAddress&gt;</span>ssample@example.com<span class="tag">&lt;/RemoteEmailAddress&gt;</span>
-<span class="tag">&lt;password&gt;</span>test123<span class="tag">&lt;/password&gt;</span>
-<span class="tag">&lt;zimbraPasswordMustChange&gt;</span>TRUE<span class="tag">&lt;/zimbraPasswordMustChange&gt;</span>
-<span class="tag">&lt;/User&gt;</span>
-<span class="tag">&lt;User&gt;</span>
-<span class="tag">&lt;sn&gt;</span>Zackry<span class="tag">&lt;/sn&gt;</span>
-<span class="tag">&lt;givenName&gt;</span>Zak<span class="tag">&lt;/givenName&gt;</span>
-<span class="tag">&lt;displayName&gt;</span>Zak Zackry<span class="tag">&lt;/displayName&gt;</span>
-<span class="tag">&lt;RemoteEmailAddress&gt;</span>zzackry@example.com<span class="tag">&lt;/RemoteEmailAddress&gt;</span>
-<span class="tag">&lt;password&gt;</span>test123<span class="tag">&lt;/password&gt;</span>
-<span class="tag">&lt;zimbraPasswordMustChange&gt;</span>TRUE<span class="tag">&lt;/zimbraPasswordMustChange&gt;</span>
-<span class="tag">&lt;/User&gt;</span>
-<span class="tag">&lt;/ImportUsers&gt;</span>
-<span class="tag">&lt;/ZCSImport&gt;</span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ZCSImport&gt;
+&lt;ImportUsers&gt;
+&lt;User&gt;
+&lt;sn&gt;Sample&lt;/sn&gt;
+&lt;givenName&gt;Sam&lt;/givenName&gt;
+&lt;displayName&gt;Sam Sample&lt;/displayName&gt;
+&lt;RemoteEmailAddress&gt;ssample@example.com&lt;/RemoteEmailAddress&gt;
+&lt;password&gt;test123&lt;/password&gt;
+&lt;zimbraPasswordMustChange&gt;TRUE&lt;/zimbraPasswordMustChange&gt;
+&lt;/User&gt;
+&lt;User&gt;
+&lt;sn&gt;Zackry&lt;/sn&gt;
+&lt;givenName&gt;Zak&lt;/givenName&gt;
+&lt;displayName&gt;Zak Zackry&lt;/displayName&gt;
+&lt;RemoteEmailAddress&gt;zzackry@example.com&lt;/RemoteEmailAddress&gt;
+&lt;password&gt;test123&lt;/password&gt;
+&lt;zimbraPasswordMustChange&gt;TRUE&lt;/zimbraPasswordMustChange&gt;
+&lt;/User&gt;
+&lt;/ImportUsers&gt;
+&lt;/ZCSImport&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -15213,25 +15248,25 @@ server.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="tag">&lt;ZCSImport&gt;</span>
-<span class="tag">&lt;SMTPHost&gt;</span>smtp.example.com<span class="tag">&lt;/SMTPHost&gt;</span>
-<span class="tag">&lt;SMTPPort&gt;</span>25<span class="tag">&lt;/SMTPPort&gt;</span>
-<span class="tag">&lt;ImportUsers&gt;</span>
-<span class="tag">&lt;User&gt;</span>
-<span class="tag">&lt;sn&gt;</span>Sample<span class="tag">&lt;/sn&gt;</span>
-<span class="tag">&lt;givenName&gt;</span>Sam<span class="tag">&lt;/givenName&gt;</span>
-<span class="tag">&lt;displayName&gt;</span>Sam Sample<span class="tag">&lt;/displayName&gt;</span>
-<span class="tag">&lt;RemoteEmailAddress&gt;</span>sam@example.com<span class="tag">&lt;/RemoteEmailAddress&gt;</span>
-<span class="tag">&lt;/User&gt;</span>
-<span class="tag">&lt;User&gt;</span>
-<span class="tag">&lt;sn&gt;</span>Zackry<span class="tag">&lt;/sn&gt;</span>
-<span class="tag">&lt;givenName&gt;</span>Zak<span class="tag">&lt;/givenName&gt;</span>
-<span class="tag">&lt;displayName&gt;</span>Zak Zackry<span class="tag">&lt;/displayName&gt;</span>
-<span class="tag">&lt;RemoteEmailAddress&gt;</span>zzackry@example.com<span class="tag">&lt;/RemoteEmailAddress&gt;</span>
-<span class="tag">&lt;/User&gt;</span>
-<span class="tag">&lt;/ImportUsers&gt;</span>
-<span class="tag">&lt;/ZCSImport&gt;</span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ZCSImport&gt;
+&lt;SMTPHost&gt;smtp.example.com&lt;/SMTPHost&gt;
+&lt;SMTPPort&gt;25&lt;/SMTPPort&gt;
+&lt;ImportUsers&gt;
+&lt;User&gt;
+&lt;sn&gt;Sample&lt;/sn&gt;
+&lt;givenName&gt;Sam&lt;/givenName&gt;
+&lt;displayName&gt;Sam Sample&lt;/displayName&gt;
+&lt;RemoteEmailAddress&gt;sam@example.com&lt;/RemoteEmailAddress&gt;
+&lt;/User&gt;
+&lt;User&gt;
+&lt;sn&gt;Zackry&lt;/sn&gt;
+&lt;givenName&gt;Zak&lt;/givenName&gt;
+&lt;displayName&gt;Zak Zackry&lt;/displayName&gt;
+&lt;RemoteEmailAddress&gt;zzackry@example.com&lt;/RemoteEmailAddress&gt;
+&lt;/User&gt;
+&lt;/ImportUsers&gt;
+&lt;/ZCSImport&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -15247,23 +15282,23 @@ type of XML file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="tag">&lt;ZCSImport&gt;</span>
-<span class="tag">&lt;IMAPHost&gt;</span>imap.gmail.com<span class="tag">&lt;/IMAPHost&gt;</span>
-<span class="tag">&lt;IMAPPort&gt;</span>993<span class="tag">&lt;/IMAPPort&gt;</span>
-<span class="tag">&lt;ConnectionType&gt;</span>ssl<span class="tag">&lt;/ConnectionType&gt;</span>
-<span class="tag">&lt;UseAdminLogin&gt;</span>0<span class="tag">&lt;/UseAdminLogin&gt;</span>
-<span class="tag">&lt;ImportUsers&gt;</span>
-<span class="tag">&lt;User&gt;</span>
-<span class="tag">&lt;sn&gt;</span>Sample<span class="tag">&lt;/sn&gt;</span>
-<span class="tag">&lt;givenName&gt;</span>Sam<span class="tag">&lt;/givenName&gt;</span>
-<span class="tag">&lt;displayName&gt;</span>Sam Sample<span class="tag">&lt;/displayName&gt;</span>
-<span class="tag">&lt;RemoteEmailAddress&gt;</span>sam@example.com<span class="tag">&lt;/RemoteEmailAddress&gt;</span>
-<span class="tag">&lt;RemoteIMAPLogin&gt;</span>sam@example.com<span class="tag">&lt;/RemoteIMAPLogin&gt;</span>
-<span class="tag">&lt;remoteIMAPPassword&gt;</span>test123<span class="tag">&lt;/remoteIMAPPassword&gt;</span>
-<span class="tag">&lt;/User&gt;</span>
-<span class="tag">&lt;/ImportUsers&gt;</span>
-<span class="tag">&lt;/ZCSImport&gt;</span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ZCSImport&gt;
+&lt;IMAPHost&gt;imap.gmail.com&lt;/IMAPHost&gt;
+&lt;IMAPPort&gt;993&lt;/IMAPPort&gt;
+&lt;ConnectionType&gt;ssl&lt;/ConnectionType&gt;
+&lt;UseAdminLogin&gt;0&lt;/UseAdminLogin&gt;
+&lt;ImportUsers&gt;
+&lt;User&gt;
+&lt;sn&gt;Sample&lt;/sn&gt;
+&lt;givenName&gt;Sam&lt;/givenName&gt;
+&lt;displayName&gt;Sam Sample&lt;/displayName&gt;
+&lt;RemoteEmailAddress&gt;sam@example.com&lt;/RemoteEmailAddress&gt;
+&lt;RemoteIMAPLogin&gt;sam@example.com&lt;/RemoteIMAPLogin&gt;
+&lt;remoteIMAPPassword&gt;test123&lt;/remoteIMAPPassword&gt;
+&lt;/User&gt;
+&lt;/ImportUsers&gt;
+&lt;/ZCSImport&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -15684,7 +15719,7 @@ domains can be scheduled on the server.</p>
 <p>LDAP URL</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapURL &quot;ldap://xxx.xxx.xxx.xxx:&lt;port&gt;&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapURL "ldap://xxx.xxx.xxx.xxx:&lt;port&gt;"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -15703,7 +15738,7 @@ domains can be scheduled on the server.</p>
 <p>LDAP admin bind DN for auto provision:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapAdminBindDn &quot;cn=admin, dc=autoprov, dc=company, dc=com&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapAdminBindDn "cn=admin, dc=autoprov, dc=company, dc=com"</code></pre>
 </div>
 </div>
 </li>
@@ -15722,7 +15757,7 @@ domains can be scheduled on the server.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapSearchFilter &quot;(uid=&lt;%placeholder&gt;)&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapSearchFilter "(uid=&lt;%placeholder&gt;)"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -15739,8 +15774,8 @@ LDAP directory root, <code>rootDSE</code>, is the starting point.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapSearchBase &quot;dc=autoprov,dc=company,dc=com&quot;
-md &lt;example.com&gt; zimbraAutoProvLdapBindDn &lt;&quot;placeholder1&quot;&gt;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapSearchBase "dc=autoprov,dc=company,dc=com"
+md &lt;example.com&gt; zimbraAutoProvLdapBindDn &lt;"placeholder1"&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -15848,7 +15883,7 @@ PREAUTH, KRB5, SPNEGO.  You can specify multiple authentication mechanisms.</p>
 <p>LDAP URL:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapURL &quot;ldap://xxx.xxx.xxx.xxx:&lt;port&gt;&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapURL "ldap://xxx.xxx.xxx.xxx:&lt;port&gt;"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -15868,7 +15903,7 @@ PREAUTH, KRB5, SPNEGO.  You can specify multiple authentication mechanisms.</p>
 <code>cn=&lt;LDAPadmin_name&gt;, dc=autoprov, dc=&lt;company_name&gt;, dc=&lt;com&gt;</code></p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapAdminBindDn &lt;&quot;bindDN&quot;&gt;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapAdminBindDn &lt;"bindDN"&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -15891,7 +15926,7 @@ provision.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapSearchFilter &lt;&quot;placeholder&quot;&gt;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapSearchFilter &lt;"placeholder"&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -15919,7 +15954,7 @@ This is used with <code>zimbraAutoProvLdapSearchFilter</code>.  If this is not s
 the LDAP directory root, <code>rootDSE</code>, is the starting point.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapSearchBase &lt;&quot;location&quot;&gt;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapSearchBase &lt;"location"&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -15931,7 +15966,7 @@ the LDAP directory root, <code>rootDSE</code>, is the starting point.</p>
 provisioning.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapBindDn &quot;uid=%&lt;placeholder1&gt;, %&lt;placeholder2&gt;&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">md &lt;example.com&gt; zimbraAutoProvLdapBindDn "uid=%&lt;placeholder1&gt;, %&lt;placeholder2&gt;"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -16797,7 +16832,7 @@ lists for different user types.</p>
 <p>Access only to specific external email address:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov grr dl &lt;dlname@example.com&gt; gst &lt;someone@foo.com&gt; &quot;&quot; sendToDistList</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov grr dl &lt;dlname@example.com&gt; gst &lt;someone@foo.com&gt; "" sendToDistList</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -16805,7 +16840,7 @@ lists for different user types.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov rvr dl &lt;dlname@example.com&gt; gst &lt;someone@foo.com&gt; &quot;&quot; sendToDistList</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov rvr dl &lt;dlname@example.com&gt; gst &lt;someone@foo.com&gt; "" sendToDistList</code></pre>
 </div>
 </div>
 </li>
@@ -20926,7 +20961,7 @@ a.m., incremental backups to run Monday through Saturday at 1 a.m., and
 old backups deleted at 12:00 a.m. every day.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -R f &quot;0 1 * * 7&quot; i &quot;0 1 * * 1-6&quot; d 1m &quot;0 0 * * *&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -R f "0 1 * * 7" i "0 1 * * 1-6" d 1m "0 0 * * *"</code></pre>
 </div>
 </div>
 </li>
@@ -20935,7 +20970,7 @@ old backups deleted at 12:00 a.m. every day.</p>
 example adds a full backup on Thursday at 1 a.m.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -A f &quot;0 1 * * 4&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -A f "0 1 * * 4"</code></pre>
 </div>
 </div>
 </li>
@@ -22867,7 +22902,7 @@ standby site once users are rerouted to it.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmplayredo --fromTime &quot;2008/10/17 08:00:00:000&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmplayredo --fromTime "2008/10/17 08:00:00:000"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -22875,7 +22910,39 @@ standby site once users are rerouted to it.</p>
 set up and running. Data from 8:30:00 to 8:35:00 is lost but that is
 expected when the restore process is being carried out.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_notes_on_ephemeral_data">Notes on Ephemeral Data</h3>
+<div class="paragraph">
+<p>As of ZCS 8.8, ephemeral data is not backed up as part of the backup process.
+Since auth tokens are ephemeral attributes, the implication is that clients
+accessing accounts restored after deletion will need to re-authenticate;
+auth tokens generated prior to the backup will no longer work.</p>
+</div>
+<div class="paragraph">
+<p>The Jira ticket ZMS-614 has been opened to track the potential future development
+of ephemeral data backups.</p>
+</div>
+<div class="sect4">
+<h5 id="_backups_with_ssdb_backend">Backups with SSDB Backend</h5>
+<div class="paragraph">
+<p>If SSDB is used as the ephemeral backend, a backup will not include any ephemeral
+attributes. All authentication data is lost, including the last logon timestamp.
+As a result, the "Last Login" column in Accounts section of the admin console
+will display "Never logged in" for restored accounts. If a specific need for this
+data arises, all authentication events are logged in the audit.log file. Customers
+considering migrating to an SSDB backend should be aware of this limitation.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_backups_with_ldap_backend">Backups with LDAP backend</h5>
+<div class="paragraph">
+<p>If the ephemeral backend is LDAP, a backup will not include auth tokens or CSRF
+tokens, but it will include the last logon timestamp. Upon account restore,
+the appropriate "Last Login" value in the admin console will be restored.</p>
+</div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
@@ -24792,9 +24859,9 @@ Log in as the <code>zimbra</code> user and use <code>zmprov</code> to modify the
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmprov modifyDomain example.com \
- zimbraSkinBackgroundColor &quot;#FF7F50&quot; \
- zimbraSkinSecondaryColor &quot;#ADEAEA&quot; \
- zimbraSkinSelectionColor &quot;#FFFF00&quot;</code></pre>
+ zimbraSkinBackgroundColor "#FF7F50" \
+ zimbraSkinSecondaryColor "#ADEAEA" \
+ zimbraSkinSelectionColor "#FFFF00"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -26190,7 +26257,7 @@ instances of that attribute.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmprov ma user1 +zimbraZimletUserProperties &quot;com_company_testing:favoriteColor:blue&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmprov ma user1 +zimbraZimletUserProperties "com_company_testing:favoriteColor:blue"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -28190,7 +28257,7 @@ RESULTNUM_ACCOUNT-ID_MAILITEMID</p></td>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmarchivesearch -m user1@yourdomain.com -q &quot;in:sent&quot; -o 0 -l 30 -d /var/tmp</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmarchivesearch -m user1@yourdomain.com -q "in:sent" -o 0 -l 30 -d /var/tmp</code></pre>
 </div>
 </div>
 </div>
@@ -28594,7 +28661,7 @@ blank space.  Specify the fields as follows:</p>
 <h5 id="_syntax_8">Syntax</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup {-q|-s|-A|-R|-F|-D}[f|i|d|] [&quot;schedule&quot;]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup {-q|-s|-A|-R|-F|-D}[f|i|d|] ["schedule"]</code></pre>
 </div>
 </div>
 </div>
@@ -28832,7 +28899,7 @@ used.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -R f [&quot;schedule&quot;]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -R f ["schedule"]</code></pre>
 </div>
 </div>
 </div>
@@ -28842,7 +28909,7 @@ used.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -A f [&quot;schedule&quot;]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -A f ["schedule"]</code></pre>
 </div>
 </div>
 </div>
@@ -28852,7 +28919,7 @@ used.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -A i [&quot;schedule&quot;]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmschedulebackup -A i ["schedule"]</code></pre>
 </div>
 </div>
 </div>
@@ -29686,7 +29753,7 @@ message in to the specified directory.</p>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmmboxsearch -m user1@yourdomain.com,user2@yourdomain.com -q &quot;in:inbox&quot; -d /var/tmp</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmmboxsearch -m user1@yourdomain.com,user2@yourdomain.com -q "in:inbox" -d /var/tmp</code></pre>
 </div>
 </div>
 </div>
@@ -30361,7 +30428,7 @@ mbox user10@domain.example.com&gt; createFolder /Archive
 257
 mbox user10@domain.example.com&gt; createTag TODO
 64
-mbox user10@domain.example.com&gt; createSearchFolder /unread &quot;is:unread&quot;
+mbox user10@domain.example.com&gt; createSearchFolder /unread "is:unread"
 258
 mbox user10@domain.example.com&gt; exit
 prov&gt;</code></pre>
@@ -30511,7 +30578,7 @@ data.  Type as:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmmailbox -z -m user@example.com gru &quot;?fmt=zip&amp;meta=1&quot; &gt; &lt;filename.zip&gt;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmmailbox -z -m user@example.com gru "?fmt=zip&amp;meta=1" &gt; &lt;filename.zip&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -31551,7 +31618,7 @@ this command can be found at:
 <h5 id="_syntax_37">Syntax</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmtzupdate --rulefile &lt;rule file&gt; -a &lt;&quot;all&quot; or list of specific email addresses&gt; [--sync] [--after &lt;date/time stamp&gt;]</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmtzupdate --rulefile &lt;rule file&gt; -a &lt;"all" or list of specific email addresses&gt; [--sync] [--after &lt;date/time stamp&gt;]</code></pre>
 </div>
 </div>
 </div>
@@ -32056,6 +32123,107 @@ requests/responses and logs them when verbose mode is turned on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_multi_node_configuration_with_standalone_imapd">Multi-Node Configuration with Standalone IMAPD</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Zimbra Collaboration supports remote IMAP servers which are run separately
+from the mailbox process.</p>
+</div>
+<div class="paragraph">
+<p><span class="image" style="float: right"><img src="images/zimbra-2-tier.png" alt="2 Tier Installation Diagram" width="400" height="400"></span></p>
+</div>
+<div class="paragraph">
+<p>Example multi-node environment:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 Proxy node</p>
+</li>
+<li>
+<p>4 IMAPD nodes</p>
+</li>
+<li>
+<p>2 Mailbox nodes</p>
+</li>
+<li>
+<p>1 LDAP node</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="sect3">
+<h4 id="_imapd_server_selection">IMAPD Server selection</h4>
+<div class="paragraph">
+<p>The Zimbra Collaboration Proxy selects the IMAPD server to send IMAP(S) requests to based
+on the configured IMAP load balancing strategy.</p>
+</div>
+<div class="paragraph">
+<p>Currently the following load balancing strategies exist:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Hash of the client&#8217;s originating ip address - <strong>ClientIPHash</strong></p>
+</li>
+<li>
+<p>Custom load balancing class installed by customer</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When the custom load balancing class CAN NOT be found the load balancing algorithm
+      falls back to the <strong>ClientIPHash</strong> algorithm.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_client_request_flow">Client Request Flow</h4>
+<div class="paragraph">
+<p><span class="image" style="float: right"><img src="images/zimbra-client-request-flow.png" alt="Client Request Flow" width="400" height="400"></span></p>
+</div>
+<div class="paragraph">
+<p>An IMAP request from a client is processed by the Proxy and is sent to the designated
+IMAPD server based on the configured load balancing strategy.  In the diagram the <strong>ClientIPHash</strong> is being utilized to select the appropriate IMAPD server for the request.  The algorithm used to select the IMAPD server is configurable using the ** option.</p>
+</div>
+<div class="paragraph">
+<p>Setup: Users <strong>user1</strong> and <strong>user2</strong> have each been provisioned on <strong>Mailboxd #1</strong> and <strong>Mailboxd #2</strong> respectively.</p>
+</div>
+<div class="paragraph">
+<p>The process is as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Client IMAP request is received by Proxy.</p>
+</li>
+<li>
+<p><strong>ClientIPHash</strong> is used to compute the index of the IMAPD server to service the request.</p>
+</li>
+<li>
+<p>IMAP request is forwarded to <strong>IMAPD #1</strong> process.</p>
+</li>
+<li>
+<p><strong>IMAPD #1</strong> locates the mailbox server that contains the requester&#8217;s mailbox.</p>
+</li>
+<li>
+<p><strong>IMAPD #1</strong> processes the request by submitting SOAP requests to <strong>Mailboxd #2</strong>.</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
@@ -33612,7 +33780,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-27 17:06:55 CDT
+Last updated 2017-05-09 16:35:16 CDT
 </div>
 </div>
 </body>
