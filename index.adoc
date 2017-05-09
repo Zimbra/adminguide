@@ -1,13 +1,4 @@
-:document-title: Administrator Guide
-:product-name: Zimbra Collaboration
-:product-abbrev: ZCS
-= {product-name} {document-title}
-v8.8.0, July, 2017
-:icons: font
-:title-logo-image: images/zimbra-logo.jpg
-:showlinks:
-:source-highlighter: coderay
-:toc: left
+include::settings.adoc[]
 
 :leveloffset: +1
 
