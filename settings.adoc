@@ -1,0 +1,11 @@
+:document-title: Administrator Guide
+:product-name: Zimbra Collaboration
+:product-abbrev: ZCS
+= {product-name} {document-title}
+:product-version: In-Development
+:product-release-date: Not Released
+:icons: font
+:title-logo-image: images/zimbra-logo.jpg
+:showlinks:
+:source-highlighter: coderay
+:toc: left
