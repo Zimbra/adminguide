@@ -560,6 +560,7 @@ table.CodeRay td.code>pre{padding:0}
 </ul>
 </li>
 <li><a href="#_zimbra_imapd_server">Zimbra IMAPD Server</a></li>
+<li><a href="#_zimbra_upstream_imap_configuration">Zimbra Upstream IMAP Configuration</a></li>
 <li><a href="#zimbra_ldap_service">Zimbra LDAP Service</a>
 <ul class="sectlevel2">
 <li><a href="#_ldap_traffic_flow">LDAP Traffic Flow</a></li>
@@ -2510,6 +2511,84 @@ When installed on the same node as a <strong>mailbox server</strong> the mailbox
 </div>
 <div class="paragraph">
 <p>In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the <strong>mailbox</strong> processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_zimbra_upstream_imap_configuration">Zimbra Upstream IMAP Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Starting with version 8.8.0 of the Zimbra Collaboration Suite the following
+IMAP related configuration options are available:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>zimbraReverseProxyUpstreamImapServers</p>
+<div class="literalblock">
+<div class="content">
+<pre>The pool of servers that are available to the proxy for handling IMAP sessions.
+When this value is empty the Nginx Lookup Extension will select the mailbox server that hosts the account.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>zimbraImapLoadBalancingAlgorithm</p>
+<div class="literalblock">
+<div class="content">
+<pre>Configures the load-balancing algorithm used to select an IMAP server from the pool of available zimbraReverseProxyUpstreamImapServers.</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The available balancing algorithms are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ClientIpHash</p>
+<div class="literalblock">
+<div class="content">
+<pre>Selects an IMAP server server based on a hash of the client IP address.
+The hashing algorithm used is a simple modulus of the client's ip address as an integer with the number of
+ configured IMAP servers. This will always return the same 'index' for the same client ip address.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Note: Extra configuration is necessary if a NAT proxy is being utilized in the environment.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>custom</p>
+<div class="literalblock">
+<div class="content">
+<pre>Selects a registered load balancing algorithm with the following format:</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>custom:{handler-algorithm} [arg1 arg2 ...]</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the custom load balancing class can&#8217;t be located the default ClientIpHash will be returned.
+</td>
+</tr>
+</table>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -33780,7 +33859,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-09 16:35:16 CDT
+Last updated 2017-05-09 16:51:00 CDT
 </div>
 </div>
 </body>
