@@ -28,6 +28,10 @@ include::imapd.adoc[]
 
 <<<
 
+include::imap_upstream.adoc[]
+
+<<<
+
 include::ldap.adoc[]
 
 <<<

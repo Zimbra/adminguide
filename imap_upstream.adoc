@@ -1,0 +1,34 @@
+= Zimbra Upstream IMAP Configuration
+
+:toc:
+
+Starting with version 8.8.0 of the {product-name} Suite the following
+IMAP related configuration options are available:
+
+* zimbraReverseProxyUpstreamImapServers
+
+  The pool of servers that are available to the proxy for handling IMAP sessions.
+  When this value is empty the Nginx Lookup Extension will select the mailbox server that hosts the account.
+
+*  zimbraImapLoadBalancingAlgorithm
+
+  Configures the load-balancing algorithm used to select an IMAP server from the pool of available zimbraReverseProxyUpstreamImapServers.
+
+The available balancing algorithms are as follows:
+
+* ClientIpHash
+
+  Selects an IMAP server server based on a hash of the client IP address.
+  The hashing algorithm used is a simple modulus of the client's ip address as an integer with the number of
+   configured IMAP servers. This will always return the same 'index' for the same client ip address.
+
+   Note: Extra configuration is necessary if a NAT proxy is being utilized in the environment.
+
+* custom
+
+  Selects a registered load balancing algorithm with the following format:
+
+      custom:{handler-algorithm} [arg1 arg2 ...]
+
+[NOTE]
+If the custom load balancing class can't be located the default ClientIpHash will be returned.
