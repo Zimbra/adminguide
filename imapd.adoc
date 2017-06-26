@@ -6,3 +6,8 @@ It can be installed on the same node as a *mailbox server* or on a separate node
 When installed on the same node as a *mailbox server* the mailbox's internal IMAPD process is disabled.
 
 In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the *mailbox* processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.
+
+Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd it MUST BE added to the '''zimbraHttpThrottleSafeIPs''' configuration item or the DosFilter will
+throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.
+
+Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the '''zimbraHttpThrottleSafeIPs''' configuration item.
