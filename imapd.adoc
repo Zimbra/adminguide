@@ -3,7 +3,7 @@
 
 The Zimbra IMAPD server is an optionally installed dedicated server that handles IMAP(S) traffic.
 It can be installed on the same node as a *mailbox server* or on a separate node.
-When installed on the same node as a *mailbox server* the mailbox's internal IMAPD process is disabled.
+When installed on the same node as a *mailbox server* the mailbox's internal IMAPD process may be disabled.  By default it is left enabled.
 
 In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the *mailbox* processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.
 
