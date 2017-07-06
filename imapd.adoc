@@ -11,3 +11,5 @@ Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd i
 throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.
 
 Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the '''zimbraHttpThrottleSafeIPs''' configuration item.
+
+Lastly, when an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers that are running a proxy. This is necessary to ensure that new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the proxy will not be aware of the newly-provisioned server. This can be done via command line by running `zmprov fc -a config`. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of `zmprov gacf zimbraReverseProxyUpstreamImapServers`, when run from a proxy node.
