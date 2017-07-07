@@ -15,7 +15,7 @@ Example multi-node environment:
 <<<
 
 
-=== IMAPD Server selection
+== IMAPD Server selection
 
 The {product-name} Proxy selects the IMAPD server to send IMAP(S) requests to based
 on the configured IMAP load balancing strategy.
@@ -28,7 +28,7 @@ Currently the following load balancing strategies exist:
 NOTE: When the custom load balancing class CAN NOT be found the load balancing algorithm
       falls back to the *ClientIPHash* algorithm.
 
-=== Client Request Flow
+== Client Request Flow
 
 image:images/zimbra-client-request-flow.png[Client Request Flow,400,400,float="right"]
 
