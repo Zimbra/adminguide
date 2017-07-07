@@ -1537,7 +1537,7 @@ auth tokens generated prior to the backup will no longer work.
 The Jira ticket ZMS-614 has been opened to track the potential future development
 of ephemeral data backups.
 
-==== Backups with SSDB Backend
+=== Backups with SSDB Backend
 
 If SSDB is used as the ephemeral backend, a backup will not include any ephemeral
 attributes. All authentication data is lost, including the last logon timestamp.
@@ -1546,7 +1546,7 @@ will display "Never logged in" for restored accounts. If a specific need for thi
 data arises, all authentication events are logged in the audit.log file. Customers
 considering migrating to an SSDB backend should be aware of this limitation.
 
-==== Backups with LDAP backend
+=== Backups with LDAP backend
 
 If the ephemeral backend is LDAP, a backup will not include auth tokens or CSRF
 tokens, but it will include the last logon timestamp. Upon account restore,
