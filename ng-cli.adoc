@@ -1,0 +1,621 @@
+[[nwtwork-ng-modules-cli]]
+Network NG Modules CLI
+----------------------
+
+[[zxsuite---network-ng-modules-command-line-interface]]
+_zxsuite_ - Network NG Modules Command-Line Interface
+-----------------------------------------------------
+
+[[basic-usage]]
+Basic Usage
+~~~~~~~~~~~
+
+Every module of Network NG, including the core, has its own set of
+_zxsuite_ commands. All _zxsuite_ commands are invoked with the
+following syntax:
+
+::
+  _zxsuite [--host|--offline] [--json] [--progress] \{module} \{action}
+  [options]_
+
+*Available switches:*
+
+* --host [hostname|ip] - Specify a target host for the command. Leave
+blank for localhost. Use all_servers to broadcast the command to all servers.
+* --offline - Use if Zimbra is not started. Some commands will not work
+* --json - The output of the command will be presented in JSON format.
+Good for scripting.
+* --progress - Prints the operation's feedback directly to STDOUT. Press
+Ctrl+C to interrupt the output. The operation itself won't be
+interrupted.
+
+*Online Help:* An Online Help for every command is available through
+_zxsuite help \{module} [command]_. Omitting the command will display
+the full list of available commands.
+
+[[core-cli]]
+Core CLI
+~~~~~~~~
+
+Basic Usage:
+
+zxsuite core \{action} [options]
+
+[[core-commands]]
+Core Commands
+^^^^^^^^^^^^^
+
+::
+  *getVersion* - Display Network NG Modules version
+
+`zxsuite core getVersion`
+
+::
+  *getProperty* - Get configuration properties
+
+`zxsuite core getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *setProperty* - Set configuration property
+
+`zxsuite core setProperty {property_name} {property_value}`
+
+::
+  *getLicenseInfo* - Display Network NG Modules license informations
+
+`zxsuite core getLicenseInfo core getLicenseInfo`
+
+::
+  *doUploadLicense* - Upload a Network NG license
+
+`zxsuite core doUploadLicense {license_path}`
+
+::
+  *doLicenseChecks* - Force Network NG license checks
+
+`zxsuite core doLicenseChecks`
+
+::
+  *getAccountStats* - Show statistic informations about provided account
+  name or ID
+
+`zxsuite core getAccountStats {account}`
+
+::
+  *getNotification* - Shows Network NG notifications
+
+`zxsuite core getNotification [attr1 value1 [attr2 value2...`
+
+::
+  *doDeleteAllDelegatedRights* - This command deletes both Admin NG and
+  Zimbra's own Admin Delegation settings
+
+`zxsuite core doDeleteAllDelegatedRights {confirmation string}`
+
+[[update-cli]]
+Update CLI
+~~~~~~~~~~
+
+Basic Usage:
+
+zxsuite update \{action} [options]
+
+[[update-commands]]
+Update Commands
+^^^^^^^^^^^^^^^
+
+::
+  *doCheckUpdate* - Fetch update information
+
+`zxsuite update doCheckUpdate`
+
+::
+  *doStartService* - start a given service
+
+`zxsuite update doStartService {service_name}`
+
+::
+  *doStopService* - stop a given service
+
+`zxsuite update doStopService {service_name}`
+
+::
+  *download* - [BETA] Update Network NG with the latest update available, the
+  version will be loaded on the next mailboxd restart
+
+`zxsuite update download`
+
+::
+  *enable* - [BETA] Enable Network NG automatic update capabilities
+
+`zxsuite update enable`
+
+::
+  *getServices* - show current status of all services for this module
+
+`zxsuite update getServices`
+
+::
+  *info* - Info on Network NG updates
+
+`zxsuite update info`
+
+::
+  *start* - [BETA] Load a new Network NG version
+
+`zxsuite update start [attr1 value1 [attr2 value2...`
+
+[[backup-ng-cli]]
+Backup NG CLI
+~~~~~~~~~~~~~
+
+Basic Usage:
+
+zxsuite backup \{action} [options]
+
+[[backup-ng-commands]]
+Backup NG Commands
+^^^^^^^^^^^^^^^^^^
+
+::
+  *getProperty* - Get configuration properties
+
+`zxsuite backup getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *setProperty* - Set configuration property
+
+`zxsuite backup setProperty {property_name} {property_value}`
+
+::
+  *doFullScan* - Perform a Full Scan
+
+`zxsuite backup doFullScan [attr1 value1 [attr2 value2...`
+
+::
+  *doSmartScan* - Perform a Smart Scan
+
+`zxsuite backup doSmartScan [attr1 value1 [attr2 value2...`
+
+::
+  *doAccountScan* - Perform a Full Scan on a single account
+
+`zxsuite backup doAccountScan {account} [attr1 value1 [attr2 value2...`
+
+::
+  *doExport* - Perform an Export limited by domains
+
+`zxsuite backup doExport {destination_path} [attr1 value1 [attr2 value2...`
+
+::
+  *doRestoreOnNewAccount* - Perform a Restore on New Account
+
+`zxsuite backup doRestoreOnNewAccount {source_account} {destination_account} {dd/MM/yyyy HH:mm:ss|last} [attr1 value1 [attr2 value2...`
+
+::
+  *doEnableDisableCOS* - Enable or disable the backup for a specific COS
+
+`zxsuite backup doEnableDisableCOS {cos_name} {enable|disable}`
+
+::
+  *doUndelete* - Perform an Undelete Restore
+
+`zxsuite backup doUndelete {account} dd/MM/yyyy HH:mm:ss|first} dd/MM/yyyy HH:mm:ss|last} [attr1 value1 [attr2 value2...`
+
+::
+  *doItemSearch* - Search for an item
+
+`zxsuite backup doItemSearch {account} [attr1 value1 [attr2 value2...`
+
+::
+  *doItemRestore* - Restores a single item
+
+`zxsuite backup doItemRestore {account_name} {item_id}`
+
+::
+  *doExternalRestore* - Perform an External Restore
+
+`zxsuite backup doExternalRestore {source_path} [attr1 value1 [attr2 value2...`
+
+::
+  *doStopOperation* - Stop a single running operation
+
+`zxsuite backup doStopOperation {operation_uuid}`
+
+::
+  *doStopAllOperations* - Stops all running operations and empties the
+  operations queue
+
+`zxsuite backup doStopAllOperations`
+
+::
+  *doCheckShares* - Check all shares on local accounts
+
+`zxsuite backup doCheckShares`
+
+::
+  *doFixShares* - Try to fix all shares on local accounts
+
+`zxsuite backup doFixShares {import_idmap_file}`
+
+::
+  *doFixOrphans* - Delete orphan digest files
+
+`zxsuite backup doFixOrphans [attr1 value1 [attr2 value2...`
+
+::
+  *doCoherencyCheck* - Check backup coherency
+
+`zxsuite backup doCoherencyCheck {backup_path} [attr1 value1 [attr2 value2...`
+
+::
+  *getAccountInfo* - Shows an account's information
+
+`zxsuite backup getAccountInfo {account} [attr1 value1 [attr2 value2...`
+
+::
+  *getBackupInfo* - Displays informations about the backup system
+
+`zxsuite backup getBackupInfo [attr1 value1 [attr2 value2...`
+
+::
+  *getMap* - Show binary Map object as human readable table
+
+`zxsuite backup getMap {file_path}`
+
+::
+  *getItem* - Display an item in a human-readable format.
+
+`zxsuite backup getItem {account} {item} [attr1 value1 [attr2 value2...`
+
+::
+  *getAvailableAccounts* - Displays all accounts available for restore
+
+`zxsuite backup getAvailableAccounts [attr1 value1 [attr2 value2...`
+
+::
+  *getAvailableDomains* - Displays all domains available for restore
+
+`zxsuite backup getAvailableDomains {dd/MM/yyyy HH:mm:ss|last} {backup_path}`
+
+::
+  *getServerConfig* - Provides a list of stored server configs
+
+`zxsuite backup getServerConfig dd/MM/yyyy HH:mm:ss|last|all} {standard|customizations} [attr1 value1 [attr2 value2...`
+
+::
+  *getCOSBackupStatus* - Displays the backup status of all COS
+
+`zxsuite backup getCOSBackupStatus [attr1 value1 [attr2 value2...`
+
+::
+  *getAllOperations* - Displays all running and queued operations
+
+`zxsuite backup getAllOperations`
+
+::
+  *monitor* - Monitor a running operation
+
+`zxsuite backup monitor {operation_uuid} [attr1 value1 [attr2 value2...`
+
+[[mobile-ng-cli]]
+Mobile NG CLI
+~~~~~~~~~~~~~
+
+Basic Usage:
+
+zxsuite mobile \{action} [options]
+
+[[mobile-ng-commands]]
+Mobile NG Commands
+^^^^^^^^^^^^^^^^^^
+
+::
+  *getProperty* - Get configuration properties
+
+`zxsuite mobile getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *setProperty* - Set configuration property
+
+`zxsuite mobile setProperty {property_name} {property_value}`
+
+::
+  *getDeviceList* - Display all devices for the provided account
+
+`zxsuite mobile getDeviceList {account}`
+
+::
+  *getDeviceInfo* - Display information about the provided device
+
+`zxsuite mobile getDeviceInfo {account} {device_id}`
+
+::
+  *doResetAccount* - Reset ALL device states for the provided account
+
+`zxsuite mobile doResetAccount {account}`
+
+::
+  *doResetDevice* - Resets the device's SyncState for a single account
+
+`zxsuite mobile doResetDevice {account} [attr1 value1 [attr2 value2...`
+
+::
+  *getAllSessions* - Returns informations about all stored mobile sessions
+
+`zxsuite mobile getAllSessions`
+
+::
+  *getActiveSessions* - Returns all active mobile sessions
+
+`zxsuite mobile getActiveSessions`
+
+::
+  *doRemoveDevice* - Removes all the device's SyncState and history from
+  the server
+
+`zxsuite mobile doRemoveDevice {account} {device_id}`
+
+::
+  *getAccountLoggers* - Returns informations about all account loggers
+
+`zxsuite mobile getAccountLoggers`
+
+::
+  *doRemoveLogger* - Removes an account logger
+
+`zxsuite mobile doRemoveLogger {logger_id|all_loggers}`
+
+::
+  *doAddAccountLogger* - Add an account logger
+
+`zxsuite mobile doAddAccountLogger {account} {debug|info|warn|err|crit} {log_file}`
+
+[[hsm-ng-cli]]
+HSM NG CLI
+~~~~~~~~~~
+
+Basic Usage:
+
+zxsuite powerstore \{action} [options]
+
+[[hsm-ng-commands]]
+HSM NG Commands
+^^^^^^^^^^^^^^^
+
+::
+  *+setHsmPolicy* - Add an additional policy to HSM.
+
+`zxsuite powerstore +setHsmPolicy {hsm_policy}`
+
+::
+  *addS3Store* - Add an S3 compatible store
+
+`zxsuite powerstore addS3Store {Name of the zimbra store} [attr1 value1 [attr2 value2...`
+
+::
+  *doCheckBlobs* - Start the doCheckBlobs operation.
+
+`zxsuite powerstore doCheckBlobs {start} [attr1 value1 [attr2 value2...`
+
+::
+  *doCreateVolume* - Create a volume on the server
+
+`zxsuite powerstore doCreateVolume {primary|secondary|index} {volume_name} {volume_path} {true|false} {compression_threshold_bytes}`
+
+::
+  *doDeduplicate* - Start a deduplication operation.
+
+`zxsuite powerstore doDeduplicate {volume_name} [attr1 value1 [attr2 value2...`
+
+::
+  *doDeleteVolume* - Delete a specific volume on the server
+
+`zxsuite powerstore doDeleteVolume {volume_id}`
+
+::
+  *doMoveBlobs* - Start the doMoveBlob operation.
+
+`zxsuite powerstore doMoveBlobs [attr1 value1 [attr2 value2...`
+
+::
+  *doRemoveHsmPolicy* - Remove a policy from HSM.
+
+`zxsuite powerstore doRemoveHsmPolicy {hsm_policy}`
+
+::
+  *doRestartService* - restart a given service
+
+`zxsuite powerstore doRestartService {service_name}`
+
+::
+  *doStartService* - start a given service
+
+`zxsuite powerstore doStartService {service_name}`
+
+::
+  *doStopAllOperations* - Stops all running operations and empties the
+  operations queue
+
+`zxsuite powerstore doStopAllOperations`
+
+::
+  *doStopOperation* - Stop a single running operation
+
+`zxsuite powerstore doStopOperation {operation_uuid}`
+
+::
+  *doStopService* - stop a given service
+
+`zxsuite powerstore doStopService {service_name}`
+
+::
+  *doUpdateVolume* - Update a specific volume on the server
+
+`zxsuite powerstore doUpdateVolume {volume_id} [attr1 value1 [attr2 value2...`
+
+::
+  *doVolumeToVolumeMove* - Start the doMoveVolumeBlobs operation.
+
+`zxsuite powerstore doVolumeToVolumeMove {source_volume_name} {destination_volume_name}`
+
+::
+  *getAllOperations* - Displays all running and queued operations
+
+`zxsuite powerstore getAllOperations [attr1 value1 [attr2 value2...`
+
+::
+  *getAllVolumes* - Prints all the volumes present in the server
+
+`zxsuite powerstore getAllVolumes`
+
+::
+  *getHsmPolicy* - Prints all the policies
+
+`zxsuite powerstore getHsmPolicy`
+
+::
+  *getProperty* - Get configuration properties
+
+`zxsuite powerstore getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *getServices* - show current status of all services for this module
+
+`zxsuite powerstore getServices`
+
+::
+  *getVolumeStats* - Show space occupation, number of items and blobs
+  contained in a volume
+
+`zxsuite powerstore getVolumeStats {volume_id} [attr1 value1 [attr2 value2...`
+
+::
+  *monitor* - Monitor a running operation
+
+`zxsuite powerstore monitor {operation_uuid} [attr1 value1 [attr2 value2...`
+
+::
+  *setHSMPolicy* - Set the default HSM policy
+
+`zxsuite powerstore setHSMPolicy {hsm_policy}`
+
+::
+  *setProperty* - Set configuration property
+
+`zxsuite powerstore setProperty {property_name} {property_value}`
+
+::
+  *testS3Connection* - Test the connection to an S3 bucket.
+
+`zxsuite powerstore testS3Connection {s3BucketConfigurationUuid}`
+
+[[admin-ng-cli]]
+Admin NG CLI
+~~~~~~~~~~~~
+
+Basic Usage:
+
+zxsuite admin \{action} [options]
+
+[[admin-ng-commands]]
+Admin NG Commands
+^^^^^^^^^^^^^^^^^
+
+::
+  *getDelegationSettings* - Shows delegated admins with their domains of
+  competency, the viewMail attribute and the admin-assignable quota
+
+`zxsuite admin getDelegationSettings [attr1 value1 [attr2 value2...`
+
+::
+  *doEditDelegationSettings* -
+
+`zxsuite admin doEditDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...`
+
+::
+  *doAddDelegationSettings* -
+
+`zxsuite admin doAddDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...`
+
+::
+  *doRemoveDelegationSettings -
+
+`zxsuite admin doRemoveDelegationSettings {account} {domain}`
+
+::
+  *getDomainSettings* - Shows all domains' name, account number limit, and
+  max account quota
+
+`zxsuite admin getDomainSettings`
+
+::
+  *setDomainSettings* - Sets domain max account quota and account limit
+
+`zxsuite admin setDomainSettings {domain} [attr1 value1 [attr2 value2...`
+
+::
+  *resetDomainSettings* - Resets global account limit, account limit per
+  cos, and domain account quota for the selected domain
+
+`zxsuite admin resetDomainSettings {domain}`
+
+::
+  *doShowAdminActivity* - Shows all recorded admin activity
+
+`zxsuite admin doShowAdminActivity [attr1 value1 [attr2 value2...`
+
+::
+  *doEnableDisableAdminLogging* - Enables or disables the logging of admin
+  activities
+
+`zxsuite admin doEnableDisableAdminLogging {enable|disable}`
+
+::
+  *setProperty* - Set configuration property
+
+`zxsuite admin setProperty {property_name} {property_value}`
+
+::
+  *getProperty* - Get configuration properties
+
+`zxsuite admin getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *doMonthlyReport* - Generate a report of admin activity in the specified
+  month
+
+`zxsuite admin doMonthlyReport [attr1 value1 [attr2 value2...`
+
+::
+  *getMonthlyReport* - Shows a report of admin activity in the specified
+  *month
+
+`zxsuite admin getMonthlyReport [attr1 value1 [attr2 value2...`
+
+::
+  *doSetZimletRights* - Fixes the Administration Zimlet rights for all
+  delegated admins.
+
+`zxsuite admin doSetZimletRights`
+
+::
+  *getAllOperations* - Displays all running and queued operations
+
+`zxsuite admin getAllOperations`
+
+::
+  *doStopAllOperations* - Stops all running operations and empties the
+  operations queue
+
+`zxsuite admin doStopAllOperations`
+
+::
+  *doStopOperation* - Stop a single running operation
+
+`zxsuite admin doStopOperation {operation_uuid}`
+
+::
+  *monitor* - Monitor a running operation
+
+`zxsuite admin monitor {operation_uuid} [attr1 value1 [attr2 value2...`

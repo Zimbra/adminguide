@@ -1,0 +1,851 @@
+[[enable-for-whole-cos]]
+Enable the Mobile NG synchronization for a whole COS
+----------------------------------------------------
+
+By enabling the Mobile NG Module for a all users in a Class of Service
+you authorize all users in that COS to use all the mobile functions of
+the Mobile NG Module.
+
+[[how-to-enable-the-mobile-ng-module-for-all-users-in-a-class-of-service]]
+How to Enable the Mobile NG Module for all users in a Class Of Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[from-the-administration-console]]
+From the Administration Console
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Enter the Zimbra Administration Console
+
+* Double-click on the Class Of Service you want to edit (on the left,
+under Configuration -> Class of Service).
+
+* Click on the Mobile tab
+
+* Check the `Enable mobile synchronization` button.
+
+[[from-the-zimbra-cli]]
+From the Zimbra CLI
+^^^^^^^^^^^^^^^^^^^
+
+* As the 'zimbra' user run: *`zmprov mc COSName
+zimbraFeatureMobileSyncEnabled TRUE`*
+
+[[how-to-disable-the-mobile-ng-module-for-all-users-in-a-class-of-service]]
+How to Disable the Mobile NG Module for all users in a Class Of Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[from-the-administration-console-1]]
+From the Administration Console
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Enter the Zimbra Administration Console
+* Double-click on the Class Of Service you want to edit (on the left,
+under Configuration -> Class of Service).
+* Click on the Mobile tab and uncheck the `Enable mobile
+synchronization` button.
+
+[[from-the-zimbra-cli-1]]
+From the Zimbra CLI
+^^^^^^^^^^^^^^^^^^^
+
+* As the 'zimbra' user run: *`zmprov mc COSName
+zimbraFeatureMobileSyncEnabled FALSE`*
+
+[[note-about-settings-hierarchy]]
+Note about Settings Hierarchy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+COS-level settings are overridden by user-level settings.
+
+[[enable-for-single-user]]
+Enable the Mobile NG Module for a single user
+---------------------------------------------
+
+By enabling the Mobile NG Module for a single user you authorize a
+single user to use all the mobile functions of the Mobile NG Module.
+
+[[how-to-enable-the-mobile-ng-module-for-a-single-user]]
+How to Enable the Mobile NG Module for a single user
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[from-the-zimbra-administration-console]]
+From the Zimbra Administration Console
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Enter the Zimbra Administration Console
+* Double-click on the User you want to edit (on the left, under
+Addresses -> Accounts).
+* Click on the ZeMobile tab
+
+* Check the `Enable mobile synchronization` button.
+
+[[from-the-zimbra-cli-2]]
+From the Zimbra CLI
+^^^^^^^^^^^^^^^^^^^
+
+* As the 'zimbra' user run: *`zmprov ma user@domain.tld
+zimbraFeatureMobileSyncEnabled TRUE`*
+
+[[how-to-disable-the-mobile-ng-module-for-a-single-user]]
+How to Disable the Mobile NG Module for a single user
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[from-the-zimbra-administration-console-1]]
+From the Zimbra Administration Console
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Enter the Zimbra Administration Console
+* Double-click on the User you want to edit (on the left, under
+Addresses -> Accounts).
+* Click on the Mobile NG tab and uncheck the `Enable mobile
+synchronization` button.
+
+[[from-the-zimbra-cli-3]]
+From the Zimbra CLI
+^^^^^^^^^^^^^^^^^^^
+
+* As the 'zimbra' user run: *`zmprov ma user@domain.tld
+zimbraFeatureMobileSyncEnabled FALSE`*
+
+[[note-about-settings-hierarchy-1]]
+Note about Settings Hierarchy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+User-level settings override COS-level settings.
+
+[[autodiscover]]
+Autodiscover
+------------
+
+[[the-autodiscover-feature]]
+The Autodiscover feature
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+At the beginning of the account creation process on any mobile devices,
+the client will try to autonomously detect the URL, domain and username
+before asking the user for an imput.
+
+Mobile NG provides its own Autodiscover handler in order to make this
+feature available in all supported version of Zimbra.
+
+WARNING: The Autodiscover feature
+will return the value of the `zimbraPublicHostname` domain property.
+Should such property be empty, it will fall back to the value of the
+`zimbraServiceHostName` server property.
+
+The domain name is either sent explicitly by the client or deduced by
+the http/s request sent by the mobile phone.
+
+[[setting-up-autodiscover]]
+Setting up Autodiscover
+~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to be functional, the Autodiscover feature needs both a
+dedicated DNS record and a change in Jetty's configuration.
+
+[[step-1-dns-records]]
+Step 1: DNS records
+^^^^^^^^^^^^^^^^^^^
+
+Two options are available:
+
+* DNS A record: either create a DNS A record or a DNS CNAME record for
+autodiscover.[yourdomain.com], whose target must be the mailserver (or
+the appropriate proxy in case of a multistore infrastructure). In order
+for SSL to be properly functional, you'll either need a wildcard SSL
+certificate for [yourdomain.com] or to declare
+`autodiscover.[yourdomain.com]` as a Certificate Subject Alt Name within
+your certificate.
+
+* DNS SRV record: create a new SRV record like the following:
+
+....
+Service: _autodiscover
+Protocol: _tcp
+Port Number: 443
+Host: [mail.yourdomain.com]
+....
+
+[[step-2-jetty-configuration]]
+Step 2: Jetty configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+WARNING: This changes are not guaranteed to survive a Zimbra update.
+Depending on the contents of the update you might need to manually
+re-apply this changes.
+
+Based on your Zimbra major release, apply one of the following changes.
+
+A restart of Zimbra's mailboxd service is needed for the new
+configuration to become active. You can do so by running _`zmmailboxdctl
+restart`_ as the _zimbra_ user.
+
+[[optzimbrajettyetcjetty.xml.in]]
+/opt/zimbra/jetty/etc/jetty.xml.in
+
+Locate the following lines...
+
+....
+<Call name="addRule">
+            <Arg>
+                <New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
+                    <Set name="pattern">/autodiscover/*</Set>
+                    <Set name="replacement">/service/autodiscover</Set>
+                </New>
+            </Arg>
+        </Call>
+        <Call name="addRule">
+            <Arg>
+                <New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
+                    <Set name="pattern">/Autodiscover/*</Set>
+                    <Set name="replacement">/service/autodiscover</Set>
+                </New>
+            </Arg>
+        </Call>
+        <Call name="addRule">
+            <Arg>
+                <New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
+                    <Set name="pattern">/AutoDiscover/*</Set>
+                    <Set name="replacement">/service/autodiscover</Set>
+                </New>
+            </Arg>
+        </Call>
+....
+
+... and replace
+
+....
+/service/autodiscover
+....
+
+with
+
+....
+/service/extension/autodiscover
+....
+
+[[the-mobile-password-feature]]
+The Mobile Password feature
+---------------------------
+
+[[mobile-passwords-and-you]]
+Mobile Passwords and you
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `Mobile Password` feature allows Global and Delegated Admins to set
+an additional password for an account to be used for Exchange ActiveSync
+authentications only.
+
+The main benefits of using this feature are:
+
+* Enforce `set-and-forget` safe passwords regardless of any other
+password policy - so that you won't need to change the password saved on
+all mobile devices sycnhronized with an account should this account's
+Zimbra password change.
+* Avoid the `real` password to be disclosed in case of unauthorized
+access to the device/client.
+
+A `Mobile Password` will not be valid for Webmail/POP3/IMAP/SMTP logins
+and the account password will not be valid for Mobile logins.
+
+[[how-to-set-a-mobile-password-for-a-mailbox]]
+How to set a Mobile Password for a mailbox
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Setting a Mobile Password is very easy:
+
+* Enter the Zimbra Administration Console.
+* Right-click on the user for which you want to set a Mobile Password
+and select `Edit`.
+* In the `Mobile` tab within the user's settings, check the `Enable
+mobile password` checkbox.
+* Enter the desired password in the `Mobile password` field and enter it
+again in the `Confirm mobile password field. You can also choose to
+generate a random mobile password by clickin the `Generate random
+password" button.
+* Save.
+
+[[mobile-device-management-a.k.a.-mobile-provisioning]]
+Mobile Device Management a.k.a. Mobile Provisioning
+---------------------------------------------------
+
+[[what-is-mobile-device-management]]
+What is Mobile Device Management?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mobile Device Management (MDM - also known as Provisioning) allows an
+Administrator to define a set of rules and security settings that are
+applied Over The Air to one or more mobile devices, ranging from PIN
+policies to Allowed/Blocked app lists and including `one time` commands
+such as the remote wipe of the entire device.
+
+MDM effectively allows the administrators to limit and restrict the use
+of corporate mobile devices in order to avoid as many risky or improper
+behaviours as possible.
+
+On top of this, MDM is also a priceless aid in carrying on `Bring Your
+Own Device` corporate policies, allowing users to connect their personal
+mobile devices to the corporate servers reducing the risk of security
+breaches to a bare minimum.
+
+[[provisioning-features-available-on-your-client]]
+Provisioning features available on your client
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Not all Provisioning features are available on all clients. A good
+comparison of Exchange ActiveSync clients can be found on
+http://en.wikipedia.org/wiki/Comparison_of_Exchange_ActiveSync_clients[Wikipedia]
+
+[[network-ng-modules-and-mdm]]
+Network NG Modules and MDM
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Network NG Modules features advanced MDM features through the Exchange
+ActiveSync protocol version 14+.
+
+Mobile policies can be enabled at COS and Mailbox level, allowing both a
+quick `one for many` setup and a user-based customized managment. In
+both cases, Mobile Management Options are available within the `Mobile` tab.
+
+[[provisioning-options]]
+Provisioning Options
+^^^^^^^^^^^^^^^^^^^^
+
+The following provisioning options are available:
+
+* Enable Mobile Policy: Enable or Disable the use of Mobile Policies for
+the current user/COS.
+* Allow non-provisionable devices: Allow the user to synchronize any
+device that does not support provisioning.
+* Allow partial policy enforcement on device: Allow the user to
+synchronize any device that does not support one or more applicable
+policies.
+
+[[enforceable-policies]]
+Enforceable Policies
+^^^^^^^^^^^^^^^^^^^^
+
+Enforceable Policies are available right below to the `Mobile Devices`
+list, grouped in the following categories:
+
+* Sync Settings - Set synchronization spans and limits.
+* Device Settings - Enable or Disable device features such as Camera,
+WiFi, Removable Storage or Bluetooth.
+* Device Security Settings - Force an unlock code and define the minimum
+requirements for the code itself.
+* Device Applications - Enable or Disable `standard` device applications
+such as the Browser and POP/IMAP client or unsigned apps.
+
+Two lists are also available for application whitelist/blacklist
+management:
+
+* Approved Applications - A customizable list of approved applications.
+* Blocked Applications - A customizable list of blocked applications
+that won't be usable on the device.
+
+[[mobile-password]]
+Mobile Password
+^^^^^^^^^^^^^^^
+
+While conceptually similar, the Mobile Password feature is not part of
+the Mobile Device Managment and can be used with any version of the EAS
+protocol.
+
+[[syncstates]]
+SyncStates
+----------
+
+[[mobile-ng-and-the-syncstate]]
+Mobile NG and the SyncState
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The SyncState (short for Synchronization Status) is a set of
+informations kept on the server about the synchronization with a mobile
+device. Each time a devices establishes a connection with the Mobile NG
+module, the following steps take place:
+
+* 1. The device requests a folderSync operation in order to synchronize
+the local Folders with the ones on the server.
+
+`    One SyncKey per local folder is sent (or a single SyncKey set to '0' if this is the first connection between the device and the server)   `
+
+* 2. The server replies with a list of available folders.
+
+`    One SyncKey per folder is sent by the server.`
+
+* 3. Then, the device requests an itemSync operation in order to
+synchronize all due items.
+
+`    The server stores the items synchronized in the SyncState.`
+
+* 4. After completing the itemSync operation, the device sends a 'ping'
+command to keep the connection alive.
+
+`    Step 4 is repeated as long as no changes happen to the synchronized account.`
+
+Every time a new item is stored on the mailbox or an old item is
+modified the server notifies the availability to the device, which
+closes the active connection (the one kept alive by the ping command)
+and repeats steps 3. and 4. .
+
+The SyncState is the combination of the SyncKeys saved on step 2 and the
+itemIds saved on step 3. It's saved by the server per the
+userId/deviceId unique pair.
+
+[[sync-request]]
+Sync Request
+^^^^^^^^^^^^
+
+The Sync Request is the actual synchronization process, started by
+either Mobile NG or by the client. During a sync request, any change in
+the mailbox that happened since the last request is synchronized to the
+device and viceversa.
+
+A sync request is issued when:
+
+* The SyncState changes
+* A sync is forced client-side
+* The current `ping` expires and a new one is sent by the device (the
+keepalive duration is defined by the client)
+
+[[managing-the-syncstates]]
+Managing the SyncStates
+~~~~~~~~~~~~~~~~~~~~~~~
+
+[[via-the-administration-zimlet]]
+Via the Administration Zimlet
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Mobile NG provides two options to manage the SyncStates of synchronized
+mobile devices:
+
+* Reset Device: Resets the device's SyncState for a single account,
+forcing a full re-synchronization the next time the device connects to
+the server.
+
+* Remove Device: Removes all the device's SyncState and history from the
+server. Useful when a mobile device is not used anymore or is assigned
+to a different employee in the same company.
+
+Both options can be found in the Administration Zimlet.
+
+[[via-the-cli]]
+Via the CLI
+^^^^^^^^^^^
+
+[[the-doremovedevice-command]]
+The doRemoveDevice command
+++++++++++++++++++++++++++
+
+....
+Syntax:
+   zxsuite mobile doRemoveDevice {account} {device_id}
+
+PARAMETER LIST
+
+NAME            TYPE
+account(M)      Account Name
+device_id(M)    String
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile doRemoveDevice john@example.com Appl79032X2WA4S
+Removes John's Appl79032X2WA4S device SyncState
+....
+
+[[the-doresetaccount-command]]
+The doResetAccount command
+++++++++++++++++++++++++++
+
+....
+Syntax:
+   zxsuite mobile doResetAccount {account}
+
+PARAMETER LIST
+
+NAME          TYPE
+account(M)    Account Name
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile doResetAccount john@example.com
+Resets all the device states for John's account
+....
+
+[[the-doresetdevice-command]]
+The doResetDevice command
++++++++++++++++++++++++++
+
+....
+Syntax:
+   zxsuite mobile doResetDevice {account} [attr1 value1 [attr2 value2...
+
+PARAMETER LIST
+
+NAME            TYPE            DEFAULT
+account(M)      Account Name
+device_id(O)    String          all
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile doResetDevice john@example.com Appl79032X2WA4S
+Resets John's Appl79032X2WA4S device SyncState
+....
+
+[[advanced-settings]]
+Advanced Settings
+-----------------
+
+[[mobile-ng-performance-tuning]]
+Mobile NG Performance tuning
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mobile NG provides three useful options to fine-tune the Mobile NG
+module according to system performances.
+
+[[performance-tuning-settings]]
+Performance Tuning settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[available-settings]]
+Available settings
+^^^^^^^^^^^^^^^^^^
+
+* Notifications Latency (ZxMobile_NotificationsLatency): The seconds of
+delay between an event on the server and its notification to the mobile
+device
+
+* Use Instant Notifications (ZxMobile_UseInstantNotficiations):
+Enable/Disable instant notifications. Overrides Notifications Latency if
+true.
+
+* Max Ping Heartbeat (ZxMobile_MaxPingHeartbeat): Maximum interval
+between 'ping' commands.
+
+All settings can be edited on the Administration Zimlet or using the
+`setProperty` command on the
+
+[[when-to-edit-the-performance-tuning-settings]]
+When to edit the Performance Tuning Settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Default settings should be optimal for most situations. If you
+experience one or more of the problems below, please apply the proper
+solution:
+
+[cols=",",options="header",]
+|=======================================================================
+|Problem |Solution
+|High system load |Disable Instant Notifications
+
+|High system load after disabling Instant Notifications |Raise
+Notification Latency.
+
+|Mobile users experience high network usage |Disable Instant
+Notifications and tweak Notifications Latency
+
+|Devices can connect but sessions are interrupted frequently |Adjust Max
+Ping Heartbeat according to your Network configuration
+
+|Items are synchronized from server-to-device with an excessive delay
+|Lower Norification Latency or Enable Instant Notifications
+|=======================================================================
+
+[[and-shared-folders]]
+Shared Folders
+--------------
+
+[[shared-folders-and-you-and-your-mobile]]
+Shared folders and you (and your mobile)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With the Network NG Mobile module, it's possible to synchronize
+folders that are not owned by the user itself to mobile devices. This
+applies to all item types available through the Exchange ActiveSync
+protocol, so you'll be able to sync any shared email folder, address
+book, calendar or tasklist to mobile devices alike.
+
+Specific features available on mobile devices might differ, based on the
+client in use.
+
+WARNING: Not all clients support the synchronization of multiple Address
+Books, Calendars or Tasklists via Exchange ActiveSync.
+
+[[how-to-sync-a-shared-folder-to-your-mobile-devices]]
+How to sync a shared folder to your mobile devices
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to allow a higher level of control over the synchronization,
+users are allowed to choose which shared folders are to be synchronized
+with their mobile devices. This is achieved through the
+
+[[enable-the-mobile-synchronization-for-a-folder]]
+Enable the mobile synchronization for a folder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Thanks to the Client Zimlet, enabling the mobile synchronization for a
+shared folder it's pretty easy:
+
+* Log in to the Zimbra WebClient.
+* Right Click the shared folder you wish to sync.
+* Select the `Folder Sync Settings` entry in the drop-down menu.
+
+* Tick the `Enable synchronization for this folder` checkbox.
+
+* Press OK.
+
+After doing so, the new folder will be synchronized to any mobile device
+connected to the account together with the next
+
+[[restrictions]]
+Restrictions
+~~~~~~~~~~~~
+
+The following restrictions apply to shared folder synchronization:
+
+* It's not possible to sync a mountpoint referring to a full account
+share.
+* It's not possible to sync just a subfolder of a shared folder, as
+doing so would return an incomplete folder tree.
+* It's not possible to sync a read-only share, as the Exchange
+ActiveSync protocol does not envision the concept of `read-only`
+resource, so synchronizing a read-only folder will cause severe
+inconsistencies between the client ad the server along with many errors.
+
+[eas-filters]
+EAS Filters
+-----------
+
+In the EAS protocol, the protocol version used for the synchronization is
+defined during the initial handshake and never changed: the server presents a
+list of all available protocol versions and the client chooses one among that list.
+
+EAS Filters are a way to limit the EAS version available to a subset of users or clients,
+to ensure that the proper version is used.
+
+Multiple EAS Filters can be set up, and will be evaluated in consequential order (see the `getAllEASFilters` and `doMoveEASFilter` commands below).
+
+[anatomy-of-an-eas-filter]
+Anatomy of an EAS Filter
+~~~~~~~~~~~~~~~~~~~~~~~~
+An EAS filter is composed by 5 parts:
+
+* A `Type`, defining the type of filter rule
+* A `Parameter`, which is the filtering identifier (e.g. device brand or email address)
+* A `Mode`, defining whether the software will limit the available versions or provide a fixed list
+* An `easversions` field, containg the protocol versions enforced by the filter
+* A `Blocking` boolean value, which defnes whether other filters are executed once the current one is successfully matched.
+
+[managing-eas-filters]
+Managing EAS filters
+~~~~~~~~~~~~~~~~~~~~
+
+EAS Filters are managed through the CLI using four dedicated commands:
+
+zxsuite mobile getAllEASFilters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This command lists all existing filters.
+
+Sample Output:
+....
+
+        filters
+
+                ID                                                          0
+                mode                                                        fixed
+                rule                                                        [type = or; rules = [[type = contains; rule = outlook/] OR [type = contains; rule = microsoft.outlook]]
+                easversions                                                 14.0
+                blocking                                                    true
+
+                ID                                                          1
+                mode                                                        limit
+                rule                                                        [type = contains; rule = samsung]
+                easversions                                                 2.5
+                blocking                                                    false
+
+                ID                                                          2
+                mode                                                        limit
+                rule                                                        [type = always]
+                easversions                                                 14.1
+                blocking                                                    false
+
+
+....
+
+zxsuite mobile doAddEASFilter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This command adds a new EAS Filter
+....
+zxsuite mobile doAddEASFilter
+
+Syntax:
+   zxsuite mobile doAddEASFilter {and|or|regex|contains|account} {text|people@example.com|account=example@ff.com,contains=android} {add|subtract|fixed|limit} {easversions} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME              TYPE               EXPECTED VALUES
+type(M)           Multiple choice    and|or|regex|contains|account
+parameter(M)      String             text|people@example.com|account=example@ff.com,contains=android
+mode(M)           Multiple choice    add|subtract|fixed|limit
+easversions(M)    String[,..]
+blocking(O)       Boolean            true|false
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile doAddEASFilter contains android fixed 2.5,12.0,14.1
+Adds a protocol filter that will restrict the pool of available EAS versions to 2.5, 12.0 and 14.1 if the user agent name
+contains the string 'android'.
+
+zxsuite mobile doAddEASFilter and account=user@example.com,contains=android fixed 14.1 blocking true
+Adds a protocol filter that will restrict the pool of available EAS versions to 14.1 if the user agent name
+contains the string 'android' only for user@example.com. No more EAS filters will be evaluated after this one due to the 'blocking' directive.
+....
+
+zxsuite mobile doDeleteEASFilter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This command deletes an existing EAS Filter
+....
+zxsuite mobile doDeleteEASFilter
+command doDeleteEASFilter requires more parameters
+
+Syntax:
+   zxsuite mobile doDeleteEASFilter {id}
+
+PARAMETER LIST
+
+NAME     TYPE
+id(M)    Integer
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile doDeleteEASFilter 2
+Removes the filter with id = 2.
+To show a list of the filters, use the
+	zxsuite mobile getAllEASFilters
+command.
+....
+
+zxsuite mobile doMoveEASFilter
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This command is used to move EAS filters to a different position in the filter queue.
+....
+zxsuite mobile doMoveEASFilter
+command doMoveEASFilter requires more parameters
+
+Syntax:
+   zxsuite mobile doMoveEASFilter {from} {to}
+
+PARAMETER LIST
+
+NAME       TYPE
+from(M)    Integer
+to(M)      Integer
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile doMoveEASFilter 0 5
+Moves the filter with id = 0 to the position 5.
+To show a list of the filters, use the
+	zxsuite mobile getAllEASFilters
+command.
+....
+
+[mobile-account-loggers]
+Mobile Account Loggers
+---------------------
+
+Mobile Account Loggers are dedicated loggers that can output the entirety of
+a user's EAS logs into a dedicated logfile, with a different verbosity than the
+one of the `sync.log` and allow for quicker troubleshooting.
+
+When creating an Account Logger, the following parameters must be specified:
+
+* The target `account`
+* The `log_level` (verbosity) of the log
+* The dedicated `log_file`
+* The `window_size` to enforce on all devices synchronizing with the account while the logger is running.
+
+WARNING: Account Loggers are removed automatically when the mailboxd is stopped or restarted, and do not usually survive a mailboxd crash. Logfiles won't be affected.
+
+[account-logger-management]
+Account Logger Management
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Account loggers can only be managed via the CLI through the following commands:
+
+zxsuite mobile doAddAccountLogger
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+....
+zxsuite mobile doAddAccountLogger
+command doAddAccountLogger requires more parameters
+
+Syntax:
+   zxsuite mobile doAddAccountLogger {account} {debug|info|warn|err|crit} {log_file} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME              TYPE               EXPECTED VALUES
+account(M)        Account Name
+log_level(M)      Multiple choice    debug|info|warn|err|crit
+log_file(M)       Path
+window_size(O)    Integer            a value > 0
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile doaddaccountlogger john@example.com info /tmp/john_logger
+Creates an info account logger for john's account to file /tmp/john_logger
+
+zxsuite mobile doaddaccountlogger john@example.com info /tmp/john_logger window_size 1
+Creates an info account logger for john's account to file /tmp/john_logger with window size set to 1.
+....
+
+zxsuite mobile doRemoveLogger
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+....
+zxsuite mobile doRemoveLogger
+command doRemoveLogger requires more parameters
+
+Syntax:
+   zxsuite mobile doRemoveLogger {logger_id|"all_loggers"}
+
+PARAMETER LIST
+
+NAME            TYPE               EXPECTED VALUES
+logger_id(M)    Multiple choice    logger_id|"all_loggers"
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile doremovelogger 5
+Removes the account logger with ID = 5
+....
+
+zxsuite mobile getAccountLoggers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sample output:
+....
+zxsuite mobile getAccountLoggers
+
+        loggers
+
+                id                                                          7
+                level                                                       DEBUG
+                name                                                        AccountLogger
+                description                                                 Logging account user@domain.com using level debug, log file /tmp/user.log
+                remove command                                              zxsuite mobile doRemoveLogger 7
+....
