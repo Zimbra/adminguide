@@ -1,3 +1,6 @@
+[[admin-ng-guide]]
+= Admin NG
+
 [[delegated-admin-provisioning]]
 Delegated Admin Provisioning
 ----------------------------
