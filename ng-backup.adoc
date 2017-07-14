@@ -1,3 +1,6 @@
+[[backup-ng-guide]]
+= Backup NG
+
 [[real-time-scan]]
 Real Time Scan
 --------------
