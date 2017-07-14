@@ -1,3 +1,6 @@
+[[cli-ng-guide]]
+= NG Modules CLI
+
 [[nwtwork-ng-modules-cli]]
 Network NG Modules CLI
 ----------------------
