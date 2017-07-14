@@ -1,3 +1,6 @@
+[[mobile-ng-guide]]
+= Mobile NG
+
 [[enable-for-whole-cos]]
 Enable the Mobile NG synchronization for a whole COS
 ----------------------------------------------------
