@@ -1,5 +1,5 @@
 [[incremental-migration-with-backup-from-old-to-88]]
-Incremental migration to Zimbra 8.8.0 with Backup NG
+= Incremental migration to Zimbra 8.8.0 with Backup NG
 ----------------------------------------------------
 
 [[description]]
