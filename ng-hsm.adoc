@@ -1,3 +1,6 @@
+[[hsm-ng-guide]]
+= HSM NG
+
 [[hierarchical-storage-management]]
 Hierarchical Storage Management
 -------------------------------
