@@ -146,11 +146,6 @@ locate the source of an issue.
 This process is foundamental to locate the source of the issue in order
 to find a solution or to correctly report it.
 
-We will proceed through these steps:
-
-1.  <<sect:zim-err>>
-2.  <<sect:ext-err>>
-
 [[sect:zim-err]]
 Chat Zimlet Error
 ^^^^^^^^^^^^^^^^^
@@ -166,7 +161,7 @@ load time should be expected.
 
 During the loading of the Zimbra Web Client open the browser developer
 tools (if You don’t know how to open the browser developer tools please
-read <<sect:tools>>).
+read the appropriate section of this guide).
 
 In the browser developer tools console You will see some logs from the
 Chat Zimlet. If an error occurs it will be printed into the browser
@@ -180,7 +175,7 @@ line where the error is generated.
 Please escalate the issue sending us the file and the row and any
 details about the error You are seeing.
 
-If no errors are detected please follow <<sect:ext-err>>.
+If no errors are detected please see the "Chat Extension Error" section.
 
 [[sect:ext-err]]
 Chat Extension Error
@@ -188,9 +183,9 @@ Chat Extension Error
 
 Any exception thrown by the Chat Extension is written into the
 `mailbox.log'. To check if there is any exception please refer to
-<<sect:mailboxlog>>.
+the appropriate section of this guide.
 
-If You can’t find a solution for the exception in the <<sect:faq>>
+If You can’t find a solution for the exception in the FAQ
 please report the issue through the appropriate channels including the complete
 exception information.
 
@@ -241,7 +236,7 @@ Gathering System information
 
 Gathering System information is a vital part of the troubleshooting
 process. In this section will help the administrator to collect useful
-system information required to correctly report an issue as described in the <<sect:how-to-escalate-an-issue>> section.
+system information required to correctly report an issue as described in the "How to escalate and issue" section.
 
 [[sect:gatheringinfo-zversion]]
 Zimbra version
@@ -334,7 +329,7 @@ logged into using the delegated access feature (eg. View Mail button
 from the admin console) to protect the privacy of the user.
 
 Check if the Chat extension is loaded correctly in the `mailbox.log`
-(see in <<sect:mailboxlog>> how to read the `mailbox.log`).
+(see the appropriate section of this guide about how to read the `mailbox.log`).
 
 The loading of the Zimbra Extension is granted by the following lines at
 the mailbbox startup:
@@ -399,8 +394,7 @@ connect to each other.
 In order to verify if the port is opened on the server, a simple check
 can be done trying to connecto to the `5269` port using a telnet client.
 
-If everything seems to work properly, open the `mailbox.log` (see in
-<<sect:mailboxlog>> how to read the `mailbox.log`) on both server and
+If everything seems to work properly, open the `mailbox.log` on both server and
 try to send an event (eg. a text message should be enough). If an
 exception appear take a look at that to give an hint on the error. If no
 meaningful exception, report the issue including the exception in the report.
@@ -416,22 +410,20 @@ information is vital to report it:
 is really happening.
 * A detailed description of the steps to reproduce the issue.
 * A detailed description of the installation and the environment: (see
-<<sect:gatheringinfo>>)
+"Gethering System Information" section of this guide)
 ** Server information: Cpu, Ram, Number of the servers and for each
 server:
-*** Zimbra Version (see <<sect:gatheringinfo-zversion>>)
+*** Zimbra Version
 *** Chat Version
-*** List of the installed zimlets (see
-<<sect:gatheringinfo-listzimlets>>)
+*** List of the installed zimlets
 ** Client information:
 *** Browser name and version
 *** Connectivity used between the servers and the client
 *** Client Skin (theme)
 *** Client Language
-*** List of the Zimlets enabled on the user (see
-<<sect:gatheringinfo-userzimlets>>)
+*** List of the Zimlets enabled on the user
 * Any log envolved by the issue:
-** `mailbox.log` (see <<sect:mailboxlog>>)
+** `mailbox.log`
 +
 You can remove any personal information to protect Your and Your Users
 privacy.
