@@ -1,0 +1,588 @@
+[[introduction]]
+Introduction
+------------
+
+[[about-this-document]]
+About this document
+~~~~~~~~~~~~~~~~~~~
+
+This document targets system administrators, aiming to provide both an
+in-depth view of the product architecture in order to simplify
+troubleshooting and the knowledge necessary for solid customizations.
+
+[[overview]]
+Overview
+~~~~~~~~
+
+Zimbra Chat is included in Zimbra since version 8.7.6 as Beta
+software and as Stable starting from Zimbra 8.8.0, its goal is to allow
+a simple and direct text-only chat between Zimbra accounts. It is
+composed by a Zimlet and a Zimbra extension.
+
+The Zimbra extensione expose an XMPP client to allow users to use the
+chat system from a standard XMPP client instead of using the Zimlet
+through the Zimbra Web Client. Users can use both methods, also at the
+same time.
+
+[[general-architecture]]
+General architecture
+^^^^^^^^^^^^^^^^^^^^
+
+Zimbra Chat is designed for Zimbra. It runs as Zimbra Server
+Extension which implements an XMPP serve rand handles all the events
+shared between the clients. The Zimbra Chat Server Extension uses
+both XMPP and a custom protocol to communicate with the Chat Zimlet.
+
+The server extension can handle multiple sessions for a single user,
+without limits. Each session has his own delivery queue in order to be
+sure that each session has exactly all of the events like any other
+session of the user.
+
+Sessions are not limited by type (XMPP or Chat Zimlet). A user can
+use both the Zimbra Web Client and an XMPP client at the same time,
+without worrying about interferences between the sessions.
+
+[[components]]
+Components
+^^^^^^^^^^
+
+Zimbra Chat is compose by two parts:
+
+* Chat Zimlet
+* Chat Extension
+
+As the Zimbra Chat Extension does not require the Chat Zimlet to
+work properly, the Chat Zimlet is designed and built to work only
+with the Zimbra Chat Extension.
+
+[[zimlet]]
+Zimlet
+++++++
+
+The Chat Zimlet is the client component of the Chat. It run on
+the Zimbra Web Client and is managed like any other Zimlet. It is fully
+integrated in the Zimbra Web Client and uses the same graphics
+libraries. The Zimlet can work only with the Chat Extension, Zimlet
+and Extension uses a specific protocol to send and receive events. The
+browser compatibility is supported for the browsers and versions
+supported by the Zimbra Web Client.
+
+Features:
+
+* Zimbra Web Client integration.
+* Manage the buddy list. Users can add, edit and remove buddies from the
+buddy list.
+* Visualize each `chat room' in a separate panel.
+* Manage the personal status.
+* Send/Receive plain messages from the users defined in the buddy list.
+* Send the presence status to the users in the buddy list.
+* Visualize the presence status of the users defined in the buddy list.
+* Support for Emojis (emoticons) on conversations. Emojis are provided
+free by EmojiOne http://emojione.com/.
+* Users can send an entire conversation as email.
+* Search conversation in the chat history (if enabled in the Extension
+options, see <<sect:confkeys>>).
+* Get desktop notifications for any incoming message.
+
+[[extension]]
+Extension
++++++++++
+
+The Zimbra Chat Extension is the core of Chat. It is a complete
+chat server which manage the events between the connected clients.
+
+It uses the ZAL to integrate into the mailboxd service of Zimbra.
+
+The extension can handle two types of connections:
+
+* SOAP connections incoming from the Chat Zimlet, using Zimbra’s
+SOAP infrastructure.
+* XMPP connections from compatible clients.
+
+Features:
+
+* Handle events from multiple sessions.
+* Handle SOAP connections for Chat Zimlet clients.
+* Handle XMPP (plain and SSL) connections for compatible clients
+throught a public port (see <<sect:confkeys>>)
+* Store the chat history for each conversation into a dedicated `chat'
+folder of the user mailbox (if enabled, see <<sect:confkeys>>).
+* Store the relationships between users into the Zimbra Database.
+
+[[installation]]
+Installation
+------------
+Zimbra Chat comes bundled with all Zimbra packages for version 8.8.0 and higher as a Zimbra package.
+
+No dedicated installation steps are required.
+
+WARNING: In case the Zimbra Chat package was not installed during the system's
+installation or upgrade, please refer to the general documentation about package
+installation in order to install it.
+
+[[upgrade]]
+Upgrade
+-------
+Zimbra Chat is upgraded together with the rest of the Zimbra platform.
+
+No dedicated upgrade steps are needed.
+
+[[troubleshooting]]
+Troubleshooting
+---------------
+
+This chapter will help the administrator to find the cause of any
+issues and to solve them. When is not possible to find a working
+solution the administrator will be guided through the process to
+report the issue through the appropriate channels.
+
+[[looking-for-errors]]
+Looking for errors
+~~~~~~~~~~~~~~~~~~
+
+This section will guide the administrator through the steps used to
+locate the source of an issue.
+
+This process is foundamental to locate the source of the issue in order
+to find a solution or to correctly report it.
+
+We will proceed through these steps:
+
+1.  <<sect:zim-err>>
+2.  <<sect:ext-err>>
+
+[[sect:zim-err]]
+Chat Zimlet Error
+^^^^^^^^^^^^^^^^^
+
+To locate any errors in the source code of the Chat Zimlet You need
+to enable the devloper mode on the Zimbra Web Client.
+
+To enable the developer mode on Zimbra Web Client modify the URL of the
+Zimbra installation appending `?dev=1` into the browser URL. Adding the
+`dev=1` parameter to the URL will force Zimbra to load the entire Web
+Client with all not minified sources, included the Zimlets. A longer
+load time should be expected.
+
+During the loading of the Zimbra Web Client open the browser developer
+tools (if You don’t know how to open the browser developer tools please
+read <<sect:tools>>).
+
+In the browser developer tools console You will see some logs from the
+Chat Zimlet. If an error occurs it will be printed into the browser
+developer tools console.
+
+If no erros are printed but You can see an unwanted behavior enable the
+`break on exception' option in the developer tools. Enabling that option
+if an error occurs the execution of the software will be paused on the
+line where the error is generated.
+
+Please escalate the issue sending us the file and the row and any
+details about the error You are seeing.
+
+If no errors are detected please follow <<sect:ext-err>>.
+
+[[sect:ext-err]]
+Chat Extension Error
+^^^^^^^^^^^^^^^^^^^^
+
+Any exception thrown by the Chat Extension is written into the
+`mailbox.log'. To check if there is any exception please refer to
+<<sect:mailboxlog>>.
+
+If You can’t find a solution for the exception in the <<sect:faq>>
+please report the issue through the appropriate channels including the complete
+exception information.
+
+[[sect:tools]]
+Tools
+~~~~~
+
+[[google-chrome-developer-tools]]
+Google Chrome Developer Tools
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If the user is experiencing an unexpected behavior of the Zimlet into
+the Zimbra Web Client is suggested to use Google Chrome Developer Tools
+to figure out on which can be the source of the issue.
+
+To open the Google Chrome Developer Tools the administrator need to open
+the main menu, then find the `Other tools' menu option and then select
+`Developer Tools'.
+
+A new panel with many tabs should appear, we care about these panels:
+
+Console::
+  Like the server console this tab will display some logs informations
+  and allow to interact with the JS Runtime.
+Network::
+  This tab will show any network activity, can be used to identify the
+  requests to the mailbox and the responses from it.
+
+[[firefox-developer-tools]]
+Firefox Developer Tools
+^^^^^^^^^^^^^^^^^^^^^^^
+
+To open the Firefox Developer Tools the administrator need to open the
+main menu, then find the `Developer Tools' button.
+
+A new panel with many tabs should appear, we care about these panels:
+
+Console::
+  Like the server console this tab will display some logs informations
+  and allow to interact with the JS Runtime.
+Network::
+  This tab will show any network activity, can be used to identify the
+  requests to the mailbox and the responses from it.
+
+[[sect:gatheringinfo]]
+Gathering System information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Gathering System information is a vital part of the troubleshooting
+process. In this section will help the administrator to collect useful
+system information required to correctly report an issue as described in the <<sect:how-to-escalate-an-issue>> section.
+
+[[sect:gatheringinfo-zversion]]
+Zimbra version
+^^^^^^^^^^^^^^
+
+To see the version of the Zimbra type this command:
+
+------------
+# As zimbra
+zmcontrol -v
+
+------------
+
+[[sect:gatheringinfo-extension]]
+Extension and Zimlet version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To see the version of the Extension and the Zimlet
+
+---------------------------------------------------------------------------
+# As zimbra
+java -cp /opt/zimbra/lib/ext/openchat/openchat.jar com.zextras.lib.OpenChat
+
+---------------------------------------------------------------------------
+
+[[sect:gatheringinfo-listzimlets]]
+List of the deployed zimlets
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To see the list of the deployed zimlets type this command:
+
+-----------------------
+# As zimbra
+zmzimletctl listZimlets
+
+-----------------------
+
+[[sect:gatheringinfo-userzimlets]]
+List of the zimlets enabled on the user
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To see the list of the Zimlets enabled for a user type this command:
+
+--------------------------------------------------------------
+# As zimbra
+zmprov getAccount user@domain.tld zimbraZimletAvailableZimlets
+
+--------------------------------------------------------------
+
+[[sect:gatheringinfo-userzimlets-pref]]
+List of the zimlet user preferences
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To see the list of the preferences of the Zimlets enabled for a user
+type this command:
+
+------------------------------------------------------------
+# As zimbra
+zmprov getAccount user@domain.tld zimbraZimletUserProperties
+
+------------------------------------------------------------
+
+[[sect:faq]]
+F.A.Q.
+~~~~~~
+
+[[Chat-zimlet-issues]]
+Chat Zimlet Issues
+^^^^^^^^^^^^^^^^^^
+
+*The ChatZimlet is not working after the user login and I see some
+JavaScript Errors, what can I do?*
+
+Most commonly is caused by caching issues, refresh all the caches with
+these commands:
+
+-------------------------------------------------
+# As zimbra
+zmprov flushCache -a zimlet com_zextras_chat_open
+
+-------------------------------------------------
+
+If the problem persists, escalate the issue.
+
+*Chat Zimlet doesn’t start at login and a popup appears informing
+the user that the server is not available, what can I do?*
+
+TIP: Remember that the Chat Zimlet will not start if the logged user is
+logged into using the delegated access feature (eg. View Mail button
+from the admin console) to protect the privacy of the user.
+
+Check if the Chat extension is loaded correctly in the `mailbox.log`
+(see in <<sect:mailboxlog>> how to read the `mailbox.log`).
+
+The loading of the Zimbra Extension is granted by the following lines at
+the mailbbox startup:
+
+-----------------------------------------------------------------------
+xxxx-xx-xx xx:xx:xx,xxx INFO  [main] [] mailbox - OpenChat starting ...
+xxxx-xx-xx xx:xx:xx,xxx INFO  [main] [] extensions - OpenChat started
+
+-----------------------------------------------------------------------
+
+Otherwise an exception, report the issue, including the exception in the report
+through the appropriate channels.
+
+*Another Zimlet is using the sidebar and a user can not see the
+Chat’s buddy list, what can I do?*
+
+Chat Zimlet uses a container which can be used by other Zimlets. To
+void collisions the Chat Zimlet try to detect if that container is
+used or not.
+
+Chat Zimlet use an internal `black list' to detect the incompatible
+zimlets and disable the sidebar mode, switching to the docked mode.
+
+The detection may fails if the Zimlet which are using the sidebar
+container is not indexed into the internal blacklist.
+
+Please report the issue mentioning the package
+name of the conflicting zimlet.
+
+If a user is stuck in the sidebar mode and anoter Zimlet has took the
+control of the siedebar You can reset the Zimlet user setting to use the
+docked mode with these commands:
+
+----------------------------------------------------------------------------------
+# As zimbra
+# Reset the involved zimlet user preference:
+zmprov modifyAccount user@example.com \
+    -zimbraZimletUserProperties "com_zextras_chat_open:zxchat_pref_dockmode:FALSE"
+zmprov modifyAccount user@example.com \
+    -zimbraZimletUserProperties "com_zextras_chat_open:zxchat_pref_dockmode:TRUE"
+# Set the zimlet user preference to dock mode:
+zmprov modifyAccount user@example.com \
+    +zimbraZimletUserProperties "com_zextras_chat_open:zxchat_pref_dockmode:TRUE"
+
+----------------------------------------------------------------------------------
+
+Then reload the Zimbra Web Client to apply the sttings modifications.
+
+If the problem persists, escalate the issue.
+
+[[Chat-extension-issues]]
+Chat Extension Issues
+^^^^^^^^^^^^^^^^^^^^^
+
+*Server to server messages are not delivered between two server, what
+can I do?*
+
+This issue can be caused by connections issues between two mailboxes.
+Verify if the port `5269` is opened on each server and the servers can
+connect to each other.
+
+In order to verify if the port is opened on the server, a simple check
+can be done trying to connecto to the `5269` port using a telnet client.
+
+If everything seems to work properly, open the `mailbox.log` (see in
+<<sect:mailboxlog>> how to read the `mailbox.log`) on both server and
+try to send an event (eg. a text message should be enough). If an
+exception appear take a look at that to give an hint on the error. If no
+meaningful exception, report the issue including the exception in the report.
+
+[[sect:how-to-escalate-an-issue]]
+How to escalate an issue
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+In case You have found an issue and You are not able to fix it, the following
+information is vital to report it:
+
+* A detailed description of the issue: What you are expecting and what
+is really happening.
+* A detailed description of the steps to reproduce the issue.
+* A detailed description of the installation and the environment: (see
+<<sect:gatheringinfo>>)
+** Server information: Cpu, Ram, Number of the servers and for each
+server:
+*** Zimbra Version (see <<sect:gatheringinfo-zversion>>)
+*** Chat Version
+*** List of the installed zimlets (see
+<<sect:gatheringinfo-listzimlets>>)
+** Client information:
+*** Browser name and version
+*** Connectivity used between the servers and the client
+*** Client Skin (theme)
+*** Client Language
+*** List of the Zimlets enabled on the user (see
+<<sect:gatheringinfo-userzimlets>>)
+* Any log envolved by the issue:
+** `mailbox.log` (see <<sect:mailboxlog>>)
++
+You can remove any personal information to protect Your and Your Users
+privacy.
+
+[[advanced-topics]]
+Advanced topics
+---------------
+
+[[sect:sizing]]
+Sizing
+~~~~~~
+
+Stress tests are being perfomed on the product.
+
+We have noticed an increment of the workload stimabe at most 7% in an
+Zimbra installation with 20000 users.
+
+The most impacting part of the Zimbra Chat Extension is made by the
+history feature. When a message is sent, a mime message is either
+created or updated, meaning few kilobytes are read or written and some
+database queries are performed.
+
+TIP: We suggest to disable history in very large deployments, to edit the
+configuration see <<sect:confkeys>>.
+
+[[sect:confkeys]]
+Configuration Keys
+~~~~~~~~~~~~~~~~~~
+
+Chat extension is easily configurable through the Zimbra CLI, all of
+the congurations are store in LDAP. +
+
+To edit an account configuration, for example run these commands:
+
+---------------------------------------------------------------
+# As zimbra
+zmprov modifyAccount account@example.tld {propertyName} {value}
+---------------------------------------------------------------
+
+zimbraChatServiceEnabled::
+  `[boolean]`, Default value: `true`.
+
+  Enable the Chat Service.
+
+  Can be applied to:
+  * Global
+  * Server
+zimbraChatHistoryEnabled::
+  `[boolean]`, Default value: `true`, requires a mailbox restart to be
+  applied.
+
+  Enable the chat history writing inside the chat folder.
+
+  Can be applied to:
+  * Cos
+  * Account
+zimbraChatConversationAuditEnabled::
+  `[boolean]`, Default value: `false`.
+
+  Enable the dedicated log for the chat conversations.
+
+  Can be applied to:
+  * Global
+  * Domain
+zimbraChatXmppSslPortEnabled::
+  `[boolean]`, Default value: `false`, requires a mailbox restart to be
+  applied.
+
+  Enable the XMPP legacy SSL port.
+
+  Can be applied to:
+  * Global
+  * Server
+zimbraChatAllowUnencryptedPassword::
+  `[boolean]`, Default value: `false`.
+
+  Allow unencrypted password login via XMPP.
+
+  Can be applied to:
+  * Global
+  * Server
+zimbraChatXmppPort::
+  `[port]`, Default value: `5222`, requires a mailbox restart to be
+  applied.
+
+  The XMPP standard port, usually used with StartTLS.
+
+  Can be applied to:
+  * Global
+  * Server
+zimbraChatXmppSslPort::
+  `[port]`, Default value: `5223`, requires a mailbox restart to be
+  applied.
+
+  The XMPP legacy SSL port.
+
+  Can be applied to:
+  * Global
+  * Server
+zimbraChatAllowDlMemberAddAsFriend::
+  `[boolean]`, optional.
+
+  Add every member of the distribution list as buddies to eachother.
+
+  Can be applied to:
+  * Distribution list
+
+[[sect:logs]]
+Logs
+~~~~
+
+[[sect:mailboxlog]]
+mailbox.log
+^^^^^^^^^^^
+
+Mailbox log is a standard Log4j log, here are some sample rows of
+a `mailbox.log`:
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+xxxx-xx-xx xx:xx:xx,xxx INFO  [qtp1912962767-310:https://123.123.123.123:8443/service/soap/ModifyPropertiesRequest] [name=user@example.com;mid=6;ip=172.17.0.2;ua=ZimbraWebClient - GC58 (Linux)/8.6.0_GA_1153;] soap - ModifyPropertiesRequest elapsed=4
+xxxx-xx-xx xx:xx:xx,xxx INFO  [qtp1912962767-310:https://123.123.123.123:8443/service/soap/ZxChatRequest] [] extensions - user@example.com changed status to AVAILABLE
+xxxx-xx-xx xx:xx:xx,xxx INFO  [qtp1912962767-310:https://123.123.123.123:8443/service/soap/ZxChatRequest] [] soap - ZxChatRequest elapsed=24
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Each row is composed by these elements:
+
+xxxx-xx-xx xx:xx:xx,xxx::
+  Timestamp of the log row.
+INFO::
+  The type of the log row.
+qtp…ModifyPropertiesRequest::
+  Information on the the threads which has requested to write the log
+  row. Usually the handler which has triggered the log row.
+name=…::
+  Information on the user session.
+soap -::
+  Source of the log row.
+ModifyPropertiesRequest elapsed=4::
+  The content of the log row.
+
+[[sect:zmmailboxdout]]
+zmmailboxd.out
+^^^^^^^^^^^^^^
+
+Mailbox log is a standard Log4j log, here are some sample rows of
+a `zmmailboxd.out`:
+
+------------------------------------------------------------------------------------------------------------------
+xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@397fbdb{HTTP/1.1}{0.0.0.0:8080}
+xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@36ebc363{SSL-http/1.1}{0.0.0.0:8443}
+xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@54d9d12d{SSL-http/1.1}{0.0.0.0:7071}
+
+-----------------------------------------------------------------------------------------------------------------
