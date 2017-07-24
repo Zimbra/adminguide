@@ -28,10 +28,16 @@ include::imapd.adoc[]
 
 <<<
 
+:leveloffset: +1
 include::imap_upstream.adoc[]
 
 <<<
 
+include::remote_imap.adoc[]
+
+<<<
+
+:leveloffset: -1
 include::ldap.adoc[]
 
 <<<
@@ -111,10 +117,6 @@ include::zimlets.adoc[]
 <<<
 
 include::cmdlineutils.adoc[]
-
-<<<
-
-include::remote_imap.adoc[]
 
 <<<
 
