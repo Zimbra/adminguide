@@ -2,7 +2,7 @@
 
 :toc:
 
-Starting with version 8.8.0 of the {product-name} Suite the following
+Starting with version 8.8.1 of the {product-name} Suite the following
 IMAP related configuration options are available:
 
 * zimbraReverseProxyUpstreamImapServers
@@ -31,4 +31,156 @@ The available balancing algorithms are as follows:
       custom:{handler-algorithm} [arg1 arg2 ...]
 
 [NOTE]
-If the custom load balancing class can't be located the default ClientIpHash will be returned.
+If the custom load balancing class can't be located the default
+ClientIpHash will be returned.
+
+= IMAPD-related Configuration & Files
+
+This section summarizes all of the configuration options related to
+the `zimbra-imapd` as well as all other files that are installed for
+the new service.
+
+== Global Configuration Settings
+
+* These control the embedded IMAP(S) servers that are run inside of
+  `mailboxd`.
+** `zimbraImapServerEnabled`
+** `zimbraImapBindPort`
+** `zimbraImapSSLServerEnabled`
+** `zimbraImapSSLBindPort`
+* These control the IMAP(S) servers that are run by `zimbra-imapd`.
+** `zimbraRemoteImapServerEnabled`
+** `zimbraRemoteImapBindPort`
+** `zimbraRemoteImapSSLServerEnabled`
+** `zimbraRemoteImapSSLBindPort`
+* This maintains the list of available IMAP(S) servers:
+** `zimbraReverseProxyUpstreamImapServers`
+
+== Server Configuration Settions
+
+If the `zimbra-imapd` service is enabled on a given server, it will be added to
+the multi-valued attribute `zimbraServiceEnabled`.
+
+For example, on an IMAP-only server:
+
+[EXAMPLE]
+----
+$ zmprov gs `zmhostname` zimbraServiceEnabled
+# name HOST.DOMAIN
+zimbraServiceEnabled: imapd
+zimbraServiceEnabled: stats
+----
+
+== Files that are installed for zimbra-imapd
+
+These are the files that are specifically installed by the
+zimbra-imapd DEB/RPM:
+
+* `/opt/zimbra/bin/zmimapdctl`
+* `/opt/zimbra/conf/imapd.log4j.properties`
+* `/opt/zimbra/lib/jars/oauth-1.4.jar`
+
+In addition, the service makes use of other jar files that are already
+installed into `/opt/zimbra/lib/jars` via the `zimbra-core` package.
+
+== Files that are created during installation
+
+`zmcertmgr` is invoked by `zmsetup.pl` to create the following
+SSL-related files:
+
+* `imapd.crt`
+* `imapd.key`
+* `imapd.keystore`
+
+== Log files
+
+The following log files (in `/opt/zimbra/log`) are created by the
+`zimbra-imapd` service via configuration contained in
+`/opt/zimbra/conf/imapd.log4j.properties`.
+
+* `imapd-audit.log`
+* `imapd.log`
+
+
+== Process Files
+
+The following files are created directly by the `zmimapdctl` script:
+
+* `imapd.out`
+* `imapd.pid`
+
+== Other Files
+
+Activity statistics are collected in `/opt/zimbra/zmstat/imapd.csv`.
+
+
+= Migrating to an imapd pool
+
+When migrating to a dedicated pool of IMAP servers, several steps must
+be followed to ensure a smooth migration process. Failure to follow
+these steps may result in service interruptions in the form of dropped
+connections of existing IMAP clients.
+
+== Memcached considerations
+
+Prior to changing any configuration, it should be decided how existing
+routes in `memcached` will be handled. By default, routes are cached in
+`memcached` for 1 day, as specified by the
+`zimbraMemcachedClientExpirySeconds` LDAP attribute. If untouched, it
+will take this long for the cached routes to expire and for the lookup
+extension to send IMAP traffic to the newly provisioned imapd
+servers. There are two things that can be done to change this
+behavior:
+
+1. Flush `memcached` after the imapd pool configuration is
+complete. This will cause all existing IMAP sessions to be restarted
+on the new servers.
+2. One day prior to switching to the imapd pool, modify the value
+`zimbraMemcachedClientExpirySeconds` of to a shorter interval, such as
+30 minutes, and reload the `memcached` configuration with the command
+`zmprov rmcc all`. Doing so will allow embedded IMAP to be turned off
+within a shorter timeframe without risking service interruptions.
+
+== Migration steps
+
+1. Set up the pool of imapd servers. This pool should be sized
+appropriately to accommodate expected IMAP traffic levels. It is
+recommended that you test each server to ensure that it is functioning
+correctly; this can be done via command line with openssl, or by
+configuring an existing IMAP client to point directly at the
+server. These servers should not be listed in the
+`zimbraReverseProxyUpstreamImapServers` attribute yet.
+2. (optional) Specify a load-balancing algorithm using the
+`zimbraImapLoadBalancingAlgorithm` attribute. The default is
+`ClientIPHash`.  If custom load-balancing algorithms are written,
+they can be specified as well.
+3. Add the imapd servers to `zimbraReverseProxyUpstreamImapServers`:
++
+----
+zmprov mcf +zimbraReverseProxyUpstreamImapServers <server1> \
+  +zimbraReverseProxyUpstreamImapServers <server2> \
+ ...
+----
++
+4. Flush the config cache on lookup servers: `zmprov -a fc config`
+5. If `zimbraMemcachedClientExpirySeconds` was decreased prior to this
+change, wait the corresponding amount of time for the existing routes
+to expire. This will allow routes in memcached to switch over to the
+new routes. Otherwise, flush memcached manually. It is recommended
+that this be done outside peak hours if possible.
+6. Set `zimbraImapServerEnabled` And `zimbraImapSSLServerEnabled` to
+`FALSE` at the global config level:
++
+----
+zmprov mcf zimbraImapServerEnabled FALSE
+zmprov mcf zimbraImapSSLServerEnabled FALSE
+----
+[NOTE] If these settings were overridden at the at the server level,
+you will need to modify them on the mailbox servers via `zmprov ms <server>..`
++
+7. Reset `zimbraMemcachedClientExpirySeconds` to the original value if
+necessary.
+
+
+
+
