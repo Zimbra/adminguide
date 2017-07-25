@@ -762,10 +762,6 @@ When should I use the Admin Config Reset?
 
 The Admin Config Reset should only be used in the following cases:
 
-* After a Zimbra NE to Zimbra OSE migration
-** The reset will clean up all the old Network Edition ACL and ACE
-settings which are not of any use in Zimbra Open Source Edition.
-
 * To completely reset a compromised situation
 ** If one or more wrong ACL or ACE settings cause your Zimbra
 Administration Console to be unstable or not to properly show (eg.
