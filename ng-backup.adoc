@@ -10,7 +10,7 @@ What is the Real Time Scanner?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Real Time Scanner is the big innovation in Backup NG. Each event on
-the system is recorded live to Zimbra Open Source Edition's RedoLog and
+the system is recorded live to Zimbra's RedoLog and
 saved by Backup NG, which means that is always possible to rollback an
 account to a previous state. Thanks to the Real Time Scanner all the
 restore modes work with a split-second precision.
