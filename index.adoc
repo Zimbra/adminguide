@@ -123,6 +123,30 @@ include::crontab.adoc[]
 
 <<<
 
+include::ng-backup.adoc[]
+
+<<<
+
+include::ng-mobile.adoc[]
+
+<<<
+
+include::ng-hsm.adoc[]
+
+<<<
+
+include::ng-admin.adoc[]
+
+<<<
+
+include::ng-cli.adoc[]
+
+<<<
+
+include::ng-migration.adoc[]
+
+<<<
+
 include::glossary.adoc[]
 
 :leveloffset: -1
