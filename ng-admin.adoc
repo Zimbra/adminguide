@@ -22,7 +22,7 @@ _zimbra_ user
 Granting Delegated Admin rights to a user
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[[from-the-administration-zimlet]]
+[[add-da-from-the-administration-zimlet]]
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -46,7 +46,7 @@ WARNING: If the `Domain Quota` is lower than the `Grant Limit`, the
 Disk space and Quota limits can be entered in Gigabytes (gb), Megabytes
 (mb) or Kilobytes (kb)
 
-[[from-the-cli]]
+[[add-dafrom-the-cli]]
 From the CLI
 ^^^^^^^^^^^^
 
@@ -72,7 +72,7 @@ adminQuota(O)    String                        0
 Editing the rights of an existing Delegated Admin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[[from-the-administration-zimlet-1]]
+[[edit-da-from-the-administration-zimlet-1]]
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -82,7 +82,7 @@ button.
 
 You can also doubleclick an entry of the list to edit it.
 
-[[from-the-cli-1]]
+[[edit-da-from-the-cli-1]]
 From the CLI
 ^^^^^^^^^^^^
 
