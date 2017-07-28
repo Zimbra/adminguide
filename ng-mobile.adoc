@@ -415,7 +415,7 @@ keepalive duration is defined by the client)
 Managing the SyncStates
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-[[via-the-administration-zimlet]]
+[[syncstates-via-the-administration-zimlet]]
 Via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -432,7 +432,7 @@ to a different employee in the same company.
 
 Both options can be found in the Administration Zimlet.
 
-[[via-the-cli]]
+[[syncstates-via-the-cli]]
 Via the CLI
 ^^^^^^^^^^^
 

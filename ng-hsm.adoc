@@ -26,7 +26,7 @@ on a costly storage, improving the overall user experience.
 
 [[stores-volumes-and-policies]]
 Stores, Volumes and Policies
-++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Dealing with the HSM technicque requires a clear understanding of some
 related terms:
@@ -57,7 +57,7 @@ Primary Data Store and one Secondary Data Store can be set as `Current`
 
 [[primary-and-secondary-data-stores]]
 Primary and Secondary Data Stores
-+++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A Data Store in Zimbra can be either a Primary Data Store or a Secondary
 Data Store - the meaning of `primary` and `secondary` is explained
@@ -121,7 +121,7 @@ position of the item.
 
 [[what-will-be-moved]]
 What will be moved
-++++++++++++++++++
+^^^^^^^^^^^^^^^^^^
 
 Basically, every item that complies to the specified HSM policy.
 
@@ -139,7 +139,7 @@ emails older than 10 days and containing an attachment.
 
 [[policy-order]]
 Policy order
-++++++++++++
+^^^^^^^^^^^^
 
 All conditions for a policy are executed in the exact order they are
 specified. HSM NG will loop on all items in the Current Primary Store
@@ -191,7 +191,7 @@ HSM NG gives you 3 different options to do so:
 
 [[apply-the-hsm-policy-via-the-administration-zimlet]]
 Apply the HSM Policy via the Administration Zimlet
-++++++++++++++++++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In order to apply the HSM Policy via the Administration Zimlet:
 
@@ -201,7 +201,7 @@ In order to apply the HSM Policy via the Administration Zimlet:
 
 [[apply-the-hsm-policy-via-the-cli]]
 Apply the HSM Policy via the CLI
-++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In order to apply the HSM Policy via the CLI, run the following command
 as the 'zimbra' user:
@@ -210,7 +210,7 @@ as the 'zimbra' user:
 
 [[apply-the-hsm-policy-through-scheduling]]
 Apply the HSM Policy through Scheduling
-+++++++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In order to schedule a daily execution of the `doMoveBlobs` operation:
 
@@ -241,7 +241,7 @@ A Volume is the physical representation of the notion of
 
 [[volume-properties]]
 Volume Properties
-+++++++++++++++++
+^^^^^^^^^^^^^^^^^
 
 All Zimbra Volumes are defined by the following properties:
 
@@ -264,9 +264,9 @@ Volume Management with HSM NG
 Creating a new volume
 ^^^^^^^^^^^^^^^^^^^^^
 
-[[from-the-administration-zimlet]]
+[[volume-from-the-administration-zimlet]]
 From the Administration Zimlet
-++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 From the HSM NG tab of the Administration Zimlet:
 
@@ -287,9 +287,9 @@ information
 * Press `OK` to create the new volume. Should the operation fail, a
 Notification containing any related errors will be generated
 
-[[from-the-cli]]
+[[volume-from-the-cli]]
 From the CLI
-++++++++++++
+^^^^^^^^^^^^
 
 To create a new volume through the CLI, the `doCreateVolume` command is
 available:
@@ -321,14 +321,14 @@ Editing a volume
 
 [[from-the-administration-zimlet-1]]
 From the Administration Zimlet
-++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Simply select an existing volume and press the appropriate `Edit`
 button.
 
 [[from-the-cli-1]]
 From the CLI
-++++++++++++
+^^^^^^^^^^^^
 
 To edit a volume through the CLI, the `doUpdateVolume` command is
 available:
@@ -382,16 +382,16 @@ Sets name of volume 3 to `example volume`, make it secondary, and set its path t
 Deleting a volume
 ^^^^^^^^^^^^^^^^^
 
-[[from-the-administration-zimlet-2]]
+[[delete-volume-from-the-administration-zimlet]]
 From the Administration Zimlet
-++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Select and existing volume and press the appropriate `Delete` button.
 Remember that only *empty* volumes can be deleted.
 
-[[from-the-cli-2]]
+[[delete-volume-from-the-cli-2]]
 From the CLI
-++++++++++++
+^^^^^^^^^^^^
 
 To delete a volume through the CLI, the `doDeleteVolume` command is
 available:
@@ -459,7 +459,7 @@ syntax].
 
 [[policy-examples]]
 Policy Examples
-+++++++++++++++
+^^^^^^^^^^^^^^^
 
 Here you can find some Policy examples described in human readable
 language. To see how to create this Policies in the HSM NG module, see
@@ -478,9 +478,9 @@ Defining a Policy
 Policies can be defined both from the HSM NG tab of the Administration
 Zimlet and from the CLI. You can specify a Zimbra Search in both cases.
 
-[[from-the-administration-zimlet-3]]
+[[policy-from-the-administration-zimlet]]
 From the Administration Zimlet
-++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Log into the Zimbra Administration Console.
 * Click the `HSM NG` entry on the Administration Zimlet.
@@ -495,9 +495,9 @@ page.
 * You can add multiple `lines` to narrow down your policy. Every `line`
 will be evaluated and executed after the line before has been applied.
 
-[[from-the-cli-3]]
+[[policy-from-the-cli]]
 From the CLI
-++++++++++++
+^^^^^^^^^^^^
 
 Two policy management commands are available il the CLI
 
@@ -808,17 +808,17 @@ usage.
 Running a Volume Deduplication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[[via-the-administration-zimlet]]
+[[dedupe-via-the-administration-zimlet]]
 Via the Administration Zimlet
-+++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To run a volume deduplication via the Administration Zimlet simply click
 on the `HSM NG` tab, select the volume you wish to deduplicate and press
 the `Deduplicate` button:
 
-[[via-the-cli]]
+[[dedupe-via-the-cli]]
 Via the CLI
-+++++++++++
+^^^^^^^^^^^
 
 ....
 zimbra@mailserver:~$ zxsuite hsm doDeduplicate
@@ -1018,12 +1018,11 @@ zxsuite hsm dodeduplicate secondvolume
 Starts a deduplication on volume secondvolume
 ....
 
+
 [[dovolumetovolumemove]]
 doVolumeToVolumeMove
 ^^^^^^^^^^^^^^^^^^^^
-
-[[usage-2]]
-Usage
+*Usage*
 
 ....
 zimbra@mail:~$ zxsuite hsm doVolumeToVolumeMove
@@ -1047,8 +1046,7 @@ zxsuite hsm doVolumeToVolumeMove sourceVolume destVolume
 Moves the whole sourceVolume to destVolume
 ....
 
-[[description-and-tips-2]]
-Description and Tips
+*Description and Tips*
 
 This command can prove itself highly useful in all those situations
 where you need to stop using a volume, such as:
@@ -1067,9 +1065,7 @@ please.
 [[getvolumestats]]
 getVolumeStats
 ^^^^^^^^^^^^^^
-
-[[usage-3]]
-Usage
+*Usage*
 
 ....
 zimbra@mail:~$ zxsuite hsm getVolumeStats
@@ -1096,8 +1092,7 @@ zxsuite hsm getVolumeStats 2
 Shows stats for the volume with ID equal to 2
 ....
 
-[[description-and-tips-3]]
-Description and Tips
+*Description and Tips*
 
 This command provides the following informations about a volume:
 
@@ -1146,11 +1141,9 @@ Moving mailboxes between mailstores
 The `doMailboxMove` command is intended to move a single mailbox from a server to another one or all accounts from a given domain on current server to a
 destination host.
 
-[doMailboxMove-syntax]
-doMailboxMove Syntax
-^^^^^^^^^^^^^^^^^^^^
+*Syntax*
 ....
-yntax:
+Syntax:
    zxsuite hsm doMailboxMove {an account name: john@example.com or a domain name: example.com} {destinationHost} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
@@ -1174,8 +1167,8 @@ Usage example:
 zxsuite HSM NG domailboxmove john@example.com mail2.example.com
 Move mailbox for account john@example.com to mail2.example.com host
 ....
-Parameters
-^^^^^^^^^^
+*Parameters*
+
 * _sourceHost_: Used only if a domain name is specified into name parameter, act like the command was issued from this host.
 * _stage_: It's possible to submit only a single stage at time, just for test purpose or to not reissue a previously completed stage.
 * _compress_: If true, blobs will be compressed just before being sent through the network.
@@ -1184,9 +1177,7 @@ Parameters
 * _threads_: number of threads used on heavy stages.
 * _hsm_: If true an HSM operation will be submitted after mailbox successfully moved.
 
-[doMailboxMove-details]
-doMailboxMove Details
-^^^^^^^^^^^^^^^^^^^^^
+*doMailboxMove Details*
 * When moving a domain, each account from current server is enumerated and moved sequentially.
 * Mailbox is set into maintenance mode when it's moved, and will be placed into original state after all emails are moved (after the ldap stage).
 * Operation is stopped if 5% or more write errors are encountered on items being moved. Pay attention that the current mailbox
@@ -1237,7 +1228,7 @@ Indexed formats
 
 [[web]]
 Web
-+++
+^^^
 
 [cols=",,",options="header",]
 |=============================================================
@@ -1251,7 +1242,7 @@ Web
 
 [[documents]]
 Documents
-+++++++++
+^^^^^^^^^
 
 [cols=",,",options="header",]
 |=======================================================================
@@ -1386,7 +1377,7 @@ Documents
 
 [[packages-and-archives]]
 Packages and Archives
-+++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^
 
 [cols=",,",options="header",]
 |======================================================

@@ -2187,7 +2187,7 @@ All your data will be exported to the default backup path
 
 [[pro-tip-single-domains-export]]
 Pro-Tip: Single Domains Export
-++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can also choose to only migrate one or more domains instead of all
 of them. To do so, run the following command *instead* of the SmartScan:
@@ -2264,7 +2264,7 @@ destination server.
 
 [[first-import-via-the-administration-zimlet]]
 First import via the Administration Zimlet
-++++++++++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can also choose to import your data using the Administration Zimlet
 following While importing via the Administration Zimlet be sure to
