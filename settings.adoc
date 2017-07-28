@@ -1,0 +1,12 @@
+:document-title: Administrator Guide
+:product-name: Zimbra Collaboration
+:product-abbrev: ZCS
+= {product-name} {document-title}
+:product-version: 8.8.1
+:product-release-date: March, 2017
+:copyright-year: 2017
+:icons: font
+:title-logo-image: images/zimbra-logo.jpg
+:showlinks:
+:source-highlighter: coderay
+:toc: left
