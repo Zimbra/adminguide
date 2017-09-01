@@ -6,52 +6,52 @@ Hierarchical Storage Management
 -------------------------------
 
 [[the-hierarchical-storage-management-technique]]
-The Hierarchical Storage Management technique
+The Hierarchical Storage Management Technique
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 HSM is a data storage technique that moves data between different stores
 according to a defined policy.
 
-The most common use of such technique is the move of `older` data from a
-faster-but-expensive storage device to a slower-but-cheaper one on the
+The most common use of the HSM technique is the move of `older` data from a
+faster-but-expensive storage device to a slower-but-cheaper one based on the
 following premises:
 
 * Fast storage costs more.
 * Slow storage costs less.
 * `Old` data will be accessed much less frequently than `new` data.
 
-Thus said, the advantages of the HSM technique are clear: Lowering the
+The advantages of the HSM technique are clear: Lowering the
 overall storage cost, since only a small part of your data needs to be
-on a costly storage, improving the overall user experience.
+on costly storage, also improves the overall user experience.
 
 [[stores-volumes-and-policies]]
 Stores, Volumes and Policies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Dealing with the HSM technicque requires a clear understanding of some
+Using HSM requires a clear understanding of some
 related terms:
 
 * Primary Store: The `fast-but-expensive` store where all your data
-is initially placed
+is initially placed.
 ** Secondary Store: The `slow-but-cheap` store where `older` data will
-be moved
+be moved.
 
 [[zimbra-stores]]
 Zimbra Stores
 -------------
 
 [[the-basics-types-of-stores-and-their-uses]]
-The Basics: types of stores and their uses
+The Basics: Types of Stores and Their Uses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Zimbra allows for *two* different types of stores to be used:
+Zimbra allows for *two* different types of stores:
 
-* *Index Store*: A store that contains informations about your data used
+* *Index Store*: A store that contains information about your data that is used
 by Apache Lucene to provide indexing and search functions.
 * *Data Store*: A store that contains all your Zimbra data organized in
-a MySql database
+a MySql database.
 
-You can have multiple stores of each kind, but only one Index Store, one
+You can have multiple stores of each type, but only one Index Store, one
 Primary Data Store and one Secondary Data Store can be set as `Current`
 (meaning that is currently used by Zimbra).
 
@@ -59,71 +59,71 @@ Primary Data Store and one Secondary Data Store can be set as `Current`
 Primary and Secondary Data Stores
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A Data Store in Zimbra can be either a Primary Data Store or a Secondary
-Data Store - the meaning of `primary` and `secondary` is explained
+A data store in Zimbra can be either a Primary Data Store or a Secondary
+Data Store.
 
 Data is moved between the `current` Primary Data Store and the `current`
-Secondary Data Store accordingly to a
+Secondary Data Store according to a defined policy.
 
 [[hsm-ngmoving-items-between-stores]]
 HSM NG: Moving Items between Stores
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The main feature of the HSM NG module is the ability of applying the
-defined
+The main feature of the HSM NG module is the ability to apply
+defined HSM policies.
 
-The move can be triggered in three different ways:
+The move can be triggered in three ways:
 
-* Click the `Apply Policy` button in the Administration Zimlet
-* Start the doMoveBlobs operation through the CLI
-* Enable the Policy Application Scheduling in the Administration Zimlet
-and wait for it to start automatically
+* Click the `Apply Policy` button in the Administration Zimlet.
+* Start the `doMoveBlobs` operation through the CLI.
+* Enable Policy Application Scheduling in the Administration Zimlet
+and wait for it to start automatically.
 
-Once the move is started the following operations are performed:
+Once the move is started, the following operations are performed:
 
 * HSM NG scans through the Primary Store to see which items comply to
-the defined policy
-* All the Blobs of the tems found in the first step is copied to the
-Secondary Store
+the defined policy.
+* All the Blobs of the items found in the first step are copied to the
+Secondary Store.
 * The database entries related to the copied items are updated to
-reflect the move
+reflect the move.
 * If the second and the third steps are completed successfully (and only
-in this case), the old Blobs are deleted from the Primary Store
+in this case), the old Blobs are deleted from the Primary Store.
 
 The Move operation is `stateful` - each step is executed only if the
-previous ones have been completed successfully - so the risk of data
-loss during a Move operation is virtually nonexistent.
+previous step has been completed successfully - so the risk of data
+loss during a Move operation is nonexistent.
 
 [[domoveblobs]]
 doMoveBlobs
 -----------
 
 [[the-domoveblobs-operation-of-hsm-ng]]
-The doMoveBlobs operation of HSM NG
+The doMoveBlobs Operation of HSM NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The doMoveBlobs is the heart of the HSM NG Modules.
+The doMoveBlobs is the heart of HSM NG.
 
-It's duty is to move items between the Current Primary Store and the
+It moves items between the Current Primary Store and the
 Current Secondary Store according to the proper HSM policy.
 
-The move is performed by a transactional algorythm, so should an error
-occour during one of the steps of the operation a rollback would take
-place and no change will be made to the data.
+The move is performed by a transactional algorithm. Should an error
+occur during one of the steps of the operation, a rollback takes
+place, and no change will be made to the data.
 
 Once HSM NG identifies the items to be moved, the following steps are
 performed:
 
-* Create a copy of the Blob to the Current Secondary Store.
-* Update the Zimbra Database in order to notify Zimbra of the new
-position of the item.
-* Delete the original Blob from the Current Primary Store.
+* A copy of the Blob to the Current Secondary Store is created.
+* The Zimbra Database is updated to notify Zimbra of the item's new
+position.
+* The original Blob is deleted from the Current Primary Store.
 
 [[what-will-be-moved]]
-What will be moved
-^^^^^^^^^^^^^^^^^^
+What is Moved?
+^^^^^^^^^^^^^^
 
-Basically, every item that complies to the specified HSM policy.
+Every item that complies to the specified HSM policy is moved.
 
 Example:
 
@@ -135,10 +135,10 @@ message:before:-10day has:attachment
 ....
 
 will move all emails and documents older than 20 days along with all
-emails older than 10 days and containing an attachment.
+emails older than 10 days that contain an attachment.
 
 [[policy-order]]
-Policy order
+Policy Order
 ^^^^^^^^^^^^
 
 All conditions for a policy are executed in the exact order they are
@@ -158,17 +158,17 @@ message,document:before:-20day
 ....
 
 applied daily on a sample server that sends/receives a total of 1000
-emails per day, 100 of which containing one or more attachments, will
-have the same final result while the execution time will probably be
-slightly higher (or much higer, depending on the number and size of the
-emails in the server).
+emails per day, 100 of which contain one or more attachments, will
+have the same final result. However, execution time of the second policy will probably be
+slightly higher (or much higher, depending on the number and size of the
+emails on the server).
 
-This is because in the first policy the first condition
-(message,document:before:-20day) will loop on all items, move many of
+This is because in the first policy, the first condition
+(message,document:before:-20day) will loop on all items and move many of
 them to the Current Secondary Store, leaving less items for the second
 condition to loop on.
 
-Viceversa, having the `message:before:-10day has:attachment` as the
+Likewise, having the `message:before:-10day has:attachment` as the
 first condition will leave more items for the second condition to loop
 on.
 
@@ -176,34 +176,34 @@ This is just an example and does not apply to all cases, but gives an
 idea on the need to carefully plan your HSM policy.
 
 [[executing-the-domoveblobs-operation-a.k.a.-applying-the-hsm-policy]]
-Executing the doMoveBlobs operation (a.k.a. Applying the HSM policy)
+Executing the doMoveBlobs Operation (a.k.a. Applying the HSM Policy)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `Applying a policy` means running the `doMoveBlobs` operation in order
 to move items between the Primary and Secondary store according to the
 defined policy.
 
-HSM NG gives you 3 different options to do so:
+HSM NG gives you three different options:
 
-* via the Administration Zimlet
-* via the CLI
-* through Scheduling
+* Via the Administration Zimlet
+* Via the CLI
+* Through Scheduling
 
 [[apply-the-hsm-policy-via-the-administration-zimlet]]
 Apply the HSM Policy via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to apply the HSM Policy via the Administration Zimlet:
+To apply the HSM Policy via the Administration Zimlet:
 
-* Log into the Zimbra Administration Console
-* Click the `HSM NG` entry on the Administration Zimlet
-* Click the `Apply Policy` button
+* Log into the Zimbra Administration Console.
+* Click the `HSM NG` entry in the Administration Zimlet.
+* Click the `Apply Policy` button.
 
 [[apply-the-hsm-policy-via-the-cli]]
 Apply the HSM Policy via the CLI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to apply the HSM Policy via the CLI, run the following command
+To apply the HSM Policy via the CLI, run the following command
 as the 'zimbra' user:
 
 ` zxsuite hsm doMoveBlobs`
@@ -212,20 +212,20 @@ as the 'zimbra' user:
 Apply the HSM Policy through Scheduling
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to schedule a daily execution of the `doMoveBlobs` operation:
+To schedule a daily execution of the `doMoveBlobs` operation:
 
-* Log into the Zimbra Administration Console
-* Click the `HSM NG` entry on the Administration Zimlet
-* Enable the scheduling by selecting the `Enable Policy Application
-scheduling` button
+* Log into the Zimbra Administration Console.
+* Click the `HSM NG` entry in the Administration Zimlet.
+* Enable scheduling by selecting the `Enable Policy Application
+scheduling` button.
 * Select the hour to run the operation under `Policy Application
-scheduled for:`
+scheduled for:`.
 
 [[domoveblobs-stats-and-info]]
 doMoveBlobs Stats and Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Informations about disk space savings, operation performances and more
+Information about disk space savings, operation performances and more
 are available by clicking the `Stats` button under the `Secondary
 Volumes` list in the HSM NG tab of the Administration Zimlet.
 
@@ -237,62 +237,62 @@ Volume Management
 Zimbra Volumes
 ~~~~~~~~~~~~~~
 
-A Volume is the physical representation of the notion of
+A volume is a distinct entity (path) on a filesystem with all the associated
+properties that contain Zimbra Blobs.
 
 [[volume-properties]]
 Volume Properties
 ^^^^^^^^^^^^^^^^^
 
-All Zimbra Volumes are defined by the following properties:
+All Zimbra volumes are defined by the following properties:
 
-* Name: a unique identifier for the volume
-* Path: the path where the data is going to be saved. _The Zimbra user
+* Name: A unique identifier for the volume.
+* Path: The path where the data is going to be saved. _The Zimbra user
 must have r/w permissions on this path_.
 * Compression: Enable or Disable the file compression for the volume.
-* Compression Threshold: the minimum file size that will trigger the
+* Compression Threshold: The minimum file size that will trigger the
 compression. 'Files under this size will never be compressed even if the
 compression is enabled.'
 * Current: A `Current` volume is a volume where data will be written
-upon arrival (Primary Current) or HSM Policy Application (Secondary
-Current)
+upon arrival (Primary Current) or HSM policy application (Secondary
+Current).
 
 [[volume-management-with-hsm-ng]]
 Volume Management with HSM NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[creating-a-new-volume]]
-Creating a new volume
+Creating a New Volume
 ^^^^^^^^^^^^^^^^^^^^^
 
 [[volume-from-the-administration-zimlet]]
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-From the HSM NG tab of the Administration Zimlet:
+To create a new volumen from the HSM NG tab of the Administration Zimlet:
 
-* Click the appropriate `Add` in the `Volumes Managment` section
+* Click the appropriate `Add` option in the `Volumes Management` section
 according to the type of volume you want to create.
 
-* Select the store type, choosing between local mountpoint or S3 Bucket
+* Select the store type, choosing between local mountpoint or S3 Bucket.
 
 * Enter the new volume's name.
 * Enter a path for the new volume.
 * Check the `Enable Compression` button if you wish to activate data
 compression on the new volume.
-* Select the Compression Thereshold.
+* Select the Compression Threshold.
 
-* In case of S3 Bucket, it's possible to store multiple Bucket
-information
+* If you are using an S3 Bucket, it's possible to store information for multiple buckets.
+
 
 * Press `OK` to create the new volume. Should the operation fail, a
-Notification containing any related errors will be generated
+notification containing any related errors will be generated.
 
 [[volume-from-the-cli]]
 From the CLI
 ^^^^^^^^^^^^
 
-To create a new volume through the CLI, the `doCreateVolume` command is
-available:
+To create a new volume through the CLI, use the `doCreateVolume` command:
 
 ....
 Syntax:
@@ -316,22 +316,21 @@ Creates a new secondary volume named `volume B` in /opt/zimbra/store_B/, with co
 ....
 
 [[editing-a-volume]]
-Editing a volume
+Editing a Volume
 ^^^^^^^^^^^^^^^^
 
 [[from-the-administration-zimlet-1]]
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Simply select an existing volume and press the appropriate `Edit`
-button.
+To edit a volume from the Administration Zimlet, simply select an existing volume
+and press the appropriate `Edit` button.
 
 [[from-the-cli-1]]
 From the CLI
 ^^^^^^^^^^^^
 
-To edit a volume through the CLI, the `doUpdateVolume` command is
-available:
+To edit a volume through the CLI, use the `doUpdateVolume` command:
 
 ....
 Syntax:
@@ -379,22 +378,21 @@ Sets name of volume 3 to `example volume`, make it secondary, and set its path t
 ....
 
 [[deleting-a-volume]]
-Deleting a volume
+Deleting a Volume
 ^^^^^^^^^^^^^^^^^
 
 [[delete-volume-from-the-administration-zimlet]]
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Select and existing volume and press the appropriate `Delete` button.
+To delete a volume from the Administration Zimlet, select an existing volume and press the appropriate `Delete` button.
 Remember that only *empty* volumes can be deleted.
 
 [[delete-volume-from-the-cli-2]]
 From the CLI
 ^^^^^^^^^^^^
 
-To delete a volume through the CLI, the `doDeleteVolume` command is
-available:
+To delete a volume through the CLI, use the `doDeleteVolume` command:
 
 ....
 Syntax:
@@ -442,16 +440,16 @@ Policy Management
 -----------------
 
 [[what-is-a-policy]]
-What is a Policy
-~~~~~~~~~~~~~~~~
+What is a Policy?
+~~~~~~~~~~~~~~~~~
 
-A HSM Policy is a set of rules that will be applied to define what items
+An HSM policy is a set of rules that define what items
 will be moved from the Primary Store to the Secondary Store when the
 `doMoveBlobs` operation of HSM NG is triggered, either manually or by
 scheduling.
 
-A Policy can consist of a single rule valid for all Item Types
-(`Simple` policy) or multiple rules valid for one or more Item Types
+A policy can consist of a single rule that is valid for all item types
+(`Simple` policy) or multiple rules valid for one or more item types
 (`Composite` policy). Also, an additional `sub-rule` can be defined
 using Zimbra's
 http://wiki.zimbra.com/wiki/Zimbra_Web_Client_Search_Tips[search
@@ -461,8 +459,7 @@ syntax].
 Policy Examples
 ^^^^^^^^^^^^^^^
 
-Here you can find some Policy examples described in human readable
-language. To see how to create this Policies in the HSM NG module, see
+Here are some policy examples. To see how to create the policies in the HSM NG module, see
 below.
 
 * `Move all items older than 30 days`
@@ -482,15 +479,16 @@ Zimlet and from the CLI. You can specify a Zimbra Search in both cases.
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Log into the Zimbra Administration Console.
-* Click the `HSM NG` entry on the Administration Zimlet.
+To define a policy from the Administration Zimlet:
 
-* Click the `Add` button in the Storage Management Policy section of the
-page.
+* Log into the Zimbra Administration Console.
+* Click `HSM NG` on the Administration Zimlet.
+
+* Click the `Add` button in the Storage Management Policy section.
 
 * Select the Item Types from the `Items to Move:` list.
 * Enter the Item Age from the `Move Items older than:` box.
-* *OPTIONAL*: Add a Zimbra Search in the `Addiditional Options` box.
+* *OPTIONAL*: Add a Zimbra Search in the `Additional Options` box.
 
 * You can add multiple `lines` to narrow down your policy. Every `line`
 will be evaluated and executed after the line before has been applied.
@@ -499,7 +497,7 @@ will be evaluated and executed after the line before has been applied.
 From the CLI
 ^^^^^^^^^^^^
 
-Two policy management commands are available il the CLI
+Two policy management commands are available in the CLI:
 
 * setHsmPolicy
 * +setHsmPolicy
@@ -525,24 +523,24 @@ The _policy_ parameter must be specified in the following syntax
 `itemType1[,itemType2,itemtype3,etc]:query`
 
 [[secondary-volumes-on-amazon-s3]]
-Secondary volumes on Amazon S3
+Secondary Volumes on Amazon S3
 ------------------------------
 
 [[hsm-ng-and-s3-buckets]]
 HSM NG and S3 buckets
 ~~~~~~~~~~~~~~~~~~~~~
 
-Starting from Network NG Modules 2.4.0, secondary volumes created with
+Secondary volumes created with
 HSM NG can now be hosted on S3 buckets, effectively moving the largest
-part of your data to a secure and durable cloud storage.
+part of your data to secure and durable cloud storage.
 
 [[s3-compatible-services]]
-S3-compatible services
+S3-compatible Services
 ^^^^^^^^^^^^^^^^^^^^^^
 
 While any storage service compatible with the Amazon S3 API should work
 out of the box with HSM NG, Amazon S3 and DellEMC ECS are the only
-officially supported platforms at the moment.
+officially supported platforms.
 
 [[local-cache]]
 Local Cache
@@ -551,7 +549,7 @@ Local Cache
 This feature requires a local directory to be used for item caching,
 which must be readable and writable by the `zimbra` user.
 
-Such directory must be created manually and its path must be entrered in
+The local directory must be created manually and its path must be entered in
 the `HSM NG` section of the Administration Zimlet in the Zimbra
 Administration Console.
 
@@ -560,20 +558,20 @@ to be unretrievable, meaning that users will get a `No such BLOB` error
 when trying to access any item stored on an S3 volume.
 
 [[bucket-setup]]
-Bucket setup
+Bucket Setup
 ~~~~~~~~~~~~
 
 HSM NG doesn't need any dedicated setting or configuration on the S3
-side, so setting up a bucket for your volumes is pretty easy - creating
-a dedicated user, bucket and access policy is not required but strongly
-suggested as it's much easier to manage.
+side, so setting up a bucket for your volumes is easy. Although creating
+a dedicated user, bucket and access policy are not required, they are strongly
+suggested because they make it much easier to manage.
 
 All you need to start storing your secondary volumes on S3 is:
 
 * An S3 bucket. You need to know the bucket's name and region in order
 to use it.
 * A user's Access Key and Secret.
-* A policy which grants the user full rights on your bucket.
+* A policy that grants the user full rights on your bucket.
 
 [[s3-buckets]]
 S3 Buckets
@@ -584,25 +582,28 @@ volume, you can save it on the Zimbra Administration Console at
 *Configure > Global Settings > S3 Buckets*.
 
 [[creating-a-secondary-volume-on-s3]]
-Creating a secondary volume on S3
+Creating a Secondary Volume on S3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Click on the `HSM NG` entry of the Administration Zimlet in the
-Zimbra Administration Console.
-* Under the `Secondary Volumes` list, click on `Add`
+To create a secondary volumn on S3:
 
-* Select `S3 bucket`
+* Click the `HSM NG` entry of the Administration Zimlet in the
+Zimbra Administration Console.
+* Click `Add` under the `Secondary Volumes` list.
+
+* Select `S3 bucket`.
 
 * Enter the volume's name and prefix, then either add a bucket's
 information or load those from the ones saved in the Global Settings.
-Define whether to use the Infrequent Access storage class and if so set
+
+* Define whether to use the Infrequent Access storage class, and if so, set
 its size threshold.
 
-* Define whether the new volume is set as Current or not and click
-`Finish` to create the new volume.
+* Define whether the new volume is set as Current or not.
+* Click `Finish` to create the new volume.
 
 [[amazon-s3-tips]]
-Amazon S3 tips
+Amazon S3 Tips
 ~~~~~~~~~~~~~~
 
 [[bucket]]
@@ -610,26 +611,25 @@ Bucket
 ^^^^^^
 
 Storing your secondary Zimbra volumes on Amazon S3 doesn't have any
-specific bucket requirements, albeit we suggest to create a dedicated
-Bucket disabling Static Website Hosting for an easier management.
+specific bucket requirements, but we suggest that you create a dedicated
+bucket and disable Static Website Hosting for easier management.
 
 [[user]]
 User
 ^^^^
 
-In order to obtain an Access Key and the related Secret, a `Programmatic
-Access` used is needed: we suggest to create a dedicated one in Amazon's
-IAM Service for an easier management.
+To obtain an Access Key and the related Secret, a `Programmatic
+Access` user is needed. We suggest that you create a dedicated user in Amazon's
+IAM Service for easier management.
 
 [[rights-management]]
 Rights Management
 ^^^^^^^^^^^^^^^^^
 
-In Amazon's IAM you can set access policies for your users. It's
-mandatory that the user your Access Key and Secret belong to has a set
-of appropriate rights both on the bucket itself and on its content -
-granting full rights such as in the following example is suggested for
-an easier management:
+In Amazon's IAM, you can set access policies for your users. It's
+mandatory that the user of your Access Key and Secret has a set
+of appropriate rights both on the bucket itself and on its contents.
+For easier management, we recommend granting full rights as shown in the following example:
 
 ....
 {
@@ -666,17 +666,17 @@ section to:
 ....
 
 The bucket's ARN is expressed according to Amazon's standard naming
-format: *arn:partition:service:region:account-id:resource* - for more
-information abuout this topic please check Amazon's documentation.
+format: *arn:partition:service:region:account-id:resource*. For more
+information about this topic, please see Amazon's documentation.
 
 [[bucket-paths-and-naming]]
-Bucket paths and naming
+Bucket Paths and Naming
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Files are stored in a bucket according to a well-defined path, which can
-be customized at will in order to make your bucket's contents easier to
-understand even on multiserver environments with multiple secondary
-volumes:
+be customized at will to make your bucket's contents easier to
+understand (even on multiserver environments with multiple secondary
+volumes):
 
 /*Bucket Name*/*Destination Path*/[*Volume Prefix*-]*serverID*/
 
@@ -689,14 +689,14 @@ it's a quick way to differentiate and recognize different volumes within
 the bucket.
 
 [[infrequent-access-storage-class]]
-Infrequent Access storage class
+Infrequent Access Storage Class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 HSM NG is compatible with the `Amazon S3 Standard - Infrequent access`
-storage class, and will set any file larger than the `Infrequent Access
+storage class and will set any file larger than the `Infrequent Access
 Threshold` value to this storage class.
 
-For more information about Infrequent Access please refer to the
+For more information about Infrequent Access, please refer to the
 https://aws.amazon.com/s3/storage-classes[official Amazon S3
 Documentation].
 
@@ -708,31 +708,31 @@ Item Deduplication
 What is Item Deduplication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Item Deduplication is a technicque that allows to save disk space by
+Item deduplication is a technique that allows you to save disk space by
 storing a single copy of an item and referencing it multiple times
 instead of storing multiple copies of the same item and referencing each
 copy only once.
 
-This might seem a minor improvement, in theory, but in practical use can
-make a huge difference.
+This might seem like a minor improvement. However, in practical use, it
+makes a significant difference.
 
 [[item-deduplication-in-zimbra]]
 Item Deduplication in Zimbra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Item Deduplication is performed by Zimbra at the moment of storing a new
-item in the
+Item deduplication is performed by Zimbra at the moment of storing a new
+item in the Current Primary Volume.
 
-When a new item is being created its `message ID` is compared to a list
-of cached items, and in case of a match a hardlink to the cached
+When a new item is being created, its `message ID` is compared to a list
+of cached items. If there is a match, a hardlink to the cached
 message's BLOB is created instead of a whole new BLOB for the message.
 
-The dedupe cache is managed in Zimbra 8 through the following config
+The dedupe cache is managed in Zimbra through the following config
 attributes:
 
 *zimbraPrefDedupeMessagesSentToSelf*
 
-Used to set the deduplication behaviour for sent-to-self messages.
+Used to set the deduplication behavior for sent-to-self messages.
 
 ....
 <attr id="144" name="zimbraPrefDedupeMessagesSentToSelf" type="enum" value="dedupeNone,secondCopyifOnToOrCC,dedupeAll" cardinality="single"
@@ -759,7 +759,7 @@ Number of cached Message IDs.
 
 *zimbraPrefMessageIdDedupingEnabled*
 
-Manage deduplication at Account or COS-level.
+Manage deduplication at account or COS-level.
 
 ....
 <attr id="1198" name="zimbraPrefMessageIdDedupingEnabled" type="boolean" cardinality="single" optionalIn="account,cos" flags="accountInherited"
@@ -792,7 +792,7 @@ them)
 Item Deduplication and HSM NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The HSM NG module features a `doDeduplicate` operation that parses a
+The HSM NG features a `doDeduplicate` operation that parses a
 target volume to find and deduplicate any duplicated item.
 
 Doing so you will save even more disk space, as while Zimbra's automatic
@@ -812,13 +812,15 @@ Running a Volume Deduplication
 Via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To run a volume deduplication via the Administration Zimlet simply click
+To run a volume deduplication via the Administration Zimlet, simply click
 on the `HSM NG` tab, select the volume you wish to deduplicate and press
-the `Deduplicate` button:
+the `Deduplicate` button.
 
 [[dedupe-via-the-cli]]
 Via the CLI
 ^^^^^^^^^^^
+
+To run a volume deduplication through the CLI, use the `doDeduplicate` command:
 
 ....
 zimbra@mailserver:~$ zxsuite hsm doDeduplicate
@@ -846,7 +848,7 @@ To list all available volumes, you can use the _`zxsuite hsm
 getAllVolumes`_ command.
 
 [[dodeduplicate-stats]]
-`doDeduplicate` stats
+`doDeduplicate` Stats
 ^^^^^^^^^^^^^^^^^^^^^
 
 The `doDeduplicate` operation is a valid target for the `monitor`
@@ -865,62 +867,62 @@ Current Pass (Digest Prefix):  63/64
  Total Space Saved:             21.88 GB
 ....
 
-* `Current Pass (Digest Prefix)` - The `doDeduplicate` command will
-analyze the BLOBS in groups based on the first characted of their digest
+* `Current Pass (Digest Prefix)`: The `doDeduplicate` command will
+analyze the BLOBS in groups based on the first character of their digest
 (name).
-* `Checked Mailboxes` - The number of mailboxes analyzed for the current
+* `Checked Mailboxes`: The number of mailboxes analyzed for the current
 pass.
-* `Deduplicated/duplicated Blobs` - Number of BLOBS deduplicated by the
+* `Deduplicated/duplicated Blobs`: Number of BLOBS deduplicated by the
 current operation / Number of total duplicated items on the volume.
-* `Already Deduplicated Blobs` - Number of deduplicated blobs on the
+* `Already Deduplicated Blobs`: Number of deduplicated blobs on the
 volume (duplicated blobs that have been deduplicated by a previous run).
-* `Skipped Blobs` - BLOBs that have not been analyzed, usually because
+* `Skipped Blobs`: BLOBs that have not been analyzed, usually because
 of a read error or missing file.
-* `Invalid Digests` - BLOBs with a bad digest (name different from the
+* `Invalid Digests`: BLOBs with a bad digest (name different from the
 actual digest of the file).
-* `Total Space Saved` - Amount of disk space freed by the doDeduplicate
+* `Total Space Saved`: Amount of disk space freed by the doDeduplicate
 operation.
 
 Looking at the sample output above we can see that:
 
-* The operation is running the second to last pass on the last mailbox
+* The operation is running the second to last pass on the last mailbox.
 * 137089 duplicated BLOBs have been found, 71178 of which have already
 been deduplicated previously.
 * The current operation deduplicated 64868 BLOBs, for a total disk space
-saving of 21.88GB
+saving of 21.88GB.
 
 [[advanced-volume-operations]]
 Advanced Volume Operations
 --------------------------
 
 [[hsm-ng-more-than-meets-the-eye]]
-HSM NG: More than meets the eye
+HSM NG: More than Meets the Eye
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-While at first sight HSM NG might only seem a module strictly dedicated
-to HSM, it also features some highly useful Volume-related tools that
+At first sight, HSM NG seem to be strictly dedicated
+to HSM. However, it also features some highly useful volume-related tools that
 are not directly related to HSM.
 
-Due to the implicit risks in volume management, this tools are only
+Due to the implicit risks in volume management, these tools are only
 available through the CLI.
 
 [[volume-operations-at-a-glance]]
-Volume Operations at a glance
+Volume Operations at a Glance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following volume operations are available:
 
-*doCheckBlobs* - Perform BLOB coherency checks on one or more volumes.
+*doCheckBlobs*: Perform BLOB coherency checks on one or more volumes.
 
-*doDeduplicate* - Start Item Dedupliaction on a volume.
+*doDeduplicate*: Start Item Deduplication on a volume.
 
-*doVolumeToVolumeMove* - Move all items from a Volume to another.
+*doVolumeToVolumeMove*: Move all items from one volume to another.
 
-*getVolumeStats* - Display informations about a volume's size and number
+*getVolumeStats*: Display information about a volume's size and number
 of thereby contained items/blobs.
 
 [[volume-operation-analysis]]
-Volume operation analysis
+Volume Operation Analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[docheckblobs]]
@@ -952,20 +954,15 @@ traced(O)                      Boolean         true|false         false
 Usage example:
 
 Usage examples:
-zxsuite hsm doCheckBlobs start
-Perform a BLOB coherency check on all message volumes
+zxsuite hsm doCheckBlobs start: Perform a BLOB coherency check on all message volumes.
 
-zxsuite hsm doCheckBlobs start volume_ids 1,3
-Perform a BLOB coherency check on volumes 1 and 3
+zxsuite hsm doCheckBlobs start volume_ids 1,3: Perform a BLOB coherency check on volumes 1 and 3.
 
-zxsuite hsm doCheckBlobs start mailbox_ids 2,9,27
-Perform a BLOB coherency check on mailboxes 2,9 and 27
+zxsuite hsm doCheckBlobs start mailbox_ids 2,9,27: Perform a BLOB coherency check on mailboxes 2,9 and 27.
 
-zxsuite hsm doCheckBlobs start missing_blobs_crosscheck false
-Perform a BLOB coherency check without checking on other volumes
+zxsuite hsm doCheckBlobs start missing_blobs_crosscheck false: Perform a BLOB coherency check without checking on other volumes.
 
-zxsuite hsm doCheckBlobs start traced true
-Perform a BLOB coherency check, logging even the correct checked items
+zxsuite hsm doCheckBlobs start traced true: Perform a BLOB coherency check, logging even the correct checked items.
 ....
 
 [[description-and-tips]]
@@ -973,21 +970,21 @@ Description and Tips
 
 The doCheckBlobs operation can be used to run BLOB coherency checks on
 volumes and mailboxes. This can be useful when experiencing issues
-related to broken or unviewable items, as such are often caused by
-either the impossibility for Zimbra to find or access the BLOB file
-related to an Item or an issue with the BLOB content itself.
+related to broken or unviewable items, which are often caused because
+either Zimbra cannot find or access the BLOB file
+related to an item or there is an issue with the BLOB content itself.
 
 Specifically, the following checks are made:
 
 * DB-to-BLOB coherency: For every Item entry in Zimbra's DB, check
-whether the appropriate BLOB file exists
+whether the appropriate BLOB file exists.
 * BLOB-to-DB coherency: For every BLOB file in a volume/mailbox, check
-whether the appropriate DB data exists
+whether the appropriate DB data exists.
 * Filename coherency: Checks the coherency of each BLOB's filename with
-its content (as BLOBs are named after their file's SHA hash)
+its content (as BLOBs are named after their file's SHA hash).
 * Size coherency: For every BLOB file in a volume/mailbox, checks
 whether the BLOB file's size is coherent with the expected size (stored
-in the DB)
+in the DB).
 
 [[dodeduplicate]]
 doDeduplicate
@@ -1048,19 +1045,18 @@ Moves the whole sourceVolume to destVolume
 
 *Description and Tips*
 
-This command can prove itself highly useful in all those situations
+This command can prove highly useful in all situations
 where you need to stop using a volume, such as:
 
-* Decommissioning old hardware - if you want to get rid of that old disk
-in a physical server, just create new volumes on other/newer disks and
+* Decommissioning old hardware: If you want to get rid of an old disk
+in a physical server, create new volumes on other/newer disks and
 move your data there.
-* Fixing `little mistakes` - Toying around with loop devices or new
-mount options made you create a new volume in the wrong place? Move the
-data to another volume! _Nobody saw anything, I swear!_
-* Centralize volumes - are you just done redesigning your storage
-infrastructure or you just finally decided to tidy up your Zimbra
-volumes? With this command you can centralize and move volumes as you
-please.
+* Fixing `little mistakes`: If you accidentally create a new volume in the wrong place, move the
+data to another volume.
+* Centralize volumes: Centralize and move volumes as you
+please, for example, if you redesigned your storage
+infrastructure or you are tidying up your Zimbra
+volumes.
 
 [[getvolumestats]]
 getVolumeStats
@@ -1094,7 +1090,7 @@ Shows stats for the volume with ID equal to 2
 
 *Description and Tips*
 
-This command provides the following informations about a volume:
+This command provides the following information about a volume:
 
 [cols=",",options="header",]
 |=======================================================================
@@ -1136,10 +1132,11 @@ following data to the output:
 |=================================================================
 
 [moving-mailboxes-between-mailstores]
-Moving mailboxes between mailstores
+Moving Mailboxes Between Mailstores
 -----------------------------------
-The `doMailboxMove` command is intended to move a single mailbox from a server to another one or all accounts from a given domain on current server to a
-destination host.
+The `doMailboxMove` command allows you to move a single mailbox, or all accounts
+from a given domain, from one mailbox server to another within the same
+Zimbra infrastructure.
 
 *Syntax*
 ....
@@ -1169,61 +1166,74 @@ Move mailbox for account john@example.com to mail2.example.com host
 ....
 *Parameters*
 
-* _sourceHost_: Used only if a domain name is specified into name parameter, act like the command was issued from this host.
-* _stage_: It's possible to submit only a single stage at time, just for test purpose or to not reissue a previously completed stage.
-* _compress_: If true, blobs will be compressed just before being sent through the network.
-* _checkDigest_: If true, a digest check will be made for each blob (digest is taken from the item's db entry).
+* _sourceHost_: Used only if a domain name is specified in the name parameter,
+acts like the command was issued from this host.
+* _stage_: It's possible to submit only a single stage at a time, just for test
+purposes or to not reissue a previously completed stage.
+* _compress_: If true, blobs will be compressed just before being sent through
+the network.
+* _checkDigest_: If true, a digest check will be made for each blob (digest
+is taken from the item's db entry).
 * _overwrite_: If false, and digest check is correct, blob files will not be overwritten.
-* _threads_: number of threads used on heavy stages.
-* _hsm_: If true an HSM operation will be submitted after mailbox successfully moved.
+* _threads_: Number of threads used on heavy stages.
+* _hsm_: If true, an HSM operation will be submitted after the mailbox is successfully moved.
 
 *doMailboxMove Details*
-* When moving a domain, each account from current server is enumerated and moved sequentially.
-* Mailbox is set into maintenance mode when it's moved, and will be placed into original state after all emails are moved (after the ldap stage).
-* Operation is stopped if 5% or more write errors are encountered on items being moved. Pay attention that the current mailbox
-   may remains in maintenance mode.
-* Single-mailbox moves will not start if destination server has not enough space available or user just belongs
-   to destination host.
-* All data is moved at low-level and will not be changed except some small things like mailbox id.
-* The operation is made up of 7 stages: blobs|db|chat_db|ldap|backup|reindex|delete. For each mailbox:
-    ** blobs:   all blobs are copied from source server to destination one.
-    ** db:      all database entries are copied form source server to destination one.
-    ** chat_db: all chat db information are copied from source server to destination one.
-    ** ldap:    zimbraMailHost ldap attribute is updated and all account caches are flushed.
-    ** backup:  all backup entries are copied from source server to destination one.
-    ** reindex: start a mailbox reindex.
-    ** delete:  all blobs and db entries are deleted from source server, backup items are also marked as deleted.
-* All of the stages are executed sequentially. If a single stage is specified, mailbox is parked in maintenance mode though the entire operation.
-   On success mailbox will be placed into original state.
-* Initially all blob items will be stored into destination server primary volume.
-* On the reindex stage's completion an HSM new operation is submitted to destination server, if not specified otherwise.
-* All volumes' compression options are taken in care.
-* The MailboxMove operation can be executed if and only if no others operations are running on the source server.
-* The HSM option applies current HSM policies. It's runs after each mailbox is successfully moved, on any run new items will be moved.
+* When moving a domain, each account from the current server is enumerated and moved
+sequentially.
+* The mailbox is set to maintenance mode when it's moved, and will be placed
+into its original state after all emails are moved (after the ldap stage).
+* Operation is stopped if 5% or more write errors are encountered on items being
+moved. Pay attention that the current mailbox may remains in maintenance mode.
+* Single-mailbox moves will not start if the destination server does not have
+enough space available or user just belongs to teh destination host.
+* All data is moved at a low-level and will not be changed except for some small things
+like mailbox id.
+* The operation is made up of 7 stages: blobs|db|chat_db|ldap|backup|reindex|delete.
+For each mailbox:
+    ** blobs: All blobs are copied from the source server to the destination server.
+    ** db: All database entries are copied from the source server to the destination server.
+    ** chat_db: All chat db information is copied from the source server to the destination server.
+    ** ldap: zimbraMailHost ldap attribute is updated and all account caches are flushed.
+    ** backup: All backup entries are copied from the source server to the destination server.
+    ** reindex: Start a mailbox reindex.
+    ** delete:  All blobs and db entries are deleted from the source server,
+    backup items are also marked as deleted.
+* All of the stages are executed sequentially. If a single stage is specified,
+the mailbox is parked in maintenance mode throughout the entire operation. On
+success, the mailbox will be placed into its original state.
+* Initially, all blob items will be stored in the destination server primary volume.
+* On the reindex stage's completion, a new HSM operation is submitted to the
+destination server, if not specified otherwise.
+* All volumes' compression options are taken.
+* The MailboxMove operation can be executed if and only if no others operations
+are running on the source server.
+* The HSM option applies current HSM policies. It runs after each mailbox is
+successfully moved. On any run new, items will be moved.
 
 [[hsm-ng-attachment-indexing]]
 HSM NG Attachment Indexing
 --------------------------
 
 [[how-indexing-works]]
-How indexing works
+How Indexing Works
 ~~~~~~~~~~~~~~~~~~
-A new Indexing Engine has been added to HSM NG to index attachment contents.
+A new indexing engine has been added to HSM NG to index attachment contents.
 
-It works together with Zimbra's default engine: the main Zimbra indexing
-process analyzes the content of an item, splitting it into several parts
-based on the MIME parts of the object, then handles the indexing of
+The indexing engine works together with Zimbra's default engine. The main Zimbra indexing
+process analyzes the contents of an item, splitting it into several parts
+based on the MIME parts of the object. Next, Zimbra handles the indexing of
 `known` contents - plaintext - and passes the datastream on to the
 HSM NG handlers for all other content.
 
-It includes an indexing cache, that speeds up the indexing process of
+The indexing engine includes an indexing cache that speeds up the indexing process of
 any content that has already been analyzed. Datastreams over 10Kb are
-cached by default and the cache hold 10000 entries, while smaller
+cached by default, and the cache hold 10000 entries, while smaller
 datastreams are not cached as the cache benefits only apply to large
 datastreams.
 
 [[indexed-formats]]
-Indexed formats
+Indexed Formats
 ~~~~~~~~~~~~~~~
 
 [[web]]
