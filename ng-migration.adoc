@@ -1,10 +1,8 @@
 [[MIG-88-incremental-migration-with-backup-from-old-to-88]]
-Incremental Migration to Zimbra 8.8.0 with Backup NG
-----------------------------------------------------
+= Incremental Migration to Zimbra 8.8.0 with Backup NG
 
 [[MIG-88-description]]
-Description
-~~~~~~~~~~~
+== Description
 
 * This guide describes how to perform an Incremental Migration using
 Backup NG.

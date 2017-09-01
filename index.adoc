@@ -148,9 +148,7 @@ include::ng-cli.adoc[]
 
 <<<
 
-:leveloffset: +1
 include::ng-migration.adoc[]
-:leveloffset: -1
 
 <<<
 
