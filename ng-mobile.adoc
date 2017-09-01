@@ -2,19 +2,17 @@
 = Mobile NG
 
 [[enable-for-whole-cos]]
-Enable Mobile NG Synchronization for a COS
-----------------------------------------------------
+== Enable Mobile NG Synchronization for a COS
+
 
 By enabling Mobile NG for a all users in a Class of Service,
 you authorize all users in that COS to use all the mobile functions of Mobile NG.
 
 [[how-to-enable-the-mobile-ng-module-for-all-users-in-a-class-of-service]]
-How to Enable Mobile NG for all Users in a Class Of Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== How to Enable Mobile NG for all Users in a Class Of Service
 
 [[from-the-administration-console]]
-From the Administration Console
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== From the Administration Console
 
 To enable Mobile NG for all users in a COS from the Administration Console:
 
@@ -28,8 +26,7 @@ under Configuration -> Class of Service).
 * Check the `Enable mobile synchronization` button.
 
 [[from-the-zimbra-cli]]
-From the Zimbra CLI
-^^^^^^^^^^^^^^^^^^^
+== From the Zimbra CLI
 
 To enable Mobile NG for all users in a COS from the CLI:
 
@@ -37,12 +34,10 @@ To enable Mobile NG for all users in a COS from the CLI:
 zimbraFeatureMobileSyncEnabled TRUE`*
 
 [[how-to-disable-the-mobile-ng-module-for-all-users-in-a-class-of-service]]
-How to Disable Mobile NG for all Users in a Class Of Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== How to Disable Mobile NG for all Users in a Class Of Service
 
 [[from-the-administration-console-1]]
-From the Administration Console
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== From the Administration Console
 
 To disable Mobile NG for all users in a COS from the Administration Console:
 
@@ -53,8 +48,7 @@ under Configuration -> Class of Service).
 synchronization` button.
 
 [[from-the-zimbra-cli-1]]
-From the Zimbra CLI
-^^^^^^^^^^^^^^^^^^^
+== From the Zimbra CLI
 
 To disable Mobile NG for all users in a COS from the CLI:
 

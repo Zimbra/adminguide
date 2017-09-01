@@ -116,18 +116,6 @@ include::zimlets.adoc[]
 
 <<<
 
-include::cmdlineutils.adoc[]
-
-<<<
-
-include::spnego.adoc[]
-
-<<<
-
-include::crontab.adoc[]
-
-<<<
-
 include::ng-backup.adoc[]
 
 <<<
@@ -152,6 +140,20 @@ include::ng-migration.adoc[]
 
 <<<
 
+include::cmdlineutils.adoc[]
+
+<<<
+
+include::spnego.adoc[]
+
+<<<
+
+include::crontab.adoc[]
+
+<<<
+
 include::glossary.adoc[]
+
+<<<
 
 :leveloffset: -1
