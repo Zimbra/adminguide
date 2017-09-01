@@ -1,5 +1,4 @@
-[[introduction]]
-Introduction
+Zimbra Drive
 ------------
 
 Zimbra Drive is a client that interfaces Zimbra to third party products and services.
@@ -14,7 +13,6 @@ Zimbra product. Likewise, the data is not managed by Zimbra or any incorporated
 service. Therefore, Zimbra Support does not support issues related to Nextcloud
 and ownCloud servers.
 
-[[about-this-document]]
 About this Document
 ~~~~~~~~~~~~~~~~~~~
 
@@ -43,7 +41,6 @@ software nor falls under any Zimbra Support contract as stated in section
 2.4(a) of Zimbra's "Maintenance & Support Terms and Conditions".
 
 
-[[overview]]
 Overview
 ~~~~~~~~
 
@@ -60,7 +57,6 @@ an authentication mechanism into the Zimbra
 Web Interface. Each Zimbra account will be linked to the external storage
 service account.
 
-[[components]]
 Components
 ^^^^^^^^^^
 
@@ -74,7 +70,6 @@ Each component is mandatory and requires careful configuration.
 However, errors in installation or configuration won’t affect Zimbra
 usability.
 
-[[extension]]
 Extension
 ^^^^^^^^^
 
@@ -82,7 +77,6 @@ The Zimbra Drive extension is installed in the mailboxd component. The extension
 acts between the Zimbra Drive Zimlet and the Cloud App,
 providing services like authentication and item actions to the Zimlet.
 
-[[zimlet]]
 Zimlet
 ^^^^^^
 
@@ -108,15 +102,14 @@ ownCloud. It provides transparent authentication in ownCloud and
 Nextcloud using Zimbra credentials and a layer of compatibility that
 abstracts the version of ownCloud and Nextcloud for the extension.
 
-[[installation]]
 Installation
-------------
+~~~~~~~~~~~~
 
 This chapter guides the administrator through the manual installation of Zimbra Drive.
 
 [[requirements]]
 Requirements
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 * Root-level access to the underlying operating system.
 * Administrative access to an external cloud supported service (see
@@ -127,7 +120,7 @@ Supported versions:
 
 [[zimbra-packages-installation]]
 Zimbra Packages Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section describes how to install the Zimbra Drive Extension
 and the Zimbra Drive Zimlet.
@@ -143,7 +136,7 @@ Install zimbra-drive [Y] Yes
 
 [[zimbra-already-installed]]
 Zimbra Already Installed
-^^^^^^^^^^^^^^^^^^^^^^^^
+++++++++++++++++++++++++
 
 The Zimbra installation adds the Zimbra repositories to apt sources
 list, so Zimbra Drive can be installed through the following command:
@@ -168,7 +161,7 @@ zmmailboxd  restart
 
 [[cloud-app-installation]]
 Cloud App Installation
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 Here are the steps to install the Zimbra Drive Cloud App to the
 specific supported cloud.
@@ -178,7 +171,8 @@ the archive `zimbradrive.tar.gz`.
 
 [[==subsec:NextcloudownCloudInstallation==]]
 Nextcloud/ownCloud
-^^^^^^^^^^^^^^^^^^
+++++++++++++++++++
+
 
 Nextcloud and ownCloud require the same following installation steps. +
 The placeholder `PATHTOCLOUD` is the path of the Nextcloud/ownCloud
@@ -210,7 +204,7 @@ installation].
 
 [[configuration]]
 Configuration
--------------
+~~~~~~~~~~~~~
 
 Zimbra Drive configuration is split into the Zimbra side and the Cloud side.
 The Zimbra Drive Zimlet doesn’t need more than standard Zimlet
@@ -221,7 +215,7 @@ only configure for your desired cloud service.
 
 [[zimbra-extension-configuration]]
 Zimbra Extension Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Zimbra Extension setup requires the URL of the cloud service that will
 be paired. This URL has to be set in the domain attribute
@@ -248,11 +242,12 @@ In Nextcloud/ownCloud, the URL has to target `index.php`
 
 [[cloud-app-configuration]]
 Cloud App Configuration
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 [[NextcloudownCloudInstallation]]
 Nextcloud/ownCloud
-^^^^^^^^^^^^^^^^^^
+++++++++++++++++++
+
 
 When everything is correctly configured, the Zimbra end user creates a
 private account in the cloud service that will be paired with the Zimbra
@@ -294,9 +289,8 @@ Domain PreAuth Key: +
 `# If response is empty, generate with` +
 `zmprov generateDomainPreAuthKey domainExample.com` +
 
-[[upgrade]]
 Upgrade
--------
+~~~~~~~
 
 This chapter guides administrators through the manual upgrade of
 Zimbra Drive. It’s important to pay attention to the version of each
@@ -307,7 +301,7 @@ but the Zimbra Drive App must be manually updated.
 
 [[zimbra-extension-and-zimlet-upgrade]]
 Zimbra Extension and Zimlet Upgrade
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When Zimbra is upgraded, Zimbra Drive can be
 installed directly from the installation. Zimbra Drive can be kept
@@ -322,7 +316,7 @@ yum update; yum install zimbra-drive
 
 [[cloud-app-upgrade]]
 Cloud App Upgrade
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 Unlike the Zimbra Drive Zimlet and the Extension, the Zimbra Drive Cloud app has to be
 manually upgraded on every version change.
@@ -347,14 +341,14 @@ are no longer used. In mysql, execute the following command: +
 
 [[uninstallation]]
 Uninstallation
---------------
+~~~~~~~~~~~~~~
 
 This chapter guides the administrator through the manual
 uninstallation of Zimbra Drive and cleanup of the system.
 
 [[disablePackages]]
 Disable Zimbra Drive Packages
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Since the Zimbra Drive Extension and the Zimbra Drive Zimlet are installed as
 Zimbra packages, their uninstallation is unexpected. To disable Zimbra Drive,
@@ -362,11 +356,11 @@ disable the Zimbra Drive Zimlet from the desired user, domain or class of servic
 
 [[remove-cloud-app]]
 Remove Cloud App
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 [[NextcloudownCloudUninstallation]]
 Nextcloud/ownCloud
-^^^^^^^^^^^^^^^^^^
+++++++++++++++++++
 
 The removal of the Nextcloud/ownCloud App has two steps:
 clean up and app uninstall.
@@ -422,11 +416,11 @@ Zimbra Drive App.
 
 [[advanced]]
 Advanced Topics
----------------
+~~~~~~~~~~~~~~~
 
 [[build-from-sources]]
 Build from Sources
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 This section describes the steps to build the Zimbra Drive components. The
 official Zimbra Drive source repository is hosted on
@@ -461,7 +455,7 @@ The archive zimbra_drive.tgz contains all components of Zimbra Drive:
 
 [[manual-installation]]
 Manual Installation
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 Manual installation is not supported.
 
@@ -471,7 +465,7 @@ to a fail during the Zimbra upgrade.
 
 [[extension-1]]
 Extension
-^^^^^^^^^
++++++++++
 
 The files `zimbradrive-extension.jar` and `zal.jar` must be copied in the
 right place; then a mailbox restart is required to load the extension.
@@ -498,7 +492,7 @@ Initialized extension Zimbra Abstraction Layer for: zimbradrive
 
 [[zimlet-1]]
 Zimlet
-^^^^^^
+++++++
 
 Deploy the Zimbra Drive Zimlet with the following command:
 
@@ -553,7 +547,7 @@ zmprov fc zimlet
 
 [[manual-uninstall]]
 Manual Uninstall
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 Manual uninstallation is not supported.
 
@@ -589,7 +583,7 @@ the command +
 
 [[how_to_report_an_issue]]
 How to Report an Issue
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 If an issue is found, Zimbra Support requires the following
 information:
@@ -617,14 +611,14 @@ Any personal information can be removed to protect the privacy.
 
 [[gatheringinfo]]
 Gathering System Information
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section helps the administrator to collect useful system
 information that is required to escalate an issue to Zimbra Support.
 
 [[gatheringinfo-zversion]]
 Zimbra Version
-^^^^^^^^^^^^^^
+++++++++++++++
 
 To see the version of Zimbra, type this command:
 
@@ -636,7 +630,7 @@ zmcontrol -v
 
 [[gatheringinfo-listzimlets]]
 List of Deployed Zimlets
-^^^^^^^^^^^^^^^^^^^^^^^^
+++++++++++++++++++++++++
 
 To see the list of deployed Zimlets, type this command:
 
@@ -648,7 +642,7 @@ zmzimletctl listZimlets
 
 [[gatheringinfo-userzimlets]]
 List of Zimlets Enabled for the User
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+++++++++++++++++++++++++++++++++++++
 
 To see the list of Zimlets enabled for a user, type this command:
 
@@ -660,7 +654,7 @@ zmprov getAccount user@domain.tld zimbraZimletAvailableZimlets
 
 [[gatheringinfo-userzimlets-pref]]
 List of Zimlet User Preferences
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++++++++++++
 
 To see the list of preferences for the Zimlets enabled for a user,
 type this command:
@@ -673,7 +667,7 @@ zmprov getAccount user@domain.tld zimbraZimletUserProperties
 
 [[gatheringinfo-extension]]
 Extension and Zimlet Versions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++++++++++
 
 To see the version of the extension and the Zimlet, type this command:
 

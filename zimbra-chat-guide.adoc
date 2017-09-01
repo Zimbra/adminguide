@@ -1,5 +1,4 @@
-[[introduction]]
-Introduction
+Zimbra Chat
 ------------
 
 [[about-this-document]]
@@ -10,7 +9,6 @@ This document is written for system administrators, and it aims to provide both 
 in-depth view of the product architecture to simplify
 troubleshooting and the knowledge necessary for solid customizations.
 
-[[overview]]
 Overview
 ~~~~~~~~
 
@@ -110,7 +108,7 @@ folder in the user's mailbox (if enabled, see <<sect:confkeys>>).
 
 [[installation]]
 Installation
-------------
+~~~~~~~~~~~~
 Zimbra Chat comes bundled with all Zimbra packages for version 8.8.0 and higher as a Zimbra package.
 
 No dedicated installation steps are required.
@@ -121,14 +119,15 @@ installation to install it.
 
 [[upgrade]]
 Upgrade
--------
+~~~~~~~
+
 Zimbra Chat is upgraded with the rest of the Zimbra platform.
 
 No dedicated upgrade steps are needed.
 
 [[troubleshooting]]
 Troubleshooting
----------------
+~~~~~~~~~~~~~~~
 
 This chapter helps the administrator find and solve any
 issues. If no solution is found, the administrator is guided through the process to
@@ -136,7 +135,7 @@ report the issue.
 
 [[looking-for-errors]]
 Looking for Errors
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 This process is fundamental to locating the source of an issue and
 to find a solution or to correctly report it.
@@ -416,11 +415,11 @@ privacy.
 
 [[advanced-topics]]
 Advanced Topics
----------------
+~~~~~~~~~~~~~~~
 
 [[sect:sizing]]
 Sizing
-~~~~~~
+^^^^^^
 
 Stress tests are being performed on Zimbra Chat.
 
@@ -437,7 +436,7 @@ configuration see <<sect:confkeys>>.
 
 [[sect:confkeys]]
 Configuration Keys
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 The Chat Extension is easily configurable through the Zimbra CLI. All of
 the configurations are stored in LDAP. +
@@ -519,11 +518,11 @@ zimbraChatAllowDlMemberAddAsFriend::
 
 [[sect:logs]]
 Logs
-~~~~
+^^^^
 
 [[sect:mailboxlog]]
 mailbox.log
-^^^^^^^^^^^
++++++++++++
 
 Mailbox log is a standard Log4j log. Here are some sample rows of
 a `mailbox.log`:
@@ -553,7 +552,7 @@ ModifyPropertiesRequest elapsed=4::
 
 [[sect:zmmailboxdout]]
 zmmailboxd.out
-^^^^^^^^^^^^^^
+++++++++++++++
 
 Mailbox log is a standard Log4j log. Here are some sample rows of
 a `zmmailboxd.out`:
@@ -563,4 +562,5 @@ xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@39
 xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@36ebc363{SSL-http/1.1}{0.0.0.0:8443}
 xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@54d9d12d{SSL-http/1.1}{0.0.0.0:7071}
 
------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+
