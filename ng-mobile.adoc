@@ -2,54 +2,55 @@
 = Mobile NG
 
 [[enable-for-whole-cos]]
-Enable the Mobile NG synchronization for a whole COS
-----------------------------------------------------
+== Enable Mobile NG Synchronization for a COS
 
-By enabling the Mobile NG Module for a all users in a Class of Service
-you authorize all users in that COS to use all the mobile functions of
-the Mobile NG Module.
+
+By enabling Mobile NG for a all users in a Class of Service,
+you authorize all users in that COS to use all the mobile functions of Mobile NG.
 
 [[how-to-enable-the-mobile-ng-module-for-all-users-in-a-class-of-service]]
-How to Enable the Mobile NG Module for all users in a Class Of Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== How to Enable Mobile NG for all Users in a Class Of Service
 
 [[from-the-administration-console]]
-From the Administration Console
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== From the Administration Console
 
-* Enter the Zimbra Administration Console
+To enable Mobile NG for all users in a COS from the Administration Console:
 
-* Double-click on the Class Of Service you want to edit (on the left,
+* Open the Zimbra Administration Console.
+
+* Double-click the Class Of Service you want to edit (on the left,
 under Configuration -> Class of Service).
 
-* Click on the Mobile tab
+* Click  the Mobile tab.
 
 * Check the `Enable mobile synchronization` button.
 
 [[from-the-zimbra-cli]]
-From the Zimbra CLI
-^^^^^^^^^^^^^^^^^^^
+== From the Zimbra CLI
+
+To enable Mobile NG for all users in a COS from the CLI:
 
 * As the 'zimbra' user run: *`zmprov mc COSName
 zimbraFeatureMobileSyncEnabled TRUE`*
 
 [[how-to-disable-the-mobile-ng-module-for-all-users-in-a-class-of-service]]
-How to Disable the Mobile NG Module for all users in a Class Of Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== How to Disable Mobile NG for all Users in a Class Of Service
 
 [[from-the-administration-console-1]]
-From the Administration Console
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+== From the Administration Console
 
-* Enter the Zimbra Administration Console
-* Double-click on the Class Of Service you want to edit (on the left,
+To disable Mobile NG for all users in a COS from the Administration Console:
+
+* Open the Zimbra Administration Console.
+* Double-click the Class Of Service you want to edit (on the left,
 under Configuration -> Class of Service).
-* Click on the Mobile tab and uncheck the `Enable mobile
+* Click the Mobile tab and uncheck the `Enable mobile
 synchronization` button.
 
 [[from-the-zimbra-cli-1]]
-From the Zimbra CLI
-^^^^^^^^^^^^^^^^^^^
+== From the Zimbra CLI
+
+To disable Mobile NG for all users in a COS from the CLI:
 
 * As the 'zimbra' user run: *`zmprov mc COSName
 zimbraFeatureMobileSyncEnabled FALSE`*
@@ -61,51 +62,59 @@ Note about Settings Hierarchy
 COS-level settings are overridden by user-level settings.
 
 [[enable-for-single-user]]
-Enable the Mobile NG Module for a single user
----------------------------------------------
+Enable Mobile NG for a Single User
+----------------------------------
 
 By enabling the Mobile NG Module for a single user you authorize a
 single user to use all the mobile functions of the Mobile NG Module.
 
 [[how-to-enable-the-mobile-ng-module-for-a-single-user]]
-How to Enable the Mobile NG Module for a single user
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How to Enable Mobile NG for a Single User
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[from-the-zimbra-administration-console]]
 From the Zimbra Administration Console
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Enter the Zimbra Administration Console
-* Double-click on the User you want to edit (on the left, under
-Addresses -> Accounts).
-* Click on the ZeMobile tab
+To enable Mobile NG for a single user from the Administration Console:
 
-* Check the `Enable mobile synchronization` button.
+* Open the Zimbra Administration Console.
+* Double-click the user you want to edit (on the left, under
+Addresses -> Accounts).
+* Click the ZeMobile tab.
+
+* Check `Enable mobile synchronization`.
 
 [[from-the-zimbra-cli-2]]
 From the Zimbra CLI
 ^^^^^^^^^^^^^^^^^^^
 
+To enable Mobile NG for a single user from the CLI:
+
 * As the 'zimbra' user run: *`zmprov ma user@domain.tld
 zimbraFeatureMobileSyncEnabled TRUE`*
 
 [[how-to-disable-the-mobile-ng-module-for-a-single-user]]
-How to Disable the Mobile NG Module for a single user
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How to Disable Mobile NG for a Single User
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[from-the-zimbra-administration-console-1]]
 From the Zimbra Administration Console
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Enter the Zimbra Administration Console
-* Double-click on the User you want to edit (on the left, under
+To disable Mobile NG for a single user from the CLI:
+
+* Open the Zimbra Administration Console.
+* Double-click the user you want to edit (on the left, under
 Addresses -> Accounts).
-* Click on the Mobile NG tab and uncheck the `Enable mobile
-synchronization` button.
+* Click the Mobile NG tab and uncheck `Enable mobile
+synchronization`.
 
 [[from-the-zimbra-cli-3]]
 From the Zimbra CLI
 ^^^^^^^^^^^^^^^^^^^
+
+To disable Mobile NG for a single user from the CLI:
 
 * As the 'zimbra' user run: *`zmprov ma user@domain.tld
 zimbraFeatureMobileSyncEnabled FALSE`*
@@ -121,14 +130,14 @@ Autodiscover
 ------------
 
 [[the-autodiscover-feature]]
-The Autodiscover feature
+The Autodiscover Feature
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-At the beginning of the account creation process on any mobile devices,
+At the beginning of the account creation process on any mobile device,
 the client will try to autonomously detect the URL, domain and username
-before asking the user for an imput.
+before asking the user for input.
 
-Mobile NG provides its own Autodiscover handler in order to make this
+Mobile NG provides its own Autodiscover handler to make this
 feature available in all supported version of Zimbra.
 
 WARNING: The Autodiscover feature
@@ -143,7 +152,7 @@ the http/s request sent by the mobile phone.
 Setting up Autodiscover
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to be functional, the Autodiscover feature needs both a
+To be functional, the Autodiscover feature needs both a
 dedicated DNS record and a change in Jetty's configuration.
 
 [[step-1-dns-records]]
@@ -152,15 +161,15 @@ Step 1: DNS records
 
 Two options are available:
 
-* DNS A record: either create a DNS A record or a DNS CNAME record for
+* DNS A record: Either create a DNS A record or a DNS CNAME record for
 autodiscover.[yourdomain.com], whose target must be the mailserver (or
-the appropriate proxy in case of a multistore infrastructure). In order
-for SSL to be properly functional, you'll either need a wildcard SSL
+the appropriate proxy in case of a multistore infrastructure). For SSL
+to be properly functional, you'll either need a wildcard SSL
 certificate for [yourdomain.com] or to declare
 `autodiscover.[yourdomain.com]` as a Certificate Subject Alt Name within
 your certificate.
 
-* DNS SRV record: create a new SRV record like the following:
+* DNS SRV record: Create a new SRV record like the following:
 
 ....
 Service: _autodiscover
@@ -170,12 +179,12 @@ Host: [mail.yourdomain.com]
 ....
 
 [[step-2-jetty-configuration]]
-Step 2: Jetty configuration
+Step 2: Jetty Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-WARNING: This changes are not guaranteed to survive a Zimbra update.
-Depending on the contents of the update you might need to manually
-re-apply this changes.
+WARNING: These changes are not guaranteed to survive a Zimbra update.
+Depending on the contents of the update, you might need to manually
+re-apply these changes.
 
 Based on your Zimbra major release, apply one of the following changes.
 
@@ -228,11 +237,11 @@ with
 ....
 
 [[the-mobile-password-feature]]
-The Mobile Password feature
+The Mobile Password Feature
 ---------------------------
 
 [[mobile-passwords-and-you]]
-Mobile Passwords and you
+Mobile Passwords and You
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The `Mobile Password` feature allows Global and Delegated Admins to set
@@ -241,30 +250,30 @@ authentications only.
 
 The main benefits of using this feature are:
 
-* Enforce `set-and-forget` safe passwords regardless of any other
-password policy - so that you won't need to change the password saved on
-all mobile devices sycnhronized with an account should this account's
+* Enforce `set-and-forget` safe passwords, regardless of any other
+password policy, so that you won't need to change the password saved on
+all mobile devices synchronized with an account should this account's
 Zimbra password change.
 * Avoid the `real` password to be disclosed in case of unauthorized
 access to the device/client.
 
-A `Mobile Password` will not be valid for Webmail/POP3/IMAP/SMTP logins
-and the account password will not be valid for Mobile logins.
+A `Mobile Password` will not be valid for Webmail/POP3/IMAP/SMTP logins,
+and the account password will not be valid for mobile logins.
 
 [[how-to-set-a-mobile-password-for-a-mailbox]]
-How to set a Mobile Password for a mailbox
+How to Set a Mobile Password for a Mailbox
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Setting a Mobile Password is very easy:
+Setting a mobile password is easy:
 
-* Enter the Zimbra Administration Console.
-* Right-click on the user for which you want to set a Mobile Password
+* Open the Zimbra Administration Console.
+* Right-click the user for which you want to set a Mobile Password
 and select `Edit`.
 * In the `Mobile` tab within the user's settings, check the `Enable
 mobile password` checkbox.
 * Enter the desired password in the `Mobile password` field and enter it
 again in the `Confirm mobile password field. You can also choose to
-generate a random mobile password by clickin the `Generate random
+generate a random mobile password by clicking the `Generate random
 password" button.
 * Save.
 
@@ -276,39 +285,38 @@ Mobile Device Management a.k.a. Mobile Provisioning
 What is Mobile Device Management?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Mobile Device Management (MDM - also known as Provisioning) allows an
-Administrator to define a set of rules and security settings that are
+Mobile Device Management (MDM - also known as provisioning) allows an
+administrator to define a set of rules and security settings that are
 applied Over The Air to one or more mobile devices, ranging from PIN
-policies to Allowed/Blocked app lists and including `one time` commands
+policies to Allowed/Blocked app lists and including `one time` commands,
 such as the remote wipe of the entire device.
 
-MDM effectively allows the administrators to limit and restrict the use
-of corporate mobile devices in order to avoid as many risky or improper
-behaviours as possible.
+MDM effectively allows administrators to limit and restrict the use
+of corporate mobile devices to avoid risky or improper behaviors.
 
-On top of this, MDM is also a priceless aid in carrying on `Bring Your
+MDM is also a priceless aid for `Bring Your
 Own Device` corporate policies, allowing users to connect their personal
-mobile devices to the corporate servers reducing the risk of security
-breaches to a bare minimum.
+mobile devices to the corporate servers, while reducing the risk of security
+breaches to a minimum.
 
 [[provisioning-features-available-on-your-client]]
-Provisioning features available on your client
+Provisioning Features Available on Your Client
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Not all Provisioning features are available on all clients. A good
+Not all provisioning features are available on all clients. A good
 comparison of Exchange ActiveSync clients can be found on
 http://en.wikipedia.org/wiki/Comparison_of_Exchange_ActiveSync_clients[Wikipedia]
 
 [[network-ng-modules-and-mdm]]
-Network NG Modules and MDM
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Network NG and MDM
+~~~~~~~~~~~~~~~~~~
 
-Network NG Modules features advanced MDM features through the Exchange
+Network NG features advanced MDM features through the Exchange
 ActiveSync protocol version 14+.
 
-Mobile policies can be enabled at COS and Mailbox level, allowing both a
-quick `one for many` setup and a user-based customized managment. In
-both cases, Mobile Management Options are available within the `Mobile` tab.
+Mobile policies can be enabled at COS and mailbox levels, allowing both a
+quick `one for many` setup and user-based customized management. In
+both cases, Mobile Management Options are available in the `Mobile` tab.
 
 [[provisioning-options]]
 Provisioning Options
@@ -316,7 +324,7 @@ Provisioning Options
 
 The following provisioning options are available:
 
-* Enable Mobile Policy: Enable or Disable the use of Mobile Policies for
+* Enable Mobile Policy: Enable or disable the use of mobile policies for
 the current user/COS.
 * Allow non-provisionable devices: Allow the user to synchronize any
 device that does not support provisioning.
@@ -328,30 +336,30 @@ policies.
 Enforceable Policies
 ^^^^^^^^^^^^^^^^^^^^
 
-Enforceable Policies are available right below to the `Mobile Devices`
+Enforceable Policies are available right below the `Mobile Devices`
 list, grouped in the following categories:
 
-* Sync Settings - Set synchronization spans and limits.
-* Device Settings - Enable or Disable device features such as Camera,
-WiFi, Removable Storage or Bluetooth.
-* Device Security Settings - Force an unlock code and define the minimum
+* Sync Settings: Set synchronization spans and limits.
+* Device Settings: Enable or disable device features such as camera,
+WiFi, removable storage or Bluetooth.
+* Device Security Settings: Force an unlock code and define the minimum
 requirements for the code itself.
-* Device Applications - Enable or Disable `standard` device applications
+* Device Applications: Enable or disable `standard` device applications
 such as the Browser and POP/IMAP client or unsigned apps.
 
 Two lists are also available for application whitelist/blacklist
 management:
 
-* Approved Applications - A customizable list of approved applications.
-* Blocked Applications - A customizable list of blocked applications
+* Approved Applications: A customizable list of approved applications.
+* Blocked Applications: A customizable list of blocked applications
 that won't be usable on the device.
 
 [[mobile-password]]
 Mobile Password
 ^^^^^^^^^^^^^^^
 
-While conceptually similar, the Mobile Password feature is not part of
-the Mobile Device Managment and can be used with any version of the EAS
+While conceptually similar, the mobile password feature is not part of
+ Mobile Device Managment and can be used with any version of the EAS
 protocol.
 
 [[syncstates]]
@@ -363,11 +371,11 @@ Mobile NG and the SyncState
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The SyncState (short for Synchronization Status) is a set of
-informations kept on the server about the synchronization with a mobile
-device. Each time a devices establishes a connection with the Mobile NG
-module, the following steps take place:
+information kept on the server about the synchronization with a mobile
+device. Each time a device establishes a connection with Mobile NG, the
+following steps take place:
 
-* 1. The device requests a folderSync operation in order to synchronize
+* 1. The device requests a folderSync operation to synchronize
 the local Folders with the ones on the server.
 
 `    One SyncKey per local folder is sent (or a single SyncKey set to '0' if this is the first connection between the device and the server)   `
@@ -376,7 +384,7 @@ the local Folders with the ones on the server.
 
 `    One SyncKey per folder is sent by the server.`
 
-* 3. Then, the device requests an itemSync operation in order to
+* 3. Then, the device requests an itemSync operation to
 synchronize all due items.
 
 `    The server stores the items synchronized in the SyncState.`
@@ -387,9 +395,9 @@ command to keep the connection alive.
 `    Step 4 is repeated as long as no changes happen to the synchronized account.`
 
 Every time a new item is stored on the mailbox or an old item is
-modified the server notifies the availability to the device, which
+modified, the server notifies the availability to the device, which
 closes the active connection (the one kept alive by the ping command)
-and repeats steps 3. and 4. .
+and repeats steps 3 and 4.
 
 The SyncState is the combination of the SyncKeys saved on step 2 and the
 itemIds saved on step 3. It's saved by the server per the
@@ -402,14 +410,14 @@ Sync Request
 The Sync Request is the actual synchronization process, started by
 either Mobile NG or by the client. During a sync request, any change in
 the mailbox that happened since the last request is synchronized to the
-device and viceversa.
+device and vice versa.
 
 A sync request is issued when:
 
-* The SyncState changes
-* A sync is forced client-side
+* The SyncState changes.
+* A sync is forced client-side.
 * The current `ping` expires and a new one is sent by the device (the
-keepalive duration is defined by the client)
+keepalive duration is defined by the client).
 
 [[managing-the-syncstates]]
 Managing the SyncStates
@@ -419,8 +427,8 @@ Managing the SyncStates
 Via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Mobile NG provides two options to manage the SyncStates of synchronized
-mobile devices:
+Mobile NG provides two options in the Administration Zimlet to manage the
+SyncStates of synchronized mobile devices:
 
 * Reset Device: Resets the device's SyncState for a single account,
 forcing a full re-synchronization the next time the device connects to
@@ -430,11 +438,11 @@ the server.
 server. Useful when a mobile device is not used anymore or is assigned
 to a different employee in the same company.
 
-Both options can be found in the Administration Zimlet.
-
 [[syncstates-via-the-cli]]
 Via the CLI
 ^^^^^^^^^^^
+To manage the SyncStates of synchronized mobile devices via the CLI, use one
+of the following commands:
 
 [[the-doremovedevice-command]]
 The doRemoveDevice command
@@ -506,23 +514,23 @@ Advanced Settings
 -----------------
 
 [[mobile-ng-performance-tuning]]
-Mobile NG Performance tuning
+Mobile NG Performance Tuning
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Mobile NG provides three useful options to fine-tune the Mobile NG
-module according to system performances.
+Mobile NG provides three useful options to fine-tune Mobile NG according
+to system performance.
 
 [[performance-tuning-settings]]
-Performance Tuning settings
+Performance Tuning Settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[available-settings]]
-Available settings
+Available Settings
 ^^^^^^^^^^^^^^^^^^
 
 * Notifications Latency (ZxMobile_NotificationsLatency): The seconds of
 delay between an event on the server and its notification to the mobile
-device
+device.
 
 * Use Instant Notifications (ZxMobile_UseInstantNotficiations):
 Enable/Disable instant notifications. Overrides Notifications Latency if
@@ -531,33 +539,33 @@ true.
 * Max Ping Heartbeat (ZxMobile_MaxPingHeartbeat): Maximum interval
 between 'ping' commands.
 
-All settings can be edited on the Administration Zimlet or using the
-`setProperty` command on the
+All settings can be edited in the Administration Zimlet or via CLI using the
+`setProperty` command.
 
 [[when-to-edit-the-performance-tuning-settings]]
-When to edit the Performance Tuning Settings
+When to Edit the Performance Tuning Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Default settings should be optimal for most situations. If you
 experience one or more of the problems below, please apply the proper
-solution:
+solution.
 
 [cols=",",options="header",]
 |=======================================================================
 |Problem |Solution
-|High system load |Disable Instant Notifications
+|High system load |Disable instant notifications
 
-|High system load after disabling Instant Notifications |Raise
-Notification Latency.
+|High system load after disabling instant notifications |Raise
+notification latency
 
-|Mobile users experience high network usage |Disable Instant
-Notifications and tweak Notifications Latency
+|Mobile users experience high network usage |Disable instant
+notifications and tweak notifications latency
 
 |Devices can connect but sessions are interrupted frequently |Adjust Max
-Ping Heartbeat according to your Network configuration
+Ping Heartbeat according to your network configuration
 
 |Items are synchronized from server-to-device with an excessive delay
-|Lower Norification Latency or Enable Instant Notifications
+|Lower notification latency or enable instant notifications
 |=======================================================================
 
 [[and-shared-folders]]
@@ -565,46 +573,45 @@ Shared Folders
 --------------
 
 [[shared-folders-and-you-and-your-mobile]]
-Shared folders and you (and your mobile)
+Shared Folders and You (and Your Mobile)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-With the Network NG Mobile module, it's possible to synchronize
+With Network NG, it's possible to synchronize
 folders that are not owned by the user itself to mobile devices. This
 applies to all item types available through the Exchange ActiveSync
 protocol, so you'll be able to sync any shared email folder, address
-book, calendar or tasklist to mobile devices alike.
+book, calendar or task list to mobile devices.
 
 Specific features available on mobile devices might differ, based on the
 client in use.
 
-WARNING: Not all clients support the synchronization of multiple Address
-Books, Calendars or Tasklists via Exchange ActiveSync.
+WARNING: Not all clients support the synchronization of multiple address
+books, calendars or task lists via Exchange ActiveSync.
 
 [[how-to-sync-a-shared-folder-to-your-mobile-devices]]
-How to sync a shared folder to your mobile devices
+How to Sync a Shared Folder to Your Mobile Devices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to allow a higher level of control over the synchronization,
+To allow a higher level of control over synchronization,
 users are allowed to choose which shared folders are to be synchronized
-with their mobile devices. This is achieved through the
+with their mobile devices.
 
 [[enable-the-mobile-synchronization-for-a-folder]]
-Enable the mobile synchronization for a folder
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Enable Mobile Synchronization for a Folder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Thanks to the Client Zimlet, enabling the mobile synchronization for a
-shared folder it's pretty easy:
+To enable mobile synchronization for a shared folder:
 
-* Log in to the Zimbra WebClient.
-* Right Click the shared folder you wish to sync.
-* Select the `Folder Sync Settings` entry in the drop-down menu.
+* Log in to the Zimbra Web Client.
+* Right-click the shared folder you want to sync.
+* Select `Folder Sync Settings` in the drop-down menu.
 
-* Tick the `Enable synchronization for this folder` checkbox.
+* Check the `Enable synchronization for this folder` checkbox.
 
 * Press OK.
 
-After doing so, the new folder will be synchronized to any mobile device
-connected to the account together with the next
+The new folder will be synchronized to any mobile device
+connected to the account.
 
 [[restrictions]]
 Restrictions
@@ -614,42 +621,43 @@ The following restrictions apply to shared folder synchronization:
 
 * It's not possible to sync a mountpoint referring to a full account
 share.
-* It's not possible to sync just a subfolder of a shared folder, as
+* It's not possible to sync a subfolder of a shared folder, as
 doing so would return an incomplete folder tree.
 * It's not possible to sync a read-only share, as the Exchange
-ActiveSync protocol does not envision the concept of `read-only`
-resource, so synchronizing a read-only folder will cause severe
-inconsistencies between the client ad the server along with many errors.
+ActiveSync protocol does not envision the concept of a `read-only`
+resource. Synchronizing a read-only folder will cause severe
+inconsistencies between the client and the server, along with many errors.
 
 [eas-filters]
 EAS Filters
 -----------
 
 In the EAS protocol, the protocol version used for the synchronization is
-defined during the initial handshake and never changed: the server presents a
+defined during the initial handshake and never changed. The server presents a
 list of all available protocol versions and the client chooses one among that list.
 
-EAS Filters are a way to limit the EAS version available to a subset of users or clients,
+EAS filters are a way to limit the EAS version available to a subset of users or clients
 to ensure that the proper version is used.
 
-Multiple EAS Filters can be set up, and will be evaluated in consequential order (see the `getAllEASFilters` and `doMoveEASFilter` commands below).
+Multiple EAS filters can be set up and will be evaluated in sequential order (see the `getAllEASFilters` and `doMoveEASFilter` commands below).
 
 [anatomy-of-an-eas-filter]
 Anatomy of an EAS Filter
 ~~~~~~~~~~~~~~~~~~~~~~~~
-An EAS filter is composed by 5 parts:
+An EAS filter is composed of 5 parts:
 
-* A `Type`, defining the type of filter rule
-* A `Parameter`, which is the filtering identifier (e.g. device brand or email address)
-* A `Mode`, defining whether the software will limit the available versions or provide a fixed list
-* An `easversions` field, containg the protocol versions enforced by the filter
-* A `Blocking` boolean value, which defnes whether other filters are executed once the current one is successfully matched.
+* `Type`: Defines the type of filter rule.
+* `Parameter`: The filtering identifier (e.g. device brand or email address).
+* `Mode`: Defines whether the software will limit the available versions or provide a fixed list.
+* `easversions` field: Contains the protocol versions enforced by the filter.
+* `Blocking` boolean value: Defines whether other filters are executed once
+the current one is successfully matched.
 
 [managing-eas-filters]
-Managing EAS filters
+Managing EAS Filters
 ~~~~~~~~~~~~~~~~~~~~
 
-EAS Filters are managed through the CLI using four dedicated commands:
+EAS filters are managed through the CLI using the following four dedicated commands.
 
 zxsuite mobile getAllEASFilters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -683,7 +691,7 @@ Sample Output:
 
 zxsuite mobile doAddEASFilter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-This command adds a new EAS Filter
+This command adds a new EAS filter.
 ....
 zxsuite mobile doAddEASFilter
 
@@ -714,7 +722,7 @@ contains the string 'android' only for user@example.com. No more EAS filters wil
 
 zxsuite mobile doDeleteEASFilter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-This command deletes an existing EAS Filter
+This command deletes an existing EAS Filter.
 ....
 zxsuite mobile doDeleteEASFilter
 command doDeleteEASFilter requires more parameters
@@ -767,20 +775,22 @@ command.
 
 [mobile-account-loggers]
 Mobile Account Loggers
----------------------
+----------------------
 
-Mobile Account Loggers are dedicated loggers that can output the entirety of
+Mobile account loggers are dedicated loggers that can output the entirety of
 a user's EAS logs into a dedicated logfile, with a different verbosity than the
-one of the `sync.log` and allow for quicker troubleshooting.
+one of the `sync.log`. This allow sfor quicker troubleshooting.
 
-When creating an Account Logger, the following parameters must be specified:
+When creating an account logger, the following parameters must be specified:
 
-* The target `account`
-* The `log_level` (verbosity) of the log
-* The dedicated `log_file`
+* The target `account`.
+* The `log_level` (verbosity) of the log.
+* The dedicated `log_file`.
 * The `window_size` to enforce on all devices synchronizing with the account while the logger is running.
 
-WARNING: Account Loggers are removed automatically when the mailboxd is stopped or restarted, and do not usually survive a mailboxd crash. Logfiles won't be affected.
+WARNING: Account loggers are removed automatically when the mailboxd is
+stopped or restarted and do not usually survive a mailboxd crash.
+Log files won't be affected.
 
 [account-logger-management]
 Account Logger Management

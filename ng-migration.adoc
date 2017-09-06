@@ -1,10 +1,8 @@
 [[MIG-88-incremental-migration-with-backup-from-old-to-88]]
-Incremental migration to Zimbra 8.8.0 with Backup NG
-----------------------------------------------------
+= Incremental Migration to Zimbra 8.8.0 with Backup NG
 
 [[MIG-88-description]]
-Description
-~~~~~~~~~~~
+== Description
 
 * This guide describes how to perform an Incremental Migration using
 Backup NG.
@@ -12,43 +10,43 @@ Backup NG.
 environment, minimizing the downtime and aiming to be transparent for
 the users.
 ** If correctly planned and executed, your mail system won't suffer any
-downtime and the impact on the users will be close to zero.
-* The source server of the migration requires either Zextras Suite or Zimbra Suite Plus.
+downtime, and the impact on the users will be close to zero.
+* The source server of the migration requires either the Zextras Suite or Zimbra Suite Plus.
 ** This guide applies for migrations from any Zimbra version supported by either of those to Zimbra 8.8.
-* All the CLI commands in this guide must be executed as the Zimbra
+* All the CLI commands in this Guide must be executed as the Zimbra
 user unless otherwise specified.
 
 [[MIG-88-what-will-be-migrated]]
-What will be migrated
-~~~~~~~~~~~~~~~~~~~~~
+What Will be Migrated?
+~~~~~~~~~~~~~~~~~~~~~~
 
-* Emails and Email Folders.
-* Contacts and Address Books.
-* Appontments and Calendars.
-* Tasks and Tasklists.
-* Files and Briefcases.
-* Share informations.
-* User Preferences.
-* User Settings.
-* Class of Service Settings.
-* Domain Settings.
+* Email and email folders
+* Contacts and address books
+* Appointments and calendars
+* Tasks and task lists
+* Files and briefcases
+* Share informations
+* User preferences
+* User settings
+* Class of Service settings
+* Domain settings
 
 [[MIG-88-what-will-not-be-migrated]]
-What will NOT be migrated
-~~~~~~~~~~~~~~~~~~~~~~~~~
+What Will NOT be Migrated?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Server settings (migrated for reference but not restored).
-* Global Settings (migrated for reference but not restored).
+* Server settings (migrated for reference but not restored)
+* Global settings (migrated for reference but not restored)
 * Customizations (Postfix, Jetty, etc...).
 * Items moved or deleted during the process will not be moved or deleted
 on the destination server.
 * Preferences (e.g. passwords) changed during the process will be reset
 upon each import.
 
-WARNING: The Incremental Migration is not designed to set up a
+WARNING: The incremental migration is not designed to set up a
 server-to-server mirroring. Using multiple imports to create a mirrored
 copy of the source server won't create a *mirrored* copy at all, since
-no deletions are performed by the Import process.
+no deletions are performed by the import process.
 
 [[MIG-88-source-data]]
 Source Data
@@ -59,43 +57,47 @@ Data from the source server is obtained through either Zextras Suite or Zimbra S
 * Zimbra Suite Plus can be obtained on the Zimbra website at https://www.zimbra.com
 
 [[MIG-88-software-installation]]
-Software installation
+Software Installation
 ~~~~~~~~~~~~~~~~~~~~~
-Once you obtained the package of either Zextras Suite or Zimbra Suite Plus, the installation process is the following:
+Once you obtaine either Zextras Suite or Zimbra Suite Plus, follow this
+ installation process:
 
-* Copy the package over to your server, in a directory owned by the root user.
+* Copy the package to your server, in a directory owned by the root user.
 * Unpack the package using `tar zxf`.
-* Enter the newly created directory called either `zextras_suite-[version]` or `zimbra_suite_plus-[version]`.
+* Enter the newly created directory called either `zextras_suite-[version]`
+or `zimbra_suite_plus-[version]`.
 * As root, run the installation script `./install.sh all`.
-* Follow the installation wizard, accepting the software EULA and installing both the Core and the Zimlet component.
-* Once the installation is completed, you can proceed with the guide.
+* Follow the installation wizard, accepting the software EULA and installing
+both the Core and the Zimlet component.
+* Once the installation is complete, proceed with the Guide.
 
-WARNING: Installing Zimbra Suite Plus or Zextras Suite requires a mailboxd service restart, which will be performed during the installation.
+WARNING: Installing Zimbra Suite Plus or Zextras Suite requires a mailboxd
+service restart, which will be performed during the installation.
 
 [[MIG-88-pre-migration-checks]]
-Pre-migration checks
+Pre-migration Checks
 --------------------
 
 [[MIG-88-servers]]
 Servers
 ~~~~~~~
 
-* The source server: any Zimbra server can be the source of your
+* Source server: Any Zimbra server can be the source of your
 migration, provided that it's running Backup NG or Zimbra Suite Plus.
-* The destination server: any Zimbra server can be the destination of
-your migratio, provided that it's running Backup NG.
+* Destination server: Any Zimbra server can be the destination of
+your migration, provided that it's running Backup NG.
 
 [[MIG-88-storage]]
 Storage
 ~~~~~~~
 
-* On the Source server: If Backup NG is not currently enabled on the
+* Source server: If Backup NG is not currently enabled on the
 source server, make sure you have an amount of free disk space
 _comparable_ to the size of the `/opt/zimbra/store/` folder (the
 exported data is compressed through the gzip algorythm, and all zimbra
 items are deduplicated, usually reducing the size of exported to the 70%
 of the original size).
-* On the Destination server: Make sure you have an amount of free space
+* Destination server: Make sure you have an amount of free space
 greater than the size of the `/opt/zimbra/store/` and of the `export`
 folders on the source server combined.
 
@@ -103,25 +105,27 @@ folders on the source server combined.
 Data Transfer
 ~~~~~~~~~~~~~
 
-While you can choose to transfer the data in any other way, rsync is our
+While you can choose to transfer the data in any way, rsync is our
 method of choice as it's a good compromise between speed and
 convenience.
 
 The main data transfer is executed while the source server is still
 active and functional. However, since the transfer is performed via
-network, carefully plan your transfer in advance so that you'll have
-transfered *all of your data* before migrating.
+the network, carefully plan your transfer in advance so that you'll have
+transferred *all of your data* before migrating.
 
 [[MIG-88-alternative-ways-to-transfer-your-data]]
-Alternative Ways to transfer your data
+Alternative Ways to Transfer Your Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Anything spanning from remote mount to physical move of the drive is ok
+Anything spanning from remote mount to physical move of the drive is ok,
 as long as it suits your needs.
 
 ....
-Never underestimate the bandwidth of a station wagon full of tapes hurtling down the highway.
---Tanenbaum, Andrew S. (1996). Computer Networks. New Jersey: Prentice-Hall. p. 83. ISBN 0-13-349945-6.
+Never underestimate the bandwidth of a station wagon full of tapes hurtling 
+down the highway.
+--Tanenbaum, Andrew S. (1996). Computer Networks. New Jersey: Prentice-Hall. 
+p. 83. ISBN 0-13-349945-6.
 ....
 
 [[MIG-88-dns]]
@@ -129,30 +133,30 @@ DNS
 ~~~
 
 Set the TTL value of your MX record to 300 on your `real` DNS. This will
-allow a fast switch between source and destination server.
+allow a fast switch between source and destination servers.
 
 [[MIG-88-the-setup]]
-Setting up the migration
+Setting up the Migration
 ------------------------
 
 [[MIG-88-step-1-coherency-checks]]
-Step 1: Coherency checks
+Step 1: Coherency Checks
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to avoid any possible data-related issue, run the following
+To avoid any possible data-related issues, run the following
 checks on the source server:
 
 * http://wiki.zimbra.com/wiki/Ajcody-Notes-No-Such-Blob#Zmblobchk_for_5.0.6.2B_Systems[zmblobchk]:
-this command checks the consistency between Zimbra's metadata and BLOBs.
+Checks the consistency between Zimbra's metadata and BLOBs.
 * http://wiki.zimbra.com/wiki/Zmdbintegrityreport[zmdbintegrityreport]:
-this command checks the integrity of the Zimbra's database.
+Checks the integrity of the Zimbra's database.
 
 Repair any error found as described in Zimbra's official documentation.
 
 Running a reindex of all mailboxes is also suggested.
 
 [[MIG-88-step-2-network-ng-modules-setup]]
-Step 2: Network NG Modules setup
+Step 2: Network NG Setup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Disable the Real Time Scanner on both servers:
@@ -161,12 +165,12 @@ Disable the Real Time Scanner on both servers:
 zxsuite backup setProperty ZxBackup_RealTimeScanner false
 ....
 
-WARNING: A dedicated device for the data export is strongly recommended in
-order to improve the export performance and to lower the impact on the
-performances of the running system.
+WARNING: A dedicated device for the data export is strongly recommended
+to improve the export performance and to lower the impact on the
+performance of the running system.
 
-Such device must be mounted on the `/opt/zimbra/backup/` path and the
-Zimbra user must have r/w permissions on it
+Any device must be mounted on the `/opt/zimbra/backup/` path, and the
+Zimbra user must have r/w permissions on it.
 
 [[MIG-88-step-3-data-export-smartscan]]
 Step 3: Data Export (SmartScan)
@@ -178,7 +182,7 @@ Run a SmartScan on the source server:
 zxsuite backup doSmartScan
 ....
 
-All your data will be exported to the default backup path
+All of your data will be exported to the default backup path
 (/opt/zimbra/backup/ng/).
 
 [[MIG-88-pro-tip-single-domains-export]]
@@ -192,34 +196,34 @@ of them. To do so, run the following command *instead* of the SmartScan:
 zxsuite backup doExport /path/to/export/folder/ domains yourdomain.com,yourdomain2.com[..]
 ....
 
-Mind that if you start with the `SmartScan` method you'll have to carry
-on the migration with such method, and if you start with the `Single
-Domains` method you'll have to carry on the migration with this one. The
+Mind that if you start with the `SmartScan` method, you'll have to carry
+on the migration with such method. If you start with the `Single
+Domains` method ,you'll have to carry on the migration with this one. The
 two methods cannot be mixed.
 
 [[MIG-88-data-export-smartscan-via-the-administration-zimlet]]
-Data export (SmartScan) via the Administration Zimlet
+Data Export (SmartScan) via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can also choose to export your data using the Administration Zimlet
-following
+as follows:
 
 [[MIG-88-step-4-data-synchronization]]
 Step 4: Data Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-WARNING: When you move the exported data to the destination server make
+WARNING: When you move the exported data to the destination server, make
 sure that the destination folder is not Backup NG's backup path on the
-destination server in order to avoid any nuisiances if you already use
+destination server ito avoid any issues if you already use
 Backup NG or plan to do so on the destination server.
 
 _(You can skip this step if you choose to transfer your data by other
 means than rsync.)_
 
-Using _rsync_, copy the data contained in the
-/opt/zimbra/backup/ng/ on a directory in the destination server
-(make sure the Zimbra user has r/w permissions on such folder). Use a
-terminal multiplexer like _screen_ or _tmux_, this process command might
+Using _rsync_, copy the data contained in
+/opt/zimbra/backup/ng/ to a directory in the destination server
+(make sure the Zimbra user has r/w permissions on the folder). Use a
+terminal multiplexer like _screen_ or _tmux_. This process command might
 need A LOT of time depending on network speed and amount of data
 involved.
 
@@ -229,7 +233,7 @@ rsync -avH /opt/zimbra/backup/ng/ root@desinationserver:/path/for/the/data/
 ....
 
 [[MIG-88-alternate-synchronization-method]]
-Alternate synchronization method
+Alternate Synchronization Method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 While the suggested method is great for high-bandwidth situations, the
@@ -244,7 +248,7 @@ remount the device on the source server as /opt/zimbra/backup/ng/
 with all due permissions.
 
 [[MIG-88-step-5-first-import]]
-Step 5: First import
+Step 5: First Import
 ~~~~~~~~~~~~~~~~~~~~
 
 Import all exported data to the destination server:
@@ -253,22 +257,22 @@ Import all exported data to the destination server:
 zxsuite backup doExternalRestore /path/for/the/data/
 ....
 
-Now sit back and relax while Network NG Modules imports your data on the
+Now sit back and relax while Network NG imports your data on the
 destination server.
 
-''Warning: Do not edit nor delete the
+''Warning: Do not edit or delete the backup path after this step.''
 
 [[MIG-88-first-import-via-the-administration-zimlet]]
-First import via the Administration Zimlet
+First Import via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can also choose to import your data using the Administration Zimlet
-following While importing via the Administration Zimlet be sure to
-remove all System Accounts (like GalSync, Ham, Spam, Quarantine etc.)
+You can also choose to import your data using the Administration Zimlet.
+ While importing via the Administration Zimlet, be sure to
+remove all system accounts (like GalSync, Ham, Spam, Quarantine etc.)
 from the imported account list.
 
 [[MIG-88-step-5-alternate-first-import-for-large-migrations-advanced-users-only]]
-Step 5 (alternate): First import for large migrations
+Step 5 (alternate): First Import for Large Migrations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are to migrate a very large infrastructure where an export/import
@@ -276,8 +280,8 @@ lasts for hours or even days, there is an alternative way to handle the
 migration from this point forward.
 
 Instead of importing all of your data to the destination server, you can
-run a `Provisioning Only` import that will only create Domains, Classes
-of Service and Accounts on the destination server, skipping all mailbox
+run a `Provisioning Only` import that will only create domains, Classes
+of Service and accounts on the destination server, skipping all mailbox
 contents.
 
 ....
@@ -313,10 +317,10 @@ work on their mailbox.
 slowdowns.
 
 [[MIG-88-the-situation-so-far]]
-The situation so far
+The Situation so Far
 --------------------
 
-Right now the vast majority of the data has already been imported to the
+Right now, the vast majority of the data has already been imported to the
 destination server. The source server is still active and functional,
 and you are ready to perform the actual migration.
 
@@ -325,12 +329,12 @@ The Migration
 -------------
 
 [[MIG-88-step-6-pre-migration-checks]]
-Step 6: Pre-migration checks
+Step 6: Pre-migration Checks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before switching the mail flow, ALWAYS make sure that the new server is
 ready to become active (check your firewall, your DNS settings, your
-security systems etc.)
+security systems etc.).
 
 [[MIG-88-step-7-the-switch]]
 Step 7: The Switch
@@ -340,7 +344,7 @@ This is it, the migration moment has come! At the end of this step the
 destination server will be active and functional.
 
 * Repeat step 3, step 4 and step 5 (only new data will be exported and
-synchronized)
+synchronized).
 * Switch the mail flow to the new server.
 * Once NO MORE EMAILS arrive to the source server, repeat step 3, step 4
 and step 5.
@@ -348,25 +352,24 @@ and step 5.
 The Destination server is now active and functional.
 
 [[MIG-88-step-8-post-migration-checks]]
-Step 8: Post-migration checks
+Step 8: Post-migration Checks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Run the following command to check for shares inconsistencies.
+Run the following command to check for shares inconsistencies:
 
 ....
 zxsuite backup doCheckShares
 ....
 
-Should this command report any inconsistency, the
+Should this command report any inconsistency, use the following command
+to parse the import mapfile used as the first argument and fix
+any broken shares.
 
 ....
 zxsuite backup doFixShares
 ....
 
-command will parse the import mapfile used as the first argument and fix
-any broken share.
-
-Mapfiles can be found in the Backup Path of the destination server as
+Mapfiles can be found in the backup path of the destination server as
 `map_[source_serverID]`.
 
 [[MIG-88-step-9-galsync]]
@@ -374,7 +377,7 @@ Step 9: Galsync
 ~~~~~~~~~~~~~~~
 
 Delete any imported GalSync accounts from the Zimbra Administration
-Console, then if needed create new GalSync accounts on all the imported
+Console, then if needed, create new GalSync accounts on all the imported
 domains and resync all the GalSync accounts with the following command:
 
 ....
@@ -385,10 +388,11 @@ zmgsautil forceSync -a galsync.randomstring@domain.com -n [resourcename]
 Step 10: Message Deduplication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Running a Volume Deduplication using the HSM NG module is highly suggested after a migration.
+Running a Volume Deduplication using HSM NG is highly suggested
+after a migration.
 
 [[MIG-88-what-now-1]]
-What now?
+What Now?
 ~~~~~~~~~
 
 * Initialize Backup NG on the new server to make sure all of your data is safe.
@@ -398,10 +402,10 @@ Incremental Migration FAQ
 -------------------------
 
 [[MIG-88-q-do-i-need-a-valid-license-in-order-to-perform-an-incremental-migration]]
-Q: Do I need a valid license in order to perform an incremental migration?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Q: Do I need a valid license to perform an incremental migration?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Yes. It can be either a Trial License or a purchased one.
+Yes. It can be either a trial License or a purchased one.
 
 [[MIG-88-q-what-will-be-migrated]]
 Q: What will be migrated?
@@ -409,8 +413,8 @@ Q: What will be migrated?
 
 Everything except for the server configuration. This includes:
 
-* User Data
-* User Preferences
+* User data
+* User preferences
 * Classes of Service configuration
 * Domain configurations
 

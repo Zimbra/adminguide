@@ -6,52 +6,51 @@ Delegated Admin Provisioning
 ----------------------------
 
 [[what-is-the-delegated-admin-provisioning]]
-What is the Delegated Admin Provisioning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+What is Delegated Admin Provisioning?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Delegated Admin Provisioning is the set of operations that allow you to
 grant, edit and revoke Domain Admin rights to a user.
 
-All Delegated Admin Provisioning operations can be either performed:
+All Delegated Admin Provisioning operations can be performed:
 
 * From the Admin NG tab of the Administration Zimlet
 * From the CLI, running the appropriate _zxsuite_ command as the
 _zimbra_ user
 
 [[granting-delegated-admin-rights-to-a-user]]
-Granting Delegated Admin rights to a user
+Granting Delegated Admin Rights to a User
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[add-da-from-the-administration-zimlet]]
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In the `Delegated Admins` section of the Admin NG Tab in the
-Administration Zimlet click the `Add` button.
+In the `Delegated Admins` section of the Admin NG tab in the
+Administration Zimlet, click the `Add` button.
 
-You will be asked the following informations:
+You will be be prompted for the following information:
 
-* Account: the email address you want to grant Delegated Admin rights
-to.
-* Domain: the domain on which the Delegated Admin will have control.
+* Account: The email address to which you want to grant Delegated Admin rights.
+* Domain: The domain on which the Delegated Admin will have control.
 * Delegated Auth: Check this box to allow the Delegated Admin to use the
-`View Mail` features on any mailbox of the selected domain.
-* Grant Limit: The maximum mailbox quota this admin can assign to a
+`View Mail` features on any mailbox in the selected domain.
+* Grant Limit: The maximum mailbox quota this Delegated Admin can assign to a
 user.
 * Edit Features: Defines whether the Delegated Admin is able to edit the
-contents of the `Features` tab on its users.
+contents of the `Features` tab for its assigned users.
 
 WARNING: If the `Domain Quota` is lower than the `Grant Limit`, the
-`Grant Limit` value will be ignored +
+`Grant Limit` value will be ignored. +
 Disk space and Quota limits can be entered in Gigabytes (gb), Megabytes
-(mb) or Kilobytes (kb)
+(mb) or Kilobytes (kb).
 
 [[add-dafrom-the-cli]]
 From the CLI
 ^^^^^^^^^^^^
 
-To grant Delegated Admin rights to a user, the `doAddDelegationSettings`
-command is available:
+To grant Delegated Admin rights to a user, use the `doAddDelegationSettings`
+command:
 
 ....
 Syntax:
@@ -69,25 +68,25 @@ adminQuota(O)    String                        0
 ....
 
 [[editing-the-rights-of-an-existing-delegated-admin]]
-Editing the rights of an existing Delegated Admin
+Editing the Rights of an Existing Delegated Admin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[edit-da-from-the-administration-zimlet-1]]
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In the `Delegated Admins` section of the Admin NG Tab in the
-Administration Zimlet select an entry in the list and click the `Edit`
+In the `Delegated Admins` section of the Admin NG tab in the
+Administration Zimlet, select an entry in the list and click the `Edit`
 button.
 
-You can also doubleclick an entry of the list to edit it.
+You can also double click an entry on the list to edit it.
 
 [[edit-da-from-the-cli-1]]
 From the CLI
 ^^^^^^^^^^^^
 
-To edit the rights of an existing Delegated Admin, the
-`doEditDelegationSettings` command is available:
+To edit the rights of an existing Delegated Admin, use the
+`doEditDelegationSettings` command:
 
 ....
 Syntax:
@@ -105,7 +104,7 @@ adminQuota(O)    String
 ....
 
 [[revoke-delegated-admin-rights-from-a-user]]
-Revoke Delegated Admin rights from a user
+Revoke Delegated Admin Rights from a User
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[from-the-administration-zimlet-2]]
@@ -113,15 +112,15 @@ From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the `Delegated Admins` section of the Admin NG Tab in the
-Administration Zimlet select an entry in the list and click the `Delete`
+Administration Zimlet, select an entry in the list and click the `Delete`
 button.
 
 [[from-the-cli-2]]
 From the CLI
 ^^^^^^^^^^^^
 
-To revoke Delegated Admin rights from a user, the
-`doRemoveDelegationSettings` command is available:
+To revoke Delegated Admin rights from a user, use the
+`doRemoveDelegationSettings` command:
 
 ....
 Syntax:
@@ -141,8 +140,8 @@ Quota Management
 ----------------
 
 [[what-is-quota-management]]
-What is Quota Management
-~~~~~~~~~~~~~~~~~~~~~~~~
+What is Quota Management?
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Admin NG allows the Global Administrator to set two different types of
 quota limits: the `Grant Limit` and the `Domain Quota`.
@@ -157,26 +156,25 @@ The `Grant Limit`
 
 The `Grant Limit` is one of the properties of a Delegated Admin.
 
-It specifies the maximum mailbox quota that such admin can grant to a
-mailbox and can be set and changed in the "
+It specifies the maximum mailbox quota that the Delegated Admin can grant to a
+mailbox and can be set and changed in the Delegated Admin's settings.
 
 Three options are available:
 
-* None: the Delegated Admin cannot edit the Quota attribute of a
+* None: The Delegated Admin cannot edit the Quota attribute of a
 mailbox.
-* Custom: the Delegated Admin can grant up to the specified value. This
+* Custom: The Delegated Admin can grant up to the specified value. This
 overrides any domain/COS quota setting.
-* Unlimited: the Delegated Admin can grant any quota to the mailbox.
+* Unlimited: The Delegated Admin can grant any quota to the mailbox.
 This overrides any domain/COS quota setting.
 
 [[the-domain-quota]]
 The `Domain Quota`
 ^^^^^^^^^^^^^^^^^^
 
-The `Domain Quota` is a property that applies to a domain.
-
-It specifies the maximum mailbox quota that *any Administrator* can
-grant to a mailbox in such domain and can be set and changed in the "
+The `Domain Quota` is a property that specifies the maximum mailbox quota that
+*any Administrator* can
+grant to a mailbox in the domain.
 
 WARNING: Assigning an unlimited quota to a mailbox will override the
 Domain Quota setting.
@@ -188,7 +186,7 @@ Domain Quota setting.
 The `Grant Limit` and `Domain Quota` properties are mutually exclusive
 on a restrictive basis.
 
-This means that the following scenarios may occour:
+This means that the following scenarios may occur:
 
 * A Global Admin grants a user a higher quota than the allowed Domain
 Quota
@@ -196,7 +194,7 @@ Quota
 Quota
 * A Delegated Admin's Grant Limit is lower than the Domain Quota
 
-Let's examine this scenario one by one.
+Let's examine these scenario one by one.
 
 [[a-global-admin-grants-a-user-a-higher-quota-than-the-allowed-domain-quota]]
 A Global Admin grants a user a higher quota than the allowed Domain
@@ -212,7 +210,7 @@ A Delegated Admin grants a user a higher quota than the allowed Domain
 Quota
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case the effective quota for the user will be the maximum quota
+In this case, the effective quota for the user will be the maximum quota
 allowed by the `Domain Quota` setting, even if the Delegated Admin's
 Grant Limit is higher than the Domain Quota.
 
@@ -220,7 +218,7 @@ Grant Limit is higher than the Domain Quota.
 A Delegated Admin's Grant Limit is lower than the Domain Quota
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case the maximum quota that the Delegated Admin can grant to a
+In this case, the maximum quota that the Delegated Admin can grant to a
 user will be the one defined by the Grant Limit, even if the Domain
 Quota is higher. A Global Admin, which is not bound to any Grant Limit
 restriction, will be allowed to assign any mailbox quota to the user up
@@ -231,31 +229,28 @@ Domain Limits
 -------------
 
 [[what-is-domain-limit-management-a.k.a.-domain-settings]]
-What is Domain Limit Management (a.k.a. `Domain Settings`)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+What is Domain Limit Management (a.k.a. `Domain Settings`)?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Domain Limit Management is one of the features of the Admin NG module of
-Network NG Modules. It allows a Global Administrator to set domain level
-limits that cannot be overcome by any Administrator.
+Domain Limit Management is a feature of the Admin NG module. It allows a
+Global Administrator to set domain level
+limits that cannot be exceeded by any Administrator.
 
-The only way to overcome a Domain Limit is to change the domain limit
+The only way to exceed a Domain Limit is to change the Domain Limit
 itself.
 
 [[domain-limits-1]]
 Domain Limits
 ^^^^^^^^^^^^^
 
-* Global Account Limit
-** The maximum number of accounts that can be created on this domain.
-* Domain Quota
-** The maximum mailbox quota that any Administrator can grant to a
+* Global Account Limit: The maximum number of accounts that can be created on this domain.
+* Domain Quota: The maximum mailbox quota that any Administrator can grant to a
 mailbox in the domain.
-* COS Limits
-** Define which Classes of Service can be used for users in the domain
-and the maximum number of users per Class of Service
+* COS Limits: Define which Classes of Service can be used for users in the domain
+and the maximum number of users per Class of Service.
 
 [[edit-the-limits-of-a-domain]]
-Edit the limits of a Domain
+Edit the Limits of a Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[from-the-administration-zimlet-3]]
@@ -263,17 +258,17 @@ From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 All the domains in the Zimbra infrastructure are listed in the `Domain
-Settings` list inside the Admin NG tab of the Administration Zimlet.
+Settings` list in the Admin NG tab of the Administration Zimlet.
 
-To edit the limits of a Domain, select the domain from the `Domain
+To edit the limits of a domain, select the domain from the `Domain
 Settings` list and press the `Edit` button.
 
 [[from-the-cli-3]]
 From the CLI
 ^^^^^^^^^^^^
 
-To edit the limits of a Domain through the CLI, the `setDomainSettings`
-command is available:
+To edit the limits of a domain through the CLI, use the `setDomainSettings`
+command:
 
 ....
 Syntax:
@@ -294,14 +289,15 @@ Usage example:
 
 zxsuite admin setDomainSettings example.com account_limit 100 domain_account_quota 100mb cos_limits cos1:30,cos2:80
 
-Sets a global account limit on the domain example.com of 100 accounts, with a domain account quota of 100 megabytes,
+Sets a global account limit on the domain example.com of 100 accounts,
+with a domain account quota of 100 megabytes
 and with cos account limits of 30 for cos1 and 80 for cos2.
 
-Note: A cos limit of -1 removes the limit for the cos
+Note: A cos limit of -1 removes the limit for the cos.
 ....
 
 [[reset-the-limits-of-a-domain]]
-Reset the limits of a Domain
+Reset the Limits of a Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[from-the-administration-zimlet-4]]
@@ -309,18 +305,18 @@ From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 All the domains in the Zimbra infrastructure are listed in the `Domain
-Settings` list inside the Admin NG tab of the Administration Zimlet.
+Settings` list in the Admin NG tab of the Administration Zimlet.
 
-To reset the limits of a Domain, select the domain from the `Domain
+To reset the limits of a domain, select the domain from the `Domain
 Settings` list and press the `Reset` button, then click `Ok` in the
-confirmation pop-up that will appear.
+confirmation pop-up.
 
 [[from-the-cli-4]]
 From the CLI
 ^^^^^^^^^^^^
 
-To reset the limits of a Domain through the CLI, the
-`resetDomainSettings` command is available:
+To reset the limits of a Domain through the CLI, use the
+`resetDomainSettings` command:
 
 ....
 Syntax:
@@ -342,42 +338,42 @@ Zimbra Administration as a Delegated Admin
 Accessing the Zimbra Administration Console as a Delegated Admin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to access the Zimbra Administration Console, connect to port
+To access the Zimbra Administration Console, connect to port
 7071 of your mailserver with a web browser and login with your Zimbra
 credentials.
 
 E.g: https://mail.domain.com:7071
 
 [[delegated-admin-can-and-cant-table]]
-Delegated Admin CAN and CAN'T table
+Delegated Admin CAN and CAN'T Table
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A quick reference of what a Delegated Admin CAN and CAN'T do through the
+Here is a quick reference of what a Delegated Admin CAN and CAN'T do through the
 Admin NG module.
 
 [cols=",",options="header",]
 |=======================================================================
 |CAN |CAN'T
-|View the account list of any domain they are granted Delegate Admin
-rights for. |View the account list belonging to any other domain.
+|View the account list of any domain for which they are granted Delegate Admin
+rights |View the account list belonging to any other domain
 
-|Edit any user account in any domain they are granted Delegate Admin
-rights for. |Edit any user account belonging to any other domain.
+|Edit any user account in any domain for which they are granted Delegate Admin
+rights |Edit any user account belonging to any other domain
 
-|Edit any alias, distribution list or resource in any domain they are
-granted Delegate Admin rights for. |Edit any alias, distribution list or
-resource belonging to any other domain.
+|Edit any alias, distribution list or resource in any domain for which they are
+granted Delegate Admin rights |Edit any alias, distribution list or
+resource belonging to any other domain
 
 | |Edit any Global Admin account
 
 | |Grant Global Admin or Delegated Admin rights to any user
 
-|Create an account on a domain they are granted Delegated Admin rights
-for. |Create an account on any other domain.
+|Create an account on a domain for which they are granted Delegated Admin rights
+ |Create an account on any other domain
 
 |Select the Class Of Service of an account between those available for
-that account's domain. |Arbitrarily set the Class of Service of an
-account between those available on the server.
+that account's domain |Arbitrarily set the Class of Service of an
+account between those available on the server
 
 | |Edit COS settings
 
@@ -409,11 +405,11 @@ delegated admin rights have been granted.
 ** `Mobile NG`: Manage the synchronization of mobile devices and clients
 belonging to any domain for which delegated admin rights have been
 granted.
-** "Admin NG: View the list of Delegated Admins of to any domain for
+** "Admin NG: View the list of Delegated Admins belonging to any domain for
 which delegated admin rights have been granted as well as quota usage
 informations.
-* `Search Bar`: Perform quick searches
-* `[username]`: Log Out from the Zimbra Administration Console
+* `Search Bar`: Perform quick searches.
+* `[username]`: Log Out from the Zimbra Administration Console.
 
 [[delegated-admin-log-browsing]]
 Delegated Admin Log Browsing
@@ -430,9 +426,9 @@ activity through a search-based graphical log browser.
 The Admin NG Log Browser
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Admin NG Log Browser can be accessed by clicking the `Browse Logs`
+The Admin NG Log Browser can be accessed by clicking `Browse Logs`
 in the Admin NG tab of the Administration Zimlet. The `Filter Log`
-pop-up dialog will open allowing you to apply some filters to the logs
+pop-up dialog will open, allowing you to apply some filters to the logs
 you want to browse.
 
 The available filters are:
@@ -443,13 +439,13 @@ single Domain Admin.
 ** `Action`: Filter the logs to only view one particular action. See
 below for the available actions.
 * `Advanced` filters
-** `Client IP`: filters the logs to only shows operations performed from
+** `Client IP`: Filters the logs to only show operations performed from
 a determined IP address.
-** `Show Logins`: select this checkbox to also show when the Domain
+** `Show Logins`: Select this checkbox to also show when the Domain
 Admins log into the Zimbra Web Client.
-** `Outcome`: filters the logs to either show all operations, successful
-operations or failes operations.
-** `Start` and `End`: limits the logs shown to a specific timespan
+** `Outcome`: Filters the logs to either show all operations, successful
+operations or failed operations.
+** `Start` and `End`: Limits the logs shown to a specific timespan
 (default: the current day).
 
 Clicking the `View` button will apply the selected filters and show the
@@ -462,11 +458,10 @@ The `Action` filter
 Any operation an Administrator can perform is available in the drop-down
 menu of the `Action` filter.
 
-All of this operations are important to keep track of your admin's
-actions and to troubleshoot issues, in our opinion the most interesting
-are:
+All of these operations are important to keep track of your admin's
+actions and to troubleshoot issues.
 
-* `Auth`: All ZWC authentications
+* `Auth`: All ZWC authentications.
 * `DelegateAuth`: All Delegated Authentications, either through the
 `View Mail` button or through the `-z` option of the _zmmailbox_
 command.
@@ -477,29 +472,29 @@ command.
 * `DeleteDistributionList`: All distribution lists deletions.
 
 [[reports-and-informations]]
-Reports and Informations
-------------------------
+Reports and Information
+-----------------------
 
 [[admin-ng-monthly-reports]]
 Admin NG Monthly Reports
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Admin NG module includes a very useful `Monthly Reports` feature
-that allow Global Administrators to keep track of both Delegated Admin
+that allows Global Administrators to keep track of both Delegated Admin
 operations and domain status for a given month.
 
 [[how-does-the-monthly-report-system-work]]
 How does the Monthly Report system work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At the first day of each month, the Admin NG module automatically
+On the first day of each month, the Admin NG module automatically
 creates a report based on the data gathered in the Admin NG Log.
 
 This monthly report includes:
 
-[cols="",options="header",]
+[cols=",",options="header",]
 |=======================================================================
-|GLOBAL REPORT
+|GLOBAL REPORT |
 |First logged action |Timestamp of the first action performed by an
 Admin this month
 
@@ -528,9 +523,9 @@ during the month
 during the month
 |=======================================================================
 
-[cols="",options="header",]
+[cols=",",options="header",]
 |=======================================================================
-|DOMAIN REPORT
+|DOMAIN REPORT  |
 |Domain |The name of the domain this data refers to
 
 |Last admin login |Latest administrative login timestamp
@@ -543,7 +538,7 @@ domain
 |Maximum Domain Size |Sum of the maximum quota of all mailboxes
 (excluding `Unlimited` mailboxes)
 
-|Accounts with no quota limit |Nuber of mailboxes which don't have a
+|Accounts with no quota limit |Number of mailboxes that don't have a
 quota limit
 
 |Total size of accounts with no quota limit |Sum of the quotas used by
@@ -562,9 +557,9 @@ on this domain
 admins on this domain
 |=======================================================================
 
-[cols="",options="header",]
+[cols=",",options="header",]
 |=======================================================================
-|ADMIN REPORT
+|ADMIN REPORT |
 |Admin |The name of the admin this data refers to
 
 |Successful logins |Number of successful logins into the Admin Console
@@ -591,28 +586,27 @@ month
 |=======================================================================
 
 [[how-to-access-the-monthly-reports]]
-How to access the monthly reports
+How to Access the Monthly Reports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[from-the-administration-zimlet-5]]
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To access the `Monthly Reports` interface:
+To access the `Monthly Reports`:
 
-* Log into the Zimbra Administration Console as a Global Admin
-* Enter the Admin NG tab of the Administration Zimlet
-* Click on the `Monthly Reports` button on the top-right part of the
-page
-* Select the month you wish to view the report for and click `Show
-Report`
+* Log into the Zimbra Administration Console as a Global Admin.
+* On the Admin NG tab of the Administration Zimlet, click the `Monthly Reports`
+button on the top-right of the page.
+* Select the month you wish to view and click `Show
+Report`.
 
 [[from-the-cli-5]]
 From the CLI
 ^^^^^^^^^^^^
 
-In order to view the Monthly Reports from the CLI, the
-`getMonthlyReport` command is available:
+To view the Monthly Reports from the CLI, use the
+`getMonthlyReport` command:
 
 ....
 zxsuite admin getMonthlyReport [attr1 value1 [attr2 value2...
@@ -639,8 +633,8 @@ Shows the monthly report for the month '11/2012'
 Partial Reports
 ~~~~~~~~~~~~~~~
 
-In order to create a partial report for the current month, the
-`doMonthlyReport` command is available:
+To create a partial report for the current month, use the
+`doMonthlyReport` command:
 
 ....
 zxsuite admin doMonthlyReport [attr1 value1 [attr2 value2...
@@ -659,11 +653,12 @@ zxsuite admin doMonthlyReport
 Generates the monthly report for the previous month and saves it in the current Admin NG log path
 
 zxsuite admin doMonthlyReport month 01/2013
-Generates a PARTIAL monthly report for the current month, without saving it to disk.
+Generates a PARTIAL monthly report for the current month, without saving it to disk
 
 ** NOTE**
 
-This command is automatically executed once a month to generate a file containing the report for the
+This command is automatically executed once a month to generate a file containing
+the report for the
 previous month. To overwrite an existing report file, set the 'force' parameter to true.
 ....
 
@@ -671,51 +666,51 @@ previous month. To overwrite an existing report file, set the 'force' parameter 
 The Admin NG Log Path
 ~~~~~~~~~~~~~~~~~~~~~
 
-The Admin NG Module stores all the Monthly Reports together with the
-logs used to both generate the Monthly reports and to provide
-informations via the `Admin Log Browser` feature in a path inside the
-/opt/zimbra/conf/ directory (default /opt/zimbra/conf/zextras/zxadmin/).
-This particular default path has been chosen as it is the only directory
-which has a 100% chance NOT to be deleted during a Zimbra update.
+The Admin NG Module stores all monthly reports, together with the
+logs used to generate the Monthly reports and to provide
+information via the `Admin Log Browser` feature, in a path inside the
+`/opt/zimbra/conf/` directory (default `/opt/zimbra/conf/zextras/zxadmin/`).
+This particular default path has been chosen because it is the only directory
+that CANNOT be deleted during a Zimbra update.
 
 [[the-admin-ng-log-path-structure-and-contents]]
-The Admin NG Log Path structure and contents
+The Admin NG Log Path Structure and Contents
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Admin NG Log Path is a flat directory containing the following
+The Admin NG log path is a flat directory containing the following
 files:
 
 * One or more `YYYY_MM` files containing the logs for the file's
-namesake month
-* Zero or more `YYYY_MM.report` files containing the Monthly Report for
+namesake month.
+* Zero or more `YYYY_MM.report` files containing the monthly report for
 the file's namesake month.
 * Zero or more `YYYY_MM.X` files containing partial logs for the file's
 namesake month. These files are created when changing the Admin NG Log
-Path
+Path.
 
 [[changing-the-admin-ng-log-path]]
-Changing The Admin NG Log Path
+Changing the Admin NG Log Path
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 WARNING: Carefully read this paragraph before changing the Admin NG Log
-Path, any error on the procedure will cause a potential log loss that
+Path. Any error on the procedure will cause a potential log loss that
 will render the `Monthly Report` and `Show Admin Logs` features highly
-unreliable
+unreliable.
 
-In order to safely change the Admin NG Log Path follow these steps:
+To safely change the Admin NG Log Path, follow these steps:
 
 * Create the folder that will contain the logs:
 ** The folder's ownership must be `zimbra:zimbra`.
 ** The 'zimbra' user must have read and write permissions to the folder.
 ** The folder must be empty.
-* Log into the Zimbra Administration Console as a Global Admin
-* Enter the Admin NG tab of the Administration Zimlet
+* Log into the Zimbra Administration Console as a Global Admin.
+* Open the Admin NG tab in the Administration Zimlet.
 * In the `Basic Module Configuration` section, click the `Change` button
 near the Admin Log Path line.
-* Enter the new path and click on `Change Path`
-* If no errors are shown, move all the contents of the old Log Path
+* Enter the new path and click `Change Path`.
+* If no errors are shown, move all the contents of the old log path.
 ** It's perfectly normal to only see `.report` and `.X` files in the old
-Log Path, as the current log file will be given the `.1` extension to
+log path, as the current log file will be given the `.1` extension to
 mark it as a partial. Any previous `.X` files will have their extension
 number increased by 1.
 
@@ -724,36 +719,35 @@ Configuration Reset
 -------------------
 
 [[what-is-the-admin-ng-configuration-reset]]
-What is the Admin NG Configuration Reset
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+What is the Admin NG Configuration Reset?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Admin NG Configuration Reset is a free feature of the Admin NG
 module that allows a Global Administrator to completely wipe all
 delegation rights from the server.
 
 This is not a `rollback` feature that cleans the Admin NG module's
-configuation. Resetting the Admin Configuration will affect both Admin
-NG and Zimbra delegation rights
+configuration. Resetting the Admin Configuration will affect both Admin
+NG and Zimbra delegation rights.
 
 WARNING: Using the Admin Configuration Reset feature will completely
 wipe all delegation configuration from the server, bringing it back to
 the state of a fresh installation. Only Admin Delegation settings will
-be wiped, no other kind of data will be affected
+be wiped, no other kind of data will be affected.
 
 [[what-does-the-admin-configuration-reset-clear]]
-What does the Admin Configuration Reset clear
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+What does the Admin Configuration Reset clear?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Admin Configuration Reset clears the following configurations:
 
 * The `isDelegatedAdmin` account property for all accounts on the server
 * All Access Control Entries and all Access Control Lists for
 ** Users
-** Classes of Service
 ** Domains
-** Classes of Service
-** Local Configuration
-** Server Configuration
+** Classes of service
+** Local configuration
+** Server configuration
 ** Zimlets
 
 [[when-should-i-use-the-admin-config-reset]]
@@ -764,25 +758,23 @@ The Admin Config Reset should only be used in the following cases:
 
 * To completely reset a compromised situation
 ** If one or more wrong ACL or ACE settings cause your Zimbra
-Administration Console to be unstable or not to properly show (eg.
+Administration Console to be unstable or not to properly show (e.g.
 displaying a blank page or missing one or more UI elements), use the
 Admin Configuration Reset as a final resolution.
 
 * If you plan to stop using the Admin NG module
-** The reset option is available even if no valid Network NG License is
+** The reset option is available even if no valid Network NG license is
 active. Remember that this will also wipe any manually set Delegation
-setting.
+settings.
 
 [[how-do-i-use-the-admin-configuration-reset]]
 How do I use the Admin Configuration Reset?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you *really* want to reset the Admin Delegation Configuration, simply
-run the
+If you *really* want to reset the Admin Delegation configuration, simply
+run this CLI command:
 
 `zxsuite core doDeleteAllDelegatedRights`
 
-CLI command.
-
-You will be asked to enter a confirmation string in order
+You will be asked to enter a confirmation string
 to avoid any accidental use of the command.

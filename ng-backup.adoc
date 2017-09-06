@@ -1,5 +1,5 @@
 [[backup-ng-guide]]
-= Backup NG
+= Backup Next Generation (NG)
 
 [[real-time-scan]]
 Real Time Scan
@@ -11,19 +11,19 @@ What is the Real Time Scanner?
 
 The Real Time Scanner is the big innovation in Backup NG. Each event on
 the system is recorded live to Zimbra's RedoLog and
-saved by Backup NG, which means that is always possible to rollback an
-account to a previous state. Thanks to the Real Time Scanner all the
-restore modes work with a split-second precision.
+saved by Backup NG, which means that it is always possible to rollback an
+account to a previous state. Thanks to the Real Time Scanner, all the
+restore modes work with split-second precision.
 
 [[how-does-it-work]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
 The Real Time Scanner reads all the events of the mail server almost
 real-time by following the flow of informations provided by the RedoLog.
-Then it 'replicates' the same operations on it's own data structure,
+Then it 'replicates' the same operations on its own data structure,
 creating items or updating their metadata. No information is ever
-overwritten in the backup, so that every item has its own complete
+overwritten in the backup, so every item has its own complete
 history.
 
 [[managing-the-real-time-scanner]]
@@ -42,9 +42,9 @@ Via the Administration Zimlet
 
 * Under Real Time Scanner, press the `Enable` button.
 
-*Note: when the Real Time Scanner is enabled for the first time or
+*Note: When the Real Time Scanner is enabled for the first time or
 re-enabled after a stop, a Live Full Scan is required. A warning will be
-displayed after enabling the Real Time Scanner and you will be prompted
+displayed after enabling the Real Time Scanner, and you will be prompted
 to start the Full Scan.*
 
 [[via-the-cli]]
@@ -84,23 +84,19 @@ zxsuite backup setProperty ZxBackup_RealTimeScanner FALSE
 ....
 
 [[why-should-i-disable-the-real-time-scanner]]
-Why should I disable the Real Time Scanner?
+Why Should I Disable the Real Time Scanner?
 +++++++++++++++++++++++++++++++++++++++++++
 
-The only time you should stop the Real Time Scanner is while performin
+The only time you should disable the Real Time Scanner is while performing
 an External Import of multiple domains. This is a safety measure to
-avoid high load on your server. After the import just re-enable the Real
-Time Scanner and perform a SmartScan when prompted, and you are good to
-go!
+avoid high load on your server. After the import, re-enable the Real
+Time Scanner and perform a SmartScan when prompted.
 
 [[limitations-and-safety-scan]]
-Limitations and safety scan
+Limitations and Safety Scan
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-At the moment there are two main limitations when restoring data
-acquired via the Real Time Scanner.
-
-Namely, those are
+The main limitation when restoring data acquired via the Real Time Scanner is:
 
 * *Emptied Folder* - when a user uses the `Empty Folder` button in the
 right-click context menu
@@ -113,38 +109,38 @@ This fixes any misaligned data and sanitizes the backed up metadata for
 the mailbox.
 
 [[smartscan]]
-Smartscan
+SmartScan
 ---------
 
 [[what-is-the-smart-scan]]
-What is the Smart Scan?
+What is the SmartScan?
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The Smart Scan is the main coherency check for the health of your backup
+The SmartScan is the main coherency check for the health of your backup
 system. It's `Smart` because it operates only on accounts modified since
 the last SmartScan, hence improving system performance and decreasing
 scan time exponentially.
 
-By default a SmartScan is scheduled to be executed each night (if `Scan
+By default, a SmartScan is scheduled to be executed each night (if `Scan
 Operation Scheduling` is enabled in the Backup NG section of the
 Administration Zimlet). Once a week, on a day set by the user, a Purge
 is executed together with the SmartScan to clear Backup NG's datastore
 from any deleted item that exceeded the retention period.
 
 [[how-does-it-work-1]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
-The Backup NG engine scans all the items on the Zimbra Datastore looking
-for items modified after the last SmartScan updating any outdated entry
-and creating any item not yet present in the backup while flagging as
-deleted any item found in the backup and not in the Zimbra Datastore.
+The Backup NG engine scans all the items on the Zimbra Datastore, looking
+for items modified after the last SmartScan. It updates any outdated entry
+and creates any item not yet present in the backup while flagging as
+deleted any item found in the backup and not in the Zimbra datastore.
 
-Finally, it updates all Configuration metadata in the backup, so that
-Domains, Accounts, COSs and Server Configurations are stored.
+Finally, it updates all configuration metadata in the backup, so that
+domains, accounts, COSs and server configurations are stored.
 
 [[when-is-a-smart-scan-executed]]
-When is a Smart Scan executed?
+When is a SmartScan Executed?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * When the Backup NG module is started.
@@ -154,24 +150,26 @@ Administration Zimlet.
 after being previously disabled.
 
 [[running-a-smart-scan]]
-Running a Smart Scan
+Running a SmartScan
 ~~~~~~~~~~~~~~~~~~~~
 
 [[starting-the-scan-via-the-administration-zimlet]]
-Starting the scan via the Administration Zimlet
+Starting the Scan via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Open the Administration Zimlet
+To start a SmartScan via the Administration Zimlet,
 
-* Click the Backup NG tab (be sure to have a valid
+* Open the Administration Zimlet.
 
-* Click `Run Smartscan`
+* Click the Backup NG tab (be sure to have a valid license).
+
+* Click `Run Smartscan`.
 
 [[starting-the-scan-via-the-cli]]
-Starting the scan via the CLI
+Starting the San via the CLI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To start a FullScan via the CLI the `doSmartScan` command is available
+To start a FullScan via the CLI, use the `doSmartScan` command:
 
 ....
 Syntax:
@@ -192,11 +190,10 @@ Performs a smart scan and sends notifications to user1@example.com and user2@exa
 ....
 
 [[checking-the-status-of-a-running-scan]]
-Checking the status of a running scan
+Checking the Status of a Running Scan
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To check the status of a running scan via the CLI the `monitor` command
-is available
+To check the status of a running scan via the CLI, use the `monitor` command:
 
 ....
 Syntax:
@@ -221,28 +218,28 @@ What is the Backup Purge?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Backup Purge is a cleanup operation that removes from the Backup
-Path any deleted item which exceeded the retention time defined by the
+Path any deleted item that exceeded the retention time defined by the
 `Data Retention Policy`.
 
 [[how-does-it-work-2]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
-The Purge engine scans through the metadata of all deleted items, and
+The Purge engine scans the metadata of all deleted items, and it
 removes any item whose last update (deletion) timestamp is higher than
 the retention time.
 
-Should an item BLOB still be referenced by one or more valid metadata
-files - due to Backup NG's built-in deduplication - the BLOB itself will
+If an item BLOB is still referenced by one or more valid metadata
+files, due to Backup NG's built-in deduplication, the BLOB itself will
 not be deleted.
 
-Starting from Network NG Modules 1.8.17, Postfix Customizations backed
-up by Backup NG also follow the backup path's purge policies: this can
+SPostfix customizations backed
+up by Backup NG also follow the backup path's purge policies. This can
 be changed in the ``Backup NG` section of the Administration Zimlet by
 unchecking the `Purge old customizations` checkbox.
 
 [[when-is-a-backup-purge-executed]]
-When is a Backup Purge executed?
+When is a Backup Purge Executed?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Weekly, if the Scan Operation Scheduling is enabled in the
@@ -252,7 +249,7 @@ CLI.
 
 [[infinite-retention]]
 
-Infinite retention
+Infinite Retention
 ~~~~~~~~~~~~~~~~~~
 
 Should the `Data Retention Policy` be set to `0`, meaning infinite
@@ -267,15 +264,17 @@ Running a Backup Purge
 Starting the Backup Purge via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Click the Backup NG tab (be sure to have a valid
+To start a BackupPurge via the Administration Zimlet:
 
-* Click the `Run Purge` button on the top-right part of the UI.
+* Click the Backup NG tab (be sure to have a valid license).
+
+* Click the `Run Purge` button in the top-right part of the UI.
 
 [[starting-the-backup-purge-via-the-cli]]
 Starting the Backup Purge via the CLI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To start a BackupPurge via the CLI the `doPurge` command is available
+To start a BackupPurge via the CLI, use the `doPurge` command:
 
 ....
 Syntax:
@@ -296,11 +295,10 @@ zxsuite backup dopurge purgeDays 30 backup_path /opt/zimbra/backup/backup_name
 ....
 
 [[checking-the-status-of-a-running-backup-purge]]
-Checking the status of a running Backup Purge
+Checking the Status of a Running Backup Purge
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To check the status of a running Purge via the CLI the `monitor` command
-is available
+To check the status of a running Purge via the CLI, use the `monitor` command:
 
 ....
 Syntax:
@@ -324,18 +322,17 @@ External Backup
 What is the External Backup?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The External Backup is one of the Bakcup Modes of Backup NG.
-
-It creates a snapshot of the mail system, ready to be used for a
+The External Backup is one of the Bakcup Modes of Backup NG. It creates a
+snapshot of the mail system, which is ready to be used for a
 migration. Exported data is deduplicated and compressed to optimize disk
 utilization, transfer times and I/O rates.
 
 [[how-does-it-work-3]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
-The Backup NG engine scans through all the data in the Zimbra Datastore,
-saving all the items (deduplicated and compressed) on a folder of your
+The Backup NG engine scans all the data in the Zimbra datastore,
+saving all the items (deduplicated and compressed) into a folder of your
 choice.
 
 [[folder-permissions]]
@@ -345,21 +342,20 @@ Folder Permissions
 The destination folder must be readable and writable by the *zimbra*
 user.
 
-In order to create a valid export directory you can run the following
-commands:
+To create a valid export directory, run the following commands:
 
 _mkdir /opt/zimbra/backup/yourdestfolder_
 
 _chown -R zimbra:zimbra /opt/zimbra/backup/yourdestfolder_
 
 [[preparing-the-migration]]
-Preparing the migration
+Preparing the Migration
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to minimize the risk of errors, please perform the following
-mainteinance procedures before migrating:
+To minimize the risk of errors, please perform the following
+maintenance procedures before migrating:
 
-* Doublecheck Zimbra permissions with the following command (must be ran
+* Double check Zimbra permissions with the following command (must be ran
 as root): _/opt/zimbra/libexec/zmfixperms --verbose --extended_
 * Reindex all mailboxes.
 * Check the BLOB consistency with the _zmblobchk_ utility.
@@ -372,28 +368,29 @@ Running an External Backup
 Via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+To start an External Backup via the Administration Zimlet:
+
 * Click the Backup NG tab.
 
-* Click on the `Export Backup` button under `Import/Export` to open the
+* Click the `Export Backup` button under `Import/Export` to open the
 Export Backup wizard.
 
-* Enter the Destination Path in the textbox and press Next. The software will
+* Enter the Destination Path in the textbox, and press Next. The software will
 check if the destination folder is empty and whether the 'zimbra' user
-has R/W permissions or not.
+has R/W permissions.
 
-* Select the domains you want to export and press Next.
+* Select the domains you want to export, and press Next.
 
 * Verify all your choices in the Operation Summary window. You can also
-add additional email addresses to be notified when the Restore operation
-is finished. Pleas notice that the Admin account and the User who
-started the Restore procedure are notified by default.
+add additional email addresses to be notified when the restore operation
+is finished. Please notice that the Admin account and the user who
+started the restore procedure are notified by default.
 
 [[via-the-cli-2]]
 Via the CLI
 ^^^^^^^^^^^
 
-To start an External Backup via the CLI, the `doExport` command is
-available:
+To start an External Backup via the CLI, use `doExport` command:
 
 ....
 Syntax:
@@ -419,8 +416,8 @@ Exports a backup of example.com to /opt/zimbra/backup/ and notifies john@example
 Scheduling Script
 ~~~~~~~~~~~~~~~~~
 
-The Network NG Modules CLI can be used to schedule External Backup
-operation. This comes very handy when you need to keep a
+The NG CLI can be used to schedule External Backup
+operations. This is handy when you need to keep a
 daily/weekly/monthly backup for corporate or legal reasons.
 
 [[restore-on-new-account]]
@@ -431,75 +428,74 @@ Restore on New Account
 What is the Restore on New Account?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Restore on New Account procedure allows you to restore a the
-contents and preferences of a mailbox as it was in a moment in time, in
+The Restore on New Account procedure allows you to restore the
+contents and preferences of a mailbox as it was in a moment in time, into
 a completely new account. The source account is not changed in any way,
-so that is possible to recover one or more deleted items in a user's
+so it is possible to recover one or more deleted items in a user's
 account without actually rolling back the whole mailbox. When you run
-this kind of restore you can choose to hide the newly created account
+this kind of restore, you can choose to hide the newly created account
 from the GAL as a security measure.
 
 [[how-does-it-work-4]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
-When a Restore on New Account starts a new account is created (the
-Destination Account) and all the items existing in the Source Account at
-the moment selected are recreated in the Destination Account, including
+When a Restore on New Account starts, a new account is created (the
+destination account). All the items existing in the source account at
+the moment selected are recreated in the destination account, including
 the folder structure and all the user's data. All restored items will be
-created in the Current Primary Store unless the `Obey HSM Policy` box is
+created in the current primary store unless the `Obey HSM Policy` box is
 checked.
 
 WARNING: When restoring data on a new account, shared items consistency
 is not preserved. This is because the original share rules refer to the
-original account's ID, not to the restored one's.
+original account's ID, not to the restored account.
 
 [[running-a-restore-on-new-account-via-the-administration-zimlet]]
 Running a Restore on New Account via the Administration Zimlet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A Restore on New Account can be ran in two ways
+A Restore on New Account can be run in two ways.
 
 [[from-the-accounts-tab]]
-From the account list
+From the Account List
 ^^^^^^^^^^^^^^^^^^^^^
 
-Running the restore from the `Accounts` tab in the Zimbra
-Administration Console allows to operate on users currently existing on
+Running Restore from the `Accounts` tab in the Zimbra
+Administration Console allows you to operate on users currently existing on
 the server. +
-If you need to restore a deleted user, please proceed to the restore via
+If you need to restore a deleted user, please proceed to Restore via
 the Administration Zimlet.
 
-* In the Left Pane of the Administration Console select `Accounts` to
-show up the Accounts List.
+* Select `Accounts` in the left pane of the Administration Console to
+show the Accounts List.
 
-* Browse the list and select the account to be restored (Source) by
-clicking on it.
+* Browse the list and click the account to be restored (Source).
 
 * On the top bar, press the wheel and then the `Restore ` button.
 
 * Select `Restore on New Account` as the Restore Mode and enter the name
-of the new account (Destination) in the text box. You can then choose
+of the new account (Destination) into the text box. You can then choose
 whether to Hide in GAL the new account or not. When you're done
-choosing, press `Next`
+choosing, press `Next`.
 
 * Choose the restore date. Day/Month/Year can be selected via a minical,
-the hour via a drop-down menu, minute and second via two text boxes.
+the hour via a drop-down menu and minute and second via two text boxes.
 Click `Next`.
 
 * Verify all your choice in the Operation Summary window. You can also
-add additional email addresses to be notified when the Restore operation
-is finished. Pleas notice that the Admin account and the User who
-started the Restore procedure are notified by default.
+add additional email addresses to be notified when the restore operation
+is finished. Pleas notice that the admin account and the user who
+started the restore procedure are notified by default.
 
-Click `Finish` to start the Restore.
+Click `Finish` to start the restore.
 
 [[running-a-restore-on-new-account-via-the-cli]]
 Running a Restore on New Account via the CLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To start a Restore on New Account via the CLI, the doRestoreOnNewAccount
-command is available:
+To start a Restore on New Account via the CLI, use the doRestoreOnNewAccount
+command:
 
 ....
 Syntax:
@@ -532,21 +528,20 @@ What is Undelete Restore?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Undelete Restore is one of the Restore Modes available in Backup NG.
-
 It allows an administrator to restore all items deleted from a mailbox
-in a period of time and and put them in a dedicated Zimbra folder inside
+in a period of time and put them into a dedicated Zimbra folder inside
 the mailbox itself.
 
 [[how-does-it-work-5]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
-During an Undelete Restore the Backup NG engine searches the backup
+During an Undelete Restore, the Backup NG engine searches the backup
 datastore for items flagged as `DELETED` and restores them in a
-dedicated folder in the selected Mailbox. WARNING: In order to allow to
+dedicated folder in the selected mmailbox. WARNING: To
 deal with IMAP-deleted emails in a more comfortable way for the user:
 the `deleted` IMAP flag will now be stripped from any restored item so
-that the item itself is visible in the Zimbra WebClient.
+that the item itself is visible in the Zimbra Web Client.
 
 [[running-an-undelete-restore]]
 Running an Undelete Restore
@@ -556,24 +551,23 @@ Running an Undelete Restore
 Via the Administration Console
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* In the Left Pane of the Administration Console select `Accounts` to
-show up the Accounts List.
+* Select `Accounts`in the left pane of the Administration Console to
+show the Accounts List.
 
-* Browse the list and select the account to be restored (Source) by
-clicking on it.
+* Browse the list and click the account to be restored (Source).
 
 * On the top bar, press the wheel and then the `Restore ` button".
 
 * Select `Undelete` as the Restore Mode and press `Next`.
 
 * Choose the restore date-time slot. Day/Month/Year can be selected via
-a minical, the hour via a drop-down menu, minute and second via two text
+a minical, the hour via a drop-down menu and the minute and second via two text
 boxes. Click `Next`.
 
-* Verify all your choice in the Operation Summary window. You can also
-add additional email addresses to be notified when the Restore operation
-is finished. Pleas notice that the Admin account and the User who
-started the Restore procedure are notified by default.
+* Verify your choices in the Operation Summary window. You can also
+add additional email addresses to be notified when the restore operation
+is finished. Please notice that the admin account and the user who
+started the restore procedure are notified by default.
 
 * Click `Finish` to start the Restore.
 
@@ -581,8 +575,7 @@ started the Restore procedure are notified by default.
 Via the CLI
 ^^^^^^^^^^^
 
-To start an Undelete Restore operation, the `doUndelete` command is
-available:
+To start an Undelete Restore operation, use the `doUndelete` command:
 
 ....
 Syntax:
@@ -615,13 +608,13 @@ What is the External Restore?
 The External Restore is one of the Restore Modes of Backup NG.
 
 [[how-does-it-work-6]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
 The External Restore adds to the current Zimbra server all the data,
-metadata and configurations stored on an External Backup.
+metadata and configuration data stored on an external backup.
 
-The workflow of the import procedure is the following:
+The workflow of the import procedure is as follows:
 
 *PHASE1*
 
@@ -647,22 +640,22 @@ accounts)
 * _''Operation Ended'' notification with complete feedback_
 
 [[before-you-start-1]]
-Before you start
+Before You Start
 ~~~~~~~~~~~~~~~~
 
 If Backup NG is already initialized on the destination server, disable
-the RealTime Scanner in order to improve both memory usage and I/O
-performances.
+the RealTime Scanner to improve both memory usage and I/O
+performance.
 
-In order to reduce the I/O overhead and the amount of disk space used
+To reduce the I/O overhead and the amount of disk space used
 for the migration, advanced users may tweak or disable Zimbra's RedoLog
 for the duration of the import.
 
-In order to further reduce the amount of disk space used, it's possible
-to enable compression on your Current Primary Volume before starting the
-import. If you do not wish to use a compressed Primary Volume after
-migration, it's possible to create a new and uncompressed Primary
-Volume, set it to `Current` and the switch the old one to `Secondary`.
+To further reduce the amount of disk space used, it's possible
+to enable compression on your current primary volume before starting the
+import. If you do not wish to use a compressed primary volume after
+migration, it's possible to create a new and uncompressed primary
+volume, set it to `Current` and  switch the old one to `Secondary`.
 All of this can be done using the HSM NG module.
 
 [[running-an-external-restore]]
@@ -675,28 +668,27 @@ Via the Administration Zimlet
 
 * Click the Backup NG tab.
 
-* Click on the `Import Backup` button under `Import/Export` to open the
+* Click the `Import Backup` button under `Import/Export` to open the
 Import Backup wizard.
 
-* Enter the Destination Path in the textbox and press Forward. The software
+* Enter the Destination Path into the text box and press Forward. The software
 will check if the destination folder contains a valid backup and
-whether the 'zimbra' user has Read permissions or not.
+whether the 'zimbra' user has Read permissions.
 
 * Select the domains you want to import and press Forward.
 
 * Select the accounts you want to import and press Forward.
 
 * Verify all your choices in the Operation Summary window. You can also
-add additional email addresses to be notified when the Restore operation
-is finished. Please notice that the Admin account and the User who
-started the Restore procedure are notified by default.
+add additional email addresses to be notified when the restore operation
+is finished. Please notice that the admin account and the user who
+started the restore procedure are notified by default.
 
 [[via-the-cli-4]]
 Via the CLI
 ^^^^^^^^^^^
 
-To start an External Restore operation, the `doExternalRestore` command
-is available:
+To start an External Restore operation, use the `doExternalRestore` command:
 
 ....
 Syntax:
@@ -725,18 +717,18 @@ Restores the example.com domain, including all system accounts, and the john@exa
 ....
 
 [[speeding-up-the-restore-through-multithreading]]
-Speeding up the restore through multithreading
+Speeding up the Restore through Multithreading
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The `concurrent_accounts` parameter
-allows to restore multiple accounts at the same time, thus greatly
+allows you to restore multiple accounts at the same time, thus greatly
 speeding up the restore process. *This feature is not available via
-GUI*.
+the Administration Console*.
 
-WARNING: Albeit resource consumption does not grow linearily with the
+WARNING: Albeit resource consumption does not grow linearly with the
 number of accounts restored at the same time, it can easily become
-taxing - start from a low number of concurrent accounts, raising it
-according to your server's performances.
+taxing. Start from a low number of concurrent accounts, and raise it
+according to your server's performance.
 
 ....
 Usage example:
@@ -750,9 +742,9 @@ Restores the example0.com and example1.com domain, excluding system accounts, re
 After the Restore: Message Deduplication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Running a volume-wide deduplication with HSM NG is highly suggested after an
-External Restore, since the native deduplication system might be ineffective
-when sequentially importing accounts.
+Running a volume-wide deduplication with the HSM NG module is highly
+recommended after an External Restore, since the native deduplication
+system might be ineffective when sequentially importing accounts.
 
 [[restore-deleted-account]]
 Restore Deleted Account
@@ -762,48 +754,47 @@ Restore Deleted Account
 What is the Restore Deleted Account?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Restore Deleted Account procedure allows you to restore a the
-contents and preferences of a mailbox as it was when said mailbox was
-deleted, in a completely new account.
+The Restore Deleted Account procedure allows you to restore the
+contents and preferences of a mailbox, as it was when said mailbox was
+deleted, into a completely new account.
 
 [[how-does-it-work-7]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
-When a Restore Deleted Account starts a new account is created (the
-Destination Account) and all the items existing in the Source Account at
-the moment of the deletion are recreated in the Destination Account,
+When a Restore Deleted Account starts, a new account is created (the
+Destination Account), and all the items existing in the source account at
+the moment of the deletion are recreated in the destination account,
 including the folder structure and all the user's data. All restored
-items will be created in the Current Primary Store unless the `Obey HSM
+items will be created in the current primary store unless the `Obey HSM
 Policy` box is checked.
 
 WARNING: When restoring data on a new account, shared items consistency
 is not preserved. This is because the original share rules refer to the
-original account's ID, not to the restored one's.
+original account's ID, not to the restored account.
 
 [[from-the-backup-ng-tab]]
 From the Backup NG tab
 ^^^^^^^^^^^^^^^^^^^^^^
 
-* In the Left Pane of the Administration Console select ``Backup NG` to
-show up the Backup NG tab.
+* Select ``Backup NG` in the left pane of the Administration Console to
+show the Backup NG tab.
 
-* On the Top Bar push the `Restore Deleted Account` button.
+* On the top bar, push the `Restore Deleted Account` button.
 
 * Choose the restore date. Day/Month/Year can be selected via a minical,
-the hour via a drop-down menu, minute and second via two text boxes.
+the hour via a drop-down menu and the minute and second via two text boxes.
 Click `Next`.
 
-* Browse the list and select the account to be restored (Source) by
-clicking on it.
+* Browse the list and click the account to be restored (Source).
 
 * Enter the name of the new account (Destination) in the text box. You
 can then choose whether to Hide in GAL the new account or not. When
 you're done choosing, press `Next`.
 
-* Verify all your choice in the Operation Summary window. You can also
-add additional email addresses to be notified when the Restore operation
-is finished. Pleas notice that the Admin account and the User who
+* Verify all your choices in the Operation Summary window. You can also
+add additional email addresses to be notified when the restore operation
+is finished. Please notice that the admin account and the user who
 started the Restore procedure are notified by default.
 
 * Click `Finish` to start the Restore.
@@ -819,7 +810,7 @@ What is the Item Restore?
 The Item Restore is one of the Restore Modes of Backup NG.
 
 [[how-does-it-work-8]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
 A single item is restored from the backup to the owner's account.
@@ -833,14 +824,13 @@ Running an Item Restore
 Via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Item Restore is only available through the CLI
+Item Restore is only available through the CLI.
 
 [[via-the-cli-5]]
 Via the CLI
 ^^^^^^^^^^^
 
-To start an Item Restore operation, the `doItemRestore` command is
-available:
+To start an Item Restore operation, use the `doItemRestore` command:
 
 ....
 Syntax:
@@ -862,10 +852,10 @@ Restores item 4784 in the `john@example.com` mailbox
 ....
 
 [[how-to-obtain-the-itemid]]
-How to obtain the itemID
+How to Obtain the itemID
 ++++++++++++++++++++++++
 
-The `itemID` is one of the so-called `metadata` of an item consisting in
+The `itemID` is one of the `metadata` of an item consisting in
 an univoque code that identifies an item in a mailbox.
 
 Along with all other metadata, it is stored in a file inside the `items`
@@ -878,9 +868,9 @@ e.g.:
 ` Item 2057 of account 4a217bb3-6861-4c9f-80f8-f345ae2897b5, default backup path` +
 ` /opt/zimbra/backup/ng/accounts/4a217bb3-6861-4c9f-80f8-f345ae2897b5/items/57/2057`
 
-Metadata are stored in a plaintext file, so tools like `grep` and `find`
-can be used to search for contents. In order to see the metadata
-contained in a file in a more readable format you can use the `zxsuite
+Metadata are stored in a plain text file, so tools like `grep` and `find`
+can be used to search for contents. To see the metadata
+contained in a file in a more readable format, you can use the `zxsuite
 backup getItem` command:
 
 ....
@@ -927,10 +917,10 @@ Shows item with id = 1 belonging to account a7300a00-56ec-46c3-9773-c6ef7c4f3636
 ....
 
 [[real-life-example]]
-''Real Life'' example
+''Real Life'' Example
 ~~~~~~~~~~~~~~~~~~~~~
 
-Let's say a user moves one item to the Trash...
+Let's say a user moves one item to the trash...
 
 `2013-07-18 15:22:01,495 INFO  [btpool0-4361://localhost/service/soap/MsgActionRequest [name=user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailop - moving Message (id=339) to Folder Trash (id=3)`
 
@@ -938,28 +928,27 @@ Let's say a user moves one item to the Trash...
 
 `2013-07-18 15:25:08,962 INFO  [btpool0-4364://localhost/service/soap/FolderActionRequest] [name=user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailbox - Emptying 9 items from /Trash, removeSubfolders=true.`
 
-She then calls the Administrator in order to restore the deleted item.
-Knowing the itemID and the email address, the mighty Administrator only
-needs to run
+She then calls the Administrator to restore the deleted item.
+Knowing the itemID and the email address, the Administrator runs the following
+as the `zimbra` user to restore the missing item:
 
 ` zxsuite backup doItemRestore user@domain.com 339`
 
-as the `zimbra` user to restore the missing item.
 
 [[disaster-recovery]]
 Disaster Recovery
 -----------------
 
 [[the-disaster]]
-The disaster
+The Disaster
 ~~~~~~~~~~~~
 
 [[what-can-go-wrong]]
-What can go wrong
+What Can go Wrong
 ^^^^^^^^^^^^^^^^^
 
-To classify a problem under `Disaster`, one or more of the following
-must be happened:
+To classify a problem as a `Disaster`, one or more of the following
+must happened:
 
 * Hardware failure of one or more vital filesystems (such as / or
 /opt/zimbra/)
@@ -970,10 +959,10 @@ of the related virtualization infrastructure
 * A critical failure on a software or OS update/upgrade
 
 [[minimizing-the-chances]]
-Minimizing the chances
+Minimizing the Chances
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Some quick suggestions in order to minimize the chances of a disaster:
+Some suggestions to minimize the chances of a disaster:
 
 * Always keep vital filesystems on different drives (namely /,
 /opt/zimbra/ and your Backup NG path)
@@ -986,25 +975,25 @@ The Recovery
 ~~~~~~~~~~~~
 
 [[how-to-recover-your-system]]
-How to recover your system
+How to Recover Your System
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The recovery of a system is divided in 2 steps:
+The recovery of a system is divided into 2 steps:
 
 * Base system recovery (OS installation and configuration, Zimbra
 installation and base configuration)
 * Data recovery (reimporting the last available data to the Zimbra
-server, including Domain and User Configurations, Classes of Services
+server, including domain and user configurations, COS data
 and mailbox contents)
 
 [[how-can-backup-ng-help-with-recovery]]
-How can Backup NG help with recovery
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+How can Backup NG Help with Recovery?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The `Import Backup` feature of Backup NG provides an easy and safe way
-to perform step 2 of a Recovery.
+to perform step 2 of a recovery.
 
-Using the old server's Backup Path as the import path allows you to
+Using the old server's backup path as the import path allows you to
 restore a basic installation of Zimbra to the last valid moment of your
 old server.
 
@@ -1014,19 +1003,19 @@ The Recovery Process
 
 * Install Zimbra on a new server and configure the Server and Global
 settings.
-* Install Network NG Modules on the new server.
-* Mount the Backup folder of the old server on the new one. If
-this is not available, you use the last External Backup available or the
-latest
+* Install Network NG modules on the new server.
+* Mount the backup folder of the old server onto the new one. If
+this is not available, use the last external backup available or the
+latest copy of either.
 * Begin an External Restore on the new server using the following CLI
 command:
 
 `zxsuite backup doExternalRestore /path/to/the/old/store`
 
-* The External Restore operation will immediatly create the domains,
+* The External Restore operation will immediately create the domains,
 accounts and distribution lists, so as soon as the first part of the
-Restore is completed (check your Network NG Modules Notifications) the
-system will be ready to be used by your users. Emails and other mailbox
+Restore is completed (check your Network NG Modules Notifications), the
+system will be ready for your users. Emails and other mailbox
 items will be restored afterwards.
 
 [[settings-and-configs]]
@@ -1034,7 +1023,7 @@ Settings and Configs
 ^^^^^^^^^^^^^^^^^^^^
 
 Server and Global settings are backed up but are not restored
-automatically: Backup NG's high-level integration with Zimbra allows you
+automatically. Backup NG's high-level integration with Zimbra allows you
 to restore your data to a server with a different OS/Zimbra
 Release/Networking/Storage setup without any constraints other than the
 minimum Zimbra version required to run Network NG Modules.
@@ -1080,13 +1069,11 @@ zxsuite backup getserverconfig standard date last query zimlets/com_zimbra_ymemo
  Displays all settings for the com_zimbra_ymemoticons zimlet, using colored output and high verbosity.
 ....
 
-Specifically,
+Specifically, this will display the latest backed up configurations:
 
 ....
 zxsuite backup getServerConfig standard backup_path /your/backup/path/ date last query / | less
 ....
-
-will display the latest backed up configurations.
 
 You can change the `query` argument to display specific settings, e.g.
 
@@ -1122,31 +1109,31 @@ VMs and Snapshots
 ~~~~~~~~~~~~~~~~~
 
 Thanks to the advent of highly evolved virtualization solutions in the
-past years, Virtual Machines are now the most common way to deploy
+past years, virtual machines are now the most common way to deploy
 server solutions such as Zimbra Collaboration Suite.
 
-Most hypervisors feature customizable snapshot capabilites, and
-snapshot-based VM backup systems: in case of a disaster, it's always
+Most hypervisors feature customizable snapshot capabilities and
+snapshot-based VM backup systems. In case of a disaster, it's always
 possible to roll back to the latest snapshot and import the missing data
 using the `External Restore` feature of Backup NG - using the server's
 backup path as the import path.
 
 [[disaster-recovery-from-a-previous-vm-state]]
-Disaster Recovery from a previous VM state
+Disaster Recovery from a Previous VM State
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Snapshot-based backup systems allow you to keep a `frozen` copy of a VM
 in a valid state and rollback to it at will. To 100% ensure data
-consistency it's better to take snapshot copies of switched off VMs, but
+consistency, it's better to take snapshot copies of switched off VMs, but
 this is not mandatory.
 
-*When using this kinds of systems, it's vital to make sure that the
+*When using these kinds of systems, it's vital to make sure that the
 Backup Path isn't either part of the snapshot (e.g. by setting the vdisk
 to `Independent Persistend` in VMWare ESX/i) or altered in any way when
 rolling back in order for the missing data to be available for import.*
 
-In order to perform a Disaster Recovery from a previous machine state
-with Backup NG you need to:
+To perform a disaster recovery from a previous machine state
+with Backup NG, you need to:
 
 * Restore the last valid backup into a separate (clone) VM in an
 isolated network, making sure that users can't access it and that both
@@ -1158,7 +1145,7 @@ clone and mount it (on a different path).
 * Start an External Restore using the Backup Path as the Import Path.
 
 Doing so will parse all items in the Backup Path and import the missing
-ones, speeding up the Disaster Recovery by a good measure. This steps
+ones, speeding up the disaster recovery. These steps
 can be repeated as many time as needed as long as user access and mail
 traffic is inhibited.
 
@@ -1170,24 +1157,24 @@ The Aftermath
 ~~~~~~~~~~~~~
 
 [[what-now]]
-What now?
+What Now?
 ^^^^^^^^^
 
-Just initialize a new Backup Path and store the old one until you please
-- should you need to restore any content from before the disaster.
+Should you need to restore any content from before the disaster,
+just initialize a new Backup Path and store the old one.
 
 [[unrestorable-items]]
-Unrestorable items
+Unrestorable Items
 ------------------
 
 [[how-can-i-check-if-all-of-my-items-have-been-restored]]
 How can I check if all of my items have been restored?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It's very easy: just check the appropriate `Operation Completed`
-notification you received as soon as the restore operation has been
-completed. It can be viewed in the `Notifications` section of the
-Administration Zimlet and it's also emailed to the address you specified
+It's very easy. Check the appropriate `Operation Completed`
+notification you received as soon as the restore operation finished.
+It can be viewed in the `Notifications` section of the
+Administration Zimlet, and it's also emailed to the address you specified
 in the `Core` section of the Administration Zimlet as the `Notification
 E-Mail recipient address`.
 
@@ -1217,13 +1204,13 @@ items:
 Skipped Items vs. Unrestored Items
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* `Skipped` item: an item that has been already restored, either during
+* `Skipped` item: An item that has already been restored, either during
 the current restore or in a previous one.
-* `Unrestored` item: an item that has not been restored due to an issue
+* `Unrestored` item: An item that has not been restored due to an issue
 in the restore process.
 
 [[why-some-of-my-items-have-not-been-restored]]
-Why some of my items have not been restored?
+Why have some of my items not been restored?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are different possible causes, the most common of which are:
@@ -1237,22 +1224,22 @@ readable and the content is correct, but Zimbra refuses to inject the
 item.
 
 [[how-can-i-identify-unrestored-items]]
-How can I identify unrestored items?
+How Can I Identify Unrestored Items?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are two ways to do so: via the CLI and via the Zimbra Webclient.
+There are two ways to do so: via the CLI and via the Zimbra Web Client.
 The first way can be used to search for the item within the
-backup/import path while the second way can be used to view the items in
+backup/import path, and the second can be used to view the items in
 the source server.
 
 [[identifying-unrestorable-items-through-the-cli]]
-Identifying Unrestorable items through the CLI
+Identifying Unrestorable Items through the CLI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The `getItem` command of the CLI can display an item and the related
-metadata extracting all informations from a backup path/external backup.
+The `getItem` CLI command can display an item and the related
+metadata, extracting all information from a backup path/external backup.
 
-The syntax of the command is the following:
+The syntax of the command is:
 
 ....
    zxsuite backup getItem {account} {item} [attr1 value1 [attr2 value2...
@@ -1269,25 +1256,25 @@ date(O)           Date               dd/mm/yyyy hh:mm:ss|all    last
 (M) == mandatory parameter, (O) == optional parameter
 ....
 
-Thus, to extract the raw data and metadata informations of the item
-whose itemID is _49965_ belonging to _account2@domain.com_ also
-including the full dump of the item's BLOB the command would be:
+To extract the raw data and metadata information of the item
+whose itemID is _49965_ belonging to _account2@domain.com_ ,also
+including the full dump of the item's BLOB, the command would be:
 
 `zxsuite backup getItem account2@domain.com 49965 dump_blob true`
 
 [[identifying-unrestorable-items-through-the-zimbra-webclient]]
-Identifying Unrestorable items through the Zimbra WebClient
+Identifying Unrestorable Items through the Zimbra WebClient
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The comma separated list of unrestored items displayed in the `Operation
 Complete` notification can be used as a search argument in the Zimbra
-Webclient to perform an item search.
+Web Client to perform an item search.
 
 To do so:
 
 * Log into the Zimbra Administration Console in the source server.
-* Use the `View Mail` feature to access the account in which the
-unrestored items are.
+* Use the `View Mail` feature to access the account containing the
+unrestored items.
 * In the search box, enter *item:* followed by the comma separated list
 of itemIDs.
 
@@ -1300,32 +1287,32 @@ no results try to run the same search in the `Address Book`, `Calendar`,
 `Tasks` and `Briefcase` tabs
 
 [[how-can-i-restore-unrestored-items]]
-How can I restore unrestored items?
+How Can I Restore Unrestored Items?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-While an item not being restored is a clear sign of an issue, either
-with the item itself or with your current Zimbra setup,
-in some cases there are good chances of being able to restore an
-item even if it was not restored on the first import try.
+An item not being restored is a clear sign of an issue, either
+with the item itself or with your current Zimbra setup. In some cases,
+ there are good chances of being able to restore an
+item even if it was not restored on the first try.
 
-In the following paragraphs you will find a collections of tips and
+In the following paragraphs, you will find a collections of tips and
 tricks that can be helpful when dealing with different kinds of
 unrestorable items.
 
 [[items-not-restored-because-of-a-read-error]]
-Items not restored because of a Read Error
+Items Not Restored because of a Read Error
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A dutiful distinction must be done about the read errors that can cause
 items not to be restored:
 
-* *hard* errors: hardware failures and all other `destructive` errors
+* *hard* errors: Hardware failures and all other `destructive` errors
 that cause an unrecoverable data loss.
 * *soft* errors: `non-destructive` errors such as wrong permissions,
-filesystem errors, RAID issues (e.g.: broken RAID1 mirroring) etcetera.
+filesystem errors, RAID issues (e.g.: broken RAID1 mirroring), etc.
 
 While there is nothing much to do about hard errors, you can prevent or
-mitigate soft errors following these guidelines:
+mitigate soft errors by following these guidelines:
 
 * Run a filesystem check.
 * If using a RAID disk setup, check the array for possible issues
@@ -1333,12 +1320,12 @@ mitigate soft errors following these guidelines:
 * Make sure that the 'zimbra' user has r/w access to the backup/import
 path, all its subfolders and all thereby contained files.
 * Carefully check the link quality of network-shared filesystems. If
-link quality is poor consider transferring the data with rsync.
-* If using SSHfs to remotely mount the backup/import path make sure to
+link quality is poor, consider transferring the data with rsync.
+* If using SSHfs to remotely mount the backup/import path, make sure to
 run the mount command as root using the `-o allow_other` option.
 
 [[items-not-restored-because-identified-as-broken-items]]
-Items not restored because identified as Broken Items
+Items Not Restored because Identified as Broken Items
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Unfortunately, this is the worst category of unrestored items in terms
@@ -1346,8 +1333,8 @@ of `salvageability`.
 
 Based on the degree of corruption of the item, it might be possible to
 recover either a previous state or the raw object (this is only valid
-for emails). To identify the degree of corruption, the `getItem` CLI
-command comes handy:
+for emails). To identify the degree of corruption, use the `getItem` CLI
+command:
 
 ....
    zxsuite backup getItem {account} {item} [attr1 value1 [attr2 value2...
@@ -1364,8 +1351,8 @@ date(O)           Date               dd/mm/yyyy hh:mm:ss|all    last
 (M) == mandatory parameter, (O) == optional parameter
 ....
 
-Searching for the broken item setting the `backup_path` parameter to the
-import path and the `date` parameter to `all` will display all valid
+Searching for the broken item, setting the `backup_path` parameter to the
+import path and the `date` parameter to `all`, will display all valid
 states for the item.
 
 ....
@@ -1385,7 +1372,7 @@ zimbra@test:~$ zxsuite backup getItem admin@example.com 24700 backup_path�
                blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
 ....
 
-If the item is an email you will be able to recover a standard .eml file
+If the item is an email, you will be able to recover a standard .eml file
 through the following steps:
 
 * Identify the latest valid state
@@ -1427,26 +1414,26 @@ Jul 12 16:35:42 test zmconfigd[14198]: Service status change: test.examp
 using your favorite client.
 
 [[items-not-restored-because-identified-as-invalid-items]]
-Items not restored because identified as Invalid Items
+Items Not Restored because Identified as Invalid Items
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-An item is identified as `Invalid` when, albeit being formally correct
+An item is identified as `Invalid` when, albeit being formally correct,
 is discarded by Zimbra's LMTP Validator upon injection. This is common
 when importing items created on an older version of Zimbra to a newer
-one, as the validation rules are updated very often and because of this
-not all messages considered valid by a certain Zimbra version are still
+one, Validation rules are updated very often, so not all messages
+considered valid by a certain Zimbra version are still
 considered valid by a newer version.
 
-If you experienced a lot of unrestored items during an import it might
+If you experienced a lot of unrestored items during an import, it might
 be a good idea to momentarily disable the LMTP validator and repeat the
 import:
 
-* To disable Zimbra's LMTP Validator run the following command as the
+* To disable Zimbra's LMTP Validator, run the following command as the
 Zimbra user:
 
 `zmlocalconfig -e zimbra_lmtp_validate_messages=false`
 
-* Once the import is completed you can enable the LMTP validator running
+* Once the import is completed, you can enable the LMTP validator running
 
 `zmlocalconfig -e zimbra_lmtp_validate_messages=true`
 
@@ -1462,31 +1449,30 @@ doCoherencyCheck
 What is the Coherency Check?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `Coherency Check` is a feature added in Network NG Modules 1.10.2
-which performs a deeper check of a Backup Path than the one done by the
+The `Coherency Check` performs a deeper check of a Backup Path than the one done by the
 SmartScan.
 
-While the SmartScan works `incrementally`, by only checking items which
+While the SmartScan works `incrementally` by only checking items that
 have been modified since the last SmartScan, the Coherency Check
-performs a throughout check of all metadata and BLOBs in the backup
+performs a thorough check of all metadata and BLOBs in the backup
 path.
 
 It's specifically designed to detect corrupted metadata and BLOBs.
 
 [[how-does-it-work-9]]
-How does it work?
+How Does it Work?
 ~~~~~~~~~~~~~~~~~
 
-The Coherency Check verifies the integrity of every metadata in the
-backup path and of the related BLOBs: should any errors be found,
+The Coherency Check verifies the integrity of all metadata in the
+backup path and of the related BLOBs. Should any errors be found,
 running the check with the `fixBackup` option will move any orphaned or
 corrupted metadata/BLOB to a dedicated directory within the backup path.
 
 [[when-should-a-coherency-check-be-executed]]
-When should a Coherency Check be executed?
+When Should a Coherency Check be Executed?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* At interval periods in order to make sure that everything is ok (e.g.
+* At interval periods to make sure that everything is ok (e.g.
 every 3 or 6 months).
 * After a system crash.
 * After the filesystem or storage device containing the backup path
@@ -1506,14 +1492,13 @@ Running a Coherency Check
 Starting the Check via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Coherency Check is not available on the Administration Zimlet.
+The Coherency Check is not available via the Administration Zimlet.
 
 [[starting-the-check-via-the-cli]]
 Starting the Check via the CLI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To start a Coherency Check via the CLI the `doCoherencyCheck` command is
-available
+To start a Coherency Check via the CLI, use the `doCoherencyCheck` command:
 
 ....
 Syntax:
@@ -1540,11 +1525,10 @@ Performs a coherency check on /opt/zimbra/backup/ng/ and moves corrupted backup 
 ....
 
 [[checking-the-status-of-a-running-check]]
-Checking the status of a running check
+Checking the Status of a Running Check
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To check the status of a running scan via the CLI the `monitor` command
-is available
+To check the status of a running scan via the CLI, use the `monitor` command:
 
 ....
 Syntax:
@@ -1561,93 +1545,89 @@ operation_host(O)    String
 ....
 
 [[taking-additional-and-offsite-backups-of-backup-ngs-datastore]]
-Taking Additional and Offsite backups of Backup NG's Datastore
+Taking Additional and Offsite Backups of Backup NG's Datastore
 --------------------------------------------------------------
 
 [[who-watches-the-watchmen]]
-Who watches the watchmen?
+Who Watches the Watchmen?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-While mailserver backups were never really a concern for Juvenal or
-Plato, the concept of `who watches the watchmen` can also be applied to
-this field.
-
-Having backup system is a great safety measure against data loss, but
+Having backup systems is a great safety measure against data loss, but
 each backup system must be part of a broader `backup strategy` to ensure
 the highest possible level of reliability. The lack of a proper backup
-strategy gives a false sense of security, while actually turining even
+strategy gives a false sense of security, while actually turning even
 the best backup systems in the world into yet another breaking point.
 
 Devising a backup strategy is no easy matter, and at some point you will
 most likely be confronted with the following question: *``What if I lose
-the data I backed up?''*. The chances of this happening ultimately only
-depend on how you make and manage your backups: it's more likely to lose
+the data I backed up?``*. The chances of this happening ultimately only
+depend on how you make and manage your backups. It's more likely that you will lose
 all of your backed up data if you store both your data and your backups
 in a single SATAII disk than if you store your backed up data on a
 dedicated SAN using a RAID 1+0 setup.
 
-In this article you can find some suggestions and best practices in
-order to improve your backup strategy by making a backup of the Backup
-NG's Datastore and storing it offsite.
+Here are some suggestions and best practices to improve your backup strategy
+by making a backup of the Backup
+NG's datastore and storing it offsite.
 
 [[making-an-additional-backup-of-backup-ngs-datastore]]
-Making an additional backup of Backup NG's datastore
+Making an Additional Backup of Backup NG's Datastore
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* *Atomicity*: any transaction is committed and written to the disk only
+* *Atomicity*: Any transaction is committed and written to the disk only
 when completed.
-* *Consistency*: any commited transaction is valid and no invalid
+* *Consistency*: Any committed transaction is valid, and no invalid
 transaction will be committed and written to the disk.
-* *Isolation*: all transactions are executed sequentially so that no
+* *Isolation*: All transactions are executed sequentially so that no
 more than 1 transaction can affect the same item at once.
-* *Durability*: once a transaction is committed, it will stay so even in
+* *Durability*: Once a transaction is committed, it will stay so even in
 case of a crash (e.g. power loss or hardware failure).
 
-Due to this, it's very easy to make a backup of it. The best (and
+Due to this, it's very easy to make a backup. The best (and
 easiest) way to do so is by using *http://rsync.samba.org/[rsync]*.
 Specific options and parameters depend on many factors, such as the
 amount of data to be synced and the storage in use, while connecting to
-an rsync daemon instead of using a remote shell as a transport as it's
+an rsync daemon instead of using a remote shell as a transport is
 usually much faster in transferring the data.
 
-You won't need to stop neither Zimbra nor the Real Time Scanner in order
-to make an additional backup of Backup NG's datastore using rsync, and
+You won't need to stop Zimbra or the Real Time Scanner to make an additional
+backup of Backup NG's datastore using rsync, and
 you will be always able to stop the sync at any time and reprise it
 afterwards if needed.
 
 [[storing-your-backup-ngs-datastore-backup-offsite]]
-Storing your Backup NG's datastore backup offsite
+Storing Your Backup NG's Datastore Backup Offsite
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As seen in the previous paragraph, making a backup of Backup NG's
+As seen in the previous section, making a backup of Backup NG's
 Datastore is very easy, and the use of rsync makes it just as easy to
 store your backup in a remote location.
 
-In order to optimize your backup strategy when dealing to this kind of
-setup, the following best practices might help a lot:
+To optimize your backup strategy when dealing with this kind of
+setup, the following best practices are recommended:
 
 * If you schedule your rsync backups, make sure that you leave enough
 time between an rsync instance and the next one in order for the
 transfer to be completed.
 * Use the --delete options so that files that have been deleted in the
-source server are deleted in the destination one to avoid
+source server are deleted in the destination server to avoid
 inconsistencies.
 ** If you notice that using the `--delete` option takes too much time,
-schedule two different rsync instances: one with the `--delete` to be
-ran after the weekly Purge and one without such option.
+schedule two different rsync instances: one with `--delete` to be
+run after the weekly purge and one without this option.
 * Make sure you transfer the whole folder tree recursively starting from
-Backup NG's Backup Path. This includes Server Config backups and
+Backup NG's Backup Path. This includes server config backups and
 mapfiles.
 * Make sure the destination filesystem is case sensitive (just as Backup
 NG's Backup Path must be).
 * If you plan to restore directly from the remote location, make sure
 that the _zimbra_ user on your server has read and write permissions on
 the transferred data.
-* Expect to experience slowlynesses if your transfer speed is much
-higher than your storage throughtput (or vice versa).
+* Expect to experience slowness if your transfer speed is much
+higher than your storage throughput (or vice versa).
 
 [[additionaloffsite-backup-f.a.q.]]
-Additional/Offsite backup F.A.Q.
+Additional/Offsite Backup F.A.Q.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[why-shouldnt-i-use-the-export-backup-feature-of-backup-ng-instead-of-rsync]]
@@ -1657,8 +1637,8 @@ rsync?
 For many reasons:
 
 * The `Export Backup` feature is designed to perform migrations. It
-exports a `snapshot` which is an end in itself and was not designed to
-be managed incrementally, meaning that each time an Export Backup is ran
+exports a `snapshot` that is an end in itself and was not designed to
+be managed incrementally. Each time an Export Backup is run,
 it'll probably take just as much time as the previous one, while using
 rsync is much more time-efficient.
 * Being a Backup NG operation, any other operation started while the
@@ -1667,42 +1647,42 @@ completed.
 * An `Export Backup` operation has a higher impact on system resources
 than an rsync.
 * Should you need to stop an Export Backup operation, you won't be able
-to reprise it and you'll need to start from scratch.
+to reprise it, and you'll need to start from scratch.
 
 [[can-i-use-this-for-disaster-recovery]]
 Can I use this for Disaster Recovery?
 
-Yes. Obviously, if your Backup Path is still available it's better to
+Yes. Obviously, if your Backup Path is still available. it's better to
 use that, as it will restore all items and settings to the last valid
-state, but should your Backup Path be lost you'll be able to use your
-additional/offsite backup. See the
+state. However, should your Backup Path be lost, you'll be able to use your
+additional/offsite backup.
 
 [[can-i-use-this-to-restore-data-on-the-server-the-backup-copy-belongs-to]]
 Can I use this to restore data on the server the backup copy belongs to?
 
-Yes, but not through the `External Restore` operation since item and
+Yes, but not through the `External Restore` operation, since item and
 folder IDs are the same.
 
 The most appropriate steps to restore data from a copy of the backup
-path to the very same server are the following:
+path to the very same server are as follows:
 
-* Stop the RealTime Scanner
-* Change the Backup Path to the copy you wish to restore your data from
-* Run either a `Restore on New Account` or a `Restore Deleted Account`
-* Once the restore is over, change the Backup Path to the original one
+* Stop the RealTime Scanner.
+* Change the Backup Path to the copy you wish to restore your data from.
+* Run either `Restore on New Account` or a `Restore Deleted Account`.
+* Once the restore is over, change the backup path to the original one.
 * Start the RealTime Scanner. A SmartScan will trigger to update the
-backup data
+backup data.
 
 [[can-i-use-this-to-create-an-activestandby-infrastructure]]
 Can I use this to create an Active/Standby infrastructure?
 
 No, because the `External Restore` operation does not perform any
-deletions. In the long run running several External Restores you'll end
-up filling up your mailboxes with unwanted stuff, since items deleted
+deletions. By running several External Restores, you'll end
+up filling up your mailboxes with unwanted content, since items deleted
 from the original mailbox will not be deleted on the `standby` server.
 
 The `External Restore` operation has been designed so that accounts will
-be available for use as soon as the operation is started, so that your
+be available for use as soon as the operation is started, so your
 users will be able to send and receive emails even if the restore is
 running.
 
@@ -1711,12 +1691,11 @@ Are there any other ways to do an Additional/Offsite backup of my
 system?
 
 There are for sure, and some of them might even be better than the one
-described in this page. This are just guidelines that apply to the vast
-majority of the cases.
+described here. These are just guidelines that apply to the majority of cases.
 
 [[multistore-informations]]
-Multistore Informations
------------------------
+Multistore Information
+----------------------
 
 [[backup-ng-and-multistores]]
 
@@ -1725,21 +1704,18 @@ Backup NG in a Multistore Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[command-execution-in-a-multistore-environment]]
-Command execution in a Multistore Environment
+Command Execution in a Multistore Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The new Network NG Modules Administration Zimlet makes the management of
+The new Network Administration Zimlet makes the management of
 multiple servers very easy. You can select a server from the Backup NG
 tab and perform all backup operations on that server, even if you are
-logged into the Zimbra Administration Console of another server. See the
-standard
-
-This also applies to the
+logged into the Zimbra Administration Console of another server.
 
 Specific differences between Singlestore and Multistore environments
 are:
 
-* In a Multistore Environment, Restore on New Account operations ALWAYS
+* In a Multistore environment, `Restore on New Account` operations ALWAYS
 create the new account in the Source account's mailbox server.
 * All operations are logged on the target server, not in the server that
 launched the operation.
@@ -1753,7 +1729,8 @@ Backup and Restore
 Backup and Restore in a Multistore environment will work exactly like in
 a Singlestore environment.
 
-The different servers will be configured and managed separately via the Adminsitration Zimlet, but certain operations like Live Full
+The different servers will be configured and managed separately via
+the Administration Zimlet, but certain operations like Live Full
 Scan and Stop All Operations can be 'broadcast' to all the mailstores
 via the _zxsuite_ CLI using the _--hostname all_servers_ option. This
 applies also to Backup NG settings (see the CLI wiki page for more
@@ -1785,29 +1762,30 @@ automatic server selection.
 Export and Import
 ^^^^^^^^^^^^^^^^^
 
-Export and Import functions are those which differ the most when
+Export and Import functions are those that differ the most when
 performed on a Multistore environment.
 
-Here are the basic scenarios:
+Here are the basic scenarios.
 
 [[export-from-a-singlestore-and-import-to-a-multistore]]
-Export from a Singlestore and import to a Multistore
+Export from a Singlestore and Import to a Multistore
 ++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Importing multiple accounts of a single domain to different store will
+Importing multiple accounts of a single domain to a different store will
 break the consistency of ALL the items that are shared from/to a mailbox
 on a different server.
 
-A command in the CLI is available in order to fix the shares for accounts imported on differen servers.
+A command in the CLI is available to fix the shares for accounts
+imported on different servers.
 
 [[export-from-a-multistore-and-import-to-a-single-or-multistore]]
-Export from a Multistore and import to a Single or Multistore
+Export from a Multistore and Import to a Single or Multistore
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Two different Scenarios apply here:
+Two different scenarios apply here:
 
-* `Mirror` import: Same number of source and destination mailstores,
-each export is imported on a different server. This will break the
+* `Mirror` import: Same number of source and destination mailstores.
+Each export is imported on a different server. This will break the
 consistency of ALL the items that are shared from/to a mailbox on a
 different server. The `doCheckShares` and `doFixShares` CLI commands are
 available to check and fix share consistency (see below).
@@ -1820,10 +1798,10 @@ shared from/to a mailbox on a different server. The `doCheckShares` and
 consistency (see below)
 
 [[the-docheckshares-and-dofixshares-commands]]
-The `doCheckShares` and `doFixShares` commands
+The `doCheckShares` and `doFixShares` Commands
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The `doCheckShares` command will parse all share informations in local
+The `doCheckShares` command will parse all share information in local
 accounts and report any error:
 
 ....
@@ -1839,7 +1817,7 @@ zxsuite backup doCheckShares
 Check all shares on local accounts
 ....
 
-The `doFixShares` will fix all share inconsistencies using a migration
+The `doFixShares` will fix all share inconsistencies using a migration.
 
 ....
 zimbra@test:~$ zxsuite help backup doFixShares
@@ -1858,25 +1836,26 @@ import_idmap_file(M)    String
 Usage example:
 
 zxsuite backup doFixShares idmap_file
-Fixes the shares' consistency after an import according to the mapping contained in the /opt/zimbra/backup/ng/idmap_file
+Fixes the shares' consistency after an import according to the
+mapping contained in the /opt/zimbra/backup/ng/idmap_file
 ....
 
 [[operation-queue-and-queue-management]]
-Operation queue and queue management
+Operation Queue and Queue Management
 ------------------------------------
 
 [[backup-ngs-operation-queue]]
 Backup NG's Operation Queue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Every time a Backup NG operation is started - either manually or through
-scheduling - it is enqueued in a dedicated unprioritized FIFO queue.
+Every time a Backup NG operation is started, either manually or through
+scheduling, it is enqueued in a dedicated, unprioritized FIFO queue.
 Each operation is executed as soon as any preceding operation is
 dequeued (either because it has been completed or terminated).
 
 The queue system affects the following operations:
 
-* External Backup
+* External backup
 * All restore operations
 * Smartscan
 
@@ -1895,20 +1874,20 @@ Through the Administration Console
 Viewing the Queue
 +++++++++++++++++
 
-In order to view the operation queue, access the `Notifications` tab in
+To view the operation queue, access the `Notifications` tab in
 the Administration Zimlet and click the `Operation Queue` button.
 
-WARNING: The Administration Zimlet displays operations enqueued both by
-the Backup NG and the HSM NG modules in a single view. This is just a
-design choice, as the two queues are completely separated, meaning that
+WARNING: The Administration Zimlet displays operations queued both by
+Backup NG and HSM NG in a single view. This is just a
+design choice, as the two queues are completely separate, meaning that
 one Backup NG operation and one HSM NG operation can be running at the
 same time.
 
 [[emptying-the-queue]]
-Emptying the queue
+Emptying the Queue
 ++++++++++++++++++
 
-In order to stop the current operation and empty Backup NG's operation
+To stop the current operation and empty Backup NG's operation
 queue, enter the `Backup NG` tab in the Administration Zimlet and click
 the `Stop all Operations` button.
 
@@ -1920,8 +1899,8 @@ Through the CLI
 Viewing the Queue
 +++++++++++++++++
 
-In order to view Backup NG's operation queue, the `getAllOperations`
-command is available:
+To view Backup NG's operation queue, use the `getAllOperations`
+command:
 
 ....
 zimbra@server:~$ zxsuite help backup getAllOperations
@@ -1944,11 +1923,11 @@ Shows all running and queued operations
 ....
 
 [[emptying-the-queue-1]]
-Emptying the queue
+Emptying the Queue
 ++++++++++++++++++
 
-In order to stop the current operation and empty Backup NG's operation
-queue, the `doStopAllOperations` command is available:
+To stop the current operation and empty Backup NG's operation
+queue, use the `doStopAllOperations` command:
 
 ....
 zimbra@mail:~$ zxsuite help backup doStopAllOperations
@@ -1964,11 +1943,11 @@ Stops all running operations
 ....
 
 [[removing-a-single-operation-from-the-queue]]
-Removing a single operation from the queue
+Removing a Single Operation from the Queue
 ++++++++++++++++++++++++++++++++++++++++++
 
-In order to stop the current operation or to remove a specific operation
-from the queue, the `doStopOperation` command is available:
+To stop the current operation or to remove a specific operation
+from the queue, use the `doStopOperation` command:
 
 ....
 zimbra@mail:~$ zxsuite help backup doStopOperation
@@ -1995,24 +1974,25 @@ COS-level Backup Management
 ---------------------------
 
 [[what-is-cos-level-backup-management]]
-What is COS-level Backup Management
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+What is COS-level Backup Management?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-COS-level Backup Management allows the administrator to disable ALL Backup NG functions for a
-whole Class of Service in order lower storage usage.
+COS-level Backup Management allows the administrator to disable ALL
+Backup NG functions for a
+whole Class of Service to lower storage usage.
 
 [[how-does-cos-level-backup-management-work]]
-How does COS-level Backup Management work?
+How Does COS-level Backup Management Work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[what-happens-if-i-disable-the-backup-ng-module-for-a-class-of-service]]
 What happens if I disable the Backup NG Module for a Class of Service?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* The Real Time Scanner will ignore all accounts in such COS.
-* The Export Backup function WILL NOT EXPORT accounts in such COS.
-* Accounts in such COS will be treated as `Deleted` by the backup
-system. This means that after the Data Retention period expires all data
+* The Real Time Scanner will ignore all accounts in the COS.
+* The Export Backup function WILL NOT EXPORT accounts in the COS.
+* Accounts in the COS will be treated as `Deleted` by the backup
+system. This means that after the data retention period expires, all data
 for such accounts will be purged from the backup store. Re-enabling the
 backup for a Class of Service will reset this.
 
@@ -2027,7 +2007,7 @@ While the Notes field remains fully editable and usable, changing or
 deleting this marker will re-enable the backup for the COS.
 
 [[incremental-migration-with-backup]]
-Incremental migration with Backup NG
+Incremental Migration with Backup NG
 ------------------------------------
 
 [[description]]
@@ -2040,54 +2020,54 @@ Backup NG.
 environment, minimizing the downtime and aiming to be transparent for
 the users.
 * If correctly planned and executed, your mail system won't suffer any
-downtime and the impact on the users will be close to zero.
-* _' All the CLI commands in this guide must be executed as the Zimbra
-user unless otherwise specified._'
+downtime, and the impact on the users will be close to zero.
+* _ All the CLI commands in this guide must be executed as the Zimbra
+user unless otherwise specified._
 
 [[what-will-be-migrated]]
-What will be migrated
-~~~~~~~~~~~~~~~~~~~~~
+What Will be Migrated?
+~~~~~~~~~~~~~~~~~~~~~~
 
-* Emails and Email Folders.
-* Contacts and Address Books.
-* Appontments and Calendars.
-* Tasks and Tasklists.
-* Files and Briefcases.
-* Share informations.
-* User Preferences.
-* User Settings.
-* Class of Service Settings.
-* Domain Settings.
+* Emails and email folders
+* Contacts and address books
+* Appontments and calendars
+* Tasks and task lists
+* Files and briefcases
+* Share informations
+* User preferences
+* User settings
+* Class of Service settings
+* Domain settings
 
 [[what-will-not-be-migrated]]
-What will NOT be migrated
-~~~~~~~~~~~~~~~~~~~~~~~~~
+What Will NOT be Migrated?
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Server settings (migrated for reference but not restored).
-* Global Settings (migrated for reference but not restored).
-* Customizations (Postfix, Jetty, etc...).
+* Server settings (migrated for reference but not restored)
+* Global settings (migrated for reference but not restored)
+* Customizations (Postfix, Jetty, etc...)
 * Items moved or deleted during the process will not be moved or deleted
 on the destination server.
 * Preferences (e.g. passwords) changed during the process will be reset
-upon each import.
+upon each import
 
-WARNING: The Incremental Migration is not designed to set up a
+WARNING: The incremental migration is not designed to set up a
 server-to-server mirroring. Using multiple imports to create a mirrored
 copy of the source server won't create a *mirrored* copy at all, since
-no deletions are performed by the Import process.
+no deletions are performed by the import process.
 
 [[pre-migration-checks]]
-Pre-migration checks
+Pre-Migration Checks
 ~~~~~~~~~~~~~~~~~~~~
 
 [[servers]]
 Servers
 ^^^^^^^
 
-* The source server: any Zimbra server can be the source of your
+* Source Server: Any Zimbra server can be the source of your
 migration, provided that it's running Backup NG or Zimbra Suite Plus.
-* The destination server: any Zimbra server can be the destination of
-your migratio, provided that it's running Backup NG.
+* Destination Server: Any Zimbra server can be the destination of
+your migration, provided that it's running Backup NG.
 
 [[storage]]
 Storage
@@ -2096,8 +2076,8 @@ Storage
 * On the Source server: If Backup NG is not currently enabled on the
 source server, make sure you have an amount of free disk space
 _comparable_ to the size of the `/opt/zimbra/store/` folder (the
-exported data is compressed through the gzip algorythm, and all zimbra
-items are deduplicated, usually reducing the size of exported to the 70%
+exported data is compressed through the gzip algorithm, and all zimbra
+items are deduplicated, usually reducing the size of exported to 70%
 of the original size).
 * On the Destination server: Make sure you have an amount of free space
 greater than the size of the `/opt/zimbra/store/` and of the `export`
@@ -2108,19 +2088,19 @@ Data Transfer
 ^^^^^^^^^^^^^
 
 While you can choose to transfer the data in any other way, rsync is our
-method of choice as it's a good compromise between speed and
+method of choice because it's a good compromise between speed and
 convenience.
 
 The main data transfer is executed while the source server is still
 active and functional. However, since the transfer is performed via
 network, carefully plan your transfer in advance so that you'll have
-transfered *all of your data* before migrating.
+transferred *all of your data* before migrating.
 
 [[alternative-ways-to-transfer-your-data]]
-Alternative Ways to transfer your data
+Alternative Ways to Transfer Your Data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Anything spanning from remote mount to physical move of the drive is ok
+Anything spanning from the remote mount to physical move of the drive is ok
 as long as it suits your needs.
 
 ....
@@ -2133,30 +2113,30 @@ DNS
 ~~~
 
 Set the TTL value of your MX record to 300 on your `real` DNS. This will
-allow a fast switch between source and destination server.
+allow a fast switch between source and destination servers.
 
 [[the-setup]]
 The Setup
 ~~~~~~~~~~
 
 [[step-1-coherency-checks]]
-Step 1: Coherency checks
+Step 1: Coherency Checks
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to avoid any possible data-related issue, run the following
+To avoid any possible data-related issues, run the following
 checks on the source server:
 
 * http://wiki.zimbra.com/wiki/Ajcody-Notes-No-Such-Blob#Zmblobchk_for_5.0.6.2B_Systems[zmblobchk]:
-this command checks the consistency between Zimbra's metadata and BLOBs.
+Checks the consistency between Zimbra's metadata and BLOBs.
 * http://wiki.zimbra.com/wiki/Zmdbintegrityreport[zmdbintegrityreport]:
-this command checks the integrity of the Zimbra's database.
+Checks the integrity of the Zimbra database.
 
 Repair any error found as described in Zimbra's official documentation.
 
 Running a reindex of all mailboxes is also suggested.
 
 [[step-2-network-ng-modules-setup]]
-Step 2: Network NG Modules setup
+Step 2: Network NG Modules Setup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Disable the Real Time Scanner on both servers:
@@ -2169,8 +2149,8 @@ WARNING: A dedicated device for the data export is strongly recommended in
 order to improve the export performance and to lower the impact on the
 performances of the running system.
 
-Such device must be mounted on the `/opt/zimbra/backup/` path and the
-Zimbra user must have r/w permissions on it
+Any such device must be mounted on the `/opt/zimbra/backup/` path, and the
+Zimbra user must have r/w permissions on it.
 
 [[step-3-data-export-smartscan]]
 Step 3: Data Export (SmartScan)
@@ -2196,34 +2176,33 @@ of them. To do so, run the following command *instead* of the SmartScan:
 zxsuite backup doExport /path/to/export/folder/ domains yourdomain.com,yourdomain2.com[..]
 ....
 
-Mind that if you start with the `SmartScan` method you'll have to carry
-on the migration with such method, and if you start with the `Single
-Domains` method you'll have to carry on the migration with this one. The
+Mind that if you start with the `SmartScan` method, you'll have to carry
+on the migration with this method. If you start with the `Single
+Domains` method you'll have to carry on the migration with this method. The
 two methods cannot be mixed.
 
 [[data-export-smartscan-via-the-administration-zimlet]]
-Data export (SmartScan) via the Administration Zimlet
+Data Export (SmartScan) via the Administration Zimlet
 +++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-You can also choose to export your data using the Administration Zimlet
-following
+You can also choose to export your data using the Administration Zimlet.
 
 [[step-4-data-synchronization]]
 Step 4: Data Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-WARNING: When you move the exported data to the destination server make
+WARNING: When you move the exported data to the destination server, make
 sure that the destination folder is not Backup NG's backup path on the
-destination server in order to avoid any nuisiances if you already use
+destination server to avoid any nuisances if you already use
 Backup NG or plan to do so on the destination server.
 
 _(You can skip this step if you choose to transfer your data by other
 means than rsync.)_
 
 Using _rsync_, copy the data contained in the
-/opt/zimbra/backup/ng/ on a directory in the destination server
-(make sure the Zimbra user has r/w permissions on such folder). Use a
-terminal multiplexer like _screen_ or _tmux_, this process command might
+/opt/zimbra/backup/ng/ onto a directory in the destination server
+(make sure the Zimbra user has r/w permissions on the folder). Use a
+terminal multiplexer like _screen_ or _tmux_. This process might
 need A LOT of time depending on network speed and amount of data
 involved.
 
@@ -2233,11 +2212,11 @@ rsync -avH /opt/zimbra/backup/ng/ root@desinationserver:/path/for/the/data/
 ....
 
 [[alternate-synchronization-method]]
-Alternate synchronization method
+Alternate Synchronization Method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 While the suggested method is great for high-bandwidth situations, the
-first synchronization can involve a lot of data. If you feel that the
+first synchronization can involve a lot of data. If the
 rsync method is too slow, you might consider a physical move of the
 device (or the proper disk file if running on a virtual environment).
 
@@ -2248,58 +2227,57 @@ remount the device on the source server as /opt/zimbra/backup/ng/
 with all due permissions.
 
 [[step-5-first-import]]
-Step 5: First import
+Step 5: First Import
 ~~~~~~~~~~~~~~~~~~~~
 
-Import all exported data to the destination server:
+Import all exported data to the destination server.
 
 ....
 zxsuite backup doExternalRestore /path/for/the/data/
 ....
 
-Now sit back and relax while Network NG Modules imports your data on the
-destination server.
+Network NG imports your data onto the destination server.
 
-''Warning: Do not edit nor delete the
+''Warning: Do not edit nor delete the backup path after this step.''
 
 [[first-import-via-the-administration-zimlet]]
-First import via the Administration Zimlet
+First Import via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can also choose to import your data using the Administration Zimlet
-following While importing via the Administration Zimlet be sure to
-remove all System Accounts (like GalSync, Ham, Spam, Quarantine etc.)
+You can also choose to import your data using the Administration Zimlet.
+While importing via the Administration Zimlet, be sure to
+remove all system accounts (like GalSync, Ham, Spam, Quarantine etc.)
 from the imported account list.
 
 [[step-5-alternate-first-import-for-large-migrations-advanced-users-only]]
-Step 5 (alternate): First import for large migrations [ADVANCED users
-only]
+Step 5 (alternate): First Import for Large Migrations [ADVANCED Users
+Only]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are to migrate a very large infrastructure where an export/import
+If you are planning to migrate a very large infrastructure where an export/import
 lasts for hours or even days, there is an alternative way to handle the
 migration from this point forward.
 
 Instead of importing all of your data to the destination server, you can
-run a `Provisioning Only` import that will only create Domains, Classes
-of Service and Accounts on the destination server, skipping all mailbox
+run a `Provisioning Only` import that will only create Domains, classes
+of service and accounts on the destination server, skipping all mailbox
 contents.
 
 ....
 zxsuite backup doExternalRestore /path/for/the/data/ provisioning_only TRUE
 ....
 
-After doing this, switch the mailflow to the new server and, when the
+After doing this, switch the mailflow to the new server. When the
 switch is completed, start the `real` import.
 
 ....
 zxsuite backup doExternalRestore /path/for/the/data/
 ....
 
-This way, your users will now connect to the new server where new emails
+Your users will now connect to the new server where new emails
 will be delivered while old emails are being restored.
 
-This approach has it's pros and cons, namely:
+This approach has pros and cons.
 
 *Pros*
 
@@ -2318,10 +2296,10 @@ work on their mailbox.
 slowdowns.
 
 [[the-situation-so-far]]
-The situation so far
+The Situation so Far
 ~~~~~~~~~~~~~~~~~~~~
 
-Right now the vast majority of the data has already been imported to the
+Now the vast majority of the data has already been imported to the
 destination server. The source server is still active and functional,
 and you are ready to perform the actual migration.
 
@@ -2330,22 +2308,22 @@ The Migration
 ~~~~~~~~~~~~~
 
 [[step-6-pre-migration-checks]]
-Step 6: Pre-migration checks
+Step 6: Pre-Migration Checks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before switching the mail flow, ALWAYS make sure that the new server is
 ready to become active (check your firewall, your DNS settings, your
-security systems etc.)
+security systems, etc.)
 
 [[step-7-the-switch]]
 Step 7: The Switch
 ~~~~~~~~~~~~~~~~~~
 
-This is it, the migration moment has come! At the end of this step the
+At the end of this step the
 destination server will be active and functional.
 
 * Repeat step 3, step 4 and step 5 (only new data will be exported and
-synchronized)
+synchronized).
 * Switch the mail flow to the new server.
 * Once NO MORE EMAILS arrive to the source server, repeat step 3, step 4
 and step 5.
@@ -2353,23 +2331,22 @@ and step 5.
 The Destination server is now active and functional.
 
 [[step-8-post-migration-checks]]
-Step 8: Post-migration checks
+Step 8: Post-Migration Checks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Run the following command to check for shares inconsistencies.
+Run the following command to check for inconsistencies with shares:
 
 ....
 zxsuite backup doCheckShares
 ....
 
-Should this command report any inconsistency, the
+Should this command report any inconsistency, this command will parse the
+import mapfile used as the first argument and fix
+any broken share:
 
 ....
 zxsuite backup doFixShares
 ....
-
-command will parse the import mapfile used as the first argument and fix
-any broken share.
 
 Mapfiles can be found in the Backup Path of the destination server as
 `map_[source_serverID]`.
@@ -2379,7 +2356,7 @@ Step 9: Galsync
 ~~~~~~~~~~~~~~~
 
 Delete any imported GalSync accounts from the Zimbra Administration
-Console, then if needed create new GalSync accounts on all the imported
+Console. Then, if needed, create new GalSync accounts on all the imported
 domains and resync all the GalSync accounts with the following command:
 
 ....
@@ -2393,7 +2370,7 @@ Step 10: Message Deduplication
 Running a Volume Deduplication using the HSM NG module is highly suggested after a migration.
 
 [[what-now-1]]
-What now?
+What Now?
 ~~~~~~~~~
 
 * Initialize Backup NG on the new server to make sure all of your data is safe.
@@ -2403,20 +2380,20 @@ Incremental Migration FAQ
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[q-do-i-need-a-valid-license-in-order-to-perform-an-incremental-migration]]
-Q: Do I need a valid license in order to perform an incremental migration?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Q: Do I need a valid license to perform an incremental migration?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Yes. It can be either a Trial License or a purchased one.
+Yes. It can be either a trial license or a purchased one.
 
 [[q-what-will-be-migrated]]
 Q: What will be migrated?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Everything except for the server configuration. This includes:
+Everything except the server configuration is migrated, including:
 
-* User Data
-* User Preferences
-* Classes of Service configuration
+* User data
+* User preferences
+* Classes of Service configurations
 * Domain configurations
 
 [[q-will-i-lose-my-shares-will-i-need-to-re-configure-all-my-shares]]
