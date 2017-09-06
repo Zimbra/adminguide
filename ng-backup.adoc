@@ -88,7 +88,7 @@ Why Should I Disable the Real Time Scanner?
 +++++++++++++++++++++++++++++++++++++++++++
 
 The only time you should disable the Real Time Scanner is while performing
-an External Import of multiple domains. This is a safety measure to
+an External Restore of multiple domains. This is a safety measure to
 avoid high load on your server. After the import, re-enable the Real
 Time Scanner and perform a SmartScan when prompted.
 
@@ -137,7 +137,7 @@ and creates any item not yet present in the backup while flagging as
 deleted any item found in the backup and not in the Zimbra datastore.
 
 Finally, it updates all configuration metadata in the backup, so that
-domains, accounts, COSs and server configurations are stored.
+domains, accounts, COSs and server configurations are stored along with a dump of all LDAP data and config.
 
 [[when-is-a-smart-scan-executed]]
 When is a SmartScan Executed?
@@ -322,9 +322,9 @@ External Backup
 What is the External Backup?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The External Backup is one of the Bakcup Modes of Backup NG. It creates a
+The External Backup is one of the Backup Methods of Backup NG. It creates a
 snapshot of the mail system, which is ready to be used for a
-migration. Exported data is deduplicated and compressed to optimize disk
+migration or for Disaster Recovery. Exported data is deduplicated and compressed to optimize disk
 utilization, transfer times and I/O rates.
 
 [[how-does-it-work-3]]
@@ -358,7 +358,7 @@ maintenance procedures before migrating:
 * Double check Zimbra permissions with the following command (must be ran
 as root): _/opt/zimbra/libexec/zmfixperms --verbose --extended_
 * Reindex all mailboxes.
-* Check the BLOB consistency with the _zmblobchk_ utility.
+* Check the BLOB consistency with the _zxsuite hsm doCheckBlobs_ utility.
 
 [[running-an-external-backup]]
 Running an External Backup
@@ -861,12 +861,12 @@ an univoque code that identifies an item in a mailbox.
 Along with all other metadata, it is stored in a file inside the `items`
 directory of the proper account in
 
-`  [backup path]/accounts/[accountID]/items/[last 2 digits of itemID]/[itemID]`
+`[backup path]/accounts/[accountID]/items/[last 2 digits of itemID]/[itemID]`
 
 e.g.:
 
-` Item 2057 of account 4a217bb3-6861-4c9f-80f8-f345ae2897b5, default backup path` +
-` /opt/zimbra/backup/ng/accounts/4a217bb3-6861-4c9f-80f8-f345ae2897b5/items/57/2057`
+Item 2057 of account 4a217bb3-6861-4c9f-80f8-f345ae2897b5, default backup path +
+`/opt/zimbra/backup/ng/accounts/4a217bb3-6861-4c9f-80f8-f345ae2897b5/items/57/2057`
 
 Metadata are stored in a plain text file, so tools like `grep` and `find`
 can be used to search for contents. To see the metadata
@@ -932,7 +932,7 @@ She then calls the Administrator to restore the deleted item.
 Knowing the itemID and the email address, the Administrator runs the following
 as the `zimbra` user to restore the missing item:
 
-` zxsuite backup doItemRestore user@domain.com 339`
+`zxsuite backup doItemRestore user@domain.com 339`
 
 
 [[disaster-recovery]]
@@ -996,6 +996,8 @@ to perform step 2 of a recovery.
 Using the old server's backup path as the import path allows you to
 restore a basic installation of Zimbra to the last valid moment of your
 old server.
+
+This is just one possible Disaster Recovery scenario: more advanced scenarios and technicques are described in the Zimbra Wiki.
 
 [[the-recovery-process]]
 The Recovery Process
@@ -1129,7 +1131,7 @@ this is not mandatory.
 
 *When using these kinds of systems, it's vital to make sure that the
 Backup Path isn't either part of the snapshot (e.g. by setting the vdisk
-to `Independent Persistend` in VMWare ESX/i) or altered in any way when
+to `Independent Persistent in VMWare ESX/i) or altered in any way when
 rolling back in order for the missing data to be available for import.*
 
 To perform a disaster recovery from a previous machine state
@@ -2126,12 +2128,12 @@ Step 1: Coherency Checks
 To avoid any possible data-related issues, run the following
 checks on the source server:
 
-* http://wiki.zimbra.com/wiki/Ajcody-Notes-No-Such-Blob#Zmblobchk_for_5.0.6.2B_Systems[zmblobchk]:
+* https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Zimbra_NG_HSM/Advanced_Volume_Operations#doCheckBlobs[zxsuite hsm doCheckBlobs]:
 Checks the consistency between Zimbra's metadata and BLOBs.
 * http://wiki.zimbra.com/wiki/Zmdbintegrityreport[zmdbintegrityreport]:
 Checks the integrity of the Zimbra database.
 
-Repair any error found as described in Zimbra's official documentation.
+Repair any error found.
 
 Running a reindex of all mailboxes is also suggested.
 
@@ -2250,9 +2252,8 @@ remove all system accounts (like GalSync, Ham, Spam, Quarantine etc.)
 from the imported account list.
 
 [[step-5-alternate-first-import-for-large-migrations-advanced-users-only]]
-Step 5 (alternate): First Import for Large Migrations [ADVANCED Users
-Only]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 5 (alternate): First Import for Large Migrations [ADVANCED Users Only]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are planning to migrate a very large infrastructure where an export/import
 lasts for hours or even days, there is an alternative way to handle the

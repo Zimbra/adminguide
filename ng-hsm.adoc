@@ -553,7 +553,9 @@ The local directory must be created manually and its path must be entered in
 the `HSM NG` section of the Administration Zimlet in the Zimbra
 Administration Console.
 
-WARNING: Failing to correctly set the cache directory will cause items
+If the Local Cache directory is not set, you won't be able to create any secondary volume on an S3-compatible device or service.
+
+WARNING: Failing to correctly configure the cache directory will cause items
 to be unretrievable, meaning that users will get a `No such BLOB` error
 when trying to access any item stored on an S3 volume.
 
