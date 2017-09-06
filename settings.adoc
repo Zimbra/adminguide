@@ -1,8 +1,8 @@
-:document-title: Administrator Guide
+:document-title: Administrator Guide version 8.8.3
 :product-name: Zimbra Collaboration
 :product-abbrev: ZCS
 = {product-name} {document-title}
-:product-version: 8.8.1
+:product-version: 8.8.3
 :product-release-date: March, 2017
 :copyright-year: 2017
 :icons: font
