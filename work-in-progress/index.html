@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6">
-<title>Zimbra Collaboration Administrator Guide</title>
+<title>Zimbra Collaboration Administrator Guide version 8.8.3</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -519,11 +519,11 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Zimbra Collaboration Administrator Guide</h1>
+<h1>Zimbra Collaboration Administrator Guide version 8.8.3</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_zimbra_collaboration_administrator_guide">Zimbra Collaboration Administrator Guide</a></li>
+<li><a href="#_zimbra_collaboration_administrator_guide_version_8_8_3">Zimbra Collaboration Administrator Guide version 8.8.3</a></li>
 <li><a href="#_license">License</a></li>
 <li><a href="#introduction">Introduction</a>
 <ul class="sectlevel2">
@@ -918,7 +918,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_zimbra_collaboration_administrator_guide">Zimbra Collaboration Administrator Guide</h2>
+<h2 id="_zimbra_collaboration_administrator_guide_version_8_8_3">Zimbra Collaboration Administrator Guide version 8.8.3</h2>
 <div class="sectionbody">
 
 </div>
@@ -930,7 +930,7 @@ table.CodeRay td.code>pre{padding:0}
 <p><span class="image"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="CC BY-SA"></span> Synacor, Inc., 2017</p>
 </div>
 <div class="paragraph">
-<p>&#169; 2017 by Synacor, Inc. Zimbra Collaboration Administrator Guide</p>
+<p>&#169; 2017 by Synacor, Inc. Zimbra Collaboration Administrator Guide version 8.8.3</p>
 </div>
 <div class="paragraph">
 <p>This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
@@ -26400,7 +26400,7 @@ to <code>false</code>:</p>
 <h6 id="why-should-i-disable-the-real-time-scanner">Why Should I Disable the Real Time Scanner?</h6>
 <div class="paragraph">
 <p>The only time you should disable the Real Time Scanner is while performing
-an External Import of multiple domains. This is a safety measure to
+an External Restore of multiple domains. This is a safety measure to
 avoid high load on your server. After the import, re-enable the Real
 Time Scanner and perform a SmartScan when prompted.</p>
 </div>
@@ -26459,7 +26459,7 @@ deleted any item found in the backup and not in the Zimbra datastore.</p>
 </div>
 <div class="paragraph">
 <p>Finally, it updates all configuration metadata in the backup, so that
-domains, accounts, COSs and server configurations are stored.</p>
+domains, accounts, COSs and server configurations are stored along with a dump of all LDAP data and config.</p>
 </div>
 </div>
 <div class="sect3">
@@ -26672,9 +26672,9 @@ operation_host(O)    String
 <div class="sect3">
 <h4 id="what-is-the-external-backup">What is the External Backup?</h4>
 <div class="paragraph">
-<p>The External Backup is one of the Bakcup Modes of Backup NG. It creates a
+<p>The External Backup is one of the Backup Methods of Backup NG. It creates a
 snapshot of the mail system, which is ready to be used for a
-migration. Exported data is deduplicated and compressed to optimize disk
+migration or for Disaster Recovery. Exported data is deduplicated and compressed to optimize disk
 utilization, transfer times and I/O rates.</p>
 </div>
 </div>
@@ -26717,7 +26717,7 @@ as root): <em>/opt/zimbra/libexec/zmfixperms --verbose --extended</em></p>
 <p>Reindex all mailboxes.</p>
 </li>
 <li>
-<p>Check the BLOB consistency with the <em>zmblobchk</em> utility.</p>
+<p>Check the BLOB consistency with the <em>zxsuite hsm doCheckBlobs</em> utility.</p>
 </li>
 </ul>
 </div>
@@ -27339,14 +27339,14 @@ an univoque code that identifies an item in a mailbox.</p>
 directory of the proper account in</p>
 </div>
 <div class="paragraph">
-<p><code>  [backup path]/accounts/[accountID]/items/[last 2 digits of itemID]/[itemID]</code></p>
+<p><code>[backup path]/accounts/[accountID]/items/[last 2 digits of itemID]/[itemID]</code></p>
 </div>
 <div class="paragraph">
 <p>e.g.:</p>
 </div>
 <div class="paragraph">
-<p><code> Item 2057 of account 4a217bb3-6861-4c9f-80f8-f345ae2897b5, default backup path</code><br>
-<code> /opt/zimbra/backup/ng/accounts/4a217bb3-6861-4c9f-80f8-f345ae2897b5/items/57/2057</code></p>
+<p>Item 2057 of account 4a217bb3-6861-4c9f-80f8-f345ae2897b5, default backup path<br>
+<code>/opt/zimbra/backup/ng/accounts/4a217bb3-6861-4c9f-80f8-f345ae2897b5/items/57/2057</code></p>
 </div>
 <div class="paragraph">
 <p>Metadata are stored in a plain text file, so tools like <code>grep</code> and <code>find</code>
@@ -27421,7 +27421,7 @@ Knowing the itemID and the email address, the Administrator runs the following
 as the <code>zimbra</code> user to restore the missing item:</p>
 </div>
 <div class="paragraph">
-<p><code> zxsuite backup doItemRestore <a href="mailto:user@domain.com">user@domain.com</a> 339</code></p>
+<p><code>zxsuite backup doItemRestore <a href="mailto:user@domain.com">user@domain.com</a> 339</code></p>
 </div>
 </div>
 </div>
@@ -27508,6 +27508,9 @@ to perform step 2 of a recovery.</p>
 <p>Using the old server&#8217;s backup path as the import path allows you to
 restore a basic installation of Zimbra to the last valid moment of your
 old server.</p>
+</div>
+<div class="paragraph">
+<p>This is just one possible Disaster Recovery scenario: more advanced scenarios and technicques are described in the Zimbra Wiki.</p>
 </div>
 </div>
 <div class="sect4">
@@ -27667,7 +27670,7 @@ this is not mandatory.</p>
 <div class="paragraph">
 <p><strong>When using these kinds of systems, it&#8217;s vital to make sure that the
 Backup Path isn&#8217;t either part of the snapshot (e.g. by setting the vdisk
-to <code>Independent Persistend</code> in VMWare ESX/i) or altered in any way when
+to `Independent Persistent in VMWare ESX/i) or altered in any way when
 rolling back in order for the missing data to be available for import.</strong></p>
 </div>
 <div class="paragraph">
@@ -29020,7 +29023,7 @@ checks on the source server:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://wiki.zimbra.com/wiki/Ajcody-Notes-No-Such-Blob#Zmblobchk_for_5.0.6.2B_Systems">zmblobchk</a>:
+<p><a href="https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Zimbra_NG_HSM/Advanced_Volume_Operations#doCheckBlobs">zxsuite hsm doCheckBlobs</a>:
 Checks the consistency between Zimbra&#8217;s metadata and BLOBs.</p>
 </li>
 <li>
@@ -29030,7 +29033,7 @@ Checks the integrity of the Zimbra database.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Repair any error found as described in Zimbra&#8217;s official documentation.</p>
+<p>Repair any error found.</p>
 </div>
 <div class="paragraph">
 <p>Running a reindex of all mailboxes is also suggested.</p>
@@ -29180,11 +29183,10 @@ While importing via the Administration Zimlet, be sure to
 remove all system accounts (like GalSync, Ham, Spam, Quarantine etc.)
 from the imported account list.</p>
 </div>
-<div id="step-5-alternate-first-import-for-large-migrations-advanced-users-only" class="paragraph">
-<p>Step 5 (alternate): First Import for Large Migrations [ADVANCED Users
-Only]
-<sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub><sub>~</sub></p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="step-5-alternate-first-import-for-large-migrations-advanced-users-only">Step 5 (alternate): First Import for Large Migrations [ADVANCED Users Only]</h4>
 <div class="paragraph">
 <p>If you are planning to migrate a very large infrastructure where an export/import
 lasts for hours or even days, there is an alternative way to handle the
@@ -29248,7 +29250,6 @@ work on their mailbox.</p>
 slowdowns.</p>
 </li>
 </ul>
-</div>
 </div>
 </div>
 <div class="sect3">
@@ -31302,6 +31303,9 @@ which must be readable and writable by the <code>zimbra</code> user.</p>
 the <code>HSM NG</code> section of the Administration Zimlet in the Zimbra
 Administration Console.</p>
 </div>
+<div class="paragraph">
+<p>If the Local Cache directory is not set, you won&#8217;t be able to create any secondary volume on an S3-compatible device or service.</p>
+</div>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -31309,7 +31313,7 @@ Administration Console.</p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Failing to correctly set the cache directory will cause items
+Failing to correctly configure the cache directory will cause items
 to be unretrievable, meaning that users will get a <code>No such BLOB</code> error
 when trying to access any item stored on an S3 volume.
 </td>
@@ -45419,7 +45423,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-01 12:35:26 CDT
+Last updated 2017-09-06 10:23:06 CDT
 </div>
 </div>
 </body>
