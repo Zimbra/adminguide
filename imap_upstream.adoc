@@ -161,6 +161,8 @@ zmprov mcf +zimbraReverseProxyUpstreamImapServers <server1> \
   +zimbraReverseProxyUpstreamImapServers <server2> \
  ...
 ----
+[NOTE]
+In an upgrade scenario values MUST BE assigned to `zimbraReverseProxyUpstreamImapServers` at the server level until all mailbox servers have been updated.
 +
 4. Flush the config cache on lookup servers: `zmprov -a fc config`
 5. If `zimbraMemcachedClientExpirySeconds` was decreased prior to this
@@ -180,7 +182,3 @@ you will need to modify them on the mailbox servers via `zmprov ms <server>..`
 +
 7. Reset `zimbraMemcachedClientExpirySeconds` to the original value if
 necessary.
-
-
-
-
