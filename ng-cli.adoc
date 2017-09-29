@@ -301,6 +301,26 @@ Backup NG Commands
 
 `zxsuite backup monitor {operation_uuid} [attr1 value1 [attr2 value2...`
 
+::
+  *getServices* - Show the current status of all the module's services
+
+`zxsuite backup getServices`
+
+::
+  *doBackupLDAP* - Backup LDAP
+
+`zxsuite backup doBackupLDAP`		
+
+::
+  *doRestartService* - Restart one given service 
+
+`zxsuite backup doRestartService {service_name}`
+
+::
+  *doRestoreBlobs* - Start a "restore blobs" operation which tries to restore broken zimbra blobs.
+
+`zxsuite backup doRestoreBlobs {volume_id} [attr1 value1 [attr2 value2...]]`
+
 [[mobile-ng-cli]]
 Mobile NG CLI
 ~~~~~~~~~~~~~
