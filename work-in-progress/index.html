@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6">
-<title>Zimbra Collaboration Administrator Guide version 8.8.3</title>
+<title>Zimbra Collaboration Administrator Guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -519,11 +519,11 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Zimbra Collaboration Administrator Guide version 8.8.3</h1>
+<h1>Zimbra Collaboration Administrator Guide</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_zimbra_collaboration_administrator_guide_version_8_8_3">Zimbra Collaboration Administrator Guide version 8.8.3</a></li>
+<li><a href="#_zimbra_collaboration_administrator_guide">Zimbra Collaboration Administrator Guide</a></li>
 <li><a href="#_license">License</a></li>
 <li><a href="#introduction">Introduction</a>
 <ul class="sectlevel2">
@@ -918,7 +918,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_zimbra_collaboration_administrator_guide_version_8_8_3">Zimbra Collaboration Administrator Guide version 8.8.3</h2>
+<h2 id="_zimbra_collaboration_administrator_guide">Zimbra Collaboration Administrator Guide</h2>
 <div class="sectionbody">
 
 </div>
@@ -930,7 +930,7 @@ table.CodeRay td.code>pre{padding:0}
 <p><span class="image"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="CC BY-SA"></span> Synacor, Inc., 2017</p>
 </div>
 <div class="paragraph">
-<p>&#169; 2017 by Synacor, Inc. Zimbra Collaboration Administrator Guide version 8.8.3</p>
+<p>&#169; 2017 by Synacor, Inc. Zimbra Collaboration Administrator Guide</p>
 </div>
 <div class="paragraph">
 <p>This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
@@ -32722,17 +32722,31 @@ command:</p>
 <div class="literalblock">
 <div class="content">
 <pre>Syntax:
-   zxsuite admin doAddDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...
+   zxsuite admin doAddDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
-NAME             TYPE       EXPECTED VALUES   DEFAULT
-account(M)       String
-domain(M)        String
-viewMail(O)      Boolean    true|false         false
-adminQuota(O)    String                        0
+NAME               TYPE       EXPECTED VALUES    DEFAULT
+account(M)         String
+domain(M)          String
+viewMail(O)        Boolean    true|false         false
+editFeatures(O)    Boolean    true|false         false
+adminQuota(O)      String                        -1
 
-(M) == mandatory parameter, (O) == optional parameter</pre>
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+
+zxsuite admin doAddDelegationSettings john@example.com example.com viewMail true adminQuota -1
+Adds John as delegated administrator of domain example.com, with the right to view user mail on such domain and
+no right to grand quotas to users.
+
+zxsuite admin doAddDelegationSettings john@example.com example.com adminQuota 0
+Adds John as delegated administrator of domain example.com, with the right to assign unlimited quotas to users.
+
+zxsuite admin doAddDelegationSettings john@example.com example.com adminQuota 10gb
+Adds John as delegated administrator of domain example.com, with the right to assign quotas up to 10gb to each user.</pre>
 </div>
 </div>
 </div>
@@ -32759,17 +32773,31 @@ button.</p>
 <div class="literalblock">
 <div class="content">
 <pre>Syntax:
-   zxsuite admin doEditDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...
+   zxsuite admin doEditDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
-NAME             TYPE       EXPECTED VALUES
-account(M)       String
-domain(M)        String
-viewMail(O)      Boolean    true|false
-adminQuota(O)    String
+NAME               TYPE       EXPECTED VALUES
+account(M)         String
+domain(M)          String
+viewMail(O)        Boolean    true|false
+editFeatures(O)    Boolean    true|false
+adminQuota(O)      String
 
-(M) == mandatory parameter, (O) == optional parameter</pre>
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+
+zxsuite admin doEditDelegationSettings john@example.com example.com viewMail true adminQuota -1
+Edits John's delegation rights for domain example.com, with the right to view user mail on such domain and
+no right to grand quotas to users.
+
+zxsuite admin doEditDelegationSettings john@example.com example.com adminQuota 0
+Edits John's delegation rights for domain example.com, with the right to assign unlimited quotas to users.
+
+zxsuite admin doEditDelegationSettings john@example.com example.com adminQuota 10gb
+Edits John's delegation rights for domain example.com, with the right to assign quotas up to 10gb to each user.</pre>
 </div>
 </div>
 </div>
@@ -32792,8 +32820,7 @@ button.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Syntax:
-   zxsuite admin doRemoveDelegationSettings {account} {domain}
+<pre>zxsuite admin doRemoveDelegationSettings {account} {domain}
 
 PARAMETER LIST
 
@@ -32801,7 +32828,12 @@ NAME          TYPE
 account(M)    String
 domain(M)     String
 
-(M) == mandatory parameter, (O) == optional parameter</pre>
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite admin doRemoveDelegationSettings john@example.com example.com
+John no longer administers domain example.com</pre>
 </div>
 </div>
 </div>
@@ -34399,6 +34431,50 @@ operations queue</p>
 </div>
 <div class="paragraph">
 <p><code>zxsuite backup monitor {operation_uuid} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"></dt>
+<dd>
+<p><strong>getServices</strong> - Show the current status of all the module&#8217;s services</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>zxsuite backup getServices</code></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"></dt>
+<dd>
+<p><strong>doBackupLDAP</strong> - Backup LDAP</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>zxsuite backup doBackupLDAP</code></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"></dt>
+<dd>
+<p><strong>doRestartService</strong> - Restart one given service</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>zxsuite backup doRestartService {service_name}</code></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"></dt>
+<dd>
+<p><strong>doRestoreBlobs</strong> - Start a "restore blobs" operation which tries to restore broken zimbra blobs.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>zxsuite backup doRestoreBlobs {volume_id} [attr1 value1 [attr2 value2&#8230;&#8203;]]</code></p>
 </div>
 </div>
 </div>
@@ -45423,7 +45499,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-06 10:23:06 CDT
+Last updated 2017-10-04 12:34:16 CDT
 </div>
 </div>
 </body>
