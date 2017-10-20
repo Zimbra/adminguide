@@ -988,6 +988,8 @@ its content (as BLOBs are named after their file's SHA hash).
 whether the BLOB file's size is coherent with the expected size (stored
 in the DB).
 
+IMPORTANT: The old `zmblobchk` command is deprecated and replaced by `zxsuite hsm doCheckBlobs` on all infrastructures using HSM NG module. 
+
 [[dodeduplicate]]
 doDeduplicate
 ^^^^^^^^^^^^^
