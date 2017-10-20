@@ -171,11 +171,6 @@ Backup NG Commands
 `zxsuite backup setProperty {property_name} {property_value}`
 
 ::
-  *doFullScan* - Perform a Full Scan
-
-`zxsuite backup doFullScan [attr1 value1 [attr2 value2...`
-
-::
   *doSmartScan* - Perform a Smart Scan
 
 `zxsuite backup doSmartScan [attr1 value1 [attr2 value2...`
