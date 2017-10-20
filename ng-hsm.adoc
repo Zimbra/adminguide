@@ -311,7 +311,7 @@ compression_threshold_bytes(O)    Long                                          
 
 Usage example:
 
-zxsuite hsm docreatevolume secondary `volume B` `/opt/zimbra/store_B/` volume_compressed true compression_threshold_bytes 4096
+zxsuite powerstore docreatevolume secondary "volume B" "/opt/zimbra/store_B/" true 4096 volume_compressed true compression_threshold_bytes 4096
 Creates a new secondary volume named `volume B` in /opt/zimbra/store_B/, with compression and compression threshold to 4096 bytes
 ....
 
@@ -373,8 +373,8 @@ compression_threshold(O)    Long                          4096
 
 Usage example:
 
-zxsuite hsm doupdatevolume 3 secondary `example volume` `/opt/zimbra/store_example/`
-Sets name of volume 3 to `example volume`, make it secondary, and set its path to /opt/zimbra/store_example/
+zxsuite powerstore doupdatevolume oldName volume_type secondary volume_name "example volume" volume_path "/opt/zimbra/store_example/"
+Sets name of volume "oldName" to `example volume`, make it secondary, and set its path to /opt/zimbra/store_example/
 ....
 
 [[deleting-a-volume]]
