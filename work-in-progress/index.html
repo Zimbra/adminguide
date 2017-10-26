@@ -2626,6 +2626,13 @@ When installed on the same node as a <strong>mailbox server</strong> the mailbox
 <div class="paragraph">
 <p>In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the <strong>mailbox</strong> processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p>Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd it MUST BE added to the '''zimbraHttpThrottleSafeIPs''' configuration item or the DosFilter will
 throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.</p>
@@ -2633,8 +2640,47 @@ throttle the new server.  Failure to do so will cause SOAP traffic from the Remo
 <div class="paragraph">
 <p>Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the '''zimbraHttpThrottleSafeIPs''' configuration item.</p>
 </div>
-<div class="paragraph">
-<p>Lastly, when an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in '''zimbraReverseProxyAvailableLookupTargets'''. This is necessary to ensure that the new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command <code>zmprov flushCache -a config</code>. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of <code>zmprov gacf zimbraReverseProxyUpstreamImapServers</code>, when run from a lookup target server.</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+When an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in '''zimbraReverseProxyAvailableLookupTargets'''. This is necessary to ensure that the new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command <code>zmprov flushCache -a config</code>. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of <code>zmprov gacf zimbraReverseProxyUpstreamImapServers</code>, when run from a lookup target server.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Do NOT configure a load balancer between the Zimbra HTTP Proxy node and any remote IMAPD servers as this will interfere
+with correct operation.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The zmlocalconfig setting <strong>nio_imap_enabled</strong> MUST have value <strong>true</strong> when using the Zimbra IMAPD server.  The legacy
+Imap server which does not use NIO is not supported.
+</td>
+</tr>
+</table>
 </div>
 <div style="page-break-after: always;"></div>
 <div class="sect2">
@@ -31023,7 +31069,7 @@ compression_threshold_bytes(O)    Long                                          
 
 Usage example:
 
-zxsuite hsm docreatevolume secondary `volume B` `/opt/zimbra/store_B/` volume_compressed true compression_threshold_bytes 4096
+zxsuite powerstore docreatevolume secondary "volume B" "/opt/zimbra/store_B/" true 4096 volume_compressed true compression_threshold_bytes 4096
 Creates a new secondary volume named `volume B` in /opt/zimbra/store_B/, with compression and compression threshold to 4096 bytes</pre>
 </div>
 </div>
@@ -31086,8 +31132,8 @@ compression_threshold(O)    Long                          4096
 
 Usage example:
 
-zxsuite hsm doupdatevolume 3 secondary `example volume` `/opt/zimbra/store_example/`
-Sets name of volume 3 to `example volume`, make it secondary, and set its path to /opt/zimbra/store_example/</pre>
+zxsuite powerstore doupdatevolume oldName volume_type secondary volume_name "example volume" volume_path "/opt/zimbra/store_example/"
+Sets name of volume "oldName" to `example volume`, make it secondary, and set its path to /opt/zimbra/store_example/</pre>
 </div>
 </div>
 </div>
@@ -31843,6 +31889,18 @@ whether the BLOB file&#8217;s size is coherent with the expected size (stored
 in the DB).</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The old <code>zmblobchk</code> command is deprecated and replaced by <code>zxsuite hsm doCheckBlobs</code> on all infrastructures using HSM NG module.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -34144,17 +34202,6 @@ version will be loaded on the next mailboxd restart</p>
 </div>
 <div class="paragraph">
 <p><code>zxsuite backup setProperty {property_name} {property_value}</code></p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1"></dt>
-<dd>
-<p><strong>doFullScan</strong> - Perform a Full Scan</p>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p><code>zxsuite backup doFullScan [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="dlist">
 <dl>
@@ -45499,7 +45546,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-04 12:34:16 CDT
+Last updated 2017-10-26 08:04:02 CDT
 </div>
 </div>
 </body>
