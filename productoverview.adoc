@@ -97,8 +97,8 @@ Open source components that include:
 * SpamAssassin, a mail filter that attempts to identify spam
 * Amavisd-new interfaces between the MTA and one or more content checkers
 
-|James/Steve filtering |
-Creates filters for email
+|Apache JSieve |
+Manages filters for email
 
 |LibreOffice |
 High fidelity document preview
