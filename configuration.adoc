@@ -997,7 +997,7 @@ Wizard in the Administration Console to generate the RSA Private Key and
 CSR.
 
 Admin Console: ::
-*Home > 1 Get Started > 3. Install Certificates*
+*Home > 1 Get Started > 2. Install Certificates*
 
 Use guidelines from the Install Certificates table to set parameters for
 your certificates.
