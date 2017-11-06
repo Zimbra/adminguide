@@ -1142,6 +1142,8 @@ The `doMailboxMove` command allows you to move a single mailbox, or all accounts
 from a given domain, from one mailbox server to another within the same
 Zimbra infrastructure.
 
+WARNING: If the HSM NG module is installed and enabled, this command replaces the old `zmmboxmove` and `zmmailboxmove` commands. Using any of the legacy commands will return an error and won't move any data.
+
 *Syntax*
 ....
 Syntax:
@@ -1183,18 +1185,23 @@ is taken from the item's db entry).
 * _hsm_: If true, an HSM operation will be submitted after the mailbox is successfully moved.
 
 *doMailboxMove Details*
+
 * When moving a domain, each account from the current server is enumerated and moved
 sequentially.
+
 * The mailbox is set to maintenance mode when it's moved, and will be placed
 into its original state after all emails are moved (after the ldap stage).
+
 * Operation is stopped if 5% or more write errors are encountered on items being
 moved. Pay attention that the current mailbox may remains in maintenance mode.
+
 * Single-mailbox moves will not start if the destination server does not have
 enough space available or user just belongs to teh destination host.
+
 * All data is moved at a low-level and will not be changed except for some small things
 like mailbox id.
-* The operation is made up of 7 stages: blobs|db|chat_db|ldap|backup|reindex|delete.
-For each mailbox:
+
+* The operation is made up of 7 stages: blobs|db|chat_db|ldap|backup|reindex|delete. For each mailbox:
     ** blobs: All blobs are copied from the source server to the destination server.
     ** db: All database entries are copied from the source server to the destination server.
     ** chat_db: All chat db information is copied from the source server to the destination server.
@@ -1203,15 +1210,21 @@ For each mailbox:
     ** reindex: Start a mailbox reindex.
     ** delete:  All blobs and db entries are deleted from the source server,
     backup items are also marked as deleted.
+    
 * All of the stages are executed sequentially. If a single stage is specified,
 the mailbox is parked in maintenance mode throughout the entire operation. On
 success, the mailbox will be placed into its original state.
+
 * Initially, all blob items will be stored in the destination server primary volume.
+
 * On the reindex stage's completion, a new HSM operation is submitted to the
 destination server, if not specified otherwise.
+
 * All volumes' compression options are taken.
+
 * The MailboxMove operation can be executed if and only if no others operations
 are running on the source server.
+
 * The HSM option applies current HSM policies. It runs after each mailbox is
 successfully moved. On any run new, items will be moved.
 
