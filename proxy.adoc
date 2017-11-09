@@ -24,6 +24,7 @@ Benefits for using Zimbra Proxy include:
 * Caching
 * Centralized Logging and Auditing
 * URL Rewriting
+* Strict Server Name Enforcement (optional)
 
 For more information, see the wiki page
 https://wiki.zimbra.com/wiki/Zimbra_Proxy_Guide[Zimbra_Proxy_Guide].
