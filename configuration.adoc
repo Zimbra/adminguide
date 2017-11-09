@@ -997,7 +997,7 @@ Wizard in the Administration Console to generate the RSA Private Key and
 CSR.
 
 Admin Console: ::
-*Home > 1 Get Started > 3. Install Certificates*
+*Home > 1 Get Started > 2. Install Certificates*
 
 Use guidelines from the Install Certificates table to set parameters for
 your certificates.
@@ -1093,7 +1093,7 @@ record.
 Edit the certificate for the domain:
 
 Admin Console: ::
-*Home > 1 Get Started > 3. Install Certificates*
+*Home > 1 Get Started > 2. Install Certificates*
 
 Copy the domain's issued signed commercial certificate's and private key
 files to the *Domain Certificate* section for the selected domain.
