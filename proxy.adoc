@@ -158,6 +158,36 @@ using the Zimbra Mailbox Ports.
 
 |====================================================
 
+=== Strict Server Name Enforcement
+
+Zimbra Proxy has the ability to strictly enforce which values are allowed in the `Host` header
+passed in by the client.
+
+This is _enabled by default_ on new installations but left _disabled for upgrades_ from previous
+versions unless toggled during the installation.
+
+The functionality may be altered by setting the `zimbraReverseProxyStrictServerNameEnabled` boolean configuration
+option followed by restarting the proxy server.
+
+* TRUE - strict server name enforcement enabled
+* FALSE - strict server name enforcement disabled
+
+[source,bash]
+----
+zmprov mcf zimbraReverseProxyStrictServerNameEnabled TRUE
+----
+
+When the strict server name functionality is enabled additional valid server names may be specified
+using the `zimbraVirtualHostName` and `zimbraVirtualIPAddress` configuration items at the domain level.
+
+[source,bash]
+----
+zmprov md example.com zimbraVirtualHostName mail.example.com zimbraVirtualIPAddress 1.2.3.4
+----
+
+[NOTE]
+Only one virtual ip address is needed per domain although more than one is acceptable.
+
 === Setting Up IMAP and POP Proxy After HTTP Proxy Installation
 
 IMAP proxy is installed with {product-name} and set up during
