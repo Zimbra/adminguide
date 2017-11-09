@@ -806,7 +806,6 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#from-the-administration-console-1">From the Administration Console</a></li>
 <li><a href="#from-the-zimbra-cli-1">From the Zimbra CLI</a></li>
 <li><a href="#enable-for-single-user">Enable Mobile NG for a Single User</a></li>
-<li><a href="#autodiscover">Autodiscover</a></li>
 <li><a href="#the-mobile-password-feature">The Mobile Password Feature</a></li>
 <li><a href="#mobile-device-management-a.k.a.-mobile-provisioning">Mobile Device Management a.k.a. Mobile Provisioning</a></li>
 <li><a href="#syncstates">SyncStates</a></li>
@@ -1216,9 +1215,9 @@ Active Directory</p>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">James/Steve filtering</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache JSieve</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Creates filters for email</p>
+<p>Manages filters for email</p>
 </div></div></td>
 </tr>
 <tr>
@@ -2626,6 +2625,13 @@ When installed on the same node as a <strong>mailbox server</strong> the mailbox
 <div class="paragraph">
 <p>In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the <strong>mailbox</strong> processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p>Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd it MUST BE added to the '''zimbraHttpThrottleSafeIPs''' configuration item or the DosFilter will
 throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.</p>
@@ -2633,8 +2639,47 @@ throttle the new server.  Failure to do so will cause SOAP traffic from the Remo
 <div class="paragraph">
 <p>Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the '''zimbraHttpThrottleSafeIPs''' configuration item.</p>
 </div>
-<div class="paragraph">
-<p>Lastly, when an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in '''zimbraReverseProxyAvailableLookupTargets'''. This is necessary to ensure that the new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command <code>zmprov flushCache -a config</code>. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of <code>zmprov gacf zimbraReverseProxyUpstreamImapServers</code>, when run from a lookup target server.</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+When an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in '''zimbraReverseProxyAvailableLookupTargets'''. This is necessary to ensure that the new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command <code>zmprov flushCache -a config</code>. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of <code>zmprov gacf zimbraReverseProxyUpstreamImapServers</code>, when run from a lookup target server.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Do NOT configure a load balancer between the Zimbra HTTP Proxy node and any remote IMAPD servers as this will interfere
+with correct operation.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The zmlocalconfig setting <strong>nio_imap_enabled</strong> MUST have value <strong>true</strong> when using the Zimbra IMAPD server.  The legacy
+Imap server which does not use NIO is not supported.
+</td>
+</tr>
+</table>
 </div>
 <div style="page-break-after: always;"></div>
 <div class="sect2">
@@ -10248,7 +10293,7 @@ CSR.</p>
 <dl>
 <dt class="hdlist1">Admin Console: </dt>
 <dd>
-<p><strong>Home &gt; 1 Get Started &gt; 3. Install Certificates</strong></p>
+<p><strong>Home &gt; 1 Get Started &gt; 2. Install Certificates</strong></p>
 </dd>
 </dl>
 </div>
@@ -10391,7 +10436,7 @@ record.
 <dl>
 <dt class="hdlist1">Admin Console: </dt>
 <dd>
-<p><strong>Home &gt; 1 Get Started &gt; 3. Install Certificates</strong></p>
+<p><strong>Home &gt; 1 Get Started &gt; 2. Install Certificates</strong></p>
 </dd>
 </dl>
 </div>
@@ -16179,7 +16224,7 @@ sent to the user when the user&#8217;s account is auto provisioned.</p>
 </dd>
 <dt class="hdlist1"><code>zimbraAutoProvNotificationBody</code></dt>
 <dd>
-<p>Template used to construct the subject of the notification message
+<p>Template used to construct the body of the notification message
 sent to the user when the user&#8217;s account is auto provisioned.</p>
 <div class="paragraph">
 <p>Supported variables: <code>${ACCOUNT_ADDRESS}</code>, <code>${ACCOUNT_DISPLAY_NAME}</code></p>
@@ -16699,7 +16744,7 @@ command prompt.</p>
 <div class="paragraph">
 <p>A resource is a location or equipment that can be scheduled for a meeting.
 Each meeting room location and other non-location specific resources such
-as AV equipment is set up as a resource account.  The <strong>Addresses &gt;
+as AV equipment is set up as a resource account.  The <strong>Manage &gt;
 Resources</strong> section in the Administration Console shows all resources that
 are configured for Zimbra Collaboration.</p>
 </div>
@@ -29596,156 +29641,6 @@ zimbraFeatureMobileSyncEnabled FALSE</code></strong></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="autodiscover">Autodiscover</h3>
-<div class="sect3">
-<h4 id="the-autodiscover-feature">The Autodiscover Feature</h4>
-<div class="paragraph">
-<p>At the beginning of the account creation process on any mobile device,
-the client will try to autonomously detect the URL, domain and username
-before asking the user for input.</p>
-</div>
-<div class="paragraph">
-<p>Mobile NG provides its own Autodiscover handler to make this
-feature available in all supported version of Zimbra.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-The Autodiscover feature
-will return the value of the <code>zimbraPublicHostname</code> domain property.
-Should such property be empty, it will fall back to the value of the
-<code>zimbraServiceHostName</code> server property.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The domain name is either sent explicitly by the client or deduced by
-the http/s request sent by the mobile phone.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="setting-up-autodiscover">Setting up Autodiscover</h4>
-<div class="paragraph">
-<p>To be functional, the Autodiscover feature needs both a
-dedicated DNS record and a change in Jetty&#8217;s configuration.</p>
-</div>
-<div class="sect4">
-<h5 id="step-1-dns-records">Step 1: DNS records</h5>
-<div class="paragraph">
-<p>Two options are available:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>DNS A record: Either create a DNS A record or a DNS CNAME record for
-autodiscover.[yourdomain.com], whose target must be the mailserver (or
-the appropriate proxy in case of a multistore infrastructure). For SSL
-to be properly functional, you&#8217;ll either need a wildcard SSL
-certificate for [yourdomain.com] or to declare
-<code>autodiscover.[yourdomain.com]</code> as a Certificate Subject Alt Name within
-your certificate.</p>
-</li>
-<li>
-<p>DNS SRV record: Create a new SRV record like the following:</p>
-</li>
-</ul>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Service: _autodiscover
-Protocol: _tcp
-Port Number: 443
-Host: [mail.yourdomain.com]</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="step-2-jetty-configuration">Step 2: Jetty Configuration</h5>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-These changes are not guaranteed to survive a Zimbra update.
-Depending on the contents of the update, you might need to manually
-re-apply these changes.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Based on your Zimbra major release, apply one of the following changes.</p>
-</div>
-<div class="paragraph">
-<p>A restart of Zimbra&#8217;s mailboxd service is needed for the new
-configuration to become active. You can do so by running <em>`zmmailboxdctl
-restart`</em> as the <em>zimbra</em> user.</p>
-</div>
-<div id="optzimbrajettyetcjetty.xml.in" class="paragraph">
-<p>/opt/zimbra/jetty/etc/jetty.xml.in</p>
-</div>
-<div class="paragraph">
-<p>Locate the following lines&#8230;&#8203;</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;Call name="addRule"&gt;
-            &lt;Arg&gt;
-                &lt;New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule"&gt;
-                    &lt;Set name="pattern"&gt;/autodiscover/*&lt;/Set&gt;
-                    &lt;Set name="replacement"&gt;/service/autodiscover&lt;/Set&gt;
-                &lt;/New&gt;
-            &lt;/Arg&gt;
-        &lt;/Call&gt;
-        &lt;Call name="addRule"&gt;
-            &lt;Arg&gt;
-                &lt;New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule"&gt;
-                    &lt;Set name="pattern"&gt;/Autodiscover/*&lt;/Set&gt;
-                    &lt;Set name="replacement"&gt;/service/autodiscover&lt;/Set&gt;
-                &lt;/New&gt;
-            &lt;/Arg&gt;
-        &lt;/Call&gt;
-        &lt;Call name="addRule"&gt;
-            &lt;Arg&gt;
-                &lt;New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule"&gt;
-                    &lt;Set name="pattern"&gt;/AutoDiscover/*&lt;/Set&gt;
-                    &lt;Set name="replacement"&gt;/service/autodiscover&lt;/Set&gt;
-                &lt;/New&gt;
-            &lt;/Arg&gt;
-        &lt;/Call&gt;</pre>
-</div>
-</div>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
-<li>
-<p>and replace</p>
-</li>
-</ol>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>/service/autodiscover</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>with</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>/service/extension/autodiscover</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="the-mobile-password-feature">The Mobile Password Feature</h3>
 <div class="sect3">
 <h4 id="mobile-passwords-and-you">Mobile Passwords and You</h4>
@@ -31023,7 +30918,7 @@ compression_threshold_bytes(O)    Long                                          
 
 Usage example:
 
-zxsuite hsm docreatevolume secondary `volume B` `/opt/zimbra/store_B/` volume_compressed true compression_threshold_bytes 4096
+zxsuite powerstore docreatevolume secondary "volume B" "/opt/zimbra/store_B/" true 4096 volume_compressed true compression_threshold_bytes 4096
 Creates a new secondary volume named `volume B` in /opt/zimbra/store_B/, with compression and compression threshold to 4096 bytes</pre>
 </div>
 </div>
@@ -31086,8 +30981,8 @@ compression_threshold(O)    Long                          4096
 
 Usage example:
 
-zxsuite hsm doupdatevolume 3 secondary `example volume` `/opt/zimbra/store_example/`
-Sets name of volume 3 to `example volume`, make it secondary, and set its path to /opt/zimbra/store_example/</pre>
+zxsuite powerstore doupdatevolume oldName volume_type secondary volume_name "example volume" volume_path "/opt/zimbra/store_example/"
+Sets name of volume "oldName" to `example volume`, make it secondary, and set its path to /opt/zimbra/store_example/</pre>
 </div>
 </div>
 </div>
@@ -31844,6 +31739,18 @@ in the DB).</p>
 </li>
 </ul>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The old <code>zmblobchk</code> command is deprecated and replaced by <code>zxsuite hsm doCheckBlobs</code> on all infrastructures using HSM NG module.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect4">
 <h5 id="dodeduplicate">doDeduplicate</h5>
@@ -32067,6 +31974,18 @@ following data to the output:</p>
 from a given domain, from one mailbox server to another within the same
 Zimbra infrastructure.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If the HSM NG module is installed and enabled, this command replaces the old <code>zmmboxmove</code> and <code>zmmailboxmove</code> commands. Using any of the legacy commands will return an error and won&#8217;t move any data.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><strong>Syntax</strong></p>
 </div>
@@ -32130,38 +32049,83 @@ is taken from the item&#8217;s db entry).</p>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>doMailboxMove Details</strong>
-* When moving a domain, each account from the current server is enumerated and moved
-sequentially.
-* The mailbox is set to maintenance mode when it&#8217;s moved, and will be placed
-into its original state after all emails are moved (after the ldap stage).
-* Operation is stopped if 5% or more write errors are encountered on items being
-moved. Pay attention that the current mailbox may remains in maintenance mode.
-* Single-mailbox moves will not start if the destination server does not have
-enough space available or user just belongs to teh destination host.
-* All data is moved at a low-level and will not be changed except for some small things
-like mailbox id.
-* The operation is made up of 7 stages: blobs|db|chat_db|ldap|backup|reindex|delete.
-For each mailbox:
-    <strong> blobs: All blobs are copied from the source server to the destination server.
-    </strong> db: All database entries are copied from the source server to the destination server.
-    <strong> chat_db: All chat db information is copied from the source server to the destination server.
-    </strong> ldap: zimbraMailHost ldap attribute is updated and all account caches are flushed.
-    <strong> backup: All backup entries are copied from the source server to the destination server.
-    </strong> reindex: Start a mailbox reindex.
-    ** delete:  All blobs and db entries are deleted from the source server,
-    backup items are also marked as deleted.
-* All of the stages are executed sequentially. If a single stage is specified,
+<p><strong>doMailboxMove Details</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>When moving a domain, each account from the current server is enumerated and moved
+sequentially.</p>
+</li>
+<li>
+<p>The mailbox is set to maintenance mode when it&#8217;s moved, and will be placed
+into its original state after all emails are moved (after the ldap stage).</p>
+</li>
+<li>
+<p>Operation is stopped if 5% or more write errors are encountered on items being
+moved. Pay attention that the current mailbox may remains in maintenance mode.</p>
+</li>
+<li>
+<p>Single-mailbox moves will not start if the destination server does not have
+enough space available or user just belongs to teh destination host.</p>
+</li>
+<li>
+<p>All data is moved at a low-level and will not be changed except for some small things
+like mailbox id.</p>
+</li>
+<li>
+<p>The operation is made up of 7 stages: blobs|db|chat_db|ldap|backup|reindex|delete. For each mailbox:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>blobs: All blobs are copied from the source server to the destination server.</p>
+</li>
+<li>
+<p>db: All database entries are copied from the source server to the destination server.</p>
+</li>
+<li>
+<p>chat_db: All chat db information is copied from the source server to the destination server.</p>
+</li>
+<li>
+<p>ldap: zimbraMailHost ldap attribute is updated and all account caches are flushed.</p>
+</li>
+<li>
+<p>backup: All backup entries are copied from the source server to the destination server.</p>
+</li>
+<li>
+<p>reindex: Start a mailbox reindex.</p>
+</li>
+<li>
+<p>delete:  All blobs and db entries are deleted from the source server,
+backup items are also marked as deleted.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>All of the stages are executed sequentially. If a single stage is specified,
 the mailbox is parked in maintenance mode throughout the entire operation. On
-success, the mailbox will be placed into its original state.
-* Initially, all blob items will be stored in the destination server primary volume.
-* On the reindex stage&#8217;s completion, a new HSM operation is submitted to the
-destination server, if not specified otherwise.
-* All volumes' compression options are taken.
-* The MailboxMove operation can be executed if and only if no others operations
-are running on the source server.
-* The HSM option applies current HSM policies. It runs after each mailbox is
+success, the mailbox will be placed into its original state.</p>
+</li>
+<li>
+<p>Initially, all blob items will be stored in the destination server primary volume.</p>
+</li>
+<li>
+<p>On the reindex stage&#8217;s completion, a new HSM operation is submitted to the
+destination server, if not specified otherwise.</p>
+</li>
+<li>
+<p>All volumes' compression options are taken.</p>
+</li>
+<li>
+<p>The MailboxMove operation can be executed if and only if no others operations
+are running on the source server.</p>
+</li>
+<li>
+<p>The HSM option applies current HSM policies. It runs after each mailbox is
 successfully moved. On any run new, items will be moved.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -34144,17 +34108,6 @@ version will be loaded on the next mailboxd restart</p>
 </div>
 <div class="paragraph">
 <p><code>zxsuite backup setProperty {property_name} {property_value}</code></p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1"></dt>
-<dd>
-<p><strong>doFullScan</strong> - Perform a Full Scan</p>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p><code>zxsuite backup doFullScan [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="dlist">
 <dl>
@@ -45499,7 +45452,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-04 12:34:16 CDT
+Last updated 2017-10-26 08:13:10 CDT
 </div>
 </div>
 </body>
