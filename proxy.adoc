@@ -103,7 +103,7 @@ the location of the Kerberos Keytab file, including Zimbra Proxy password
 == Zimbra Proxy
 
 Zimbra Proxy allows end users to access their {product-name} account
-using end clients such as Microsoft Outlook, Mozilla Thunderbird, or other
+using clients such as Microsoft Outlook, Mozilla Thunderbird, or other
 POP/IMAP end-client software. End users can connect using POP3, IMAP, POP3S
 (Secure POP3), or IMAPS (Secure IMAP).
 
