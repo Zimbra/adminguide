@@ -81,7 +81,7 @@ To enable Mobile NG for a single user from the Administration Console:
 * Open the Zimbra Administration Console.
 * Double-click the user you want to edit (on the left, under
 Addresses -> Accounts).
-* Click the ZeMobile tab.
+* Click the Mobile tab.
 
 * Check `Enable mobile synchronization`.
 
