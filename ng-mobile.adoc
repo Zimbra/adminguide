@@ -670,7 +670,7 @@ Mobile Account Loggers
 
 Mobile account loggers are dedicated loggers that can output the entirety of
 a user's EAS logs into a dedicated logfile, with a different verbosity than the
-one of the `sync.log`. This allow sfor quicker troubleshooting.
+one of the `sync.log`. This allows for quicker troubleshooting.
 
 When creating an account logger, the following parameters must be specified:
 
