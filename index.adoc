@@ -2,6 +2,8 @@ include::settings.adoc[]
 
 :leveloffset: +1
 
+include::mobilesync_warning.adoc[]
+
 <<<
 
 include::legal.adoc[]

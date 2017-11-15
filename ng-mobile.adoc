@@ -81,7 +81,7 @@ To enable Mobile NG for a single user from the Administration Console:
 * Open the Zimbra Administration Console.
 * Double-click the user you want to edit (on the left, under
 Addresses -> Accounts).
-* Click the ZeMobile tab.
+* Click the Mobile tab.
 
 * Check `Enable mobile synchronization`.
 
@@ -213,13 +213,15 @@ Provisioning Options
 
 The following provisioning options are available:
 
-* Enable Mobile Policy: Enable or disable the use of mobile policies for
+* Enable Mobile Device Management: Enable or disable the use of mobile policies for
 the current user/COS.
 * Allow non-provisionable devices: Allow the user to synchronize any
 device that does not support provisioning.
 * Allow partial policy enforcement on device: Allow the user to
 synchronize any device that does not support one or more applicable
 policies.
+
+TIP: By default, MDM is disabled in NG MobileSync. To enable navigate to Network Modules NG -> Mobile -> Advanced Settings and check the “Enable Mobile Device Management” option
 
 [[enforceable-policies]]
 Enforceable Policies
@@ -668,7 +670,7 @@ Mobile Account Loggers
 
 Mobile account loggers are dedicated loggers that can output the entirety of
 a user's EAS logs into a dedicated logfile, with a different verbosity than the
-one of the `sync.log`. This allow sfor quicker troubleshooting.
+one of the `sync.log`. This allows for quicker troubleshooting.
 
 When creating an account logger, the following parameters must be specified:
 
