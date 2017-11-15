@@ -213,7 +213,7 @@ Provisioning Options
 
 The following provisioning options are available:
 
-* Enable Mobile Policy: Enable or disable the use of mobile policies for
+* Enable Mobile Device Management: Enable or disable the use of mobile policies for
 the current user/COS.
 * Allow non-provisionable devices: Allow the user to synchronize any
 device that does not support provisioning.
