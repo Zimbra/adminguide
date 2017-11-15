@@ -221,6 +221,8 @@ device that does not support provisioning.
 synchronize any device that does not support one or more applicable
 policies.
 
+TIP: By default, MDM is disabled in NG MobileSync. To enable navigate to Network Modules NG -> Mobile -> Advanced Settings and check the “Enable Mobile Device Management” option
+
 [[enforceable-policies]]
 Enforceable Policies
 ^^^^^^^^^^^^^^^^^^^^
