@@ -523,7 +523,6 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_zimbra_collaboration_administrator_guide_version_8_8_5">Zimbra Collaboration Administrator Guide version 8.8.5</a></li>
 <li><a href="#_license">License</a></li>
 <li><a href="#introduction">Introduction</a>
 <ul class="sectlevel2">
@@ -913,13 +912,19 @@ table.CodeRay td.code>pre{padding:0}
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+If you are upgrading/migrating from a pervious version of Zimbra and plan to enable the new mobile sync module for Zimbra, please read <a href="https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Things_To_Know_Before_Upgrading">"Things to Know Before Upgrading"</a> and <a href="https://zimbra.github.io/installguides/latest/single.html#mobile-ng">the install guide</a> for critical information.
+</td>
+</tr>
+</table>
+</div>
 <div style="page-break-after: always;"></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_zimbra_collaboration_administrator_guide_version_8_8_5">Zimbra Collaboration Administrator Guide version 8.8.5</h2>
-<div class="sectionbody">
-
 </div>
 </div>
 <div class="sect1">
@@ -29626,7 +29631,7 @@ single user to use all the mobile functions of the Mobile NG Module.</p>
 Addresses &#8594; Accounts).</p>
 </li>
 <li>
-<p>Click the ZeMobile tab.</p>
+<p>Click the Mobile tab.</p>
 </li>
 <li>
 <p>Check <code>Enable mobile synchronization</code>.</p>
@@ -29805,7 +29810,7 @@ both cases, Mobile Management Options are available in the <code>Mobile</code> t
 <div class="ulist">
 <ul>
 <li>
-<p>Enable Mobile Policy: Enable or disable the use of mobile policies for
+<p>Enable Mobile Device Management: Enable or disable the use of mobile policies for
 the current user/COS.</p>
 </li>
 <li>
@@ -29818,6 +29823,18 @@ synchronize any device that does not support one or more applicable
 policies.</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+By default, MDM is disabled in NG MobileSync. To enable navigate to Network Modules NG &#8594; Mobile &#8594; Advanced Settings and check the “Enable Mobile Device Management” option
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect4">
@@ -30413,7 +30430,7 @@ command.</pre>
 <div class="paragraph">
 <p>Mobile account loggers are dedicated loggers that can output the entirety of
 a user&#8217;s EAS logs into a dedicated logfile, with a different verbosity than the
-one of the <code>sync.log</code>. This allow sfor quicker troubleshooting.</p>
+one of the <code>sync.log</code>. This allows for quicker troubleshooting.</p>
 </div>
 <div class="paragraph">
 <p>When creating an account logger, the following parameters must be specified:</p>
@@ -45506,7 +45523,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-14 13:10:17 CST
+Last updated 2017-11-15 13:08:40 CST
 </div>
 </div>
 </body>
