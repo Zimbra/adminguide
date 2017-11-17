@@ -240,10 +240,10 @@ with `iostat -x`).
 == Configuring Denial of Service Filter Parameters
 
 The denial-of-service filter (DoSFilter) limits exposure to requests
-flooding.  The DoSFilter throttles clients sending a large number of
+flooding over HTTP/HTTPS.  The DoSFilter throttles clients sending a large number of
 requests over a short period of time.
 
-The DoSFilter is enabled by default on {product-abbrev} and is applied to all requests.
+The DoSFilter is enabled by default on {product-abbrev} and is applied to all HTTP and HTTPS requests. DosFilter dis not applied to POP3, IMAP or SMTP requests.
 You can modify the configuration to accommodate your specific environmental
 needs.  Disabling the DoSFilter is not recommended.
 
