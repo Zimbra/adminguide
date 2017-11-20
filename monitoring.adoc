@@ -243,9 +243,7 @@ The denial-of-service filter (DoSFilter) limits exposure to requests
 flooding over HTTP/HTTPS.  The DoSFilter throttles clients sending a large number of
 requests over a short period of time.
 
-The DoSFilter is enabled by default on {product-abbrev} and is applied to all HTTP and HTTPS requests. DosFilter dis not applied to POP3, IMAP or SMTP requests.
-You can modify the configuration to accommodate your specific environmental
-needs.  Disabling the DoSFilter is not recommended. For information on preventing multiple failed login attempts see  <<cos.adoc#passwordpolicy,Password Policy>>
+DosFilter is only applied to HTTP and HTTPS requests, in other words, it does not affect requests for any other protocols like POP3, IMAP or SMTP. You can modify the configuration to accommodate your specific environmental needs. DoSFilter is enabled by default on {product-abbrev}. Disabling the DoSFilter is not recommended. For information on preventing multiple failed login attempts see <<cos.adoc#passwordpolicy,Password Policy>>
 
 === Identifying False Positives
 
