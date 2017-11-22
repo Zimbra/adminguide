@@ -256,7 +256,7 @@ zmprov md example.com zimbraChangePasswordURL https://auth.example.com
 ----
 
 === Configuring a Password Policy
-
+[[passwordpolicy]]
 If internal authentication is configured for the domain, you can require
 users to create strong passwords to guard against simple password
 harvest attacks. Users can be locked out of their accounts if they fail
