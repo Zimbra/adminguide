@@ -1,0 +1,50 @@
+= IMAP
+:toc:
+
+{product-name} has two IMAP servers: in-process IMAP server and standalone zimbra-imapd (Zimbra IMAPD Server). The built-in IMAP server is installed by default and is part of zimbra-mailboxd process (<<mailboxserver.adoc, Zimbra Mailbox Server>>). We recommend using in-process IMAP server for small deployments with light IMAP traffic.
+
+== Common IMAP Configuration settings
+
+The following global and server level configuration attributes are available to control and tune IMAP service.
+
+* zimbraImapServerEnabled. When set to TRUE, in-process IMAP server is enabled. When set to FALSE, in-process IMAP server is disabled. Default value is TRUE.
+* zimbraImapSSLServerEnabled. When set to TRUE, in-process IMAP SSL server is enabled. When set to FALSE, in-process IMAP SSL server is disabled. Default value is TRUE
+* zimbraImapBindAddress (can be set only on server level). Specifies interface address on which in-process IMAP server should listen; if empty, binds to all interfaces.
+* zimbraImapBindPort. Specifies port number on which in-process IMAP server should listen. Default value is 7143.
+* zimbraImapSSLBindAddress (can be set only on server level). Specifies interface address on which in-process IMAP SSL server should listen; if empty, binds to all interfaces.
+* zimbraImapSSLBindPort. Specifies port number on which in-process IMAP SSL server should listen on. Defaut value is 7993.
+* zimbraImapNumThreads. Specifies number of threads in IMAP handler's thread pool. This setting applies to in-process IMAP server as well as zimbra-imapd. {product-name} uses IMAP NIO by default, which allows each IMAP handler thread to handle multiple connections. The default value of 200 is sufficient to handle up to 10,000 active IMAP clients.
+* zimbraImapCleartextLoginEnabled. Specifies whether or not to allow cleartext logins over a non SSL/TLS connection. Default value is FALSE.
+* zimbraImapProxyBindPort. Specifies port number on which IMAP proxy server should listen. Default value is 143. See <<proxy.adoc, Zimbra Proxy Components>> for more information.
+* zimbraImapSSLProxyBindPort. Specifies port number on which IMAP SSL proxy server should listen. Default value is 993. See <<proxy.adoc, Zimbra Proxy Components>> for more information.
+ * zimbraImapMaxRequestSize. Specifies maximum size of IMAP request in bytes excluding literal data. *Note:* this setting does not apply to IMAP LOGIN requests. IMAP LOGIN requests are handled by IMAP Proxy (<<proxy.adoc, Zimbra Proxy Components>>) and are limited to 256 characters.
+ * zimbraImapInactiveSessionCacheMaxDiskSize. Specifies the maximum disk size of inactive IMAP cache in Bytes before eviction. By default this value is 10GB. This is a rough limit, because due to internals of Ehcache actual size on disk will often exceed this limit by a modest margin.
+ * zimbraImapInactiveSessionEhcacheSize. Specifies the maximum heap size of the inactive session cache in Bytes before eviction. By default this value is 1 megabyte. This is a rough limit, because due to internals of Ehcache actual size in memory will often exceed this limit by a modest margin.
+ * zimbraImapActiveSessionEhcacheMaxDiskSize. Specifies the maximum amount of disk space the imap active session cache will consume in Bytes before eviction. By default this value is 100 gigabytes. This is a rough limit, because due to internals of ehcache actual size in memory will often exceed this limit by a modest margin.
+
+== Zimbra IMAPD Server
+
+ The Zimbra IMAPD server is an optionally installed dedicated server that handles IMAP(S) traffic.
+ It can be installed on the same node as a *mailbox server* or on a separate node.
+ When installed on the same node as a *mailbox server* the mailbox's in-process IMAP server may be disabled.  By default it is left enabled.
+
+ In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the *mailbox* processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.
+
+ [IMPORTANT]
+ ===============================
+ Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd it MUST BE added to the '''zimbraHttpThrottleSafeIPs''' configuration item or the DosFilter will
+ throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.
+
+ Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the '''zimbraHttpThrottleSafeIPs''' configuration item.
+ ===============================
+
+ [IMPORTANT]
+ When an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in '''zimbraReverseProxyAvailableLookupTargets'''. This is necessary to ensure that the new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command `zmprov flushCache -a config`. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of `zmprov gacf zimbraReverseProxyUpstreamImapServers`, when run from a lookup target server.
+
+ [IMPORTANT]
+ Do NOT configure a load balancer between the Zimbra HTTP Proxy node and any remote IMAPD servers as this will interfere
+ with correct operation.
+
+ [IMPORTANT]
+ The zmlocalconfig setting *nio_imap_enabled* MUST have value *true* when using the Zimbra IMAPD server.  The legacy
+ Imap server which does not use NIO is not supported.
