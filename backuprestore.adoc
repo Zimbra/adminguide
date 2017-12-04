@@ -319,10 +319,9 @@ delete old backups when they are no longer needed.
 * `zmbackupquery` -- This command lists the information about ongoing and
 completed backups, including labels and dates.
 * `zmrestore` -- This command executes a full or incremental restore to the
-Zimbra mail server. The *zmrestore* command is performed on a server
-that is running.
-* `zmrestoreoffline` -- This command restores the Zimbra mail server when
-the mailboxd process is stopped.
+Zimbra mail server. Should only be performed on a running mailbox server.
+* `zmrestoreoffline` -- This command restores a full or incremental restore
+ to the Zimbra mail server. Should only be performed on a stopped mailbox server.
 * `zmrestoreldap` -- This command restores the complete LDAP directory
 server, including accounts, domains, servers, COS and other data.
 
@@ -800,12 +799,14 @@ value.
 
 Three types of restore procedures can be run:
 
-The `zmrestore` command is used to restore the mailboxes while the
+* The `zmrestore` command is used to restore the mailboxes while the
 {product-name} mailbox server is running.
 
-* `zmrestoreoffline` -- to restore the mail server when the mail server is
-down. This command is run for disaster recovery.
-* `zmrestoreldap` -- to restore the content of the LDAP directory server.
+* The `zmrestoreoffline` command is used restore the mail server when
+the mail server is stopped. This command is run for disaster recovery.
+
+* The `zmrestoreldap` command is used to restore the content of the
+LDAP directory server.
 
 The restore process allows all accounts or individual accounts to be
 specified.
@@ -1166,7 +1167,7 @@ server searches the redo log for uncommitted transactions and replays
 any that it finds. Replaying the redo logs brings the system to a
 consistent state.
 
-=== Restore the {product-name}
+=== Restore the {product-name} Server
 
 If a complete machine failure occurs, use the following steps to restore
 to a new server.
@@ -1192,7 +1193,7 @@ rules.
 {product-name}.
 .  Copy the backup files to the new server.
 .  Run `zmrestoreldap` to restore the global LDAP data.
-.  Run `zmrestoreoffline` to restore account data from the backup
+.  Run `zmrestoreoffline` to restore account data from the backed up
 sessions.
 .  Prepare and run a new backup.
 
@@ -1305,7 +1306,24 @@ before the restore is complete.
 [NOTE]
 To find the LDAP session label to restore, type `zmrestoreldap –lbs`.
 
-.  Because some {product-name} services are running at this
+.  Ensure that the following services are running before attempting to execute `zmrestoreoffline`.
+  - MariaDB
+  - OpenLDAP
++
+[source,bash]
+----
+zmcontrol start
+----
+
+.  Ensure that the following services are stopped before attempting to execute `zmrestoreoffline`.
+  - Mailboxd
++
+[source,bash]
+----
+zmmailboxdctl stop
+----
+
+Because some {product-name} services are running at this
 point, type `zmconvertctl start`. This is required before running
 `zmrestoreoffline`.
 
@@ -1317,10 +1335,11 @@ servers LDAP config.
 zmlocalconfig -f -e zimbra_ldap_password=<password>
 ----
 
-.  Start the offline restore.
+.  Start the offline restore after stopping mailboxd.
 +
 [source,bash]
 ----
+zmmailboxdctl stop
 zmrestoreoffline -sys -a all -c -br
 ----
 +

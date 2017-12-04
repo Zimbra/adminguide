@@ -2309,9 +2309,13 @@ zmrestore -a user1@domain.com -ca -pre new_
 
 === zmrestoreoffline (Offline Restore)
 
-Run `zmrestoreoffline` when the Zimbra server (i.e., the mailbox process)
-is down.  The SQL database for the server and the OpenLDAP directory
-server must be running before you start the `zmrestoreoffline` command.
+`zmrestoreoffline` requires that the following is true:
+
+- mailboxd IS NOT running
+- SQL database IS RUNNING
+- OpenLDAP directory IS RUNNING
+
+Pre-requisites
 
 ==== Syntax
 [source,bash]
