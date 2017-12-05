@@ -310,7 +310,7 @@ restore the LDAP server.
 
 * `zmschedulebackup` -- This command is used to schedule full backups,
 incremental backups, and deletion of old backups.
-* `zmbackup` -- This command executes full or incremental backup of the mail
+* `zmbackup` -- This command executes full or incremental backup of the {product-name} mailbox
 server. This is run on a live server, while the mailboxd process and the
 mailbox server are running. This command also has an option to manually
 delete old backups when they are no longer needed.
@@ -318,10 +318,8 @@ delete old backups when they are no longer needed.
 * `zmbackupabort -r` -- This command stops an ongoing restore.
 * `zmbackupquery` -- This command lists the information about ongoing and
 completed backups, including labels and dates.
-* `zmrestore` -- This command executes a full or incremental restore to the
-Zimbra mail server. Should only be performed on a running mailbox server.
-* `zmrestoreoffline` -- This command restores a full or incremental restore
- to the Zimbra mail server. Should only be performed on a stopped mailbox server.
+* `zmrestore` -- This command restores a backup to a running {product-name} mailbox server.
+* `zmrestoreoffline` -- This command restores the {product-name} mail server when the mailboxd process is stopped.
 * `zmrestoreldap` -- This command restores the complete LDAP directory
 server, including accounts, domains, servers, COS and other data.
 
@@ -522,7 +520,7 @@ specified.
 
 Use the zmbackup command to perform the following backup operations:
 
-* Perform a manual back up all mailboxes on server<1>:
+* Perform a manual backup of all mailboxes on server<1>:
 [source,bash]
 ----
 zmbackup -f -s server1.domain.com -a all
@@ -617,7 +615,7 @@ zmbackupquery
 zmbackupabort -s server1 -lb full-20070712.155951.123
 ----
 
-== Back up using the Auto-Grouped Method
+== Backup using the Auto-Grouped Method
 
 The auto-grouped backup method is configured either from the
 Administration Console or from the CLI.
@@ -698,7 +696,7 @@ failure.
 
 == Backup Options
 
-The backup process can be configured to selectively back up content and
+The backup process can be configured to selectively backup content and
 to backup the MariaDB database.
 
 === Backup Up content Options
@@ -719,7 +717,7 @@ on the primary volumes as well as secondary (HSM) volumes.
 `zimbraBackupSkipBlobs` is *FALSE* but you want to skip blobs on HSM
 volumes.
 
-=== Back Up the MariaDB Database
+=== Backup the MariaDB Database
 
 You can configure {product-name} backups to run mysqldump to
 backup your MariaDB database during backup sessions. When this is enabled,
@@ -802,8 +800,8 @@ Three types of restore procedures can be run:
 * The `zmrestore` command is used to restore the mailboxes while the
 {product-name} mailbox server is running.
 
-* The `zmrestoreoffline` command is used restore the mail server when
-the mail server is stopped. This command is run for disaster recovery.
+* The `zmrestoreoffline` command is used to restore the mailbox server when
+just the mailboxd process it is stopped. This command is run for disaster recovery.
 
 * The `zmrestoreldap` command is used to restore the content of the
 LDAP directory server.
@@ -1193,8 +1191,7 @@ rules.
 {product-name}.
 .  Copy the backup files to the new server.
 .  Run `zmrestoreldap` to restore the global LDAP data.
-.  Run `zmrestoreoffline` to restore account data from the backed up
-sessions.
+.  Run `zmrestoreoffline` to restore account data from the backup sessions.
 .  Prepare and run a new backup.
 
 ==== Old Server Status
@@ -1307,8 +1304,8 @@ before the restore is complete.
 To find the LDAP session label to restore, type `zmrestoreldap –lbs`.
 
 .  Ensure that the following services are running before attempting to execute `zmrestoreoffline`.
-  - MariaDB
-  - OpenLDAP
+  - mysqld (MariaDB)
+  - slapd (OpenLDAP)
 +
 [source,bash]
 ----
@@ -1316,7 +1313,7 @@ zmcontrol start
 ----
 
 .  Ensure that the following services are stopped before attempting to execute `zmrestoreoffline`.
-  - Mailboxd
+  - mailboxd
 +
 [source,bash]
 ----
@@ -1486,7 +1483,7 @@ if the *.restore* file has the latest local configuration data, delete the
 
 == Using snapshots to Backup and Restore
 
-You can back up and restore a server using the snapshot feature provided
+You can backup and restore a server using the snapshot feature provided
 by the storage layer rather than using Zimbra's backup and restore
 feature. Using snapshots, you can maintain a standby site if the primary
 site fails and reroute users to the standby site to keep operations

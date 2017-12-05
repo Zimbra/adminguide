@@ -1255,7 +1255,7 @@ zmprov sp admin@domain.com password
 ----
 ====
 
-.Creating a domain that authenticates against Zimbra OpenLDAP
+.Creating a domain that authenticates against Zimbra LDAP
 ====
 [source,bash]
 ----
@@ -2313,7 +2313,7 @@ zmrestore -a user1@domain.com -ca -pre new_
 
 - mailboxd IS NOT running
 - SQL database IS RUNNING
-- OpenLDAP directory IS RUNNING
+- LDAP directory IS RUNNING
 
 Pre-requisites
 
