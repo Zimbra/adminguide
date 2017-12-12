@@ -1,6 +1,9 @@
 [[backup_and_restore]]
-= Backup and Restore
+= Backup and Restore (*)
 :toc:
+
+[NOTE]
+*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
 
 {product-name} includes a configurable backup manager that resides on every
 {product-name} server and performs both backup and restore functions. You

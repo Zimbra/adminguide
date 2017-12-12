@@ -1,4 +1,4 @@
-= SSDB Configuration Options
+= SSDB Configuration Options (BETA)
 
 The purpose of this guide is to discuss some of the options available
 with `SSDB`, specifically with regards to:

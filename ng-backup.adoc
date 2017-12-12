@@ -1,5 +1,5 @@
 [[backup-ng-guide]]
-= Backup Next Generation (NG)
+= Backup Next Generation NG
 
 [[real-time-scan]]
 Real Time Scan
