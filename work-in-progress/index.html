@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.6">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <title>Zimbra Collaboration Administrator Guide version 8.8.5</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -17,6 +17,7 @@ audio:not([controls]){display:none;height:0}
 [hidden],template{display:none}
 script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
 a{background:transparent}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
@@ -51,7 +52,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -63,6 +64,7 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
+body{-webkit-font-smoothing:antialiased}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
@@ -89,12 +91,13 @@ strong,b{font-weight:bold;line-height:inherit}
 small{font-size:60%;line-height:inherit}
 code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
 ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
-ul,ol{margin-left:1.5em}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
 ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
 ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
 ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
@@ -116,25 +119,18 @@ table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
 .clearfix:after,.float-group:after{clear:both}
-*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
-*:not(pre)>code.nobreak{word-wrap:normal}
-*:not(pre)>code.nowrap{white-space:nowrap}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
-em em{font-style:normal}
-strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
 kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
 .keyseq kbd:last-child{margin-right:0}
-.menuseq,.menuref{color:#000}
-.menuseq b:not(.caret),.menuref{font-weight:inherit}
-.menuseq{word-spacing:-.02em}
-.menuseq b.caret{font-size:1.25em;line-height:.8}
-.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
 b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
 b.button:before{content:"[";padding:0 3px 0 2px}
 b.button:after{content:"]";padding:0 2px 0 3px}
@@ -201,7 +197,7 @@ table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
 table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
 .admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
 .admonitionblock>table td.icon{text-align:center;width:80px}
-.admonitionblock>table td.icon img{max-width:initial}
+.admonitionblock>table td.icon img{max-width:none}
 .admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
@@ -257,13 +253,13 @@ table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
 table.tableblock{max-width:100%;border-collapse:separate}
 table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
-table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
-table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
-table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
-table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px 0}
-table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0 0}
-table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
-table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
 table.frame-all{border-width:1px}
 table.frame-sides{border-width:0 1px}
 table.frame-topbot{border-width:1px 0}
@@ -284,12 +280,10 @@ ul li ol{margin-left:1.5em}
 dl dd{margin-left:1.125em}
 dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
-ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
-ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
-ul.unstyled,ol.unstyled{margin-left:0}
-ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -306,8 +300,7 @@ ol.lowergreek{list-style-type:lower-greek}
 td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
 td.hdlist1{font-weight:bold;padding-bottom:1.25em}
 .literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
-.colist>table tr>td:first-of-type{padding:.4em .75em 0 .75em;line-height:1;vertical-align:top}
-.colist>table tr>td:first-of-type img{max-width:initial}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
 .colist>table tr>td:last-of-type{padding:.25em 0}
 .thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
 .imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
@@ -370,7 +363,6 @@ div.unbreakable{page-break-inside:avoid}
 .yellow{color:#bfbf00}
 .yellow-background{background-color:#fafa00}
 span.icon>.fa{cursor:default}
-a span.icon>.fa{cursor:inherit}
 .admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
 .admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
 .admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
@@ -424,7 +416,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <style>
 /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
@@ -565,8 +557,10 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_mailbox_server_logs">Mailbox Server Logs</a></li>
 </ul>
 </li>
-<li><a href="#_zimbra_imapd_server">Zimbra IMAPD Server</a>
+<li><a href="#_imap">IMAP</a>
 <ul class="sectlevel2">
+<li><a href="#_common_imap_configuration_settings">Common IMAP Configuration settings</a></li>
+<li><a href="#_zimbra_imapd_server">Zimbra IMAPD Server</a></li>
 <li><a href="#_zimbra_upstream_imap_configuration">Zimbra Upstream IMAP Configuration</a></li>
 <li><a href="#_imapd_related_configuration_files">IMAPD-related Configuration &amp; Files</a></li>
 <li><a href="#_migrating_to_an_imapd_pool">Migrating to an imapd pool</a></li>
@@ -631,14 +625,14 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_customized_admin_extensions">Customized Admin Extensions</a></li>
 </ul>
 </li>
-<li><a href="#_ephemeral_data">Ephemeral Data</a>
+<li><a href="#_ephemeral_data_beta">Ephemeral Data (BETA)</a>
 <ul class="sectlevel2">
 <li><a href="#_post_zimbra_collaboration_install_configuration">Post Zimbra Collaboration Install Configuration</a></li>
 <li><a href="#_migration_procedure">Migration Procedure</a></li>
 <li><a href="#_migration_details">Migration Details</a></li>
 </ul>
 </li>
-<li><a href="#_ssdb_configuration_options">SSDB Configuration Options</a>
+<li><a href="#_ssdb_configuration_options_beta">SSDB Configuration Options (BETA)</a>
 <ul class="sectlevel2">
 <li><a href="#_overview">Overview</a></li>
 <li><a href="#_master_slave_replication">Master-Slave Replication</a></li>
@@ -689,7 +683,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_moving_a_mailbox">Moving a Mailbox</a></li>
 </ul>
 </li>
-<li><a href="#_delegated_administration">Delegated Administration</a>
+<li><a href="#_delegated_administration">Delegated Administration (*)</a>
 <ul class="sectlevel2">
 <li><a href="#_target_types_for_granting_administrative_rights">Target Types for Granting Administrative Rights</a></li>
 <li><a href="#_rights">Rights</a></li>
@@ -720,7 +714,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_notifications_and_alerts_sent_by_zimbra_collaboration">Notifications and Alerts Sent by Zimbra Collaboration</a></li>
 </ul>
 </li>
-<li><a href="#backup_and_restore">Backup and Restore</a>
+<li><a href="#backup_and_restore">Backup and Restore (*)</a>
 <ul class="sectlevel2">
 <li><a href="#_backing_up_the_mailbox_server_2">Backing Up the Mailbox Server</a></li>
 <li><a href="#_backup_methods">Backup Methods</a></li>
@@ -729,7 +723,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_backup_and_restore_using_the_command_line_interface">Backup and Restore Using the Command Line Interface</a></li>
 <li><a href="#_backing_up_using_the_standard_method">Backing up using the Standard Method</a></li>
 <li><a href="#_aborting_a_full_backup_in_progress">Aborting a Full Backup in Progress</a></li>
-<li><a href="#_back_up_using_the_auto_grouped_method">Back up using the Auto-Grouped Method</a></li>
+<li><a href="#_backup_using_the_auto_grouped_method">Backup using the Auto-Grouped Method</a></li>
 <li><a href="#_backup_options">Backup Options</a></li>
 <li><a href="#_managing_disk_space_for_backups">Managing Disk Space for Backups</a></li>
 <li><a href="#_restoring_data">Restoring Data</a></li>
@@ -738,7 +732,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_notes_on_ephemeral_data">Notes on Ephemeral Data</a></li>
 </ul>
 </li>
-<li><a href="#_zimbra_mobile">Zimbra Mobile</a>
+<li><a href="#_zimbra_mobile">Zimbra Mobile (*)</a>
 <ul class="sectlevel2">
 <li><a href="#_mobile_device_security_policies">Mobile Device Security Policies</a></li>
 <li><a href="#_setting_up_mobile_policies_on_zcs">Setting Up Mobile Policies on ZCS</a></li>
@@ -774,7 +768,23 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_managing_zimlets_from_the_command_line_interface">Managing Zimlets from the Command Line Interface</a></li>
 </ul>
 </li>
-<li><a href="#backup-ng-guide">Backup Next Generation (NG)</a>
+<li><a href="#voice_service">Using the Voice Service</a>
+<ul class="sectlevel2">
+<li><a href="#_order_of_configuration">Order of Configuration</a></li>
+<li><a href="#_voice_service_requirements">Voice Service Requirements</a></li>
+<li><a href="#_using_a_third_party_unified_communications_server">Using a Third-Party Unified Communications Server</a></li>
+<li><a href="#_cisco_urls">Cisco URLs</a></li>
+<li><a href="#_mitel_urls">Mitel URLs</a></li>
+<li><a href="#_creating_the_voice_chat_service">Creating the Voice/Chat Service</a></li>
+<li><a href="#_configure_presence_cisco_only">Configure Presence (Cisco only)</a></li>
+<li><a href="#_enabling_the_voice_chat_service">Enabling the Voice/Chat Service</a></li>
+<li><a href="#_enable_voice_chat_service_on_a_domain">Enable Voice/Chat Service on a Domain</a></li>
+<li><a href="#_enable_voice_chat_service_on_a_cos">Enable Voice/Chat Service on a COS</a></li>
+<li><a href="#_enable_voice_chat_service_on_a_user_account">Enable Voice/Chat Service on a User Account</a></li>
+<li><a href="#_enabling_the_voice_chat_zimlets">Enabling the Voice/Chat Zimlets</a></li>
+</ul>
+</li>
+<li><a href="#backup-ng-guide">Backup Next Generation NG</a>
 <ul class="sectlevel2">
 <li><a href="#real-time-scan">Real Time Scan</a></li>
 <li><a href="#smartscan">SmartScan</a></li>
@@ -2620,73 +2630,113 @@ of those disks fails.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_zimbra_imapd_server">Zimbra IMAPD Server</h2>
+<h2 id="_imap">IMAP</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Zimbra IMAPD server is an optionally installed dedicated server that handles IMAP(S) traffic.
-It can be installed on the same node as a <strong>mailbox server</strong> or on a separate node.
-When installed on the same node as a <strong>mailbox server</strong> the mailbox&#8217;s internal IMAPD process may be disabled.  By default it is left enabled.</p>
+<p>Zimbra Collaboration has two IMAP servers: in-process IMAP server and standalone zimbra-imapd (Zimbra IMAPD Server). The built-in IMAP server is installed by default and is part of zimbra-mailboxd process (<a href="#mailboxserver.adoc">Zimbra Mailbox Server</a>). We recommend using in-process IMAP server for small deployments with light IMAP traffic.</p>
 </div>
+<div class="sect2">
+<h3 id="_common_imap_configuration_settings">Common IMAP Configuration settings</h3>
 <div class="paragraph">
-<p>In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the <strong>mailbox</strong> processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.</p>
+<p>The following global and server level configuration attributes are available to control and tune IMAP service.</p>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd it MUST BE added to the '''zimbraHttpThrottleSafeIPs''' configuration item or the DosFilter will
-throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>zimbraImapServerEnabled. When set to TRUE, in-process IMAP server is enabled. When set to FALSE, in-process IMAP server is disabled. Default value is TRUE.</p>
+</li>
+<li>
+<p>zimbraImapSSLServerEnabled. When set to TRUE, in-process IMAP SSL server is enabled. When set to FALSE, in-process IMAP SSL server is disabled. Default value is TRUE</p>
+</li>
+<li>
+<p>zimbraImapBindAddress (can be set only on server level). Specifies interface address on which in-process IMAP server should listen; if empty, binds to all interfaces.</p>
+</li>
+<li>
+<p>zimbraImapBindPort. Specifies port number on which in-process IMAP server should listen. Default value is 7143.</p>
+</li>
+<li>
+<p>zimbraImapSSLBindAddress (can be set only on server level). Specifies interface address on which in-process IMAP SSL server should listen; if empty, binds to all interfaces.</p>
+</li>
+<li>
+<p>zimbraImapSSLBindPort. Specifies port number on which in-process IMAP SSL server should listen on. Defaut value is 7993.</p>
+</li>
+<li>
+<p>zimbraImapNumThreads. Specifies number of threads in IMAP handler&#8217;s thread pool. This setting applies to in-process IMAP server as well as zimbra-imapd. Zimbra Collaboration uses IMAP NIO by default, which allows each IMAP handler thread to handle multiple connections. The default value of 200 is sufficient to handle up to 10,000 active IMAP clients.</p>
+</li>
+<li>
+<p>zimbraImapCleartextLoginEnabled. Specifies whether or not to allow cleartext logins over a non SSL/TLS connection. Default value is FALSE.</p>
+</li>
+<li>
+<p>zimbraImapProxyBindPort. Specifies port number on which IMAP proxy server should listen. Default value is 143. See <a href="#proxy.adoc">Zimbra Proxy Components</a> for more information.</p>
+</li>
+<li>
+<p>zimbraImapSSLProxyBindPort. Specifies port number on which IMAP SSL proxy server should listen. Default value is 993. See <a href="#proxy.adoc">Zimbra Proxy Components</a> for more information.</p>
+</li>
+<li>
+<p>zimbraImapMaxRequestSize. Specifies maximum size of IMAP request in bytes excluding literal data. <strong>Note:</strong> this setting does not apply to IMAP LOGIN requests. IMAP LOGIN requests are handled by IMAP Proxy (<a href="#proxy.adoc">Zimbra Proxy Components</a>) and are limited to 256 characters.</p>
+</li>
+<li>
+<p>zimbraImapInactiveSessionCacheMaxDiskSize. Specifies the maximum disk size of inactive IMAP cache in Bytes before eviction. By default this value is 10GB. This is a rough limit, because due to internals of Ehcache actual size on disk will often exceed this limit by a modest margin.</p>
+</li>
+<li>
+<p>zimbraImapInactiveSessionEhcacheSize. Specifies the maximum heap size of the inactive session cache in Bytes before eviction. By default this value is 1 megabyte. This is a rough limit, because due to internals of Ehcache actual size in memory will often exceed this limit by a modest margin.</p>
+</li>
+<li>
+<p>zimbraImapActiveSessionEhcacheMaxDiskSize. Specifies the maximum amount of disk space the imap active session cache will consume in Bytes before eviction. By default this value is 100 gigabytes. This is a rough limit, because due to internals of ehcache actual size in memory will often exceed this limit by a modest margin.</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the '''zimbraHttpThrottleSafeIPs''' configuration item.</p>
 </div>
-</td>
-</tr>
-</table>
+<div class="sect2">
+<h3 id="_zimbra_imapd_server">Zimbra IMAPD Server</h3>
+<div class="literalblock">
+<div class="content">
+<pre>The Zimbra IMAPD server is an optionally installed dedicated server that handles IMAP(S) traffic.
+It can be installed on the same node as a *mailbox server* or on a separate node.
+When installed on the same node as a *mailbox server* the mailbox's in-process IMAP server may be disabled.  By default it is left enabled.</pre>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-When an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in '''zimbraReverseProxyAvailableLookupTargets'''. This is necessary to ensure that the new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command <code>zmprov flushCache -a config</code>. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of <code>zmprov gacf zimbraReverseProxyUpstreamImapServers</code>, when run from a lookup target server.
-</td>
-</tr>
-</table>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
+<div class="literalblock">
+<div class="content">
+<pre>In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the *mailbox* processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[IMPORTANT]
+===============================
+Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd it MUST BE added to the '''zimbraHttpThrottleSafeIPs''' configuration item or the DosFilter will
+throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the '''zimbraHttpThrottleSafeIPs''' configuration item.
+===============================</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[IMPORTANT]
+When an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in '''zimbraReverseProxyAvailableLookupTargets'''. This is necessary to ensure that the new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command `zmprov flushCache -a config`. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of `zmprov gacf zimbraReverseProxyUpstreamImapServers`, when run from a lookup target server.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[IMPORTANT]
 Do NOT configure a load balancer between the Zimbra HTTP Proxy node and any remote IMAPD servers as this will interfere
-with correct operation.
-</td>
-</tr>
-</table>
+with correct operation.</pre>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-The zmlocalconfig setting <strong>nio_imap_enabled</strong> MUST have value <strong>true</strong> when using the Zimbra IMAPD server.  The legacy
-Imap server which does not use NIO is not supported.
-</td>
-</tr>
-</table>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[IMPORTANT]
+The zmlocalconfig setting *nio_imap_enabled* MUST have value *true* when using the Zimbra IMAPD server.  The legacy
+Imap server which does not use NIO is not supported.</pre>
+</div>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 <div class="sect2">
 <h3 id="_zimbra_upstream_imap_configuration">Zimbra Upstream IMAP Configuration</h3>
 <div class="paragraph">
@@ -5628,7 +5678,7 @@ using the Zimbra Mailbox Ports.</p>
 passed in by the client.</p>
 </div>
 <div class="paragraph">
-<p>This is <em>enabled by default</em> on new installations but left <em>disabled for upgrades</em> from previous
+<p>This is <em>enabled by default</em> on <strong>new installations</strong> but left <em>disabled</em> for <strong>upgrades</strong> from previous
 versions unless toggled during the installation.</p>
 </div>
 <div class="paragraph">
@@ -5651,7 +5701,7 @@ option followed by restarting the proxy server.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When the strict server name functionality is enabled additional valid server names may be specified
+<p>When the strict server name functionality is enabled, additional valid server names may be specified
 using the <code>zimbraVirtualHostName</code> and <code>zimbraVirtualIPAddress</code> configuration items at the domain level.</p>
 </div>
 <div class="listingblock">
@@ -6638,8 +6688,7 @@ popup. Guide text is also provided from these popups, as demonstrated in
 the following illustration.</p>
 </div>
 <div class="openblock">
-<div class="title">Viewing Attributes at the Administration Console</div>
-<div class="content">
+<div class="title">Viewing Attributes at the Administration Console</div><div class="content">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 50%;">
@@ -7902,8 +7951,8 @@ Additional information is provided in
 <td class="tableblock halign-left valign-top"><p class="tableblock">Software Updates</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Find out if your system needs a Zimbra Server update or not, and use this
 page to view polling and email contact information pertinent to software
-updates for your system.</p>
-<p class="tableblock">See also <a href="#checking_for_updates">Checking for Zimbra Collaboration Software Updates</a>.</p></td>
+updates for your system.
+</p><p class="tableblock">See also <a href="#checking_for_updates">Checking for Zimbra Collaboration Software Updates</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Account Migration</p></td>
@@ -8454,8 +8503,7 @@ navigating the Administration Console, in the following topics:</p>
 following illustration.</p>
 </div>
 <div id="high_level_view_of_administration_console_ui" class="openblock">
-<div class="title">High-level View of Administration Console UI</div>
-<div class="content">
+<div class="title">High-level View of Administration Console UI</div><div class="content">
 <div class="imageblock">
 <div class="content">
 <img src="images/high_level_view_of_admin_console_ui.png" alt="High-level View of Administration Console UI">
@@ -11825,7 +11873,19 @@ referencing the volume cannot be deleted.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_implementing_hierarchical_storage_management">Implementing Hierarchical Storage Management</h4>
+<h4 id="_implementing_hierarchical_storage_management">Implementing Hierarchical Storage Management (*)</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Hierarchical Storage Management (HSM) allows you to configure storage
 volumes for older messages. HSM is a process of moving older data from the
@@ -12308,7 +12368,7 @@ icon. A confirmation query is presented.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ephemeral_data">Ephemeral Data</h2>
+<h2 id="_ephemeral_data_beta">Ephemeral Data (BETA)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There are 3 main types of ephemeral data stored in LDAP during normal operation of Zimbra Collaboration.</p>
@@ -12394,7 +12454,7 @@ through the following process:</p>
 <li>
 <p>Install <code>SSDB</code> and note the ip address and port configured since you will
 need this data for the next steps. Refer to
-<a href="#_ssdb_configuration_options">SSDB Configuration Options</a> for more information.</p>
+<a href="#_ssdb_configuration_options">[_ssdb_configuration_options]</a> for more information.</p>
 </li>
 <li>
 <p>Migrate any existing short-lived data to <code>SSDB</code> using the <code>/opt/zimbra/bin/zmmigrateattrs</code> command.</p>
@@ -12599,7 +12659,7 @@ in LDAP is wiped immediately as part of the account deletion process.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ssdb_configuration_options">SSDB Configuration Options</h2>
+<h2 id="_ssdb_configuration_options_beta">SSDB Configuration Options (BETA)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The purpose of this guide is to discuss some of the options available
@@ -12724,7 +12784,7 @@ being maintained by <code>Keepalived</code>.</p>
 <div class="paragraph">
 <p>Once the installation and configuration of <em>both</em> the <code>SSDB</code>
 master-slave setup and Zimbra Collaboration have been completed, follow the
-instructions in <a href="#_ephemeral_data">Ephemeral Data</a> to update the
+instructions in <a href="#_ephemeral_data">[_ephemeral_data]</a> to update the
 <code>zimbraEphemeralBackendURL</code> accordingly.</p>
 </div>
 <div class="paragraph">
@@ -13744,7 +13804,7 @@ and when passwords expire, users are sent to this page.</p>
 </div>
 <div class="sect3">
 <h4 id="_configuring_a_password_policy">Configuring a Password Policy</h4>
-<div class="paragraph">
+<div id="passwordpolicy" class="paragraph">
 <p>If internal authentication is configured for the domain, you can require
 users to create strong passwords to guard against simple password
 harvest attacks. Users can be locked out of their accounts if they fail
@@ -15138,8 +15198,8 @@ selected COS account.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of one-time codes to generate</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Value to assign maximum number of 6-digit passcodes that may be viewed/used
 by the account when attempting to access the system.  The passcode is
-presented to the account once the initial login credentials are accepted.</p>
-<p class="tableblock">Each passcode has a 15-second life cycle.</p></td>
+presented to the account once the initial login credentials are accepted.
+</p><p class="tableblock">Each passcode has a 15-second life cycle.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable application passcodes</p></td>
@@ -15498,9 +15558,9 @@ random passwords or to assign the same password for each account.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Generate random password</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If you select Generate a random password for each account, set the length
-for the password.  The password can be from 6 to 64 characters.</p>
-<p class="tableblock">Default = 8 characters</p>
-<p class="tableblock">If you select to generate a random password, you must download the .csv
+for the password.  The password can be from 6 to 64 characters.
+</p><p class="tableblock">Default = 8 characters
+</p><p class="tableblock">If you select to generate a random password, you must download the .csv
 file that is created so that you can give the password information to each
 user.</p></td>
 </tr>
@@ -15677,9 +15737,9 @@ random passwords or to assign the same password for each account.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Generate random password</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If you select Generate a random password for each account, set the length
-for the password.  The password can be from 6 to 64 characters.</p>
-<p class="tableblock">Default = 8 characters</p>
-<p class="tableblock">If you select to generate a random password, you must download the .csv
+for the password.  The password can be from 6 to 64 characters.
+</p><p class="tableblock">Default = 8 characters
+</p><p class="tableblock">If you select to generate a random password, you must download the .csv
 file that is created so that you can give the password information to each
 user.</p></td>
 </tr>
@@ -16097,8 +16157,8 @@ directory data.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ZCS polls the external directory for accounts to auto provision.  For this
 mode, you configure how often the external directory is polled for new
 users, the maximum number of users to process at each interval, and which
-domains are scheduled for account auto provision on specified servers.</p>
-<p class="tableblock">Guidelines are provided in
+domains are scheduled for account auto provision on specified servers.
+</p><p class="tableblock">Guidelines are provided in
 <a href="#eager_mode_configuration">Eager Mode Configuration</a>.</p></td>
 </tr>
 <tr>
@@ -16106,8 +16166,8 @@ domains are scheduled for account auto provision on specified servers.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If a user logs into ZWC the first time through one of the authentication
 mechanisms supported for auto provisioning, and if the user does not exist
 in the ZCS directory, a new account is automatically created in ZCS for
-this user.</p>
-<p class="tableblock">Guidelines are provided in
+this user.
+</p><p class="tableblock">Guidelines are provided in
 <a href="#lazy_mode_configuration">Lazy Mode Configuration</a>.</p></td>
 </tr>
 <tr>
@@ -16115,8 +16175,8 @@ this user.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Auto provisioning does not occurs: instead, the administrator manually
 searches from the configured external auto-provisioning LDAP source and
 selects an entry from the search result to create the corresponding Zimbra
-account for the external entry.</p>
-<p class="tableblock">Guidelines are provided in
+account for the external entry.
+</p><p class="tableblock">Guidelines are provided in
 <a href="#manual_mode_configuration">Manual Mode Configuration</a>.</p></td>
 </tr>
 </tbody>
@@ -16998,8 +17058,8 @@ to the client interface.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Maintenance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Logging is disabled and any mail addressed to this account is queued at the
-MTA.</p>
-<p class="tableblock">Note that this state is automatically set for the account during a backup
+MTA.
+</p><p class="tableblock">Note that this state is automatically set for the account during a backup
 or when importing/exporting/ restoring the account.</p></td>
 </tr>
 <tr>
@@ -17024,8 +17084,8 @@ acocunt does not change the account license.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The automatic state that occurs if the user attempts to log in with
 incorrect password.  A LockOut cannot be administratively assigned but will
 occur after the number of user attempts exceeds the configured number of
-attempts allowed.  The duration of the lockout is also configurable.</p>
-<p class="tableblock">The administrator can remove the locked out status at any time.</p></td>
+attempts allowed.  The duration of the lockout is also configurable.
+</p><p class="tableblock">The administrator can remove the locked out status at any time.</p></td>
 </tr>
 </tbody>
 </table>
@@ -17380,7 +17440,7 @@ specific users that are allowed to access the distribution list.</p>
 </td>
 <td class="content">
 For more information about how granting rights works,
-see <a href="#_delegated_administration">Delegated Administration</a>.
+see <a href="#Delegated Administration">[Delegated Administration]</a>.
 </td>
 </tr>
 </table>
@@ -17887,7 +17947,7 @@ such as all managers, you can quickly modify a dynamic distribution list to
 be used for a specific COS.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 14. A dynamic distribution list that includes all users that have active accounts in a specific COS</div>
+<div class="title">Example 10. A dynamic distribution list that includes all users that have active accounts in a specific COS</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -17898,7 +17958,7 @@ be used for a specific COS.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 15. A dynamic distribution list that includes all users based on job titles</div>
+<div class="title">Example 11. A dynamic distribution list that includes all users based on job titles</div>
 <div class="content">
 <div class="paragraph">
 <p>To use this, the account&#8217;s Contact Information <strong>Job Title</strong> field must
@@ -17913,7 +17973,7 @@ include the title.  In this example it would be set to "Manager".</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 16. A dynamic distribution list for all delegated administrators</div>
+<div class="title">Example 12. A dynamic distribution list for all delegated administrators</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -18022,8 +18082,20 @@ skip blobs on HSM volumes.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_delegated_administration">Delegated Administration</h2>
+<h2 id="_delegated_administration">Delegated Administration (*)</h2>
 <div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The global administrator can create different delegated administrator
 roles.</p>
@@ -18108,16 +18180,16 @@ accounts or calendar resource in the domain.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Distribution List</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Includes the distribution list and all distribution lists under this
-distribution list.</p>
-<p class="tableblock">If the right is applicable to accounts and calendar resources, all accounts
+distribution list.
+</p><p class="tableblock">If the right is applicable to accounts and calendar resources, all accounts
 and calendar resources that are direct or indirect members of this
 distribution list.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Domain</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Applicable to a specific domain, not to any sub-domains.</p>
-<p class="tableblock">Sub-domains must be explicitly marked as targets.</p>
-<p class="tableblock">When domain is the target, the rights are granted for all accounts,
+<td class="tableblock halign-left valign-top"><p class="tableblock">Applicable to a specific domain, not to any sub-domains.
+</p><p class="tableblock">Sub-domains must be explicitly marked as targets.
+</p><p class="tableblock">When domain is the target, the rights are granted for all accounts,
 calendar resources and distribution lists in the domain.</p></td>
 </tr>
 <tr>
@@ -18128,8 +18200,8 @@ calendar resources and distribution lists in the domain.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Global ACL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Administrator rights for all entries in a target type. For example, you
 could add an ACE to the Global Access Control List (ACL) that grants the
-right to create accounts on domains.</p>
-<p class="tableblock">Delegated administrator accounts that are granted this right can create
+right to create accounts on domains.
+</p><p class="tableblock">Delegated administrator accounts that are granted this right can create
 accounts in all domains in the system.</p></td>
 </tr>
 <tr>
@@ -18389,12 +18461,12 @@ topic:</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Global Config <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup></p>
+<p>Global Config <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p>
 </div>
 <div id="footnotes">
 <hr>
-<div class="footnote" id="_footnote_2">
-<a href="#_footnoteref_2">2</a>. All rights for accounts and calendar resources can also be granted on domain targets.  All rights for distribution list can also be granted on domain targets.  When rights are granted on a domain, the ACEs apply the right to all direct or indirect account calendar resources, and members of the distribution list in the domain.
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. All rights for accounts and calendar resources can also be granted on domain targets.  All rights for distribution list can also be granted on domain targets.  When rights are granted on a domain, the ACEs apply the right to all direct or indirect account calendar resources, and members of the distribution list in the domain.
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
@@ -18405,12 +18477,12 @@ topic:</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Global Grant <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</sup></p>
+<p>Global Grant <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p>
 </div>
 <div id="footnotes">
 <hr>
-<div class="footnote" id="_footnote_3">
-<a href="#_footnoteref_3">3</a>. All rights for all other targets can also be granted on the global targets. When any rights are granted on a global grant entry, the ACEs apply the right to all entries on the system. For example, if you grant a createAccount (which is a domain right) to AdminA on the global grant entry, AdminA can create accounts in all domains on the system.
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. All rights for all other targets can also be granted on the global targets. When any rights are granted on a global grant entry, the ACEs apply the right to all entries on the system. For example, if you grant a createAccount (which is a domain right) to AdminA on the global grant entry, AdminA can create accounts in all domains on the system.
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
@@ -18931,12 +19003,12 @@ distribution lists.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">account, domain, dl</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">account, domain, or distribution list address</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>SD Right <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</sup></p>
+<p>SD Right <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p>
 </div>
 <div id="footnotes">
 <hr>
-<div class="footnote" id="_footnote_4">
-<a href="#_footnoteref_4">4</a>. To deny the View Mail right on the target, check the box for <strong>Is Negative Right (Deny)</strong>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. To deny the View Mail right on the target, check the box for <strong>Is Negative Right (Deny)</strong>
 </div>
 </div></div></td>
 </tr>
@@ -19080,12 +19152,12 @@ accounts, grant the following negative right as well.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">domain</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">domain name</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>SD Right <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</sup></p>
+<p>SD Right <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p>
 </div>
 <div id="footnotes">
 <hr>
-<div class="footnote" id="_footnote_5">
-<a href="#_footnoteref_5">5</a>. To deny the Create Account right on the target, check the box for <strong>Is Negative Right (Deny)</strong>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. To deny the Create Account right on the target, check the box for <strong>Is Negative Right (Deny)</strong>
 </div>
 </div></div></td>
 </tr>
@@ -19116,12 +19188,12 @@ the cross mailbox search, grant the right to view that mailbox only.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">account</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">cross mailbox search target account name</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>SD Right <sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</sup></p>
+<p>SD Right <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup></p>
 </div>
 <div id="footnotes">
 <hr>
-<div class="footnote" id="_footnote_6">
-<a href="#_footnoteref_6">6</a>. To deny the View Mail right on the target, check the box for <strong>Is Negative Right (Deny)</strong>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. To deny the View Mail right on the target, check the box for <strong>Is Negative Right (Deny)</strong>
 </div>
 </div></div></td>
 </tr>
@@ -19657,13 +19729,11 @@ with <code>iostat -x</code>).</p>
 <h3 id="_configuring_denial_of_service_filter_parameters">Configuring Denial of Service Filter Parameters</h3>
 <div class="paragraph">
 <p>The denial-of-service filter (DoSFilter) limits exposure to requests
-flooding.  The DoSFilter throttles clients sending a large number of
+flooding over HTTP/HTTPS.  The DoSFilter throttles clients sending a large number of
 requests over a short period of time.</p>
 </div>
 <div class="paragraph">
-<p>The DoSFilter is enabled by default on ZCS and is applied to all requests.
-You can modify the configuration to accommodate your specific environmental
-needs.  Disabling the DoSFilter is not recommended.</p>
+<p>DosFilter is only applied to HTTP and HTTPS requests, in other words, it does not affect requests for any other protocols like POP3, IMAP or SMTP. You can modify the configuration to accommodate your specific environmental needs. DoSFilter is enabled by default on ZCS. Disabling the DoSFilter is not recommended. For information on preventing multiple failed login attempts see <a href="#passwordpolicy">Password Policy</a></p>
 </div>
 <div class="sect3">
 <h4 id="_identifying_false_positives">Identifying False Positives</h4>
@@ -19681,7 +19751,7 @@ to see if the DoSFilter was applied.</p>
 </ul>
 </div>
 <div class="exampleblock">
-<div class="title">Example 17. <code>sync.log</code> entry showing the DoSFilter</div>
+<div class="title">Example 13. <code>sync.log</code> entry showing the DoSFilter</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -19700,7 +19770,7 @@ ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?
 </ul>
 </div>
 <div class="exampleblock">
-<div class="title">Example 18. <code>zmmailboxd.out</code> entry showing the DoSFilter</div>
+<div class="title">Example 14. <code>zmmailboxd.out</code> entry showing the DoSFilter</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -20598,7 +20668,7 @@ during the execution of the process that disrupted the normal flow.  This
 signals that some type of error was detected.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 19. Handler Exception</div>
+<div class="title">Example 15. Handler Exception</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -20617,7 +20687,7 @@ log line, this is the root of the error.  In the example below, the error
 was caused by 501, bad address syntax.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 20. Stack Trace</div>
+<div class="title">Example 16. Stack Trace</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -20667,7 +20737,7 @@ errors before the startup message date.  This example shows an
 out-of-memory error on June 17, 2007.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 21. Startup message</div>
+<div class="title">Example 17. Startup message</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -20680,7 +20750,7 @@ out-of-memory error on June 17, 2007.</p>
 <p>Look for errors before the startup message.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 22. Error message</div>
+<div class="title">Example 18. Error message</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -20698,7 +20768,7 @@ report with a <strong>caused by</strong> explanation that the recipient address 
 rejected as the address must be a fully-qualified address.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 23. Mail delivery problem</div>
+<div class="title">Example 19. Mail delivery problem</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -20743,7 +20813,7 @@ trying to log in as admin on the Zimbra Web Client, using Firefox in a
 Windows OS.  Permission was denied because it was not an admin account.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 24. Account Error - Login error</div>
+<div class="title">Example 20. Account Error - Login error</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -20764,7 +20834,7 @@ at com.zimbra.cs.service.admin.<strong>Auth</strong>.handle(<strong>Auth</strong
 occurred while trying to connect <a href="mailto:siress@example.com">siress@example.com</a>.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 25. Account Error - IMAP error</div>
+<div class="title">Example 21. Account Error - IMAP error</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -21204,8 +21274,20 @@ Number of accounts: 500</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="backup_and_restore">Backup and Restore</h2>
+<h2 id="backup_and_restore">Backup and Restore (*)</h2>
 <div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Zimbra Collaboration includes a configurable backup manager that resides on every
 Zimbra Collaboration server and performs both backup and restore functions. You
@@ -21617,7 +21699,7 @@ restore the LDAP server.</p>
 incremental backups, and deletion of old backups.</p>
 </li>
 <li>
-<p><code>zmbackup</code>&#8201;&#8212;&#8201;This command executes full or incremental backup of the mail
+<p><code>zmbackup</code>&#8201;&#8212;&#8201;This command executes full or incremental backup of the Zimbra Collaboration mailbox
 server. This is run on a live server, while the mailboxd process and the
 mailbox server are running. This command also has an option to manually
 delete old backups when they are no longer needed.</p>
@@ -21633,13 +21715,10 @@ delete old backups when they are no longer needed.</p>
 completed backups, including labels and dates.</p>
 </li>
 <li>
-<p><code>zmrestore</code>&#8201;&#8212;&#8201;This command executes a full or incremental restore to the
-Zimbra mail server. The <strong>zmrestore</strong> command is performed on a server
-that is running.</p>
+<p><code>zmrestore</code>&#8201;&#8212;&#8201;This command restores a backup to a running Zimbra Collaboration mailbox server.</p>
 </li>
 <li>
-<p><code>zmrestoreoffline</code>&#8201;&#8212;&#8201;This command restores the Zimbra mail server when
-the mailboxd process is stopped.</p>
+<p><code>zmrestoreoffline</code>&#8201;&#8212;&#8201;This command restores the Zimbra Collaboration mail server when the mailboxd process is stopped.</p>
 </li>
 <li>
 <p><code>zmrestoreldap</code>&#8201;&#8212;&#8201;This command restores the complete LDAP directory
@@ -21702,7 +21781,7 @@ a.m.</p>
 <p>Type an asterisk (*) in the fields you are not using.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 26. <code>zmschedulebackup</code> options</div>
+<div class="title">Example 22. <code>zmschedulebackup</code> options</div>
 <div class="content">
 <div class="ulist">
 <ul>
@@ -21769,7 +21848,7 @@ To return backups to the default schedule use the command <code>zmschedulebackup
 example:</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 27. Default Backup Schedule</div>
+<div class="title">Example 23. Default Backup Schedule</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -21995,7 +22074,7 @@ specified.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Perform a manual back up all mailboxes on server&lt;1&gt;:</p>
+<p>Perform a manual backup of all mailboxes on server&lt;1&gt;:</p>
 </li>
 </ul>
 </div>
@@ -22190,7 +22269,7 @@ zmbackupabort -s server1 -lb full-20070712.155951.123</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_back_up_using_the_auto_grouped_method">Back up using the Auto-Grouped Method</h3>
+<h3 id="_backup_using_the_auto_grouped_method">Backup using the Auto-Grouped Method</h3>
 <div class="paragraph">
 <p>The auto-grouped backup method is configured either from the
 Administration Console or from the CLI.</p>
@@ -22311,7 +22390,7 @@ failure.</p>
 <div class="sect2">
 <h3 id="_backup_options">Backup Options</h3>
 <div class="paragraph">
-<p>The backup process can be configured to selectively back up content and
+<p>The backup process can be configured to selectively backup content and
 to backup the MariaDB database.</p>
 </div>
 <div class="sect3">
@@ -22344,7 +22423,7 @@ volumes.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_back_up_the_mariadb_database">Back Up the MariaDB Database</h4>
+<h4 id="_backup_the_mariadb_database">Backup the MariaDB Database</h4>
 <div class="paragraph">
 <p>You can configure Zimbra Collaboration backups to run mysqldump to
 backup your MariaDB database during backup sessions. When this is enabled,
@@ -22477,18 +22556,19 @@ value.</p>
 <div class="paragraph">
 <p>Three types of restore procedures can be run:</p>
 </div>
-<div class="paragraph">
-<p>The <code>zmrestore</code> command is used to restore the mailboxes while the
-Zimbra Collaboration mailbox server is running.</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>zmrestoreoffline</code>&#8201;&#8212;&#8201;to restore the mail server when the mail server is
-down. This command is run for disaster recovery.</p>
+<p>The <code>zmrestore</code> command is used to restore the mailboxes while the
+Zimbra Collaboration mailbox server is running.</p>
 </li>
 <li>
-<p><code>zmrestoreldap</code>&#8201;&#8212;&#8201;to restore the content of the LDAP directory server.</p>
+<p>The <code>zmrestoreoffline</code> command is used to restore the mailbox server when
+just the mailboxd process it is stopped. This command is run for disaster recovery.</p>
+</li>
+<li>
+<p>The <code>zmrestoreldap</code> command is used to restore the content of the
+LDAP directory server.</p>
 </li>
 </ul>
 </div>
@@ -22566,7 +22646,7 @@ is restored.
 <p><strong>Examples</strong></p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 28. Perform a full restore of all accounts on server1</div>
+<div class="title">Example 24. Perform a full restore of all accounts on server1</div>
 <div class="content">
 <div class="paragraph">
 <p>Including last full backup and any incremental backups since last full backup</p>
@@ -22579,7 +22659,7 @@ is restored.
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 29. Perform a single account restore on server1</div>
+<div class="title">Example 25. Perform a single account restore on server1</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -22589,7 +22669,7 @@ is restored.
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 30. Restore to a specific point in time (PIT)</div>
+<div class="title">Example 26. Restore to a specific point in time (PIT)</div>
 <div class="content">
 <div class="paragraph">
 <p>The following restore options affect redo log replay. If you do not specify
@@ -22641,7 +22721,7 @@ incremental backups at all.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 31. Specify an exact time, the incremental backup label, or the redo log sequence to restore to.</div>
+<div class="title">Example 27. Specify an exact time, the incremental backup label, or the redo log sequence to restore to.</div>
 <div class="content">
 <div class="paragraph">
 <p>Restore stops at the earliest possible point in time if more than one point
@@ -22668,7 +22748,7 @@ in time restore options are specified.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 32. Perform an incremental restore only to last full backup, excluding incremental backups since then, for all accounts</div>
+<div class="title">Example 28. Perform an incremental restore only to last full backup, excluding incremental backups since then, for all accounts</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -22678,7 +22758,7 @@ in time restore options are specified.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 33. Restore mailbox and LDAP data for an account</div>
+<div class="title">Example 29. Restore mailbox and LDAP data for an account</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -22688,7 +22768,7 @@ in time restore options are specified.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 34. Restore to a new target account</div>
+<div class="title">Example 30. Restore to a new target account</div>
 <div class="content">
 <div class="paragraph">
 <p>A prefix is prepended to the original account names</p>
@@ -22705,7 +22785,7 @@ in time restore options are specified.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 35. Restore system tables in the database (db) and <code>localconfig.xml</code></div>
+<div class="title">Example 31. Restore system tables in the database (db) and <code>localconfig.xml</code></div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -22715,7 +22795,7 @@ in time restore options are specified.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 36. Include <code>--contineOnError</code> (<code>-c</code>) to the command so that the restore process continues if an error is encountered.</div>
+<div class="title">Example 32. Include <code>--contineOnError</code> (<code>-c</code>) to the command so that the restore process continues if an error is encountered.</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -22729,7 +22809,7 @@ when the restore process is complete.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 37. Restore a specific account</div>
+<div class="title">Example 33. Restore a specific account</div>
 <div class="content">
 <div class="paragraph">
 <p>Can also be used to restore deleted accounts</p>
@@ -22742,7 +22822,7 @@ when the restore process is complete.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 38. Avoid restoring accounts that were deleted</div>
+<div class="title">Example 34. Avoid restoring accounts that were deleted</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -22752,7 +22832,7 @@ when the restore process is complete.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 39. Restore a mailbox, but exclude all the delete operations that were in the redolog replay</div>
+<div class="title">Example 35. Restore a mailbox, but exclude all the delete operations that were in the redolog replay</div>
 <div class="content">
 <div class="paragraph">
 <p>When the mailbox is restored it will contain messages that were
@@ -22998,7 +23078,7 @@ LDAP server being restored.</p>
 <p><strong>Examples</strong></p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 40. Find the LDAP session labels</div>
+<div class="title">Example 36. Find the LDAP session labels</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23008,7 +23088,7 @@ LDAP server being restored.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 41. Restore the complete LDAP directory server</div>
+<div class="title">Example 37. Restore the complete LDAP directory server</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23018,7 +23098,7 @@ LDAP server being restored.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 42. Restore LDAP data for specific accounts</div>
+<div class="title">Example 38. Restore LDAP data for specific accounts</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -23086,7 +23166,7 @@ consistent state.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_restore_the_zimbra_collaboration">Restore the Zimbra Collaboration</h4>
+<h4 id="_restore_the_zimbra_collaboration_server">Restore the Zimbra Collaboration Server</h4>
 <div class="paragraph">
 <p>If a complete machine failure occurs, use the following steps to restore
 to a new server.</p>
@@ -23138,8 +23218,7 @@ Zimbra Collaboration.</p>
 <p>Run <code>zmrestoreldap</code> to restore the global LDAP data.</p>
 </li>
 <li>
-<p>Run <code>zmrestoreoffline</code> to restore account data from the backup
-sessions.</p>
+<p>Run <code>zmrestoreoffline</code> to restore account data from the backup sessions.</p>
 </li>
 <li>
 <p>Prepare and run a new backup.</p>
@@ -23342,10 +23421,47 @@ To find the LDAP session label to restore, type <code>zmrestoreldap –lbs</code
 </div>
 </li>
 <li>
+<p>Ensure that the following services are running before attempting to execute <code>zmrestoreoffline</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mysqld (MariaDB)</p>
+</li>
+<li>
+<p>slapd (OpenLDAP)</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zmcontrol start</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Ensure that the following services are stopped before attempting to execute <code>zmrestoreoffline</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mailboxd</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zmmailboxdctl stop</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
 <p>Because some Zimbra Collaboration services are running at this
 point, type <code>zmconvertctl start</code>. This is required before running
 <code>zmrestoreoffline</code>.</p>
-</li>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Sync your LDAP password from backup directory to the new production
 servers LDAP config.</p>
@@ -23356,10 +23472,11 @@ servers LDAP config.</p>
 </div>
 </li>
 <li>
-<p>Start the offline restore.</p>
+<p>Start the offline restore after stopping mailboxd.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmrestoreoffline -sys -a all -c -br</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmmailboxdctl stop
+zmrestoreoffline -sys -a all -c -br</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23587,7 +23704,7 @@ if the <strong>.restore</strong> file has the latest local configuration data, d
 <div class="sect2">
 <h3 id="_using_snapshots_to_backup_and_restore">Using snapshots to Backup and Restore</h3>
 <div class="paragraph">
-<p>You can back up and restore a server using the snapshot feature provided
+<p>You can backup and restore a server using the snapshot feature provided
 by the storage layer rather than using Zimbra&#8217;s backup and restore
 feature. Using snapshots, you can maintain a standby site if the primary
 site fails and reroute users to the standby site to keep operations
@@ -23702,8 +23819,20 @@ the appropriate "Last Login" value in the admin console will be restored.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_zimbra_mobile">Zimbra Mobile</h2>
+<h2 id="_zimbra_mobile">Zimbra Mobile (*)</h2>
 <div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Zimbra Mobile provides over-the-air synchronization of mail, contacts,
 calendar and task data and device security policy enforcement between
@@ -23862,8 +23991,8 @@ and the Zimbra server.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Check this box to set up mobile security policies that enforce security
 rules on compliant mobile devices.  You can enforce general security
 policies including password rules and set up local wipe capability on
-compliant devices.</p>
-<p class="tableblock">After the mobile policy is set up, the next time a mobile device sends a
+compliant devices.
+</p><p class="tableblock">After the mobile policy is set up, the next time a mobile device sends a
 request to the server, mobile devices that are capable of enforcing
 security policies automatically set up the rules you implement and
 immediately enforces them.</p></td>
@@ -24368,7 +24497,7 @@ checks are performed on the envelope, Bcc copies and messages sent to
 distribution lists are captured.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 43. Sending messages with archiving enabled</div>
+<div class="title">Example 39. Sending messages with archiving enabled</div>
 <div class="content">
 <div class="paragraph">
 <p>For example, if User A sends a message to User B, and if User B has
@@ -26410,7 +26539,372 @@ the Zimbra Wiki at <a href="https://wiki.zimbra.com" class="bare">https://wiki.z
 </div>
 </div>
 <div class="sect1">
-<h2 id="backup-ng-guide">Backup Next Generation (NG)</h2>
+<h2 id="voice_service">Using the Voice Service</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Unified Communications (UC) is the integration of multiple modes of communication services, allowing users to receive communication from one service, such as voice mail, and respond using another service, such as Click-to-Call.</p>
+</div>
+<div class="paragraph">
+<p>Zimbra uses real-time communications services such as voice, telephony and presence to inter-operate with non-real-time services such as email and voice mail. The Zimbra Collaboration Voice Service feature includes Visual Voice Mail, Click-to-Call, and Presence (Cisco only). Zimbra Collaboration uses Cisco or Mitel servers, as a third-party voice server, or UC server, to bridge calls between Zimbra Collaboration and the Zimbra Web Client (ZWC).</p>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> UC system administrators are responsible for configuring the UC server based on that UC server’s documentation.</p>
+</div>
+<div class="paragraph">
+<p>You enable the voice service from the administration console. Users use the voice service feature from the Voice tab in the ZWC.</p>
+</div>
+<div class="paragraph">
+<p>When users sign into the voice service from their ZWC account, they are actually logging into a UC server. After the initial user set-up, the voice service is seamless and requires no additional account configuration.</p>
+</div>
+<div class="paragraph">
+<p>Voice service features include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Visual Voice Mail:</strong> From the Voice tab, users can easily view and listen to voice mails and view details such as caller name, time details, and length of message. Users can call back the person that left the message, forward or reply to the message by email, save or delete the message, and select how to be notified of a new voice message. Supported audio formats include WAV and MP3.</p>
+</li>
+<li>
+<p><strong>Click-to-Call:</strong> The ability to make a phone call from a ZWC account. Users can highlight and click phone number in their email to dial, or select a contact’s phone number from their contact lists. The call is bridged from the registered physical or soft phone the user selects to use to call the recipient. Click-to-Call eliminates the use for a dial pad on a phone.</p>
+</li>
+<li>
+<p><strong>Click-to-Chat:</strong> (Cisco clients only) The ability to chat with a contact using the Cisco Jabber client and ZCS. Users must have the recipient’s IM address stored in their contact information. They can then access the recipient’s contact card and click the IM link to initiate a chat session.</p>
+</li>
+<li>
+<p><strong>Presence:</strong> (Cisco clients only) The ability to display in real time the availability information about users or contacts. When using Cisco Jabber, users can manually set their presence status or it is automatically set for them. For example, when users are on a phone call their presence status is automatically set to “on a call”. Presence status is displayed as available, away, on a call, or do not disturb.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_order_of_configuration">Order of Configuration</h3>
+<div class="paragraph">
+<p>To create voice service, follow the order of configuration as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Access URLs, as described in Using a Third-Party Unified Communications Server.</p>
+</li>
+<li>
+<p>Create the voice service, as described in Creating the Voice/Chat Service.</p>
+</li>
+<li>
+<p>Enable the voice service and the voice feature, as described in Enabling the Voice/Chat Service. Enabling the voice feature allows the Voice tab to display in the ZWC.</p>
+</li>
+<li>
+<p>Enable the appropriate Zimlets for the vendor server you are using, as described in Enabling the Voice/Chat Zimlets.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_voice_service_requirements">Voice Service Requirements</h3>
+<div class="paragraph">
+<p>The following are required for ZCS voice service:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Voice Service license:</strong> A ZCS license with the voice service feature is required. To obtain this license, see the Zimbra Collaboration Server License section for more information.</p>
+</li>
+<li>
+<p><strong>Unified Communications Server:</strong> Third-Party Unified Communications server requirements for either Cisco or Mitel are listed below. URLs from the UC server are used in the configuration of the ZCS voice service, as described in Using a Third-Party Unified Communications Server.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>For Cisco:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Cisco Unity Connection (UC) 8.5 and above</strong>. Cisco UC generates the Voice URL used in the voice service configuration.</p>
+</li>
+<li>
+<p><strong>Cisco Unified Communications Manager (CUCM) 7.1(3):</strong> Enable Web Dialer service for Click-to-Call functionality. Cisco CUCM generates the Call URL used in the voice service configuration.</p>
+</li>
+<li>
+<p><strong>Cisco Unified Presence Server (CUPS) 8.0:</strong> Cisco CUPS requires Presence Web Service to be enabled, and an application user must be created for viewing the presence. This is done in Cisco Communications Manager (CUCM) &gt; User Management. Cisco CUPS generates the Presence URL used in the voice service configuration.</p>
+</li>
+<li>
+<p><strong>Cisco Jabber client provided to users for UC collaboration.</strong></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>For Mitel:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Mitel Unified Communicator Advanced (Mitel UCA) 5.0.23.0 release and above.</strong> Mitel UCA generates the URLs used in the voice service configuration.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>ZCS Zimlets:</strong> Voice Preferences Zimlet, Cisco Click2Call Zimlet or Mitel Click2Call Zimlet</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_a_third_party_unified_communications_server">Using a Third-Party Unified Communications Server</h3>
+<div class="paragraph">
+<p>The ZCS Voice Service uses a third-party Unified Communications (UC) server to bridge calls between ZCS and the UC server. UC server domain information is added to the ZCS administrator console as a Proxy Allowed Domain. This allows Zimlets that are used in the configuration of the voice service to send requests to the UC servers, such as for the Click-To-Call and/or Presence feature. The following URLs from the UC server are used to configure the voice service.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cisco_urls">Cisco URLs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Voice URL:</strong> The Voice URL is the URL of the Cisco UC server. For example, <a href="https://xx.xx.xxx.xx" class="bare">https://xx.xx.xxx.xx</a>. This URL is used by the ZCS server to fetch user’s voice mails from the Cisco UC server on behalf of users.</p>
+</li>
+<li>
+<p><strong>Call URL:</strong> The Call URL is the URL of the Cisco CUCM server. For example, <a href="https://xx.xx.xxx.xx/webdialer/services/WebdialerSoapService70" class="bare">https://xx.xx.xxx.xx/webdialer/services/WebdialerSoapService70</a>. This URL is used by the ZCS Cisco Click2Call Zimlet to send requests to the Cisco CUCM server to bridge calls.</p>
+</li>
+<li>
+<p><strong>Presence URL:</strong> The Presence URL is the URL of the Cisco CUPS server and used to generate a session ID. For example, <a href="http://xx.xx.xxx.xx:8082/presence-service/users.This" class="bare">http://xx.xx.xxx.xx:8082/presence-service/users.This</a> URL is used by the ZCS Email Zimlet to send fetch requests to the contact’s presence from the Cisco CUPS server.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> Provision an application user name and password using the Cisco Unified Presence Server (CUPS).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mitel_urls">Mitel URLs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Voice URL:</strong> The Voice URL is the URL of the Mitel server. For example <a href="https://xx.xx.xxx.xx" class="bare">https://xx.xx.xxx.xx</a>. This URL is used by the ZCS server to fetch user’s voice mails from the Mitel Voice server on behalf of users.</p>
+</li>
+<li>
+<p><strong>Call URL:</strong> The Call URL is the URL of the Mitel server. For example, <a href="https://xx.xx.xxx.xx/webdialer/services/WebdialerSoapService70" class="bare">https://xx.xx.xxx.xx/webdialer/services/WebdialerSoapService70</a>. This URL is used by the ZCS Mitel Click2Call Zimlet to send requests to the Mitel server to bridge calls.</p>
+</li>
+<li>
+<p><strong>User URL:</strong> The User URL is the URL of the Mitel server. This URL is used by ZCS for user identification/authentication.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_the_voice_chat_service">Creating the Voice/Chat Service</h3>
+<div class="paragraph">
+<p>When creating the voice/chat service in ZCS, you are enabling the bridge between ZCS and a third-party UC server. You create a service for a domain, Class of Service (COS), or user.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the ZCS administrator console, go to the <strong>Home&gt;Configure&gt;Voice/Chat Service</strong> page.</p>
+</li>
+<li>
+<p>From the gear icon menu, select <strong>New</strong>.</p>
+</li>
+<li>
+<p>On the Choose Voice/Chat Vendor, select your vendor from the drop-down menu.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong>.</p>
+</li>
+<li>
+<p>Add a <strong>Display name</strong> for the domain, COS, or user you are creating.</p>
+</li>
+<li>
+<p>Add the URLs for the voice services you want to enable.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configure_presence_cisco_only">Configure Presence (Cisco only)</h3>
+<div class="paragraph">
+<p>If configuring Presence, you must generate a Presence Session ID.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to <strong>Configure&gt;Voice/Chat Service</strong> page.</p>
+</li>
+<li>
+<p>Select the voice service for which you want to generate a Presence Session ID.</p>
+</li>
+<li>
+<p>Click the gear icon drop down menu and select <strong>Generate Session ID</strong> from the menu.</p>
+</li>
+<li>
+<p>Enter the <strong>Presence User Name</strong> and <strong>Presence Password</strong>, which are the credentials for the presence server to authenticate the voice connection between ZCS and the UC server. This allows ZCS to retrieve presence information for users.</p>
+</li>
+<li>
+<p>Click <strong>OK</strong>. A presence session ID is generated and displays as the <strong>Presence Session ID</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enabling_the_voice_chat_service">Enabling the Voice/Chat Service</h3>
+<div class="paragraph">
+<p>After you create the voice/chat service for a domain, COS, or user, you must enable the voice/chat service. For COS and User accounts, you also enable the voice feature which displays the Voice tab in the ZWC.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enable_voice_chat_service_on_a_domain">Enable Voice/Chat Service on a Domain</h3>
+<div class="paragraph">
+<p>For Voice/Chat service on a domain, enable the service on the Domains&gt;General Information page.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the <strong>Configure&gt;Domains</strong> page.</p>
+</li>
+<li>
+<p>Select the domain for which you want to enable voice service.</p>
+</li>
+<li>
+<p>Click the gear icon menu and select <strong>Edit</strong>.</p>
+</li>
+<li>
+<p>Scroll down to Voice and Chat section and from the <strong>Voice/Chat Service</strong> drop-down menu select the voice service to enable.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enable_voice_chat_service_on_a_cos">Enable Voice/Chat Service on a COS</h3>
+<div class="paragraph">
+<p>For Voice/Chat service on a COS, you must first enable the voice/chat service and then enable the voice feature.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the <strong>Configure&gt;Class of Service</strong> page.</p>
+</li>
+<li>
+<p>Select the COS for which you want to enable the voice service.</p>
+</li>
+<li>
+<p>Click the gear icon drop and select <strong>Edit</strong>.</p>
+</li>
+<li>
+<p>On the General Information page, scroll down to <strong>Voice and Chat</strong> section and from the <strong>Voice/Chat Service</strong> drop-down menu select the voice service to enable.</p>
+</li>
+<li>
+<p>In the Navigation pane, click <strong>Features</strong>.</p>
+</li>
+<li>
+<p>On the Features page, scroll down to <strong>Voice and Chat Features</strong> section and click <strong>Enable Voice Feature</strong>. This displays the Voice tab in the ZWC.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enable_voice_chat_service_on_a_user_account">Enable Voice/Chat Service on a User Account</h3>
+<div class="paragraph">
+<p>For Voice/Chat service on a User Account, you must first enable the voice/chat service and then enable the voice feature.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the <strong>Home&gt;Manage&gt;Accounts</strong> page.</p>
+</li>
+<li>
+<p>Select the account for which you want to enable voice service.</p>
+</li>
+<li>
+<p>Click the gear icon drop and select <strong>Edit</strong>.</p>
+</li>
+<li>
+<p>On the General Information page, scroll down to <strong>Voice and Chat</strong> section.</p>
+</li>
+<li>
+<p>From the <strong>Voice/Chat Service</strong> menu select the voice service to enable.</p>
+</li>
+<li>
+<p>Enter a <strong>Chat/Voice Username</strong> for the user. This is the user account name in the third-party UC server. If you do not provide a name, the default name is used. For example for email account “<a href="mailto:user1@domain.com">user1@domain.com</a>”, the default voice username is “user1”.</p>
+</li>
+<li>
+<p>From the <strong>Voice/Chat Service</strong> menu select the voice service to enable.</p>
+</li>
+<li>
+<p>In the Navigation pane, click <strong>Features</strong>.</p>
+</li>
+<li>
+<p>On the Features page, scroll down to <strong>Voice and Chat Features</strong> section and click <strong>Enable Voice Feature</strong>. This displays the Voice tab in the ZWC.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enabling_the_voice_chat_zimlets">Enabling the Voice/Chat Zimlets</h3>
+<div class="paragraph">
+<p>Zimlets are used in the configuration of the voice service to enable the service and send requests to the UC servers. The Voice Preferences Zimlet adds a voice page to the user interface, and the vendor specific Click2Call Zimlets provide the click to call capability.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the <strong>Home&gt;Configure&gt;Zimlets</strong> page.</p>
+</li>
+<li>
+<p>Enable the Voice Preferences Zimlet.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the <strong>Voice Preferences</strong> Zimlet in the Content pane.</p>
+</li>
+<li>
+<p>Go to the gear icon menu and select <strong>Deploy</strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enable the vendor Zimlet for Click2Call.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the Zimlet appropriate to the vender server you are using:</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>If you are using Cisco, select the <strong>Cisco Click2Call</strong> Zimlet.</p>
+</li>
+<li>
+<p>If you are using Mitel, select the <strong>Mitel Click2Call</strong> Zimlet.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to the gear icon menu and select <strong>Deploy</strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you want to undeploy a Zimlet, select the Zimlet and go to the gear icon drop down menu and select <strong>Undeploy</strong>, or you can toggle the Zimlet.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="backup-ng-guide">Backup Next Generation NG</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="real-time-scan">Real Time Scan</h3>
@@ -39361,8 +39855,8 @@ proxy lookup.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>getAllReverseProxy Backends (garpb)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of servers that have
-<code>zimbraReverseProxyLookupTarget=TRUE</code>.</p>
-<p class="tableblock">Basically if a mailbox server is available for lookup requests from the
+<code>zimbraReverseProxyLookupTarget=TRUE</code>.
+</p><p class="tableblock">Basically if a mailbox server is available for lookup requests from the
 proxy.</p></td>
 </tr>
 <tr>
@@ -39378,7 +39872,7 @@ certificates for.</p></td>
 <div class="sect4">
 <h5 id="_examples_using_zmprov">Examples&#8201;&#8212;&#8201;using zmprov</h5>
 <div class="exampleblock">
-<div class="title">Example 44. Creating an account with a password that is assigned to the default COS</div>
+<div class="title">Example 40. Creating an account with a password that is assigned to the default COS</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39388,7 +39882,7 @@ certificates for.</p></td>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 45. Creating an account with a password that is assigned to a specified COS</div>
+<div class="title">Example 41. Creating an account with a password that is assigned to a specified COS</div>
 <div class="content">
 <div class="paragraph">
 <p>You must know the COS ID number.  To find a COS ID:</p>
@@ -39403,7 +39897,7 @@ zmprov ca name@domain.com password zimbraCOS cosIDnumberstring</code></pre>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 46. Creating an account when the password is not authenticated internally</div>
+<div class="title">Example 42. Creating an account when the password is not authenticated internally</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39417,7 +39911,7 @@ password.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 47. Using a batch process to create accounts</div>
+<div class="title">Example 43. Using a batch process to create accounts</div>
 <div class="content">
 <div class="paragraph">
 <p>See <a href="#provisioning_user_accounts">Provisioning User Accounts</a> for the
@@ -39426,7 +39920,7 @@ procedure.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 48. Bulk provisioning</div>
+<div class="title">Example 44. Bulk provisioning</div>
 <div class="content">
 <div class="paragraph">
 <p>See the Zimbra wiki page <a href="https://wiki.zimbra.com/wiki/Bulk_Provisioning">Bulk_Provisioning</a>.</p>
@@ -39434,7 +39928,7 @@ procedure.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 49. Adding an alias to an account</div>
+<div class="title">Example 45. Adding an alias to an account</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39444,7 +39938,7 @@ procedure.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 50. Creating a distribution list</div>
+<div class="title">Example 46. Creating a distribution list</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39457,7 +39951,7 @@ procedure.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 51. Adding a member to a distribution list</div>
+<div class="title">Example 47. Adding a member to a distribution list</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39479,7 +39973,7 @@ You can add multiple members to a list from the Administration Console.
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 52. Changing the administrator&#8217;s password</div>
+<div class="title">Example 48. Changing the administrator&#8217;s password</div>
 <div class="content">
 <div class="paragraph">
 <p>Use this command to change any password.  Enter the address of the password
@@ -39493,7 +39987,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 53. Creating a domain that authenticates against Zimbra OpenLDAP</div>
+<div class="title">Example 49. Creating a domain that authenticates against Zimbra LDAP</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39503,7 +39997,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 54. Setting the default domain</div>
+<div class="title">Example 50. Setting the default domain</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39513,7 +40007,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 55. Listing all COSs and their attribute values</div>
+<div class="title">Example 51. Listing all COSs and their attribute values</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39523,7 +40017,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 56. Listing all user accounts in a domain (domain.com)</div>
+<div class="title">Example 52. Listing all user accounts in a domain (domain.com)</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39533,7 +40027,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 57. Listing all user accounts and their configurations</div>
+<div class="title">Example 53. Listing all user accounts and their configurations</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39543,7 +40037,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 58. Enabling logger on a single server</div>
+<div class="title">Example 54. Enabling logger on a single server</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39556,7 +40050,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 59. Querying a value for a multi-valued attribute</div>
+<div class="title">Example 55. Querying a value for a multi-valued attribute</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39570,7 +40064,7 @@ the ldap service is enabled.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 60. Modify the purge interval</div>
+<div class="title">Example 56. Modify the purge interval</div>
 <div class="content">
 <div class="paragraph">
 <p>To modify the purge interval, set <code>zimbraMailPurgeSleepInterval</code> to the
@@ -39589,7 +40083,7 @@ minutes. You could also set <strong>&lt;xh&gt;</strong> for hours.</p>
 </div>
 </div>
 <div id="custom_new_mail_notification" class="exampleblock">
-<div class="title">Example 61. Customize the notification email</div>
+<div class="title">Example 57. Customize the notification email</div>
 <div class="content">
 <div class="paragraph">
 <p>Modify <code>zimbraNewMailNotification</code> to customize the notification email
@@ -39634,7 +40128,7 @@ ofservice, use <code>zmprov mc</code>.  The command is written on one line.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 62. Enable the SMS notification by COS, account or domain</div>
+<div class="title">Example 58. Enable the SMS notification by COS, account or domain</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -39646,7 +40140,7 @@ zmprov md &lt;domain&gt; zimbraFeatureCalendarReminderDeviceEmailEnabled TRUE</c
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 63. Enable the Activity Stream feature for a COS or set of users</div>
+<div class="title">Example 59. Enable the Activity Stream feature for a COS or set of users</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40096,7 +40590,7 @@ RESULTNUM_ACCOUNT-ID_MAILITEMID</p></td>
 </tbody>
 </table>
 <div class="exampleblock">
-<div class="title">Example 64. Search archives on a specified server and put a copy of the archive in a specified directory</div>
+<div class="title">Example 60. Search archives on a specified server and put a copy of the archive in a specified directory</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40259,7 +40753,7 @@ is not required if the target is the default directory,
 (<code>/opt/zimbra/backup</code>).</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 65. Perform a full backup of all mailboxes on <strong>server1</strong></div>
+<div class="title">Example 61. Perform a full backup of all mailboxes on <strong>server1</strong></div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40269,7 +40763,7 @@ is not required if the target is the default directory,
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 66. Perform incremental backup of all mailboxes on <strong>server1</strong> since last full backup</div>
+<div class="title">Example 62. Perform incremental backup of all mailboxes on <strong>server1</strong> since last full backup</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40279,7 +40773,7 @@ is not required if the target is the default directory,
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 67. Perform full backup of only <strong>user1</strong>'s mailbox on <strong>server1</strong>.</div>
+<div class="title">Example 63. Perform full backup of only <strong>user1</strong>'s mailbox on <strong>server1</strong>.</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40301,7 +40795,7 @@ Hostname does not need full domain if account is used.
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 68. Perform incremental backup of <strong>user1</strong>'s mailbox on <strong>server1</strong></div>
+<div class="title">Example 64. Perform incremental backup of <strong>user1</strong>'s mailbox on <strong>server1</strong></div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40444,8 +40938,8 @@ default value is 50.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-n</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-n none | user | organizer | attendee | all</code></p>
-<p class="tableblock">Send email notifications to selected users if they are out of sync for an
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-n none | user | organizer | attendee | all</code>
+</p><p class="tableblock">Send email notifications to selected users if they are out of sync for an
 appointment</p></td>
 </tr>
 </tbody>
@@ -40728,7 +41222,7 @@ used.</p>
 <div class="sect4">
 <h5 id="_backup_scheduling_examples">Backup Scheduling Examples</h5>
 <div class="exampleblock">
-<div class="title">Example 69. Schedule the default full and incremental backup</div>
+<div class="title">Example 65. Schedule the default full and incremental backup</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40738,7 +41232,7 @@ used.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 70. Replace the existing schedule with a new schedule</div>
+<div class="title">Example 66. Replace the existing schedule with a new schedule</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40748,7 +41242,7 @@ used.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 71. Add an additional full backup to the existing schedule</div>
+<div class="title">Example 67. Add an additional full backup to the existing schedule</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40758,7 +41252,7 @@ used.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 72. Add an additional incremental backup to the existing schedule</div>
+<div class="title">Example 68. Add an additional incremental backup to the existing schedule</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40768,7 +41262,7 @@ used.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 73. Display the existing schedules</div>
+<div class="title">Example 69. Display the existing schedules</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -40778,7 +41272,7 @@ used.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 74. Display the schedules on one line</div>
+<div class="title">Example 70. Display the schedules on one line</div>
 <div class="content">
 <div class="paragraph">
 <p>Display the schedules on one line as a command, so that they can be copied
@@ -40847,8 +41341,8 @@ message showing which accounts were not restored.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--label</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-lb</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Label of the full backup to be aborted.</p>
-<p class="tableblock">Use the zmbackupquery, to find the label name.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Label of the full backup to be aborted.
+</p><p class="tableblock">Use the zmbackupquery, to find the label name.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--restore</code></p></td>
@@ -40864,8 +41358,8 @@ or the server.domain.com name.  The default is the localhost name.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--target</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-t</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Specifies the target backup location.</p>
-<p class="tableblock">The default is <code>/opt/zimbra/backup</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Specifies the target backup location.
+</p><p class="tableblock">The default is <code>/opt/zimbra/backup</code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -41077,8 +41571,8 @@ current redo logs of the system.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--createAccount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-ca</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Restores accounts to target accounts whose names are prepended with prefix.</p>
-<p class="tableblock">(Can only be used in commands that use the <code>-pre</code> option.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restores accounts to target accounts whose names are prepended with prefix.
+</p><p class="tableblock">(Can only be used in commands that use the <code>-pre</code> option.)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--debug</code></p></td>
@@ -41176,7 +41670,7 @@ time.  (This option is always enabled with <code>-a all</code>)</p></td>
 <div class="sect4">
 <h5 id="_examples_2">Examples</h5>
 <div class="exampleblock">
-<div class="title">Example 75. Perform complete restore of all accounts on <strong>server1</strong></div>
+<div class="title">Example 71. Perform complete restore of all accounts on <strong>server1</strong></div>
 <div class="content">
 <div class="paragraph">
 <p>Perform complete restore of all accounts on <strong>server1</strong>, including last
@@ -41190,7 +41684,7 @@ full backup and any incremental backups since last full backup.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 76. Perform restore only to last full backup</div>
+<div class="title">Example 72. Perform restore only to last full backup</div>
 <div class="content">
 <div class="paragraph">
 <p>Perform restore only to last full backup, excluding incremental
@@ -41204,7 +41698,7 @@ backups since then, for all accounts on <strong>server1</strong>.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 77. Create a new account from a backup of the target account</div>
+<div class="title">Example 73. Create a new account from a backup of the target account</div>
 <div class="content">
 <div class="paragraph">
 <p>The name of the new account will be <a href="mailto:new_user1@domain.com">new_user1@domain.com</a>.</p>
@@ -41221,9 +41715,23 @@ backups since then, for all accounts on <strong>server1</strong>.</p>
 <div class="sect3">
 <h4 id="_zmrestoreoffline_offline_restore">zmrestoreoffline (Offline Restore)</h4>
 <div class="paragraph">
-<p>Run <code>zmrestoreoffline</code> when the Zimbra server (i.e., the mailbox process)
-is down.  The SQL database for the server and the OpenLDAP directory
-server must be running before you start the <code>zmrestoreoffline</code> command.</p>
+<p><code>zmrestoreoffline</code> requires that the following is true:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>mailboxd IS NOT running</p>
+</li>
+<li>
+<p>SQL database IS RUNNING</p>
+</li>
+<li>
+<p>LDAP directory IS RUNNING</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pre-requisites</p>
 </div>
 <div class="sect4">
 <h5 id="_syntax_12">Syntax</h5>
@@ -41358,7 +41866,7 @@ time.  (This option is always enabled with <code>-a all</code>)</p></td>
 running.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 78. Perform a complete restore of all accounts on <strong>server1</strong></div>
+<div class="title">Example 74. Perform a complete restore of all accounts on <strong>server1</strong></div>
 <div class="content">
 <div class="paragraph">
 <p>Perform a complete restore of all accounts on <strong>server1</strong>, including last
@@ -41592,7 +42100,7 @@ of two different mailboxes on the specified server and put a copy of the
 message in to the specified directory.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 79. Cross-mailbox search</div>
+<div class="title">Example 75. Cross-mailbox search</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -42253,7 +42761,7 @@ Usage is described in the CLI help for the following.</p>
 <div class="sect4">
 <h5 id="_examples_4">Examples</h5>
 <div class="exampleblock">
-<div class="title">Example 80. Create tags and folders</div>
+<div class="title">Example 76. Create tags and folders</div>
 <div class="content">
 <div class="paragraph">
 <p>When you create an account, you may want to pre-create some tags and
@@ -42280,7 +42788,7 @@ prov&gt;</code></pre>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 81. Find the mailbox size for an account</div>
+<div class="title">Example 77. Find the mailbox size for an account</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -42290,7 +42798,7 @@ prov&gt;</code></pre>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 82. Send requests to a mailbox using the admin auth token</div>
+<div class="title">Example 78. Send requests to a mailbox using the admin auth token</div>
 <div class="content">
 <div class="paragraph">
 <p>This is required when using the command <code>emptyDumpster</code>.  Use
@@ -42304,7 +42812,7 @@ prov&gt;</code></pre>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 83. Use <code>--admin-priv</code> with select Mailbox command</div>
+<div class="title">Example 79. Use <code>--admin-priv</code> with select Mailbox command</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -42315,7 +42823,7 @@ mbox&gt; sm --admin-priv foo@domain.com</code></pre>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 84. Authenticate as a delegated admin user</div>
+<div class="title">Example 80. Authenticate as a delegated admin user</div>
 <div class="content">
 <div class="paragraph">
 <p>This lets one user login to another user&#8217;s mailbox.  The authenticating
@@ -42332,7 +42840,7 @@ user bar and open mailbox foo:</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 85. Find the mailbox size for an account</div>
+<div class="title">Example 81. Find the mailbox size for an account</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -42342,7 +42850,7 @@ user bar and open mailbox foo:</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 86. Backup mailbox content in a zip file</div>
+<div class="title">Example 82. Backup mailbox content in a zip file</div>
 <div class="content">
 <div class="paragraph">
 <p>When you use <code>zmmailbox</code> to backup individual mailboxes, you can save
@@ -43084,8 +43592,8 @@ under each directory being sorted in ascending order and processed.</p>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-m</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the mailbox ids separated by a comma or a space.  The entire list
-of mailbox ids must be quoted if using space as a separator.</p>
-<p class="tableblock">To dump contents of all the redolog files, omit this option.</p></td>
+of mailbox ids must be quoted if using space as a separator.
+</p><p class="tableblock">To dump contents of all the redolog files, omit this option.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--no-offset</code></p></td>
@@ -43686,8 +44194,8 @@ COS, and turns on the Zimlet.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>acl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;zimlet&gt; &lt;cos1&gt; {grant | deny} | [&lt;cos2&gt; {grant|deny}&#8230;&#8203;]</code></p>
-<p class="tableblock">Sets the access control, grant|deny, to a COS.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;zimlet&gt; &lt;cos1&gt; {grant | deny} | [&lt;cos2&gt; {grant|deny}&#8230;&#8203;]</code>
+</p><p class="tableblock">Sets the access control, grant|deny, to a COS.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>listAcls</code></p></td>
@@ -44122,7 +44630,7 @@ hosting particular service.</p>
 <li>
 <p>From the command prompt, type <code>setspn –a {userlogonname} {serviceaccountname}</code></p>
 <div class="exampleblock">
-<div class="title">Example 87. Map mailbox server name as servie Principal Names to user account</div>
+<div class="title">Example 83. Map mailbox server name as servie Principal Names to user account</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -44197,8 +44705,8 @@ Active Directory Domain Controller section.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-pass</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This is the password to use.</p>
-<p class="tableblock">Enter the password entered in the <strong>User Logon Name (pre-Windows2000)</strong> set
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is the password to use.
+</p><p class="tableblock">Enter the password entered in the <strong>User Logon Name (pre-Windows2000)</strong> set
 in <strong>Step 1.c</strong> in Setting up the Microsoft Windows Active Directory Domain
 Controller section.</p></td>
 </tr>
@@ -44215,7 +44723,7 @@ To avoid warning messages from the toolkit enter this value.</p></td>
 </tbody>
 </table>
 <div class="exampleblock">
-<div class="title">Example 88. Using <code>ktpass</code> to create a jetty.keytab file</div>
+<div class="title">Example 84. Using <code>ktpass</code> to create a jetty.keytab file</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -44295,13 +44803,11 @@ command.</p>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
 </colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">zimbraSpnegoAuthEnabled</th>
-<th class="tableblock halign-left valign-top">Set to TRUE.</th>
-</tr>
-</thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>zimbraSpnegoAuthEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set to TRUE.</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>zimbraSpnegoAuthErrorURL</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This is the URL users are redirected to when spnego auth fails. Setting it
@@ -44311,8 +44817,8 @@ password.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>zimbraSpnegoAuthRealm</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Kerberos realm in the domain controller.</p>
-<p class="tableblock">This is the domain name in the Active Directory. (COMPANY.COM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Kerberos realm in the domain controller.
+</p><p class="tableblock">This is the domain name in the Active Directory. (COMPANY.COM)</p></td>
 </tr>
 </tbody>
 </table>
@@ -44349,9 +44855,9 @@ the <code>zmprov ms</code> command.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>zimbraSpnegoAuthPrincipal</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enter the user logon name set in <code>zimbraSpnegoAuthTargetName</code> and the
-address set in global config <code>zimbraSpnegoAuthRealm</code></p>
-<p class="tableblock">Type as <code>zimbraSpnegoAuthTargetName@zimbraSpnegoAuthRealm</code></p>
-<p class="tableblock">For example, <strong>HTTP/mail1.example.com@COMPANY.COM</strong></p></td>
+address set in global config <code>zimbraSpnegoAuthRealm</code>
+</p><p class="tableblock">Type as <code>zimbraSpnegoAuthTargetName@zimbraSpnegoAuthRealm</code>
+</p><p class="tableblock">For example, <strong>HTTP/mail1.example.com@COMPANY.COM</strong></p></td>
 </tr>
 </tbody>
 </table>
@@ -45071,7 +45577,7 @@ a.m. and at 8:15 p.m.</p>
 <div class="sect2">
 <h3 id="_single_server_crontab_l_example">Single Server Crontab -l Example</h3>
 <div class="exampleblock">
-<div class="title">Example 89. Output of <code>crontab -l</code></div>
+<div class="title">Example 85. Output of <code>crontab -l</code></div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -45523,7 +46029,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-15 13:08:40 CST
+Last updated 2017-12-14 16:38:08 STD
 </div>
 </div>
 </body>
