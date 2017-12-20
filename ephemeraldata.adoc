@@ -26,11 +26,15 @@ The two currently supported Ephemeral Data backends are:
 
 Mail systems with large numbers of active users have been found to overload LDAP as noted in  https://bugzilla.zimbra.com/show_bug.cgi?id=104858[Bugzilla 104858].
 
-== Post {product-name} Install Configuration
+Frequent authentication requests place a high load on Ephemeral Data storage backend. See the following Zimbra wiki pages for results of authentication-based laod tests:
+
+* https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-LDAP-Authentication-Load-Tests[LDAP Authentication load tests]
+* https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-SSDB-Authentication-Load-Tests[SSDB Authentication load tests]
+
+== Configuring a Running {product-name} to Use SSDB
 
 Configuring an already running {product-name} installation
-to utilize `SSDB` instead of `LDAP` for short lived data storage
-through the following process:
+to utilize `SSDB` instead of `LDAP` for short lived data storage is done through the following process:
 
 1. Install `SSDB` and note the ip address and port configured since you will
    need this data for the next steps. Refer to
