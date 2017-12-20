@@ -125,7 +125,7 @@ connections of existing IMAP clients.
 Prior to changing any configuration, it should be decided how existing
 routes in `memcached` will be handled. By default, routes are cached in
 `memcached` for 1 day, as specified by the
-`zimbraMemcachedClientExpirySeconds` LDAP attribute. If untouched, it
+`zimbraReverseProxyCacheEntryTTL` LDAP attribute. If untouched, it
 will take this long for the cached routes to expire and for the lookup
 extension to send IMAP traffic to the newly provisioned imapd
 servers. There are two things that can be done to change this
@@ -135,7 +135,7 @@ behavior:
 complete. This will cause all existing IMAP sessions to be restarted
 on the new servers.
 2. One day prior to switching to the imapd pool, modify the value
-`zimbraMemcachedClientExpirySeconds` of to a shorter interval, such as
+`zimbraReverseProxyCacheEntryTTL` of to a shorter interval, such as
 30 minutes, and reload the `memcached` configuration with the command
 `zmprov rmcc all`. Doing so will allow embedded IMAP to be turned off
 within a shorter timeframe without risking service interruptions.
@@ -162,7 +162,7 @@ zmprov mcf +zimbraReverseProxyUpstreamImapServers <server1> \
 ----
 +
 4. Flush the config cache on lookup servers: `zmprov -a fc config`
-5. If `zimbraMemcachedClientExpirySeconds` was decreased prior to this
+5. If `zimbraReverseProxyCacheEntryTTL` was decreased prior to this
 change, wait the corresponding amount of time for the existing routes
 to expire. This will allow routes in memcached to switch over to the
 new routes. Otherwise, flush memcached manually. It is recommended
@@ -177,7 +177,7 @@ zmprov mcf zimbraImapSSLServerEnabled FALSE
 [NOTE] If these settings were overridden at the at the server level,
 you will need to modify them on the mailbox servers via `zmprov ms <server>..`
 +
-7. Reset `zimbraMemcachedClientExpirySeconds` to the original value if
+7. Reset `zimbraReverseProxyCacheEntryTTL` to the original value if
 necessary.
 
 

@@ -424,7 +424,7 @@ Build from Sources
 
 This section describes the steps to build the Zimbra Drive components. The
 official Zimbra Drive source repository is hosted on
-https://github.com/ZeXtras/ZimbraDrive[GitHub.com/ZeXtras/ZimbraDrive].
+https://github.com/ZeXtras/zimbra-drive[GitHub.com/ZeXtras/zimbra-drive].
 
 The build system uses a relative path. The following example assumes that
 the working path is `/tmp/`, but it can be changed at will.
@@ -591,19 +591,20 @@ information:
 * A detailed description of the issue: What you are expecting and what
 is really happening.
 * A detailed description of the steps to reproduce the issue.
-* A detailed description of the installation and the environment: (see )
+* A detailed description of the installation and the environment: (see
+"Gathering System Information" section of this guide)
 ** Cloud information:
 ** Server information: CPU, RAM, number of servers and for each
 server:
-*** Zimbra version (see )
+*** Zimbra version
 *** Zimbra Drive version
-*** List of the installed Zimlets (see )
+*** List of the installed Zimlets
 ** Client information:
 *** Browser name and version
 *** Connectivity used between the servers and the client
 *** Client skin (theme)
 *** Client language
-*** List of the Zimlets enabled for the user (see )
+*** List of the Zimlets enabled for the user
 * Any log involved in the issue:
 ** `mailbox.log`
 

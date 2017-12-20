@@ -216,10 +216,8 @@ To schedule a daily execution of the `doMoveBlobs` operation:
 
 * Log into the Zimbra Administration Console.
 * Click the `HSM NG` entry in the Administration Zimlet.
-* Enable scheduling by selecting the `Enable Policy Application
-scheduling` button.
-* Select the hour to run the operation under `Policy Application
-scheduled for:`.
+* Enable scheduling by selecting the `Enable HSM Session scheduling:` button.
+* Select the hour to run the operation under `HSM Session scheduled for:`.
 
 [[domoveblobs-stats-and-info]]
 doMoveBlobs Stats and Info
@@ -988,7 +986,7 @@ its content (as BLOBs are named after their file's SHA hash).
 whether the BLOB file's size is coherent with the expected size (stored
 in the DB).
 
-IMPORTANT: The old `zmblobchk` command is deprecated and replaced by `zxsuite hsm doCheckBlobs` on all infrastructures using HSM NG module. 
+IMPORTANT: The old `zmblobchk` command is deprecated and replaced by `zxsuite hsm doCheckBlobs` on all infrastructures using HSM NG module.
 
 [[dodeduplicate]]
 doDeduplicate
@@ -1210,7 +1208,7 @@ like mailbox id.
     ** reindex: Start a mailbox reindex.
     ** delete:  All blobs and db entries are deleted from the source server,
     backup items are also marked as deleted.
-    
+
 * All of the stages are executed sequentially. If a single stage is specified,
 the mailbox is parked in maintenance mode throughout the entire operation. On
 success, the mailbox will be placed into its original state.
