@@ -1553,14 +1553,84 @@ auth tokens generated prior to the backup will no longer work.
 The Jira ticket ZMS-614 has been opened to track the potential future development
 of ephemeral data backups.
 
-=== Backups with SSDB Backend
+=== Ephemeral Storage SSDB Backend
+
+==== Backing up Ephemeral Data in SSDB
 
 If SSDB is used as the ephemeral backend, a backup will not include any ephemeral
-attributes. All authentication data is lost, including the last logon timestamp.
-As a result, the "Last Login" column in Accounts section of the admin console
-will display "Never logged in" for restored accounts. If a specific need for this
-data arises, all authentication events are logged in the audit.log file. Customers
-considering migrating to an SSDB backend should be aware of this limitation.
+attributes.
+
+Note: This section does not detail how to deploy and administer an SSDB server. For that information please see section <<SSDB Configuration Options>>.
+
+Backing up the data stored in SSDB (if so configured) is done as follows:
+
+[source,bash]
+----
+ssdb-dump -h localhost -p 8888 -o /tmp/ephemeral-backup-<date>
+----
+
+Note: If running in master / slave configuration the `ssdb-dump` should be run on the *master*.
+
+===== Example backup
+[source,bash]
+----
+ssdb-dump - SSDB backup command
+Copyright (c) 2012-2015 ssdb.io
+
+recv begin...
+received 1 entry(s)
+received 10 entry(s)
+received 100 entry(s)
+received 1000 entry(s)
+received 10000 entry(s)
+received 100000 entry(s)
+received 200000 entry(s)
+received 300000 entry(s)
+received 400000 entry(s)
+received 400021 entry(s)
+recv end
+
+total dumped 400021 entry(s)
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  2        1        7         0        0         7
+
+compacting data...
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  2        2       10         0        0        10
+
+backup has been made to folder: /tmp/ephemeral-backup-<date>
+----
+
+==== Restoring Ephemeral Data to SSDB
+
+Restoring ephemeral data to SSDB from a backup can only be done with a backup from
+an SSDB server.
+
+A restoration can be done in one of two ways:
+
+ - import into a running server
+ - override of existing data
+
+===== Importing into a running server
+
+Using the `leveldb-import` command provided with the SSDB software a backup created
+with the `ssdb-dump` command can be imported into a running SSDB server.
+
+[source,bash]
+----
+leveldb-import localhost 8888 /tmp/ephemeral-backup-<date>/data
+----
+
+==== Data override
+
+Stop the SSDB server.
+Copy the directory created using the `ssdb-dump` command previously to a known location.
+Update `ssdb.conf` configuration file to update the `work_dir` option to the proper path.
+Start the SSDB server back up and verify previously working logins still work.
 
 === Backups with LDAP backend
 
