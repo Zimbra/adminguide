@@ -913,7 +913,7 @@ table.CodeRay td.code>pre{padding:0}
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-これまでのバージョンからのアップグレード/移行で、Zimbraの新規機能モバイル同期モジュールを有効化を予定している場合、重要な情報である <a href="https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Things_To_Know_Before_Upgrading">"Things to Know Before Upgrading"</a> と <a href="https://zimbra.github.io/installguides/8.8.5/jp/single.html#mobile-ng">インストールガイド</a> を必ず一読するようにしてください。
+これまでのバージョンからのアップグレード/移行で、Zimbraの新規機能であるモバイル同期モジュールの有効化を予定している場合は、重要な情報である <a href="https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Things_To_Know_Before_Upgrading">"Things to Know Before Upgrading"</a> と <a href="https://zimbra.github.io/installguides/8.8.5/jp/single.html#mobile-ng">インストールガイド</a> を必ず一読するようにしてください。
 </td>
 </tr>
 </table>
@@ -2588,7 +2588,7 @@ zimbraServiceEnabled: stats</pre>
 <h4 id="_memcachedに関する留意事項">Memcachedに関する留意事項</h4>
 <div class="paragraph">
 <p>設定を変更するにあたり、まず <code>memcached</code> にある既存の経路をどうするかを決める必要があります。経路は、デフォルトでは
-<code>zimbraMemcachedClientExpirySeconds</code> というLDAP属性にて指定されているとおり、1日分が <code>memcached</code> にキャッシュされます。変更しなければ、これがこのまま、経路がキャッシュされる期間として、そして、lookup extensionが新たにあてたIMAPDサーバーへIMAPトラフィックを送信する間隔として、採用されることになります。変更する場合は、以下の2点を実施します。</p>
+<code>zimbraReverseProxyCacheEntryTTL</code> というLDAP属性にて指定されているとおり、1日分が <code>memcached</code> にキャッシュされます。変更しなければ、これがこのまま、経路がキャッシュされる期間として、そして、lookup extensionが新たにあてたIMAPDサーバーへIMAPトラフィックを送信する間隔として、採用されることになります。変更する場合は、以下の2点を実施します。</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -2596,7 +2596,7 @@ zimbraServiceEnabled: stats</pre>
 <p>IMAPDの一通りの設定が完了した後、 <code>memcached</code> をフラッシュします。これにより、新しいサーバープールで既存のIMAPセッションをすべて再開させることになります。</p>
 </li>
 <li>
-<p>IMAPDへ移行する1日前に、 <code>zimbraMemcachedClientExpirySeconds</code> の値を30分など比較的短い間隔に修正します。その後、コマンド <code>zmprov rmcc all</code> にて <code>memcached</code> 設定をリロードします。これにより、サービスを中断させるリスクを冒すことなく、短いタイムフレーム内で組み込み型IMAPサービスを停止させることができます。</p>
+<p>IMAPDへ移行する1日前に、 <code>zimbraReverseProxyCacheEntryTTL</code> の値を30分など比較的短い間隔に修正します。</p>
 </li>
 </ol>
 </div>
@@ -2629,7 +2629,7 @@ zimbraServiceEnabled: stats</pre>
 <code>zmprov -a fc config</code></p>
 </li>
 <li>
-<p>この変更作業の前に、 <code>zimbraMemcachedClientExpirySeconds</code> の値を短い間隔に修正していた場合、現経路のキャッシュが削除される期間が過ぎるまで待機してください。経過を待つことで、 memcached内の経路が新経路にスイッチできるようになります。もし待てない場合は、手動でmemcachedをフラッシュしてください。可能であればこの作業はピーク時間外に実施することをお勧めします。</p>
+<p>この変更作業の前に、 <code>zimbraReverseProxyCacheEntryTTL</code> の値を短い間隔に修正していた場合、現経路のキャッシュが削除される期間が過ぎるまで待機してください。経過を待つことで、 memcached内の経路が新経路にスイッチできるようになります。もし待てない場合は、手動でmemcachedをフラッシュしてください。可能であればこの作業はピーク時間外に実施することをお勧めします。</p>
 </li>
 <li>
 <p>グローバル設定レベルにて、 <code>zimbraImapServerEnabled</code> と <code>zimbraImapSSLServerEnabled</code> を
@@ -2645,7 +2645,7 @@ zmprov mcf zimbraImapSSLServerEnabled FALSE</pre>
 </div>
 </li>
 <li>
-<p>必要に応じて、 <code>zimbraMemcachedClientExpirySeconds</code> を元の値にリセットします。</p>
+<p>必要に応じて、 <code>zimbraReverseProxyCacheEntryTTL</code> を元の値にリセットします。</p>
 </li>
 </ol>
 </div>
@@ -6093,7 +6093,7 @@ Collaboratorにより監視されたサーバー、各サーバーのサービ�
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">モバイルシンク統</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">モバイルシンク統計</p></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>モバイルシンク統計のためのシステム全体の情報ページ。サーバーで実行されたActive Syncデバイスの合計数をレポートします。</p>
 </div></div></td>
@@ -25664,7 +25664,7 @@ JohnのAppl79032X2WA4Sというデバイスの SyncStateをリセットします
 <p>同期させたい共有フォルダを右クリックします。</p>
 </li>
 <li>
-<p>older Sync Settings をドロップダウンメニューから選択します。</p>
+<p>Folder Sync Settings をドロップダウンメニューから選択します。</p>
 </li>
 <li>
 <p>Enable synchronization for this folder チェックボックスをオンにします。</p>
@@ -28498,7 +28498,7 @@ domain(M)    String
 </ul>
 </div>
 <div class="paragraph">
-<p><code>View</code> ボタンをクリックすると、選択したフィルタの結果がログブラウザに表示されます。</p>
+<p><code>詳細</code> ボタンをクリックすると、選択したフィルタの結果がログブラウザに表示されます。</p>
 </div>
 </div>
 <div class="sect3">
