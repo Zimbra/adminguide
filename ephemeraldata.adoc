@@ -26,7 +26,7 @@ The two currently supported Ephemeral Data backends are:
 
 Mail systems with large numbers of active users have been found to overload LDAP as noted in  https://bugzilla.zimbra.com/show_bug.cgi?id=104858[Bugzilla 104858].
 
-Frequent authentication requests place a high load on Ephemeral Data storage backend. See the following Zimbra wiki pages for results of authentication-based laod tests:
+Frequent authentication requests place a high load on Ephemeral Data storage backend. See the following Zimbra wiki pages for results of authentication-based load tests:
 
 * https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-LDAP-Authentication-Load-Tests[LDAP Authentication load tests]
 * https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-SSDB-Authentication-Load-Tests[SSDB Authentication load tests]
