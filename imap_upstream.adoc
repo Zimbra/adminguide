@@ -134,11 +134,9 @@ behavior:
 1. Flush `memcached` after the imapd pool configuration is
 complete. This will cause all existing IMAP sessions to be restarted
 on the new servers.
-2. One day prior to switching to the imapd pool, modify the value
-`zimbraReverseProxyCacheEntryTTL` of to a shorter interval, such as
-30 minutes, and reload the `memcached` configuration with the command
-`zmprov rmcc all`. Doing so will allow embedded IMAP to be turned off
-within a shorter timeframe without risking service interruptions.
+2. One day prior to switching to the imapd pool, modify the value of
+`zimbraReverseProxyCacheEntryTTL` to a shorter interval, such as
+30 minutes.
 
 == Migration steps
 
