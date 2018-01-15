@@ -56,14 +56,13 @@ the new service.
 * This maintains the list of available IMAP(S) servers:
 ** `zimbraReverseProxyUpstreamImapServers`
 
-== Server Configuration Settions
+== Server Configuration Settings
 
 If the `zimbra-imapd` service is enabled on a given server, it will be added to
 the multi-valued attribute `zimbraServiceEnabled`.
 
 For example, on an IMAP-only server:
 
-[EXAMPLE]
 ----
 $ zmprov gs `zmhostname` zimbraServiceEnabled
 # name HOST.DOMAIN
