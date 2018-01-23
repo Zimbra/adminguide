@@ -581,7 +581,7 @@ system logs through the syslog daemon as well as Zimbra specific logs on
 the local file system.  The logs described below are the primary logs that
 are used for analysis and troubleshooting.
 
-Local logs containing Zimbra activity are in the `/opt/zimbra/log`
+Local logs containing {product-name} activity are in the `/opt/zimbra/log`
 directory.
 
 * *audit.log* -- This log contains authentication activity of users
@@ -630,7 +630,7 @@ to `zimbra.log`.
 
 === Syslog
 
-Zimbra modifies the systems syslog daemon to capture data from the mail and
+{product-name} modifies the systems syslog daemon to capture data from the mail and
 local syslog facility to `/var/log/zimbra.log`.  This allows syslogd to
 capture data from several {product-name} components including
 Postfix, Amavis, ClamAV, mailboxd, zmconfigd, and logger.  The SNMP module
@@ -788,7 +788,7 @@ This pattern consists of 6 blocks of data:
 * Date and time (e.g.: `2018-01-22 19:23:07,100`)
 * Log level (e.g. `INFO`)
 * Thread number with a prefix (e.g. `[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`, `[Index-9]`, etc)
-* Zimbra context
+* {product-name} context
 * Component name (e.g. `soap`, `mailbox`, `mbxmgr`, etc)
 * Log message
 
@@ -798,9 +798,9 @@ You can read more about Log4j patterns in https://logging.apache.org/log4j/1.2/a
 
 Thread numbers in mailbox.log are prefixed to identify internal components. The following prefixes are currently used in {product-name}: `btpool`, `pool`, `LmtpServer`, `ImapServer`,`ImapSSLServer`, `Pop3Server`, `Pop3SSLServer`, `ScheduledTask`, `Timer`, `AnonymousIoService`, `CloudRoutingReaderThread`, `GC`, `SocketAcceptor`, `Thread`, `qtp`.
 
-*Zimbra Context in mailbox.log*
+*{product-name} Context in mailbox.log*
 
-`[%z]` section in the log pattern describes Zimbra context and consists of key-value pairs in the format `key=value`, separated by semi-colons (`;`). The following key value pairs are currently supported and may be recorded in log entries in any order and eny combination:
+`[%z]` section in the log pattern describes {product-name} context and consists of key-value pairs in the format `key=value`, separated by semi-colons (`;`). The following key value pairs are currently supported and may be recorded in log entries in any order and eny combination:
 
 * `ip` - IP of the TCP/IP client making a request
 * `oip` - originating IP address. When a request is made through NGINX proxy, this value will contain the IP address of the client application, while `ip` value will contain the IP address of the proxy server
@@ -814,13 +814,13 @@ Thread numbers in mailbox.log are prefixed to identify internal components. The 
 * `via` - list of IP addresses and user-agents of the request's proxy chain
 * `soapId` - ID assigned to a SOAP request to track proxied hops for a particular request
 * `msgid` - value of Message-ID header of the message being operated on
-*  `ds` - name of the Data Source being operated on
+* `ds` - name of the Data Source being operated on
 * `port` - server port to which the client connected
 * `oport` - originating port number of request
 * `oproto` - originating protocol of request. This can be passed by internal components that make SOAP requests on behalf of a user (e.g. MTA and IMAPd)
 
 The example below is a record showing that
-on October 25, 2007, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP 10.1.1.136.
+on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP 10.1.1.136.
 
 image:images/poplogmessage.png[Mailbox Log Entry for POP]
 
