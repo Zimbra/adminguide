@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.6">
-<title>Zimbra Collaboration Administrator Guide version 8.8.5</title>
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>Zimbra Collaboration Administrator Guide version 8.8.6</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -519,7 +519,7 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Zimbra Collaboration Administrator Guide version 8.8.5</h1>
+<h1>Zimbra Collaboration Administrator Guide version 8.8.6</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -565,8 +565,10 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_mailbox_server_logs">Mailbox Server Logs</a></li>
 </ul>
 </li>
-<li><a href="#_zimbra_imapd_server">Zimbra IMAPD Server</a>
+<li><a href="#_imap">IMAP</a>
 <ul class="sectlevel2">
+<li><a href="#_common_imap_configuration_settings">Common IMAP Configuration settings</a></li>
+<li><a href="#_zimbra_imapd_server">Zimbra IMAPD Server</a></li>
 <li><a href="#_zimbra_upstream_imap_configuration">Zimbra Upstream IMAP Configuration</a></li>
 <li><a href="#_imapd_related_configuration_files">IMAPD-related Configuration &amp; Files</a></li>
 <li><a href="#_migrating_to_an_imapd_pool">Migrating to an imapd pool</a></li>
@@ -633,18 +635,20 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#_ephemeral_data">Ephemeral Data</a>
 <ul class="sectlevel2">
-<li><a href="#_post_zimbra_collaboration_install_configuration">Post Zimbra Collaboration Install Configuration</a></li>
+<li><a href="#_configuring_a_running_zimbra_collaboration_to_use_ssdb">Configuring a Running Zimbra Collaboration to Use SSDB</a></li>
 <li><a href="#_migration_procedure">Migration Procedure</a></li>
 <li><a href="#_migration_details">Migration Details</a></li>
 </ul>
 </li>
-<li><a href="#_ssdb_configuration_options">SSDB Configuration Options</a>
+<li><a href="#_ssdb_installation_and_configuration">SSDB Installation and Configuration</a>
 <ul class="sectlevel2">
-<li><a href="#_overview">Overview</a></li>
+<li><a href="#_installation">Installation</a></li>
+<li><a href="#_overview_of_configuration_options">Overview of Configuration Options</a></li>
 <li><a href="#_master_slave_replication">Master-Slave Replication</a></li>
 <li><a href="#_master_master_replication">Master-Master Replication</a></li>
 <li><a href="#_multi_master_scaling_replication">Multi-Master Scaling / Replication</a></li>
 <li><a href="#_ldap_attributes">LDAP Attributes</a></li>
+<li><a href="#_scaling_ssdb_for_production_load_with_zimbra_collaboration">Scaling SSDB for Production Load with Zimbra Collaboration</a></li>
 <li><a href="#_conclusion">Conclusion</a></li>
 </ul>
 </li>
@@ -729,7 +733,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_backup_and_restore_using_the_command_line_interface">Backup and Restore Using the Command Line Interface</a></li>
 <li><a href="#_backing_up_using_the_standard_method">Backing up using the Standard Method</a></li>
 <li><a href="#_aborting_a_full_backup_in_progress">Aborting a Full Backup in Progress</a></li>
-<li><a href="#_back_up_using_the_auto_grouped_method">Back up using the Auto-Grouped Method</a></li>
+<li><a href="#_backup_using_the_auto_grouped_method">Backup using the Auto-Grouped Method</a></li>
 <li><a href="#_backup_options">Backup Options</a></li>
 <li><a href="#_managing_disk_space_for_backups">Managing Disk Space for Backups</a></li>
 <li><a href="#_restoring_data">Restoring Data</a></li>
@@ -859,7 +863,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_zimbra_chat">Zimbra Chat</a>
 <ul class="sectlevel2">
 <li><a href="#about-this-document">About this document</a></li>
-<li><a href="#_overview_6">Overview</a></li>
+<li><a href="#_overview_5">Overview</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#upgrade">Upgrade</a></li>
 <li><a href="#troubleshooting">Troubleshooting</a></li>
@@ -872,8 +876,8 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_zimbra_drive">Zimbra Drive</a>
 <ul class="sectlevel2">
 <li><a href="#_about_this_document">About this Document</a></li>
-<li><a href="#_overview_7">Overview</a></li>
-<li><a href="#_installation">Installation</a></li>
+<li><a href="#_overview_6">Overview</a></li>
+<li><a href="#_installation_2">Installation</a></li>
 <li><a href="#_upgrade">Upgrade</a></li>
 <li><a href="#uninstallation">Uninstallation</a></li>
 <li><a href="#advanced">Advanced Topics</a></li>
@@ -934,7 +938,7 @@ If you are upgrading/migrating from a pervious version of Zimbra and plan to ena
 <p><span class="image"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="CC BY-SA"></span> Synacor, Inc., 2017</p>
 </div>
 <div class="paragraph">
-<p>&#169; 2017 by Synacor, Inc. Zimbra Collaboration Administrator Guide version 8.8.5</p>
+<p>&#169; 2017 by Synacor, Inc. Zimbra Collaboration Administrator Guide version 8.8.6</p>
 </div>
 <div class="paragraph">
 <p>This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
@@ -2620,12 +2624,69 @@ of those disks fails.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_zimbra_imapd_server">Zimbra IMAPD Server</h2>
+<h2 id="_imap">IMAP</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>Zimbra Collaboration has two IMAP servers: in-process IMAP server and standalone zimbra-imapd (Zimbra IMAPD Server). The built-in IMAP server is installed by default and is part of zimbra-mailboxd process (<a href="#mailboxserver.adoc">Zimbra Mailbox Server</a>). We recommend using in-process IMAP server for small deployments with light IMAP traffic.</p>
+</div>
+<div class="sect2">
+<h3 id="_common_imap_configuration_settings">Common IMAP Configuration settings</h3>
+<div class="paragraph">
+<p>The following global and server level configuration attributes are available to control and tune IMAP service.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>zimbraImapServerEnabled</strong>. When set to TRUE, in-process IMAP server is enabled. When set to FALSE, in-process IMAP server is disabled. Default value is TRUE.</p>
+</li>
+<li>
+<p><strong>zimbraImapSSLServerEnabled</strong>. When set to TRUE, in-process IMAP SSL server is enabled. When set to FALSE, in-process IMAP SSL server is disabled. Default value is TRUE</p>
+</li>
+<li>
+<p><strong>zimbraImapBindAddress</strong> (can be set only on server level). Specifies interface address on which in-process IMAP server should listen; if empty, binds to all interfaces.</p>
+</li>
+<li>
+<p><strong>zimbraImapBindPort</strong>. Specifies port number on which in-process IMAP server should listen. Default value is 7143.</p>
+</li>
+<li>
+<p><strong>zimbraImapSSLBindAddress</strong> (can be set only on server level). Specifies interface address on which in-process IMAP SSL server should listen; if empty, binds to all interfaces.</p>
+</li>
+<li>
+<p><strong>zimbraImapSSLBindPort</strong>. Specifies port number on which in-process IMAP SSL server should listen on. Defaut value is 7993.</p>
+</li>
+<li>
+<p><strong>zimbraImapNumThreads</strong>. Specifies number of threads in IMAP handler&#8217;s thread pool. This setting applies to in-process IMAP server as well as zimbra-imapd. Zimbra Collaboration uses IMAP NIO by default, which allows each IMAP handler thread to handle multiple connections. The default value of 200 is sufficient to handle up to 10,000 active IMAP clients.</p>
+</li>
+<li>
+<p><strong>zimbraImapCleartextLoginEnabled</strong>. Specifies whether or not to allow cleartext logins over a non SSL/TLS connection. Default value is FALSE.</p>
+</li>
+<li>
+<p><strong>zimbraImapProxyBindPort</strong>. Specifies port number on which IMAP proxy server should listen. Default value is 143. See <a href="#proxy.adoc">Zimbra Proxy Components</a> for more information.</p>
+</li>
+<li>
+<p><strong>zimbraImapSSLProxyBindPort</strong>. Specifies port number on which IMAP SSL proxy server should listen. Default value is 993. See <a href="#proxy.adoc">Zimbra Proxy Components</a> for more information.</p>
+</li>
+<li>
+<p><strong>zimbraImapMaxRequestSize</strong>. Specifies maximum size of IMAP request in bytes excluding literal data. <strong>Note:</strong> this setting does not apply to IMAP LOGIN requests. IMAP LOGIN requests are handled by IMAP Proxy (<a href="#proxy.adoc">Zimbra Proxy Components</a>) and are limited to 256 characters.</p>
+</li>
+<li>
+<p><strong>zimbraImapInactiveSessionCacheMaxDiskSize</strong>. Specifies the maximum disk size of inactive IMAP cache in Bytes before eviction. By default this value is 10GB. This is a rough limit, because due to internals of Ehcache actual size on disk will often exceed this limit by a modest margin.</p>
+</li>
+<li>
+<p><strong>zimbraImapInactiveSessionEhcacheSize</strong>. Specifies the maximum heap size of the inactive session cache in Bytes before eviction. By default this value is 1 megabyte. This is a rough limit, because due to internals of Ehcache actual size in memory will often exceed this limit by a modest margin.</p>
+</li>
+<li>
+<p><strong>zimbraImapActiveSessionEhcacheMaxDiskSize</strong>. Specifies the maximum amount of disk space the imap active session cache will consume in Bytes before eviction. By default this value is 100 gigabytes. This is a rough limit, because due to internals of ehcache actual size in memory will often exceed this limit by a modest margin.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_zimbra_imapd_server">Zimbra IMAPD Server</h3>
+<div class="paragraph">
 <p>The Zimbra IMAPD server is an optionally installed dedicated server that handles IMAP(S) traffic.
-It can be installed on the same node as a <strong>mailbox server</strong> or on a separate node.
-When installed on the same node as a <strong>mailbox server</strong> the mailbox&#8217;s internal IMAPD process may be disabled.  By default it is left enabled.</p>
+ It can be installed on the same node as a <strong>mailbox server</strong> or on a separate node.
+ When installed on the same node as a <strong>mailbox server</strong> the mailbox&#8217;s in-process IMAP server may be disabled.  By default it is left enabled.</p>
 </div>
 <div class="paragraph">
 <p>In installations which have very heavy IMAP usage it is the recommended practice to install IMAPD on separate nodes from the <strong>mailbox</strong> processes to allow for horizontal scaling of IMAPD resources independently from the mailbox nodes.</p>
@@ -2638,11 +2699,11 @@ When installed on the same node as a <strong>mailbox server</strong> the mailbox
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd it MUST BE added to the '''zimbraHttpThrottleSafeIPs''' configuration item or the DosFilter will
-throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.</p>
+<p>Whenever a new IMAPD node is installed in a ZCS cluster that is not a mailboxd it MUST BE added to the <strong>zimbraHttpThrottleSafeIPs</strong> configuration item or the DosFilter will
+ throttle the new server.  Failure to do so will cause SOAP traffic from the Remote IMAPD node to be throttled leading to unexpected communication errors.</p>
 </div>
 <div class="paragraph">
-<p>Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the '''zimbraHttpThrottleSafeIPs''' configuration item.</p>
+<p>Alternatively the DoSFilter can be effectively disabled by adding the ip address subnet that the new machine lives on to the <strong>zimbraHttpThrottleSafeIPs</strong> configuration item.</p>
 </div>
 </td>
 </tr>
@@ -2655,7 +2716,7 @@ throttle the new server.  Failure to do so will cause SOAP traffic from the Remo
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-When an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in '''zimbraReverseProxyAvailableLookupTargets'''. This is necessary to ensure that the new node is added to '''zimbraReverseProxyUpstreamImapServers''' attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command <code>zmprov flushCache -a config</code>. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of <code>zmprov gacf zimbraReverseProxyUpstreamImapServers</code>, when run from a lookup target server.
+When an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must be flushed on all ZCS servers listed in <strong>zimbraReverseProxyAvailableLookupTargets</strong>. This is necessary to ensure that the new node is added to <strong>zimbraReverseProxyUpstreamImapServers</strong> attribute; without this step, the lookup extension on these servers will not be aware of the newly-provisioned IMAP node. To do this, run the command <code>zmprov flushCache -a config</code>. To verify that this has taken effect, make sure that the new IMAPD node is listed in the output of <code>zmprov gacf zimbraReverseProxyUpstreamImapServers</code>, when run from a lookup target server.
 </td>
 </tr>
 </table>
@@ -2668,7 +2729,7 @@ When an IMAPD node is added to a ZCS cluster, the globalconfig LDAP cache must b
 </td>
 <td class="content">
 Do NOT configure a load balancer between the Zimbra HTTP Proxy node and any remote IMAPD servers as this will interfere
-with correct operation.
+ with correct operation.
 </td>
 </tr>
 </table>
@@ -2681,12 +2742,13 @@ with correct operation.
 </td>
 <td class="content">
 The zmlocalconfig setting <strong>nio_imap_enabled</strong> MUST have value <strong>true</strong> when using the Zimbra IMAPD server.  The legacy
-Imap server which does not use NIO is not supported.
+ Imap server which does not use NIO is not supported.
 </td>
 </tr>
 </table>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 <div class="sect2">
 <h3 id="_zimbra_upstream_imap_configuration">Zimbra Upstream IMAP Configuration</h3>
 <div class="paragraph">
@@ -2827,7 +2889,7 @@ the new service.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_server_configuration_settions">Server Configuration Settions</h4>
+<h4 id="_server_configuration_settings">Server Configuration Settings</h4>
 <div class="paragraph">
 <p>If the <code>zimbra-imapd</code> service is enabled on a given server, it will be added to
 the multi-valued attribute <code>zimbraServiceEnabled</code>.</p>
@@ -5628,7 +5690,7 @@ using the Zimbra Mailbox Ports.</p>
 passed in by the client.</p>
 </div>
 <div class="paragraph">
-<p>This is <em>enabled by default</em> on new installations but left <em>disabled for upgrades</em> from previous
+<p>This is <em>enabled by default</em> on <strong>new installations</strong> but left <em>disabled</em> for <strong>upgrades</strong> from previous
 versions unless toggled during the installation.</p>
 </div>
 <div class="paragraph">
@@ -5651,7 +5713,7 @@ option followed by restarting the proxy server.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When the strict server name functionality is enabled additional valid server names may be specified
+<p>When the strict server name functionality is enabled, additional valid server names may be specified
 using the <code>zimbraVirtualHostName</code> and <code>zimbraVirtualIPAddress</code> configuration items at the domain level.</p>
 </div>
 <div class="listingblock">
@@ -12382,19 +12444,31 @@ Starting with version 8.8.0 the ability to save these types of ephemeral data us
 <div class="paragraph">
 <p>Mail systems with large numbers of active users have been found to overload LDAP as noted in  <a href="https://bugzilla.zimbra.com/show_bug.cgi?id=104858">Bugzilla 104858</a>.</p>
 </div>
+<div class="paragraph">
+<p>Frequent authentication requests place a high load on Ephemeral Data storage backend. See the following Zimbra wiki pages for results of authentication-based load tests:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-LDAP-Authentication-Load-Tests">LDAP Authentication load tests</a></p>
+</li>
+<li>
+<p><a href="https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-SSDB-Authentication-Load-Tests">SSDB Authentication load tests</a></p>
+</li>
+</ul>
+</div>
 <div class="sect2">
-<h3 id="_post_zimbra_collaboration_install_configuration">Post Zimbra Collaboration Install Configuration</h3>
+<h3 id="_configuring_a_running_zimbra_collaboration_to_use_ssdb">Configuring a Running Zimbra Collaboration to Use SSDB</h3>
 <div class="paragraph">
 <p>Configuring an already running Zimbra Collaboration installation
-to utilize <code>SSDB</code> instead of <code>LDAP</code> for short lived data storage
-through the following process:</p>
+to utilize <code>SSDB</code> instead of <code>LDAP</code> for short lived data storage is done through the following process:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p>Install <code>SSDB</code> and note the ip address and port configured since you will
 need this data for the next steps. Refer to
-<a href="#_ssdb_configuration_options">SSDB Configuration Options</a> for more information.</p>
+<a href="#_ssdb_configuration_options">[_ssdb_configuration_options]</a> for more information.</p>
 </li>
 <li>
 <p>Migrate any existing short-lived data to <code>SSDB</code> using the <code>/opt/zimbra/bin/zmmigrateattrs</code> command.</p>
@@ -12599,8 +12673,16 @@ in LDAP is wiped immediately as part of the account deletion process.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ssdb_configuration_options">SSDB Configuration Options</h2>
+<h2 id="_ssdb_installation_and_configuration">SSDB Installation and Configuration</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_installation">Installation</h3>
+<div class="paragraph">
+<p>Zimbra Collaboration packages do not include SSDB server and Zimbra Collaboration installation and configuration utilities do not alter SSDB configuration. To install the latest version of SSDB, follow instructions provided by SSDB developer community in <a href="http://ssdb.io/docs/install.html">SSDB Installation Documentation</a>. Please note, that Zimbra Collaboration has been tested with SSDB version 1.9.5. In order to install SSDB 1.9.5, download  <a href="https://github.com/ideawu/ssdb/tree/stable-1.9.5">stable-1.9.5.zip</a> instead of <a href="https://github.com/ideawu/ssdb/archive/master.zip">master.zip</a> when following <a href="http://ssdb.io/docs/install.html">SSDB installation instructions</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_overview_of_configuration_options">Overview of Configuration Options</h3>
 <div class="paragraph">
 <p>The purpose of this guide is to discuss some of the options available
 with <code>SSDB</code>, specifically with regards to:</p>
@@ -12631,8 +12713,6 @@ Zimbra Collaboration currently uses a <code>Redis</code>-compatible client for
 communication with <code>SSDB</code>, so many of the concepts described herein
 are applicable with a <code>Redis</code> backend.</p>
 </div>
-<div class="sect2">
-<h3 id="_overview">Overview</h3>
 <div class="sect3">
 <h4 id="_high_availability_with_master_slave_replication">High-availability with Master-Slave replication</h4>
 <div class="sect4">
@@ -12701,7 +12781,7 @@ the primary instance goes down.  This document will describe one
 technique for accomplishing that goal.</p>
 </div>
 <div class="sect3">
-<h4 id="_overview_2">Overview</h4>
+<h4 id="_overview">Overview</h4>
 <div class="paragraph">
 <p><code>SSDB</code> will be installed on two servers.  It will be configured such
 that one server is the designated master and the other server is the
@@ -13120,7 +13200,7 @@ the master.</p>
 <div class="sect2">
 <h3 id="_master_master_replication">Master-Master Replication</h3>
 <div class="sect3">
-<h4 id="_overview_3">Overview</h4>
+<h4 id="_overview_2">Overview</h4>
 <div class="paragraph">
 <p>Another way to ensure that <code>SSDB</code> remains highly-available is to set-up
 master-master replication and configure a proxy that understands
@@ -13286,7 +13366,7 @@ backend bk_redis
 <div class="sect2">
 <h3 id="_multi_master_scaling_replication">Multi-Master Scaling / Replication</h3>
 <div class="sect3">
-<h4 id="_overview_4">Overview</h4>
+<h4 id="_overview_3">Overview</h4>
 <div class="paragraph">
 <p>The details of multi-master configuration will not be covered in this
 document.  In essence, you will install and configure multiple
@@ -13333,6 +13413,18 @@ Otherwise, a lost <code>SSDB</code> connection may cause mailboxd threads to rem
 blocked indefinitely, even after the connection is re-established.
 In general, the resource pool should be sized such that the mailbox server
 is not starved for resources.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_scaling_ssdb_for_production_load_with_zimbra_collaboration">Scaling SSDB for Production Load with Zimbra Collaboration</h3>
+<div class="paragraph">
+<p>The main characteristics of Zimbra Collaboration production load that affects load on SSDB server are the frequency of authentication requests and frequency of SOAP requests sent by Zimbra Collaboration Web Client and 3rd party SOAP clients. Each authentication request results in a 2 or 3 write operations for SSDB. The write operations update zimbraLastLogonTimestamp, zimbraAuthTokens and zimbraCsrfTokenData values. Note, that zimbraCsrfTokenData is updated only when using a CSRF-enabled SOAP client such as Zimbra Collaboration Web Client. Each authenticated SOAP request results in 2 read operations for SSDB.</p>
+</div>
+<div class="sect3">
+<h4 id="_minimum_recommended_ssdb_configuration">Minimum Recommended SSDB Configuration</h4>
+<div class="paragraph">
+<p>We recommend that your SSDB server has at least 2GB RAM and 1 CPU. If you plan on running additional tools, such as monitoring and configuration management on your SSDB server, consider increasing memory and adding one more CPU core to accommodate additional software. Check out <a href="https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-SSDB-Authentication-Load-Tests">Zimbra and SSDB Authentication Load Tests</a> for more information.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -13744,7 +13836,7 @@ and when passwords expire, users are sent to this page.</p>
 </div>
 <div class="sect3">
 <h4 id="_configuring_a_password_policy">Configuring a Password Policy</h4>
-<div class="paragraph">
+<div id="passwordpolicy" class="paragraph">
 <p>If internal authentication is configured for the domain, you can require
 users to create strong passwords to guard against simple password
 harvest attacks. Users can be locked out of their accounts if they fail
@@ -16068,7 +16160,7 @@ CLI.  This section describes the supported CLI attributes and auto
 provisioning methods.</p>
 </div>
 <div class="sect3">
-<h4 id="_overview_5">Overview</h4>
+<h4 id="_overview_4">Overview</h4>
 <div class="paragraph">
 <p>When an external LDAP authentication mechanism - such as external LDAP
 authentication, preauth, or SPNEGO - is configured for a ZCS domain, you
@@ -19657,13 +19749,11 @@ with <code>iostat -x</code>).</p>
 <h3 id="_configuring_denial_of_service_filter_parameters">Configuring Denial of Service Filter Parameters</h3>
 <div class="paragraph">
 <p>The denial-of-service filter (DoSFilter) limits exposure to requests
-flooding.  The DoSFilter throttles clients sending a large number of
+flooding over HTTP/HTTPS.  The DoSFilter throttles clients sending a large number of
 requests over a short period of time.</p>
 </div>
 <div class="paragraph">
-<p>The DoSFilter is enabled by default on ZCS and is applied to all requests.
-You can modify the configuration to accommodate your specific environmental
-needs.  Disabling the DoSFilter is not recommended.</p>
+<p>DosFilter is only applied to HTTP and HTTPS requests, in other words, it does not affect requests for any other protocols like POP3, IMAP or SMTP. You can modify the configuration to accommodate your specific environmental needs. DoSFilter is enabled by default on ZCS. Disabling the DoSFilter is not recommended. For information on preventing multiple failed login attempts see <a href="#passwordpolicy">Password Policy</a></p>
 </div>
 <div class="sect3">
 <h4 id="_identifying_false_positives">Identifying False Positives</h4>
@@ -21617,7 +21707,7 @@ restore the LDAP server.</p>
 incremental backups, and deletion of old backups.</p>
 </li>
 <li>
-<p><code>zmbackup</code>&#8201;&#8212;&#8201;This command executes full or incremental backup of the mail
+<p><code>zmbackup</code>&#8201;&#8212;&#8201;This command executes full or incremental backup of the Zimbra Collaboration mailbox
 server. This is run on a live server, while the mailboxd process and the
 mailbox server are running. This command also has an option to manually
 delete old backups when they are no longer needed.</p>
@@ -21633,13 +21723,10 @@ delete old backups when they are no longer needed.</p>
 completed backups, including labels and dates.</p>
 </li>
 <li>
-<p><code>zmrestore</code>&#8201;&#8212;&#8201;This command executes a full or incremental restore to the
-Zimbra mail server. The <strong>zmrestore</strong> command is performed on a server
-that is running.</p>
+<p><code>zmrestore</code>&#8201;&#8212;&#8201;This command restores a backup to a running Zimbra Collaboration mailbox server.</p>
 </li>
 <li>
-<p><code>zmrestoreoffline</code>&#8201;&#8212;&#8201;This command restores the Zimbra mail server when
-the mailboxd process is stopped.</p>
+<p><code>zmrestoreoffline</code>&#8201;&#8212;&#8201;This command restores the Zimbra Collaboration mail server when the mailboxd process is stopped.</p>
 </li>
 <li>
 <p><code>zmrestoreldap</code>&#8201;&#8212;&#8201;This command restores the complete LDAP directory
@@ -21995,7 +22082,7 @@ specified.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Perform a manual back up all mailboxes on server&lt;1&gt;:</p>
+<p>Perform a manual backup of all mailboxes on server&lt;1&gt;:</p>
 </li>
 </ul>
 </div>
@@ -22190,7 +22277,7 @@ zmbackupabort -s server1 -lb full-20070712.155951.123</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_back_up_using_the_auto_grouped_method">Back up using the Auto-Grouped Method</h3>
+<h3 id="_backup_using_the_auto_grouped_method">Backup using the Auto-Grouped Method</h3>
 <div class="paragraph">
 <p>The auto-grouped backup method is configured either from the
 Administration Console or from the CLI.</p>
@@ -22311,7 +22398,7 @@ failure.</p>
 <div class="sect2">
 <h3 id="_backup_options">Backup Options</h3>
 <div class="paragraph">
-<p>The backup process can be configured to selectively back up content and
+<p>The backup process can be configured to selectively backup content and
 to backup the MariaDB database.</p>
 </div>
 <div class="sect3">
@@ -22344,7 +22431,7 @@ volumes.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_back_up_the_mariadb_database">Back Up the MariaDB Database</h4>
+<h4 id="_backup_the_mariadb_database">Backup the MariaDB Database</h4>
 <div class="paragraph">
 <p>You can configure Zimbra Collaboration backups to run mysqldump to
 backup your MariaDB database during backup sessions. When this is enabled,
@@ -22477,18 +22564,19 @@ value.</p>
 <div class="paragraph">
 <p>Three types of restore procedures can be run:</p>
 </div>
-<div class="paragraph">
-<p>The <code>zmrestore</code> command is used to restore the mailboxes while the
-Zimbra Collaboration mailbox server is running.</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>zmrestoreoffline</code>&#8201;&#8212;&#8201;to restore the mail server when the mail server is
-down. This command is run for disaster recovery.</p>
+<p>The <code>zmrestore</code> command is used to restore the mailboxes while the
+Zimbra Collaboration mailbox server is running.</p>
 </li>
 <li>
-<p><code>zmrestoreldap</code>&#8201;&#8212;&#8201;to restore the content of the LDAP directory server.</p>
+<p>The <code>zmrestoreoffline</code> command is used to restore the mailbox server when
+just the mailboxd process it is stopped. This command is run for disaster recovery.</p>
+</li>
+<li>
+<p>The <code>zmrestoreldap</code> command is used to restore the content of the
+LDAP directory server.</p>
 </li>
 </ul>
 </div>
@@ -23086,7 +23174,7 @@ consistent state.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_restore_the_zimbra_collaboration">Restore the Zimbra Collaboration</h4>
+<h4 id="_restore_the_zimbra_collaboration_server">Restore the Zimbra Collaboration Server</h4>
 <div class="paragraph">
 <p>If a complete machine failure occurs, use the following steps to restore
 to a new server.</p>
@@ -23138,8 +23226,7 @@ Zimbra Collaboration.</p>
 <p>Run <code>zmrestoreldap</code> to restore the global LDAP data.</p>
 </li>
 <li>
-<p>Run <code>zmrestoreoffline</code> to restore account data from the backup
-sessions.</p>
+<p>Run <code>zmrestoreoffline</code> to restore account data from the backup sessions.</p>
 </li>
 <li>
 <p>Prepare and run a new backup.</p>
@@ -23342,10 +23429,47 @@ To find the LDAP session label to restore, type <code>zmrestoreldap –lbs</code
 </div>
 </li>
 <li>
+<p>Ensure that the following services are running before attempting to execute <code>zmrestoreoffline</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mysqld (MariaDB)</p>
+</li>
+<li>
+<p>slapd (OpenLDAP)</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zmcontrol start</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Ensure that the following services are stopped before attempting to execute <code>zmrestoreoffline</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mailboxd</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zmmailboxdctl stop</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
 <p>Because some Zimbra Collaboration services are running at this
 point, type <code>zmconvertctl start</code>. This is required before running
 <code>zmrestoreoffline</code>.</p>
-</li>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Sync your LDAP password from backup directory to the new production
 servers LDAP config.</p>
@@ -23356,10 +23480,11 @@ servers LDAP config.</p>
 </div>
 </li>
 <li>
-<p>Start the offline restore.</p>
+<p>Start the offline restore after stopping mailboxd.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">zmrestoreoffline -sys -a all -c -br</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">zmmailboxdctl stop
+zmrestoreoffline -sys -a all -c -br</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -23587,7 +23712,7 @@ if the <strong>.restore</strong> file has the latest local configuration data, d
 <div class="sect2">
 <h3 id="_using_snapshots_to_backup_and_restore">Using snapshots to Backup and Restore</h3>
 <div class="paragraph">
-<p>You can back up and restore a server using the snapshot feature provided
+<p>You can backup and restore a server using the snapshot feature provided
 by the storage layer rather than using Zimbra&#8217;s backup and restore
 feature. Using snapshots, you can maintain a standby site if the primary
 site fails and reroute users to the standby site to keep operations
@@ -23679,14 +23804,104 @@ auth tokens generated prior to the backup will no longer work.</p>
 of ephemeral data backups.</p>
 </div>
 <div class="sect3">
-<h4 id="_backups_with_ssdb_backend">Backups with SSDB Backend</h4>
+<h4 id="_ephemeral_storage_ssdb_backend">Ephemeral Storage SSDB Backend</h4>
+<div class="sect4">
+<h5 id="_backing_up_ephemeral_data_in_ssdb">Backing up Ephemeral Data in SSDB</h5>
 <div class="paragraph">
 <p>If SSDB is used as the ephemeral backend, a backup will not include any ephemeral
-attributes. All authentication data is lost, including the last logon timestamp.
-As a result, the "Last Login" column in Accounts section of the admin console
-will display "Never logged in" for restored accounts. If a specific need for this
-data arises, all authentication events are logged in the audit.log file. Customers
-considering migrating to an SSDB backend should be aware of this limitation.</p>
+attributes.</p>
+</div>
+<div class="paragraph">
+<p>Note: This section does not detail how to deploy and administer an SSDB server. For that information please see section <a href="#SSDB Configuration Options">[SSDB Configuration Options]</a>.</p>
+</div>
+<div class="paragraph">
+<p>Backing up the data stored in SSDB (if so configured) is done as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">ssdb-dump -h localhost -p 8888 -o /tmp/ephemeral-backup-&lt;date&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note: If running in master / slave configuration the <code>ssdb-dump</code> should be run on the <strong>master</strong>.</p>
+</div>
+<div class="sect5">
+<h6 id="_example_backup">Example backup</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">ssdb-dump - SSDB backup command
+Copyright (c) 2012-2015 ssdb.io
+
+recv begin...
+received 1 entry(s)
+received 10 entry(s)
+received 100 entry(s)
+received 1000 entry(s)
+received 10000 entry(s)
+received 100000 entry(s)
+received 200000 entry(s)
+received 300000 entry(s)
+received 400000 entry(s)
+received 400021 entry(s)
+recv end
+
+total dumped 400021 entry(s)
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  2        1        7         0        0         7
+
+compacting data...
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  2        2       10         0        0        10
+
+backup has been made to folder: /tmp/ephemeral-backup-&lt;date&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_restoring_ephemeral_data_to_ssdb">Restoring Ephemeral Data to SSDB</h5>
+<div class="paragraph">
+<p>Restoring ephemeral data to SSDB from a backup can only be done with a backup from
+an SSDB server.</p>
+</div>
+<div class="paragraph">
+<p>A restoration can be done in one of two ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>import into a running server</p>
+</li>
+<li>
+<p>override of existing data</p>
+</li>
+</ul>
+</div>
+<div class="sect5">
+<h6 id="_importing_into_a_running_server">Importing into a running server</h6>
+<div class="paragraph">
+<p>Using the <code>leveldb-import</code> command provided with the SSDB software a backup created
+with the <code>ssdb-dump</code> command can be imported into a running SSDB server.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">leveldb-import localhost 8888 /tmp/ephemeral-backup-&lt;date&gt;/data</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_data_override">Data override</h5>
+<div class="paragraph">
+<p>Stop the SSDB server.
+Copy the directory created using the <code>ssdb-dump</code> command previously to a known location.
+Update <code>ssdb.conf</code> configuration file to update the <code>work_dir</code> option to the proper path.
+Start the SSDB server back up and verify previously working logins still work.</p>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -35820,7 +36035,7 @@ troubleshooting and the knowledge necessary for solid customizations.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_overview_6">Overview</h3>
+<h3 id="_overview_5">Overview</h3>
 <div class="paragraph">
 <p>Zimbra Chat is included in Zimbra starting in version 8.7.6 as Beta
 software and version 8.8.0 as Stable. Zimbra Chat provides simple and
@@ -36719,7 +36934,7 @@ software nor falls under any Zimbra Support contract as stated in section
 </div>
 </div>
 <div class="sect2">
-<h3 id="_overview_7">Overview</h3>
+<h3 id="_overview_6">Overview</h3>
 <div class="sect3">
 <h4 id="general_architecture">General Architecture</h4>
 <div class="paragraph">
@@ -36794,7 +37009,7 @@ abstracts the version of ownCloud and Nextcloud for the extension.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_installation">Installation</h3>
+<h3 id="_installation_2">Installation</h3>
 <div class="paragraph">
 <p>This chapter guides the administrator through the manual installation of Zimbra Drive.</p>
 </div>
@@ -39493,7 +39708,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 53. Creating a domain that authenticates against Zimbra OpenLDAP</div>
+<div class="title">Example 53. Creating a domain that authenticates against Zimbra LDAP</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
@@ -41221,9 +41436,23 @@ backups since then, for all accounts on <strong>server1</strong>.</p>
 <div class="sect3">
 <h4 id="_zmrestoreoffline_offline_restore">zmrestoreoffline (Offline Restore)</h4>
 <div class="paragraph">
-<p>Run <code>zmrestoreoffline</code> when the Zimbra server (i.e., the mailbox process)
-is down.  The SQL database for the server and the OpenLDAP directory
-server must be running before you start the <code>zmrestoreoffline</code> command.</p>
+<p><code>zmrestoreoffline</code> requires that the following is true:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>mailboxd IS NOT running</p>
+</li>
+<li>
+<p>SQL database IS RUNNING</p>
+</li>
+<li>
+<p>LDAP directory IS RUNNING</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pre-requisites</p>
 </div>
 <div class="sect4">
 <h5 id="_syntax_12">Syntax</h5>
@@ -45523,7 +45752,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-15 13:08:40 CST
+Last updated 2017-12-20 09:54:07 CST
 </div>
 </div>
 </body>
