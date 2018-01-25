@@ -163,7 +163,7 @@ using the Zimbra Mailbox Ports.
 Zimbra Proxy has the ability to strictly enforce which values are allowed in the `Host` header
 passed in by the client.
 
-This is _enabled by default_ on new installations but left _disabled for upgrades_ from previous
+This is _enabled by default_ on *new installations* but left _disabled_ for *upgrades* from previous
 versions unless toggled during the installation.
 
 The functionality may be altered by setting the `zimbraReverseProxyStrictServerNameEnabled` boolean configuration
@@ -177,7 +177,7 @@ option followed by restarting the proxy server.
 zmprov mcf zimbraReverseProxyStrictServerNameEnabled TRUE
 ----
 
-When the strict server name functionality is enabled additional valid server names may be specified
+When the strict server name functionality is enabled, additional valid server names may be specified
 using the `zimbraVirtualHostName` and `zimbraVirtualIPAddress` configuration items at the domain level.
 
 [source,bash]
