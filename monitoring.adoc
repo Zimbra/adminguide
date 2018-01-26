@@ -790,17 +790,27 @@ This pattern consists of 6 blocks of data:
 * Thread number with a prefix (e.g. `[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`, `[Index-9]`, etc)
 * {product-name} context
 * Component name (e.g. `soap`, `mailbox`, `mbxmgr`, etc)
-* Log message
+* Log message. *Note:* the log message section may span multiple lines. When a log message contains an exception, the stack trace will always start on a new line below the error message.
 
 You can read more about Log4j patterns in https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html[Log4j PatternLayout documentation].
 
 *Thread prefix in mailbox.log*
 
-Thread numbers in mailbox.log are prefixed to identify internal components. The following prefixes are currently used in {product-name}: `btpool`, `pool`, `LmtpServer`, `ImapServer`,`ImapSSLServer`, `Pop3Server`, `Pop3SSLServer`, `ScheduledTask`, `Timer`, `AnonymousIoService`, `CloudRoutingReaderThread`, `GC`, `SocketAcceptor`, `Thread`, `qtp`.
+Thread numbers in mailbox.log are prefixed to identify internal components. Most threads have the following naming convention: "*{thread prefix}-{thread number}*".
+
+Threads with prefix `qtp` are created by Jetty `QueuedThreadPool` and have the following naming convention: "*qtp{hash code}-{thread number}*" where `hashCode` is the hash code value of the instance of `QueuedThreadPool` that owns the thread (see https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode()[Object::hashCode] in Java platform documentation).
+
+`\{thread-number\}` in thread names is an integer that monotonously increases within each thread factory. Thread numbers are reset when `mailboxd` process is stopped or restarted.
+
+The following prefixes are currently used for thread names in {product-name}: `btpool`, `pool`, `LmtpServer`, `ImapServer`,`ImapSSLServer`, `Pop3Server`, `Pop3SSLServer`, `ScheduledTask`, `Timer`, `AnonymousIoService`, `CloudRoutingReaderThread`, `GC`, `SocketAcceptor`, `Thread`, `qtp`.
 
 *{product-name} Context in mailbox.log*
 
-`[%z]` section in the log pattern describes {product-name} context and consists of key-value pairs in the format `key=value`, separated by semi-colons (`;`). The following key value pairs are currently supported and may be recorded in log entries in any order and eny combination:
+`[%z]` section in the log pattern describes {product-name} context and consists of key-value pairs in the format `key=value`, separated by semi-colons (;). In cases where a value contains a semi-colon, the semi-colon is replaced with a double semi-colon (;;). E.g., browser UserAgent strings often include semi-colons, such as this one "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36". In mailbox.log, this UserAgent string will appear as following:
+
+image:images/doublesemicolon.png[ua value with double semi-colon]
+
+The following key value pairs are currently supported and may be recorded in log entries in any order and eny combination:
 
 * `ip` - IP of the TCP/IP client making a request
 * `oip` - originating IP address. When a request is made through NGINX proxy, this value will contain the IP address of the client application, while `ip` value will contain the IP address of the proxy server
