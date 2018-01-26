@@ -787,22 +787,31 @@ This pattern consists of 6 blocks of data:
 
 * Date and time (e.g.: `2018-01-22 19:23:07,100`)
 * Log level (e.g. `INFO`)
-* Thread number with a prefix (e.g. `[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`, `[Index-9]`, etc)
+* Thread name (e.g. `[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`, `[Index-9]`, etc)
 * {product-name} context
 * Component name (e.g. `soap`, `mailbox`, `mbxmgr`, etc)
 * Log message. *Note:* the log message section may span multiple lines. When a log message contains an exception, the stack trace will always start on a new line below the error message.
 
 You can read more about Log4j patterns in https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html[Log4j PatternLayout documentation].
 
-*Thread prefix in mailbox.log*
+*Thread name in mailbox.log*
 
-Thread numbers in mailbox.log are prefixed to identify internal components. Most threads have the following naming convention: "*{thread prefix}-{thread number}*".
+Thread names in mailbox.log are prefixed to identify internal components. Most threads have one of the following naming conventsion: "*{thread prefix}-{thread number}*" or "*{thread prefix}-{thread number}:{url}*".
 
-Threads with prefix `qtp` are created by Jetty `QueuedThreadPool` and have the following naming convention: "*qtp{hash code}-{thread number}*" where `hashCode` is the hash code value of the instance of `QueuedThreadPool` that owns the thread (see https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode()[Object::hashCode] in Java platform documentation).
+The following *{thread prefix}* values are currently used for thread names in {product-name}: `btpool`, `pool`, `LmtpServer`, `ImapServer`,`ImapSSLServer`, `Pop3Server`, `Pop3SSLServer`, `ScheduledTask`, `Timer`, `AnonymousIoService`, `CloudRoutingReaderThread`, `GC`, `SocketAcceptor`, `Thread`, `qtp`.
 
-`\{thread-number\}` in thread names is an integer that monotonously increases within each thread factory. Thread numbers are reset when `mailboxd` process is stopped or restarted.
+Threads with prefix `qtp` are created by Jetty `QueuedThreadPool` and have the following naming convention: "*qtp{hash code}-{thread number}:{url}*" where *{hash code}*` is the hash code value of the instance of `QueuedThreadPool` that owns the thread (see https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode()[Object::hashCode] in Java platform documentation).
 
-The following prefixes are currently used for thread names in {product-name}: `btpool`, `pool`, `LmtpServer`, `ImapServer`,`ImapSSLServer`, `Pop3Server`, `Pop3SSLServer`, `ScheduledTask`, `Timer`, `AnonymousIoService`, `CloudRoutingReaderThread`, `GC`, `SocketAcceptor`, `Thread`, `qtp`.
+*{thread number}* in thread names is an integer that monotonously increases within each thread factory. Thread numbers are reset when `mailboxd` process is stopped or restarted.
+
+Log records reported by threads that serve SOAP requests will usually contain URL of the request being served in *{url}* part of thread name, as in the following example:
+
+image:images/zwclogmessage.png[Mailbox Log Entry for SOAP]
+
+
+Due to a known bug in {product-name} *{url}* part of the thread name may contain duplicate protocol identifier, as in the following example:
+
+`[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`
 
 *{product-name} Context in mailbox.log*
 
@@ -833,10 +842,6 @@ The example below is a record showing that
 on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP 10.1.1.136.
 
 image:images/poplogmessage.png[Mailbox Log Entry for POP]
-
-Log records reported by threads that serve SOAP requests will usually contain URL of the request being served, as in the following example:
-
-image:images/zwclogmessage.png[Mailbox Log Entry for SOAP]
 
 The following example shows a record of a failed `IMAP STATUS` request sent by `user1@mydomain.com` using AquaMail mobile app. The user's device has IP address `72.83.144.255` (as reported in `oip` field). The request came to IMAP server via Zimbra nginx proxy, which has IP address `10.4.4.138` (as reported in `ip` and `via` fields).
 
