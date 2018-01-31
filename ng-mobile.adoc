@@ -80,7 +80,7 @@ To enable Mobile NG for a single user from the Administration Console:
 
 * Open the Zimbra Administration Console.
 * Double-click the user you want to edit (on the left, under
-Addresses -> Accounts).
+Manage -> Accounts).
 * Click the Mobile tab.
 
 * Check `Enable mobile synchronization`.
@@ -106,7 +106,7 @@ To disable Mobile NG for a single user from the CLI:
 
 * Open the Zimbra Administration Console.
 * Double-click the user you want to edit (on the left, under
-Addresses -> Accounts).
+Manage -> Accounts).
 * Click the Mobile NG tab and uncheck `Enable mobile
 synchronization`.
 
@@ -325,7 +325,7 @@ SyncStates of synchronized mobile devices:
 forcing a full re-synchronization the next time the device connects to
 the server.
 
-* Remove Device: Removes all the device's SyncState and history from the
+* Wipe Device: Removes all the device's SyncState and history from the
 server. Useful when a mobile device is not used anymore or is assigned
 to a different employee in the same company.
 
