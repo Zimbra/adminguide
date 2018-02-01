@@ -18,9 +18,11 @@ The available balancing algorithms are as follows:
 
 * AccountIdHash
 
-  Selects an IMAP server server based on a hash of the account id of the user making the request.
-  The hashing algorithm used is a simple modulus of the account id as an integer with the number of
-   configured IMAP servers for the mailbox hosting the account. This will always return the same 'index' for the same account id.
+  Selects an IMAP server server based on a hash of the account id of
+  the user making the request.  The hashing algorithm used is a simple
+  modulus of the account id as an integer with the number of
+  configured IMAP servers for the mailbox hosting the account. This
+  will always return the same 'index' for the same account id.
 
 * custom
 
@@ -28,9 +30,16 @@ The available balancing algorithms are as follows:
 
       custom:{handler-algorithm} [arg1 arg2 ...]
 
+[IMPORTANT]
+Custom hashing algorithms are required to consistently hash to the same
+IMAP server for the same account or the IMAP RECENT response to clients
+will be inconsistent.
+
 [NOTE]
-If the custom load balancing class can't be located the default
+
+* If the custom load balancing class can't be located the default
 AccountIdHash will be returned.
+
 
 = IMAPD-related Configuration & Files
 
