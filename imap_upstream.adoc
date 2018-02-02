@@ -18,7 +18,7 @@ The available balancing algorithms are as follows:
 
 * AccountIdHash
 
-  Selects an IMAP server server based on a hash of the account id of
+  Selects an IMAP server based on a hash of the account id of
   the user making the request.  The hashing algorithm used is a simple
   modulus of the account id as an integer with the number of
   configured IMAP servers for the mailbox hosting the account. This
