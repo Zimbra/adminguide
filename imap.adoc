@@ -48,3 +48,12 @@ Do NOT configure a load balancer between the Zimbra HTTP Proxy node and any remo
 [IMPORTANT]
 The zmlocalconfig setting *nio_imap_enabled* MUST have value *true* when using the Zimbra IMAPD server.  The legacy
  Imap server which does not use NIO is not supported.
+
+==  IMAPD Configuration settings
+
+The following global and server level configuration attributes are available to control and tune the IMAPD service.
+
+* *zimbraRemoteImapServerEnabled*. When set to TRUE, the standalone IMAP server is enabled. When set to FALSE, the standalone IMAP server is disabled. Default value is FALSE.
+* *zimbraRemoteImapSSLServerEnabled*. When set to TRUE, the standalone IMAP SSL server is enabled. When set to FALSE, the standalone IMAP SSL server is disabled. Default value is FALSE.
+* *zimbraRemoteImapBindPort*. Specifies port number on which the standalone IMAP server should listen. Default value is 8143.
+* *zimbraRemoteImapSSLBindPort*. Specifies port number on which the standalone IMAP SSL server should listen on. Defaut value is 8993.
