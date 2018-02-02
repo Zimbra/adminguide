@@ -16,13 +16,11 @@ IMAP related configuration options are available:
 
 The available balancing algorithms are as follows:
 
-* ClientIpHash
+* AccountIdHash
 
-  Selects an IMAP server server based on a hash of the client IP address.
-  The hashing algorithm used is a simple modulus of the client's ip address as an integer with the number of
-   configured IMAP servers. This will always return the same 'index' for the same client ip address.
-
-   Note: Extra configuration is necessary if a NAT proxy is being utilized in the environment.
+  Selects an IMAP server server based on a hash of the account id of the user making the request.
+  The hashing algorithm used is a simple modulus of the account id as an integer with the number of
+   configured IMAP servers for the mailbox hosting the account. This will always return the same 'index' for the same account id.
 
 * custom
 
@@ -32,7 +30,7 @@ The available balancing algorithms are as follows:
 
 [NOTE]
 If the custom load balancing class can't be located the default
-ClientIpHash will be returned.
+AccountIdHash will be returned.
 
 = IMAPD-related Configuration & Files
 
@@ -177,7 +175,3 @@ you will need to modify them on the mailbox servers via `zmprov ms <server>..`
 +
 7. Reset `zimbraReverseProxyCacheEntryTTL` to the original value if
 necessary.
-
-
-
-
