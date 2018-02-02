@@ -787,22 +787,22 @@ This pattern consists of 6 blocks of data:
 
 * Date and time (e.g.: `2018-01-22 19:23:07,100`)
 * Log level (e.g. `INFO`)
-* Thread name (e.g. `[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`, `[Index-9]`, etc)
+* Thread name (e.g. `[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`, `[Index-9]`, etc.)
 * {product-name} context
-* Component name (e.g. `soap`, `mailbox`, `mbxmgr`, etc)
+* Component name (e.g. `soap`, `mailbox`, `mbxmgr`, etc.)
 * Log message. *Note:* the log message section may span multiple lines. When a log message contains an exception, the stack trace will always start on a new line below the error message.
 
 You can read more about Log4j patterns in https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html[Log4j PatternLayout documentation].
 
 *Thread name in mailbox.log*
 
-Thread names in mailbox.log are prefixed to identify internal components. Most threads have one of the following naming conventsion: "*{thread prefix}-{thread number}*" or "*{thread prefix}-{thread number}:{url}*".
+Thread names in mailbox.log are prefixed to identify internal components. Most threads have one of the following naming convention: "*{thread prefix}-{thread number}*" or "*{thread prefix}-{thread number}:{url}*".
 
 The following *{thread prefix}* values are currently used for thread names in {product-name}: `btpool`, `pool`, `LmtpServer`, `ImapServer`,`ImapSSLServer`, `Pop3Server`, `Pop3SSLServer`, `ScheduledTask`, `Timer`, `AnonymousIoService`, `CloudRoutingReaderThread`, `GC`, `SocketAcceptor`, `Thread`, `qtp`.
 
 Threads with prefix `qtp` are created by Jetty `QueuedThreadPool` and have the following naming convention: "*qtp{hash code}-{thread number}:{url}*" where *{hash code}*` is the hash code value of the instance of `QueuedThreadPool` that owns the thread (see https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode()[Object::hashCode] in Java platform documentation).
 
-*{thread number}* in thread names is an integer that monotonously increases within each thread factory. Thread numbers are reset when `mailboxd` process is stopped or restarted.
+*{thread number}* in thread names is an integer that monotonically increases within each thread factory. Thread numbers are reset when `mailboxd` process is stopped or restarted.
 
 Log records reported by threads that serve SOAP requests will usually contain URL of the request being served in *{url}* part of thread name, as in the following example:
 
@@ -819,35 +819,35 @@ Due to a known bug in {product-name} *{url}* part of the thread name may contain
 
 image:images/doublesemicolon.png[ua value with double semi-colon]
 
-The following key value pairs are currently supported and may be recorded in log entries in any order and eny combination:
+The following key value pairs are currently supported and may be recorded in log entries in any order and any combination:
 
-* `ip` - IP of the TCP/IP client making a request
-* `oip` - originating IP address. When a request is made through NGINX proxy, this value will contain the IP address of the client application, while `ip` value will contain the IP address of the proxy server
-* `cid` - connection id of a server that is monotonically increasing - useful for tracking individual connections
-* `id` - ID of the target account
-* `name` - name of the target account (email address)
-* `aid` - ID of the authenticated account. Only present if target account is different then authenticated account
-* `aname` - name of the authenticated account. Only present if target account is different then authenticated account
-* `mid` - Id of requested mailbox. Only present if request is dealing with a mailbox
-* `ua`  - name of the client application (i.e. User Agent)
-* `via` - list of IP addresses and user-agents of the request's proxy chain
-* `soapId` - ID assigned to a SOAP request to track proxied hops for a particular request
-* `msgid` - value of Message-ID header of the message being operated on
-* `ds` - name of the Data Source being operated on
-* `port` - server port to which the client connected
-* `oport` - originating port number of request
-* `oproto` - originating protocol of request. This can be passed by internal components that make SOAP requests on behalf of a user (e.g. MTA and IMAPd)
+* `ip` -- IP of the TCP/IP client making a request
+* `oip` -- originating IP address. When a request is made through NGINX proxy, this value will contain the IP address of the client application, while `ip` value will contain the IP address of the proxy server
+* `cid` -- connection id of a server that is monotonically increasing - useful for tracking individual connections
+* `id` -- ID of the target account
+* `name` -- name of the target account (email address)
+* `aid` -- ID of the authenticated account. Only present if target account is different then authenticated account
+* `aname` -- name of the authenticated account. Only present if target account is different then authenticated account
+* `mid` -- ID of requested mailbox. Only present if request is dealing with a mailbox
+* `ua`  -- name of the client application (i.e. User Agent)
+* `via` -- list of IP addresses and user-agents of the request's proxy chain
+* `soapId` -- ID assigned to a SOAP request to track proxied hops for a particular request
+* `msgid` -- value of Message-ID header of the message being operated on
+* `ds` -- name of the Data Source being operated on
+* `port` -- server port to which the client connected
+* `oport` -- originating port number of request
+* `oproto` -- originating protocol of request. This can be passed by internal components that make SOAP requests on behalf of a user (e.g. MTA and IMAPd)
 
 The example below is a record showing that
 on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP 10.1.1.136.
 
 image:images/poplogmessage.png[Mailbox Log Entry for POP]
 
-The following example shows a record of a failed `IMAP STATUS` request sent by `user1@mydomain.com` using AquaMail mobile app. The user's device has IP address `72.83.144.255` (as reported in `oip` field). The request came to IMAP server via Zimbra nginx proxy, which has IP address `10.4.4.138` (as reported in `ip` and `via` fields).
+The following example shows a record of a failed `IMAP STATUS` request sent by `user1@mydomain.com` using AquaMail mobile app. The user's device has IP address `72.83.144.255` (as reported in `oip` field). The request came to IMAP server via {product-name} nginx proxy, which has IP address `10.4.4.138` (as reported in `ip` and `via` fields).
 
 image:images/imaplogmessage.png[Mailbox Log Entry for IMAP]
 
-The following example shows a record of LMTP server delivering a message. The IP address in this log message most likely belongs to Zimbra MTA running on local network.
+The following example shows a record of LMTP server delivering a message. The IP address in this log message most likely belongs to {product-name} MTA running on local network.
 
 image:images/lmtplogmessage.png[Mailbox Log Entry for LMTP]
 
