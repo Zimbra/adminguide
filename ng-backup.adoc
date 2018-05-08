@@ -166,7 +166,7 @@ To start a SmartScan via the Administration Zimlet,
 * Click `Run Smartscan`.
 
 [[starting-the-scan-via-the-cli]]
-Starting the San via the CLI
+Starting the Scan via the CLI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To start a FullScan via the CLI, use the `doSmartScan` command:
