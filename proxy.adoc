@@ -453,7 +453,7 @@ This configures the following:
 |zimbraMailReferMode |reverse-proxied.
 |zimbraMailPort |8080 (to avoid port conflicts)
 |zimbraMailSSLPort |8443 (to avoid port conflicts)
-|zimbraReverseProxyLookupTarget to |TRUE
+|zimbraReverseProxyLookupTarget |TRUE
 |TRUE
 |zimbraMailMode |HTTP (the only supported mode)
 |zimbraMailProxyPort |80 (to avoid port conflicts)
