@@ -454,7 +454,6 @@ This configures the following:
 |zimbraMailPort |8080 (to avoid port conflicts)
 |zimbraMailSSLPort |8443 (to avoid port conflicts)
 |zimbraReverseProxyLookupTarget |TRUE
-|TRUE
 |zimbraMailMode |HTTP (the only supported mode)
 |zimbraMailProxyPort |80 (to avoid port conflicts)
 |zimbraMailSSLProxyPort |443 (to avoid port conflicts)
