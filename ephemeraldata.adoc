@@ -1,4 +1,4 @@
-= Ephemeral Data
+= Ephemeral Data (BETA)
 
 There are 3 main types of ephemeral data stored in LDAP during normal operation of {product-name}.
 

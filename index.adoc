@@ -118,6 +118,10 @@ include::zimlets.adoc[]
 
 <<<
 
+include::voice-service.adoc[]
+
+<<<
+
 include::ng-backup.adoc[]
 
 <<<

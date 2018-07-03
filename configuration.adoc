@@ -1910,7 +1910,10 @@ the previous volume.
 A current volume cannot be deleted, and message volumes that have messages
 referencing the volume cannot be deleted.
 
-=== Implementing Hierarchical Storage Management
+=== Implementing Hierarchical Storage Management (*)
+
+[NOTE]
+*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
 
 Hierarchical Storage Management (HSM) allows you to configure storage
 volumes for older messages. HSM is a process of moving older data from the
