@@ -547,17 +547,17 @@ Admin NG Commands
 `zxsuite admin getDelegationSettings [attr1 value1 [attr2 value2...`
 
 ::
-  *doEditDelegationSettings* -
+  *doEditDelegationSettings*
 
 `zxsuite admin doEditDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...`
 
 ::
-  *doAddDelegationSettings* -
+  *doAddDelegationSettings*
 
 `zxsuite admin doAddDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...`
 
 ::
-  *doRemoveDelegationSettings -
+  *doRemoveDelegationSettings
 
 `zxsuite admin doRemoveDelegationSettings {account} {domain}`
 
