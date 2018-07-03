@@ -142,16 +142,16 @@ guide.
 
 image::images/administration_console_ui.png[Administration Console]
 
-<1> Go to Previous or Next page
-<2> Current Location/Path
-<3> Search
-<4> Screen Refresh
-<5> Current User and Logout Option
-<6> Help
-<7> Gear Icon
-<8> Status Pane
-<9> Viewing Pane
-<10> Navigation Pane
+    <1> Go to Previous or Next page
+    <2> Current Location/Path
+    <3> Search
+    <4> Screen Refresh
+    <5> Current User and Logout Option
+    <6> Help
+    <7> Gear Icon
+    <8> Status Pane
+    <9> Viewing Pane
+    <10> Navigation Pane
 
 The displays and options in the navigation pane and viewing pane change in
 accordance with your selections. Other portions of the UI -- arrow buttons,
@@ -203,15 +203,15 @@ system status and a series of quick access links for essential tasks.
 
 image::images/administration_console_home_ui.png[Home UI]
 
-<1> Go to Previous or Next page
-<2> Search
-<3> Screen Refresh
-<4> Current User and Logout Option
-<5> Help
-<6> System Status
-<7> Status Pane
-<8> Quick Start
-<9> Navigation Pane
+    <1> Go to Previous or Next page
+    <2> Search
+    <3> Screen Refresh
+    <4> Current User and Logout Option
+    <5> Help
+    <6> System Status
+    <7> Status Pane
+    <8> Quick Start
+    <9> Navigation Pane
 
 .Home UI
 [cols="1,3a",options="header",]
@@ -265,13 +265,13 @@ monitored by the Collaborator.
 
 image::images/administration_console_monitor_ui.png[Monitor UI]
 
-<1> Go to Previous or Next page
-<2> Search
-<3> Screen Refresh
-<4> Current User and Logout Option
-<5> Help
-<6> Status Pane
-<7> Navigation Pane
+    <1> Go to Previous or Next page
+    <2> Search
+    <3> Screen Refresh
+    <4> Current User and Logout Option
+    <5> Help
+    <6> Status Pane
+    <7> Navigation Pane
 
 ==== Monitor Navigation Pane and Pages
 
@@ -365,14 +365,14 @@ Collaborator.
 
 image::images/administration_manage_ui.png[Manage UI]
 
-<1> Go to Previous or Next page
-<2> Search
-<3> Screen Refresh
-<4> Current User and Logout Option
-<5> Help
-<6> Gear Icon
-<7> Status Pane
-<8> Navigation Pane
+    <1> Go to Previous or Next page
+    <2> Search
+    <3> Screen Refresh
+    <4> Current User and Logout Option
+    <5> Help
+    <6> Gear Icon
+    <7> Status Pane
+    <8> Navigation Pane
 
 .Manage UI
 [cols="1,3a",options="header",]
@@ -444,13 +444,13 @@ globalcomponents.
 
 image::images/administration_console_configure_ui.png[Configure UI]
 
-<1> Go to Previous or Next page
-<2> Search
-<3> Screen Refresh
-<4> Help
-<5> Gear Icon
-<6> Status Pane
-<7> Configure Navigation Pane
+    <1> Go to Previous or Next page
+    <2> Search
+    <3> Screen Refresh
+    <4> Help
+    <5> Gear Icon
+    <6> Status Pane
+    <7> Configure Navigation Pane
 
 .Configure UI
 [cols="1,3a",options="header",]
@@ -696,13 +696,13 @@ and tools from this page.
 image::images/administration_console_tools_and_migration_ui.png[Tools and Migration UI]
 
 
-<1> Go to Previous or Next page
-<2> Search
-<3> Screen Refresh
-<4> Current User and Logout Option
-<5> Help
-<6> Status Pane
-<7> _Tools and Migration_ Navigation Pane
+    <1> Go to Previous or Next page
+    <2> Search
+    <3> Screen Refresh
+    <4> Current User and Logout Option
+    <5> Help
+    <6> Status Pane
+    <7> _Tools and Migration_ Navigation Pane
 
 .Tools and Migration
 [cols="1,3",options="header",]
@@ -821,15 +821,15 @@ string must be entered in the search.
 
 image::images/administration_console_search_ui.png[Search UI]
 
-<1> Go to Previous or Next page
-<2> Search Options
-<3> Search
-<4> Screen Refresh
-<5> Current User and Logout Option
-<6> Help
-<7> Gear Icon
-<8> Status Pane
-<9> Search Navigation Pane
+    <1> Go to Previous or Next page
+    <2> Search Options
+    <3> Search
+    <4> Screen Refresh
+    <5> Current User and Logout Option
+    <6> Help
+    <7> Gear Icon
+    <8> Status Pane
+    <9> Search Navigation Pane
 
 
 .Search UI
@@ -909,13 +909,13 @@ forums and to viewexpert responses to the top migration questions.
 
 image::images/administration_console_help_center_ui.png[Help Center UI]
 
-<1> Go to Previous or Next page
-<2> Search
-<3> Screen Refresh
-<4> Current User and Logout Option
-<5> Help
-<6> Status Pane
-<7> Help Center Navigation Pane
+    <1> Go to Previous or Next page
+    <2> Search
+    <3> Screen Refresh
+    <4> Current User and Logout Option
+    <5> Help
+    <6> Status Pane
+    <7> Help Center Navigation Pane
 
 === Tools in Collaborator Tables
 

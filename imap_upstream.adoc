@@ -16,13 +16,13 @@ IMAP related configuration options are available:
 
 The available balancing algorithms are as follows:
 
-* ClientIpHash
+* AccountIdHash
 
-  Selects an IMAP server server based on a hash of the client IP address.
-  The hashing algorithm used is a simple modulus of the client's ip address as an integer with the number of
-   configured IMAP servers. This will always return the same 'index' for the same client ip address.
-
-   Note: Extra configuration is necessary if a NAT proxy is being utilized in the environment.
+  Selects an IMAP server based on a hash of the account id of
+  the user making the request.  The hashing algorithm used is a simple
+  modulus of the account id as an integer with the number of
+  configured IMAP servers for the mailbox hosting the account. This
+  will always return the same 'index' for the same account id.
 
 * custom
 
@@ -30,9 +30,16 @@ The available balancing algorithms are as follows:
 
       custom:{handler-algorithm} [arg1 arg2 ...]
 
+[IMPORTANT]
+Custom hashing algorithms are required to consistently hash to the same
+IMAP server for the same account or the IMAP RECENT response to clients
+will be inconsistent.
+
 [NOTE]
-If the custom load balancing class can't be located the default
-ClientIpHash will be returned.
+
+* If the custom load balancing class can't be located the default
+AccountIdHash will be returned.
+
 
 = IMAPD-related Configuration & Files
 
@@ -56,14 +63,13 @@ the new service.
 * This maintains the list of available IMAP(S) servers:
 ** `zimbraReverseProxyUpstreamImapServers`
 
-== Server Configuration Settions
+== Server Configuration Settings
 
 If the `zimbra-imapd` service is enabled on a given server, it will be added to
 the multi-valued attribute `zimbraServiceEnabled`.
 
 For example, on an IMAP-only server:
 
-[EXAMPLE]
 ----
 $ zmprov gs `zmhostname` zimbraServiceEnabled
 # name HOST.DOMAIN
@@ -126,7 +132,7 @@ connections of existing IMAP clients.
 Prior to changing any configuration, it should be decided how existing
 routes in `memcached` will be handled. By default, routes are cached in
 `memcached` for 1 day, as specified by the
-`zimbraMemcachedClientExpirySeconds` LDAP attribute. If untouched, it
+`zimbraReverseProxyCacheEntryTTL` LDAP attribute. If untouched, it
 will take this long for the cached routes to expire and for the lookup
 extension to send IMAP traffic to the newly provisioned imapd
 servers. There are two things that can be done to change this
@@ -135,11 +141,9 @@ behavior:
 1. Flush `memcached` after the imapd pool configuration is
 complete. This will cause all existing IMAP sessions to be restarted
 on the new servers.
-2. One day prior to switching to the imapd pool, modify the value
-`zimbraMemcachedClientExpirySeconds` of to a shorter interval, such as
-30 minutes, and reload the `memcached` configuration with the command
-`zmprov rmcc all`. Doing so will allow embedded IMAP to be turned off
-within a shorter timeframe without risking service interruptions.
+2. One day prior to switching to the imapd pool, modify the value of
+`zimbraReverseProxyCacheEntryTTL` to a shorter interval, such as
+30 minutes.
 
 == Migration steps
 
@@ -163,7 +167,7 @@ zmprov mcf +zimbraReverseProxyUpstreamImapServers <server1> \
 ----
 +
 4. Flush the config cache on lookup servers: `zmprov -a fc config`
-5. If `zimbraMemcachedClientExpirySeconds` was decreased prior to this
+5. If `zimbraReverseProxyCacheEntryTTL` was decreased prior to this
 change, wait the corresponding amount of time for the existing routes
 to expire. This will allow routes in memcached to switch over to the
 new routes. Otherwise, flush memcached manually. It is recommended
@@ -178,9 +182,5 @@ zmprov mcf zimbraImapSSLServerEnabled FALSE
 [NOTE] If these settings were overridden at the at the server level,
 you will need to modify them on the mailbox servers via `zmprov ms <server>..`
 +
-7. Reset `zimbraMemcachedClientExpirySeconds` to the original value if
+7. Reset `zimbraReverseProxyCacheEntryTTL` to the original value if
 necessary.
-
-
-
-

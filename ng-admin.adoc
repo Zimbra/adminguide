@@ -480,7 +480,7 @@ operations or failed operations.
 ** `Start` and `End`: Limits the logs shown to a specific timespan
 (default: the current day).
 
-Clicking the `View` button will apply the selected filters and show the
+Clicking the `Details` button will apply the selected filters and show the
 log browser.
 
 [[the-action-filter]]

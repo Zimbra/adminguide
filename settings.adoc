@@ -1,4 +1,4 @@
-:product-version: 8.8.5
+:product-version: 8.8.6
 :document-title: Administrator Guide version {product-version}
 :product-name: Zimbra Collaboration
 :product-abbrev: ZCS

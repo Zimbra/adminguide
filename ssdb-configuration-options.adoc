@@ -1,4 +1,10 @@
-= SSDB Configuration Options (BETA)
+= SSDB Installation and Configuration
+
+== Installation
+
+{product-name} packages do not include SSDB server and {product-name} installation and configuration utilities do not alter SSDB configuration. To install the latest version of SSDB, follow instructions provided by SSDB developer community in http://ssdb.io/docs/install.html[SSDB Installation Documentation]. Please note, that {product-name} has been tested with SSDB version 1.9.5. In order to install SSDB 1.9.5, download  https://github.com/ideawu/ssdb/tree/stable-1.9.5[stable-1.9.5.zip] instead of https://github.com/ideawu/ssdb/archive/master.zip[master.zip] when following http://ssdb.io/docs/install.html[SSDB installation instructions].
+
+== Overview of Configuration Options
 
 The purpose of this guide is to discuss some of the options available
 with `SSDB`, specifically with regards to:
@@ -17,8 +23,6 @@ updating `zimbraEphemeralBackendURL` and migrating attributes.
 {product-name} currently uses a `Redis`-compatible client for
 communication with `SSDB`, so many of the concepts described herein
 are applicable with a `Redis` backend.
-
-== Overview
 
 === High-availability with Master-Slave replication
 
@@ -572,6 +576,11 @@ blocked indefinitely, even after the connection is re-established.
 In general, the resource pool should be sized such that the mailbox server
 is not starved for resources.
 
+== Scaling SSDB for Production Load with {product-name}
+The main characteristics of {product-name} production load that affects load on SSDB server are the frequency of authentication requests and frequency of SOAP requests sent by {product-name} Web Client and 3rd party SOAP clients. Each authentication request results in a 2 or 3 write operations for SSDB. The write operations update zimbraLastLogonTimestamp, zimbraAuthTokens and zimbraCsrfTokenData values. Note, that zimbraCsrfTokenData is updated only when using a CSRF-enabled SOAP client such as {product-name} Web Client. Each authenticated SOAP request results in 2 read operations for SSDB.
+
+=== Minimum Recommended SSDB Configuration
+We recommend that your SSDB server has at least 2GB RAM and 1 CPU. If you plan on running additional tools, such as monitoring and configuration management on your SSDB server, consider increasing memory and adding one more CPU core to accommodate additional software. Check out https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-SSDB-Authentication-Load-Tests[Zimbra and SSDB Authentication Load Tests] for more information.
 
 == Conclusion
 
