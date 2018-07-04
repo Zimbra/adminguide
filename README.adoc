@@ -29,11 +29,18 @@ documentation into HTML files like so:
 
 [source,bash]
 ----
-asciidoctor -b html5 -o admin_guide.html index.adoc
+asciidoctor -b html5 -D ~/repos/adminguide-ghpages/8.8.9 -o admin_guide.html index.adoc
 ----
 
 Each section of the document is contained in its own file. You may use the
 `index.adoc` file to generate the entire document.
+
+The `images/` directory must also be copied to the output destination:
+
+[source,bash]
+-----
+cp -r ./images ~/repos/adminguide-ghpages/8.8.9/images
+-----
 
 
 Additional Information
@@ -50,9 +57,10 @@ For additional product information check the https://wiki.zimbra.com[Zimbra Wiki
 
 License
 -------
-image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[CC BY-SA] Synacor, Inc., 2016
+:copyright-year: 2018
+image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[CC BY-SA] Synacor, Inc., {copyright-year}
 
-(C) 2016-2017 by Synacor, Inc.
+(C) 2016-{copyright-year} by Synacor, Inc.
 
 This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
 International License unless another license agreement between you and
