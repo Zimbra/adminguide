@@ -1,10 +1,10 @@
-:product-version: 8.8.6
+:product-version: 8.8.9
 :document-title: Administrator Guide version {product-version}
 :product-name: Zimbra Collaboration
 :product-abbrev: ZCS
 = {product-name} {document-title}
-:product-release-date: November, 2017
-:copyright-year: 2017
+:product-release-date: July, 2018
+:copyright-year: 2018
 :icons: font
 :title-logo-image: images/zimbra-logo.jpg
 :showlinks:
