@@ -235,7 +235,7 @@ This configures the following:
 |zimbraReverseProxyLookupTarget |TRUE
 |zimbraPop3CleartextLoginEnabled |TRUE
 
-|=======================================================================
+|====================================================
 --
 
 . Restart services on the proxy and mailbox servers.
