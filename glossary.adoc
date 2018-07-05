@@ -1,4 +1,4 @@
-Zimbra[glossary]
+[glossary]
 = Glossary
 
 The Glossary lists terms and acronyms used in this document, and includes
