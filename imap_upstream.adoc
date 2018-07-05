@@ -36,8 +36,7 @@ IMAP server for the same account or the IMAP RECENT response to clients
 will be inconsistent.
 
 [NOTE]
-
-* If the custom load balancing class can't be located the default
+If the custom load balancing class can't be located the default
 AccountIdHash will be returned.
 
 
@@ -179,7 +178,8 @@ that this be done outside peak hours if possible.
 zmprov mcf zimbraImapServerEnabled FALSE
 zmprov mcf zimbraImapSSLServerEnabled FALSE
 ----
-[NOTE] If these settings were overridden at the at the server level,
+[NOTE]
+If these settings were overridden at the server level,
 you will need to modify them on the mailbox servers via `zmprov ms <server>..`
 +
 7. Reset `zimbraReverseProxyCacheEntryTTL` to the original value if
