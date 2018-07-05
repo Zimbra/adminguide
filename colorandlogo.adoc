@@ -67,7 +67,7 @@ information about the license usage can be found at https://www.zimbra.com/licen
 ==== Graphics to Replace
 
 The following logo files can be changed. Your logos must be the same
-size as the specified here or the image might not display correctly.
+size as specified here or the image might not display correctly.
 These graphic files can be saved on another server or in a directory
 that is not overwritten when {product-name} is upgraded.
 
@@ -90,7 +90,7 @@ changed at this time.
 On the administration console, the Global Settings and the Domains
 settings include a Themes page that can be configured to customize the
 color scheme and to add a company logo and logo URL. You upload your
-company logo to be used on the Zimbra Web Clientand administration
+company logo to be used on the Zimbra Web Client and administration
 console pages.
 
 ==== Changing Base Theme Colors

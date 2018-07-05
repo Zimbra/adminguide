@@ -90,7 +90,7 @@ reflect the move.
 * If the second and the third steps are completed successfully (and only
 in this case), the old Blobs are deleted from the Primary Store.
 
-The Move operation is `stateful` - each step is executed only if the
+The Move operation is _stateful_ - each step is executed only if the
 previous step has been completed successfully - so the risk of data
 loss during a Move operation is nonexistent.
 
@@ -267,7 +267,7 @@ Creating a New Volume
 From the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To create a new volumen from the HSM NG tab of the Administration Zimlet:
+To create a new volume from the HSM NG tab of the Administration Zimlet:
 
 * Click the appropriate `Add` option in the `Volumes Management` section
 according to the type of volume you want to create.

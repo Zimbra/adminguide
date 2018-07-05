@@ -250,7 +250,7 @@ Mobile Password
 ^^^^^^^^^^^^^^^
 
 While conceptually similar, the mobile password feature is not part of
- Mobile Device Managment and can be used with any version of the EAS
+ Mobile Device Management and can be used with any version of the EAS
 protocol.
 
 [[syncstates]]

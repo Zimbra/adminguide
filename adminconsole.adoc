@@ -13,7 +13,7 @@ based on the rights assigned to the administrator role.
 Two types of administrator accounts can be created to manage {product-name}:
 
 * *Global Administrators* have full privileges to manage servers,
-globalsettings, domains, and accounts as well as create other
+global settings, domains, and accounts as well as create other
 administrators. One global administrator account is created when the
 software is installed. Additional global administrator accounts can be
 created. You can perform administration tasks from the Administration
@@ -40,7 +40,7 @@ the following URL pattern.
 
 . At the login screen, enter the complete administrator address - as
 *admin@domain.com* - and the password that was configured during
-serverinstallation of {product-name}.
+server installation of {product-name}.
 +
 image::images/administration_console.png[Administration Console]
 
@@ -440,7 +440,7 @@ Rights*, *Configure Grants*, *Search Mail*.
 
 The *Configure* screen provides the *Configure* navigation pane and the
 *Configure* pages, which enable configurations for individual and/or
-globalcomponents.
+global components.
 
 image::images/administration_console_configure_ui.png[Configure UI]
 
@@ -905,7 +905,7 @@ your criteria.
 The *Help Center* is a reference of resources available from the online
 help and documentation, which you can access with the links provided in
 the *Help* *Center* screen. Use this page, also, to access community
-forums and to viewexpert responses to the top migration questions.
+forums and to view expert responses to the top migration questions.
 
 image::images/administration_console_help_center_ui.png[Help Center UI]
 

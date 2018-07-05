@@ -47,7 +47,7 @@ In the {product-name} configuration, mail transfer and delivery
 are distinct functions: Postfix acts as a MTA, and the Zimbra mail
 server acts as a Mail Delivery Agent (MDA).
 
-The MTA configuration is stored in LDAP. The zmconfigd process polls the
+The MTA configuration is stored in LDAP. The `zmconfigd` process polls the
 LDAP directory every two minutes for modifications and updates the
 Postfix configuration files with the changes.
 
@@ -232,7 +232,7 @@ https:// wiki.zimbra.com/wiki/Anti-spam_strategies.
 
 [[spam_assassin_score]]
 *Managing the Spam Assassin Score:* SpamAssassin uses predefined rules
-aswell as a Bayes database to score messages with a numerical range.
+as well as a Bayes database to score messages with a numerical range.
 Zimbra uses a percentage value to determine "`spaminess`" based on a
 SpamAssassin score of 20 as 100%. Any message tagged between 33%-75% is
 considered spam and delivered to the user's junk folder. Messages tagged
@@ -258,7 +258,7 @@ When this is enabled, Berkeley DB database is not enabled.
 
 [[training_spam_filter]]
 *Training the Spam Filter* -- The effectiveness of the anti-spam filter is
-dependenton user input to differentiate spam or ham. The SpamAssassin
+dependent on user input to differentiate spam or ham. The SpamAssassin
 filter learns from messages that users specifically mark as spam by
 sending them to their junk folder or not spam by removing them from
 their junk folder. A copy of these marked messages is sent to the
@@ -293,13 +293,13 @@ get accurate scores. To determine whether to mark messages as spam at least
 200 known spams and 200 known hams must be identified.
 
 [[spamassassin_sa_update_tool]]
-SpamAssassin's sa-update tool is included with SpamAssassin. This tool
+SpamAssassin's `sa-update` tool is included with SpamAssassin. This tool
 updates SpamAssassin rules from the SA organization. The tool is
 installed into `/opt/zimbra/common/bin`.
 
 [[config_final_destination_spam]]
 *Configuring Final Destination for Spam* -- You can configure Amavis
-behavior tohandle a spam item's final destination by using the following
+behavior to handle a spam item's final destination by using the following
 attribute:
 
 `zimbraAmavisFinalSpamDestiny`
@@ -340,7 +340,7 @@ The email is silently discarded (not delivered).
 
 [[setting_up_trusted_netorks]]
 *Setting Up Trusted Networks:* The {product-abbrev} configuration allows
-relaying only forthe local network, but you can configure trusted networks
+relaying only for the local network, but you can configure trusted networks
 that are allowed to relay mail. You set the MTA trusted networks as a
 global setting, but you can configure trusted networks as a server
 setting. The server setting overrides the global setting.
@@ -375,7 +375,7 @@ following examples:
 *Enabling a Milter Server:* Milter server can be enabled to enforce
 restrictions on which addresses can send to distribution lists and add
 *Reply-To* and *X-Zimbra-DL* headers to messages sent from distribution
-lists. This can beenabled globally or for specific servers from the
+lists. This can be enabled globally or for specific servers from the
 Administration Console.
 
 [NOTE]
@@ -447,11 +447,11 @@ any <<postscreen_attributes,Postscreen Attributes>> that provide the
 ignore, enforce, or drop instruction, use guidelines as follows:
 
 * _ignore_ -- Ignore this result. Allow other tests to complete. Repeat this
-testwith subsequent client connections. This is the default setting, which
+test with subsequent client connections. This is the default setting, which
 is useful for testing and collecting statistics without blocking mail.
 
 * _enforce_ -- Allow other tests to complete. Reject attempts to deliver
-mailwith a 550 SMTP reply, and log the hello/sender/recipient
+mail with a 550 SMTP reply, and log the hello/sender/recipient
 information. Repeat this test with subsequent client connections.
 
 * _drop_ -- Drop the connection immediately with a 521 SMTP reply.
@@ -466,7 +466,7 @@ You can see example usages of these attributes in
 
 * `zimbraMtaPostscreenAccessList` -- Default = permit_mynetworks
 +
-Postconf postscreen_access_list setting, which is the permanent white/
+Postconf `postscreen_access_list` setting, which is the permanent white/
 blacklist for remote SMTP client IP addresses. Postscreen(8) searches this
 list immediately after a remote SMTP client connects. Specify a comma- or
 whitespace -separated list of commands (in upper or lower case) or lookup
@@ -501,7 +501,7 @@ one-letter suffix that specifies the time unit). Time units: s (seconds), m
 * `zimbraMtaPostscreenBlacklistAction` -- Default = ignore
 +
 The action that postscreen(8) is to take when a remote SMTP client is
-permanently blacklisted with the postscreen_access_list parameter, as
+permanently blacklisted with the `postscreen_access_list` parameter, as
 either ignore, enforce, or drop.
 
 * `zimbraMtaPostscreenCacheCleanupInterval` -- Default = 12h
@@ -555,12 +555,12 @@ postscreen(8) will update an SMTP client's DNSBL score with each non-error
 reply.
 
 [WARNING]
-When postscreen rejects mail, it replies with the DNSBL domainname. Use the
+When postscreen rejects mail, it replies with the DNSBL domain name. Use the
 `postscreen_dnsbl_reply_map` feature to hide "`password`" information in
 DNSBL domain names.
 
 When a client's score is equal to or greater than the threshold specified
-with postscreen _dnsbl_threshold, postscreen(8) can drop the connection
+with `postscreen_dnsbl_threshold`, postscreen(8) can drop the connection
 with the remote SMTP client.
 
 Specify a list of `domain=filter*weight` entries, separated by comma or
@@ -599,7 +599,7 @@ postscreen_dnsbl_sites = example.com=127.0.0.4
 +
 Value to define the inclusive lower bound for blocking a remote SMTP
 client, based on its combined DNSBL score as defined with the
-postscreen_dnsbl_sites parameter.
+`postscreen_dnsbl_sites` parameter.
 
 * `zimbraMtaPostscreenDnsblTTL` -- Default = 1h
 +
@@ -618,7 +618,7 @@ protocol tests, based on its combined DNSBL score as defined with the
 `postscreen_dnsbl_sites` parameter.
 +
 Specify a negative value to enable this feature. When a client passes the
-postscreen_dnsbl_whitelist_threshold without having failed other tests, all
+`postscreen_dnsbl_whitelist_threshold` without having failed other tests, all
 pending or disabled tests are flagged as completed with a time-to-live
 value equal to `postscreen_dnsbl_ttl`. When a test was already completed, its
 time-to-live value is updated if it was less than `postscreen_dnsbl_ttl`.
@@ -643,7 +643,7 @@ one-letter suffix that specifies the time unit). Time units: s (seconds), m
 * `zimbraMtaPostscreenNonSmtpCommandAction` -- Default = drop
 +
 The action that postscreen(8) takes when a remote SMTP client sends
-non-SMTP commands as specified with the postscreen_forbidden_ commands
+non-SMTP commands as specified with the `postscreen_forbidden_` commands
 parameter, as either ignore, enforce, or drop.
 
 * `zimbraMtaPostscreenNonSmtpCommandEnable` -- Default = no
@@ -734,7 +734,7 @@ list.
 
 [NOTE]
 IPv6 address information must be specified inside `[]` in
-`thepostscreen_whitelist_interfaces` value, and in files specified with
+the `postscreen_whitelist_interfaces` value, and in files specified with
 `/file/name`. IP version 6 addresses contain the "`:`" character, and would
 otherwise be confused with a `type:table` pattern.
 
@@ -754,7 +754,7 @@ The minimum amount of time that postscreen(8) is allowed -- resulting from a
 successful DNS -based reputation test -- before a client IP address is
 required to pass that test again. If the DNS reply specifies a larger TTL
 value, that value will be used unless it would be larger than
-postscreen_dnsbl_max_ttl.
+`postscreen_dnsbl_max_ttl`.
 +
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m
@@ -767,7 +767,7 @@ The maximum amount of time allowable for postscreen(8) to use the result
 from a successful DNS-based reputation test before a client IP address is
 required to pass that test again. If the DNS reply specifies a shorter TTL
 value, that value will be used unless it would be smaller than
-postscreen_dnsbl_min_ttl.
+`postscreen_dnsbl_min_ttl`.
 
 Specify a non-zero time value (an integral value plus an optional
 one-letter suffix that specifies the time unit). Time units: s (seconds), m

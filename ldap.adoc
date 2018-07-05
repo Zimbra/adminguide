@@ -40,7 +40,7 @@ are organized by domain.  Entries belong to a domain, such as accounts,
 groups, aliases, are provisioned under the domain DN in the directory.  The
 config branch contains admin system entries that are not part of a domain.
 Config branch entries include system admin accounts, global config, global
-grants, COS, servers, mime types, and zimlets.
+grants, COS, servers, mime types, and Zimlets.
 
 The Zimbra LDAP Hierarchy figure shows the Zimbra LDAP hierarchy.  Each
 type of entry (object) has certain associated object classes.

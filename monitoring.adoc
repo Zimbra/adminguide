@@ -123,16 +123,16 @@ the number of recipients who received messages.
 Server-specific statistics also include the following details:
 
 * *Disk* -- for a selected server displays the disk used and the disk
-spaceavailable.  The information is displayed for the last hour, day,
+space available.  The information is displayed for the last hour, day,
 month, and year.
 
 * *Session* -- displays information about the active Web client,
-administratorand IMAP sessions.  You can see how many active sessions are
+administrator and IMAP sessions.  You can see how many active sessions are
 opened, who is logged on, when the session was created and the last time
 the session was accessed.
 
 * *Mailbox Quota* -- displays information about each account sorted
-bymailbox size in descending order.  See
+by mailbox size in descending order.  See
 <<monitoring_mailbox_quotas,Monitoring Mailbox Quotas>>.
 
 === Configuring Logger Mail Reports
@@ -182,7 +182,7 @@ zmdisklog_warn_threshold
 zmdisklog_critical_threshold
 ----
 
-When starting services with zmcontrol, if the threshold is exceeded, a
+When starting services with `zmcontrol`, if the threshold is exceeded a
 warning is displayed before the services are started.  You should clean up
 your disk to free up space.
 
@@ -248,7 +248,7 @@ DosFilter is only applied to HTTP and HTTPS requests, in other words, it does no
 === Identifying False Positives
 
 Sometimes Zimbra Connector for Outlook (ZCO), mobile ActiveSync clients, or
-running some zmprov commands trigger the DoSFilter.  When this happens, the
+running some `zmprov` commands trigger the DoSFilter.  When this happens, the
 Zimbra mailbox service is unavailable.  You can review the following logs
 to see if the DoSFilter was applied.
 
@@ -276,7 +276,7 @@ ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?
 
 === Customizing DoSFilter Configuration
 
-The following attributes are used with zmprov to configure the DoSFilter.
+The following attributes are used with `zmprov` to configure the DoSFilter.
 These attributes can be configured as global settings and as server
 settings.  If these attributes are set in the server, the server settings
 override the global settings.
@@ -349,7 +349,7 @@ masterLDAP server are automatically whitelisted by IP address.  These hosts
 are discovered using a *GetAllServersRequest*.  Type as `zmprov gas`.
 
 * *External Provisioning Hosts/SOAP API* -- External provisioning hosts can
-beadded to the IP whitelist to ensure that the DoSFilter does not block
+be added to the IP whitelist to ensure that the DoSFilter does not block
 some requests.  For example, a mailbox reindex might make several calls per
 second that can trigger the DoSFilter.
 
@@ -464,10 +464,10 @@ in a queue:
 active,deferred, and corrupt messages can be moved to the Held queue.
 Messages stay in this queue until the administrator moves them.
 
-* *Release* to remove all message from the Held queue.  Messages aremoved
+* *Release* to remove all message from the Held queue.  Messages are moved
 to the Deferred queue.
 
-* *Requeue* all messages in the queue being viewed.  Requeuing messagescan
+* *Requeue* all messages in the queue being viewed.  Requeuing messages can
 be used to send messages that were deferred because of a configuration
 problem that has been fixed.  Messages are re-evaluated and earlier
 penalties are forgotten.
@@ -549,12 +549,12 @@ The types of authentication failures checked include:
 second window.
 
 * *Account check* -- The default is to send an email alert if 15
-authenticationfailures from any IP address occur within a 60 second window.
+authentication failures from any IP address occur within a 60 second window.
 This check attempts to detect a distributed hijack based attack on a single
 account.
 
 * *IP check* -- The default is to send an email alert if 20 authentication
-failuresto any account occur within a 60 second window.  This check
+failures to any account occur within a 60 second window.  This check
 attempts to detect a single host based attack across multiple accounts.
 
 * *Total authentication failure check* -- The default is to send an email
@@ -563,7 +563,7 @@ alert if1000 auth failures from any IP address to any account occurs within
 on the mailbox server.
 
 The default values that trigger an email alert are changed in the following
-zmlocalconfig parameters:
+`zmlocalconfig` parameters:
 
 * IP/Account value, change `zimbra_swatch_ipacct_threshold`
 * Account check, change `zimbra_swatch_acct_threshold`
@@ -585,21 +585,21 @@ Local logs containing {product-name} activity are in the `/opt/zimbra/log`
 directory.
 
 * *audit.log* -- This log contains authentication activity of users
-andadministrators and login failures.  In addition, it logs admin activity
+and administrators and login failures.  In addition, it logs admin activity
 to be able to track configuration changes.
 
 * *clamd.log* -- This log contains activity from the anti-virus application
 clamd.
 
 * *freshclam.log* -- This log contains log information related to the
-updating ofthe clamd virus definitions.
+updating of the clamd virus definitions.
 
 * *mailbox.log* -- This log is a mailboxd log4j server log containing the
 logs from the mailbox server.  This includes the mailbox store, LMTP
 server, IMAP and POP servers, and Index server.
 
 * *myslow.log* -- This slow query log consists of all SQL statements from
-themailbox server that took more then `long_query_time` seconds to execute.
+the mailbox server that took more then `long_query_time` seconds to execute.
 +
 [NOTE]
 `long_query_time` is defined in `/opt/zimbra/conf/my.cnf`.
@@ -641,7 +641,7 @@ Administration Console.
 
 By default, mailboxd is configured to log its output to
 `/opt/zimbra/log/mailbox.log`.  You can enable mailboxd to take advantage
-of a centralizedsyslogd infrastructure by enabling the following either
+of a centralized syslogd infrastructure by enabling the following either
 globally or by server:
 
 [source,bash]
@@ -839,7 +839,7 @@ The following key value pairs are currently supported and may be recorded in log
 * `oproto` -- originating protocol of request. This can be passed by internal components that make SOAP requests on behalf of a user (e.g. MTA and IMAPd)
 
 The example below is a record showing that
-on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP 10.1.1.136.
+on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP `10.1.1.136`.
 
 image:images/poplogmessage.png[Mailbox Log Entry for POP]
 
@@ -871,7 +871,7 @@ signals that some type of error was detected.
 ====
 
 Sometimes a stack trace is displayed after the exceptions notification.  A
-stack trace reports the threads and monitors in the zimbra's *mailboxd*
+stack trace reports the threads and monitors in Zimbra's *mailboxd*
 service.  This information aids in debugging, because the trace shows where
 the error occurred.  The last few entries in the stack often indicate the
 origin of the problem.  When the *caused by* descriptor is included in the
@@ -1032,7 +1032,7 @@ primary recipients.
 * *Message-ID* -- Unique number used for tracing mail routing
 
 * *In-Reply-To* -- Message ID of the message that is a reply to.  Used to
-linkrelated messages together.
+link related messages together.
 
 * *Received: from* -- The name and IP address the message was sent from. The
 header displays Received: from information from the MTA to the LMTP and
@@ -1053,7 +1053,7 @@ search to identify that the index is corrupt.  You must monitor the index
 log for messages about corrupt indexes.  If the server detects a corrupt
 index, a message is logged to the Zimbra mailbox.log at the WARN logging
 level.  The message starts with *Possibly corrupt index*.  When this
-message is displayed, the administratormust correct the problem.  In many
+message is displayed, the administrator must correct the problem.  In many
 cases correcting the problem might mean reindexing the mailbox.
 
 Reindexing a mailbox's content can take some time, depending on the number
@@ -1124,7 +1124,7 @@ When the MariaDB database is checked, running this report can consume a
 significant amount of I/O.  This should not present a problem, but if you
 find that running this report does affect your operation, you can change
 the frequency with which zmbintegrityreport is run.  See
-<<zcs_crontab_jobs,{product-abbrev} Contrab Jobs>>.
+<<zcs_crontab_jobs,{product-abbrev} Crontab Jobs>>.
 
 == Checking for {product-name} Software Updates
 

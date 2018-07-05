@@ -42,10 +42,10 @@ Via the Administration Zimlet
 
 * Under Real Time Scanner, press the `Enable` button.
 
-*Note: When the Real Time Scanner is enabled for the first time or
+NOTE: When the Real Time Scanner is enabled for the first time or
 re-enabled after a stop, a Live Full Scan is required. A warning will be
 displayed after enabling the Real Time Scanner, and you will be prompted
-to start the Full Scan.*
+to start the Full Scan.
 
 [[via-the-cli]]
 Via the CLI
@@ -344,9 +344,9 @@ user.
 
 To create a valid export directory, run the following commands:
 
-_mkdir /opt/zimbra/backup/yourdestfolder_
+`mkdir /opt/zimbra/backup/yourdestfolder`
 
-_chown -R zimbra:zimbra /opt/zimbra/backup/yourdestfolder_
+`chown -R zimbra:zimbra /opt/zimbra/backup/yourdestfolder`
 
 [[preparing-the-migration]]
 Preparing the Migration
@@ -356,9 +356,9 @@ To minimize the risk of errors, please perform the following
 maintenance procedures before migrating:
 
 * Double check Zimbra permissions with the following command (must be ran
-as root): _/opt/zimbra/libexec/zmfixperms --verbose --extended_
+as root): `/opt/zimbra/libexec/zmfixperms --verbose --extended`
 * Reindex all mailboxes.
-* Check the BLOB consistency with the _zxsuite hsm doCheckBlobs_ utility.
+* Check the BLOB consistency with the `zxsuite hsm doCheckBlobs` utility.
 
 [[running-an-external-backup]]
 Running an External Backup
@@ -538,8 +538,10 @@ How Does it Work?
 
 During an Undelete Restore, the Backup NG engine searches the backup
 datastore for items flagged as `DELETED` and restores them in a
-dedicated folder in the selected mmailbox. WARNING: To
-deal with IMAP-deleted emails in a more comfortable way for the user:
+dedicated folder in the selected mailbox.
+
+WARNING: To
+deal with IMAP-deleted emails in a more comfortable way for the user,
 the `deleted` IMAP flag will now be stripped from any restored item so
 that the item itself is visible in the Zimbra Web Client.
 
@@ -1088,7 +1090,7 @@ test.domain.com_________________________________________________________________
 ....
 
 The \{zimbrahome}/conf/ and \{zimbrahome}/postfix/conf/ directories are
-backed up aswell:
+backed up as well:
 
 ....
 zimbra@test:~$ zxsuite backup getServerConfig customizations date last verbose true
@@ -1586,7 +1588,7 @@ more than 1 transaction can affect the same item at once.
 case of a crash (e.g. power loss or hardware failure).
 
 Due to this, it's very easy to make a backup. The best (and
-easiest) way to do so is by using *http://rsync.samba.org/[rsync]*.
+easiest) way to do so is by using `http://rsync.samba.org/[rsync]`.
 Specific options and parameters depend on many factors, such as the
 amount of data to be synced and the storage in use, while connecting to
 an rsync daemon instead of using a remote shell as a transport is
@@ -1734,7 +1736,7 @@ a Singlestore environment.
 The different servers will be configured and managed separately via
 the Administration Zimlet, but certain operations like Live Full
 Scan and Stop All Operations can be 'broadcast' to all the mailstores
-via the _zxsuite_ CLI using the _--hostname all_servers_ option. This
+via the `zxsuite_ CLI using the _--hostname all_servers` option. This
 applies also to Backup NG settings (see the CLI wiki page for more
 details).
 
@@ -2032,7 +2034,7 @@ What Will be Migrated?
 
 * Emails and email folders
 * Contacts and address books
-* Appontments and calendars
+* Appointments and calendars
 * Tasks and task lists
 * Files and briefcases
 * Share informations
@@ -2201,7 +2203,7 @@ Backup NG or plan to do so on the destination server.
 _(You can skip this step if you choose to transfer your data by other
 means than rsync.)_
 
-Using _rsync_, copy the data contained in the
+Using `rsync`, copy the data contained in the
 /opt/zimbra/backup/ng/ onto a directory in the destination server
 (make sure the Zimbra user has r/w permissions on the folder). Use a
 terminal multiplexer like _screen_ or _tmux_. This process might
@@ -2225,7 +2227,7 @@ device (or the proper disk file if running on a virtual environment).
 After moving the disk, you can remotely mount it back to the source
 server (e.g. via SSHFS), as the additional synchronizations needed for
 the migration will involve much less data. In this case, be sure to
-remount the device on the source server as /opt/zimbra/backup/ng/
+remount the device on the source server as `/opt/zimbra/backup/ng/`
 with all due permissions.
 
 [[step-5-first-import]]
@@ -2240,7 +2242,7 @@ zxsuite backup doExternalRestore /path/for/the/data/
 
 Network NG imports your data onto the destination server.
 
-''Warning: Do not edit nor delete the backup path after this step.''
+WARNING: Do not edit or delete the backup path after this step.
 
 [[first-import-via-the-administration-zimlet]]
 First Import via the Administration Zimlet
