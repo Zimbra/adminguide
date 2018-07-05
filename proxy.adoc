@@ -29,6 +29,7 @@ Benefits for using Zimbra Proxy include:
 For more information, see the wiki page
 https://wiki.zimbra.com/wiki/Zimbra_Proxy_Guide[Zimbra_Proxy_Guide].
 
+[[zimbra_proxy_components]]
 == Zimbra Proxy Components
 
 Zimbra Proxy is designed to provide a HTTP/POP/IMAP proxy that is quick,
