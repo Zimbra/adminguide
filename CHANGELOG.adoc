@@ -3,6 +3,12 @@ Zimbra Administration Guide ChangeLog
 
 :website: https://www.zimbra.com
 
+Version 8.8.9
+-------------
+.Additions and changes
+- Added Voice Services section.
+- General cleanup: fixed broken links, spelling and format issues.
+
 Version 8.7
 -----------
 .Additions and changes

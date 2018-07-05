@@ -277,15 +277,15 @@ name when `zmconfigarchive` is run.
 ==== Administering the archive server
 
 The `amavisd-new` server process controls account archiving as well as
-antivirus and antispam processes. The `zmarchivectl` command can be used to
+antivirus and anti-spam processes. The `zmarchivectl` command can be used to
 start, stop, restart or obtain the status of the amavisd-new server process
 that controls account archiving. Caution should be taken when starting or
 stopping the archiving process as it is a shared server process between
-archiving, antivirus, and antispam processes. Performing actions on any of
+archiving, antivirus, and anti-spam processes. Performing actions on any of
 them affect any of the other services that may be enabled in your
 deployment.
 
-If you want to disable archiving and not antivirus, or antispam services,
+If you want to disable archiving and not antivirus, or anti-spam services,
 disable the respective service either through the CLI or through the
 Administration Console.
 

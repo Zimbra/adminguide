@@ -320,7 +320,7 @@ Restore accounts from the LDAP backup
 
 |zmrestoreoffline |
 (Offline Restore) Performs full restore when the Zimbra server (i.e.,
-the mailboxd process) is down
+the `mailboxd` process) is down
 
 |zmsaslauthdctl  |
 Start, stop, or find the status of saslauthd (authentication)
@@ -500,7 +500,7 @@ topics:
 .`zmprov` -- Account Provisioning Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 |addAccountAlias (aaa) |
 {name@domain \| id \| adminName} {alias@domain}|
 [source,bash]
@@ -649,7 +649,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 .`zmprov` -- Calendar Resource Provisioning Commands
 [cols="2m,3",options="header",]
 |=======================================================================
-|Commnad |Syntax
+|Command |Syntax
 
 |createCalendarResource (ccr) |
 {name@domain} [attr1 value1 [attr2 value2]...]
@@ -681,7 +681,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 .`zmprov` -- Free Busy Commands
 [cols="2m,3",options="header",]
 |=======================================================================
-|Commnad |Syntax
+|Command |Syntax
 
 |getAllFbp (gafbp) | [-v]
 
@@ -700,7 +700,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 .`zmprov` -- Domain Provisioning Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |countAccount (cta) |
 {domain \| id} |
@@ -760,7 +760,7 @@ updated when a domain is renamed.
 .`zmprov` -- COS Provisioning Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |copyCos (cpc) |
 {src-cos-name \| id} {dest-cos-name} |
@@ -815,7 +815,7 @@ zmprov rc Executive Business
 .`zmprov` -- Server Provisioning Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |createServer (cs) |
 {name} [attr1 value1]... |
@@ -849,8 +849,8 @@ zmprov ms domain.com zimbraVirusDefinitionsUpdateFrequency 2h
 ----
 
 |getAllMtaAuthURLs (gamau) | |
-Used to publish into saslauthd.conf what servers should be used for
-saslauthd.conf MTA auth
+Used to publish into `saslauthd.conf` what servers should be used for
+`saslauthd.conf` MTA auth
 
 |getAllMemcachedServers (gamcs) | |
 Used to list memcached servers (for nginix use).
@@ -863,7 +863,7 @@ Used to list memcached servers (for nginix use).
 .`zmprov` -- Config Provisioning Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |getAllConfig (gacf) |
 [-v] |
@@ -896,7 +896,7 @@ Modifies the LDAP settings.
 .`zmprov` -- Distribution List Provisioning Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |createDistributionList (cdl) |
 {list@domain} |
@@ -962,7 +962,7 @@ zmprov md list@domain.com
 .`zmprov` -- Mailbox Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |getMailboxInfo (gmi) |
 {account} |
@@ -1010,7 +1010,7 @@ Only specify the hostname parameter when unlocking a mailbox after a failed move
 .`zmprov` -- Miscellaneous Provisioning Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |countObjects (cto) |
 {type} [-d {domain \| id}] |
@@ -1053,7 +1053,7 @@ Generates preAuth values for comparison.
 .`zmprov` -- Logs Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |addAccountLogger (aal) |
 {name@domain \| id} {logging-category} {debug \| info \| warn \| error} |
@@ -1087,7 +1087,7 @@ logging categories.
 .`zmprov` -- Search Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |searchGAL (sg) |
 {domain} {name} |
@@ -1111,19 +1111,20 @@ logging categories.
 
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |getShareInfo (gsi) |
 {owner-name \| owner-id} |
 
 |=======================================================================
 
+[[unified_communication_service_cmds]]
 ==== Unified Communication Service Commands
 
 .`zmprov` -- Unified Communication Service Commands
 [cols="1m,2m,2a",options="header",]
 |=======================================================================
-|Commnad |Syntax |Example/Notes
+|Command |Syntax |Example/Notes
 
 |createUCService (cucs) |
 {name} [attr1 value1 [attr2 value2]...] |
@@ -1151,7 +1152,7 @@ logging categories.
 .`zmprov` -- IMAP/POP Proxy Commands
 [cols="1m,2",options="header",]
 |=======================================================================
-|Commnad |Example/Notes
+|Command |Example/Notes
 
 |getAllReverseProxyURLs (garpu) |
 Used to publish into nginx.conf the servers that should be used for reverse
@@ -1161,7 +1162,7 @@ proxy lookup.
 Returns the list of servers that have
 `zimbraReverseProxyLookupTarget=TRUE`.
 
-Basically if a mailbox server is available for lookup requests from the
+Indicates whether a mailbox server is available for lookup requests from the
 proxy.
 
 |getAllReverseProxyDomains (garpd) |
@@ -1312,7 +1313,7 @@ Then type zmloggerctl start, to start the logger.
 zmprov gs server.com attribute=value
 ----
 
-For example, zmprov gs example.com zimbraServiceEnabled=ldap to find out if
+For example, `zmprov gs example.com zimbraServiceEnabled=ldap` to find out if
 the ldap service is enabled.
 ====
 
@@ -1503,7 +1504,7 @@ zmprov rim <user@example.com> start
 
 === zmaccts
 
-Use zmaccts to run a report that lists all the accounts, their status,
+Use `zmaccts` to run a report that lists all the accounts, their status,
 when they were created and the last time anyone logged on.  The domain
 summary shows the total number of accounts and their status.
 
@@ -1516,7 +1517,7 @@ zmaccts
 
 === zmarchiveconfig
 
-Use zmarchiveconfig for configuring the archiving mailbox.  It has the
+Use `zmarchiveconfig` for configuring the archiving mailbox.  It has the
 option of using short commands or full names for commands that lead to the
 same function being carried out.
 
@@ -1571,7 +1572,7 @@ Activates debug mode (dumps SOAP messages)
 
 === zmarchivectl
 
-Use zmarchivectl to start, stop, reload, or check the status of the Zimbra
+Use `zmarchivectl` to start, stop, reload, or check the status of the Zimbra
 account archive.
 
 ==== Syntax
@@ -1583,7 +1584,7 @@ zmarchivectl start|stop|reload|status
 
 === zmarchivesearch
 
-Use zmarchivesearch to search across account archives.  You can search
+Use `zmarchivesearch` to search across account archives.  You can search
 for archives that match specific criteria and save copies to a
 directory.
 
@@ -1601,27 +1602,27 @@ zmarchivesearch {-m <user@domain.com>} {-q <query_string>} [-o <offset>] [-l <li
 |Long Name |Short Name |Description
 
 |--dir |-d |
-<arg> Directory to write messages to.  If none is specified, then only the
+`<arg>` Directory to write messages to.  If none is specified, then only the
 headers are fetched.  Filenames are generated in the form
-RESULTNUM_ACCOUNT-ID_MAILITEMID
+`RESULTNUM_ACCOUNT-ID_MAILITEMID`
 
 |--help |-h |
 Displays help messages
 
 |--limit |-l |
-<arg> Sets the limit for the number of results returned.  The default is 25
+`<arg>` Sets the limit for the number of results returned.  The default is 25
 
 |--mbox |-m |
-<arg> Name of archive account to search
+`<arg>` Name of archive account to search
 
 |--offset |-o |
-<arg> Specifies where the hit list should begin.  The default is 0
+`<arg>` Specifies where the hit list should begin.  The default is 0
 
 |--query |-q |
-<arg> The query string for archive search
+`<arg>` The query string for archive search
 
 |--server |-s |
-<arg> Mail server hostname.  Default is localhost
+`<arg>` Mail server hostname.  Default is localhost
 
 |--verbose |-v |
 Allows printing of status messages while the search is being executed
@@ -1639,7 +1640,7 @@ zmarchivesearch -m user1@yourdomain.com -q "in:sent" -o 0 -l 30 -d /var/tmp
 
 === zmbackup
 
-Use zmbackup to perform full backups and incremental backups for a
+Use `zmbackup` to perform full backups and incremental backups for a
 designated mail host.
 
 This utility has short option names and full names.  The short option is
@@ -1662,7 +1663,7 @@ zmbackup {-f | -i | del} {-a <arg>} [options]
 |Long Name |Short Name |Description
 
 |--account |-a |
-<arg> Account email addresses separated by white space or all for all
+`<arg>` Account email addresses separated by white space or all for all
 accounts.  This option is not specified for auto-grouped backups since the
 system knows which accounts to backup every night.
 
@@ -1670,7 +1671,7 @@ system knows which accounts to backup every night.
 Display diagnostics for debugging purposes.
 
 |--delete |-del |
-<arg> Deletes the backups including and prior to the specified label, date
+`<arg>` Deletes the backups including and prior to the specified label, date
 (YYYY/MM/DD[-hh:mm:ss]) or period (nn(d \| m \| y]).
 
 |--excludeBlobs | |
@@ -1711,14 +1712,14 @@ config is used.
 Backs up blobs as individual files rather than in zip files.
 
 |--server |-s |
-<arg> Mail server host name.  For format, use either the plain host name or
+`<arg>` Mail server host name.  For format, use either the plain host name or
 the server.domain.com name.  The default is the localhost name.
 
 |--sync |-sync |
 Runs full backup synchronously.
 
 |--target |-t |
-<arg> Specifies the target backup location.  The default is
+`<arg>` Specifies the target backup location.  The default is
 `/opt/zimbra/backup`.
 
 |--zip |-z |
@@ -1825,7 +1826,7 @@ volumes
 
 === zmcalchk
 
-Use zmcalchk to check the consistency of appointments on the Zimbra
+Use `zmcalchk` to check the consistency of appointments on the Zimbra
 calendar and sends an email notification regarding inconsistencies.  For
 example, it checks if all attendees and organizers of an event on the
 calendar agree on start/stop times and occurrences of a meeting.
@@ -1862,7 +1863,7 @@ appointment
 
 === zmschedulebackup
 
-Use zmschedulebackup to schedule backups and add the command to your cron
+Use `zmschedulebackup` to schedule backups and add the command to your cron
 table.
 
 The default schedule is as follows:
@@ -2075,7 +2076,7 @@ Displays the usage options for this command
 |--label |-lb |
 `<arg>` Label of the full backup to be aborted.
 
-Use the zmbackupquery, to find the label name.
+Use `zmbackupquery`, to find the label name.
 
 |--restore |-r |
 Abort the restore in process
@@ -2093,7 +2094,7 @@ The default is `/opt/zimbra/backup`.
 
 === zmbackupquery
 
-Use zmbackupquery to find full backup sets.  The command can be used to
+Use `zmbackupquery` to find full backup sets.  The command can be used to
 find a specific full backup set or full backup sets since a specific date,
 or all backup sets in the backup directory.
 
@@ -2250,7 +2251,7 @@ Restores the account in directory service.
 `<arg>` Replay up to and including this redo log sequence.
 
 |--restoreToTime | |
-`<arg>` Replay rodo logs until this time.
+`<arg>` Replay redo logs until this time.
 
 |--restorefullBackupOnly |-rf |
 Restores to the full backup only, not any incremental backups since that
@@ -2311,7 +2312,7 @@ zmrestore -a user1@domain.com -ca -pre new_
 
 `zmrestoreoffline` requires that the following is true:
 
-- mailboxd IS NOT running
+- `mailboxd` IS NOT running
 - SQL database IS RUNNING
 - LDAP directory IS RUNNING
 
@@ -2370,7 +2371,7 @@ Restores the account in directory service.
 `<arg>` Replay up to and including this redo log sequence.
 
 |--restoreToTime | |
-`<arg>` Replay rodo logs until this time.
+`<arg>` Replay redo logs until this time.
 
 |--restoreFullBackupOnly |-rf |
 Restores to the full backup only, not any incremental backups since that
@@ -2412,7 +2413,7 @@ zmrestoreoffline -s server1.domain.com
 
 === zmrestoreldap
 
-Use zmrestoreldap to restore accounts from the LDAP backup.
+Use `zmrestoreldap` to restore accounts from the LDAP backup.
 
 ==== Syntax
 [source,bash]
@@ -2547,9 +2548,9 @@ Request that the status message print while the search is being executed.
 
 ==== Example
 
-The following example is to do a cross-mailbox search in the inbox folder
-of two different mailboxes on the specified server and put a copy of the
-message in to the specified directory.
+The following example performs a cross-mailbox search in the inbox folder
+of two different mailboxes on the specified server and puts a copy of the found
+messages in to the specified directory.
 
 .Cross-mailbox search
 ====
@@ -2561,7 +2562,7 @@ zmmboxsearch -m user1@yourdomain.com,user2@yourdomain.com -q "in:inbox" -d /var/
 
 === zmmboxmove
 
-Use zmmboxmove to move mailboxes.  The destination server manages the
+Use `zmmboxmove` to move mailboxes.  The destination server manages the
 overall move process.  Using the `zmmboxmove` command significantly reduces
 the account lockout time.
 
@@ -2570,7 +2571,7 @@ server to another.  Mailboxes can be moved between Zimbra servers that
 share the same LDAP server.  All the files are copied to the new server and
 the LDAP is updated.  After the mailbox is moved to a new server a copy
 still remains on the older server, but the status of the old mailbox is
-closed.  Users cannot log on and mail is not delivered.  You should check
+`closed`.  Users cannot log on and mail is not delivered.  You should check
 to see that all the mailbox content was moved successfully before purging
 the old mailbox.
 
@@ -2689,7 +2690,7 @@ This syncs new and updated contact data only.
 The datasource ID the LDAP datasource ID.  The datasource name is the name
 of the address book (folder) in the GAL account created to sync LDAP to.
 
-A cron job can be set up to run trickleSync.
+A cron job can be set up to run `trickleSync`.
 
 |fullSync |
 This syncs all LDAP contact data.  You can also set this from the
@@ -2722,16 +2723,16 @@ in {product-abbrev}:
 
 * *LDAP Root password*.  This is used for internal LDAP operations.
 
-* *LDAP Postfix password*.  This is the password used by the postfix user
-toidentify itself to the LDAP serve and must be configured on the MTA
+* *LDAP Postfix password*.  This is the password used by the `postfix` user
+to identify itself to the LDAP server and must be configured on the MTA
 server to be the same as the password on the LDAP master server.
 
-* *LDAP Amavis password*.  This is the password used by the amavis userto
+* *LDAP Amavis password*.  This is the password used by the `amavis` user to
 identify itself to the LDAP server and must be configured on the MTA server
 to be the same as the password on the LDAP server.
 
 * *LDAP Replication password*.  This is the password used by the
-LDAPreplication user to identify itself to the LDAP master and must be the
+`LDAPreplication` user to identify itself to the LDAP master and must be the
 same as the password on the LDAP master server.
 
 ==== Syntax
@@ -3029,10 +3030,10 @@ mbox> sm --admin-priv foo@domain.com
 .Authenticate as a delegated admin user
 ====
 This lets one user login to another user's mailbox.  The authenticating
-user must be a delegated admin account and must have `adminLoginAs` right
+user must be a delegated admin account and must have the `adminLoginAs` right
 on the target mailbox.  This auth option uses a non-admin auth token.  Use
 the `--auth` option to specify the authenticating account.  To login as
-user bar and open mailbox foo:
+user `bar` and open mailbox `foo`:
 
 [source,bash]
 ----
@@ -3115,7 +3116,7 @@ Only `zimbraMailMode` *HTTPS* can ensure that no listener will be available
 on HTTP/port 80, that no client application will try to auth over HTTP, and
 that all data exchanged with the client application will be encrypted.
 
-*Mailboxd* has to be stopped and restarted for the change to take effect.
+Note, `mailboxd` has to be stopped and restarted for the change to take effect.
 
 [NOTE]
 If you switch to HTTPS, you use the self-signed certificate generated
@@ -3138,7 +3139,7 @@ zmtlsctl [mode]
 
 . Type `zmtlsctl [mode]` and press *ENTER*.
 . Type `zmmailboxdctl stop` and press *ENTER.*
-. When mailboxd is stopped, type `zmmailboxdctl start` and press *ENTER.*
+. When `mailboxd` is stopped, type `zmmailboxdctl start` and press *ENTER.*
 
 ==== Limitations When Using Redirect
 
@@ -3485,9 +3486,11 @@ Use `zmskindeploy` to simplify the process of deploying skins in ZWC.  This
 tool processes the skin deployment, enables the skin for all users of the
 ZWC deployment, and restarts the web server so that it recognizes the new
 skin.
-
+////
+//Linked wiki article is for ZCS prior to 8.x.
 For more information about this tool, see
-https://wiki.zimbra.com/index.php?title=About_Creating_{product-abbrev}_Themes.
+https://wiki.zimbra.com/index.php?title=About_Creating_ZCS_Themes.
+////
 
 ==== Syntax
 [source,bash]
@@ -3559,11 +3562,11 @@ follows the XPath syntax as: `[/]element1[/element2][/@attr][=value]`.
 === zmstat-chart
 
 Use `zmstat-chart` to collect statistical information for the CPU, IO,
-mailboxd, MTAqueue, MariaDB, and other components and to run a script on the
+`mailboxd`, MTAqueue, MariaDB, and other components and to run a script on the
 csv files to display the usage details in various charts.  These csv files
 are saved to `/opt/zimbra/zmstat/`.
 
-You must enable zmstat to collect the performance charts data:
+You must enable `zmstat` to collect the performance charts data:
 
 . Enter `zmprov ms {hostname} zimbraServerEnable stats`.
 . Restart the server, Enter:
@@ -3711,7 +3714,7 @@ specific users or all users.  A .ics rule file should first be created to
 run with this command.  A rule file lists a series of rules to match a time
 zone and the replacement time zone definitions.  More information about
 this command can be found at:
-https://wiki.zimbra.com/wiki/Changing_{product-abbrev}_Time_Zones.
+https://wiki.zimbra.com/wiki/Changing_ZCS_Time_Zones.
 
 
 ==== Syntax
@@ -3817,7 +3820,7 @@ Turns off the current secondary message volume.
 
 === zmzimletctl
 
-Use `zmzimletctl` to manage Zimlets and to list all zimlets on the server.
+Use `zmzimletctl` to manage Zimlets and to list all Zimlets on the server.
 Additional information is provided in <<zimlets,Zimlets>>.  Most Zimlet
 deployment can be completed from the Zimbra Administration Console.
 

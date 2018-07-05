@@ -360,12 +360,12 @@ check their email, but email is still delivered to the accounts.  If an
 account's status setting is marked as maintenance or closed, the account's
 status overrides the domain status setting.
 
-* *Maintenance*. When the domain status is markedas maintenance, users
+* *Maintenance*. When the domain status is marked as maintenance, users
 cannot log in and their email is queued at the MTA. If an account's status
 setting is marked as closed, the account's status overrides the domain
 status setting.
 
-* *Suspended*. When the domain status is marked assuspended, users cannot
+* *Suspended*. When the domain status is marked as suspended, users cannot
 log in, their email is queued at the MTA, and accounts and distribution
 lists cannot be created, deleted, or modified. If an account's status
 setting is marked as closed, the account's status overrides the domain
@@ -482,7 +482,7 @@ some reason, the traditional LDAP-based search is run.
 The GAL sync accounts are system accounts and do not use a Zimbra license.
 
 When you configure the GAL sync account, you define the GAL datasource and
-the contact data is syncd from the datasource to the GAL sync accounts'
+the contact data is synced from the datasource to the GAL sync accounts'
 address books. If the mode *Both* is selected, an address book is created
 in the account for each LDAP data source.
 
@@ -576,7 +576,7 @@ Admin Console: ::
 for authentication on the domain.  When you select Internal, no other
 configuration is required.
 
-* *External LDAP*. The user name and password is theauthentication
+* *External LDAP*. The user name and password is the authentication
 information supplied in the bind operation to the directory server. You
 must configure the LDAP URL, LDAP filter, and to use DN password to bind to
 the external server.
@@ -664,8 +664,8 @@ After the domain has been renamed
 
 * Update external references that you have set up for the old domain name
 to the new domain name. This may include automatically generated emails
-that were sent to the administrator's mailbox such as backup ses-sion
-notifications. Immediately run a full backup of the new domain
+that were sent to the administrator's mailbox such as backup session
+notifications. Immediately run a full backup of the new domain:
 
 [source,bash]
 ----
@@ -835,7 +835,7 @@ The server settings that can be viewed from the Administration Console,
 Configure Servers link for a specific server include:
 
 * General information about the service host name, and LMTP advertised name
-and bind address, and the number of threads that can simultane-ously
+and bind address, and the number of threads that can simultaneously
 process data source imports.
 
 * A list of enabled services. You can disable and enable the services.
@@ -970,7 +970,7 @@ Default = 1825 days (5 years)
 
 * A *commercial certificate* is issued by a certificate authority (CA) that
 attests that the public key contained in the certificate belongs to the
-organi-zation (servers) noted in the certificate.
+organization (servers) noted in the certificate.
 
 When {product-name} Server is installed, the self-signed certificate is
 automatically installed and can be used for testing {product-name}
@@ -1149,7 +1149,7 @@ DKIM-Signature a=rsa-sha1; q=dns;
 ----
 
 Receivers who successfully validate a DKIM signature can use information
-about the signer as part of a program to limit spam, spoofing, phising, or
+about the signer as part of a program to limit spam, spoofing, phishing, or
 other undesirable behavior.
 
 === Configure {product-name} for DKIM Signing
@@ -1273,7 +1273,7 @@ the domain, selector, private key, public signature and identity:
 == Anti-spam Settings
 
 {product-abbrev} uses SpamAssassin to control spam. SpamAssassin uses predefined rules
-as well as a Bayes database to score messages. Zimbra evaulates spaminess
+as well as a Bayes database to score messages. Zimbra evaluates spaminess
 based on percentage. Messages tagged between 33%-75% are considered spam
 and delivered to the user's junk folder. Messages tagged above 75% are not
 sent to the user and are discarded.
@@ -1330,7 +1330,7 @@ feedback system mailboxes are created to receive mail notification.
 * *Spam Training User* for mail that was not marked as spam but should be.
 
 * *Non-spam (referred to as ham) training user* for mail that was marked
-asspam but should not have been.
+as spam but should not have been.
 
 The mailbox quota and attachment indexing is disabled for these training
 accounts. Disabling quotas prevents bouncing messages when the mailbox is
@@ -1346,7 +1346,7 @@ When {product-abbrev} is installed, the spam/ham cleanup filter is configured on
 the first MTA. The {product-abbrev} spam training tool, *zmtrainsa*, is configured to
 automatically retrieve these messages and train the spam filter. The
 *zmtrainsa script* is enabled through a crontab job to feed mail to the
-SpamAssassinapplication, allowing SpamAssassin to 'learn' what signs are
+SpamAssassin application, allowing SpamAssassin to 'learn' what signs are
 likely to mean spam or ham. The zmtrainsa script empties these mailboxes
 each day.
 

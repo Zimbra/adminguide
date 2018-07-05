@@ -318,7 +318,7 @@ Check to see if the Chat Extension is loaded correctly in the `mailbox.log`
 (see the appropriate section of this guide about how to read the `mailbox.log`).
 
 Loading of the Zimbra Extension is granted by the following lines at
-the mailbbox startup:
+the mailbox startup:
 
 -----------------------------------------------------------------------
 xxxx-xx-xx xx:xx:xx,xxx INFO  [main] [] mailbox - OpenChat starting ...
@@ -345,7 +345,7 @@ If the problem persists, report the issue, mentioning the
 name of the conflicting Zimlet.
 
 If a user is stuck in the sidebar mode and another Zimlet has taken
-control of the siedebar, you can reset the Zimlet user setting to use the
+control of the sidebar, you can reset the Zimlet user setting to use the
 docked mode with these commands:
 
 ----------------------------------------------------------------------------------
@@ -511,7 +511,7 @@ zimbraChatXmppSslPort::
 zimbraChatAllowDlMemberAddAsFriend::
   `[boolean]`, optional.
 
-  Add every member of the distribution list as buddies to eachother.
+  Add every member of the distribution list as buddies to each other.
 
   Can be applied to:
   * Distribution list
@@ -563,4 +563,3 @@ xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@36
 xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@54d9d12d{SSL-http/1.1}{0.0.0.0:7071}
 
 ------------------------------------------------------------------------------------------------------------------
-
