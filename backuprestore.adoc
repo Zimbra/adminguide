@@ -1565,7 +1565,7 @@ If SSDB is used as the ephemeral backend, a backup will not include any ephemera
 attributes.
 
 Note: This section does not detail how to deploy and administer an SSDB server.
-For that information please see section <<overview_of_configuration_options,SSDB Configuration Options>>.
+For that information please see section <<ssdb-configuration-options.adoc#ssdb_configuration_options,SSDB Configuration Options>>.
 
 Backing up the data stored in SSDB (if so configured) is done as follows:
 

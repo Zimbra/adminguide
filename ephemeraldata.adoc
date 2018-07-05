@@ -1,3 +1,4 @@
+[[ephemeral_data]]
 = Ephemeral Data (BETA)
 
 There are 3 main types of ephemeral data stored in LDAP during normal operation of {product-name}.
@@ -38,7 +39,7 @@ to utilize `SSDB` instead of `LDAP` for short lived data storage is done through
 
 1. Install `SSDB` and note the ip address and port configured since you will
    need this data for the next steps. Refer to
-   <<_ssdb_configuration_options>> for more information.
+   <<ssdb-configuration-options.adoc#ssdb_configuration_options>> for more information.
 2. Migrate any existing short-lived data to `SSDB` using the `/opt/zimbra/bin/zmmigrateattrs` command.
 3. Configure {product-name} to utilize `SSDB`.
 
