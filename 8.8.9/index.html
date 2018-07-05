@@ -561,7 +561,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_updating_your_license">Updating Your License</a></li>
 </ul>
 </li>
-<li><a href="#_zimbra_mailbox_server">Zimbra Mailbox Server</a>
+<li><a href="#zimbra_mailbox_server">Zimbra Mailbox Server</a>
 <ul class="sectlevel2">
 <li><a href="#_mailbox_server">Mailbox Server</a></li>
 <li><a href="#_web_application_server">Web Application Server</a></li>
@@ -603,7 +603,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#zimbra_proxy_server">Zimbra Proxy Server</a>
 <ul class="sectlevel2">
 <li><a href="#_benefits_of_using_zimbra_proxy">Benefits of Using Zimbra Proxy</a></li>
-<li><a href="#_zimbra_proxy_components">Zimbra Proxy Components</a></li>
+<li><a href="#zimbra_proxy_components">Zimbra Proxy Components</a></li>
 <li><a href="#_proxy_architecture_and_flow">Proxy Architecture and Flow</a></li>
 <li><a href="#_changing_the_zimbra_proxy_configuration">Changing the Zimbra Proxy Configuration</a></li>
 <li><a href="#_zimbra_proxy">Zimbra Proxy</a></li>
@@ -931,7 +931,6 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_single_server_crontab_l_example">Single Server Crontab -l Example</a></li>
 </ul>
 </li>
-<li><a href="#_glossary">Glossary</a></li>
 </ul>
 </div>
 </div>
@@ -945,7 +944,7 @@ table.CodeRay td.code>pre{padding:0}
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-If you are upgrading/migrating from a pervious version of Zimbra and plan to enable the new mobile sync module for Zimbra, please read <a href="https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Things_To_Know_Before_Upgrading">"Things to Know Before Upgrading"</a> and <a href="https://zimbra.github.io/installguides/latest/single.html#mobile-ng">the install guide</a> for critical information.
+If you are upgrading/migrating from a previous version of Zimbra and plan to enable the new mobile sync module for Zimbra, please read <a href="https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Things_To_Know_Before_Upgrading">"Things to Know Before Upgrading"</a> and <a href="https://zimbra.github.io/installguides/latest/single.html#mobile-ng">the install guide</a> for critical information.
 </td>
 </tr>
 </table>
@@ -970,7 +969,7 @@ Synacor, Inc. provides otherwise. To view a copy of this license, visit
 Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
 </div>
 <div class="paragraph">
-<p>Synacor, Inc., 2018<br>
+<p>Synacor, Inc., 2016<br>
 40 La Riviere Drive, Suite 300<br>
 Buffalo, New York 14202</p>
 </div>
@@ -1064,11 +1063,6 @@ feedback and suggestions.</p>
 <div class="paragraph">
 <p>Let us know what you like about the product and what you would like to
 see in the product. Post your ideas to the Zimbra Forum.</p>
-</div>
-<div class="paragraph">
-<p>If you encounter problems with this software, go to
-<a href="https://bugzilla.zimbra.com" class="bare">https://bugzilla.zimbra.com</a> to submit a bug report. Make sure to provide
-enough detail so that the bug can be easily duplicated.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1195,7 +1189,7 @@ to work with the software.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Postfix</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Open source mail transfer agent (MTA) that routes mail messages to the
-appropriate Zimbraserver</p>
+appropriate Zimbra server</p>
 </div></div></td>
 </tr>
 <tr>
@@ -2365,7 +2359,7 @@ license count is automatically refreshed on each mailbox server.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_zimbra_mailbox_server">Zimbra Mailbox Server</h2>
+<h2 id="zimbra_mailbox_server">Zimbra Mailbox Server</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zimbra mailbox server is a dedicated server that manages all the
@@ -2649,7 +2643,7 @@ of those disks fails.
 <h2 id="_imap">IMAP</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Zimbra Collaboration has two IMAP servers: in-process IMAP server and standalone zimbra-imapd (Zimbra IMAPD Server). The built-in IMAP server is installed by default and is part of zimbra-mailboxd process (<a href="#mailboxserver.adoc">Zimbra Mailbox Server</a>). We recommend using in-process IMAP server for small deployments with light IMAP traffic.</p>
+<p>Zimbra Collaboration has two IMAP servers: in-process IMAP server and standalone zimbra-imapd (Zimbra IMAPD Server). The built-in IMAP server is installed by default and is part of zimbra-mailboxd process (<a href="#zimbra_mailbox_server">Zimbra Mailbox Server</a>). We recommend using in-process IMAP server for small deployments with light IMAP traffic.</p>
 </div>
 <div class="sect2">
 <h3 id="_common_imap_configuration_settings">Common IMAP Configuration settings</h3>
@@ -2674,7 +2668,7 @@ of those disks fails.
 <p><strong>zimbraImapSSLBindAddress</strong> (can be set only on server level). Specifies interface address on which in-process IMAP SSL server should listen; if empty, binds to all interfaces.</p>
 </li>
 <li>
-<p><strong>zimbraImapSSLBindPort</strong>. Specifies port number on which in-process IMAP SSL server should listen on. Defaut value is 7993.</p>
+<p><strong>zimbraImapSSLBindPort</strong>. Specifies port number on which in-process IMAP SSL server should listen on. Default value is 7993.</p>
 </li>
 <li>
 <p><strong>zimbraImapNumThreads</strong>. Specifies number of threads in IMAP handler&#8217;s thread pool. This setting applies to in-process IMAP server as well as zimbra-imapd. Zimbra Collaboration uses IMAP NIO by default, which allows each IMAP handler thread to handle multiple connections. The default value of 200 is sufficient to handle up to 10,000 active IMAP clients.</p>
@@ -2683,13 +2677,13 @@ of those disks fails.
 <p><strong>zimbraImapCleartextLoginEnabled</strong>. Specifies whether or not to allow cleartext logins over a non SSL/TLS connection. Default value is FALSE.</p>
 </li>
 <li>
-<p><strong>zimbraImapProxyBindPort</strong>. Specifies port number on which IMAP proxy server should listen. Default value is 143. See <a href="#proxy.adoc">Zimbra Proxy Components</a> for more information.</p>
+<p><strong>zimbraImapProxyBindPort</strong>. Specifies port number on which IMAP proxy server should listen. Default value is 143. See <a href="#zimbra_proxy_components">Zimbra Proxy Components</a> for more information.</p>
 </li>
 <li>
-<p><strong>zimbraImapSSLProxyBindPort</strong>. Specifies port number on which IMAP SSL proxy server should listen. Default value is 993. See <a href="#proxy.adoc">Zimbra Proxy Components</a> for more information.</p>
+<p><strong>zimbraImapSSLProxyBindPort</strong>. Specifies port number on which IMAP SSL proxy server should listen. Default value is 993. See <a href="#zimbra_proxy_components">Zimbra Proxy Components</a> for more information.</p>
 </li>
 <li>
-<p><strong>zimbraImapMaxRequestSize</strong>. Specifies maximum size of IMAP request in bytes excluding literal data. <strong>Note:</strong> this setting does not apply to IMAP LOGIN requests. IMAP LOGIN requests are handled by IMAP Proxy (<a href="#proxy.adoc">Zimbra Proxy Components</a>) and are limited to 256 characters.</p>
+<p><strong>zimbraImapMaxRequestSize</strong>. Specifies maximum size of IMAP request in bytes excluding literal data. <strong>Note:</strong> this setting does not apply to IMAP LOGIN requests. IMAP LOGIN requests are handled by IMAP Proxy (<a href="#zimbra_proxy_components">Zimbra Proxy Components</a>) and are limited to 256 characters.</p>
 </li>
 <li>
 <p><strong>zimbraImapInactiveSessionCacheMaxDiskSize</strong>. Specifies the maximum disk size of inactive IMAP cache in Bytes before eviction. By default this value is 10GB. This is a rough limit, because due to internals of Ehcache actual size on disk will often exceed this limit by a modest margin.</p>
@@ -2787,7 +2781,7 @@ The zmlocalconfig setting <strong>nio_imap_enabled</strong> MUST have value <str
 <p><strong>zimbraRemoteImapBindPort</strong>. Specifies port number on which the standalone IMAP server should listen. Default value is 8143.</p>
 </li>
 <li>
-<p><strong>zimbraRemoteImapSSLBindPort</strong>. Specifies port number on which the standalone IMAP SSL server should listen on. Defaut value is 8993.</p>
+<p><strong>zimbraRemoteImapSSLBindPort</strong>. Specifies port number on which the standalone IMAP SSL server should listen on. Default value is 8993.</p>
 </li>
 </ul>
 </div>
@@ -3299,7 +3293,7 @@ are organized by domain.  Entries belong to a domain, such as accounts,
 groups, aliases, are provisioned under the domain DN in the directory.  The
 config branch contains admin system entries that are not part of a domain.
 Config branch entries include system admin accounts, global config, global
-grants, COS, servers, mime types, and zimlets.</p>
+grants, COS, servers, mime types, and Zimlets.</p>
 </div>
 <div class="paragraph">
 <p>The Zimbra LDAP Hierarchy figure shows the Zimbra LDAP hierarchy.  Each
@@ -4181,7 +4175,7 @@ are distinct functions: Postfix acts as a MTA, and the Zimbra mail
 server acts as a Mail Delivery Agent (MDA).</p>
 </div>
 <div class="paragraph">
-<p>The MTA configuration is stored in LDAP. The zmconfigd process polls the
+<p>The MTA configuration is stored in LDAP. The <code>zmconfigd</code> process polls the
 LDAP directory every two minutes for modifications and updates the
 Postfix configuration files with the changes.</p>
 </div>
@@ -4510,7 +4504,7 @@ https:// wiki.zimbra.com/wiki/Anti-spam_strategies.
 </div>
 <div id="spam_assassin_score" class="paragraph">
 <p><strong>Managing the Spam Assassin Score:</strong> SpamAssassin uses predefined rules
-aswell as a Bayes database to score messages with a numerical range.
+as well as a Bayes database to score messages with a numerical range.
 Zimbra uses a percentage value to determine &#8220;spaminess&#8221; based on a
 SpamAssassin score of 20 as 100%. Any message tagged between 33%-75% is
 considered spam and delivered to the user&#8217;s junk folder. Messages tagged
@@ -4550,7 +4544,7 @@ can also use a MariaDB database.</p>
 </div>
 <div id="training_spam_filter" class="paragraph">
 <p><strong>Training the Spam Filter</strong>&#8201;&#8212;&#8201;The effectiveness of the anti-spam filter is
-dependenton user input to differentiate spam or ham. The SpamAssassin
+dependent on user input to differentiate spam or ham. The SpamAssassin
 filter learns from messages that users specifically mark as spam by
 sending them to their junk folder or not spam by removing them from
 their junk folder. A copy of these marked messages is sent to the
@@ -4598,13 +4592,13 @@ get accurate scores. To determine whether to mark messages as spam at least
 200 known spams and 200 known hams must be identified.</p>
 </div>
 <div id="spamassassin_sa_update_tool" class="paragraph">
-<p>SpamAssassin&#8217;s sa-update tool is included with SpamAssassin. This tool
+<p>SpamAssassin&#8217;s <code>sa-update</code> tool is included with SpamAssassin. This tool
 updates SpamAssassin rules from the SA organization. The tool is
 installed into <code>/opt/zimbra/common/bin</code>.</p>
 </div>
 <div id="config_final_destination_spam" class="paragraph">
 <p><strong>Configuring Final Destination for Spam</strong>&#8201;&#8212;&#8201;You can configure Amavis
-behavior tohandle a spam item&#8217;s final destination by using the following
+behavior to handle a spam item&#8217;s final destination by using the following
 attribute:</p>
 </div>
 <div class="paragraph">
@@ -4677,7 +4671,7 @@ email&#8201;&#8212;&#8201;it is not advised.</p>
 </table>
 <div id="setting_up_trusted_netorks" class="paragraph">
 <p><strong>Setting Up Trusted Networks:</strong> The ZCS configuration allows
-relaying only forthe local network, but you can configure trusted networks
+relaying only for the local network, but you can configure trusted networks
 that are allowed to relay mail. You set the MTA trusted networks as a
 global setting, but you can configure trusted networks as a server
 setting. The server setting overrides the global setting.</p>
@@ -4732,7 +4726,7 @@ following examples:</p>
 <p><strong>Enabling a Milter Server:</strong> Milter server can be enabled to enforce
 restrictions on which addresses can send to distribution lists and add
 <strong>Reply-To</strong> and <strong>X-Zimbra-DL</strong> headers to messages sent from distribution
-lists. This can beenabled globally or for specific servers from the
+lists. This can be enabled globally or for specific servers from the
 Administration Console.</p>
 </div>
 <div class="admonitionblock note">
@@ -4852,12 +4846,12 @@ ignore, enforce, or drop instruction, use guidelines as follows:</p>
 <ul>
 <li>
 <p><em>ignore</em>&#8201;&#8212;&#8201;Ignore this result. Allow other tests to complete. Repeat this
-testwith subsequent client connections. This is the default setting, which
+test with subsequent client connections. This is the default setting, which
 is useful for testing and collecting statistics without blocking mail.</p>
 </li>
 <li>
 <p><em>enforce</em>&#8201;&#8212;&#8201;Allow other tests to complete. Reject attempts to deliver
-mailwith a 550 SMTP reply, and log the hello/sender/recipient
+mail with a 550 SMTP reply, and log the hello/sender/recipient
 information. Repeat this test with subsequent client connections.</p>
 </li>
 <li>
@@ -4879,7 +4873,7 @@ You can see example usages of these attributes in
 <li>
 <p><code>zimbraMtaPostscreenAccessList</code>&#8201;&#8212;&#8201;Default = permit_mynetworks</p>
 <div class="paragraph">
-<p>Postconf postscreen_access_list setting, which is the permanent white/
+<p>Postconf <code>postscreen_access_list</code> setting, which is the permanent white/
 blacklist for remote SMTP client IP addresses. Postscreen(8) searches this
 list immediately after a remote SMTP client connects. Specify a comma- or
 whitespace -separated list of commands (in upper or lower case) or lookup
@@ -4922,7 +4916,7 @@ one-letter suffix that specifies the time unit). Time units: s (seconds), m
 <p><code>zimbraMtaPostscreenBlacklistAction</code>&#8201;&#8212;&#8201;Default = ignore</p>
 <div class="paragraph">
 <p>The action that postscreen(8) is to take when a remote SMTP client is
-permanently blacklisted with the postscreen_access_list parameter, as
+permanently blacklisted with the <code>postscreen_access_list</code> parameter, as
 either ignore, enforce, or drop.</p>
 </div>
 </li>
@@ -4998,7 +4992,7 @@ reply.</p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-When postscreen rejects mail, it replies with the DNSBL domainname. Use the
+When postscreen rejects mail, it replies with the DNSBL domain name. Use the
 <code>postscreen_dnsbl_reply_map</code> feature to hide &#8220;password&#8221; information in
 DNSBL domain names.
 </td>
@@ -5007,7 +5001,7 @@ DNSBL domain names.
 </div>
 <div class="paragraph">
 <p>When a client&#8217;s score is equal to or greater than the threshold specified
-with postscreen _dnsbl_threshold, postscreen(8) can drop the connection
+with <code>postscreen_dnsbl_threshold</code>, postscreen(8) can drop the connection
 with the remote SMTP client.</p>
 </div>
 <div class="paragraph">
@@ -5064,7 +5058,7 @@ postscreen_dnsbl_sites = example.com*2, example.net, example.org</pre>
 <div class="paragraph">
 <p>Value to define the inclusive lower bound for blocking a remote SMTP
 client, based on its combined DNSBL score as defined with the
-postscreen_dnsbl_sites parameter.</p>
+<code>postscreen_dnsbl_sites</code> parameter.</p>
 </div>
 </li>
 <li>
@@ -5089,7 +5083,7 @@ protocol tests, based on its combined DNSBL score as defined with the
 </div>
 <div class="paragraph">
 <p>Specify a negative value to enable this feature. When a client passes the
-postscreen_dnsbl_whitelist_threshold without having failed other tests, all
+<code>postscreen_dnsbl_whitelist_threshold</code> without having failed other tests, all
 pending or disabled tests are flagged as completed with a time-to-live
 value equal to <code>postscreen_dnsbl_ttl</code>. When a test was already completed, its
 time-to-live value is updated if it was less than <code>postscreen_dnsbl_ttl</code>.</p>
@@ -5121,7 +5115,7 @@ one-letter suffix that specifies the time unit). Time units: s (seconds), m
 <p><code>zimbraMtaPostscreenNonSmtpCommandAction</code>&#8201;&#8212;&#8201;Default = drop</p>
 <div class="paragraph">
 <p>The action that postscreen(8) takes when a remote SMTP client sends
-non-SMTP commands as specified with the postscreen_forbidden_ commands
+non-SMTP commands as specified with the <code>postscreen_forbidden_</code> commands
 parameter, as either ignore, enforce, or drop.</p>
 </div>
 </li>
@@ -5240,7 +5234,7 @@ list.</p>
 </td>
 <td class="content">
 IPv6 address information must be specified inside <code>[]</code> in
-<code>thepostscreen_whitelist_interfaces</code> value, and in files specified with
+the <code>postscreen_whitelist_interfaces</code> value, and in files specified with
 <code>/file/name</code>. IP version 6 addresses contain the &#8220;:&#8221; character, and would
 otherwise be confused with a <code>type:table</code> pattern.
 </td>
@@ -5268,7 +5262,7 @@ postscreen_whitelist_interfaces = !168.100.189.8, static:all</pre>
 successful DNS -based reputation test&#8201;&#8212;&#8201;before a client IP address is
 required to pass that test again. If the DNS reply specifies a larger TTL
 value, that value will be used unless it would be larger than
-postscreen_dnsbl_max_ttl.</p>
+<code>postscreen_dnsbl_max_ttl</code>.</p>
 </div>
 <div class="paragraph">
 <p>Specify a non-zero time value (an integral value plus an optional
@@ -5285,7 +5279,7 @@ one-letter suffix that specifies the time unit). Time units: s (seconds), m
 from a successful DNS-based reputation test before a client IP address is
 required to pass that test again. If the DNS reply specifies a shorter TTL
 value, that value will be used unless it would be smaller than
-postscreen_dnsbl_min_ttl.</p>
+<code>postscreen_dnsbl_min_ttl</code>.</p>
 </div>
 <div class="paragraph">
 <p>Specify a non-zero time value (an integral value plus an optional
@@ -5526,7 +5520,7 @@ modification is necessary.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_zimbra_proxy_components">Zimbra Proxy Components</h3>
+<h3 id="zimbra_proxy_components">Zimbra Proxy Components</h3>
 <div class="paragraph">
 <p>Zimbra Proxy is designed to provide a HTTP/POP/IMAP proxy that is quick,
 reliable, and scalable. Zimbra Proxy includes the following:</p>
@@ -6587,7 +6581,7 @@ based on the rights assigned to the administrator role.</p>
 <ul>
 <li>
 <p><strong>Global Administrators</strong> have full privileges to manage servers,
-globalsettings, domains, and accounts as well as create other
+global settings, domains, and accounts as well as create other
 administrators. One global administrator account is created when the
 software is installed. Additional global administrator accounts can be
 created. You can perform administration tasks from the Administration
@@ -6638,7 +6632,7 @@ the following URL pattern.</p>
 <li>
 <p>At the login screen, enter the complete administrator address - as
 <strong>admin@domain.com</strong> - and the password that was configured during
-serverinstallation of Zimbra Collaboration.</p>
+server installation of Zimbra Collaboration.</p>
 <div class="imageblock">
 <div class="content">
 <img src="images/administration_console.png" alt="Administration Console">
@@ -7338,7 +7332,7 @@ Rights</strong>, <strong>Configure Grants</strong>, <strong>Search Mail</strong>
 <div class="paragraph">
 <p>The <strong>Configure</strong> screen provides the <strong>Configure</strong> navigation pane and the
 <strong>Configure</strong> pages, which enable configurations for individual and/or
-globalcomponents.</p>
+global components.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -8156,7 +8150,7 @@ your criteria.</p>
 <p>The <strong>Help Center</strong> is a reference of resources available from the online
 help and documentation, which you can access with the links provided in
 the <strong>Help</strong> <strong>Center</strong> screen. Use this page, also, to access community
-forums and to viewexpert responses to the top migration questions.</p>
+forums and to view expert responses to the top migration questions.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -9280,13 +9274,13 @@ account&#8217;s status setting is marked as maintenance or closed, the account&#
 status overrides the domain status setting.</p>
 </li>
 <li>
-<p><strong>Maintenance</strong>. When the domain status is markedas maintenance, users
+<p><strong>Maintenance</strong>. When the domain status is marked as maintenance, users
 cannot log in and their email is queued at the MTA. If an account&#8217;s status
 setting is marked as closed, the account&#8217;s status overrides the domain
 status setting.</p>
 </li>
 <li>
-<p><strong>Suspended</strong>. When the domain status is marked assuspended, users cannot
+<p><strong>Suspended</strong>. When the domain status is marked as suspended, users cannot
 log in, their email is queued at the MTA, and accounts and distribution
 lists cannot be created, deleted, or modified. If an account&#8217;s status
 setting is marked as closed, the account&#8217;s status overrides the domain
@@ -9481,7 +9475,7 @@ The GAL sync accounts are system accounts and do not use a Zimbra license.
 </div>
 <div class="paragraph">
 <p>When you configure the GAL sync account, you define the GAL datasource and
-the contact data is syncd from the datasource to the GAL sync accounts'
+the contact data is synced from the datasource to the GAL sync accounts'
 address books. If the mode <strong>Both</strong> is selected, an address book is created
 in the account for each LDAP data source.</p>
 </div>
@@ -9633,7 +9627,7 @@ for authentication on the domain.  When you select Internal, no other
 configuration is required.</p>
 </li>
 <li>
-<p><strong>External LDAP</strong>. The user name and password is theauthentication
+<p><strong>External LDAP</strong>. The user name and password is the authentication
 information supplied in the bind operation to the directory server. You
 must configure the LDAP URL, LDAP filter, and to use DN password to bind to
 the external server.</p>
@@ -9772,8 +9766,8 @@ name. The LDAP is updated to reflect the changes.</p>
 <li>
 <p>Update external references that you have set up for the old domain name
 to the new domain name. This may include automatically generated emails
-that were sent to the administrator&#8217;s mailbox such as backup ses-sion
-notifications. Immediately run a full backup of the new domain</p>
+that were sent to the administrator&#8217;s mailbox such as backup session
+notifications. Immediately run a full backup of the new domain:</p>
 </li>
 </ul>
 </div>
@@ -10026,7 +10020,7 @@ Configure Servers link for a specific server include:</p>
 <ul>
 <li>
 <p>General information about the service host name, and LMTP advertised name
-and bind address, and the number of threads that can simultane-ously
+and bind address, and the number of threads that can simultaneously
 process data source imports.</p>
 </li>
 <li>
@@ -10225,7 +10219,7 @@ Default = 1825 days (5 years)</p>
 <li>
 <p>A <strong>commercial certificate</strong> is issued by a certificate authority (CA) that
 attests that the public key contained in the certificate belongs to the
-organi-zation (servers) noted in the certificate.</p>
+organization (servers) noted in the certificate.</p>
 </li>
 </ul>
 </div>
@@ -10499,7 +10493,7 @@ information is similar to the following example.</p>
 </div>
 <div class="paragraph">
 <p>Receivers who successfully validate a DKIM signature can use information
-about the signer as part of a program to limit spam, spoofing, phising, or
+about the signer as part of a program to limit spam, spoofing, phishing, or
 other undesirable behavior.</p>
 </div>
 <div class="sect3">
@@ -10678,7 +10672,7 @@ the domain, selector, private key, public signature and identity:</p>
 <h3 id="_anti_spam_settings">Anti-spam Settings</h3>
 <div class="paragraph">
 <p>ZCS uses SpamAssassin to control spam. SpamAssassin uses predefined rules
-as well as a Bayes database to score messages. Zimbra evaulates spaminess
+as well as a Bayes database to score messages. Zimbra evaluates spaminess
 based on percentage. Messages tagged between 33%-75% are considered spam
 and delivered to the user&#8217;s junk folder. Messages tagged above 75% are not
 sent to the user and are discarded.</p>
@@ -10768,7 +10762,7 @@ feedback system mailboxes are created to receive mail notification.</p>
 </li>
 <li>
 <p><strong>Non-spam (referred to as ham) training user</strong> for mail that was marked
-asspam but should not have been.</p>
+as spam but should not have been.</p>
 </li>
 </ul>
 </div>
@@ -10789,7 +10783,7 @@ sent to the appropriate spam training mailbox.</p>
 the first MTA. The ZCS spam training tool, <strong>zmtrainsa</strong>, is configured to
 automatically retrieve these messages and train the spam filter. The
 <strong>zmtrainsa script</strong> is enabled through a crontab job to feed mail to the
-SpamAssassinapplication, allowing SpamAssassin to 'learn' what signs are
+SpamAssassin application, allowing SpamAssassin to 'learn' what signs are
 likely to mean spam or ham. The zmtrainsa script empties these mailboxes
 each day.</p>
 </div>
@@ -14156,7 +14150,7 @@ roles.  Account aliases can be selected for the <strong>From</strong> name of me
 sent from that persona account and a specific signature can be set for the
 persona account.  The number of personas that can be created is
 configurable depending on your requirements.  The minimum is 0, and the
-default is 20 (zimbraIdentityMaxNumEntries).</p>
+default is 20 (<code>zimbraIdentityMaxNumEntries</code>).</p>
 </div>
 <div class="paragraph">
 <p>See <strong><em>COS</em> &gt; Features &#8594; Mail Features</strong> container in the Admin Console.</p>
@@ -14743,7 +14737,7 @@ the domain is ignored.</p>
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Number of minutes before an appoitment to show reminder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of minutes before an appointment to show reminder</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Sets the minutes before the meeting to send a reminder notice.</p>
 </div></div></td>
@@ -16379,7 +16373,7 @@ domains to be scheduled for account auto-provisioning on specified servers.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Log in to the ZCS server as zimbra and type zmprov at the command
+<p>Log in to the ZCS server as zimbra and type <code>zmprov</code> at the command
 prompt.</p>
 <div class="listingblock">
 <div class="content">
@@ -16570,7 +16564,7 @@ preauth, Kerberos 5, and/or Spnego).</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Log in to the ZCS server as zimbra and type zmprov at the command
+<p>Log in to the ZCS server as zimbra and type <code>zmprov</code> at the command
 prompt.</p>
 </li>
 <li>
@@ -16743,7 +16737,7 @@ LDAP server.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Log in to the ZCS server as zimbra and type zmprov at the
+<p>Log in to the ZCS server as zimbra and type <code>zmprov</code> at the
 command prompt.</p>
 </li>
 <li>
@@ -16834,18 +16828,18 @@ maintained.  The following resource scheduling values can be set up:</p>
 <ul>
 <li>
 <p><strong>Auto decline all recurring appointments</strong>&#8201;&#8212;&#8201;This value is enabled when
-theresource can be scheduled for only one meeting at a time.  No recurring
+the resource can be scheduled for only one meeting at a time.  No recurring
 appointments can be scheduled for this resource.</p>
 </li>
 <li>
 <p><strong>Auto accept if available, auto-decline on conflict</strong>&#8201;&#8212;&#8201;When this option
-isselected, the resource account automatically accepts appointments unless
+is selected, the resource account automatically accepts appointments unless
 the resource is already scheduled.  The free/busy times can be viewed.  You
 can modify the auto-decline rule to accept some meetings that conflict.</p>
 </li>
 <li>
 <p><strong>Manual accept, auto decline on conflict</strong>&#8201;&#8212;&#8201;When this option is selected,
-theresource account automatically declines all appointments that conflict.
+the resource account automatically declines all appointments that conflict.
 Appointment requests that do not conflict are marked as tentative in the
 resource calendar and must be manually accepted.  If you set this up,
 configure the forwarding address so a copy of the invite is sent to the
@@ -16854,7 +16848,7 @@ auto-decline rule to accept some meetings that conflict.</p>
 </li>
 <li>
 <p><strong>Auto accept always</strong>&#8201;&#8212;&#8201;The resource account automatically accepts
-allappointments that are scheduled.  In this case, free/busy information is
+all appointments that are scheduled.  In this case, free/busy information is
 not maintained, thus more than one meeting could schedule the resource at
 the same time.  Because the resource always accepts the invitation, the
 suggested use for this policy would be for a frequently used location off
@@ -16934,7 +16928,7 @@ invites.</p>
 </div>
 <div class="paragraph">
 <p>The status of an account determines whether a user can log in and
-receivemail.  The account status is displayed on the <strong>Accounts</strong>
+receive mail.  The account status is displayed on the <strong>Accounts</strong>
 pane of the Administration Console.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -16977,7 +16971,7 @@ compromised (used in an unauthorized manner).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Closed</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Login is disabled and messaged are bounced.  This status is used to
 soft-delete the account before deleting it from the server.  A closed
-acocunt does not change the account license.</p></td>
+account does not change the account license.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LockOut</p></td>
@@ -18466,7 +18460,7 @@ Administration Console.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><strong>Admin Groups</strong> are distribution lists (DL) that have Admin Groupenabled,
+<p><strong>Admin Groups</strong> are distribution lists (DL) that have Admin Group enabled,
 which flags it as a delegated administrator DL. After the admin group
 administrator is created and configured with rights and admin views, you
 add administrator user accounts to the admin group.</p>
@@ -19462,18 +19456,18 @@ the number of recipients who received messages.</p>
 <ul>
 <li>
 <p><strong>Disk</strong>&#8201;&#8212;&#8201;for a selected server displays the disk used and the disk
-spaceavailable.  The information is displayed for the last hour, day,
+space available.  The information is displayed for the last hour, day,
 month, and year.</p>
 </li>
 <li>
 <p><strong>Session</strong>&#8201;&#8212;&#8201;displays information about the active Web client,
-administratorand IMAP sessions.  You can see how many active sessions are
+administrator and IMAP sessions.  You can see how many active sessions are
 opened, who is logged on, when the session was created and the last time
 the session was accessed.</p>
 </li>
 <li>
 <p><strong>Mailbox Quota</strong>&#8201;&#8212;&#8201;displays information about each account sorted
-bymailbox size in descending order.  See
+by mailbox size in descending order.  See
 <a href="#monitoring_mailbox_quotas">Monitoring Mailbox Quotas</a>.</p>
 </li>
 </ul>
@@ -19545,7 +19539,7 @@ disk warning thresholds.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>When starting services with zmcontrol, if the threshold is exceeded, a
+<p>When starting services with <code>zmcontrol</code>, if the threshold is exceeded a
 warning is displayed before the services are started.  You should clean up
 your disk to free up space.</p>
 </div>
@@ -19639,7 +19633,7 @@ requests over a short period of time.</p>
 <h4 id="_identifying_false_positives">Identifying False Positives</h4>
 <div class="paragraph">
 <p>Sometimes Zimbra Connector for Outlook (ZCO), mobile ActiveSync clients, or
-running some zmprov commands trigger the DoSFilter.  When this happens, the
+running some <code>zmprov</code> commands trigger the DoSFilter.  When this happens, the
 Zimbra mailbox service is unavailable.  You can review the following logs
 to see if the DoSFilter was applied.</p>
 </div>
@@ -19683,7 +19677,7 @@ ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?
 <div class="sect3">
 <h4 id="_customizing_dosfilter_configuration">Customizing DoSFilter Configuration</h4>
 <div class="paragraph">
-<p>The following attributes are used with zmprov to configure the DoSFilter.
+<p>The following attributes are used with <code>zmprov</code> to configure the DoSFilter.
 These attributes can be configured as global settings and as server
 settings.  If these attributes are set in the server, the server settings
 override the global settings.</p>
@@ -19793,7 +19787,7 @@ are discovered using a <strong>GetAllServersRequest</strong>.  Type as <code>zmp
 </li>
 <li>
 <p><strong>External Provisioning Hosts/SOAP API</strong>&#8201;&#8212;&#8201;External provisioning hosts can
-beadded to the IP whitelist to ensure that the DoSFilter does not block
+be added to the IP whitelist to ensure that the DoSFilter does not block
 some requests.  For example, a mailbox reindex might make several calls per
 second that can trigger the DoSFilter.</p>
 </li>
@@ -19958,11 +19952,11 @@ active,deferred, and corrupt messages can be moved to the Held queue.
 Messages stay in this queue until the administrator moves them.</p>
 </li>
 <li>
-<p><strong>Release</strong> to remove all message from the Held queue.  Messages aremoved
+<p><strong>Release</strong> to remove all message from the Held queue.  Messages are moved
 to the Deferred queue.</p>
 </li>
 <li>
-<p><strong>Requeue</strong> all messages in the queue being viewed.  Requeuing messagescan
+<p><strong>Requeue</strong> all messages in the queue being viewed.  Requeuing messages can
 be used to send messages that were deferred because of a configuration
 problem that has been fixed.  Messages are re-evaluated and earlier
 penalties are forgotten.</p>
@@ -20098,13 +20092,13 @@ second window.</p>
 </li>
 <li>
 <p><strong>Account check</strong>&#8201;&#8212;&#8201;The default is to send an email alert if 15
-authenticationfailures from any IP address occur within a 60 second window.
+authentication failures from any IP address occur within a 60 second window.
 This check attempts to detect a distributed hijack based attack on a single
 account.</p>
 </li>
 <li>
 <p><strong>IP check</strong>&#8201;&#8212;&#8201;The default is to send an email alert if 20 authentication
-failuresto any account occur within a 60 second window.  This check
+failures to any account occur within a 60 second window.  This check
 attempts to detect a single host based attack across multiple accounts.</p>
 </li>
 <li>
@@ -20117,7 +20111,7 @@ on the mailbox server.</p>
 </div>
 <div class="paragraph">
 <p>The default values that trigger an email alert are changed in the following
-zmlocalconfig parameters:</p>
+<code>zmlocalconfig</code> parameters:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -20157,7 +20151,7 @@ directory.</p>
 <ul>
 <li>
 <p><strong>audit.log</strong>&#8201;&#8212;&#8201;This log contains authentication activity of users
-andadministrators and login failures.  In addition, it logs admin activity
+and administrators and login failures.  In addition, it logs admin activity
 to be able to track configuration changes.</p>
 </li>
 <li>
@@ -20166,7 +20160,7 @@ clamd.</p>
 </li>
 <li>
 <p><strong>freshclam.log</strong>&#8201;&#8212;&#8201;This log contains log information related to the
-updating ofthe clamd virus definitions.</p>
+updating of the clamd virus definitions.</p>
 </li>
 <li>
 <p><strong>mailbox.log</strong>&#8201;&#8212;&#8201;This log is a mailboxd log4j server log containing the
@@ -20175,7 +20169,7 @@ server, IMAP and POP servers, and Index server.</p>
 </li>
 <li>
 <p><strong>myslow.log</strong>&#8201;&#8212;&#8201;This slow query log consists of all SQL statements from
-themailbox server that took more then <code>long_query_time</code> seconds to execute.</p>
+the mailbox server that took more then <code>long_query_time</code> seconds to execute.</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -20246,7 +20240,7 @@ Administration Console.</p>
 <div class="paragraph">
 <p>By default, mailboxd is configured to log its output to
 <code>/opt/zimbra/log/mailbox.log</code>.  You can enable mailboxd to take advantage
-of a centralizedsyslogd infrastructure by enabling the following either
+of a centralized syslogd infrastructure by enabling the following either
 globally or by server:</p>
 </div>
 <div class="listingblock">
@@ -20670,7 +20664,7 @@ Utilities</a>, the <code>zmprov</code> miscellaneous section.</p>
 </div>
 <div class="paragraph">
 <p>The example below is a record showing that
-on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address <code>222.173.186.17</code> has contacted the Zimbra Collaboration server and that the request was proxied through a local proxy server with IP 10.1.1.136.</p>
+on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address <code>222.173.186.17</code> has contacted the Zimbra Collaboration server and that the request was proxied through a local proxy server with IP <code>10.1.1.136</code>.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="images/poplogmessage.png" alt="Mailbox Log Entry for POP"></span></p>
@@ -20713,7 +20707,7 @@ signals that some type of error was detected.</p>
 </div>
 <div class="paragraph">
 <p>Sometimes a stack trace is displayed after the exceptions notification.  A
-stack trace reports the threads and monitors in the zimbra&#8217;s <strong>mailboxd</strong>
+stack trace reports the threads and monitors in Zimbra&#8217;s <strong>mailboxd</strong>
 service.  This information aids in debugging, because the trace shows where
 the error occurred.  The last few entries in the stack often indicate the
 origin of the problem.  When the <strong>caused by</strong> descriptor is included in the
@@ -20910,7 +20904,7 @@ primary recipients.</p>
 </li>
 <li>
 <p><strong>In-Reply-To</strong>&#8201;&#8212;&#8201;Message ID of the message that is a reply to.  Used to
-linkrelated messages together.</p>
+link related messages together.</p>
 </li>
 <li>
 <p><strong>Received: from</strong>&#8201;&#8212;&#8201;The name and IP address the message was sent from. The
@@ -20938,7 +20932,7 @@ search to identify that the index is corrupt.  You must monitor the index
 log for messages about corrupt indexes.  If the server detects a corrupt
 index, a message is logged to the Zimbra mailbox.log at the WARN logging
 level.  The message starts with <strong>Possibly corrupt index</strong>.  When this
-message is displayed, the administratormust correct the problem.  In many
+message is displayed, the administrator must correct the problem.  In many
 cases correcting the problem might mean reindexing the mailbox.</p>
 </div>
 <div class="paragraph">
@@ -21033,7 +21027,7 @@ When the MariaDB database is checked, running this report can consume a
 significant amount of I/O.  This should not present a problem, but if you
 find that running this report does affect your operation, you can change
 the frequency with which zmbintegrityreport is run.  See
-<a href="#zcs_crontab_jobs">ZCS Contrab Jobs</a>.
+<a href="#zcs_crontab_jobs">ZCS Crontab Jobs</a>.
 </td>
 </tr>
 </table>
@@ -21451,10 +21445,10 @@ are replayed to bring the system to the point before the failure.</p>
 very short time.</p>
 </div>
 <div class="paragraph">
-<p>Custom configurations&#8201;&#8212;&#8201;such as mailboxd&#8217;s <code>jetty/etc/*.xml</code>&#8201;&#8212;&#8201;are not backed up.</p>
+<p>Custom configurations&#8201;&#8212;&#8201;such as <code>mailboxd&#8217;s `jetty/etc/*.xml</code>&#8201;&#8212;&#8201;are not backed up.</p>
 </div>
 <div class="sect4">
-<h5 id="_backup_notifcation">Backup Notifcation</h5>
+<h5 id="_backup_notification">Backup Notification</h5>
 <div class="paragraph">
 <p>A backup report is sent to the admin mailbox when full and incremental
 backups are performed. This report shows the success or failure of the
@@ -21567,12 +21561,12 @@ start and stop times.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>sys/</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Global database tables and localconfig.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global database tables and <code>localconfig</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>db_schema.xml</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database schema information for global tables. Each table dump file has a
-.csv format.</p></td>
+<code>`.csv</code> format.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>localconfig.xml</code></p></td>
@@ -21692,18 +21686,18 @@ backups into.</p>
 not need to make any additional changes. But when running the auto-grouped
 backup you must manually configure the backup schedule. To do so, access
 the CLI and follow the steps under
-<a href="#scheule_auto_group_backups">Schedule Auto-Group Backups</a>
+<a href="#schedule_auto_group_backups">Schedule Auto-Group Backups</a>
 to run <code>zmschedulebackup -D</code> to set the default
 schedule for auto-grouped backups.</p>
 </div>
 <div class="paragraph">
 <p><strong>Throttling option with auto-grouped backup.</strong> The auto-grouped backup
-methodautomatically backs up mailboxes that have never been backed up
+method automatically backs up mailboxes that have never been backed up
 when the next backup is scheduled. This might not be the best option
 every time a full backup is required on all mailboxes, such as
 immediately after massive mailbox migrations or after a major upgrade.
 Enabling <strong>Throttle automatic</strong> <strong>backups</strong> limits the mailbox count in a
-daily backup to T/N. This breaks theconstraint of backing up all
+daily backup to T/N. This breaks the constraint of backing up all
 mailboxes in N days, but it helps backup to finish during off hours.</p>
 </div>
 <div class="paragraph">
@@ -21734,7 +21728,7 @@ incremental backups, and deletion of old backups.</p>
 </li>
 <li>
 <p><code>zmbackup</code>&#8201;&#8212;&#8201;This command executes full or incremental backup of the Zimbra Collaboration mailbox
-server. This is run on a live server, while the mailboxd process and the
+server. This is run on a live server, while the <code>mailboxd</code> process and the
 mailbox server are running. This command also has an option to manually
 delete old backups when they are no longer needed.</p>
 </li>
@@ -21752,7 +21746,7 @@ completed backups, including labels and dates.</p>
 <p><code>zmrestore</code>&#8201;&#8212;&#8201;This command restores a backup to a running Zimbra Collaboration mailbox server.</p>
 </li>
 <li>
-<p><code>zmrestoreoffline</code>&#8201;&#8212;&#8201;This command restores the Zimbra Collaboration mail server when the mailboxd process is stopped.</p>
+<p><code>zmrestoreoffline</code>&#8201;&#8212;&#8201;This command restores the Zimbra Collaboration mail server when the <code>mailboxd</code> process is stopped.</p>
 </li>
 <li>
 <p><code>zmrestoreldap</code>&#8201;&#8212;&#8201;This command restores the complete LDAP directory
@@ -21761,7 +21755,7 @@ server, including accounts, domains, servers, COS and other data.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Refer to <a href="#appendix_a">Appendix A Command Line Utilities</a>
+<p>Refer to <a href="#command_line_utilities">Appendix A: Command Line Utilities</a>
 for usage and definitions for each of these commands.</p>
 </div>
 </div>
@@ -22059,7 +22053,7 @@ time.</p>
 </div>
 <div class="paragraph">
 <p>Backup files are saved as zip files without compression. To change the
-default zip option, see <a href="#appendix_a">Appendix A Command Line Interface</a>,
+default zip option, see <a href="#command_line_utilities">Appendix A: Command Line Utilities</a>,
 zmbackup section.</p>
 </div>
 </div>
@@ -22086,7 +22080,7 @@ entries for those accounts.</p>
 <p>Archived logs that are less than an hour old at the time of incremental
 backup are copied to the backup and are not deleted. These redologs are
 deleted one hour after the backup. The interval is set by the
-localconfig key <code>backup_archived_redolog_keep_time</code>. The default is 3600
+<code>localconfig</code> key <code>backup_archived_redolog_keep_time</code>. The default is 3600
 seconds.</p>
 </div>
 <div class="paragraph">
@@ -22408,8 +22402,8 @@ copy its content again.</p>
 </div>
 <div class="paragraph">
 <p>Backup files are saved as zip files without compression. To change the
-default zip option, see <a href="#appendix_a">Appendix A Command Line Interface</a>,
-zmbackup section.</p>
+default zip option, see <a href="#command_line_utilities">Appendix A: Command Line Utilities</a>,
+<code>zmbackup</code> section.</p>
 </div>
 <div class="paragraph">
 <p>These backup files can be used to restore the complete Zimbra Collaboration
@@ -22459,13 +22453,13 @@ volumes.</p>
 <div class="sect3">
 <h4 id="_backup_the_mariadb_database">Backup the MariaDB Database</h4>
 <div class="paragraph">
-<p>You can configure Zimbra Collaboration backups to run mysqldump to
+<p>You can configure Zimbra Collaboration backups to run <code>mysqldump</code> to
 backup your MariaDB database during backup sessions. When this is enabled,
-a mysqldump backup runs with each full, incremental, and auto-grouped
+a <code>mysqldump</code> backup runs with each full, incremental, and auto-grouped
 backup.</p>
 </div>
 <div class="paragraph">
-<p>The mysqldump is a backup of your MariaDB database at a specific time.
+<p>The <code>mysqldump</code> is a backup of your MariaDB database at a specific time.
 Data changes that occur later than the dump file are written to the
 binary log. To recover to a specific point in time, binary logging must
 be enabled. See the Zimbra wiki article, MariaDB Backup and Restore at
@@ -22483,7 +22477,7 @@ MariaDB database backup file that is saved.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Enable mysqldump to run automatically with your backups, type</p>
+<p>Enable <code>mysqldump</code> to run automatically with your backups, type</p>
 </li>
 </ul>
 </div>
@@ -22494,7 +22488,7 @@ MariaDB database backup file that is saved.</p>
 </div>
 <div class="paragraph">
 <p><strong>N</strong> is the number of copies of the MariaDB database backups that
-areretained.</p>
+are retained.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -22539,7 +22533,7 @@ administrator.</p>
 </td>
 <td class="content">
 If you are also backing up the MariaDB database, make sure you set the value
-large enough to include the myslqdump file size.
+large enough to include the <code>myslqdump</code> file size.
 </td>
 </tr>
 </table>
@@ -22598,7 +22592,7 @@ Zimbra Collaboration mailbox server is running.</p>
 </li>
 <li>
 <p>The <code>zmrestoreoffline</code> command is used to restore the mailbox server when
-just the mailboxd process it is stopped. This command is run for disaster recovery.</p>
+just the <code>mailboxd</code> process it is stopped. This command is run for disaster recovery.</p>
 </li>
 <li>
 <p>The <code>zmrestoreldap</code> command is used to restore the content of the
@@ -22915,7 +22909,7 @@ restored.</p>
 <div class="sect3">
 <h4 id="_restore_mailboxes_when_mail_server_is_down">Restore Mailboxes When Mail Server Is Down</h4>
 <div class="paragraph">
-<p>The offline restore process can only be run when the mailboxd server is
+<p>The offline restore process can only be run when the$1`mailboxd` server is
 not running. In general, offline restore is run under the following
 circumstances:</p>
 </div>
@@ -22937,11 +22931,11 @@ server.</p>
 store server is started to keep the redo logs in sequence.</p>
 </div>
 <div class="paragraph">
-<p>In a disaster recovery when the Zimbra software is reinstalled, if mailboxd
+<p>In a disaster recovery when the Zimbra software is reinstalled, if <code>mailboxd</code>
 is started before the backup files are restored, the mail server would
 begin to accept email messages and perform other activities, producing redo
 logs in the process. Since the pre-disaster data have not been restored to
-the server, the redo logs would be out of sequence. Once mailboxd is
+the server, the redo logs would be out of sequence. Once <code>mailboxd</code> is
 running, it would be too late to restore the pre-disaster data.</p>
 </div>
 <div class="paragraph">
@@ -22985,7 +22979,7 @@ archive area on the mailbox server</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Restore all accounts on server1 when mailboxd is stopped</p>
+<p>Restore all accounts on server1 when <code>mailboxd</code> is stopped</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmrestoreoffline -a all</code></pre>
@@ -22993,7 +22987,7 @@ archive area on the mailbox server</p>
 </div>
 </li>
 <li>
-<p>Start mailboxd after the offline restore is complete</p>
+<p>Start <code>mailboxd</code> after the offline restore is complete</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmcontrol startup</code></pre>
@@ -23067,7 +23061,7 @@ and blobs.</p>
 <ul>
 <li>
 <p><strong>Search index</strong>&#8201;&#8212;&#8201;If you do not restore the search index data, the
-mailbox willhave to be reindexed after the restore.</p>
+mailbox will have to be reindexed after the restore.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmrestore -a &lt;all|account&gt; --exclude-search-index</code></pre>
@@ -23076,7 +23070,7 @@ mailbox willhave to be reindexed after the restore.</p>
 </li>
 <li>
 <p><strong>Blobs</strong>&#8201;&#8212;&#8201;This is a useful option when all blobs for the mailbox being
-restoredalready exists.</p>
+restored already exist.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmrestore &lt;all or account&gt;|--exclude-blobs</code></pre>
@@ -23085,7 +23079,7 @@ restoredalready exists.</p>
 </li>
 <li>
 <p><strong>HSM-blobs</strong>&#8201;&#8212;&#8201;This is useful when all HSM blobs for the mailbox
-beingrestored already exists.</p>
+being restored already exist.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmrestore &lt;all or account&gt; --exclude-hsm-blobs</code></pre>
@@ -23102,7 +23096,7 @@ beingrestored already exists.</p>
 restore the LDAP directory server first.</p>
 </div>
 <div class="paragraph">
-<p>The zmrestoreldap command restores the global LDAP data including COS,
+<p>The <code>zmrestoreldap</code> command restores the global LDAP data including COS,
 distribution lists, etc. You can restore the complete LDAP server, which
 recreates the entire schema or you can restore specific accounts. You
 specify the session to restore. The restore command has to be run on the
@@ -23349,11 +23343,11 @@ the original server settings:</p>
 <ol class="loweralpha" type="a">
 <li>
 <p><strong>Zimbra LDAP Server</strong>&#8201;&#8212;&#8201;For <strong>Domain to create</strong>, identify the same
-defaultdomain as on the old server.</p>
+default domain as on the old server.</p>
 </li>
 <li>
 <p><strong>Zimbra Mailbox Server</strong>&#8201;&#8212;&#8201;An administrator&#8217;s account is
-automaticallycreated.</p>
+automatically created.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -23372,7 +23366,7 @@ the old server</p>
 </li>
 <li>
 <p>Change the <strong>Spam training user</strong> and the <strong>Non-spam (HAM) training</strong>
-<strong>user</strong> account names to be the same as the spam account names onthe old
+<strong>user</strong> account names to be the same as the spam account names on the old
 server.</p>
 </li>
 <li>
@@ -23415,7 +23409,7 @@ the additional volumes now.</p>
 </li>
 <li>
 <p>Delete the MariaDB data and reinitialize an empty data directory. If
-you do not do this, zmrestoreoffline will have errors. As zimbra, type</p>
+you do not do this, <code>zmrestoreoffline</code> will have errors. As <code>zimbra</code>, type:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">rm -rf /opt/zimbra/db/data/* /opt/zimbra/libexec/zmmyinit</code></pre>
@@ -23438,7 +23432,7 @@ from an archive location to <code>/opt/zimbra/backup</code>.</p>
 </div>
 <div class="paragraph">
 <p>If you are restoring a large number of accounts, you might run a command
-such as the UNIX command, nohup, so that the session does not terminate
+such as the UNIX command, <code>nohup</code>, so that the session does not terminate
 before the restore is complete.</p>
 </div>
 <div class="admonitionblock note">
@@ -23459,10 +23453,10 @@ To find the LDAP session label to restore, type <code>zmrestoreldap –lbs</code
 <div class="ulist">
 <ul>
 <li>
-<p>mysqld (MariaDB)</p>
+<p><code>mysqld</code> (MariaDB)</p>
 </li>
 <li>
-<p>slapd (OpenLDAP)</p>
+<p><code>slapd</code> (OpenLDAP)</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmcontrol start</code></pre>
@@ -23477,7 +23471,7 @@ To find the LDAP session label to restore, type <code>zmrestoreldap –lbs</code
 <div class="ulist">
 <ul>
 <li>
-<p>mailboxd</p>
+<p><code>mailboxd</code></p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmmailboxdctl stop</code></pre>
@@ -23506,7 +23500,7 @@ servers LDAP config.</p>
 </div>
 </li>
 <li>
-<p>Start the offline restore after stopping mailboxd.</p>
+<p>Start the offline restore after stopping <code>mailboxd</code>.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmmailboxdctl stop
@@ -23514,7 +23508,7 @@ zmrestoreoffline -sys -a all -c -br</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You might run a command such as nohup here also. To watch the progress,
+<p>You might run a command such as <code>nohup</code> here also. To watch the progress,
 tail <code>/opt/zimbra/log/mailbox.log</code>.</p>
 </div>
 <div class="admonitionblock note">
@@ -23624,7 +23618,7 @@ state.</p>
 <div class="sect4">
 <h5 id="_restore_after_corrupted_or_unreadable_redo_log">Restore After Corrupted or Unreadable Redo Log</h5>
 <div class="paragraph">
-<p>If the redo log becomes unreadable, the mailboxd service stops and
+<p>If the redo log becomes unreadable, the <code>mailboxd</code> service stops and
 cannot restart. If this happens, inspect the hardware and software to
 find the source of the problem before proceeding.</p>
 </div>
@@ -23642,7 +23636,7 @@ restored.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The mailboxd service must not be running, and all accounts must be in
+The <code>mailboxd</code> service must not be running, and all accounts must be in
 maintenance mode before beginning.
 </td>
 </tr>
@@ -23659,7 +23653,7 @@ maintenance mode before beginning.
 </div>
 </li>
 <li>
-<p>With the mailboxd service not running, type</p>
+<p>With the <code>mailboxd</code> service not running, type</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmrestoreoffline</code></pre>
@@ -23728,8 +23722,8 @@ directory.</p>
 </div>
 <div class="paragraph">
 <p>If you have made changes since the last backup, you might need to replace
-the localconfig.xml file with the restored copy. Compare these files, and
-if the <strong>.restore</strong> file has the latest local configuration data, delete the
+the <code>localconfig.xml</code> file with the restored copy. Compare these files, and
+if the <code><strong>.restore</strong></code> file has the latest local configuration data, delete the
 <code>localconfig.xml</code> file and rename the file with the <code>.restore</code> extension to
 <code>localconfig.xml</code>.</p>
 </div>
@@ -23747,10 +23741,10 @@ running.</p>
 <div class="paragraph">
 <p>Snapshots are taken for all volumes of data and are transferred to the
 standby site periodically. Data volumes that are backed up using
-snapshots include MariaDB, blobs, lucene index, and redologs.</p>
+snapshots include MariaDB, blobs, Lucene index, and redologs.</p>
 </div>
 <div class="paragraph">
-<p>When the primary site is down, the zmplayredo command is used to bring
+<p>When the primary site is down, the <code>zmplayredo</code> command is used to bring
 consistency to the snapshots and to reapply any changes in data to
 minimize data loss across volumes</p>
 </div>
@@ -23838,7 +23832,8 @@ of ephemeral data backups.</p>
 attributes.</p>
 </div>
 <div class="paragraph">
-<p>Note: This section does not detail how to deploy and administer an SSDB server. For that information please see section <a href="#SSDB Configuration Options">[SSDB Configuration Options]</a>.</p>
+<p>Note: This section does not detail how to deploy and administer an SSDB server.
+For that information please see section <a href="#overview_of_configuration_options">SSDB Configuration Options</a>.</p>
 </div>
 <div class="paragraph">
 <p>Backing up the data stored in SSDB (if so configured) is done as follows:</p>
@@ -23922,11 +23917,21 @@ with the <code>ssdb-dump</code> command can be imported into a running SSDB serv
 </div>
 <div class="sect4">
 <h5 id="_data_override">Data override</h5>
-<div class="paragraph">
-<p>Stop the SSDB server.
-Copy the directory created using the <code>ssdb-dump</code> command previously to a known location.
-Update <code>ssdb.conf</code> configuration file to update the <code>work_dir</code> option to the proper path.
-Start the SSDB server back up and verify previously working logins still work.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Stop the SSDB server.</p>
+</li>
+<li>
+<p>Copy the directory created using the <code>ssdb-dump</code> command previously to a known location.</p>
+</li>
+<li>
+<p>Update <code>ssdb.conf</code> configuration file to update the <code>work_dir</code> option to the proper path.</p>
+</li>
+<li>
+<p>Start the SSDB server back up and verify previously working logins still work.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -24035,7 +24040,7 @@ removable storage can be disabled.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Only WM6 devices and IPhones support security policies set by the
+Only WM6 devices and iPhones support security policies set by the
 server. Older devices do not respond to security policies.
 </td>
 </tr>
@@ -24431,7 +24436,7 @@ issued by many certification authorities.</p>
 <p>When you complete the request you must have a valid domain name service
 (DNS SRV record) for <code>autodiscover.&lt;domain&gt;.com</code>. Configure the <strong>Subject
 Alternative Name</strong> (SAN) field with the valid domain names that you use.
-Thealternative name should include the domain
+The alternative name should include the domain
 <code>autodiscover.&lt;company&gt;.com</code>. Include all the domain names required for
 your environment in the Subject Alternative Name field.</p>
 </div>
@@ -24491,7 +24496,7 @@ on the <a href="https://wiki.zimbra.com">Zimbra Wiki</a>.</p>
 <h4 id="_change_mobile_device_password_policy">Change Mobile Device Password Policy</h4>
 <div class="paragraph">
 <p>If a mobile device is locked by the Zimbra Collaboration mobile password
-policy, the PIN requirement must be removed to resync the device.</p>
+policy, the PIN requirement must be removed to re-sync the device.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -24507,7 +24512,7 @@ policy, the PIN requirement must be removed to resync the device.</p>
 <p>On the <strong>Mobile Access</strong> page, uncheck <strong>Force pin on device</strong>.</p>
 </li>
 <li>
-<p>After the password policy has been disabled, the user must resync
+<p>After the password policy has been disabled, the user must re-sync
 the device:</p>
 <div class="ulist">
 <ul>
@@ -24967,16 +24972,16 @@ name when <code>zmconfigarchive</code> is run.</p>
 <h5 id="_administering_the_archive_server">Administering the archive server</h5>
 <div class="paragraph">
 <p>The <code>amavisd-new</code> server process controls account archiving as well as
-antivirus and antispam processes. The <code>zmarchivectl</code> command can be used to
+antivirus and anti-spam processes. The <code>zmarchivectl</code> command can be used to
 start, stop, restart or obtain the status of the amavisd-new server process
 that controls account archiving. Caution should be taken when starting or
 stopping the archiving process as it is a shared server process between
-archiving, antivirus, and antispam processes. Performing actions on any of
+archiving, antivirus, and anti-spam processes. Performing actions on any of
 them affect any of the other services that may be enabled in your
 deployment.</p>
 </div>
 <div class="paragraph">
-<p>If you want to disable archiving and not antivirus, or antispam services,
+<p>If you want to disable archiving and not antivirus, or anti-spam services,
 disable the respective service either through the CLI or through the
 Administration Console.</p>
 </div>
@@ -25580,7 +25585,7 @@ information about the license usage can be found at <a href="https://www.zimbra.
 <h5 id="_graphics_to_replace">Graphics to Replace</h5>
 <div class="paragraph">
 <p>The following logo files can be changed. Your logos must be the same
-size as the specified here or the image might not display correctly.
+size as specified here or the image might not display correctly.
 These graphic files can be saved on another server or in a directory
 that is not overwritten when Zimbra Collaboration is upgraded.</p>
 </div>
@@ -25617,7 +25622,7 @@ changed at this time.</p>
 <p>On the administration console, the Global Settings and the Domains
 settings include a Themes page that can be configured to customize the
 color scheme and to add a company logo and logo URL. You upload your
-company logo to be used on the Zimbra Web Clientand administration
+company logo to be used on the Zimbra Web Client and administration
 console pages.</p>
 </div>
 <div class="sect4">
@@ -26525,7 +26530,7 @@ zmprov mc &lt;COSname2&gt; +zimbraProxyAllowedDomains '*.example.com'</code></pr
 <div class="sect3">
 <h4 id="_viewing_installed_zimlets">Viewing Installed Zimlets</h4>
 <div class="paragraph">
-<p>Use the <code>zmzimletctl</code> command to view currently installed zimlets:</p>
+<p>Use the <code>zmzimletctl</code> command to view currently installed Zimlets:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -26579,7 +26584,7 @@ overwritten.
 </div>
 </li>
 <li>
-<p>Use the zmzimletctl command to update the configuration in the LDAP.  If
+<p>Use the <code>zmzimletctl</code> command to update the configuration in the LDAP.  If
 you changed the name of the configuration template, replace
 <code>config_template.xml</code> with the new name.</p>
 <div class="listingblock">
@@ -26611,7 +26616,7 @@ zip file.
 </table>
 </div>
 <div class="paragraph">
-<p>Use steps in this section upgrade a zimlet:</p>
+<p>Use steps in this section upgrade a Zimlet:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -27069,11 +27074,20 @@ history.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Note: When the Real Time Scanner is enabled for the first time or
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When the Real Time Scanner is enabled for the first time or
 re-enabled after a stop, a Live Full Scan is required. A warning will be
 displayed after enabling the Real Time Scanner, and you will be prompted
-to start the Full Scan.</strong></p>
+to start the Full Scan.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect5">
@@ -27417,10 +27431,10 @@ user.</p>
 <p>To create a valid export directory, run the following commands:</p>
 </div>
 <div class="paragraph">
-<p><em>mkdir /opt/zimbra/backup/yourdestfolder</em></p>
+<p><code>mkdir /opt/zimbra/backup/yourdestfolder</code></p>
 </div>
 <div class="paragraph">
-<p><em>chown -R zimbra:zimbra /opt/zimbra/backup/yourdestfolder</em></p>
+<p><code>chown -R zimbra:zimbra /opt/zimbra/backup/yourdestfolder</code></p>
 </div>
 </div>
 <div class="sect4">
@@ -27433,13 +27447,13 @@ maintenance procedures before migrating:</p>
 <ul>
 <li>
 <p>Double check Zimbra permissions with the following command (must be ran
-as root): <em>/opt/zimbra/libexec/zmfixperms --verbose --extended</em></p>
+as root): <code>/opt/zimbra/libexec/zmfixperms --verbose --extended</code></p>
 </li>
 <li>
 <p>Reindex all mailboxes.</p>
 </li>
 <li>
-<p>Check the BLOB consistency with the <em>zxsuite hsm doCheckBlobs</em> utility.</p>
+<p>Check the BLOB consistency with the <code>zxsuite hsm doCheckBlobs</code> utility.</p>
 </li>
 </ul>
 </div>
@@ -27650,10 +27664,22 @@ the mailbox itself.</p>
 <div class="paragraph">
 <p>During an Undelete Restore, the Backup NG engine searches the backup
 datastore for items flagged as <code>DELETED</code> and restores them in a
-dedicated folder in the selected mmailbox. WARNING: To
-deal with IMAP-deleted emails in a more comfortable way for the user:
+dedicated folder in the selected mailbox.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+To
+deal with IMAP-deleted emails in a more comfortable way for the user,
 the <code>deleted</code> IMAP flag will now be stripped from any restored item so
-that the item itself is visible in the Zimbra Web Client.</p>
+that the item itself is visible in the Zimbra Web Client.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -28346,7 +28372,7 @@ test.domain.com_________________________________________________________________
 </div>
 <div class="paragraph">
 <p>The {zimbrahome}/conf/ and {zimbrahome}/postfix/conf/ directories are
-backed up aswell:</p>
+backed up as well:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -29012,7 +29038,7 @@ case of a crash (e.g. power loss or hardware failure).</p>
 </div>
 <div class="paragraph">
 <p>Due to this, it&#8217;s very easy to make a backup. The best (and
-easiest) way to do so is by using <strong><a href="http://rsync.samba.org/">rsync</a></strong>.
+easiest) way to do so is by using <code><a href="http://rsync.samba.org/">rsync</a></code>.
 Specific options and parameters depend on many factors, such as the
 amount of data to be synced and the storage in use, while connecting to
 an rsync daemon instead of using a remote shell as a transport is
@@ -29219,7 +29245,7 @@ a Singlestore environment.</p>
 <p>The different servers will be configured and managed separately via
 the Administration Zimlet, but certain operations like Live Full
 Scan and Stop All Operations can be 'broadcast' to all the mailstores
-via the <em>zxsuite</em> CLI using the <em>--hostname all_servers</em> option. This
+via the <code>zxsuite_ CLI using the _&#8212;&#8203;hostname all_servers</code> option. This
 applies also to Backup NG settings (see the CLI wiki page for more
 details).</p>
 </div>
@@ -29595,7 +29621,7 @@ user unless otherwise specified._</p>
 <p>Contacts and address books</p>
 </li>
 <li>
-<p>Appontments and calendars</p>
+<p>Appointments and calendars</p>
 </li>
 <li>
 <p>Tasks and task lists</p>
@@ -29851,7 +29877,7 @@ Backup NG or plan to do so on the destination server.
 means than rsync.)</em></p>
 </div>
 <div class="paragraph">
-<p>Using <em>rsync</em>, copy the data contained in the
+<p>Using <code>rsync</code>, copy the data contained in the
 /opt/zimbra/backup/ng/ onto a directory in the destination server
 (make sure the Zimbra user has r/w permissions on the folder). Use a
 terminal multiplexer like <em>screen</em> or <em>tmux</em>. This process might
@@ -29876,7 +29902,7 @@ device (or the proper disk file if running on a virtual environment).</p>
 <p>After moving the disk, you can remotely mount it back to the source
 server (e.g. via SSHFS), as the additional synchronizations needed for
 the migration will involve much less data. In this case, be sure to
-remount the device on the source server as /opt/zimbra/backup/ng/
+remount the device on the source server as <code>/opt/zimbra/backup/ng/</code>
 with all due permissions.</p>
 </div>
 </div>
@@ -29894,8 +29920,17 @@ with all due permissions.</p>
 <div class="paragraph">
 <p>Network NG imports your data onto the destination server.</p>
 </div>
-<div class="paragraph">
-<p>''Warning: Do not edit nor delete the backup path after this step.''</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Do not edit or delete the backup path after this step.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect4">
 <h5 id="first-import-via-the-administration-zimlet">First Import via the Administration Zimlet</h5>
@@ -30500,7 +30535,7 @@ that won&#8217;t be usable on the device.</p>
 <h5 id="mobile-password">Mobile Password</h5>
 <div class="paragraph">
 <p>While conceptually similar, the mobile password feature is not part of
- Mobile Device Managment and can be used with any version of the EAS
+ Mobile Device Management and can be used with any version of the EAS
 protocol.</p>
 </div>
 </div>
@@ -31308,7 +31343,7 @@ in this case), the old Blobs are deleted from the Primary Store.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>The Move operation is <code>stateful</code> - each step is executed only if the
+<p>The Move operation is <em>stateful</em> - each step is executed only if the
 previous step has been completed successfully - so the risk of data
 loss during a Move operation is nonexistent.</p>
 </div>
@@ -31548,7 +31583,7 @@ Current).</p>
 <div class="sect4">
 <h5 id="volume-from-the-administration-zimlet">From the Administration Zimlet</h5>
 <div class="paragraph">
-<p>To create a new volumen from the HSM NG tab of the Administration Zimlet:</p>
+<p>To create a new volume from the HSM NG tab of the Administration Zimlet:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -33295,7 +33330,7 @@ or <code>false</code> via the <code>zxsuite config</code> CLI command.</p>
 <div class="sect2">
 <h3 id="delegated-admin-provisioning">Delegated Admin Provisioning</h3>
 <div class="sect3">
-<h4 id="what-is-the-delegated-admin-provisioning">What is Delegated Admin Provisioning?</h4>
+<h4 id="what-is-delegated-admin-provisioning">What is Delegated Admin Provisioning?</h4>
 <div class="paragraph">
 <p>Delegated Admin Provisioning is the set of operations that allow you to
 grant, edit and revoke Domain Admin rights to a user.</p>
@@ -35909,7 +35944,7 @@ no deletions are performed by the import process.
 <div class="sect3">
 <h4 id="MIG-88-software-installation">Software Installation</h4>
 <div class="paragraph">
-<p>Once you obtaine either Zextras Suite or Zimbra Suite Plus, follow this
+<p>Once you obtain either Zextras Suite or Zimbra Suite Plus, follow this
  installation process:</p>
 </div>
 <div class="ulist">
@@ -35976,7 +36011,7 @@ your migration, provided that it&#8217;s running Backup NG.</p>
 <p>Source server: If Backup NG is not currently enabled on the
 source server, make sure you have an amount of free disk space
 <em>comparable</em> to the size of the <code>/opt/zimbra/store/</code> folder (the
-exported data is compressed through the gzip algorythm, and all zimbra
+exported data is compressed through the gzip algorithm, and all zimbra
 items are deduplicated, usually reducing the size of exported to the 70%
 of the original size).</p>
 </li>
@@ -36133,7 +36168,7 @@ as follows:</p>
 <td class="content">
 When you move the exported data to the destination server, make
 sure that the destination folder is not Backup NG&#8217;s backup path on the
-destination server ito avoid any issues if you already use
+destination server, to avoid any issues if you already use
 Backup NG or plan to do so on the destination server.
 </td>
 </tr>
@@ -36169,7 +36204,7 @@ device (or the proper disk file if running on a virtual environment).</p>
 <p>After moving the disk, you can remotely mount it back to the source
 server (e.g. via SSHFS), as the additional synchronizations needed for
 the migration will involve much less data. In this case, be sure to
-remount the device on the source server as /opt/zimbra/backup/ng/
+remount the device on the source server as <code>/opt/zimbra/backup/ng/</code>
 with all due permissions.</p>
 </div>
 </div>
@@ -36342,7 +36377,7 @@ any broken shares.</p>
 <div class="paragraph">
 <p>Delete any imported GalSync accounts from the Zimbra Administration
 Console, then if needed, create new GalSync accounts on all the imported
-domains and resync all the GalSync accounts with the following command:</p>
+domains and re-sync all the GalSync accounts with the following command:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -36852,7 +36887,7 @@ from the admin console) to protect the privacy of the user.
 </div>
 <div class="paragraph">
 <p>Loading of the Zimbra Extension is granted by the following lines at
-the mailbbox startup:</p>
+the mailbox startup:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -36886,7 +36921,7 @@ name of the conflicting Zimlet.</p>
 </div>
 <div class="paragraph">
 <p>If a user is stuck in the sidebar mode and another Zimlet has taken
-control of the siedebar, you can reset the Zimlet user setting to use the
+control of the sidebar, you can reset the Zimlet user setting to use the
 docked mode with these commands:</p>
 </div>
 <div class="listingblock">
@@ -37180,7 +37215,7 @@ applied.</p>
 <p><code>[boolean]</code>, optional.</p>
 <div class="literalblock">
 <div class="content">
-<pre>Add every member of the distribution list as buddies to eachother.</pre>
+<pre>Add every member of the distribution list as buddies to each other.</pre>
 </div>
 </div>
 <div class="literalblock">
@@ -38569,7 +38604,7 @@ the Zimbra class path and starts the Jython interpreter.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>zmrestoreoffline</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">(Offline Restore) Performs full restore when the Zimbra server (i.e.,
-the mailboxd process) is down</p></td>
+the <code>mailboxd</code> process) is down</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>zmsaslauthdctl</code></p></td>
@@ -38880,7 +38915,7 @@ Commands</a></p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39118,7 +39153,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 </tr>
 </thead>
@@ -39164,7 +39199,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 </tr>
 </thead>
@@ -39203,7 +39238,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39311,7 +39346,7 @@ updated when a domain is renamed.
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39390,7 +39425,7 @@ updated when a domain is renamed.
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39441,8 +39476,8 @@ updated when a domain is renamed.
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>getAllMtaAuthURLs (gamau)</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Used to publish into saslauthd.conf what servers should be used for
-saslauthd.conf MTA auth</p>
+<p>Used to publish into <code>saslauthd.conf</code> what servers should be used for
+<code>saslauthd.conf</code> MTA auth</p>
 </div></div></td>
 </tr>
 <tr>
@@ -39466,7 +39501,7 @@ saslauthd.conf MTA auth</p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39525,7 +39560,7 @@ saslauthd.conf MTA auth</p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39632,7 +39667,7 @@ nested.
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39718,7 +39753,7 @@ at a time.
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39790,7 +39825,7 @@ authenticate to allow for single-sign on.  Used in conjunction with
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39849,7 +39884,7 @@ logging categories.</p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39891,7 +39926,7 @@ logging categories.</p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39906,7 +39941,7 @@ logging categories.</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_unified_communication_service_commands">Unified Communication Service Commands</h5>
+<h5 id="unified_communication_service_cmds">Unified Communication Service Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 73. <code>zmprov</code>&#8201;&#8212;&#8201;Unified Communication Service Commands</caption>
 <colgroup>
@@ -39916,7 +39951,7 @@ logging categories.</p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Syntax</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
@@ -39965,7 +40000,7 @@ logging categories.</p>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Commnad</th>
+<th class="tableblock halign-left valign-top">Command</th>
 <th class="tableblock halign-left valign-top">Example/Notes</th>
 </tr>
 </thead>
@@ -39979,7 +40014,7 @@ proxy lookup.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>getAllReverseProxy Backends (garpb)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns the list of servers that have
 <code>zimbraReverseProxyLookupTarget=TRUE</code>.</p>
-<p class="tableblock">Basically if a mailbox server is available for lookup requests from the
+<p class="tableblock">Indicates whether a mailbox server is available for lookup requests from the
 proxy.</p></td>
 </tr>
 <tr>
@@ -40181,7 +40216,7 @@ to be changed.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>For example, zmprov gs example.com zimbraServiceEnabled=ldap to find out if
+<p>For example, <code>zmprov gs example.com zimbraServiceEnabled=ldap</code> to find out if
 the ldap service is enabled.</p>
 </div>
 </div>
@@ -40520,7 +40555,7 @@ mailbox index by running <code>reIndexMailbox (rim)</code>.</p>
 <div class="sect3">
 <h4 id="_zmaccts">zmaccts</h4>
 <div class="paragraph">
-<p>Use zmaccts to run a report that lists all the accounts, their status,
+<p>Use <code>zmaccts</code> to run a report that lists all the accounts, their status,
 when they were created and the last time anyone logged on.  The domain
 summary shows the total number of accounts and their status.</p>
 </div>
@@ -40536,7 +40571,7 @@ summary shows the total number of accounts and their status.</p>
 <div class="sect3">
 <h4 id="_zmarchiveconfig">zmarchiveconfig</h4>
 <div class="paragraph">
-<p>Use zmarchiveconfig for configuring the archiving mailbox.  It has the
+<p>Use <code>zmarchiveconfig</code> for configuring the archiving mailbox.  It has the
 option of using short commands or full names for commands that lead to the
 same function being carried out.</p>
 </div>
@@ -40625,7 +40660,7 @@ same function being carried out.</p>
 <div class="sect3">
 <h4 id="_zmarchivectl">zmarchivectl</h4>
 <div class="paragraph">
-<p>Use zmarchivectl to start, stop, reload, or check the status of the Zimbra
+<p>Use <code>zmarchivectl</code> to start, stop, reload, or check the status of the Zimbra
 account archive.</p>
 </div>
 <div class="sect4">
@@ -40640,7 +40675,7 @@ account archive.</p>
 <div class="sect3">
 <h4 id="_zmarchivesearch">zmarchivesearch</h4>
 <div class="paragraph">
-<p>Use zmarchivesearch to search across account archives.  You can search
+<p>Use <code>zmarchivesearch</code> to search across account archives.  You can search
 for archives that match specific criteria and save copies to a
 directory.</p>
 </div>
@@ -40671,9 +40706,9 @@ directory.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--dir</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-d</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Directory to write messages to.  If none is specified, then only the
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Directory to write messages to.  If none is specified, then only the
 headers are fetched.  Filenames are generated in the form
-RESULTNUM_ACCOUNT-ID_MAILITEMID</p></td>
+<code>RESULTNUM_ACCOUNT-ID_MAILITEMID</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--help</code></p></td>
@@ -40683,27 +40718,27 @@ RESULTNUM_ACCOUNT-ID_MAILITEMID</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--limit</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-l</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Sets the limit for the number of results returned.  The default is 25</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Sets the limit for the number of results returned.  The default is 25</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--mbox</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-m</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Name of archive account to search</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Name of archive account to search</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--offset</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-o</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Specifies where the hit list should begin.  The default is 0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Specifies where the hit list should begin.  The default is 0</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--query</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-q</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; The query string for archive search</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> The query string for archive search</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-s</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Mail server hostname.  Default is localhost</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Mail server hostname.  Default is localhost</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--verbose</code></p></td>
@@ -40727,7 +40762,7 @@ RESULTNUM_ACCOUNT-ID_MAILITEMID</p></td>
 <div class="sect3">
 <h4 id="_zmbackup">zmbackup</h4>
 <div class="paragraph">
-<p>Use zmbackup to perform full backups and incremental backups for a
+<p>Use <code>zmbackup</code> to perform full backups and incremental backups for a
 designated mail host.</p>
 </div>
 <div class="paragraph">
@@ -40765,7 +40800,7 @@ dash.  For example, <code>-f</code> is the same as <code>--fullBackup</code>.</p
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--account</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-a</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Account email addresses separated by white space or all for all
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Account email addresses separated by white space or all for all
 accounts.  This option is not specified for auto-grouped backups since the
 system knows which accounts to backup every night.</p></td>
 </tr>
@@ -40777,7 +40812,7 @@ system knows which accounts to backup every night.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--delete</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-del</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Deletes the backups including and prior to the specified label, date
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Deletes the backups including and prior to the specified label, date
 (YYYY/MM/DD[-hh:mm:ss]) or period (nn(d | m | y]).</p></td>
 </tr>
 <tr>
@@ -40840,7 +40875,7 @@ config is used.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--server</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-s</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Mail server host name.  For format, use either the plain host name or
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Mail server host name.  For format, use either the plain host name or
 the server.domain.com name.  The default is the localhost name.</p></td>
 </tr>
 <tr>
@@ -40851,7 +40886,7 @@ the server.domain.com name.  The default is the localhost name.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--target</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-t</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;arg&gt; Specifies the target backup location.  The default is
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Specifies the target backup location.  The default is
 <code>/opt/zimbra/backup</code>.</p></td>
 </tr>
 <tr>
@@ -41019,7 +41054,7 @@ volumes</p></td>
 <div class="sect3">
 <h4 id="_zmcalchk">zmcalchk</h4>
 <div class="paragraph">
-<p>Use zmcalchk to check the consistency of appointments on the Zimbra
+<p>Use <code>zmcalchk</code> to check the consistency of appointments on the Zimbra
 calendar and sends an email notification regarding inconsistencies.  For
 example, it checks if all attendees and organizers of an event on the
 calendar agree on start/stop times and occurrences of a meeting.</p>
@@ -41072,7 +41107,7 @@ appointment</p></td>
 <div class="sect3">
 <h4 id="_zmschedulebackup">zmschedulebackup</h4>
 <div class="paragraph">
-<p>Use zmschedulebackup to schedule backups and add the command to your cron
+<p>Use <code>zmschedulebackup</code> to schedule backups and add the command to your cron
 table.</p>
 </div>
 <div class="paragraph">
@@ -41465,7 +41500,7 @@ message showing which accounts were not restored.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--label</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>-lb</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Label of the full backup to be aborted.</p>
-<p class="tableblock">Use the zmbackupquery, to find the label name.</p></td>
+<p class="tableblock">Use <code>zmbackupquery</code>, to find the label name.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--restore</code></p></td>
@@ -41491,7 +41526,7 @@ or the server.domain.com name.  The default is the localhost name.</p></td>
 <div class="sect3">
 <h4 id="_zmbackupquery">zmbackupquery</h4>
 <div class="paragraph">
-<p>Use zmbackupquery to find full backup sets.  The command can be used to
+<p>Use <code>zmbackupquery</code> to find full backup sets.  The command can be used to
 find a specific full backup set or full backup sets since a specific date,
 or all backup sets in the backup directory.</p>
 </div>
@@ -41751,7 +41786,7 @@ full backup if this is omitted.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--restoreToTime</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Replay rodo logs until this time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Replay redo logs until this time.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--restorefullBackupOnly</code></p></td>
@@ -41843,7 +41878,7 @@ backups since then, for all accounts on <strong>server1</strong>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>mailboxd IS NOT running</p>
+<p><code>mailboxd</code> IS NOT running</p>
 </li>
 <li>
 <p>SQL database IS RUNNING</p>
@@ -41947,7 +41982,7 @@ specify a backup file other then the latest.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--restoreToTime</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Replay rodo logs until this time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;arg&gt;</code> Replay redo logs until this time.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>--restoreFullBackupOnly</code></p></td>
@@ -42007,7 +42042,7 @@ full backup and any incremental backups since last full backup.</p>
 <div class="sect3">
 <h4 id="_zmrestoreldap">zmrestoreldap</h4>
 <div class="paragraph">
-<p>Use zmrestoreldap to restore accounts from the LDAP backup.</p>
+<p>Use <code>zmrestoreldap</code> to restore accounts from the LDAP backup.</p>
 </div>
 <div class="sect4">
 <h5 id="_syntax_13">Syntax</h5>
@@ -42218,9 +42253,9 @@ or <code>/SERVER/MAILBOXID</code> or <code>*</code>.</p></td>
 <div class="sect4">
 <h5 id="_example">Example</h5>
 <div class="paragraph">
-<p>The following example is to do a cross-mailbox search in the inbox folder
-of two different mailboxes on the specified server and put a copy of the
-message in to the specified directory.</p>
+<p>The following example performs a cross-mailbox search in the inbox folder
+of two different mailboxes on the specified server and puts a copy of the found
+messages in to the specified directory.</p>
 </div>
 <div class="exampleblock">
 <div class="title">Example 79. Cross-mailbox search</div>
@@ -42237,7 +42272,7 @@ message in to the specified directory.</p>
 <div class="sect3">
 <h4 id="_zmmboxmove">zmmboxmove</h4>
 <div class="paragraph">
-<p>Use zmmboxmove to move mailboxes.  The destination server manages the
+<p>Use <code>zmmboxmove</code> to move mailboxes.  The destination server manages the
 overall move process.  Using the <code>zmmboxmove</code> command significantly reduces
 the account lockout time.</p>
 </div>
@@ -42247,7 +42282,7 @@ server to another.  Mailboxes can be moved between Zimbra servers that
 share the same LDAP server.  All the files are copied to the new server and
 the LDAP is updated.  After the mailbox is moved to a new server a copy
 still remains on the older server, but the status of the old mailbox is
-closed.  Users cannot log on and mail is not delivered.  You should check
+<code>closed</code>.  Users cannot log on and mail is not delivered.  You should check
 to see that all the mailbox content was moved successfully before purging
 the old mailbox.</p>
 </div>
@@ -42443,7 +42478,7 @@ account can also be deleted from the Administration Console.</p>
 of the address book (folder) in the GAL account created to sync LDAP to.</p>
 </div>
 <div class="paragraph">
-<p>A cron job can be set up to run trickleSync.</p>
+<p>A cron job can be set up to run <code>trickleSync</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -42494,18 +42529,18 @@ in ZCS:</p>
 <p><strong>LDAP Root password</strong>.  This is used for internal LDAP operations.</p>
 </li>
 <li>
-<p><strong>LDAP Postfix password</strong>.  This is the password used by the postfix user
-toidentify itself to the LDAP serve and must be configured on the MTA
+<p><strong>LDAP Postfix password</strong>.  This is the password used by the <code>postfix</code> user
+to identify itself to the LDAP server and must be configured on the MTA
 server to be the same as the password on the LDAP master server.</p>
 </li>
 <li>
-<p><strong>LDAP Amavis password</strong>.  This is the password used by the amavis userto
+<p><strong>LDAP Amavis password</strong>.  This is the password used by the <code>amavis</code> user to
 identify itself to the LDAP server and must be configured on the MTA server
 to be the same as the password on the LDAP server.</p>
 </li>
 <li>
 <p><strong>LDAP Replication password</strong>.  This is the password used by the
-LDAPreplication user to identify itself to the LDAP master and must be the
+<code>LDAPreplication</code> user to identify itself to the LDAP master and must be the
 same as the password on the LDAP master server.</p>
 </li>
 </ul>
@@ -42950,10 +42985,10 @@ mbox&gt; sm --admin-priv foo@domain.com</code></pre>
 <div class="content">
 <div class="paragraph">
 <p>This lets one user login to another user&#8217;s mailbox.  The authenticating
-user must be a delegated admin account and must have <code>adminLoginAs</code> right
+user must be a delegated admin account and must have the <code>adminLoginAs</code> right
 on the target mailbox.  This auth option uses a non-admin auth token.  Use
 the <code>--auth</code> option to specify the authenticating account.  To login as
-user bar and open mailbox foo:</p>
+user <code>bar</code> and open mailbox <code>foo</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -43125,7 +43160,7 @@ that all data exchanged with the client application will be encrypted.
 </table>
 </div>
 <div class="paragraph">
-<p><strong>Mailboxd</strong> has to be stopped and restarted for the change to take effect.</p>
+<p>Note, <code>mailboxd</code> has to be stopped and restarted for the change to take effect.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -43167,7 +43202,7 @@ Security</a>.
 <p>Type <code>zmmailboxdctl stop</code> and press <strong>ENTER.</strong></p>
 </li>
 <li>
-<p>When mailboxd is stopped, type <code>zmmailboxdctl start</code> and press <strong>ENTER.</strong></p>
+<p>When <code>mailboxd</code> is stopped, type <code>zmmailboxdctl start</code> and press <strong>ENTER.</strong></p>
 </li>
 </ol>
 </div>
@@ -43748,10 +43783,6 @@ tool processes the skin deployment, enables the skin for all users of the
 ZWC deployment, and restarts the web server so that it recognizes the new
 skin.</p>
 </div>
-<div class="paragraph">
-<p>For more information about this tool, see
-<a href="https://wiki.zimbra.com/index.php?title=About_Creating_ZCS_Themes" class="bare">https://wiki.zimbra.com/index.php?title=About_Creating_ZCS_Themes</a>.</p>
-</div>
 <div class="sect4">
 <h5 id="_syntax_31">Syntax</h5>
 <div class="listingblock">
@@ -43865,12 +43896,12 @@ follows the XPath syntax as: <code>[/]element1[/element2][/@attr][=value]</code>
 <h4 id="_zmstat_chart">zmstat-chart</h4>
 <div class="paragraph">
 <p>Use <code>zmstat-chart</code> to collect statistical information for the CPU, IO,
-mailboxd, MTAqueue, MariaDB, and other components and to run a script on the
+<code>mailboxd</code>, MTAqueue, MariaDB, and other components and to run a script on the
 csv files to display the usage details in various charts.  These csv files
 are saved to <code>/opt/zimbra/zmstat/</code>.</p>
 </div>
 <div class="paragraph">
-<p>You must enable zmstat to collect the performance charts data:</p>
+<p>You must enable <code>zmstat</code> to collect the performance charts data:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -44263,7 +44294,7 @@ can be managed from the Administration Console, <strong>Server &gt; Volumes</str
 <div class="sect3">
 <h4 id="_zmzimletctl">zmzimletctl</h4>
 <div class="paragraph">
-<p>Use <code>zmzimletctl</code> to manage Zimlets and to list all zimlets on the server.
+<p>Use <code>zmzimletctl</code> to manage Zimlets and to list all Zimlets on the server.
 Additional information is provided in <a href="#zimlets">Zimlets</a>.  Most Zimlet
 deployment can be completed from the Zimbra Administration Console.</p>
 </div>
@@ -44713,7 +44744,7 @@ Example: <strong>mail1</strong></p>
 </li>
 <li>
 <p><strong>User Logon Name</strong>: This name is the value that is set for the
-<code>zimbraSpnegoAuthTargetName</code> server attribute in LDAP. Write itdown.<br>
+<code>zimbraSpnegoAuthTargetName</code> server attribute in LDAP. Write it down.<br>
 Example: <strong>HTTP/mail1.example.com</strong></p>
 </li>
 <li>
@@ -44772,7 +44803,7 @@ A list of registered SPNs is displayed.</p>
 </li>
 <li>
 <p>Create the keytab file used when signing into the Kerberos domain.  Use
-the ktpass tool from the Windows Server toolkit to create the Kerberos
+the <code>ktpass</code> tool from the Windows Server toolkit to create the Kerberos
 keytab.</p>
 <div class="admonitionblock note">
 <table>
@@ -45134,8 +45165,8 @@ differently depending on the browser.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>For computers running Windows: Internet Explorer 6.0 or later, Firefox
-3.0 or later, Chrome, Safari</p>
+<p>For computers running Windows: Internet Explorer 10.0 or later, Edge, Firefox
+52 or later, Chrome, Safari</p>
 </li>
 <li>
 <p>Apple Mac computer: Safari</p>
@@ -45685,7 +45716,7 @@ Zimbra MTA. The job runs at 11:00 p.m.</p>
 <div class="sect4">
 <h5 id="_spam_bayes_auto_expiry">Spam Bayes auto-expiry</h5>
 <div class="paragraph">
-<p>Spam bayes auto-expiry maintains the spamassassin Bayes database. This
+<p>Spam bayes auto-expiry maintains the SpamAssassin Bayes database. This
 keeps the database to manageable size ensuring spam processing remains as
 quick as possible. This runs every day at 11:20 p.m.</p>
 </div>
@@ -45802,12 +45833,10 @@ ZIMBRAEND -- DO NOT EDIT ANYTHING BETWEEN THIS LINE AND ZIMBRASTART</pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>Zimbra[glossary]
+= Glossary</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_glossary">Glossary</h2>
-<div class="sectionbody">
 <div class="paragraph">
 <p>The Glossary lists terms and acronyms used in this document, and includes
 both industry terms and application-specific terms.  If a general industry
@@ -45819,7 +45848,7 @@ product, that is noted as well.</p>
 <dt>A record</dt>
 <dd>
 <p>A (Address) records map the hostname to the numeric IP address.  For
-zimbra, the A record is the IP address for the zimbra server.</p>
+Zimbra, the A record is the IP address for the Zimbra server.</p>
 </dd>
 <dt>Account Policy</dt>
 <dd>
@@ -45868,7 +45897,7 @@ settings from the selected COS.</p>
 <dt>CLI</dt>
 <dd>
 <p>Command-Line Interface.  Used to refer to the collective set of
-Zimbra Collaboration command-line tools, such as zmprov.</p>
+Zimbra Collaboration command-line tools, such as <code>zmprov</code>.</p>
 </dd>
 <dt>Cluster</dt>
 <dd>
@@ -46069,7 +46098,7 @@ unsecured and exploited by spammers.</p>
 </dd>
 <dt>Redo Logs</dt>
 <dd>
-<p>Detailed transaction log for the .  server, used for replay and
+<p>Detailed transaction log for the Zimbra Collaboration server, used for replay and
 replication.</p>
 </dd>
 <dt>SAN</dt>
@@ -46152,9 +46181,10 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-03 21:59:50 EDT
+Last updated 2018-07-04 23:14:38 EDT
 </div>
 </div>
 </body>
