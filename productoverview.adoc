@@ -72,7 +72,7 @@ Web application server that runs Zimbra software.
 
 |Postfix |
 Open source mail transfer agent (MTA) that routes mail messages to the
-appropriate Zimbraserver
+appropriate Zimbra server
 
 |Open LDAP software |
 Open source implementation of the Lightweight Directory Access Protocol

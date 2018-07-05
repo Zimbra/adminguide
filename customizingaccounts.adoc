@@ -122,7 +122,7 @@ roles.  Account aliases can be selected for the *From* name of messages
 sent from that persona account and a specific signature can be set for the
 persona account.  The number of personas that can be created is
 configurable depending on your requirements.  The minimum is 0, and the
-default is 20 (zimbraIdentityMaxNumEntries).
+default is 20 (`zimbraIdentityMaxNumEntries`).
 
 See *_COS_ > Features -> Mail Features* container in the Admin Console.
 
@@ -490,7 +490,7 @@ See <<setting_default_time_zone,Setting Default Time Zone>>.
 If the time zone is configured in the COS, the time zone configured in
 the domain is ignored.
 
-|Number of minutes before an appoitment to show reminder |
+|Number of minutes before an appointment to show reminder |
 Sets the minutes before the meeting to send a reminder notice.
 
 |Initial calendar view |

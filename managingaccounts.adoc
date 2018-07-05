@@ -7,7 +7,7 @@ Admin Console: ::
 *Home > Manage > Accounts*
 
 The status of an account determines whether a user can log in and
-receivemail.  The account status is displayed on the *Accounts*
+receive mail.  The account status is displayed on the *Accounts*
 pane of the Administration Console.
 
 .Status - User Accounts
@@ -38,7 +38,7 @@ compromised (used in an unauthorized manner).
 |Closed |
 Login is disabled and messaged are bounced.  This status is used to
 soft-delete the account before deleting it from the server.  A closed
-acocunt does not change the account license.
+account does not change the account license.
 
 |LockOut |
 The automatic state that occurs if the user attempts to log in with
@@ -255,7 +255,7 @@ You can restrict access to a distribution list from the CLI
 `zmprov grantRight` (`grr`) command.
 
 [NOTE]
-For more information about how granting rights works, 
+For more information about how granting rights works,
 see <<Delegated Administration>>.
 
 ==== Who Can View Members of a Distribution List
