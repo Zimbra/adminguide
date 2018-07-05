@@ -639,7 +639,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_customized_admin_extensions">Customized Admin Extensions</a></li>
 </ul>
 </li>
-<li><a href="#_ephemeral_data_beta">Ephemeral Data (BETA)</a>
+<li><a href="#ephemeral_data">Ephemeral Data (BETA)</a>
 <ul class="sectlevel2">
 <li><a href="#_configuring_a_running_zimbra_collaboration_to_use_ssdb">Configuring a Running Zimbra Collaboration to Use SSDB</a></li>
 <li><a href="#_migration_procedure">Migration Procedure</a></li>
@@ -649,7 +649,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_ssdb_installation_and_configuration">SSDB Installation and Configuration</a>
 <ul class="sectlevel2">
 <li><a href="#_installation">Installation</a></li>
-<li><a href="#_overview_of_configuration_options">Overview of Configuration Options</a></li>
+<li><a href="#ssdb_configuration_options">Overview of Configuration Options</a></li>
 <li><a href="#_master_slave_replication">Master-Slave Replication</a></li>
 <li><a href="#_master_master_replication">Master-Master Replication</a></li>
 <li><a href="#_multi_master_scaling_replication">Multi-Master Scaling / Replication</a></li>
@@ -12232,7 +12232,7 @@ icon. A confirmation query is presented.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ephemeral_data_beta">Ephemeral Data (BETA)</h2>
+<h2 id="ephemeral_data">Ephemeral Data (BETA)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There are 3 main types of ephemeral data stored in LDAP during normal operation of Zimbra Collaboration.</p>
@@ -12330,7 +12330,7 @@ to utilize <code>SSDB</code> instead of <code>LDAP</code> for short lived data s
 <li>
 <p>Install <code>SSDB</code> and note the ip address and port configured since you will
 need this data for the next steps. Refer to
-<a href="#_ssdb_configuration_options">[_ssdb_configuration_options]</a> for more information.</p>
+<a href="#ssdb_configuration_options">Overview of Configuration Options</a> for more information.</p>
 </li>
 <li>
 <p>Migrate any existing short-lived data to <code>SSDB</code> using the <code>/opt/zimbra/bin/zmmigrateattrs</code> command.</p>
@@ -12544,7 +12544,7 @@ in LDAP is wiped immediately as part of the account deletion process.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_overview_of_configuration_options">Overview of Configuration Options</h3>
+<h3 id="ssdb_configuration_options">Overview of Configuration Options</h3>
 <div class="paragraph">
 <p>The purpose of this guide is to discuss some of the options available
 with <code>SSDB</code>, specifically with regards to:</p>
@@ -12666,7 +12666,7 @@ being maintained by <code>Keepalived</code>.</p>
 <div class="paragraph">
 <p>Once the installation and configuration of <em>both</em> the <code>SSDB</code>
 master-slave setup and Zimbra Collaboration have been completed, follow the
-instructions in <a href="#_ephemeral_data">[_ephemeral_data]</a> to update the
+instructions in <a href="#ephemeral_data">Ephemeral Data</a> to update the
 <code>zimbraEphemeralBackendURL</code> accordingly.</p>
 </div>
 <div class="paragraph">
@@ -23833,7 +23833,7 @@ attributes.</p>
 </div>
 <div class="paragraph">
 <p>Note: This section does not detail how to deploy and administer an SSDB server.
-For that information please see section <a href="#overview_of_configuration_options">SSDB Configuration Options</a>.</p>
+For that information please see section <a href="#ssdb_configuration_options">SSDB Configuration Options</a>.</p>
 </div>
 <div class="paragraph">
 <p>Backing up the data stored in SSDB (if so configured) is done as follows:</p>
@@ -46184,7 +46184,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-04 23:14:38 EDT
+Last updated 2018-07-04 23:37:13 EDT
 </div>
 </div>
 </body>
