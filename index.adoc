@@ -158,6 +158,10 @@ include::zimbra-drive-guide.adoc[]
 
 <<<
 
+include::zimbra-docs-guide.adoc[]
+
+<<<
+
 include::cmdlineutils.adoc[]
 
 <<<
