@@ -256,7 +256,7 @@ You can restrict access to a distribution list from the CLI
 
 [NOTE]
 For more information about how granting rights works,
-see <<Delegated Administration>>.
+see <<delegated_administration,Delegated Administration>>.
 
 ==== Who Can View Members of a Distribution List
 
