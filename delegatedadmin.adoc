@@ -1,3 +1,4 @@
+[[delegated_administration]]
 = Delegated Administration (*)
 :toc:
 
