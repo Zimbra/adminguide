@@ -177,7 +177,7 @@ examples:
   zdocs --ldap-url ldaps://ldap.example.com/ --ldap-dn 'uid=zimbra,cn=admins,cn=zimbra' --ldap-pass password ldap-test
 #change the ldap connection settings
   zdocs --ldap-url ldap://ldap2.example.com/ --ldap-dn 'uid=zimbra,cn=admins,cn=zimbra' --ldap-pass password
-ldap-write-settings
+ldap-write-config
 #add the local server
   zdocs write-local-server
 #add the local server with a custom hostname in LDAP, this command should be already invoked during setup.
