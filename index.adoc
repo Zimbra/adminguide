@@ -1,5 +1,8 @@
 include::settings.adoc[]
 
+:document-title: Administrator Guide
+= {product-name} {document-title}
+v{product-version}, {product-release-date}
 :leveloffset: +1
 
 include::mobilesync_warning.adoc[]
@@ -131,6 +134,10 @@ include::ng-mobile.adoc[]
 <<<
 
 include::ng-hsm.adoc[]
+
+<<<
+
+include::ng-abq.adoc[]
 
 <<<
 
