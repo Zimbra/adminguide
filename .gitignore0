@@ -1,0 +1,9 @@
+## MAC OS
+.DS_Store
+.Trashes
+.com.apple.timemachine.supported
+.fseventsd
+
+## other
+*~
+*.swp
