@@ -5,7 +5,9 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.7.1">
-<title>Zimbra Collaboration Administrator Guide version 8.8.9</title>
+<meta name="author" content="v8.8.9, July, 2018">
+<link rel="icon" type="image/x-icon" href="https://www.zimbra.com/wp-content/uploads/2015/08/favicon.ico">
+<title>Zimbra Collaboration Administrator Guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -524,7 +526,10 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Zimbra Collaboration Administrator Guide version 8.8.9</h1>
+<h1>Zimbra Collaboration Administrator Guide</h1>
+<div class="details">
+<span id="author" class="author">v8.8.9, July, 2018</span><br>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -854,6 +859,16 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#hsm-ng-attachment-indexing">HSM NG Attachment Indexing</a></li>
 </ul>
 </li>
+<li><a href="#_abq_service">ABQ Service</a>
+<ul class="sectlevel2">
+<li><a href="#_components">Components</a></li>
+<li><a href="#_abq_modes">ABQ Modes</a></li>
+<li><a href="#_abq_mode_control">ABQ Mode Control</a></li>
+<li><a href="#_dummy_data">Dummy data</a></li>
+<li><a href="#_notifications">Notifications</a></li>
+<li><a href="#_abq_cli">ABQ CLI</a></li>
+</ul>
+</li>
 <li><a href="#admin-ng-guide">Admin NG</a>
 <ul class="sectlevel2">
 <li><a href="#delegated-admin-provisioning">Delegated Admin Provisioning</a></li>
@@ -909,7 +924,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_zimbra_docs">Zimbra Docs</a>
 <ul class="sectlevel2">
 <li><a href="#_introduction">Introduction</a></li>
-<li><a href="#_components_2">Components</a></li>
+<li><a href="#_components_3">Components</a></li>
 <li><a href="#_document_management_flow">Document Management Flow</a></li>
 <li><a href="#_networking_and_ports">Networking and ports</a></li>
 <li><a href="#_installation_and_configuration">Installation and Configuration</a></li>
@@ -972,7 +987,7 @@ If you are upgrading/migrating from a previous version of Zimbra and plan to ena
 <p><span class="image"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="CC BY-SA"></span> Synacor, Inc., 2018</p>
 </div>
 <div class="paragraph">
-<p>&#169; 2018 by Synacor, Inc. Zimbra Collaboration Administrator Guide version 8.8.9</p>
+<p>&#169; 2018 by Synacor, Inc. Zimbra Collaboration Administrator Guide</p>
 </div>
 <div class="paragraph">
 <p>This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
@@ -31527,7 +31542,7 @@ defined policy.</p>
 as the 'zimbra' user:</p>
 </div>
 <div class="paragraph">
-<p><code> zxsuite hsm doMoveBlobs</code></p>
+<p>` zxsuite hsm doMoveBlobs`</p>
 </div>
 </div>
 <div class="sect4">
@@ -32918,29 +32933,29 @@ datastreams.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``asp''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``HtmlParser''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-asp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>asp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HtmlParser</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-asp</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``htm''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``HtmlParser''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/xhtml+xml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>htm</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HtmlParser</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/xhtml+xml</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``html''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``HtmlParser''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/xhtml+xml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>html</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HtmlParser</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/xhtml+xml, text/html</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">text/html</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``shtml''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``HtmlParser''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>shtml</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HtmlParser</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/xhtml+xml</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/xhtml+xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xhtml''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``HtmlParser''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xhtml</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HtmlParser</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/xhtml+xml</p></td>
 </tr>
 </tbody>
 </table>
@@ -32962,244 +32977,244 @@ datastreams.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``rtf''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``RTFParser''</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/rtf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>rtf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RTFParser</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/rtf</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``pdf''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pdf</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PDFParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/pdf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/pdf</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``pub''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pub</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-mspublisher</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-mspublisher</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xls''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xls</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-excel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-excel</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xlt''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xlt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-excel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-excel</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xlw''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xlw</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-excel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-excel</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``ppt''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ppt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-powerpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-powerpoint</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``pps''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pps</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-powerpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-powerpoint</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``mpp''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mpp</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-project</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-project</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``doc''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>doc</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/msword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/msword</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``dot''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dot</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/msword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/msword</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``msg''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>msg</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-outlook</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-outlook</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``vsd''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vsd</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.visio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.visio</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``vst''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vst</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.visio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.visio</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``vss''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vss</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.visio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.visio</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``vsw''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vsw</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OfficeParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.visio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.visio</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xlsm''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xlsm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-excel.sheet.macroenabled.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-excel.sheet.macroenabled.12</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``pptm''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pptm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-powerpoint.presentation.macroenabled.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-powerpoint.presentation.macroenabled.12</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xltx''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xltx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.openxmlformats-officedocument.spreadsheetml.template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.openxmlformats-officedocument.spreadsheetml.template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``docx''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>docx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.openxmlformats-officedocument.wordprocessingml.document</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.openxmlformats-officedocument.wordprocessingml.document</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``potx''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>potx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.openxmlformats-officedocument.presentationml.template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.openxmlformats-officedocument.presentationml.template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xlsx''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xlsx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``pptx''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pptx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.openxmlformats-officedocument.presentationml.presentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.openxmlformats-officedocument.presentationml.presentation</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xlam''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xlam</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-excel.addin.macroenabled.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-excel.addin.macroenabled.12</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``docm''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>docm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-word.document.macroenabled.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-word.document.macroenabled.12</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xltm''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xltm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-excel.template.macroenabled.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-excel.template.macroenabled.12</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``dotx''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dotx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.openxmlformats-officedocument.wordprocessingml.template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.openxmlformats-officedocument.wordprocessingml.template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``ppsm''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ppsm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-powerpoint.slideshow.macroenabled.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-powerpoint.slideshow.macroenabled.12</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``ppam''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ppam</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-powerpoint.addin.macroenabled.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-powerpoint.addin.macroenabled.12</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``dotm''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dotm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.ms-word.template.macroenabled.12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.ms-word.template.macroenabled.12</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``ppsx''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ppsx</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OOXMLParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.openxmlformats-officedocument.presentationml.slideshow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.openxmlformats-officedocument.presentationml.slideshow</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``odt''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>odt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.text</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.text</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``ods''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ods</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.spreadsheet</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.spreadsheet</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``odp''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>odp</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.presentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.presentation</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``odg''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>odg</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.graphics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.graphics</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``odc''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>odc</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.chart</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.chart</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``odf''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>odf</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.formula</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.formula</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``odi''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>odi</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.image</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.image</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``odm''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>odm</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.text-master</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.text-master</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``ott''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ott</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.text-template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.text-template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``ots''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ots</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.spreadsheet-template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.spreadsheet-template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``otp''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>otp</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.presentation-template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.presentation-template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``otg''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>otg</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.graphics-template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.graphics-template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``otc''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>otc</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.chart-template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.chart-template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``otf''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>otf</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.formula-template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.formula-template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``oti''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>oti</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.image-template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.image-template</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``oth''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>oth</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.oasis.opendocument.text-web</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.oasis.opendocument.text-web</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``sxw''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sxw</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OpenDocumentParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/vnd.sun.xml.writer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/vnd.sun.xml.writer</p></td>
 </tr>
 </tbody>
 </table>
@@ -33221,79 +33236,79 @@ datastreams.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``z''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>z</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CompressorParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-compress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-compress</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``bz''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bz</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CompressorParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-bzip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-bzip</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``boz''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boz</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CompressorParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-bzip2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-bzip2</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``bz2''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bz2</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CompressorParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-bzip2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-bzip2</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``gz''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gz</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CompressorParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/gzip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/gzip</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``gz''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gz</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CompressorParser</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">application/x-gzip</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``gzip''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gzip</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CompressorParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-gzip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-gzip</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``xz''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xz</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CompressorParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-xz</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-xz</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``tar''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tar</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PackageParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-tar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-tar</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``jar''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jar</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PackageParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/java-archive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/java-archive</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``7z''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>7z</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PackageParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-7z-compressed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-7z-compressed</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``cpio''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cpio</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PackageParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-cpio</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-cpio</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``zip''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>zip</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PackageParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/zip</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/zip</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``rar''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>rar</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>RarParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//application/x-rar-compressed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/x-rar-compressed</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">``txt''</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>txt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>TXTParser</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">//text/plain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">text/plain</p></td>
 </tr>
 </tbody>
 </table>
@@ -33340,11 +33355,490 @@ or <code>false</code> via the <code>zxsuite config</code> CLI command.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>e.g. to disable PDF parsing run:
-<code>zxsuite config server set server.domain.com attribute pdfParsingEnabled value false</code></p>
+<p>e.g. to disable PDF parsing run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zxsuite config server set server.domain.com attribute pdfParsingEnabled value false</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>By default, all parsers are active.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_abq_service">ABQ Service</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>New for Zimbra Collaboration 8.8.9:
+The "Allow/Block/Quarantine" feature allows for granular access control of mobile devices connecting to the server. It&#8217;s a "pre-emptive" type
+of security feature, meaning that it acts upon the first connection to the server and it&#8217;s made to ensure that only authorized devices can
+finalize synchronization with server. This allows a full administrator to keep track of all mobile device used in their network.
+Presently only CLI tools are provided; a web GUI will be released in the future.</p>
+</div>
+<div class="sect2">
+<h3 id="_components">Components</h3>
+<div class="paragraph">
+<p>The ABQ feature is composed of three main logical components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a Device Control List</p>
+</li>
+<li>
+<p>an Authorization Engine</p>
+</li>
+<li>
+<p>a set of CLI tools</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_device_control_list">Device Control List</h4>
+<div class="paragraph">
+<p>The Device Control List, also known as the "ABQ List", holds the information about allowed devices within the NG config engine.
+Devices can be added to the Device Control List via CLI based on their “Device ID” which can be obtained via CLI.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+On module startup, if the Device Control List is empty all mobile devices previously recognized by the
+Zimbra server will be imported as <strong>Allowed</strong>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_authorization_engine">Authorization Engine</h4>
+<div class="paragraph">
+<p>The Authorization Engine takes care of checking devices against the Device Control List and setting their ABQ status to the appropriate
+value.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cli_toolset">CLI Toolset.</h4>
+<div class="paragraph">
+<p>The CLI Toolset allows administrators to interact with the device control list and with the synchronization status of a device, specifically to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Display the Device Control List</p>
+</li>
+<li>
+<p>Display all Quarantined and Blocked Devices</p>
+</li>
+<li>
+<p>Add one or more devices to the Device Control List</p>
+</li>
+<li>
+<p>Move a device from “Quarantine” to “Allowed” or “Blocked”</p>
+</li>
+<li>
+<p>Change the synchronization status of a device</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Every time the administrator changes a device&#8217;s status in an ABQ-enabled environment,
+depending on the issued state the device will be forced to re-sync folders with the server
+resulting in an immediate re-route to either a <a href="#_dummy_data"><em>dummy virtual mailbox</em></a> that will explain to the user what&#8217;s happened,
+or to the real mailbox to perform the re-sync.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_abq_modes">ABQ Modes</h3>
+<div class="paragraph">
+<p>The ABQ feature is triggered for every mobile device that tries to synchronize with server, and can be set to one of four possible modes:
+"Permissive", "Interactive", "Strict” and "Disabled". This attribute is Global for all the cluster.</p>
+</div>
+<div class="sect3">
+<h4 id="_permissive_mode">"Permissive" mode:</h4>
+<div class="paragraph">
+<p>The Authorization Engine is not active, so after authenticating the user and checking their account status for safety reasons, the
+synchronization will continue. It is still possible to block specific devices but non-blocked devices will always be allowed to sync.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_interactive_mode">"Interactive" mode:</h4>
+<div class="paragraph">
+<p>After authenticating the user and checking their account status for safety reasons, the Device Control system will check the "Device ID"
+sent by the device against the list of allowed devices:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>if the device is in the "allowed" list the synchronization will continue.</p>
+</li>
+<li>
+<p>if the device is not in the “allowed” list the synchronization will be paused, a dummy email notifying the user of its
+"Quarantine" status will be sent and the connection will be set to "Quarantine" status.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Administrators can be notified at regular intervals, and every notification email will only include new Quarantined devices.
+They will then be able to allow or deny the synchronization for each device using the appropriate CLI tools.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_strict_mode">"Strict" mode:</h4>
+<div class="paragraph">
+<p>After authenticating the user and checking their account status for safety reasons, the Device Control system will check the "Device ID"
+sent by the device against the list of allowed devices:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>if the device is in the “allowed” list the synchronization will continue</p>
+</li>
+<li>
+<p>if the device is not in the “allowed” list the synchronization will be put in "Blocked" state, no data will be synchronized and a
+dummy email notifying the user of the device&#8217;s "Blocked" status will be sent.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_disabled_mode">"Disabled" mode:</h4>
+<div class="paragraph">
+<p>ABQ is disabled, no checks are triggered and no policies are enforced.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_abq_mode_control">ABQ Mode Control</h3>
+<div class="paragraph">
+<p>The current mode can be checked by running the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zxsuite config global get attribute abqMode</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The ABQ mode can be changed running the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zxsuite config global set attribute abqMode value [Permissive|Interactive|Strict|Disabled]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dummy_data">Dummy data</h3>
+<div class="paragraph">
+<p>The feature makes use of “Dummy emails” and a “Dummy mailbox” to put devices on hold while waiting for authorization (Interactive Mode)
+or to notify their “Blocked” status (Permissive Mode, Interactive Mode and Strict Mode).</p>
+</div>
+<div class="paragraph">
+<p>The Dummy Mailbox is a virtual mailbox consisting of only an “Inbox” folder that will be synchronized to the device while this is in either
+Quarantine or Block status. Dummy Emails are predefined email messages that are synchronized to a device in Quarantine or Block status to
+alert the user. For now these messages aren&#8217;t customizable, and will be localized in the future. Whenever the ABQ status of a device is
+changed, the device&#8217;s sync state will be reset.</p>
+</div>
+<div class="paragraph">
+<p>This was designed to make sure the user knows what’s happening, the alternative being forcing the synchronization to fail with no descriptive
+response for the user itself – which would likely cause a significant overhead on support calls.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notifications">Notifications</h3>
+<div class="paragraph">
+<p>Administrators can be notified via email of quarantined devices at a specific interval defined by the <code>abqNotificationsInterval</code> NG
+configuration attribute, expressed in milliseconds:</p>
+</div>
+<div class="paragraph">
+<p>The interval can be checked by running the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zxsuite config global get attribute abqNotificationsInterval</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The interval can be changed running the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zxsuite config global set attribute abqNotificationsInterval value [delay in milliseconds]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, the <code>abqNotificationsInterval</code> is set to 0 - meaning that no notifications will be delivered.</p>
+</div>
+<div class="sect3">
+<h4 id="_abq_service_status">ABQ Service Status</h4>
+<div class="paragraph">
+<p>The ABQ service status can be checked running the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zxsuite mobile getServices</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The service can be stopped or started using the default service control of the Mobile NG module:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">zxsuite mobile doStartService abq
+zxsuite mobile doStopService abq</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When mode is Disabled ABQ service won&#8217;t automatically start and devices are always allowed to sync.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_abq_cli">ABQ CLI</h3>
+<div class="paragraph">
+<p>A list of all ABQ CLI commands can be displayed running:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ zxsuite mobile abq
+
+Allow/Block/Quarantine mobile devices management
+
+    list                    - List devices.
+                              zxsuite mobile ABQ list [attr1 value1 [attr2 value2...]]
+
+    add                     - add/import devices
+                              zxsuite mobile ABQ add [attr1 value1 [attr2 value2...]]
+
+    allow                   - Allow synchronization for a quarantined device
+                              zxsuite mobile ABQ allow {device_id}
+
+    block                   - Deny synchronization for a quarantined device
+                              zxsuite mobile ABQ block {device_id}
+
+    set                     - Set synchronization status for a device
+                              zxsuite mobile ABQ set {device_id} {Allowed|Blocked|Quarantined}
+
+    delete                  - Delete device from ABQ
+                              zxsuite mobile ABQ delete {device_id}
+
+    setNotificationInterval - Set the notification interval for new quarantined devices
+                              zxsuite mobile ABQ setNotificationInterval {45m|6h|1d|0}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_abq_list_command">ABQ "list" Command</h4>
+<div class="paragraph">
+<p>List all devices ABQ status. The "status" argument will filter the list in order to only show devices in that specific status.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ zxsuite mobile abq list
+List devices.
+
+Syntax:
+   zxsuite mobile ABQ list [attr1 value1 [attr2 value2...]]
+
+
+PARAMETER LIST
+
+NAME        TYPE    EXPECTED VALUES
+status(O)   String  Allowed|Blocked|Quarantined
+
+(M) == mandatory parameter, (O) == optional parameter</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[zimbra@mail ~]$ zxsuite mobile abq list
+
+        devices
+
+                device_id   androidc133785981
+                status      Quarantined
+
+                device_id   androidc1024711770
+                status      Blocked
+
+                device_id   SAMSUNG1239862958
+                status      Allowed</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_abq_import_command">ABQ "import" Command</h4>
+<div class="paragraph">
+<p>This command imports a list of device ids from a file, and always requires two parameters:
+an Input File with a list of Device IDs separated by a newline and the "status" the imported device(s) will be set to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[zimbra@mail ~]$ zxsuite mobile abq import
+command import requires more parameters
+
+Syntax:
+    zxsuite mobile ABQ import {Path to file} {Allowed|Blocked|Quarantined}
+
+PARAMETER LIST
+
+NAME            TYPE        EXPECTED VALUES
+input_file(M)   String      Path to file
+status(M)       String      Allowed|Blocked|Quarantined
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite mobile ABQ import /path/to/file Allowed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">[zimbra@mail ~]$ zxsuite mobile abq import /tmp/list Allowed
+3 devices added
+
+[zimbra@mail ~]$ cat /tmp/list
+androidc133785981
+androidc1024711770
+SAMSUNG1239862958</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_abq_allow_command">ABQ "allow" Command</h4>
+<div class="paragraph">
+<p>This is a specific command for quarantined device, and sets device status to <strong>Allowed</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ zxsuite mobile abq allow
+Allow synchronization for a quarantined device
+
+Syntax:
+    zxsuite mobile ABQ allow {device_id}
+
+PARAMETER LIST
+
+NAME            TYPE
+device_id(M)    String
+
+(M) == mandatory parameter, (O) == optional parameter</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_abq_block_command">ABQ "block" Command</h4>
+<div class="paragraph">
+<p>This is a specific command for quarantined device, and sets device status to <strong>Blocked</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ zxsuite mobile abq block
+Deny synchronization for a quarantined device
+
+Syntax:
+    zxsuite mobile ABQ block {device_id}
+
+PARAMETER LIST
+
+NAME            TYPE
+device_id(M)    String
+
+(M) == mandatory parameter, (O) == optional parameter</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_abq_set_command">ABQ "set" Command</h4>
+<div class="paragraph">
+<p>Set any status for any single device (either known or unknown).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ zxsuite mobile abq set
+Set synchronization status for a device
+
+Syntax:
+    zxsuite mobile ABQ set {device_id} {Allowed|Blocked|Quarantined}
+
+PARAMETER LIST
+
+NAME            TYPE        EXPECTED VALUES
+device_id(M)    String
+status(M)       String      Allowed|Blocked|Quarantined
+
+(M) == mandatory parameter, (O) == optional parameter</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_abq_delete_command">ABQ "delete" Command</h4>
+<div class="paragraph">
+<p>Delete a device from all lists.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ zxsuite help mobile abq delete
+Delete device from ABQ
+
+Syntax:
+    zxsuite mobile ABQ delete {device_id}
+
+PARAMETER LIST
+
+NAME            TYPE
+device_id(M)    String
+
+(M) == mandatory parameter, (O) == optional parameter</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_abq_setnotificationinterval_command">ABQ "setNotificationInterval" Command</h4>
+<div class="paragraph">
+<p>Set notification interval for new quarantined devices.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">$ zxsuite mobile abq setNotificationInterval
+command setNotificationInterval requires more parameters
+
+Syntax:
+    zxsuite mobile ABQ setNotificationInterval {45m|6h|1d}
+
+PARAMETER LIST
+
+NAME            TYPE        EXPECTED VALUES
+interval(M)     String      45m|6h|1d
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+Set notification of new quarantined devices every 45 minutes
+    zxsuite mobile abq setNotificationInterval 45m
+Set notification of new quarantined devices every 6 hours
+    zxsuite mobile abq setNotificationInterval 6h
+Set notification of new quarantined devices once every day
+    zxsuite mobile abq setNotificationInterval 1d
+Disable notifications of new quarantined devices
+    zxsuite mobile abq setNotificationInterval 0</code></pre>
+</div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -37413,7 +37907,7 @@ service account.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_components">Components</h4>
+<h4 id="_components_2">Components</h4>
 <div class="paragraph">
 <p>Zimbra Drive includes the following components:</p>
 </div>
@@ -38188,7 +38682,7 @@ documents, spreadsheets and presentations straight from the Zimbra WebClient.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="_components_2">Components</h3>
+<h3 id="_components_3">Components</h3>
 <div class="sect3">
 <h4 id="_zimbra_docs_server">Zimbra Docs Server</h4>
 <div class="paragraph">
@@ -46553,7 +47047,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-05 21:30:02 EDT
+Last updated 2018-07-11 01:05:38 EDT
 </div>
 </div>
 </body>
