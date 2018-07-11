@@ -134,6 +134,10 @@ include::ng-hsm.adoc[]
 
 <<<
 
+include::ng-abq.adoc[]
+
+<<<
+
 include::ng-admin.adoc[]
 
 <<<
