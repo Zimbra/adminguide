@@ -1258,11 +1258,11 @@ Web
 [cols=",,",options="header",]
 |=============================================================
 |Extension |Parser |Content-type
-|``asp'' |``HtmlParser'' |//application/x-asp
-|``htm'' |``HtmlParser'' |//application/xhtml+xml
-|``html'' |``HtmlParser'' |//application/xhtml+xml | text/html
-|``shtml'' |``HtmlParser'' |//application/xhtml+xml
-|``xhtml'' |``HtmlParser'' |//application/xhtml+xml
+|`asp` |`HtmlParser` |//application/x-asp
+|`htm` |`HtmlParser` |//application/xhtml+xml
+|`html` |`HtmlParser` |//application/xhtml+xml, text/html
+|`shtml` |`HtmlParser` |//application/xhtml+xml
+|`xhtml` |`HtmlParser` |//application/xhtml+xml
 |=============================================================
 
 [[documents]]
@@ -1272,132 +1272,132 @@ Documents
 [cols=",,",options="header",]
 |=======================================================================
 |Extension |Parser |Content-type
-|``rtf'' |``RTFParser'' |//application/rtf
+|`rtf` |`RTFParser` |//application/rtf
 
-|``pdf'' |`PDFParser` |//application/pdf
+|`pdf` |`PDFParser` |//application/pdf
 
-|``pub'' |`OfficeParser` |//application/x-mspublisher
+|`pub` |`OfficeParser` |//application/x-mspublisher
 
-|``xls'' |`OfficeParser` |//application/vnd.ms-excel
+|`xls` |`OfficeParser` |//application/vnd.ms-excel
 
-|``xlt'' |`OfficeParser` |//application/vnd.ms-excel
+|`xlt` |`OfficeParser` |//application/vnd.ms-excel
 
-|``xlw'' |`OfficeParser` |//application/vnd.ms-excel
+|`xlw` |`OfficeParser` |//application/vnd.ms-excel
 
-|``ppt'' |`OfficeParser` |//application/vnd.ms-powerpoint
+|`ppt` |`OfficeParser` |//application/vnd.ms-powerpoint
 
-|``pps'' |`OfficeParser` |//application/vnd.ms-powerpoint
+|`pps` |`OfficeParser` |//application/vnd.ms-powerpoint
 
-|``mpp'' |`OfficeParser` |//application/vnd.ms-project
+|`mpp` |`OfficeParser` |//application/vnd.ms-project
 
-|``doc'' |`OfficeParser` |//application/msword
+|`doc` |`OfficeParser` |//application/msword
 
-|``dot'' |`OfficeParser` |//application/msword
+|`dot` |`OfficeParser` |//application/msword
 
-|``msg'' |`OfficeParser` |//application/vnd.ms-outlook
+|`msg` |`OfficeParser` |//application/vnd.ms-outlook
 
-|``vsd'' |`OfficeParser` |//application/vnd.visio
+|`vsd` |`OfficeParser` |//application/vnd.visio
 
-|``vst'' |`OfficeParser` |//application/vnd.visio
+|`vst` |`OfficeParser` |//application/vnd.visio
 
-|``vss'' |`OfficeParser` |//application/vnd.visio
+|`vss` |`OfficeParser` |//application/vnd.visio
 
-|``vsw'' |`OfficeParser` |//application/vnd.visio
+|`vsw` |`OfficeParser` |//application/vnd.visio
 
-|``xlsm'' |`OOXMLParser`
+|`xlsm` |`OOXMLParser`
 |//application/vnd.ms-excel.sheet.macroenabled.12
 
-|``pptm'' |`OOXMLParser`
+|`pptm` |`OOXMLParser`
 |//application/vnd.ms-powerpoint.presentation.macroenabled.12
 
-|``xltx'' |`OOXMLParser`
+|`xltx` |`OOXMLParser`
 |//application/vnd.openxmlformats-officedocument.spreadsheetml.template
 
-|``docx'' |`OOXMLParser`
+|`docx` |`OOXMLParser`
 |//application/vnd.openxmlformats-officedocument.wordprocessingml.document
 
-|``potx'' |`OOXMLParser`
+|`potx` |`OOXMLParser`
 |//application/vnd.openxmlformats-officedocument.presentationml.template
 
-|``xlsx'' |`OOXMLParser`
+|`xlsx` |`OOXMLParser`
 |//application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 
-|``pptx'' |`OOXMLParser`
+|`pptx` |`OOXMLParser`
 |//application/vnd.openxmlformats-officedocument.presentationml.presentation
 
-|``xlam'' |`OOXMLParser`
+|`xlam` |`OOXMLParser`
 |//application/vnd.ms-excel.addin.macroenabled.12
 
-|``docm'' |`OOXMLParser`
+|`docm` |`OOXMLParser`
 |//application/vnd.ms-word.document.macroenabled.12
 
-|``xltm'' |`OOXMLParser`
+|`xltm` |`OOXMLParser`
 |//application/vnd.ms-excel.template.macroenabled.12
 
-|``dotx'' |`OOXMLParser`
+|`dotx` |`OOXMLParser`
 |//application/vnd.openxmlformats-officedocument.wordprocessingml.template
 
-|``ppsm'' |`OOXMLParser`
+|`ppsm` |`OOXMLParser`
 |//application/vnd.ms-powerpoint.slideshow.macroenabled.12
 
-|``ppam'' |`OOXMLParser`
+|`ppam` |`OOXMLParser`
 |//application/vnd.ms-powerpoint.addin.macroenabled.12
 
-|``dotm'' |`OOXMLParser`
+|`dotm` |`OOXMLParser`
 |//application/vnd.ms-word.template.macroenabled.12
 
-|``ppsx'' |`OOXMLParser`
+|`ppsx` |`OOXMLParser`
 |//application/vnd.openxmlformats-officedocument.presentationml.slideshow
 
-|``odt'' |`OpenDocumentParser`
+|`odt` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.text
 
-|``ods'' |`OpenDocumentParser`
+|`ods` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.spreadsheet
 
-|``odp'' |`OpenDocumentParser`
+|`odp` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.presentation
 
-|``odg'' |`OpenDocumentParser`
+|`odg` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.graphics
 
-|``odc'' |`OpenDocumentParser`
+|`odc` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.chart
 
-|``odf'' |`OpenDocumentParser`
+|`odf` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.formula
 
-|``odi'' |`OpenDocumentParser`
+|`odi` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.image
 
-|``odm'' |`OpenDocumentParser`
+|`odm` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.text-master
 
-|``ott'' |`OpenDocumentParser`
+|`ott` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.text-template
 
-|``ots'' |`OpenDocumentParser`
+|`ots` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.spreadsheet-template
 
-|``otp'' |`OpenDocumentParser`
+|`otp` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.presentation-template
 
-|``otg'' |`OpenDocumentParser`
+|`otg` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.graphics-template
 
-|``otc'' |`OpenDocumentParser`
+|`otc` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.chart-template
 
-|``otf'' |`OpenDocumentParser`
+|`otf` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.formula-template
 
-|``oti'' |`OpenDocumentParser`
+|`oti` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.image-template
 
-|``oth'' |`OpenDocumentParser`
+|`oth` |`OpenDocumentParser`
 |//application/vnd.oasis.opendocument.text-web
 
-|``sxw'' |`OpenDocumentParser` |//application/vnd.sun.xml.writer
+|`sxw` |`OpenDocumentParser` |//application/vnd.sun.xml.writer
 |=======================================================================
 
 [[packages-and-archives]]
@@ -1407,21 +1407,21 @@ Packages and Archives
 [cols=",,",options="header",]
 |======================================================
 |Extension |Parser |Content-Type
-|``z'' |`CompressorParser` |//application/x-compress
-|``bz'' |`CompressorParser` |//application/x-bzip
-|``boz'' |`CompressorParser` |//application/x-bzip2
-|``bz2'' |`CompressorParser` |//application/x-bzip2
-|``gz'' |`CompressorParser` |//application/gzip
-|``gz'' |`CompressorParser` |application/x-gzip
-|``gzip'' |`CompressorParser` |//application/x-gzip
-|``xz'' |`CompressorParser` |//application/x-xz
-|``tar'' |`PackageParser` |//application/x-tar
-|``jar'' |`PackageParser` |//application/java-archive
-|``7z'' |`PackageParser` |//application/x-7z-compressed
-|``cpio'' |`PackageParser` |//application/x-cpio
-|``zip'' |`PackageParser` |//application/zip
-|``rar'' |`RarParser` |//application/x-rar-compressed
-|``txt'' |`TXTParser` |//text/plain
+|`z` |`CompressorParser` |//application/x-compress
+|`bz` |`CompressorParser` |//application/x-bzip
+|`boz` |`CompressorParser` |//application/x-bzip2
+|`bz2` |`CompressorParser` |//application/x-bzip2
+|`gz` |`CompressorParser` |//application/gzip
+|`gz` |`CompressorParser` |application/x-gzip
+|`gzip` |`CompressorParser` |//application/x-gzip
+|`xz` |`CompressorParser` |//application/x-xz
+|`tar` |`PackageParser` |//application/x-tar
+|`jar` |`PackageParser` |//application/java-archive
+|`7z` |`PackageParser` |//application/x-7z-compressed
+|`cpio` |`PackageParser` |//application/x-cpio
+|`zip` |`PackageParser` |//application/zip
+|`rar` |`RarParser` |//application/x-rar-compressed
+|`txt` |`TXTParser` |//text/plain
 |======================================================
 
 [[parser-controls]]
