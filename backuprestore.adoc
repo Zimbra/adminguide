@@ -1553,10 +1553,6 @@ Since auth tokens are ephemeral attributes, the implication is that clients
 accessing accounts restored after deletion will need to re-authenticate;
 auth tokens generated prior to the backup will no longer work.
 
-// ZMS-614 / ZCS-2188 was fixed 2-Jan-2018, so this needs to be updated. v v
-The Jira ticket ZMS-614 has been opened to track the potential future development
-of ephemeral data backups.
-
 === Ephemeral Storage SSDB Backend
 
 ==== Backing up Ephemeral Data in SSDB
