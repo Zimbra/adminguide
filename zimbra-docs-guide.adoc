@@ -18,7 +18,7 @@ documents, spreadsheets and presentations straight from the Zimbra WebClient.
 The Zimbra Docs server is the heart of the service. The service hosts each document opened through a LibreOffice engine and responds to the
 client via an image upon every keystroke and change in the document.
 
-IMPORTANT: This component must be installed on one or more dedicated nodes running Ubuntu 16.04 LTS or greater.
+IMPORTANT: This component must be installed on one or more dedicated nodes running Ubuntu 16.04 LTS.
 
 === Zimbra Docs Extension
 
@@ -110,7 +110,7 @@ While the Zimbra Docs extension is already contained within the NG modules, the 
 server and enabled on all users and COS that need to have access to the Zimbra Docs features.
 
 The `com_zextras_docs` Zimlet is available in the Zimbra repository, so it can be easily downloaded and deployed by running `apt-get
-install zimbra-doc`.
+install zimbra-docs`.
 
 No configuration on the mailboxd side is needed after the Zimlet has been deployed and enabled.
 
