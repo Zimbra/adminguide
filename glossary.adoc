@@ -11,6 +11,11 @@ A record::
     A (Address) records map the hostname to the numeric IP address.  For
     Zimbra, the A record is the IP address for the Zimbra server.
 
+ABQ::
+    The Allow/Block/Quarantine function provided by the NG Modules
+    gives system administrators control over which devices are allowed
+    to sync via ActiveSync.
+    
 Account Policy::
     Class of Service as exposed in Zimbra administration console.
 
