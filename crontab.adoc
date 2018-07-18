@@ -140,7 +140,7 @@ Zimbra MTA. The job runs at 11:00 p.m.
 
 ==== Spam Bayes auto-expiry
 
-Spam bayes auto-expiry maintains the spamassassin Bayes database. This
+Spam bayes auto-expiry maintains the SpamAssassin Bayes database. This
 keeps the database to manageable size ensuring spam processing remains as
 quick as possible. This runs every day at 11:20 p.m.
 

@@ -9,8 +9,13 @@ product, that is noted as well.
 [glossary]
 A record::
     A (Address) records map the hostname to the numeric IP address.  For
-    zimbra, the A record is the IP address for the zimbra server.
+    Zimbra, the A record is the IP address for the Zimbra server.
 
+ABQ::
+    The Allow/Block/Quarantine function provided by the NG Modules
+    gives system administrators control over which devices are allowed
+    to sync via ActiveSync.
+    
 Account Policy::
     Class of Service as exposed in Zimbra administration console.
 
@@ -49,7 +54,7 @@ Class of Service (COS)::
 
 CLI::
     Command-Line Interface.  Used to refer to the collective set of
-    {product-name} command-line tools, such as zmprov.
+    {product-name} command-line tools, such as `zmprov`.
 
 Cluster::
     A type of network configuration for high availability, using clusters
@@ -215,7 +220,7 @@ RBH::
     unsecured and exploited by spammers.
 
 Redo Logs::
-    Detailed transaction log for the .  server, used for replay and
+    Detailed transaction log for the {product-name} server, used for replay and
     replication.
 
 SAN::

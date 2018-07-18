@@ -49,7 +49,7 @@ In addition, you can manage the following device usage options.
 removable storage can be disabled.
 
 [NOTE]
-Only WM6 devices and IPhones support security policies set by the
+Only WM6 devices and iPhones support security policies set by the
 server. Older devices do not respond to security policies.
 
 == Setting Up Mobile Policies on {product-abbrev}
@@ -348,7 +348,7 @@ issued by many certification authorities.
 When you complete the request you must have a valid domain name service
 (DNS SRV record) for `autodiscover.<domain>.com`. Configure the *Subject
 Alternative Name* (SAN) field with the valid domain names that you use.
-Thealternative name should include the domain
+The alternative name should include the domain
 `autodiscover.<company>.com`. Include all the domain names required for
 your environment in the Subject Alternative Name field.
 
@@ -384,7 +384,7 @@ on the https://wiki.zimbra.com[Zimbra Wiki].
 === Change Mobile Device Password Policy
 
 If a mobile device is locked by the {product-name} mobile password
-policy, the PIN requirement must be removed to resync the device.
+policy, the PIN requirement must be removed to re-sync the device.
 
 Admin Console: ::
 *Home > Manage > Accounts -> _account_ -> Mobile Access*
@@ -393,7 +393,7 @@ Admin Console: ::
 
 . On the *Mobile Access* page, uncheck *Force pin on device*.
 
-. After the password policy has been disabled, the user must resync
+. After the password policy has been disabled, the user must re-sync
 the device:
 +
 * If the device is a WM6 device, the user syncs to the account. After the

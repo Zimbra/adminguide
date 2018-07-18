@@ -229,7 +229,7 @@ zmprov mc <COSname2> +zimbraProxyAllowedDomains '*.example.com'
 
 === Viewing Installed Zimlets
 
-Use the `zmzimletctl` command to view currently installed zimlets:
+Use the `zmzimletctl` command to view currently installed Zimlets:
 
 [source,bash]
 ----
@@ -264,7 +264,7 @@ If you have more than one custom Zimlet, rename the config template.xml
 file before updating the configuration in LDAP so that files are not
 overwritten.
 
-. Use the zmzimletctl command to update the configuration in the LDAP.  If
+. Use the `zmzimletctl` command to update the configuration in the LDAP.  If
 you changed the name of the configuration template, replace
 `config_template.xml` with the new name.
 +
@@ -282,7 +282,7 @@ used to deploy a new Zimlet.
 The new Zimlet zip file should be named identically to the existing Zimlet
 zip file.
 
-Use steps in this section upgrade a zimlet:
+Use steps in this section upgrade a Zimlet:
 
 . Copy the Zimlet zip file to the `/opt/zimbra/zimlets-extra` directory,
 replacing the older version.

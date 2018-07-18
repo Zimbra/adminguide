@@ -1,5 +1,8 @@
 include::settings.adoc[]
 
+:document-title: Administrator Guide
+= {product-name} {document-title}
+v{product-version}, {product-release-date}
 :leveloffset: +1
 
 include::mobilesync_warning.adoc[]
@@ -134,6 +137,10 @@ include::ng-hsm.adoc[]
 
 <<<
 
+include::ng-abq.adoc[]
+
+<<<
+
 include::ng-admin.adoc[]
 
 <<<
@@ -158,6 +165,10 @@ include::zimbra-drive-guide.adoc[]
 
 <<<
 
+include::zimbra-docs-guide.adoc[]
+
+<<<
+
 include::cmdlineutils.adoc[]
 
 <<<
@@ -167,6 +178,10 @@ include::spnego.adoc[]
 <<<
 
 include::crontab.adoc[]
+
+<<<
+
+include::ng-abq-soap.adoc[]
 
 <<<
 

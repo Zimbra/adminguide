@@ -5,7 +5,7 @@
 Delegated Admin Provisioning
 ----------------------------
 
-[[what-is-the-delegated-admin-provisioning]]
+[[what-is-delegated-admin-provisioning]]
 What is Delegated Admin Provisioning?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

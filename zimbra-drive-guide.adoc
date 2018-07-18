@@ -169,7 +169,7 @@ specific supported cloud.
 The cloud services currently supported are Nextcloud and ownCloud with
 the archive `zimbradrive.tar.gz`.
 
-[[==subsec:NextcloudownCloudInstallation==]]
+[[subsec:NextcloudownCloudInstallation]]
 Nextcloud/ownCloud
 ++++++++++++++++++
 
@@ -188,7 +188,7 @@ service in server:
 (E.g.: www-data): +
 `chown -R www-data:www-data PATHTOCLOUD/apps/zimbradrive/`
 4.  Enable Zimbra Drive App from Nextcloud/ownCloud Admin Interface or
-with command:
+with command: +
 `sudo -u www-data php PATHTOCLOUD/occ app:enable zimbradrive`
 
 At this point, the Nextcloud/ownCloud Zimbra Drive App is installed and
@@ -196,9 +196,9 @@ requires configuration.
 
 On Apache Web Server, Zimbra Drive doesn’t work if the server is not
 correctly configured. Refer to these instructions for _Apache Web Server
-Configuration_ in the Nextcloud manual
+Configuration_ in the Nextcloud manual:
 https://docs.nextcloud.com/server/11/admin_manual/installation/source_installation.html#apache-web-server-configuration[Nextcloud
-installation] or in the ownCloud manual
+installation] or in the ownCloud manual:
 https://doc.owncloud.org/server/10.0/admin_manual/installation/source_installation.html#apache-web-server-configuration[ownCloud
 installation].
 

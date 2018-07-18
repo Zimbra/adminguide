@@ -60,7 +60,7 @@ account.  Recommend that the full name be the {product-abbrev} mailbox server na
 Example: *mail1*
 +
 * *User Logon Name*: This name is the value that is set for the
-`zimbraSpnegoAuthTargetName` server attribute in LDAP. Write itdown. +
+`zimbraSpnegoAuthTargetName` server attribute in LDAP. Write it down. +
 Example: *HTTP/mail1.example.com*
 +
 * *User Logon Name (pre-Windows2000):* This name is used for the
@@ -98,7 +98,7 @@ setspn –a HTTP/mail1.example.com mail1
 A list of registered SPNs is displayed.
 
 . Create the keytab file used when signing into the Kerberos domain.  Use
-the ktpass tool from the Windows Server toolkit to create the Kerberos
+the `ktpass` tool from the Windows Server toolkit to create the Kerberos
 keytab.
 +
 [NOTE]
@@ -335,8 +335,8 @@ differently depending on the browser.
 
 The following browsers are supported:
 
-* For computers running Windows: Internet Explorer 6.0 or later, Firefox
-3.0 or later, Chrome, Safari
+* For computers running Windows: Internet Explorer 10.0 or later, Edge, Firefox
+52 or later, Chrome, Safari
 
 * Apple Mac computer: Safari
 

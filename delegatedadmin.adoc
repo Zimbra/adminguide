@@ -1,3 +1,4 @@
+[[delegated_administration]]
 = Delegated Administration (*)
 :toc:
 
@@ -327,7 +328,7 @@ Use the administration wizard to
 
 .  Create the create either an Admin Group or an Admin Account.
 
-.. *Admin Groups* are distribution lists (DL) that have Admin Groupenabled,
+.. *Admin Groups* are distribution lists (DL) that have Admin Group enabled,
 which flags it as a delegated administrator DL. After the admin group
 administrator is created and configured with rights and admin views, you
 add administrator user accounts to the admin group.

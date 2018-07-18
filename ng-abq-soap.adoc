@@ -1,0 +1,149 @@
+
+[appendix]
+= ABQ - SOAP API
+:toc:
+
+== Introduction
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::[{product-version} == 8.8.9]
+New for {product-name} {product-version}:
+endif::[]
+//
+The "Allow/Block/Quarantine" feature allows for granular access control of mobile devices connecting to the server.
+For more details about the feature, refer to the <<ng-abq,ABQ Service documentation>>.
+
+This appendix introduces the SOAP API support for the ABQ service.
+
+=== Zimbra SOAP
+Zimbra implements the Simple Object Access Protocol (SOAP) for integration with clients. For more information:
+
+- https://wiki.zimbra.com/wiki/SOAP_API_Reference_Material_Beginning_with_ZCS_8[SOAP API Reference Material beginning with Zimbra Collaboration 8.0]
+- and https://github.com/search?q=zimbra+soap&type=Repositories[here are] a couple of libraries that
+simplify access to that API.
+
+Zimbra's SOAP implementation comprises a `soap:Header` and a `soap:Body`, as in this example of a SOAP request:
+[source,xml]
+----
+<?xml version="1.0" encoding="utf-8" ?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <context xmlns="urn:zimbra">
+            <authToken>$token</authToken>
+            <format type="xml"/>
+        </context>
+    </soap:Header>
+    <soap:Body>
+        $xml
+    </soap:Body>
+</soap:Envelope>
+----
+Here `$xml` should replaced with the SOAP request that we want to issue, and `$token` should be a valid token granted by Zimbra after the client has successfully authenticated.
+
+=== Login
+To get access to Zimbra, first authenticate yourself and obtain a valid token. Here is the XML request to do so:
+[source,xml]
+----
+<AuthRequest xmlns="urn:zimbraAdmin">
+    <account by="name">"user@example.com"</account>
+    <password>password</password>
+</AuthRequest>
+----
+Here an example of a reply:
+[source,xml]
+----
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <context xmlns="urn:zimbra">
+        <change token="699"/>
+        </context>
+    </soap:Header>
+    <soap:Body>
+        <AuthResponse xmlns="urn:zimbraAdmin">
+            <authToken>0_2ebb6bdada2b1987c4fa625f95862d2a299b2e4c_69643d33363a34623065356237342d366135612d343435372d393032662d6630313833343131386666363b6578703d31333a313532393335333836373330303b61646d696e3d313a313b747970653d363a7a696d6272613b753d313a613b7469643d31303a313031323636373733383b76657273696f6e3d31333a382e382e385f47415f323030393b</authToken>
+            <lifetime>43199998</lifetime>
+        </AuthResponse>
+    </soap:Body>
+</soap:Envelope>
+----
+After we have a valid token we can use it in subsequent calls placing it into the `<authToken>$token</authToken>` of `soap:Header`.
+
+== ABQ API
+All ABQ calls have a common XML:
+[source,xml]
+----
+<zextras xmlns="urn:zimbraAdmin">
+    <module>ZxMobile</module>
+    <action>$action</action>
+</zextras>
+----
+where `$action` can be: `getDeviceControlList`, `getDeviceStatus` or `setDeviceStatus` followed by a parameter if needed. Here is an example of a reply:
+[source,xml]
+----
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <context xmlns="urn:zimbra">
+        <change token="699"/>
+        </context>
+    </soap:Header>
+    <soap:Body>
+        <response content="{"response":{"devices":[{"device_id":"device4","status":"device1=allowed;device2=quarantined;device3=Blocked"}]},
+        "ok":true}"/>
+    </soap:Body>
+</soap:Envelope>
+----
+All ABQ replies are standard and they are placed into a `<response>` tag with a `content` attribute. Content is formatted as JSON with only one `JSONObject: "response"` and `Boolean: "ok"`. The former contains the reply and the latter indicates if the request succeeded or not.
+
+=== getDeviceControlList
+Returns a list of all ABQ devices filtered by status: “all”, ”allowed”, ”quarantined” or ”blocked” (case insensitive)
+[source,xml]
+----
+<zextras xmlns="urn:zimbraAdmin">
+    <module>ZxMobile</module>
+    <action>getDeviceControlList</action>
+    <status>all</status>
+</zextras>
+----
+=== getDeviceStatus
+Returns a list of ABQ devices status given a device list (semicolon separated)
+[source,xml]
+----
+<zextras xmlns="urn:zimbraAdmin">
+    <module>ZxMobile</module>
+    <action>getDeviceStatus</action>
+    <device>device01;device02</device>
+</zextras>
+----
+The reply contains a JSON array called `devices`, each with a pair of string attributes : `"device_id"` and `"status"`. Here is an example:
+[source,json]
+----
+{"response":{"devices":[{"device_id":"device1","status":"Allowed"}]},"ok":true}
+----
+If the requested device is not found in ABQ, it is simply omitted from the response.
+
+=== setDeviceStatus
+Sets the device status for a given device or list of devices. The list is semicolon separated and each element is composed of `device_id = $status` where `$status` can
+be `Allowed`, `Quarantined` or `Blocked` (case insensitive). Returns a list of failed devices.
+
+[source,xml]
+----
+<zextras xmlns="urn:zimbraAdmin">
+    <module>ZxMobile</module>
+    <action>setDeviceStatus</action>
+    <deviceStatus>device01=allowed;device02=blocked</deviceStatus>
+</zextras>
+----
+The reply contains a JSON array called `devices`, each with a pair of string attributes : `"device_id"` and `"status"`. Here is an example:
+
+[source,json]
+----
+    {"response":{"devices":[{"device_id":"device4","status":"wrong"}]},"ok":true}
+----
+==== Example
+AbqClient is a simple java example to show access to ABQ api. It's self contained and can be build with ant:
+
+    $ ant build
+
+and executed by:
+
+    $ ant run

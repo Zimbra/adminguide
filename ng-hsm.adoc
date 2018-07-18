@@ -12,17 +12,16 @@ The Hierarchical Storage Management Technique
 HSM is a data storage technique that moves data between different stores
 according to a defined policy.
 
-The most common use of the HSM technique is the move of `older` data from a
+The most common use of the HSM technique is the move of _older_ data from a
 faster-but-expensive storage device to a slower-but-cheaper one based on the
 following premises:
 
 * Fast storage costs more.
 * Slow storage costs less.
-* `Old` data will be accessed much less frequently than `new` data.
+* _Old_ data will be accessed much less frequently than _new_ data.
 
-The advantages of the HSM technique are clear: Lowering the
-overall storage cost, since only a small part of your data needs to be
-on costly storage, also improves the overall user experience.
+The advantages of the HSM technique are clear: Lowering the overall storage cost since only a small part of your data needs to be
+on costly storage, and improving the overall user experience.
 
 [[stores-volumes-and-policies]]
 Stores, Volumes and Policies
@@ -31,10 +30,10 @@ Stores, Volumes and Policies
 Using HSM requires a clear understanding of some
 related terms:
 
-* Primary Store: The `fast-but-expensive` store where all your data
+* Primary Store: The _fast-but-expensive_ store where all your data
 is initially placed.
-** Secondary Store: The `slow-but-cheap` store where `older` data will
-be moved.
+* Secondary Store: The _slow-but-cheap_ store where _older_ data will
+be moved to.
 
 [[zimbra-stores]]
 Zimbra Stores
@@ -52,7 +51,7 @@ by Apache Lucene to provide indexing and search functions.
 a MySql database.
 
 You can have multiple stores of each type, but only one Index Store, one
-Primary Data Store and one Secondary Data Store can be set as `Current`
+Primary Data Store and one Secondary Data Store can be set as _Current_
 (meaning that is currently used by Zimbra).
 
 [[primary-and-secondary-data-stores]]
@@ -62,7 +61,7 @@ Primary and Secondary Data Stores
 A data store in Zimbra can be either a Primary Data Store or a Secondary
 Data Store.
 
-Data is moved between the `current` Primary Data Store and the `current`
+Data is moved between the _current_ Primary Data Store and the _current_
 Secondary Data Store according to a defined policy.
 
 [[hsm-ngmoving-items-between-stores]]
@@ -74,14 +73,14 @@ defined HSM policies.
 
 The move can be triggered in three ways:
 
-* Click the `Apply Policy` button in the Administration Zimlet.
+* Click the _Apply Policy_ button in the Administration Zimlet.
 * Start the `doMoveBlobs` operation through the CLI.
 * Enable Policy Application Scheduling in the Administration Zimlet
 and wait for it to start automatically.
 
 Once the move is started, the following operations are performed:
 
-* HSM NG scans through the Primary Store to see which items comply to
+* HSM NG scans through the Primary Store to see which items comply with
 the defined policy.
 * All the Blobs of the items found in the first step are copied to the
 Secondary Store.
@@ -90,9 +89,7 @@ reflect the move.
 * If the second and the third steps are completed successfully (and only
 in this case), the old Blobs are deleted from the Primary Store.
 
-The Move operation is `stateful` - each step is executed only if the
-previous step has been completed successfully - so the risk of data
-loss during a Move operation is nonexistent.
+The Move operation is _stateful_ - each step is executed only if the previous step has been completed successfully - so the risk of data loss during a Move operation is nonexistent.
 
 [[domoveblobs]]
 doMoveBlobs
@@ -109,7 +106,7 @@ Current Secondary Store according to the proper HSM policy.
 
 The move is performed by a transactional algorithm. Should an error
 occur during one of the steps of the operation, a rollback takes
-place, and no change will be made to the data.
+place and no change will be made to the data.
 
 Once HSM NG identifies the items to be moved, the following steps are
 performed:
@@ -123,7 +120,7 @@ position.
 What is Moved?
 ^^^^^^^^^^^^^^
 
-Every item that complies to the specified HSM policy is moved.
+Every item that complies with the specified HSM policy is moved.
 
 Example:
 
@@ -145,7 +142,7 @@ All conditions for a policy are executed in the exact order they are
 specified. HSM NG will loop on all items in the Current Primary Store
 and apply each separate condition before starting the next one.
 
-This mean that the following policies
+This means that the following policies
 
 ....
 message,document:before:-20day
@@ -159,27 +156,25 @@ message,document:before:-20day
 
 applied daily on a sample server that sends/receives a total of 1000
 emails per day, 100 of which contain one or more attachments, will
-have the same final result. However, execution time of the second policy will probably be
+have the same final result. However, the execution time of the second policy will probably be
 slightly higher (or much higher, depending on the number and size of the
 emails on the server).
 
 This is because in the first policy, the first condition
 (message,document:before:-20day) will loop on all items and move many of
-them to the Current Secondary Store, leaving less items for the second
+them to the Current Secondary Store, leaving fewer items for the second
 condition to loop on.
 
-Likewise, having the `message:before:-10day has:attachment` as the
-first condition will leave more items for the second condition to loop
+Likewise, having the `message:before:-10day has:attachment` as the first condition will leave more items for the second condition to loop
 on.
 
-This is just an example and does not apply to all cases, but gives an
-idea on the need to carefully plan your HSM policy.
+This is just an example and does not apply to all cases, but gives an idea of the need to carefully plan your HSM policy.
 
 [[executing-the-domoveblobs-operation-a.k.a.-applying-the-hsm-policy]]
 Executing the doMoveBlobs Operation (a.k.a. Applying the HSM Policy)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Applying a policy` means running the `doMoveBlobs` operation in order
+_Applying a policy_ means running the `doMoveBlobs` operation in order
 to move items between the Primary and Secondary store according to the
 defined policy.
 
@@ -196,17 +191,17 @@ Apply the HSM Policy via the Administration Zimlet
 To apply the HSM Policy via the Administration Zimlet:
 
 * Log into the Zimbra Administration Console.
-* Click the `HSM NG` entry in the Administration Zimlet.
-* Click the `Apply Policy` button.
+* Click the _HSM NG_ entry in the Administration Zimlet.
+* Click the _Apply Policy_ button.
 
 [[apply-the-hsm-policy-via-the-cli]]
 Apply the HSM Policy via the CLI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To apply the HSM Policy via the CLI, run the following command
-as the 'zimbra' user:
+as the _zimbra_ user:
 
-` zxsuite hsm doMoveBlobs`
+` zxsuite hsm doMoveBlobs`
 
 [[apply-the-hsm-policy-through-scheduling]]
 Apply the HSM Policy through Scheduling
@@ -215,7 +210,7 @@ Apply the HSM Policy through Scheduling
 To schedule a daily execution of the `doMoveBlobs` operation:
 
 * Log into the Zimbra Administration Console.
-* Click the `HSM NG` entry in the Administration Zimlet.
+* Click the _HSM NG_ entry in the Administration Zimlet.
 * Enable scheduling by selecting the `Enable HSM Session scheduling:` button.
 * Select the hour to run the operation under `HSM Session scheduled for:`.
 
@@ -224,12 +219,20 @@ doMoveBlobs Stats and Info
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Information about disk space savings, operation performances and more
-are available by clicking the `Stats` button under the `Secondary
+are available by clicking the _Stats_ button under the `Secondary
 Volumes` list in the HSM NG tab of the Administration Zimlet.
 
 [[volume-management]]
 Volume Management
 -----------------
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::[{product-version} == 8.8.9]
+New for {product-name} {product-version}:
+endif::[]
+//
+Both primary and secondary volumes can be created on either local storage or on supported third-party storage
+solutions.
 
 [[zimbra-volumes]]
 Zimbra Volumes
@@ -245,185 +248,455 @@ Volume Properties
 All Zimbra volumes are defined by the following properties:
 
 * Name: A unique identifier for the volume.
-* Path: The path where the data is going to be saved. _The Zimbra user
-must have r/w permissions on this path_.
+* Path: The path where the data is going to be saved.
++
+IMPORTANT: The _zimbra_ user must have r/w permissions on this path.
 * Compression: Enable or Disable the file compression for the volume.
 * Compression Threshold: The minimum file size that will trigger the
 compression. 'Files under this size will never be compressed even if the
 compression is enabled.'
-* Current: A `Current` volume is a volume where data will be written
+* Current: A _Current_ volume is a volume where data will be written
 upon arrival (Primary Current) or HSM policy application (Secondary
 Current).
 
 [[volume-management-with-hsm-ng]]
-Volume Management with HSM NG
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==== Volume Management with HSM NG - Administration Zimlet
 
-[[creating-a-new-volume]]
-Creating a New Volume
-^^^^^^^^^^^^^^^^^^^^^
+===== Creating a New Volume with the Administration Zimlet
 
-[[volume-from-the-administration-zimlet]]
-From the Administration Zimlet
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To create a new volume from the HSM NG tab of the Administration Zimlet:
 
-To create a new volumen from the HSM NG tab of the Administration Zimlet:
-
-* Click the appropriate `Add` option in the `Volumes Management` section
+* Click the appropriate _Add_ option in the _Volumes Management_ section
 according to the type of volume you want to create.
-
-* Select the store type, choosing between local mountpoint or S3 Bucket.
-
+* Select the store type, choosing between local mount point or S3 Bucket.
 * Enter the new volume's name.
 * Enter a path for the new volume.
-* Check the `Enable Compression` button if you wish to activate data
+* Check the _Enable Compression_ button if you wish to activate data
 compression on the new volume.
 * Select the Compression Threshold.
-
 * If you are using an S3 Bucket, it's possible to store information for multiple buckets.
-
-
-* Press `OK` to create the new volume. Should the operation fail, a
+* Press _OK_ to create the new volume. Should the operation fail, a
 notification containing any related errors will be generated.
 
-[[volume-from-the-cli]]
-From the CLI
-^^^^^^^^^^^^
-
-To create a new volume through the CLI, use the `doCreateVolume` command:
-
-....
-Syntax:
-   zxsuite hsm doCreateVolume {primary|secondary|index} {volume_name} {volume_path} [attr1 value1 [attr2 value2...
-
-PARAMETER LIST
-
-NAME                              TYPE               EXPECTED VALUES            DEFAULT
-volume_type(M)                    Multiple choice    primary|secondary|index
-volume_name(M)                    String
-volume_path(M)                    Path
-volume_compressed(O)              Boolean            true|false                 false
-compression_threshold_bytes(O)    Long                                          4096
-
-(M) == mandatory parameter, (O) == optional parameter
-
-Usage example:
-
-zxsuite powerstore docreatevolume secondary "volume B" "/opt/zimbra/store_B/" true 4096 volume_compressed true compression_threshold_bytes 4096
-Creates a new secondary volume named `volume B` in /opt/zimbra/store_B/, with compression and compression threshold to 4096 bytes
-....
-
-[[editing-a-volume]]
-Editing a Volume
-^^^^^^^^^^^^^^^^
-
-[[from-the-administration-zimlet-1]]
-From the Administration Zimlet
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===== Editing a Volume with the Administration Zimlet
 
 To edit a volume from the Administration Zimlet, simply select an existing volume
-and press the appropriate `Edit` button.
-
-[[from-the-cli-1]]
-From the CLI
-^^^^^^^^^^^^
-
-To edit a volume through the CLI, use the `doUpdateVolume` command:
-
-....
-Syntax:
-   zxsuite hsm doCreateVolume {primary|secondary|index} {volume_name} {volume_path} [attr1 value1 [attr2 value2...
-
-PARAMETER LIST
-
-NAME                              TYPE               EXPECTED VALUES            DEFAULT
-volume_type(M)                    Multiple choice    primary|secondary|index
-volume_name(M)                    String
-volume_path(M)                    Path
-volume_compressed(O)              Boolean            true|false                 false
-compression_threshold_bytes(O)    Long                                          4096
-
-(M) == mandatory parameter, (O) == optional parameter
-
-Usage example:
-
-zxsuite hsm docreatevolume secondary `volume B` `/opt/zimbra/store_B/` volume_compressed true compression_threshold_bytes 4096
-Creates a new secondary volume named `volume B` in /opt/zimbra/store_B/, with compression and compression threshold to 4096 bytes
-zimbra@test:~$ zxsuite hsm doUpdateVolume
-
-command doUpdateVolume requires more parameters
-
-Syntax:
-   zxsuite hsm doUpdateVolume {volume_id} [attr1 value1 [attr2 value2...
-
-PARAMETER LIST
-
-NAME                        TYPE       EXPECTED VALUES    DEFAULT
-volume_id(M)                Integer
-volume_type(O)              String                        inherited_value
-volume_name(O)              String                        inherited_value
-volume_path(O)              Path                          inherited_value
-current_volume(O)           Boolean    true|false         false
-volume_compressed(O)        Boolean    true|false         false
-compression_threshold(O)    Long                          4096
-
-(M) == mandatory parameter, (O) == optional parameter
-
-Usage example:
-
-zxsuite powerstore doupdatevolume oldName volume_type secondary volume_name "example volume" volume_path "/opt/zimbra/store_example/"
-Sets name of volume "oldName" to `example volume`, make it secondary, and set its path to /opt/zimbra/store_example/
-....
+and press the appropriate _Edit_ button.
 
 [[deleting-a-volume]]
-Deleting a Volume
-^^^^^^^^^^^^^^^^^
+===== Deleting a Volume with the Administration Zimlet
 
-[[delete-volume-from-the-administration-zimlet]]
-From the Administration Zimlet
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To delete a volume from the Administration Zimlet, select an existing volume and press the appropriate `Delete` button.
+To delete a volume from the Administration Zimlet, select an existing volume and press the appropriate _Delete_ button.
 Remember that only *empty* volumes can be deleted.
 
-[[delete-volume-from-the-cli-2]]
-From the CLI
-^^^^^^^^^^^^
+==== Volume Management with HSM NG - From the CLI
 
-To delete a volume through the CLI, use the `doDeleteVolume` command:
+IMPORTANT: Beginning with release 8.8.9, all volume creation and update commands have been updated, as the `storeType` argument is now required.
 
+The `storeType` argument is *mandatory*, it is always the on the first position and accepts any one value corresponding to the <<S3-compatible-services, S3-Compatible Services>> listed previously.
+The arguments that follow in the command now depend on the selected `storeType`.
+
+===== FileBlob (Local)
+Updated `zxsuite` syntax to create new FileBlob zimbra volume:
+....
+# Add volume, run as zimbra user
+zxsuite hsm doCreateVolume FileBlob name secondary /path/to/store
+# Delete volume
+zxsuite hsm doDeleteVolume name
+# set current
+zxsuite hsm doUpdateVolume FileBlob name current_volume true
+....
+
+zxsuite hsm doCreateVolume FileBlob
 ....
 Syntax:
-   zxsuite hsm doUpdateVolume {volume_id} [attr1 value1 [attr2 value2...
+    zxsuite hsm doCreateVolume FileBlob {volume_name} {primary|secondary|index} {volume_path} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
-NAME                        TYPE       EXPECTED VALUES    DEFAULT
-volume_id(M)                Integer
-volume_type(O)              String                        inherited_value
-volume_name(O)              String                        inherited_value
-volume_path(O)              Path                          inherited_value
-current_volume(O)           Boolean    true|false         false
-volume_compressed(O)        Boolean    true|false         false
-compression_threshold(O)    Long                          4096
+NAME                            TYPE                EXPECTED VALUES             DEFAULT
+volume_name(M)                  String
+volume_type(M)                  Multiple choice     primary|secondary|index
+volume_path(M)                  Path
+volume_compressed(O)            Boolean             true|false                  false
+compression_threshold_bytes(O)  Long                                            4096
 
 (M) == mandatory parameter, (O) == optional parameter
 
 Usage example:
 
-zxsuite hsm doupdatevolume 3 secondary `example volume` `/opt/zimbra/store_example/`
-Sets name of volume 3 to `example volume`, make it secondary, and set its path to /opt/zimbra/store_example/
-zimbra@simone:~$ zxsuite hsm doDeleteVolume
+zxsuite hsm doCreateVolume FileBlob volumeName secondary /path/to/store volume_compressed true compression_threshold_bytes 4096
+....
 
-command doDeleteVolume requires more parameters
-
+zxsuite hsm doUpdateVolume FileBlob
+....
 Syntax:
-   zxsuite hsm doDeleteVolume {volume_name}
+    zxsuite hsm doUpdateVolume FileBlob {current_volume_name} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
-NAME              TYPE
-volume_name(M)    String
+NAME                            TYPE                EXPECTED VALUES             DEFAULT
+current_volume_name(M)          String
+volume_type(O)                  String              primary|secondary|index
+volume_name(O)                  String
+volume_path(O)                  Path
+current_volume(O)               Boolean             true|false                  false
+volume_compressed(O)            String
+compression_threshold(O)        String
+
+(M) == mandatory parameter, (O) == optional parameter
+....
+
+===== S3 (Amazon and any S3-compatible solution not explicitly supported)
+....
+# Add volume, run as zimbra user
+zxsuite hsm doCreateVolume S3 name secondary bucket_name bucket access_key accessKey secret secretString region EU_WEST_1
+# Delete volume
+zxsuite hsm doDeleteVolume name
+# set current
+zxsuite hsm doUpdateVolume S3 name current_volume true
+....
+zxsuite hsm doCreateVolume S3
+....
+Syntax:
+    zxsuite hsm doCreateVolume S3 {Name of the zimbra store} {primary|secondary} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES
+volume_name(M)                  String              Name of the zimbra store
+volume_type(M)                  Multiple choice     primary|secondary
+bucket_name(O)                  String              Amazon AWS bucket
+access_key(O)                   String              Service username
+secret(O)                       String              Service password
+server_prefix(O)                String              Prefix to the server id used in all objects keys
+bucket_configuration_id(O)      String              UUID for already existing S3 service credentials
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+region(O)                       String              Amazon AWS Region
+url(O)                          String              S3 API compatible service url (ex: s3api.service.com)
+prefix(O)                       String              Prefix added to blobs keys
+use_infrequent_access(O)        Boolean             true|false
+infrequent_access_threshold(O)  String
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+S3 AWS Bucket:
+    zxsuite hsm doCreateVolume S3 volumeName primary bucket_name bucket access_key accessKey secret secretKey prefix objectKeysPrefix region EU_WEST_1 user_infrequent_access TRUE infrequent_access_threshold 4096
+
+S3 compatible object storage:
+    zxsuite hsm doCreateVolume S3 volumeName primary bucket_name bucket access_key accessKey secret secretKey url http://host/service
+
+Using existing bucket configuration:
+    zxsuite hsm doCreateVolume S3 volumeName primary bucket_configuration_id 316813fb-d3ef-4775-b5c8-f7d236fc629c
+....
+
+zxsuite hsm doUpdateVolume S3
+....
+Syntax:
+    zxsuite hsm doUpdateVolume S3 {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES             DEFAULT
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+server_prefix(O)                String              Prefix to the server id used in all objects keys
+bucket_configuration_id(O)      String              UUID for already existing service credentials
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+use_infrequent_access(O)        Boolean             true|false
+infrequent_access_threshold(O)  String
+current_volume(O)               Boolean             true|false                  false
+
+(M) == mandatory parameter, (O) == optional parameter
+....
+
+===== Scality (S3 compatible object storage)
+....
+# Add volume, run as zimbra user
+zxsuite hsm doCreateVolume ScalityS3 name secondary bucket_name mybucket access_key accessKey1 secret verySecretKey1 url http://{IP_ADDRESS}:{PORT}
+# Delete volume
+zxsuite hsm doDeleteVolume name
+# set current
+zxsuite hsm doUpdateVolume ScalityS3 name current_volume true
+....
+
+zxsuite hsm doCreateVolume ScalityS3
+....
+Syntax:
+    zxsuite hsm doCreateVolume ScalityS3 {volume_name} {primary|secondary} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES
+volume_name(M)                  String
+volume_type(M)                  Multiple choice     primary|secondary
+bucket_name(O)                  String              Bucket name
+url(O)                          String              S3 API compatible service url (ex: s3api.service.com)
+access_key(O)                   String              Service username
+secret(O)                       String              Service password
+server_prefix(O)                String              Prefix to the server id used in all objects keys
+bucket_configuration_id(O)      String              UUID for already existing service credentials
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+prefix(O)                       String              Prefix added to blobs keys
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite hsm doCreateVolume ScalityS3 volumeName primary bucket_name bucket url http://host/service access_key accessKey secret secretKet
+zxsuite hsm doCreateVolume ScalityS3 volumeName primary bucket_configuration_id uuid
+....
+
+zxsuite hsm doUpdateVolume ScalityS3
+....
+Syntax:
+    zxsuite hsm doUpdateVolume ScalityS3 {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES             DEFAULT
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+server_prefix(O)                String              Prefix to the server id used in all objects keys
+bucket_configuration_id(O)      String              UUID for already existing S3 service credentials
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+current_volume(O)               Boolean             true|false                  false
+
+(M) == mandatory parameter, (O) == optional parameter
+....
+
+===== EMC (S3 compatible object storage)
+....
+# Add volume, run as zimbra user
+zxsuite hsm docreatevolume EMC name secondary bucket_name bucket access_key ACCESSKEY secret SECRET url https://url.of.storage
+# Delete volume
+zxsuite hsm doDeleteVolume name
+# set current
+zxsuite hsm doUpdateVolume EMC name current_volume true
+....
+
+zxsuite hsm doCreateVolume EMC
+....
+Syntax:
+    zxsuite hsm doCreateVolume EMC {volume_name} {primary|secondary} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES
+volume_name(M)                  String
+volume_type(M)                  Multiple choice     primary|secondary
+bucket_name(O)                  String              Bucket name
+url(O)                          String              S3 API compatible service url (ex: s3api.service.com)
+access_key(O)                   String              Service username
+secret(O)                       String              Service password
+server_prefix(O)                String              Prefix to the server id used in all objects keys
+bucket_configuration_id(O)      String              UUID for already existing service credentials
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+prefix(O)                       String              Prefix added to blobs keys
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite hsm doCreateVolume EMC volumeName primary bucket_name bucket url http://host/service access_key accessKey secret secretKet
+zxsuite hsm doCreateVolume EMC volumeName primary bucket_configuration_id uuid
+....
+
+zxsuite hsm doUpdateVolume EMC
+....
+Syntax:
+    zxsuite hsm doUpdateVolume EMC {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES             DEFAULT
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+server_prefix(O)                String              Prefix to the server id used in all objects keys
+bucket_configuration_id(O)      String              UUID for already existing service credentials
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+current_volume(O)               Boolean             true|false                  false
+
+(M) == mandatory parameter, (O) == optional parameter
+....
+
+===== OpenIO
+....
+# add volume, run as zimbra user
+zxsuite hsm doCreateVolume OpenIO name secondary http://{IP_ADDRESS} ZeXtras OPENIO
+# Delete volume
+zxsuite hsm doDeleteVolume name
+# set current
+zxsuite hsm doUpdateVolume OpenIO name current_volume true
+....
+zxsuite hsm doCreateVolume OpenIO
+....
+Syntax:
+    zxsuite hsm doCreateVolume OpenIO {volume_name} {primary|secondary} {url} {account} {namespace} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES
+volume_name(M)                  String
+volume_type(M)                  Multiple choice     primary|secondary
+url(M)                          String
+account(M)                      String
+namespace(M)                    String
+proxy_port(O)                   Integer
+account_port(O)                 Integer
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite hsm doCreateVolume OpenIO volumeName primary http://host/service
+....
+
+accountName namespaceString proxy_port 6006 account_port 6009
+....
+Syntax:
+zxsuite hsm doUpdateVolume OpenIO {current_volume_name} [attr1 value1
+[attr2 value2...]]
+PARAMETER LIST
+NAME                            TYPE                EXPECTED VALUES             DEFAULT
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+url(O)                          String
+account(O)                      String
+namespace(O)                    String
+proxy_port(O)                   Integer
+account_port(O)                 Integer
+current_volume(O)               Boolean             true|false                  false
+
+(M) == mandatory parameter, (O) == optional parameter
+....
+
+===== Swift
+....
+# add volume, run as zimbra user
+zxsuite hsm doCreateVolume Swift name secondary http://{IP_ADDRESS}:8080/auth/v1.0/ user:username password maxDeleteObjectsCount 100
+# Delete volume
+zxsuite hsm doDeleteVolume name
+# set current
+zxsuite hsm doUpdateVolume Swift name current_volume true
+....
+
+zxsuite hsm doCreateVolume Swift
+....
+Syntax:
+    zxsuite hsm doCreateVolume Swift {volume_name} {primary|secondary} {url} {username} {password} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                        TYPE        EXPECTED VALUES             DEFAULT
+volume_name(O)              String
+volume_type(O)              String      primary|secondary
+url(O)                      String
+username(O)                 String
+password(O)                 String
+maxDeleteObjectsCount(O)    Integer     Number of object in a single bulk delete request
+                                                                    500
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite hsm doCreateVolume Swift volumeName primary http://host/service accountName password max_delete_objects_count 100
+....
+
+zxsuite hsm doUpdateVolume Swift
+....
+Syntax:
+    zxsuite hsm doUpdateVolume Swift {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                        TYPE        EXPECTED VALUES             DEFAULT
+current_volume_name(M)      String
+volume_name(O)              String
+volume_type(O)              String      primary|secondary
+url(O)                      String
+username(O)                 String
+password(O)                 String
+maxDeleteObjectsCount(O)    Integer     Number of object in a single bulk delete request
+                                                                    500
+current_volume(O)           Boolean     true|false                  false
+
+(M) == mandatory parameter, (O) == optional parameter
+....
+
+===== Cloudian (S3 compatible object storage)
+....
+# add volume, run as zimbra user
+zxsuite hsm doCreateVolume Cloudian name secondary bucket_name bucket access_key ACCESSKEY secret SECRET url https://url.of.storage
+# Delete volume
+zxsuite hsm doDeleteVolume name
+# set current
+zxsuite hsm doUpdateVolume Cloudian name current_volume true
+....
+
+zxsuite hsm doCreateVolume Cloudian
+....
+Syntax:
+    zxsuite hsm doCreateVolume Cloudian {volume_name} {primary|secondary} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES
+volume_name(M)                  String
+volume_type(M)                  Multiple choice     primary|secondary
+bucket_name(O)                  String              Bucket name
+url(O)                          String              S3 API compatible service url (ex: s3api.service.com)
+access_key(O)                   String              Service username
+secret(O)                       String              Service password
+server_prefix(O)                String              Prefix to the server id used in all objects keys
+bucket_configuration_id(O)      String              UUID for already existing service credentials
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+prefix(O)                       String              Prefix added to blobs keys
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite hsm doCreateVolume Cloudian volumeName primary bucket_name bucket url http://host/service access_key accessKey secret secretKet
+zxsuite hsm doCreateVolume Cloudian volumeName primary bucket_configuration_id uuid
+....
+
+zxsuite hsm doUpdateVolume Cloudian
+....
+Syntax:
+    zxsuite hsm doUpdateVolume Cloudian {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME                            TYPE                EXPECTED VALUES             DEFAULT
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+server_prefix(O)                String              Prefix to the server id used in all objects keys
+bucket_configuration_id(O)      String              UUID for already existing service credentials
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+current_volume(O)               Boolean             true|false                  false
+
+(M) == mandatory parameter, (O) == optional parameter
+....
+
+==== Volume Deletion
+zxsuite hsm doDeleteVolume
+....
+Syntax:
+    zxsuite hsm doDeleteVolume {volume_name}
+
+PARAMETER LIST
+
+NAME                            TYPE
+volume_name(M)                  String
 
 (M) == mandatory parameter, (O) == optional parameter
 
@@ -431,6 +704,25 @@ Usage example:
 
 zxsuite hsm dodeletevolume hsm
 Deletes volume with name hsm
+....
+
+==== Move all data from a volume to another
+....
+Syntax:
+    zxsuite hsm doVolumeToVolumeMove {source_volume_name} {destination_volume_name}
+
+PARAMETER LIST
+
+NAME                            TYPE
+source_volume_name(M)           String
+destination_volume_name(M)      String
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite hsm doVolumeToVolumeMove sourceVolume destVolume
+Moves the whole contents of sourceVolume to destVolume
 ....
 
 [[policy-management]]
@@ -447,8 +739,8 @@ will be moved from the Primary Store to the Secondary Store when the
 scheduling.
 
 A policy can consist of a single rule that is valid for all item types
-(`Simple` policy) or multiple rules valid for one or more item types
-(`Composite` policy). Also, an additional `sub-rule` can be defined
+(_Simple_ policy) or multiple rules valid for one or more item types
+(_Composite_ policy). Also, an additional _sub-rule_ can be defined
 using Zimbra's
 http://wiki.zimbra.com/wiki/Zimbra_Web_Client_Search_Tips[search
 syntax].
@@ -460,11 +752,9 @@ Policy Examples
 Here are some policy examples. To see how to create the policies in the HSM NG module, see
 below.
 
-* `Move all items older than 30 days`
-* `Move emails older than 15 days and items of all other kinds older
-than 30 days`
-* `Move calendar items older than 15 days, briefcase items older than 20 days
-and all emails in the "Archive" folder`
+* _Move all items older than 30 days_
+* _Move emails older than 15 days and items of all other kinds older than 30 days_
+* _Move calendar items older than 15 days, briefcase items older than 20 days and all emails in the "Archive" folder_
 
 [[defining-a-policy]]
 Defining a Policy
@@ -480,15 +770,15 @@ From the Administration Zimlet
 To define a policy from the Administration Zimlet:
 
 * Log into the Zimbra Administration Console.
-* Click `HSM NG` on the Administration Zimlet.
+* Click _HSM NG_ on the Administration Zimlet.
 
-* Click the `Add` button in the Storage Management Policy section.
+* Click the _Add_ button in the Storage Management Policy section.
 
 * Select the Item Types from the `Items to Move:` list.
 * Enter the Item Age from the `Move Items older than:` box.
-* *OPTIONAL*: Add a Zimbra Search in the `Additional Options` box.
+* *OPTIONAL*: Add a Zimbra Search in the _Additional Options_ box.
 
-* You can add multiple `lines` to narrow down your policy. Every `line`
+* You can add multiple _lines_ to narrow down your policy. Every _line_
 will be evaluated and executed after the line before has been applied.
 
 [[policy-from-the-cli]]
@@ -520,16 +810,15 @@ The _policy_ parameter must be specified in the following syntax
 
 `itemType1[,itemType2,itemtype3,etc]:query`
 
-[[secondary-volumes-on-amazon-s3]]
-Secondary Volumes on Amazon S3
-------------------------------
+Volumes on Amazon S3 Compatible Services
+----------------------------------------
 
 [[hsm-ng-and-s3-buckets]]
 HSM NG and S3 buckets
 ~~~~~~~~~~~~~~~~~~~~~
 
-Secondary volumes created with
-HSM NG can now be hosted on S3 buckets, effectively moving the largest
+Primary and Secondary volumes created with
+HSM NG can be hosted on S3 buckets, effectively moving the largest
 part of your data to secure and durable cloud storage.
 
 [[s3-compatible-services]]
@@ -537,18 +826,46 @@ S3-compatible Services
 ^^^^^^^^^^^^^^^^^^^^^^
 
 While any storage service compatible with the Amazon S3 API should work
-out of the box with HSM NG, Amazon S3 and DellEMC ECS are the only
-officially supported platforms.
+out of the box with HSM NG, listed here are the only
+officially supported platforms:
+
+* FileBlob (standard local volume)
+* Amazon S3
+* EMC
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::[{product-version} == 8.8.9]
+...and new for {product-name} {product-version}:
+endif::[]
+
+* OpenIO
+* Swift
+* Scality S3
+* Cloudian
+* Custom S3 (any unsupported S3-compliant solution)
+
+Primary Volumes and the "Incoming" directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In order to create a remote _Primary Store_ on a mailbox server a local "Incoming"
+directory must exist on that server. The default directory is
+`/opt/zimbra/incoming`, but you can check or modify the current value using these commands:
+
+[source,bash]
+----
+zxsuite config server get $(zmhostname) attribute incomingPath
+zxsuite config server set $(zmhostname) attribute incomingPath value /path/to/dir
+----
 
 [[local-cache]]
 Local Cache
 ^^^^^^^^^^^
 
-This feature requires a local directory to be used for item caching,
-which must be readable and writable by the `zimbra` user.
+Storing a volume on third-party remote storage solutions requires a local
+directory to be used for item caching, which must be readable and
+writable by the _zimbra_ user.
 
 The local directory must be created manually and its path must be entered in
-the `HSM NG` section of the Administration Zimlet in the Zimbra
+the _HSM NG_ section of the Administration Zimlet in the Zimbra
 Administration Console.
 
 If the Local Cache directory is not set, you won't be able to create any secondary volume on an S3-compatible device or service.
@@ -557,14 +874,31 @@ WARNING: Failing to correctly configure the cache directory will cause items
 to be unretrievable, meaning that users will get a `No such BLOB` error
 when trying to access any item stored on an S3 volume.
 
+Local Volumes
+~~~~~~~~~~~~~
+Local Volumes (i.e. FileBlob type) can be hosted on any mountpoint on the system
+regardless of the mountpoint's destination and are defined by
+the following properties:
+
+* *Name:* A unique identifier for the volume.
+* *Path:* The path where the data is going to be saved. The _zimbra_ user must have r/w permissions on this path.
+* *Compression:* Enable or Disable file compression for the volume.
+* *Compression Threshold:* the minimum file size that will trigger the compression.
++
+IMPORTANT: Files under this size will never be compressed even if compression is enabled.
+
+Current Volumes
+~~~~~~~~~~~~~~~
+A _Current Volume_ is a volume where data will be written upon arrival (Primary Current) or HSM Policy Application (Secondary Current).
+Volumes not set as Current won't be written upon except by specific manual operations such as the Volume-to-Volume move.
+
 [[bucket-setup]]
 Bucket Setup
 ~~~~~~~~~~~~
 
 HSM NG doesn't need any dedicated setting or configuration on the S3
 side, so setting up a bucket for your volumes is easy. Although creating
-a dedicated user, bucket and access policy are not required, they are strongly
-suggested because they make it much easier to manage.
+a dedicated user bucket and access policy are not required, they are strongly suggested because they make it much easier to manage.
 
 All you need to start storing your secondary volumes on S3 is:
 
@@ -573,34 +907,64 @@ to use it.
 * A user's Access Key and Secret.
 * A policy that grants the user full rights on your bucket.
 
-[[s3-buckets]]
-S3 Buckets
-^^^^^^^^^^
+Bucket Management
+^^^^^^^^^^^^^^^^^
+A centralized Bucket Management UI is available in the Zimbra Administration Console.
+This facilitates saving bucket information to be reused when creating a new volume
+on an S3-compatible storage instead of entering the information each time.
 
-Instead of adding the bucket's data each time you add a new secondary
-volume, you can save it on the Zimbra Administration Console at
-*Configure > Global Settings > S3 Buckets*.
+To access the Bucket Management UI:
 
-[[creating-a-secondary-volume-on-s3]]
-Creating a Secondary Volume on S3
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Access the Zimbra Administration Console
+* Select the "Configure" entry on the left menu
+* Select the "Global Settings" entry
+* Select the S3 Buckets entry
 
-To create a secondary volumn on S3:
+Any bucket added to the system will be available when creating a new volume of
+the following type: Amazon S3, Cloudian, EMC, Scality S3, Custom S3.
 
-* Click the `HSM NG` entry of the Administration Zimlet in the
-Zimbra Administration Console.
-* Click `Add` under the `Secondary Volumes` list.
+Bucket paths and naming
+^^^^^^^^^^^^^^^^^^^^^^^
+Files are stored in a bucket according to a well-defined path, which can be customized at will in order to make your bucket's contents easier
+to understand even on multi-server environments with multiple secondary volumes:
 
-* Select `S3 bucket`.
+`/Bucket Name/Destination Path/[Volume Prefix-]serverID/`
 
-* Enter the volume's name and prefix, then either add a bucket's
-information or load those from the ones saved in the Global Settings.
+* The *Bucket Name* and *Destination Path* are not tied to the volume itself, and there can be as many volumes under the same
+destination path as you wish.
+* The *Volume Prefix*, on the other hand, is specific to each volume and it's a quick way to differentiate and recognize different
+volumes within the bucket.
 
-* Define whether to use the Infrequent Access storage class, and if so, set
-its size threshold.
+Creating Volumes with HSM NG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To create a new volume with HSM NG from the Zimbra Administration Console:
 
-* Define whether the new volume is set as Current or not.
-* Click `Finish` to create the new volume.
+* Enter the HSM Section of the NG Administration Zimlet in the Zimbra Administration Console
+* Click on _Add_ under either the _Primary Volumes_ or _Secondary Volumes_ list
+* Select the Volume Type among the available storage choices
+* Enter the required volume information
++
+IMPORTANT: Each volume type will require different information to be set up, please refer to your storage provider's online resources to obtain
+those details.
+
+Editing Volumes with HSM NG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To edit a volume with HSM NG from the Zimbra Administration Console:
+
+* Enter the HSM Section of the NG Administration Zimlet in the Zimbra Administration Console
+* Select a volume
+* Click on _Edit_
+* When done, click _Save_
+
+Deleting Volumes with HSM NG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To delete a volume with HSM NG from the Zimbra Administration Console:
+
+* Enter the HSM Section of the NG Administration Zimlet in the Zimbra Administration Console
+* Select a volume
+* Click on _Delete_
+
+NOTE: Only empty volumes can be deleted.
 
 [[amazon-s3-tips]]
 Amazon S3 Tips
@@ -650,8 +1014,7 @@ For easier management, we recommend granting full rights as shown in the followi
 }
 ....
 
-_WARNING - This is not a valid configuration policy. Don't copy and
-paste it in your user's settings as it won't be validated._
+WARNING: This is not a valid configuration policy. Don't copy and paste it into your user's settings as it won't be validated.
 
 If you only wish to grant minimal permissions, change the `Action`
 section to:
@@ -675,7 +1038,7 @@ Bucket Paths and Naming
 
 Files are stored in a bucket according to a well-defined path, which can
 be customized at will to make your bucket's contents easier to
-understand (even on multiserver environments with multiple secondary
+understand (even on multi-server environments with multiple secondary
 volumes):
 
 /*Bucket Name*/*Destination Path*/[*Volume Prefix*-]*serverID*/
@@ -724,7 +1087,7 @@ Item deduplication is performed by Zimbra at the moment of storing a new
 item in the Current Primary Volume.
 
 When a new item is being created, its `message ID` is compared to a list
-of cached items. If there is a match, a hardlink to the cached
+of cached items. If there is a match, a hard link to the cached
 message's BLOB is created instead of a whole new BLOB for the message.
 
 The dedupe cache is managed in Zimbra through the following config
@@ -796,8 +1159,7 @@ The HSM NG features a `doDeduplicate` operation that parses a
 target volume to find and deduplicate any duplicated item.
 
 Doing so you will save even more disk space, as while Zimbra's automatic
-deduplication is bound to a limited cache, HSM NG's deduplication will
-also find and take care of multiple copies of the same email regardless
+deduplication is bound to a limited cache, HSM NG's deduplication will also find and take care of multiple copies of the same email regardless
 of any cache or timing.
 
 Running the `doDeduplicate` operation is also highly suggested after a
@@ -813,8 +1175,8 @@ Via the Administration Zimlet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To run a volume deduplication via the Administration Zimlet, simply click
-on the `HSM NG` tab, select the volume you wish to deduplicate and press
-the `Deduplicate` button.
+on the _HSM NG_ tab, select the volume you wish to deduplicate and press
+the _Deduplicate_ button.
 
 [[dedupe-via-the-cli]]
 Via the CLI
@@ -867,20 +1229,20 @@ Current Pass (Digest Prefix):  63/64
  Total Space Saved:             21.88 GB
 ....
 
-* `Current Pass (Digest Prefix)`: The `doDeduplicate` command will
+* _Current Pass (Digest Prefix)_: The `doDeduplicate` command will
 analyze the BLOBS in groups based on the first character of their digest
 (name).
-* `Checked Mailboxes`: The number of mailboxes analyzed for the current
+* _Checked Mailboxes_: The number of mailboxes analyzed for the current
 pass.
-* `Deduplicated/duplicated Blobs`: Number of BLOBS deduplicated by the
+* _Deduplicated/duplicated Blobs_: Number of BLOBS deduplicated by the
 current operation / Number of total duplicated items on the volume.
-* `Already Deduplicated Blobs`: Number of deduplicated blobs on the
+* _Already Deduplicated Blobs_: Number of deduplicated blobs on the
 volume (duplicated blobs that have been deduplicated by a previous run).
-* `Skipped Blobs`: BLOBs that have not been analyzed, usually because
+* _Skipped Blobs_: BLOBs that have not been analyzed, usually because
 of a read error or missing file.
-* `Invalid Digests`: BLOBs with a bad digest (name different from the
+* _Invalid Digests_: BLOBs with a bad digest (name different from the
 actual digest of the file).
-* `Total Space Saved`: Amount of disk space freed by the doDeduplicate
+* _Total Space Saved_: Amount of disk space freed by the doDeduplicate
 operation.
 
 Looking at the sample output above we can see that:
@@ -899,7 +1261,7 @@ Advanced Volume Operations
 HSM NG: More than Meets the Eye
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At first sight, HSM NG seem to be strictly dedicated
+At first sight, HSM NG seems to be strictly dedicated
 to HSM. However, it also features some highly useful volume-related tools that
 are not directly related to HSM.
 
@@ -1053,7 +1415,7 @@ where you need to stop using a volume, such as:
 * Decommissioning old hardware: If you want to get rid of an old disk
 in a physical server, create new volumes on other/newer disks and
 move your data there.
-* Fixing `little mistakes`: If you accidentally create a new volume in the wrong place, move the
+* Fixing _little mistakes_: If you accidentally create a new volume in the wrong place, move the
 data to another volume.
 * Centralize volumes: Centralize and move volumes as you
 please, for example, if you redesigned your storage
@@ -1084,7 +1446,7 @@ show_blob_num(O)       Boolean    true|false         false
 
 Usage example:
 
-**BE CAFERUL** show_volume_size and show_blob_num options are IO intensive and thus disabled by default
+**BE CAREFUL** show_volume_size and show_blob_num options are IO intensive and thus disabled by default
 
 zxsuite hsm getVolumeStats 2
 Shows stats for the volume with ID equal to 2
@@ -1136,7 +1498,7 @@ following data to the output:
 [moving-mailboxes-between-mailstores]
 Moving Mailboxes Between Mailstores
 -----------------------------------
-The `doMailboxMove` command allows you to move a single mailbox, or all accounts
+The `doMailboxMove` command allows you to move a single mailbox or all accounts
 from a given domain, from one mailbox server to another within the same
 Zimbra infrastructure.
 
@@ -1187,14 +1549,13 @@ is taken from the item's db entry).
 * When moving a domain, each account from the current server is enumerated and moved
 sequentially.
 
-* The mailbox is set to maintenance mode when it's moved, and will be placed
-into its original state after all emails are moved (after the ldap stage).
+* The mailbox is set to maintenance mode when it's moved and will be placed into its original state after all emails are moved (after the LDAP stage).
 
 * Operation is stopped if 5% or more write errors are encountered on items being
-moved. Pay attention that the current mailbox may remains in maintenance mode.
+moved. Beware that the current mailbox may remain in maintenance mode.
 
 * Single-mailbox moves will not start if the destination server does not have
-enough space available or user just belongs to teh destination host.
+enough space available or the user just belongs to the destination host.
 
 * All data is moved at a low-level and will not be changed except for some small things
 like mailbox id.
@@ -1203,7 +1564,7 @@ like mailbox id.
     ** blobs: All blobs are copied from the source server to the destination server.
     ** db: All database entries are copied from the source server to the destination server.
     ** chat_db: All chat db information is copied from the source server to the destination server.
-    ** ldap: zimbraMailHost ldap attribute is updated and all account caches are flushed.
+    ** ldap: zimbraMailHost LDAP attribute is updated and all account caches are flushed.
     ** backup: All backup entries are copied from the source server to the destination server.
     ** reindex: Start a mailbox reindex.
     ** delete:  All blobs and db entries are deleted from the source server,
@@ -1235,10 +1596,9 @@ How Indexing Works
 ~~~~~~~~~~~~~~~~~~
 A new indexing engine has been added to HSM NG to index attachment contents.
 
-The indexing engine works together with Zimbra's default engine. The main Zimbra indexing
-process analyzes the contents of an item, splitting it into several parts
+The indexing engine works together with Zimbra's default engine. The main Zimbra indexing process analyzes the contents of an item, splitting it into several parts
 based on the MIME parts of the object. Next, Zimbra handles the indexing of
-`known` contents - plaintext - and passes the datastream on to the
+_known_ contents - plaintext - and passes the datastream on to the
 HSM NG handlers for all other content.
 
 The indexing engine includes an indexing cache that speeds up the indexing process of
@@ -1258,11 +1618,11 @@ Web
 [cols=",,",options="header",]
 |=============================================================
 |Extension |Parser |Content-type
-|``asp'' |``HtmlParser'' |//application/x-asp
-|``htm'' |``HtmlParser'' |//application/xhtml+xml
-|``html'' |``HtmlParser'' |//application/xhtml+xml | text/html
-|``shtml'' |``HtmlParser'' |//application/xhtml+xml
-|``xhtml'' |``HtmlParser'' |//application/xhtml+xml
+|`asp` |`HtmlParser` |application/x-asp
+|`htm` |`HtmlParser` |application/xhtml+xml
+|`html` |`HtmlParser` |application/xhtml+xml, text/html
+|`shtml` |`HtmlParser` |application/xhtml+xml
+|`xhtml` |`HtmlParser` |application/xhtml+xml
 |=============================================================
 
 [[documents]]
@@ -1272,132 +1632,132 @@ Documents
 [cols=",,",options="header",]
 |=======================================================================
 |Extension |Parser |Content-type
-|``rtf'' |``RTFParser'' |//application/rtf
+|`rtf` |`RTFParser` |application/rtf
 
-|``pdf'' |`PDFParser` |//application/pdf
+|`pdf` |`PDFParser` |application/pdf
 
-|``pub'' |`OfficeParser` |//application/x-mspublisher
+|`pub` |`OfficeParser` |application/x-mspublisher
 
-|``xls'' |`OfficeParser` |//application/vnd.ms-excel
+|`xls` |`OfficeParser` |application/vnd.ms-excel
 
-|``xlt'' |`OfficeParser` |//application/vnd.ms-excel
+|`xlt` |`OfficeParser` |application/vnd.ms-excel
 
-|``xlw'' |`OfficeParser` |//application/vnd.ms-excel
+|`xlw` |`OfficeParser` |application/vnd.ms-excel
 
-|``ppt'' |`OfficeParser` |//application/vnd.ms-powerpoint
+|`ppt` |`OfficeParser` |application/vnd.ms-powerpoint
 
-|``pps'' |`OfficeParser` |//application/vnd.ms-powerpoint
+|`pps` |`OfficeParser` |application/vnd.ms-powerpoint
 
-|``mpp'' |`OfficeParser` |//application/vnd.ms-project
+|`mpp` |`OfficeParser` |application/vnd.ms-project
 
-|``doc'' |`OfficeParser` |//application/msword
+|`doc` |`OfficeParser` |application/msword
 
-|``dot'' |`OfficeParser` |//application/msword
+|`dot` |`OfficeParser` |application/msword
 
-|``msg'' |`OfficeParser` |//application/vnd.ms-outlook
+|`msg` |`OfficeParser` |application/vnd.ms-outlook
 
-|``vsd'' |`OfficeParser` |//application/vnd.visio
+|`vsd` |`OfficeParser` |application/vnd.visio
 
-|``vst'' |`OfficeParser` |//application/vnd.visio
+|`vst` |`OfficeParser` |application/vnd.visio
 
-|``vss'' |`OfficeParser` |//application/vnd.visio
+|`vss` |`OfficeParser` |application/vnd.visio
 
-|``vsw'' |`OfficeParser` |//application/vnd.visio
+|`vsw` |`OfficeParser` |application/vnd.visio
 
-|``xlsm'' |`OOXMLParser`
-|//application/vnd.ms-excel.sheet.macroenabled.12
+|`xlsm` |`OOXMLParser`
+|application/vnd.ms-excel.sheet.macroenabled.12
 
-|``pptm'' |`OOXMLParser`
-|//application/vnd.ms-powerpoint.presentation.macroenabled.12
+|`pptm` |`OOXMLParser`
+|application/vnd.ms-powerpoint.presentation.macroenabled.12
 
-|``xltx'' |`OOXMLParser`
-|//application/vnd.openxmlformats-officedocument.spreadsheetml.template
+|`xltx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.spreadsheetml.template
 
-|``docx'' |`OOXMLParser`
-|//application/vnd.openxmlformats-officedocument.wordprocessingml.document
+|`docx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.wordprocessingml.document
 
-|``potx'' |`OOXMLParser`
-|//application/vnd.openxmlformats-officedocument.presentationml.template
+|`potx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.presentationml.template
 
-|``xlsx'' |`OOXMLParser`
-|//application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+|`xlsx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 
-|``pptx'' |`OOXMLParser`
-|//application/vnd.openxmlformats-officedocument.presentationml.presentation
+|`pptx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.presentationml.presentation
 
-|``xlam'' |`OOXMLParser`
-|//application/vnd.ms-excel.addin.macroenabled.12
+|`xlam` |`OOXMLParser`
+|application/vnd.ms-excel.addin.macroenabled.12
 
-|``docm'' |`OOXMLParser`
-|//application/vnd.ms-word.document.macroenabled.12
+|`docm` |`OOXMLParser`
+|application/vnd.ms-word.document.macroenabled.12
 
-|``xltm'' |`OOXMLParser`
-|//application/vnd.ms-excel.template.macroenabled.12
+|`xltm` |`OOXMLParser`
+|application/vnd.ms-excel.template.macroenabled.12
 
-|``dotx'' |`OOXMLParser`
-|//application/vnd.openxmlformats-officedocument.wordprocessingml.template
+|`dotx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.wordprocessingml.template
 
-|``ppsm'' |`OOXMLParser`
-|//application/vnd.ms-powerpoint.slideshow.macroenabled.12
+|`ppsm` |`OOXMLParser`
+|application/vnd.ms-powerpoint.slideshow.macroenabled.12
 
-|``ppam'' |`OOXMLParser`
-|//application/vnd.ms-powerpoint.addin.macroenabled.12
+|`ppam` |`OOXMLParser`
+|application/vnd.ms-powerpoint.addin.macroenabled.12
 
-|``dotm'' |`OOXMLParser`
-|//application/vnd.ms-word.template.macroenabled.12
+|`dotm` |`OOXMLParser`
+|application/vnd.ms-word.template.macroenabled.12
 
-|``ppsx'' |`OOXMLParser`
-|//application/vnd.openxmlformats-officedocument.presentationml.slideshow
+|`ppsx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.presentationml.slideshow
 
-|``odt'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.text
+|`odt` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.text
 
-|``ods'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.spreadsheet
+|`ods` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.spreadsheet
 
-|``odp'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.presentation
+|`odp` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.presentation
 
-|``odg'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.graphics
+|`odg` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.graphics
 
-|``odc'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.chart
+|`odc` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.chart
 
-|``odf'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.formula
+|`odf` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.formula
 
-|``odi'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.image
+|`odi` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.image
 
-|``odm'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.text-master
+|`odm` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.text-master
 
-|``ott'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.text-template
+|`ott` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.text-template
 
-|``ots'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.spreadsheet-template
+|`ots` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.spreadsheet-template
 
-|``otp'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.presentation-template
+|`otp` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.presentation-template
 
-|``otg'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.graphics-template
+|`otg` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.graphics-template
 
-|``otc'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.chart-template
+|`otc` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.chart-template
 
-|``otf'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.formula-template
+|`otf` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.formula-template
 
-|``oti'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.image-template
+|`oti` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.image-template
 
-|``oth'' |`OpenDocumentParser`
-|//application/vnd.oasis.opendocument.text-web
+|`oth` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.text-web
 
-|``sxw'' |`OpenDocumentParser` |//application/vnd.sun.xml.writer
+|`sxw` |`OpenDocumentParser` |application/vnd.sun.xml.writer
 |=======================================================================
 
 [[packages-and-archives]]
@@ -1407,21 +1767,21 @@ Packages and Archives
 [cols=",,",options="header",]
 |======================================================
 |Extension |Parser |Content-Type
-|``z'' |`CompressorParser` |//application/x-compress
-|``bz'' |`CompressorParser` |//application/x-bzip
-|``boz'' |`CompressorParser` |//application/x-bzip2
-|``bz2'' |`CompressorParser` |//application/x-bzip2
-|``gz'' |`CompressorParser` |//application/gzip
-|``gz'' |`CompressorParser` |application/x-gzip
-|``gzip'' |`CompressorParser` |//application/x-gzip
-|``xz'' |`CompressorParser` |//application/x-xz
-|``tar'' |`PackageParser` |//application/x-tar
-|``jar'' |`PackageParser` |//application/java-archive
-|``7z'' |`PackageParser` |//application/x-7z-compressed
-|``cpio'' |`PackageParser` |//application/x-cpio
-|``zip'' |`PackageParser` |//application/zip
-|``rar'' |`RarParser` |//application/x-rar-compressed
-|``txt'' |`TXTParser` |//text/plain
+|`z` |`CompressorParser` |application/x-compress
+|`bz` |`CompressorParser` |application/x-bzip
+|`boz` |`CompressorParser` |application/x-bzip2
+|`bz2` |`CompressorParser` |application/x-bzip2
+|`gz` |`CompressorParser` |application/gzip
+|`gz` |`CompressorParser` |application/x-gzip
+|`gzip` |`CompressorParser` |application/x-gzip
+|`xz` |`CompressorParser` |application/x-xz
+|`tar` |`PackageParser` |application/x-tar
+|`jar` |`PackageParser` |application/java-archive
+|`7z` |`PackageParser` |application/x-7z-compressed
+|`cpio` |`PackageParser` |application/x-cpio
+|`zip` |`PackageParser` |application/zip
+|`rar` |`RarParser` |application/x-rar-compressed
+|`txt` |`TXTParser` |text/plain
 |======================================================
 
 [[parser-controls]]
@@ -1441,7 +1801,11 @@ or `false` via the `zxsuite config` CLI command.
 |rtfParsingEnabled |RTFParser
 |==================================================================
 
-e.g. to disable PDF parsing run:
-`zxsuite config server set server.domain.com attribute pdfParsingEnabled value false`
+e.g. to disable PDF parsing run:
+
+[source,bash]
+----
+zxsuite config server set server.domain.com attribute pdfParsingEnabled value false
+----
 
 By default, all parsers are active.

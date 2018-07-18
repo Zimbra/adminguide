@@ -59,7 +59,7 @@ Data from the source server is obtained through either Zextras Suite or Zimbra S
 [[MIG-88-software-installation]]
 Software Installation
 ~~~~~~~~~~~~~~~~~~~~~
-Once you obtaine either Zextras Suite or Zimbra Suite Plus, follow this
+Once you obtain either Zextras Suite or Zimbra Suite Plus, follow this
  installation process:
 
 * Copy the package to your server, in a directory owned by the root user.
@@ -94,7 +94,7 @@ Storage
 * Source server: If Backup NG is not currently enabled on the
 source server, make sure you have an amount of free disk space
 _comparable_ to the size of the `/opt/zimbra/store/` folder (the
-exported data is compressed through the gzip algorythm, and all zimbra
+exported data is compressed through the gzip algorithm, and all zimbra
 items are deduplicated, usually reducing the size of exported to the 70%
 of the original size).
 * Destination server: Make sure you have an amount of free space
@@ -214,7 +214,7 @@ Step 4: Data Synchronization
 
 WARNING: When you move the exported data to the destination server, make
 sure that the destination folder is not Backup NG's backup path on the
-destination server ito avoid any issues if you already use
+destination server, to avoid any issues if you already use
 Backup NG or plan to do so on the destination server.
 
 _(You can skip this step if you choose to transfer your data by other
@@ -244,7 +244,7 @@ device (or the proper disk file if running on a virtual environment).
 After moving the disk, you can remotely mount it back to the source
 server (e.g. via SSHFS), as the additional synchronizations needed for
 the migration will involve much less data. In this case, be sure to
-remount the device on the source server as /opt/zimbra/backup/ng/
+remount the device on the source server as `/opt/zimbra/backup/ng/`
 with all due permissions.
 
 [[MIG-88-step-5-first-import]]
@@ -378,7 +378,7 @@ Step 9: Galsync
 
 Delete any imported GalSync accounts from the Zimbra Administration
 Console, then if needed, create new GalSync accounts on all the imported
-domains and resync all the GalSync accounts with the following command:
+domains and re-sync all the GalSync accounts with the following command:
 
 ....
 zmgsautil forceSync -a galsync.randomstring@domain.com -n [resourcename]

@@ -102,9 +102,9 @@ are replayed to bring the system to the point before the failure.
 The Zimbra MTA is not backed up, as the data is only on the server for a
 very short time.
 
-Custom configurations -- such as mailboxd's `jetty/etc/*.xml` -- are not backed up.
+Custom configurations -- such as `mailboxd`'s `jetty/etc/*.xml` -- are not backed up.
 
-==== Backup Notifcation
+==== Backup Notification
 
 A backup report is sent to the admin mailbox when full and incremental
 backups are performed. This report shows the success or failure of the
@@ -194,11 +194,11 @@ start and stop times.
 Contains message files that are shared among accounts in this backup.
 
 |`sys/` |
-Global database tables and localconfig.
+Global database tables and `localconfig`.
 
 |`db_schema.xml` |
 Database schema information for global tables. Each table dump file has a
-.csv format.
+``.csv` format.
 
 |`localconfig.xml` |
 Copy of `/opt/zimbra/conf/localconfig.xml` at the time of the backup.
@@ -284,17 +284,17 @@ The standard backup is the default and is automatically scheduled. You do
 not need to make any additional changes. But when running the auto-grouped
 backup you must manually configure the backup schedule. To do so, access
 the CLI and follow the steps under
-<<scheule_auto_group_backups,Schedule Auto-Group Backups>>
+<<schedule_auto_group_backups,Schedule Auto-Group Backups>>
 to run `zmschedulebackup -D` to set the default
 schedule for auto-grouped backups.
 
 *Throttling option with auto-grouped backup.* The auto-grouped backup
-methodautomatically backs up mailboxes that have never been backed up
+method automatically backs up mailboxes that have never been backed up
 when the next backup is scheduled. This might not be the best option
 every time a full backup is required on all mailboxes, such as
 immediately after massive mailbox migrations or after a major upgrade.
 Enabling *Throttle automatic* *backups* limits the mailbox count in a
-daily backup to T/N. This breaks theconstraint of backing up all
+daily backup to T/N. This breaks the constraint of backing up all
 mailboxes in N days, but it helps backup to finish during off hours.
 
 When all mailboxes are backed up at least once, disable throttling:
@@ -314,7 +314,7 @@ restore the LDAP server.
 * `zmschedulebackup` -- This command is used to schedule full backups,
 incremental backups, and deletion of old backups.
 * `zmbackup` -- This command executes full or incremental backup of the {product-name} mailbox
-server. This is run on a live server, while the mailboxd process and the
+server. This is run on a live server, while the `mailboxd` process and the
 mailbox server are running. This command also has an option to manually
 delete old backups when they are no longer needed.
 * `zmbackupabort` -- This command stops a full backup that is in process.
@@ -322,11 +322,11 @@ delete old backups when they are no longer needed.
 * `zmbackupquery` -- This command lists the information about ongoing and
 completed backups, including labels and dates.
 * `zmrestore` -- This command restores a backup to a running {product-name} mailbox server.
-* `zmrestoreoffline` -- This command restores the {product-name} mail server when the mailboxd process is stopped.
+* `zmrestoreoffline` -- This command restores the {product-name} mail server when the `mailboxd` process is stopped.
 * `zmrestoreldap` -- This command restores the complete LDAP directory
 server, including accounts, domains, servers, COS and other data.
 
-Refer to <<appendix_a,Appendix A Command Line Utilities>>
+Refer to <<command_line_utilities,Appendix A: Command Line Utilities>>
 for usage and definitions for each of these commands.
 
 == Backing up using the Standard Method
@@ -490,7 +490,7 @@ displayed. The backup continues in the background. You can use the
 time.
 
 Backup files are saved as zip files without compression. To change the
-default zip option, see <<appendix_a,Appendix A Command Line Interface>>,
+default zip option, see <<command_line_utilities,Appendix A: Command Line Utilities>>,
 zmbackup section.
 
 === Incremental Backup Process
@@ -510,7 +510,7 @@ entries for those accounts.
 Archived logs that are less than an hour old at the time of incremental
 backup are copied to the backup and are not deleted. These redologs are
 deleted one hour after the backup. The interval is set by the
-localconfig key `backup_archived_redolog_keep_time`. The default is 3600
+`localconfig` key `backup_archived_redolog_keep_time`. The default is 3600
 seconds.
 +
 If no full backup for this account is found, the backup process performs
@@ -687,8 +687,8 @@ already exists in the backup, it flags this object as such and does not
 copy its content again.
 
 Backup files are saved as zip files without compression. To change the
-default zip option, see <<appendix_a,Appendix A Command Line Interface>>,
-zmbackup section.
+default zip option, see <<command_line_utilities,Appendix A: Command Line Utilities>>,
+`zmbackup` section.
 
 These backup files can be used to restore the complete {product-name}
 system or individual mailboxes so that account and message data is
@@ -722,12 +722,12 @@ volumes.
 
 === Backup the MariaDB Database
 
-You can configure {product-name} backups to run mysqldump to
+You can configure {product-name} backups to run `mysqldump` to
 backup your MariaDB database during backup sessions. When this is enabled,
-a mysqldump backup runs with each full, incremental, and auto-grouped
+a `mysqldump` backup runs with each full, incremental, and auto-grouped
 backup.
 
-The mysqldump is a backup of your MariaDB database at a specific time.
+The `mysqldump` is a backup of your MariaDB database at a specific time.
 Data changes that occur later than the dump file are written to the
 binary log. To recover to a specific point in time, binary logging must
 be enabled. See the Zimbra wiki article, MariaDB Backup and Restore at
@@ -740,13 +740,13 @@ These files can be quite large. Make sure that the free disk space is at
 least three times greater than the actual MariaDB database file for each
 MariaDB database backup file that is saved.
 
-* Enable mysqldump to run automatically with your backups, type
+* Enable `mysqldump` to run automatically with your backups, type
 [source, bash]
 ----
 zmlocalconfig edit mysql_backup_retention=<N>
 ----
 *N* is the number of copies of the MariaDB database backups that
-areretained.
+are retained.
 
 [NOTE]
 To restore a MariaDB database, contact Zimbra support for assistance.
@@ -770,7 +770,7 @@ administrator.
 
 [NOTE]
 If you are also backing up the MariaDB database, make sure you set the value
-large enough to include the myslqdump file size.
+large enough to include the `myslqdump` file size.
 
 The value for this attribute can be specified as a percentage of the
 total disk space, for example 25%, or as number of bytes, for example
@@ -804,7 +804,7 @@ Three types of restore procedures can be run:
 {product-name} mailbox server is running.
 
 * The `zmrestoreoffline` command is used to restore the mailbox server when
-just the mailboxd process it is stopped. This command is run for disaster recovery.
+just the `mailboxd` process it is stopped. This command is run for disaster recovery.
 
 * The `zmrestoreldap` command is used to restore the content of the
 LDAP directory server.
@@ -990,7 +990,7 @@ zmbackupabort -r
 
 === Restore Mailboxes When Mail Server Is Down
 
-The offline restore process can only be run when the mailboxd server is
+The offline restore process can only be run when the$1`mailboxd` server is
 not running. In general, offline restore is run under the following
 circumstances:
 
@@ -1003,11 +1003,11 @@ server.
 The offline restore must be run before the {product-name} mailbox
 store server is started to keep the redo logs in sequence.
 
-In a disaster recovery when the Zimbra software is reinstalled, if mailboxd
+In a disaster recovery when the Zimbra software is reinstalled, if `mailboxd`
 is started before the backup files are restored, the mail server would
 begin to accept email messages and perform other activities, producing redo
 logs in the process. Since the pre-disaster data have not been restored to
-the server, the redo logs would be out of sequence. Once mailboxd is
+the server, the redo logs would be out of sequence. Once `mailboxd` is
 running, it would be too late to restore the pre-disaster data.
 
 The offline restore process goes through the following steps.
@@ -1026,13 +1026,13 @@ archive area on the mailbox server
 
 ==== Restore All Accounts
 
-. Restore all accounts on server1 when mailboxd is stopped
+. Restore all accounts on server1 when `mailboxd` is stopped
 +
 [source,bash]
 ----
 zmrestoreoffline -a all
 ----
-. Start mailboxd after the offline restore is complete
+. Start `mailboxd` after the offline restore is complete
 +
 [source,bash]
 ----
@@ -1079,7 +1079,7 @@ When you restore from a full backup, you can exclude the search index
 and blobs.
 
 * *Search index* -- If you do not restore the search index data, the
-mailbox willhave to be reindexed after the restore.
+mailbox will have to be reindexed after the restore.
 +
 [source,bash]
 ----
@@ -1087,7 +1087,7 @@ zmrestore -a <all|account> --exclude-search-index
 ----
 
 * *Blobs* -- This is a useful option when all blobs for the mailbox being
-restoredalready exists.
+restored already exist.
 +
 [source,bash]
 ----
@@ -1095,7 +1095,7 @@ zmrestore <all or account>|--exclude-blobs
 ----
 
 * *HSM-blobs* -- This is useful when all HSM blobs for the mailbox
-beingrestored already exists.
+being restored already exist.
 +
 [source,bash]
 ----
@@ -1107,7 +1107,7 @@ zmrestore <all or account> --exclude-hsm-blobs
 In a disaster recovery where you need to restore the entire system,
 restore the LDAP directory server first.
 
-The zmrestoreldap command restores the global LDAP data including COS,
+The `zmrestoreldap` command restores the global LDAP data including COS,
 distribution lists, etc. You can restore the complete LDAP server, which
 recreates the entire schema or you can restore specific accounts. You
 specify the session to restore. The restore command has to be run on the
@@ -1246,9 +1246,9 @@ domain, hostname, passwords as on the old server. During Zimbra
 Collaboration install, the following settings must be changed to match
 the original server settings:
 ..  *Zimbra LDAP Server* -- For *Domain to create*, identify the same
-defaultdomain as on the old server.
+default domain as on the old server.
 ..  *Zimbra Mailbox Server* -- An administrator's account is
-automaticallycreated.
+automatically created.
 * Make sure that the account name for *Admin user to create* is the same
 name as on the original server.
 * Set the admin password to be the same as on the old server.
@@ -1256,7 +1256,7 @@ name as on the original server.
 * Set the Postfix user and Amavis user passwords to be the same as on
 the old server
 * Change the *Spam training user* and the *Non-spam (HAM) training*
-*user* account names to be the same as the spam account names onthe old
+*user* account names to be the same as the spam account names on the old
 server.
 * *Global Document Account* -- This account name is
 automatically generated and is usually named wiki. If you changed this,
@@ -1280,7 +1280,7 @@ zmcontrol stop
 the additional volumes now.
 
 .  Delete the MariaDB data and reinitialize an empty data directory. If
-you do not do this, zmrestoreoffline will have errors. As zimbra, type
+you do not do this, `zmrestoreoffline` will have errors. As `zimbra`, type:
 +
 [source,bash]
 ----
@@ -1300,15 +1300,15 @@ zmrestoreldap -lb <latest_label>
 ----
 +
 If you are restoring a large number of accounts, you might run a command
-such as the UNIX command, nohup, so that the session does not terminate
+such as the UNIX command, `nohup`, so that the session does not terminate
 before the restore is complete.
 +
 [NOTE]
 To find the LDAP session label to restore, type `zmrestoreldap –lbs`.
 
 .  Ensure that the following services are running before attempting to execute `zmrestoreoffline`.
-  - mysqld (MariaDB)
-  - slapd (OpenLDAP)
+  - `mysqld` (MariaDB)
+  - `slapd` (OpenLDAP)
 +
 [source,bash]
 ----
@@ -1316,7 +1316,7 @@ zmcontrol start
 ----
 
 .  Ensure that the following services are stopped before attempting to execute `zmrestoreoffline`.
-  - mailboxd
+  - `mailboxd`
 +
 [source,bash]
 ----
@@ -1335,7 +1335,7 @@ servers LDAP config.
 zmlocalconfig -f -e zimbra_ldap_password=<password>
 ----
 
-.  Start the offline restore after stopping mailboxd.
+.  Start the offline restore after stopping `mailboxd`.
 +
 [source,bash]
 ----
@@ -1343,7 +1343,7 @@ zmmailboxdctl stop
 zmrestoreoffline -sys -a all -c -br
 ----
 +
-You might run a command such as nohup here also. To watch the progress,
+You might run a command such as `nohup` here also. To watch the progress,
 tail `/opt/zimbra/log/mailbox.log`.
 +
 [NOTE]
@@ -1413,7 +1413,7 @@ state.
 
 ==== Restore After Corrupted or Unreadable Redo Log
 
-If the redo log becomes unreadable, the mailboxd service stops and
+If the redo log becomes unreadable, the `mailboxd` service stops and
 cannot restart. If this happens, inspect the hardware and software to
 find the source of the problem before proceeding.
 
@@ -1424,7 +1424,7 @@ current transactions is created after the Zimbra mailbox server is
 restored.
 
 [IMPORTANT]
-The mailboxd service must not be running, and all accounts must be in
+The `mailboxd` service must not be running, and all accounts must be in
 maintenance mode before beginning.
 
 .  Put all accounts into maintenance mode.
@@ -1434,7 +1434,7 @@ maintenance mode before beginning.
 zmprov md <domain> zimbraDomainStatus maintenance
 ----
 
-.  With the mailboxd service not running, type
+.  With the `mailboxd` service not running, type
 +
 [source,bash]
 ----
@@ -1479,8 +1479,8 @@ is renamed `localconfig.xml.restore` and is copied to the `/opt/zimbra/conf`
 directory.
 
 If you have made changes since the last backup, you might need to replace
-the localconfig.xml file with the restored copy. Compare these files, and
-if the *.restore* file has the latest local configuration data, delete the
+the `localconfig.xml` file with the restored copy. Compare these files, and
+if the ``*.restore*`` file has the latest local configuration data, delete the
 `localconfig.xml` file and rename the file with the `.restore` extension to
 `localconfig.xml`.
 
@@ -1494,9 +1494,9 @@ running.
 
 Snapshots are taken for all volumes of data and are transferred to the
 standby site periodically. Data volumes that are backed up using
-snapshots include MariaDB, blobs, lucene index, and redologs.
+snapshots include MariaDB, blobs, Lucene index, and redologs.
 
-When the primary site is down, the zmplayredo command is used to bring
+When the primary site is down, the `zmplayredo` command is used to bring
 consistency to the snapshots and to reapply any changes in data to
 minimize data loss across volumes
 
@@ -1553,9 +1553,6 @@ Since auth tokens are ephemeral attributes, the implication is that clients
 accessing accounts restored after deletion will need to re-authenticate;
 auth tokens generated prior to the backup will no longer work.
 
-The Jira ticket ZMS-614 has been opened to track the potential future development
-of ephemeral data backups.
-
 === Ephemeral Storage SSDB Backend
 
 ==== Backing up Ephemeral Data in SSDB
@@ -1563,7 +1560,8 @@ of ephemeral data backups.
 If SSDB is used as the ephemeral backend, a backup will not include any ephemeral
 attributes.
 
-Note: This section does not detail how to deploy and administer an SSDB server. For that information please see section <<SSDB Configuration Options>>.
+Note: This section does not detail how to deploy and administer an SSDB server.
+For that information please see section <<ssdb-configuration-options.adoc#ssdb_configuration_options,SSDB Configuration Options>>.
 
 Backing up the data stored in SSDB (if so configured) is done as follows:
 
@@ -1630,10 +1628,10 @@ leveldb-import localhost 8888 /tmp/ephemeral-backup-<date>/data
 
 ==== Data override
 
-Stop the SSDB server.
-Copy the directory created using the `ssdb-dump` command previously to a known location.
-Update `ssdb.conf` configuration file to update the `work_dir` option to the proper path.
-Start the SSDB server back up and verify previously working logins still work.
+ - Stop the SSDB server.
+ - Copy the directory created using the `ssdb-dump` command previously to a known location.
+ - Update `ssdb.conf` configuration file to update the `work_dir` option to the proper path.
+ - Start the SSDB server back up and verify previously working logins still work.
 
 === Backups with LDAP backend
 

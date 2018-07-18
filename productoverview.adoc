@@ -72,7 +72,7 @@ Web application server that runs Zimbra software.
 
 |Postfix |
 Open source mail transfer agent (MTA) that routes mail messages to the
-appropriate Zimbraserver
+appropriate Zimbra server
 
 |Open LDAP software |
 Open source implementation of the Lightweight Directory Access Protocol
@@ -459,15 +459,15 @@ https://wiki.zimbra.com/[Zimbra Wiki].
 
 === Identity and Access Management
 
-Key functions built into the system for user identify management are
+Key functions built into the system for user identity management are
 summarized in the following table:
 
-.Identify and Access Management Functions
+.Identity and Access Management Functions
 [cols="25,75",options="header",grid="rows"]
 |=======================================================================
 |Function |Description
 
-|Identify Lifecycle Management |
+|Identity Lifecycle Management |
 The leveraging of LDAP directory for all Create, Read, Update, and Delete
 (CRUD) functions associated to user administration with
 {product-name}. LDAP usage is optional but all attributes specific to
@@ -484,7 +484,7 @@ LDAP directory. See also
 <<zimbra_ldap_service,Zimbra LDAP Service>> for more details.
 
 |Two Factor Authentication |
-A second layer of identify security that is configured at the Admin Console
+A second layer of identity security that is configured at the Admin Console
 to enable or disable passcode generation to mobile devices associated with
 {product-name}. When enabled, user or COS accounts must use the generated
 passcode to gain access to their client services. See also

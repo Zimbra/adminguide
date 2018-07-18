@@ -741,7 +741,7 @@ provision.  You configure how often the external directory is polled for
 new users, the maximum number of users to process at each interval, and the
 domains to be scheduled for account auto-provisioning on specified servers.
 
-. Log in to the {product-abbrev} server as zimbra and type zmprov at the command
+. Log in to the {product-abbrev} server as zimbra and type `zmprov` at the command
 prompt.
 +
 [source,bash]
@@ -889,7 +889,7 @@ Lazy mode auto provisioning automatically creates a new account after a
 user authenticates from an external authentication mechanisms (LDAP,
 preauth, Kerberos 5, and/or Spnego).
 
-. Log in to the {product-abbrev} server as zimbra and type zmprov at the command
+. Log in to the {product-abbrev} server as zimbra and type `zmprov` at the command
 prompt.
 
 . Enable LAZY mode,
@@ -1021,7 +1021,7 @@ md <example.com> zimbraAutoProvNotificationFromAddress <name@example.com>
 Use the Manual Mode setting to disable auto provisioning with an external
 LDAP server.
 
-. Log in to the {product-abbrev} server as zimbra and type zmprov at the
+. Log in to the {product-abbrev} server as zimbra and type `zmprov` at the
 command prompt.
 
 . Enable MANUAL mode:
@@ -1085,16 +1085,16 @@ The scheduling policy establishes how the resource's calendar is
 maintained.  The following resource scheduling values can be set up:
 
 * *Auto decline all recurring appointments* -- This value is enabled when
-theresource can be scheduled for only one meeting at a time.  No recurring
+the resource can be scheduled for only one meeting at a time.  No recurring
 appointments can be scheduled for this resource.
 
 * *Auto accept if available, auto-decline on conflict* -- When this option
-isselected, the resource account automatically accepts appointments unless
+is selected, the resource account automatically accepts appointments unless
 the resource is already scheduled.  The free/busy times can be viewed.  You
 can modify the auto-decline rule to accept some meetings that conflict.
 
 * *Manual accept, auto decline on conflict* -- When this option is selected,
-theresource account automatically declines all appointments that conflict.
+the resource account automatically declines all appointments that conflict.
 Appointment requests that do not conflict are marked as tentative in the
 resource calendar and must be manually accepted.  If you set this up,
 configure the forwarding address so a copy of the invite is sent to the
@@ -1102,7 +1102,7 @@ account that can manually accept the invitation.  You can modify the
 auto-decline rule to accept some meetings that conflict.
 
 * *Auto accept always* -- The resource account automatically accepts
-allappointments that are scheduled.  In this case, free/busy information is
+all appointments that are scheduled.  In this case, free/busy information is
 not maintained, thus more than one meeting could schedule the resource at
 the same time.  Because the resource always accepts the invitation, the
 suggested use for this policy would be for a frequently used location off

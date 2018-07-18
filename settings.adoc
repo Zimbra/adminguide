@@ -1,12 +1,18 @@
-:product-version: 8.8.6
-:document-title: Administrator Guide version {product-version}
 :product-name: Zimbra Collaboration
 :product-abbrev: ZCS
-= {product-name} {document-title}
-:product-release-date: November, 2017
-:copyright-year: 2017
+:product-edition-commercial: Network Edition
+:product-edition-foss: Open Source Edition
+:product-short: Zimbra
+:product-family: Zimbra
+:product-provider: Zimbra
+:product-version: 8.8.9
+:product-release-date: July 2018
+:copyright-year: 2018
+
 :icons: font
 :title-logo-image: images/zimbra-logo.jpg
+:favicon: https://www.zimbra.com/wp-content/uploads/2015/08/favicon.ico
 :showlinks:
 :source-highlighter: coderay
 :toc: left
+:toclevels: 2
