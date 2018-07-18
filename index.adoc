@@ -181,6 +181,10 @@ include::crontab.adoc[]
 
 <<<
 
+include::ng-abq-soap.adoc[]
+
+<<<
+
 include::glossary.adoc[]
 
 <<<

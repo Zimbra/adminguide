@@ -169,16 +169,6 @@ specific supported cloud.
 The cloud services currently supported are Nextcloud and ownCloud with
 the archive `zimbradrive.tar.gz`.
 
-[[cloud-app-installation]]
-Cloud App Installation
-^^^^^^^^^^^^^^^^^^^^^^
-
-Here are the steps to install the Zimbra Drive Cloud App to the
-specific supported cloud.
-
-The cloud services currently supported are Nextcloud and ownCloud with
-the archive `zimbradrive.tar.gz`.
-
 [[subsec:NextcloudownCloudInstallation]]
 Nextcloud/ownCloud
 ++++++++++++++++++

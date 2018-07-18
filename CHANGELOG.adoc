@@ -7,7 +7,10 @@ Version 8.8.9
 -------------
 .Additions and changes
 - Added Voice Services section.
-- General cleanup: fixed broken links, spelling and format issues.
+- Added ng-abq & ng-abq-soap Sections provided by Cine @ ZeXtras.
+- Major rewrite of ng-hsm section, added more S3 compliant store types, and
+support for Primary on HSM.
+- General cleanup: added favicon, fixed broken links, spelling and format issues.
 
 Version 8.7
 -----------
