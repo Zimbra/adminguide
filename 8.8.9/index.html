@@ -915,6 +915,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_about_this_document">About this Document</a></li>
 <li><a href="#_overview_6">Overview</a></li>
 <li><a href="#_installation_2">Installation</a></li>
+<li><a href="#configuration">Configuration</a></li>
 <li><a href="#_upgrade">Upgrade</a></li>
 <li><a href="#uninstallation">Uninstallation</a></li>
 <li><a href="#advanced">Advanced Topics</a></li>
@@ -956,6 +957,12 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_how_to_read_the_crontab">How to read the crontab</a></li>
 <li><a href="#_zcs_cron_jobs">ZCS Cron Jobs</a></li>
 <li><a href="#_single_server_crontab_l_example">Single Server Crontab -l Example</a></li>
+</ul>
+</li>
+<li><a href="#_abq_soap_api">Appendix D: ABQ - SOAP API</a>
+<ul class="sectlevel2">
+<li><a href="#_introduction_2">Introduction</a></li>
+<li><a href="#_abq_api">ABQ API</a></li>
 </ul>
 </li>
 <li><a href="#_glossary">Glossary</a></li>
@@ -23861,10 +23868,6 @@ Since auth tokens are ephemeral attributes, the implication is that clients
 accessing accounts restored after deletion will need to re-authenticate;
 auth tokens generated prior to the backup will no longer work.</p>
 </div>
-<div class="paragraph">
-<p>The Jira ticket ZMS-614 has been opened to track the potential future development
-of ephemeral data backups.</p>
-</div>
 <div class="sect3">
 <h4 id="_ephemeral_storage_ssdb_backend">Ephemeral Storage SSDB Backend</h4>
 <div class="sect4">
@@ -31702,11 +31705,11 @@ The arguments that follow in the command now depend on the selected <code>storeT
 <div class="literalblock">
 <div class="content">
 <pre># Add volume, run as zimbra user
-zxsuite powerstore doCreateVolume FileBlob name secondary /path/to/store
+zxsuite hsm doCreateVolume FileBlob name secondary /path/to/store
 # Delete volume
-zxsuite powerstore doDeleteVolume name
+zxsuite hsm doDeleteVolume name
 # set current
-zxsuite powerstore doUpdateVolume FileBlob name current_volume true</pre>
+zxsuite hsm doUpdateVolume FileBlob name current_volume true</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -31761,11 +31764,11 @@ compression_threshold(O)        String
 <div class="literalblock">
 <div class="content">
 <pre># Add volume, run as zimbra user
-zxsuite powerstore doCreateVolume S3 name secondary bucket_name bucket access_key accessKey secret secretString region EU_WEST_1
+zxsuite hsm doCreateVolume S3 name secondary bucket_name bucket access_key accessKey secret secretString region EU_WEST_1
 # Delete volume
-zxsuite powerstore doDeleteVolume name
+zxsuite hsm doDeleteVolume name
 # set current
-zxsuite powerstore doUpdateVolume S3 name current_volume true</pre>
+zxsuite hsm doUpdateVolume S3 name current_volume true</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -31837,11 +31840,11 @@ current_volume(O)               Boolean             true|false                  
 <div class="literalblock">
 <div class="content">
 <pre># Add volume, run as zimbra user
-zxsuite powerstore doCreateVolume ScalityS3 name secondary bucket_name mybucket access_key accessKey1 secret verySecretKey1 url http://{IP_ADDRESS}:{PORT}
+zxsuite hsm doCreateVolume ScalityS3 name secondary bucket_name mybucket access_key accessKey1 secret verySecretKey1 url http://{IP_ADDRESS}:{PORT}
 # Delete volume
-zxsuite powerstore doDeleteVolume name
+zxsuite hsm doDeleteVolume name
 # set current
-zxsuite powerstore doUpdateVolume ScalityS3 name current_volume true</pre>
+zxsuite hsm doUpdateVolume ScalityS3 name current_volume true</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -31902,11 +31905,11 @@ current_volume(O)               Boolean             true|false                  
 <div class="literalblock">
 <div class="content">
 <pre># Add volume, run as zimbra user
-zxsuite powerstore docreatevolume EMC name secondary bucket_name bucket access_key ACCESSKEY secret SECRET url https://url.of.storage
+zxsuite hsm docreatevolume EMC name secondary bucket_name bucket access_key ACCESSKEY secret SECRET url https://url.of.storage
 # Delete volume
-zxsuite powerstore doDeleteVolume name
+zxsuite hsm doDeleteVolume name
 # set current
-zxsuite powerstore doUpdateVolume EMC name current_volume true</pre>
+zxsuite hsm doUpdateVolume EMC name current_volume true</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -31967,11 +31970,11 @@ current_volume(O)               Boolean             true|false                  
 <div class="literalblock">
 <div class="content">
 <pre># add volume, run as zimbra user
-zxsuite powerstore doCreateVolume OpenIO name secondary http://{IP_ADDRESS} ZeXtras OPENIO
+zxsuite hsm doCreateVolume OpenIO name secondary http://{IP_ADDRESS} ZeXtras OPENIO
 # Delete volume
-zxsuite powerstore doDeleteVolume name
+zxsuite hsm doDeleteVolume name
 # set current
-zxsuite powerstore doUpdateVolume OpenIO name current_volume true</pre>
+zxsuite hsm doUpdateVolume OpenIO name current_volume true</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -32092,11 +32095,11 @@ current_volume(O)           Boolean     true|false                  false
 <div class="literalblock">
 <div class="content">
 <pre># add volume, run as zimbra user
-zxsuite powerstore doCreateVolume Cloudian name secondary bucket_name bucket access_key ACCESSKEY secret SECRET url https://url.of.storage
+zxsuite hsm doCreateVolume Cloudian name secondary bucket_name bucket access_key ACCESSKEY secret SECRET url https://url.of.storage
 # Delete volume
-zxsuite powerstore doDeleteVolume name
+zxsuite hsm doDeleteVolume name
 # set current
-zxsuite powerstore doUpdateVolume Cloudian name current_volume true</pre>
+zxsuite hsm doUpdateVolume Cloudian name current_volume true</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -32156,7 +32159,7 @@ current_volume(O)               Boolean             true|false                  
 <div class="sect4">
 <h5 id="_volume_deletion">Volume Deletion</h5>
 <div class="paragraph">
-<p>zxsuite powerstore doDeleteVolume</p>
+<p>zxsuite hsm doDeleteVolume</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -33211,7 +33214,7 @@ show_blob_num(O)       Boolean    true|false         false
 
 Usage example:
 
-**BE CAFERUL** show_volume_size and show_blob_num options are IO intensive and thus disabled by default
+**BE CAREFUL** show_volume_size and show_blob_num options are IO intensive and thus disabled by default
 
 zxsuite hsm getVolumeStats 2
 Shows stats for the volume with ID equal to 2</pre>
@@ -38635,82 +38638,105 @@ specific supported cloud.</p>
 <p>The cloud services currently supported are Nextcloud and ownCloud with
 the archive <code>zimbradrive.tar.gz</code>.</p>
 </div>
+<div class="sect4">
+<h5 id="subsec:NextcloudownCloudInstallation">Nextcloud/ownCloud</h5>
 <div class="paragraph">
-<p>[[==subsec:NextcloudownCloudInstallation==]]
-Nextcloud/ownCloud</p>
+<p>Nextcloud and ownCloud require the same following installation steps.<br>
+The placeholder <code>PATHTOCLOUD</code> is the path of the Nextcloud/ownCloud
+service in server:</p>
 </div>
-Nextcloud and ownCloud require the same following installation steps. +
-The placeholder `PATHTOCLOUD` is the path of the Nextcloud/ownCloud
-service in server:
-
-1.  Copy `zimbradrive.tar.gz` in Nextcloud/ownCloud drive: +
-`scp zimbradrive.tar.gz root@cloud:/tmp`
-2.  In Nextcloud/ownCloud server, extract `zimbradrive.tar.gz` in
-`PATHTOCLOUD/apps`: +
-`tar -xvzf zimbradrive.tar.gz -C PATHTOCLOUD/apps`
-3.  Change permissions of the extracted folder
-`PATHTOCLOUD/apps/zimbradrive` with the user owner of Nextcloud/ownCloud
-(E.g.: www-data): +
-`chown -R www-data:www-data PATHTOCLOUD/apps/zimbradrive/`
-4.  Enable Zimbra Drive App from Nextcloud/ownCloud Admin Interface or
-with command:
-`sudo -u www-data php PATHTOCLOUD/occ app:enable zimbradrive`
-
-At this point, the Nextcloud/ownCloud Zimbra Drive App is installed and
-requires configuration.
-
-On Apache Web Server, Zimbra Drive doesn’t work if the server is not
-correctly configured. Refer to these instructions for _Apache Web Server
-Configuration_ in the Nextcloud manual
-https://docs.nextcloud.com/server/11/admin_manual/installation/source_installation.html#apache-web-server-configuration[Nextcloud
-installation] or in the ownCloud manual
-https://doc.owncloud.org/server/10.0/admin_manual/installation/source_installation.html#apache-web-server-configuration[ownCloud
-installation].
-
-[[configuration]]
-Configuration
-~~~~~~~~~~~~~
-
-Zimbra Drive configuration is split into the Zimbra side and the Cloud side.
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Copy <code>zimbradrive.tar.gz</code> in Nextcloud/ownCloud drive:<br>
+<code>scp zimbradrive.tar.gz root@cloud:/tmp</code></p>
+</li>
+<li>
+<p>In Nextcloud/ownCloud server, extract <code>zimbradrive.tar.gz</code> in
+<code>PATHTOCLOUD/apps</code>:<br>
+<code>tar -xvzf zimbradrive.tar.gz -C PATHTOCLOUD/apps</code></p>
+</li>
+<li>
+<p>Change permissions of the extracted folder
+<code>PATHTOCLOUD/apps/zimbradrive</code> with the user owner of Nextcloud/ownCloud
+(E.g.: www-data):<br>
+<code>chown -R www-data:www-data PATHTOCLOUD/apps/zimbradrive/</code></p>
+</li>
+<li>
+<p>Enable Zimbra Drive App from Nextcloud/ownCloud Admin Interface or
+with command:<br>
+<code>sudo -u www-data php PATHTOCLOUD/occ app:enable zimbradrive</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>At this point, the Nextcloud/ownCloud Zimbra Drive App is installed and
+requires configuration.</p>
+</div>
+<div class="paragraph">
+<p>On Apache Web Server, Zimbra Drive doesn’t work if the server is not
+correctly configured. Refer to these instructions for <em>Apache Web Server
+Configuration</em> in the Nextcloud manual:
+<a href="https://docs.nextcloud.com/server/11/admin_manual/installation/source_installation.html#apache-web-server-configuration">Nextcloud
+installation</a> or in the ownCloud manual:
+<a href="https://doc.owncloud.org/server/10.0/admin_manual/installation/source_installation.html#apache-web-server-configuration">ownCloud
+installation</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuration">Configuration</h3>
+<div class="paragraph">
+<p>Zimbra Drive configuration is split into the Zimbra side and the Cloud side.
 The Zimbra Drive Zimlet doesn’t need more than standard Zimlet
 configuration, so the Zimbra side requires only Zimbra Drive
 Extension configuration. On the Cloud side, each supported cloud service
 configuration will be shown later. These are independent, and you need
-only configure for your desired cloud service.
-
-[[zimbra-extension-configuration]]
-Zimbra Extension Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The Zimbra Extension setup requires the URL of the cloud service that will
+only configure for your desired cloud service.</p>
+</div>
+<div class="sect3">
+<h4 id="zimbra-extension-configuration">Zimbra Extension Configuration</h4>
+<div class="paragraph">
+<p>The Zimbra Extension setup requires the URL of the cloud service that will
 be paired. This URL has to be set in the domain attribute
-`zimbraDriveOwnCloudURL`, and it is common to all users belonging the same
-domain. Different domains may have different cloud service URLs. +
-The command to set the cloud service URL is:
-
-....
-# As zimbra
-zmprov md domainExample.com zimbraDriveOwnCloudURL CLOUD_URL
-
-....
-
-The cloud service URL (`CLOUD_URL`) has to be in the form:
-`protocol://cloudHost/path`.
-
-* `protocol`: can be `http` or `https`
-* `cloudHost`: hostname of the server with the cloud service
-* `path`: path in server of the targeted cloud service
-
-Each cloud service has its entry point. +
-In Nextcloud/ownCloud, the URL has to target `index.php`
-`protocol://cloudHost/path/index.php`
-
-[[cloud-app-configuration]]
-Cloud App Configuration
-^^^^^^^^^^^^^^^^^^^^^^^
-
-[[NextcloudownCloudInstallation]]
-Nextcloud/ownCloud
+<code>zimbraDriveOwnCloudURL</code>, and it is common to all users belonging the same
+domain. Different domains may have different cloud service URLs.<br>
+The command to set the cloud service URL is:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># As zimbra
+zmprov md domainExample.com zimbraDriveOwnCloudURL CLOUD_URL</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The cloud service URL (<code>CLOUD_URL</code>) has to be in the form:
+<code>protocol://cloudHost/path</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>protocol</code>: can be <code>http</code> or <code>https</code></p>
+</li>
+<li>
+<p><code>cloudHost</code>: hostname of the server with the cloud service</p>
+</li>
+<li>
+<p><code>path</code>: path in server of the targeted cloud service</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each cloud service has its entry point.<br>
+In Nextcloud/ownCloud, the URL has to target <code>index.php</code>
+<code>protocol://cloudHost/path/index.php</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cloud-app-configuration">Cloud App Configuration</h4>
+<div class="sect4">
+<h5 id="NextcloudownCloudInstallation">Nextcloud/ownCloud</h5>
 <div class="paragraph">
 <p>When everything is correctly configured, the Zimbra end user creates a
 private account in the cloud service that will be paired with the Zimbra
@@ -38769,6 +38795,7 @@ Domain PreAuth Key:<br>
 <code>zmprov generateDomainPreAuthKey domainExample.com</code><br></p>
 </li>
 </ul>
+</div>
 </div>
 </div>
 </div>
@@ -39280,7 +39307,7 @@ client via an image upon every keystroke and change in the document.</p>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-This component must be installed on one or more dedicated nodes running Ubuntu 16.04 LTS or greater.
+This component must be installed on one or more dedicated nodes running Ubuntu 16.04 LTS.
 </td>
 </tr>
 </table>
@@ -39413,8 +39440,7 @@ in the parameters (the url is validates against allowed nodes)</p>
 <div class="sect2">
 <h3 id="_networking_and_ports">Networking and ports</h3>
 <div class="paragraph">
-<p>The Docs Extension and Docs Zimlet don&#8217;t require any specific open port to be functional. All mailbox servers will need to be able to directly
-communicate with the Docs Server.</p>
+<p>All mailbox servers will need to be able to directly communicate with the Docs Server over port 8443 (HTTPS Backend), which must be open on both ends.</p>
 </div>
 <div class="paragraph">
 <p>The Docs Server communicates with the Extension through port 9091, so incoming traffic from all mailbox and proxy servers to that port must
@@ -39446,7 +39472,7 @@ server and enabled on all users and COS that need to have access to the Zimbra D
 </div>
 <div class="paragraph">
 <p>The <code>com_zextras_docs</code> Zimlet is available in the Zimbra repository, so it can be easily downloaded and deployed by running <code>apt-get
-install zimbra-doc</code>.</p>
+install zimbra-docs</code>.</p>
 </div>
 <div class="paragraph">
 <p>No configuration on the mailboxd side is needed after the Zimlet has been deployed and enabled.</p>
@@ -47283,6 +47309,218 @@ ZIMBRAEND -- DO NOT EDIT ANYTHING BETWEEN THIS LINE AND ZIMBRASTART</pre>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_abq_soap_api">Appendix D: ABQ - SOAP API</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_introduction_2">Introduction</h3>
+<div class="paragraph">
+<p>New for Zimbra Collaboration 8.8.9:
+The "Allow/Block/Quarantine" feature allows for granular access control of mobile devices connecting to the server.
+For more details about the feature, refer to the <a href="#ng-abq">ABQ Service documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>This appendix introduces the SOAP API support for the ABQ service.</p>
+</div>
+<div class="sect3">
+<h4 id="_zimbra_soap">Zimbra SOAP</h4>
+<div class="paragraph">
+<p>Zimbra implements the Simple Object Access Protocol (SOAP) for integration with clients. For more information:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://wiki.zimbra.com/wiki/SOAP_API_Reference_Material_Beginning_with_ZCS_8">SOAP API Reference Material beginning with Zimbra Collaboration 8.0</a></p>
+</li>
+<li>
+<p>and <a href="https://github.com/search?q=zimbra+soap&amp;type=Repositories">here are</a> a couple of libraries that
+simplify access to that API.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Zimbra&#8217;s SOAP implementation comprises a <code>soap:Header</code> and a <code>soap:Body</code>, as in this example of a SOAP request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span>
+<span class="tag">&lt;soap:Envelope</span> <span class="attribute-name">xmlns:soap</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2003/05/soap-envelope</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;soap:Header&gt;</span>
+        <span class="tag">&lt;context</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;authToken&gt;</span>$token<span class="tag">&lt;/authToken&gt;</span>
+            <span class="tag">&lt;format</span> <span class="attribute-name">type</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">xml</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/context&gt;</span>
+    <span class="tag">&lt;/soap:Header&gt;</span>
+    <span class="tag">&lt;soap:Body&gt;</span>
+        $xml
+    <span class="tag">&lt;/soap:Body&gt;</span>
+<span class="tag">&lt;/soap:Envelope&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here <code>$xml</code> should replaced with the SOAP request that we want to issue, and <code>$token</code> should be a valid token granted by Zimbra after the client has successfully authenticated.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_login">Login</h4>
+<div class="paragraph">
+<p>To get access to Zimbra, first authenticate yourself and obtain a valid token. Here is the XML request to do so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;AuthRequest</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbraAdmin</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;account</span> <span class="attribute-name">by</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>&quot;user@example.com&quot;<span class="tag">&lt;/account&gt;</span>
+    <span class="tag">&lt;password&gt;</span>password<span class="tag">&lt;/password&gt;</span>
+<span class="tag">&lt;/AuthRequest&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here an example of a reply:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;soap:Envelope</span> <span class="attribute-name">xmlns:soap</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2003/05/soap-envelope</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;soap:Header&gt;</span>
+        <span class="tag">&lt;context</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;change</span> <span class="attribute-name">token</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">699</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/context&gt;</span>
+    <span class="tag">&lt;/soap:Header&gt;</span>
+    <span class="tag">&lt;soap:Body&gt;</span>
+        <span class="tag">&lt;AuthResponse</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbraAdmin</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            <span class="tag">&lt;authToken&gt;</span>0_2ebb6bdada2b1987c4fa625f95862d2a299b2e4c_69643d33363a34623065356237342d366135612d343435372d393032662d6630313833343131386666363b6578703d31333a313532393335333836373330303b61646d696e3d313a313b747970653d363a7a696d6272613b753d313a613b7469643d31303a313031323636373733383b76657273696f6e3d31333a382e382e385f47415f323030393b<span class="tag">&lt;/authToken&gt;</span>
+            <span class="tag">&lt;lifetime&gt;</span>43199998<span class="tag">&lt;/lifetime&gt;</span>
+        <span class="tag">&lt;/AuthResponse&gt;</span>
+    <span class="tag">&lt;/soap:Body&gt;</span>
+<span class="tag">&lt;/soap:Envelope&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After we have a valid token we can use it in subsequent calls placing it into the <code>&lt;authToken&gt;$token&lt;/authToken&gt;</code> of <code>soap:Header</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_abq_api">ABQ API</h3>
+<div class="paragraph">
+<p>All ABQ calls have a common XML:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;zextras</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbraAdmin</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;module&gt;</span>ZxMobile<span class="tag">&lt;/module&gt;</span>
+    <span class="tag">&lt;action&gt;</span>$action<span class="tag">&lt;/action&gt;</span>
+<span class="tag">&lt;/zextras&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>$action</code> can be: <code>getDeviceControlList</code>, <code>getDeviceStatus</code> or <code>setDeviceStatus</code> followed by a parameter if needed. Here is an example of a reply:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;soap:Envelope</span> <span class="attribute-name">xmlns:soap</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2003/05/soap-envelope</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;soap:Header&gt;</span>
+        <span class="tag">&lt;context</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;change</span> <span class="attribute-name">token</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">699</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;/context&gt;</span>
+    <span class="tag">&lt;/soap:Header&gt;</span>
+    <span class="tag">&lt;soap:Body&gt;</span>
+        <span class="tag">&lt;response</span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">{</span><span class="delimiter">&quot;</span></span><span class="attribute-name">response</span><span class="error">&quot;</span><span class="attribute-name">:</span><span class="error">{</span><span class="error">&quot;</span><span class="attribute-name">devices</span><span class="error">&quot;</span><span class="attribute-name">:</span><span class="error">[</span><span class="error">{</span><span class="error">&quot;</span><span class="attribute-name">device_id</span><span class="error">&quot;</span><span class="attribute-name">:</span><span class="error">&quot;</span><span class="attribute-name">device4</span><span class="error">&quot;</span><span class="error">,</span><span class="error">&quot;</span><span class="attribute-name">status</span><span class="error">&quot;</span><span class="attribute-name">:</span><span class="error">&quot;</span><span class="attribute-name">device1</span>=<span class="attribute-value">allowed</span><span class="error">;</span><span class="attribute-name">device2</span>=<span class="attribute-value">quarantined</span><span class="error">;</span><span class="attribute-name">device3</span>=<span class="attribute-value">Blocked</span><span class="error">&quot;</span><span class="error">}</span><span class="error">]</span><span class="error">}</span><span class="error">,</span>
+        <span class="error">&quot;</span><span class="attribute-name">ok</span><span class="error">&quot;</span><span class="attribute-name">:true</span><span class="error">}</span><span class="error">&quot;</span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/soap:Body&gt;</span>
+<span class="tag">&lt;/soap:Envelope&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All ABQ replies are standard and they are placed into a <code>&lt;response&gt;</code> tag with a <code>content</code> attribute. Content is formatted as JSON with only one <code>JSONObject: "response"</code> and <code>Boolean: "ok"</code>. The former contains the reply and the latter indicates if the request succeeded or not.</p>
+</div>
+<div class="sect3">
+<h4 id="_getdevicecontrollist">getDeviceControlList</h4>
+<div class="paragraph">
+<p>Returns a list of all ABQ devices filtered by status: “all”, ”allowed”, ”quarantined” or ”blocked” (case insensitive)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;zextras</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbraAdmin</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;module&gt;</span>ZxMobile<span class="tag">&lt;/module&gt;</span>
+    <span class="tag">&lt;action&gt;</span>getDeviceControlList<span class="tag">&lt;/action&gt;</span>
+    <span class="tag">&lt;status&gt;</span>all<span class="tag">&lt;/status&gt;</span>
+<span class="tag">&lt;/zextras&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_getdevicestatus">getDeviceStatus</h4>
+<div class="paragraph">
+<p>Returns a list of ABQ devices status given a device list (semicolon separated)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;zextras</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbraAdmin</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;module&gt;</span>ZxMobile<span class="tag">&lt;/module&gt;</span>
+    <span class="tag">&lt;action&gt;</span>getDeviceStatus<span class="tag">&lt;/action&gt;</span>
+    <span class="tag">&lt;device&gt;</span>device01;device02<span class="tag">&lt;/device&gt;</span>
+<span class="tag">&lt;/zextras&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The reply contains a JSON array called <code>devices</code>, each with a pair of string attributes : <code>"device_id"</code> and <code>"status"</code>. Here is an example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">{<span class="key"><span class="delimiter">&quot;</span><span class="content">response</span><span class="delimiter">&quot;</span></span>:{<span class="key"><span class="delimiter">&quot;</span><span class="content">devices</span><span class="delimiter">&quot;</span></span>:[{<span class="key"><span class="delimiter">&quot;</span><span class="content">device_id</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">device1</span><span class="delimiter">&quot;</span></span>,<span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">Allowed</span><span class="delimiter">&quot;</span></span>}]},<span class="key"><span class="delimiter">&quot;</span><span class="content">ok</span><span class="delimiter">&quot;</span></span>:<span class="value">true</span>}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the requested device is not found in ABQ, it is simply omitted from the response.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setdevicestatus">setDeviceStatus</h4>
+<div class="paragraph">
+<p>Sets the device status for a given device or list of devices. The list is semicolon separated and each element is composed of <code>device_id = $status</code> where <code>$status</code> can
+be <code>Allowed</code>, <code>Quarantined</code> or <code>Blocked</code> (case insensitive). Returns a list of failed devices.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;zextras</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">urn:zimbraAdmin</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;module&gt;</span>ZxMobile<span class="tag">&lt;/module&gt;</span>
+    <span class="tag">&lt;action&gt;</span>setDeviceStatus<span class="tag">&lt;/action&gt;</span>
+    <span class="tag">&lt;deviceStatus&gt;</span>device01=allowed;device02=blocked<span class="tag">&lt;/deviceStatus&gt;</span>
+<span class="tag">&lt;/zextras&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The reply contains a JSON array called <code>devices</code>, each with a pair of string attributes : <code>"device_id"</code> and <code>"status"</code>. Here is an example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json">    {<span class="key"><span class="delimiter">&quot;</span><span class="content">response</span><span class="delimiter">&quot;</span></span>:{<span class="key"><span class="delimiter">&quot;</span><span class="content">devices</span><span class="delimiter">&quot;</span></span>:[{<span class="key"><span class="delimiter">&quot;</span><span class="content">device_id</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">device4</span><span class="delimiter">&quot;</span></span>,<span class="key"><span class="delimiter">&quot;</span><span class="content">status</span><span class="delimiter">&quot;</span></span>:<span class="string"><span class="delimiter">&quot;</span><span class="content">wrong</span><span class="delimiter">&quot;</span></span>}]},<span class="key"><span class="delimiter">&quot;</span><span class="content">ok</span><span class="delimiter">&quot;</span></span>:<span class="value">true</span>}</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_2">Example</h5>
+<div class="paragraph">
+<p>AbqClient is a simple java example to show access to ABQ api. It&#8217;s self contained and can be build with ant:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ant build</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and executed by:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ ant run</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_glossary">Glossary</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -47637,7 +47875,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-07-11 11:32:23 EDT
+Last updated 2018-07-18 16:34:49 EDT
 </div>
 </div>
 </body>
