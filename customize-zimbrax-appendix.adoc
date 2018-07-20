@@ -1,0 +1,173 @@
+[appendix]
+// HACK ALERT - asciidoctor-pdf cannot handle including this file into
+// customize-zimbrax.adoc if it starts at level 0
+//ifdef::stand-alone-doc[]
+//== Zimbra X UI Customization - LESS Variables
+//endif::[]
+//ifndef::stand-alone-doc[]
+//= Zimbra X UI Customization - LESS Variables
+//endif::[]
+= Zimbra X UI Customization - LESS Variables
+
+This is the fill list of http://lesscss.org/[LESS Variables] that may be overridden when customizing a Zimbra X installation.
+[source,javascript]
+----
+/** Layout */
+
+@toolbar-height: 49px;
+@checkbox-size: 42px;
+@mobile-toolbar-height: 57px;
+@external-header-height: 24px;
+@search-header-height: 72px;
+@sidebar-width: 192px;
+@rightbar-width: @sidebar-width;
+
+/** Colors */
+@login-background-color: @brand-primary;
+
+// Grays
+@gray-base: #000;
+@gray-darkest: lighten(@gray-base, 15%); // #262626
+@gray-darker: lighten(@gray-base, 30%); // #4d4d4d
+@gray-dark: lighten(@gray-base, 40%); // #666
+@gray: lighten(@gray-base, 46.7%); // #777
+@gray-light: lighten(@gray-base, 60%); // #999
+@gray-lighter: lighten(@gray-base, 85%); // #d9d9d9;
+@gray-lightest: lighten(@gray-base, 95%); // #f2f2f2;
+@gray-placeholder: lighten(@gray-base, 60%); // #a6a6a6;    (could be replaced by new @gray-light)
+
+// Named colors (AVOID THESE)
+@warm-gray: @gray-light;
+@off-white: #fafafa;
+@gold: #ffb81c;
+@gold-lighter: lighten(@gold, 10%);
+@translucent-white: rgba(255,255,255,.7);
+
+// Branding colors
+@brand-primary: #0088c1;
+@brand-secondary: #f15b24;
+@brand-tertiary: #0568ae;
+@brand-quarternary: #74d6ff;
+@brand-success: #007a3e;
+@brand-info: #5bc0de;
+@brand-warning: #ffb81c;
+@brand-danger: #cf2a2a;
+
+// Branding Fonts
+@branding-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+@branding-font-family-regular: @branding-font-family;
+@branding-font-family-medium: @branding-font-family;
+@branding-font-family-bold: @branding-font-family;
+@branding-font-family-medium-italic: @branding-font-family;
+
+// Other Colors?
+@color-light-positive: #00bd02;
+@color-light-negative: #ff1f1f;
+
+// Body foreground/background colors
+@body-bg: #fff;
+@text-color: @gray-darker;
+@dialog-title-fg: black;
+@background-gray: @gray-lightest;
+
+// Link foreground colors
+@link-color: @brand-tertiary;
+@link-hover-color: darken(@link-color, 15%);
+@link-hover-decoration: underline;
+
+//Item background colors
+@item-hover-bg: lighten(@brand-primary, 90%);
+@item-selected-bg: fade(lighten(@brand-primary, 50%), 50%);
+
+// Borders
+@border-color-primary: @gray-lighter;
+
+// <hr> line color
+@hr-border: @gray-lightest;
+
+// Forms
+@placeholder-color: @gray-light;
+
+// Elements
+@app-menu-active-color: @gray-lightest;
+@list-active-bg: fade(@brand-primary, 15%);
+@list-hover-bg: fade(@brand-primary, 8%);
+@sidebar-bg-color: @gray-lightest;                                 // Left sidebar background
+@sidebar-primary-button-color: @brand-primary;                     // The top button on the sidebar ("Compose", "New Contact")
+@sidebar-shaded-color: @gray-lighter;
+@rightbar-bg-color: @sidebar-bg-color;                             // Right sidebar background
+@read-pane-toolbar-color: @gray-lightest;                          // The toolbar above the read pane.
+@read-pane-bg-color: @gray-lightest;                               // The middle/main pane
+@border-color: @gray-lighter;
+
+// Favorite / Trash Indicators
+@favorite-indicator-active: @gold;
+@favorite-indicator-inactive: @gray;
+@favorite-indicator-hover: @gold-lighter;
+@favorite-indicator-disabled: @gray-lighter;
+@trash-indicator: @gray;
+@trash-indicator-hover: @brand-tertiary;
+
+// File Types
+@file-type-doc: #0f73ff;
+@file-type-ppt: #ff9937;
+@file-type-pdf: #ff4c4e;
+@file-type-xls: #0e9d58;
+@file-type-zip: #ada293;
+@file-type-default: #949cae;
+@file-type-media: #BC0E67;
+
+// Toast Notifications
+@toast-success-color: #00d171;
+@toast-failure-color: @brand-danger;
+
+
+/** Typography */
+
+// Body text
+@font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif: Georgia, "Times New Roman", Times, serif;
+@font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+@font-family-base: @font-family-sans-serif;
+@font-brand-primary: inherit;
+@font-family-primary: inherit;
+@font-family-secondary: inherit;
+
+@font-size-base: 14px;
+@font-size-med: 16px;
+@font-size-large: ceil((@font-size-base * 1.25)); // ~18px
+@font-size-small: ceil((@font-size-base * 0.85)); // ~12px
+
+@font-size-h1: floor((@font-size-base * 2.6)); // ~36px
+@font-size-h2: floor((@font-size-base * 2.15)); // ~30px
+@font-size-h3: ceil((@font-size-base * 1.7)); // ~24px
+@font-size-h4: ceil((@font-size-base * 1.25)); // ~18px
+@font-size-h5: @font-size-base;
+@font-size-h6: ceil((@font-size-base * 0.85)); // ~12px
+
+// Unitless line height for components like buttons:
+@line-height-base: 1.428571429; // 20/14
+// Computed line height (font-size x line-height) for layout use:
+@line-height-computed: floor(@font-size-base * @line-height-base); // ~20px
+
+// Headings
+@headings-font-family: inherit;
+@headings-font-weight: 300;
+@headings-line-height: 1.1;
+@headings-color: inherit;
+@headings-small-color: @gray-light;
+
+// Icons
+@icon-size-xs: 12px;    // Extra small
+@icon-size-sm: 16px;    // Small
+@icon-size-md: 24px;    // Medium (recommended default)
+@icon-size-lg: 32px;    // Large
+
+// Spacing
+@spacing-xs: 4px;
+@spacing-sm: 8px;
+@spacing-md: 16px;
+@spacing-lg: 24px;
+@spacing-xl: 32px;
+----

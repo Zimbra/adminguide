@@ -1,0 +1,319 @@
+ifndef::product-name[]
+:document-title: Zimbra X UI Customizations
+:stand-alone-doc: true
+:doctype: book
+include::settings.adoc[]
+:imagesdir: ./images
+
+endif::[]
+= Zimbra X UI Customizations
+Draft, July 2018
+:toc:
+:webClient: Zimbra X Web Client
+// asciidoctor-pdf bug; if image wider than cell, image will be shrunk but
+// the cell height will take whole page. Work-around: limit width.
+:zx-table-image-width: 250
+// The information contained within this ifdef is not intended for the adminguide.
+ifdef::laposte[]
+WARNING: This document is proprietary and confidential. No part of this document may be disclosed in any manner to a third party without the prior written consent of Synacor, Inc.
+endif::[]
+
+IMPORTANT: This document is a work in progress, details are subject to change.
+
+== Client configuration
+{webClient} takes most of its design aspects from "client configuration", settings that are provided to {product-name} in a collection of files in the `/clients` directory.
+
+The first suggested step for creating a custom configuration is to
+
+Many aspects of the {webClient} may be customized through settings provided to
+the web server in a `config.json` file.
+These are described in following sub-sections.
+
+=== External Header
+An optional External Header (navigation bar) can be defined to appear above the {webClient}.
+
+.External Header example
+image:ExternalHeader.png[External Header]
+
+The `"nav"` attribute defines three _zones_, namely `"home"` with a single navigation element,
+`"left"` and `"right"` which each support an array of navigation elements.
+
+The above example is realized from the following configuration values:
+
+[source,json]
+----
+"nav": {
+  "home": {
+    "name": "Synacor",
+    "alt": "Synacor",
+    "href": "https://synacor.com"
+  },
+
+  "left": [
+    {
+      "name":"Wiki",
+      "href": "https://wiki.corp.synacor.com/"
+    },
+    {
+      "name":"Projects",
+      "href": "https://stash.corp.synacor.com/"
+    },
+    {
+      "name":"Dashboards",
+      "href": "https://bamboo.corp.synacor.com/"
+    }
+  ],
+
+  "right": [
+    {
+      "name": "Products",
+      "href": "https://synacor.com/products/"
+    },
+    {
+      "name": "Customers",
+      "href": "https://synacor.com/customers/"
+    },
+    {
+      "name": "Media",
+      "href": "https://synacor.com/media/"
+    },
+    {
+      "name": "Careers",
+      "href": "https://synacor.com/careers/"
+    }
+  ]
+}
+----
+
+=== GIF Search
+The GIF search feature of the Plus-Sign Experience is Powered by GIPHY(TM), through its Search API.
+
+.GIF Search in Plus-Sign Experience
+image:Giphy.png[GIF Search,300,role="right"]
+
+Use of the API requires an application key.
+Read more https://developers.giphy.com/docs/#search-endpoint[here].
+
+. *Obtain a GIPHY development Key*
++
+You can obtain an individual rate-limited key by logging into the
+https://developers.giphy.com/[GIPHY developer portal] with your GIPHY account
+and then creating an app.
+You'll be asked to create a GIPHY account if you don't already have one.
+Once you've "created an app" (a step that simply reports a Zimbra service),
+it will be given its very own key to query the API.footnoteref:[giphyfaq,Text paraphrased from https://developers.giphy.com/faq/[GIPHY FAQ].]
+
+. *Configure the Zimbra X Client with the GIPHY key*
++
+The config value `giphyKey` is used to register the GIPHY key with the Zimbra X Client.
++
+.Include in client's `config.json`
+[source,json]
+----
+"giphyKey" : "qwertyuiopasdfghjkl"
+----
+
+. *Request a GIPHY production key upgrade*
++
+When you're ready to use the GIF Search feature & GIPHY API in production, click on the "Request a production key" link on the GIPHY app dashboard. You will be asked to provide more details about your app (Zimbra) and after review your development key will be upgraded.footnoteref:[giphyfaq]
+
+
+== Custom colors, backgrounds and icons
+Visual assets are provided to the Zimbra X client in an `/assets` directory that
+is read when the service is launched.
+
+=== Custom fonts and colors
+Fonts and colors may be customized by modifying `variables.less` in your client directory.
+Settings made there will override named values from the product's `style.less` files.
+
+.The default client `variables.less`
+[source,javascript]
+----
+@import '~@zimbra/x-ui/refs.less';
+
+// Add your own LESS variables here to create a theme!
+@list-hover-bg: @gray-lightest;
+----
+
+As an example, consider the Synacor livery from the `clients/synacor` directory:
+
+image:zx-synacor-colors.png[Zimbra Livery,{zx-table-image-width}]
+
+.Synacor `variables.less` example
+[source,javascript]
+---
+@synacor-red: #e92d28;
+@synacor-gray-light: #f4f7f9;
+@synacor-gray: #6b6b6b;
+@synacor-gray-dark: #2a2f3a;
+
+@brand-primary: @synacor-red;
+@brand-tertiary: @synacor-red;
+@brand-secondary: @synacor-gray;
+
+@header-bg: @synacor-gray-light;
+@header-fg: @synacor-gray-dark;
+@header-actions-fg: @synacor-gray-dark;
+
+@external-header-bg: @synacor-gray-dark;
+@external-header-fg: @synacor-gray-light;
+
+@link-color: @brand-primary;
+---
+
+// The full set of "theme-able" settings is in https://github.com/Zimbra/zm-x-ui/blob/master/variables.less
+
+=== Custom Visual Elements
+The default Zimbra installation comes with Zimbra branded image assets, which can be
+replaced for customized branding of the web client desktop shortcuts.
+
+Examples of placement of the various assets are shown in the table below.
+In addition to hosting images for inclusion in the application itself, Zimbra X also serves icons and masks to support favicons for common browsers and desktop shortcuts on Windows, MacOS, iOS and Android.
+
+
+.Default logos and icons in use
+[cols="^.^2,^.^3",options="header"]
+|===
+| Environment | Zimbra default image
+| Zimbra Header | image:zx-logo-zimbra.png[Zimbra Header,{zx-table-image-width}]
+
+| Zimbra Signin | image:zx-logo-signin.png[Zimbra Signin,{zx-table-image-width}]
+
+| iOS Safari | image:zx-icon-ios.png[iOS Safari,{zx-table-image-width}]
+| Android Chrome | image:zx-icon-android_chrome.png[Android Chrome,{zx-table-image-width}]
+| Windows 8 and 10 | image:zx-icon-windows.png[Windows 8 and 10,{zx-table-image-width}]
+| Mac OS X Safari | image:zx-icon-safari_pinned_tab.png[Mac OS X,{zx-table-image-width}]
+| Classic, desktop browsers | image:zx-icon-desktop.png[Classic desktop browsers,{zx-table-image-width}]
+|===
+
+These directions assume you have copied the `/default` client directory and are
+setting up your own client directory based off this.
+
+The following files should be overwritten with your own image files:
+`icon.png`, `logo.png`, and `logo.svg`.
+
+All other files can be modified in the same manner as above; however, you may find
+it beneficial to use an icon generator.
+The directions below are how to generate and implement your new images via
+https://realfavicongenerator.net/[RealFaviconGenerator]:
+
+. Set up your icons the way you would like with RealFaviconGenerator UI
+
+* Under the ‘Favicon Generator Options’, in the ‘Path’ tab, choose the option:
++
+_I cannot or I do not want to place favicon files at the root of my web site. Instead I will place them here:_
++
+and enter `/assets` for the path
+
+* In the same section, click on the ‘Additional Files’ tab and select ‘Generate `html_code.html`’
+
+. Generate your images and code
+
+. Download your generated package, and open it up
+
+. Open the `html_code.html` file, and if there is a line that includes the text `‘href=“/assets/favicon.ico”>’`, delete it (be sure to save the file)
+
+. Rename `html_code.html` to `mobile_icons.html`
+
+. It’s a good idea to check your favicon image files to ensure they appear as you want them to - if you used an svg as your master image, your favicon may end up being white (you can re-generate your icons using one of your generated hi-res png images, and copy the favicon files into your original package)
+
+. Copy `mobile_icons.html` into your client root folder in the Zimbra repo
+
+. Copy all other files into your client `/assets` folder
+
+That’s it! Build your Zimbra instance, and all your icons should display on the
+various mobile devices. You should validate this, for example by using the
+https://realfavicongenerator.net/favicon_checker[RealFaviconGenerator FavIcon Checker].
+
+== Zimlets for Zimbra X
+Zimbra's extension framework that uses self-contained packages called _Zimlets_
+to modify the appearance and behavior of the product has been evolved to support
+Zimbra X.
+
+Zimlets for Zimbra X are managed via the Administration Console as described in
+// cross-reference for full admin guide
+ifndef::stand-alone-doc[]
+<<zimlets.adoc,Managing Zimlets>>.
+endif::[]
+// external link if stand alone
+ifdef::stand-alone-doc[]
+https://zimbra.github.io/adminguide/latest/index.html#zimlets[Managing Zimlets].
+endif::[]
+
+Some things Zimlets can do are modify menus and actions, access context and
+account information, and dispatch actions to perform asynchronously (e.g. to
+query a remote web service).
+
+Throughout the Zimbra X app, there are hooks made available to Zimlets for
+injecting components into the app. These hooks are called `ZimletSlots`.
+Visible `ZimletSlots` are discete points for UI components.
+
+.`ZimletSlots` are anchor points for extensions
+image:zx-zimlet-showSlot.png[Zimlet slots]
+
+There are also invisible `ZimletSlots` such as the `routes` slot which allows
+URL routes to be added to screens in the app.
+
+For more information about developing Zimlets for Zimbra X, see the
+https://github.com/Zimbra/zimlet-cli/wiki[Zimlet CLI documentation].
+
+== Monetization and Ad placement
+{product-name} {product-edition-commercial} can be customized to integrate with
+https://www.synacor.com/advertising/default.aspx?section=publishers[Synacor's RefleX]
+or other ad services.
+
+=== Static ad placement locations
+The Zimlet infrastructure provides hooks that support custom creative-delivery components.
+Such placements would be _static_, insofar as the location that they occupy in the user interface is fixed.
+
+.Example ad placements
+image:zx-ad-placement.png[Ad placement]
+
+NOTE: This design is out-of-date, but serves to illustrate the availability of
+`ZimletSlots` for ad component placement.
+
+The illustrated `ZimletSlots` can be used by custom Zimlets to anchor
+the ads. These Zimlets then communicate asynchronously with the advertising
+services to present media to the user, and analytics services for tracking.
+
+// The information contained within this ifdef is not intended for the adminguide.
+ifdef::laposte[]
+
+=== Dynamic ad placement locations
+It should be possible to alternative notifications for some operations to provide additional monetization opportunities.
+
+* After sending an email, replace notification "toast" with notification + ad creative.
+
+endif::[]
+
+== Themes
+// The information contained within this ifdef is not intended for the adminguide.
+ifdef::laposte[]
+IMPORTANT: This section describes planned roadmap development that has not yet been scheduled for completion.
+
+When enabled by COS settings, users' preferences include a _theme picker_. The current design for the theme picker shows it launched from the "Gear" menu as a modal dialog, but including it within the Preferences panel is an alternative.
+
+.Theme Picker modal dialog
+image:Theme-modal-dialog.png[Theme Picker,{zx-table-image-width},align="center"]
+
+Prepared themes consist of a background image which can underly the primary canvas and / or the signin page, like so:
+
+.Opaque background image
+image:zx-background-image.png[Signin Background,{zx-table-image-width},align="center"]
+
+A suite of prepared themes has been designed, to be deployed as folders containing theme images and a `theme.less` file. Some examples:
+
+."Dew photo" theme
+image:Theme-dew-photo.png[Theme dew photo,{zx-table-image-width},align="center"]
+
+.Pink theme
+image:Theme-pink.png[Theme pink,{zx-table-image-width},align="center"]
+
+
+endif::[]
+
+
+//---------------------------------------------------------------------------------------------
+ifdef::stand-alone-doc[]
+include::customize-zimbrax-appendix.adoc[]
+endif::[]

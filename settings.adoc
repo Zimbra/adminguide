@@ -10,7 +10,7 @@
 :copyright-year: 2018
 
 :icons: font
-:title-logo-image: images/zimbra-logo.jpg
+:title-logo-image: ./images/zimbra-logo-non-interlaced.png
 :favicon: https://www.zimbra.com/wp-content/uploads/2015/08/favicon.ico
 :showlinks:
 :source-highlighter: coderay
