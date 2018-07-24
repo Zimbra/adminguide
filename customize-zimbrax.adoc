@@ -301,7 +301,7 @@ Prepared themes consist of a background image which can underly the primary canv
 .Opaque background image
 image:zx-background-image.png[Signin Background,{zx-table-image-width},align="center"]
 
-A suite of prepared themes has been designed, to be deployed as folders containing theme images and a `theme.less` file. Some examples:
+A suite of prepared themes has been designed, to be deployed as folders containing theme images and a `theme.less` file. Here are a couple of examples:
 
 ."Dew photo" theme
 image:Theme-dew-photo.png[Theme dew photo,{zx-table-image-width},align="center"]
