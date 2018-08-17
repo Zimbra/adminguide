@@ -5,8 +5,8 @@
 :product-short: Zimbra
 :product-family: Zimbra
 :product-provider: Zimbra
-:product-version: 8.8.9
-:product-release-date: July 2018
+:product-version: 8.8.10
+:product-release-date: October 2018
 :copyright-year: 2018
 
 :icons: font
