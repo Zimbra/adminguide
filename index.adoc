@@ -159,6 +159,10 @@ include::zimbra-chat-guide.adoc[]
 
 <<<
 
+include::zimbra-talk-guide.adoc[]
+
+<<<
+
 :leveloffset: -1
 include::zimbra-drive-guide.adoc[]
 :leveloffset: +1
