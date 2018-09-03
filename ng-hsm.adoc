@@ -227,7 +227,7 @@ Volume Management
 -----------------
 
 // Conditionally include version introduction, to only appear in specified release
-ifeval::[{product-version} == 8.8.9]
+ifeval::["{product-version}" == "8.8.9"]
 New for {product-name} {product-version}:
 endif::[]
 //
@@ -834,7 +834,7 @@ officially supported platforms:
 * EMC
 
 // Conditionally include version introduction, to only appear in specified release
-ifeval::[{product-version} == 8.8.9]
+ifeval::["{product-version}" == "8.8.9"]
 ...and new for {product-name} {product-version}:
 endif::[]
 
