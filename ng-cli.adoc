@@ -18,7 +18,7 @@ _zxsuite_ commands. All _zxsuite_ commands are invoked with the
 following syntax:
 
 ::
-  _zxsuite [--host|--offline] [--json] [--progress] \{module} \{action}
+  _zxsuite [--host|--offline] [--json] [--progress] [--sync] \{module} \{action}
   [options]_
 
 *Available switches:*
@@ -31,6 +31,12 @@ Good for scripting.
 * --progress - Prints the operation's feedback directly to STDOUT. Press
 Ctrl+C to interrupt the output. The operation itself won't be
 interrupted.
+* --sync - Runs the command in synchronous mode, waiting for the operation's execution to end and returning an exit code relevant with the operation's result among the following: 
+  ** 0 - Successful
+  ** 1 - Failed
+  ** 2 - Stopped
+  ** 3 - Removed
+  ** 4 - Interrupted
 
 *Online Help:* An Online Help for every command is available through
 _zxsuite help \{module} [command]_. Omitting the command will display
