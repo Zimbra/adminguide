@@ -1,0 +1,198 @@
+= Zimbra Drive v2 Documentation
+
+
+== Introduction
+Zimbra Drive v2 is a new Zimbra component that provides both a fully fledged file storage system integrated with the Zimbra WebClient and a replacement to the old “Briefcase” component.
+
+== Disclaimer
+ZIMBRA DRIVE V2 IS CURRENTLY IN BETA AND IT SHOULD NOT BE USED IN PRODUCTION ENVIRONMENTS.
+
+ALL INFORMATION, SCREENSHOTS AND DESCRIPTIONS CONTAINED IN THIS DOCUMENT ARE SUBJECT TO CHANGES.
+
+== Features
+=== Frontend
+*	Upload, manage and download files
+*	Organize files within navigable folders
+*	Preview files
+*	Mark files as “preferred” for quick access
+*	Add custom notes (descriptions) to files
+*	Share files to internal users
+*	Share files to external users (NYI)
+*	Integration with Zimbra Docs
+*	File search
+*	Folder-based navigation
+*	Quick “stateful” navigation
+
+=== Backend
+*	Option to store files on dedicated Zimbra volumes
+*	`zxsuite drive` CLI
+
+== Differences between Briefcase and Drive
+Zimbra Drive v2 does not follow the usual mailbox-driven behaviours when it comes to file storage, navigation, sharing and item deletion. See each feature’s dedicated paragraph for a complete explaination of the differences and of the features themselves.
+
+== Drive V2 UI
+
+image::images/drive_ui.png[Zimbra Drive V2 UI]
+
+. Quick Access navigation panel;
+.	Folder navigation panel;
+.	InfoBox control;
+.	New, Upload and Search features;
+.	Folder list;
+.	File list;
+
+== Feature Description
+
+=== Upload and Download
+To upload a file to Drive v2, either click on the “Upload” button above the file list or drag and drop any number of files from your computer to the main Drive window.
+
+image::images/drive_upload.png[Upload a file]
+
+To download a file from Drive v2, right-click on it and select “Download”:
+
+image::images/drive_download.png[Download a file]
+
+Any file and folder in Drive v2 can be renamed by right-clicking on it and selecting the “Rename” option in the context menu.
+
+=== Navigation
+Briefcase items are part of the mailbox’s folder and item hierarchy, while Drive v2 has its own internal folder structure and navigation. Navigating through Drive v2 folders is done through the Navigation Bar on top of the UI instead of through a tree view and folders are visible in the main section of the UI above files.
+
+image::images/drive_navigation.png[Navigate through folders and files]
+
+On top of the standard folder-based navigation, a “Quick Access” menu is available on the left side of the UI, which allows to quickly view the following types of items:
+•	“Preferred Items” – items marked with the “Star” option available in the right-click context menu;
+•	“Recently Edited” – items edited recently, sorted from the most recently edited;
+•	“Shared with me” – items shared by other users
+•	“Shared by me” – items shared to other users
+•	“Marked for deletion” – items marked for deletion
+
+=== Folder Creation
+To create a folder in Drive v2, click on the “New” button above the file list and select “Folder”:
+
+image::images/drive_newfolder.png[Create a new folder]
+
+=== Sharing
+Being separated from the mailbox’s item hierarchy, Drive v2 files and folders can be shared independently.
+Sharing permissions can be chosen among 3 options: “View”, “Edit” and “Edit and Share” – the latter two options include the “View” right by default.
+
+To share a file or a folder, right-click on it and select “Edit Shares”. After entering the email address of the destination user and selecting the sharing permissions, click the (+) button to add the share to the list:
+
+image::images/drive_addshare.png[Share an item (folder or file)]
+
+To edit or delete a share, simply click on the dropdown permission selector to change the sharing permissions of the file/folder or click the trash bin icon to delete the share:
+
+image::images/drive_editshare.png[Edit an existing share]
+
+In Drive v2 sharing rights are only “positive”, so it’s not possible to share an item with a lower permission than its parent, e.g. if a folder is shared with “Edit” permissions it’s not possible to share one of its items with “View” rights with the same person.
+
+=== Item Deletion
+When deleted, Drive v2 items are not put into the Trash like every other item type in Zimbra, as such items are marked for deletion instead.
+To mark a file or a folder for deletion, right-click on it and select “Mark for Deletion”:
+
+image::images/drive_deletefile.png[Mark an item for deletion]
+
+Items marked for deletion are displayed on the bottom of the file list with a strikethrough line and can be deleted permanently clicking on the “Delete Permanently” entry within the right-click context menu of a file marked for deletion while the “Restore” entry will unmark the file:
+
+image::images/drive_restorepermdelete.png[Restore or permanently delete a file]
+
+While any user with “Edit” or “Edit and Share” rights on an item or folder can mark it for deletion, only the original owner can delete it permanently.
+
+Items marked for deletion cannot be accessed, so should a user try to do so a pop-up message will ask whether to restore the item and access it or to stop the attempt and leave it as marked for deletion.
+
+=== InfoBox
+The InfoBox is a collapsible element that contains all information and controls for the selected file or folder, as well as a preview of the file itself if in a compatible format (pictures, PDFs and more).
+
+To display the Infobox, click on the “(i)” button on the top-right of the Drive v2 UI:
+
+image::images/drive_infobutton.png[Open the InfoBox]
+
+The infobox will appear on the right side of the screen:
+
+image::images/drive_infobox.png[The InfoBox]
+
+Top-to-bottom, the InfoBox contains:
+
+*	The name of the selected file
+*	The preview of the file (or a format icon for unsupported formats)
+*	All action items available in the right-click context menu
+*	Share information
+*	Creation and edit information
+*	A customizable “Description” field
+
+== Technical information
+=== File Storage
+While Briefcase files are stored as mail-like items within the mailbox’s folder tree, Drive v2 features a detached folder hierarchy based on nodes: thus, Drive v2 folders do not appear as mailbox folders (e.g. in the output of `zmmailbox getAllFolders`). Drive v2 metadata are stored in a dedicated HSQL Database while all files (including previous file versions and file previews) are stored in a dedicated folder within a volume’s root. File naming is now hash-based instead of id-based to achieve native deduplication, compression rules follow the volume’s settings
+
+e.g.
+Filesystem path for a briefcase file: /opt/zimbra/store/0/[mID]/msg/0/[itemid]-[revision].msg
+Filesystem path for a Drive v2 file: /opt/zimbra/store/drive/[hash]-[revision].[extension]
+
+=== Volumes
+As of this release, Drive v2 files are stored in the Current Primary volume as any other item.
+
+Integration with Zimbra Docs
+If the Zimbra Docs zimlet is correctly installed, dedicated document options will appear in the “New” button above the file list:
+
+image::images/drive_docsintegration.png[Create documents with Zimbra Docs]
+
+When right-clicking on a compatible file, an “Open with Docs” option will also appear:
+
+image::images/drive_openwithdocs.png[Open files stored in Drive with Docs]
+
+Furthemore, Zimbra Docs will also allow for previews of compatible document formats to be displayed in the InfoBox.
+
+== Zimbra Drive Backup and HSM
+=== Backup NG
+Drive V2 files are included in Backup NG, and both the RealTime Scanner and the SmartScan are aware of those and no additional actions must be taken in order to ensure the files' safety.
+
+The Restore on New Account and External Restore modes will also restore Drive V2 files, while other restore modes such as the Undelete Restore do not operate on such files.
+
+=== HSM NG
+Drive V2 can store its data on a different volume than the default Current Primary one, and HSM policies can move Drive V2 files on a different volume than the Current Secondary one, thus effectively allowing independent storage management for Drive V2 files.
+
+When an HSM policy is applied, Drive V2 files will be handled under the "document" item type.
+
+This setting is applied at server level so that different mailbox servers can use different volumes.
+
+=== Setting the Drive Primary volume
+To set the Drive Primary volume, first find out the volumeID of the target volume by running `zxsuite hsm getAllVolumes`.
+
+Once the volumeID has been identified, simply run
+
+```
+zxsuite config server set `zmhostname` attribute driveStore value [volumeID]
+```
+
+(where [volumeID] is the ID found with the previous command)
+
+=== Setting the Drive Secondary volume
+To set the Drive Secondary volume, find out the volumeID of the target volume as described on the previous paragrapgh and then run the following command
+
+```
+zxsuite config server set `zmhostname` attribute driveSecondaryStore value [volumeID]
+```
+
+== Briefcase Migration
+Briefcase data can be migrated to Drive v2 using the dedicated `doImport` CLI command:
+
+```
+zimbra@test:~$ zxsuite drive doImport
+
+Syntax:
+   zxsuite drive doImport {john@example.com,test.com[,...]} [attr1 value1 [attr2 value2...]]
+```
+The command accepts a comma separated lists of targets to migrate, which can be either mailboxes or domains, and different target types can be used on the same command.
+
+The following attributes can be used to customize the migration:
+
+[options="header"]
+|===
+|NAME                      |TYPE           |EXPECTED VALUES                   |DEFAULT |DESCRIPTION
+|targets(M)                |String[,..]    |john@example.com,test.com[,...]    ||Comma separated list of targets to migrate
+|dryRun(O)                 |Boolean        |true or false                         |false |Only perform a test run without affecting the data
+|allVersions(O)            |Boolean        |true or false                         |false |Migrate all versions of every file
+|deleteSources(O)          |Boolean        |true or false                         |false |Delete migrated files from the Briefcase
+|overwrite(O)              |Boolean        |true or false                         |false |Overwrite existing files
+|showIgnoredAccounts(O)    |Boolean        |true or false                         |false |
+|ignoreQuota(O)            |Boolean        |true or false                         |false |Ignore mailbox quota when migrating
+|===
