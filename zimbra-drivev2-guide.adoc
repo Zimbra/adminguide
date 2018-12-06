@@ -4,11 +4,6 @@
 == Introduction
 Zimbra Drive v2 is a new Zimbra component that provides both a fully fledged file storage system integrated with the Zimbra WebClient and a replacement to the old “Briefcase” component.
 
-== Disclaimer
-ZIMBRA DRIVE V2 IS CURRENTLY IN BETA AND IT SHOULD NOT BE USED IN PRODUCTION ENVIRONMENTS.
-
-ALL INFORMATION, SCREENSHOTS AND DESCRIPTIONS CONTAINED IN THIS DOCUMENT ARE SUBJECT TO CHANGES.
-
 == Features
 === Frontend
 *	Upload, manage and download files
