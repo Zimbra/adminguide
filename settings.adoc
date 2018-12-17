@@ -5,13 +5,13 @@
 :product-short: Zimbra
 :product-family: Zimbra
 :product-provider: Zimbra
-:product-version: 8.8.10
-:product-release-date: October 2018
+:product-version: 8.8.11
+:product-release-date: December 2018
 :copyright-year: 2018
 
 :icons: font
 :title-logo-image: images/zimbra-logo.jpg
-:favicon: https://www.zimbra.com/wp-content/uploads/2015/08/favicon.ico
+:favicon: images/favicon.ico
 :showlinks:
 :source-highlighter: coderay
 :toc: left
