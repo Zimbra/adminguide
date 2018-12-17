@@ -4,7 +4,7 @@
 == Introduction
 
 // Conditionally include version introduction, to only appear in specified release
-ifeval::[{product-version} == 8.8.9]
+ifeval::["{product-version}" == "8.8.9"]
 New for {product-name} {product-version},
 endif::[]
 //
@@ -122,6 +122,16 @@ The new docs nodes will be read from ldap and no manual configuration is needed.
 == Licensing
 .Zimbra Docs will be available on every NG for the same amount users allowed by the Network Edition license.
 The standalone installer is released under the MPLv2 license while the extension and Zimlet are released under a proprietary license.
+
+== Removal
+
+Before uninstalling the software the node must be removed form LDAP either from the docs node via command 
+
+`zdocs remove-local-server`
+
+or via the zmprov command from any zimbra node
+
+`zmprov deleteServer {servername}`
 
 == Commands
 
