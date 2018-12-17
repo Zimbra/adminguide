@@ -169,6 +169,10 @@ include::zimbra-drive-guide.adoc[]
 
 <<<
 
+include::zimbra-drivev2-guide.adoc[]
+
+<<<
+
 include::zimbra-docs-guide.adoc[]
 
 <<<
