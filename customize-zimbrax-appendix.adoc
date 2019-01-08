@@ -9,7 +9,7 @@
 //endif::[]
 = Zimbra X UI Customization - LESS Variables
 
-This is the fill list of http://lesscss.org/[LESS Variables] that may be overridden when customizing a Zimbra X installation.
+This is the full list of http://lesscss.org/[LESS Variables] that may be overridden when customizing a Zimbra X installation.
 [source,javascript]
 ----
 /** Layout */
