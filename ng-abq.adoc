@@ -252,7 +252,6 @@ $ zxsuite mobile abq allow
 Allow synchronization for a quarantined device
 
 Syntax:
-    zxsuite mobile ABQ allow {device_id}
 
 PARAMETER LIST
 
@@ -271,7 +270,6 @@ $ zxsuite mobile abq block
 Deny synchronization for a quarantined device
 
 Syntax:
-    zxsuite mobile ABQ block {device_id}
 
 PARAMETER LIST
 
@@ -290,7 +288,6 @@ $ zxsuite mobile abq set
 Set synchronization status for a device
 
 Syntax:
-    zxsuite mobile ABQ set {device_id} {Allowed|Blocked|Quarantined}
 
 PARAMETER LIST
 
@@ -310,7 +307,6 @@ $ zxsuite help mobile abq delete
 Delete device from ABQ
 
 Syntax:
-    zxsuite mobile ABQ delete {device_id}
 
 PARAMETER LIST
 
