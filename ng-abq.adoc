@@ -22,12 +22,16 @@ The ABQ feature is composed of three main logical components:
 The Device Control List, also known as the "ABQ List", holds the information about allowed devices within the NG config engine.
 Devices can be added to the Device Control List via CLI based on their “Device ID” which can be obtained via CLI.
 
+It is also possible to further limit access by limiting the accounts that can synchronise with the server on a specific device.
+
 NOTE: On module startup, if the Device Control List is empty all mobile devices previously recognized by the
 Zimbra server will be imported as *Allowed*.
 
 === Authorization Engine
 The Authorization Engine takes care of checking devices against the Device Control List and setting their ABQ status to the appropriate
 value.
+
+Each rule is applied to all accounts connecting using a device it is a device id. It applies to a specific account connecting using that device if it has the format device_id/account_id or device_id/accountName
 
 === CLI Toolset.
 The CLI Toolset allows administrators to interact with the device control list and with the synchronization status of a device, specifically to:
@@ -55,7 +59,8 @@ synchronization will continue. It is still possible to block specific devices bu
 After authenticating the user and checking their account status for safety reasons, the Device Control system will check the "Device ID"
 sent by the device against the list of allowed devices:
 
-- if the device is in the "allowed" list the synchronization will continue.
+- if the device/user couple is in the "allowed" list the synchronization will continue.
+- if the device/user couple is not in the device list but device is in the "allowed" list the synchronization will continue.
 - if the device is not in the “allowed” list the synchronization will be paused, a dummy email notifying the user of its
 "Quarantine" status will be sent and the connection will be set to "Quarantine" status.
 
@@ -66,7 +71,7 @@ They will then be able to allow or deny the synchronization for each device usin
 After authenticating the user and checking their account status for safety reasons, the Device Control system will check the "Device ID"
 sent by the device against the list of allowed devices:
 
-- if the device is in the “allowed” list the synchronization will continue
+- if the device/user couple or the device by itself is in the "allowed" list the synchronization will continue.
 - if the device is not in the “allowed” list the synchronization will be put in "Blocked" state, no data will be synchronized and a
 dummy email notifying the user of the device's "Blocked" status will be sent.
 
@@ -146,10 +151,10 @@ $ zxsuite mobile abq
 Allow/Block/Quarantine mobile devices management
 
     list                    - List devices.
-                              zxsuite mobile ABQ list [attr1 value1 [attr2 value2...]]
+                              zxsuite mobile ABQ list [attr1 value1 [attr2 value2...] ]
 
     add                     - add/import devices
-                              zxsuite mobile ABQ add [attr1 value1 [attr2 value2...]]
+                              zxsuite mobile ABQ add [attr1 value1 [attr2 value2...] ]
 
     allow                   - Allow synchronization for a quarantined device
                               zxsuite mobile ABQ allow {device_id}
@@ -176,7 +181,7 @@ $ zxsuite mobile abq list
 List devices.
 
 Syntax:
-   zxsuite mobile ABQ list [attr1 value1 [attr2 value2...]]
+   zxsuite mobile ABQ list [attr1 value1 [attr2 value2...] ]
 
 
 PARAMETER LIST
@@ -240,8 +245,10 @@ Example:
 [zimbra@mail ~]$ cat /tmp/list
 androidc133785981
 androidc1024711770
-SAMSUNG1239862958
+SAMSUNG1239862958/user@domain.com
 ----
+
+In the example above, devices `androidc133785981` and `androidc1024711770` are allowed to sync entirely regardless of the account, while device `SAMSUNG1239862958` can only synchronise the `user@domain.com` account
 
 === ABQ "allow" Command
 This is a specific command for quarantined device, and sets device status to *Allowed*.
@@ -252,11 +259,14 @@ $ zxsuite mobile abq allow
 Allow synchronization for a quarantined device
 
 Syntax:
+    zxsuite mobile ABQ allow {device_id} [account_id user@domain.com]
 
 PARAMETER LIST
 
 NAME            TYPE
 device_id(M)    String
+account_id(O)   String
+
 
 (M) == mandatory parameter, (O) == optional parameter
 ----
@@ -270,11 +280,14 @@ $ zxsuite mobile abq block
 Deny synchronization for a quarantined device
 
 Syntax:
+    zxsuite mobile ABQ block {device_id} [account_id user@domain.com]
 
 PARAMETER LIST
 
 NAME            TYPE
 device_id(M)    String
+account_id(O)   String
+
 
 (M) == mandatory parameter, (O) == optional parameter
 ----
@@ -288,12 +301,15 @@ $ zxsuite mobile abq set
 Set synchronization status for a device
 
 Syntax:
+    zxsuite mobile ABQ set {device_id} [account_id user@domain.com] {Allowed|Blocked|Quarantined}
 
 PARAMETER LIST
 
 NAME            TYPE        EXPECTED VALUES
 device_id(M)    String
 status(M)       String      Allowed|Blocked|Quarantined
+account_id(O)   String
+
 
 (M) == mandatory parameter, (O) == optional parameter
 ----
@@ -307,11 +323,14 @@ $ zxsuite help mobile abq delete
 Delete device from ABQ
 
 Syntax:
+    zxsuite mobile ABQ delete {device_id} [account_id user@domain.com]
 
 PARAMETER LIST
 
 NAME            TYPE
 device_id(M)    String
+account_id(O)   String
+
 
 (M) == mandatory parameter, (O) == optional parameter
 ----
