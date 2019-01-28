@@ -259,13 +259,13 @@ $ zxsuite mobile abq allow
 Allow synchronization for a quarantined device
 
 Syntax:
-    zxsuite mobile ABQ allow {device_id} [account_id user@domain.com]
+   zxsuite mobile ABQ allow {device_id} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
-NAME            TYPE
+NAME            TYPE      EXPECTED VALUES
 device_id(M)    String
-account_id(O)   String
+account(O)      String    27ee8dd9-d813-4ca7-a988-580df0027a58|user1@example.com
 
 
 (M) == mandatory parameter, (O) == optional parameter
@@ -280,14 +280,13 @@ $ zxsuite mobile abq block
 Deny synchronization for a quarantined device
 
 Syntax:
-    zxsuite mobile ABQ block {device_id} [account_id user@domain.com]
+   zxsuite mobile ABQ block {device_id} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
-NAME            TYPE
+NAME            TYPE      EXPECTED VALUES
 device_id(M)    String
-account_id(O)   String
-
+account(O)      String    27ee8dd9-d813-4ca7-a988-580df0027a58|user1@example.com
 
 (M) == mandatory parameter, (O) == optional parameter
 ----
@@ -301,15 +300,14 @@ $ zxsuite mobile abq set
 Set synchronization status for a device
 
 Syntax:
-    zxsuite mobile ABQ set {device_id} [account_id user@domain.com] {Allowed|Blocked|Quarantined}
+   zxsuite mobile ABQ set {device_id} {Allowed|Blocked|Quarantined} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
-NAME            TYPE        EXPECTED VALUES
+NAME            TYPE      EXPECTED VALUES
 device_id(M)    String
-status(M)       String      Allowed|Blocked|Quarantined
-account_id(O)   String
-
+status(M)       String    Allowed|Blocked|Quarantined
+account(O)      String    27ee8dd9-d813-4ca7-a988-580df0027a58|user1@example.com
 
 (M) == mandatory parameter, (O) == optional parameter
 ----
@@ -323,14 +321,13 @@ $ zxsuite help mobile abq delete
 Delete device from ABQ
 
 Syntax:
-    zxsuite mobile ABQ delete {device_id} [account_id user@domain.com]
+   zxsuite mobile ABQ delete {device_id} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
-NAME            TYPE
+NAME            TYPE      EXPECTED VALUES
 device_id(M)    String
-account_id(O)   String
-
+account(O)      String    27ee8dd9-d813-4ca7-a988-580df0027a58|user1@example.com
 
 (M) == mandatory parameter, (O) == optional parameter
 ----
