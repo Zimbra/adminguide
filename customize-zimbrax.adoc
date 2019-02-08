@@ -23,7 +23,11 @@ IMPORTANT: This document is a work in progress, details are subject to change.
 == Client configuration
 {webClient} takes most of its design aspects from "client configuration", settings that are provided to {product-name} in a collection of files in the `/clients` directory.
 
-The first suggested step for creating a custom configuration is to
+The first suggested step for creating a custom configuration is to copy the default client configuration.
+
+----
+cp -r clients/default clients/myclient
+----
 
 Many aspects of the {webClient} may be customized through settings provided to
 the web server in a `config.json` file.
