@@ -256,7 +256,7 @@ to see if the DoSFilter was applied.
 
 .`sync.log` entry showing the DoSFilter
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 2013-01-15 15:52:20,426 WARN [qtp1635701107-91:https://x.x.x.x/
 Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5ddddd3NR&DeviceType=iPhone&Cmd=FolderSync][name=zsupport2@domain.com;mid=64;ip=10.1.2.3;Cmd=FolderSync;DeviceID=Appl5K0113UN3NR;Version=12.1;] sync - *Service exception com.zimbra.common.service.ServiceException: error while proxying request to target server: HTTP/1.1 503 Service Unavailable*
@@ -268,7 +268,7 @@ ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?
 
 .`zmmailboxd.out` entry showing the DoSFilter
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 2013-01-15 15:57:32.537:WARN:oejs.*DoSFilter:DOS ALERT*:ip=127.0.1.1,session=null,user=null
 ----
@@ -864,7 +864,7 @@ signals that some type of error was detected.
 
 .Handler Exception
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 007-06-25 00:00:10,379 INFO [btpool0-1064] [name=nriers@example.com;mid=228;ip=10.2.3.4;ua=zimbra Desktop/0.38;] SoapEngine - *handler exception*
 ----
@@ -880,7 +880,7 @@ was caused by 501, bad address syntax.
 
 .Stack Trace
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 com.example.cs.mailbox.MailServiceException: *Invalid address*: Jon R
 at com.example.cs.mailbox.*MailServiceException.internal_SEND_FAILURE* (MailServiceException.java:412)
@@ -922,7 +922,7 @@ out-of-memory error on June 17, 2007.
 
 .Startup message
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 2007-06-25 01:56:18,725 INFO [main] [] soap - Servlet SoapServlet starting up
 ----
@@ -932,7 +932,7 @@ Look for errors before the startup message.
 
 .Error message
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 2007-06-17 20:11:34,194 FATAL [btpool0-3335] [name=samd@example.com;aname=abcadmin@example.com;mid=142;ip=10.3.4.5;ua=zimbraConnectorForBES/5.0.207;] system - handler exception java.lang.OutOfMemoryError: PermGen space
 ----
@@ -946,7 +946,7 @@ rejected as the address must be a fully-qualified address.
 
 .Mail delivery problem
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 2007-06-25 10:47:43,008 INFO [*LmtpServer*-250]
 [name=bigen@example.com;mid=30;msgid=<1291804360.35481182793659172.JavaMail.root@example.com>;] *lmtp - rejecting message bigen@example.com: exception occurred*
@@ -987,7 +987,7 @@ Windows OS.  Permission was denied because it was not an admin account.
 
 .Account Error - Login error
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 2007-06-25 09:16:11,483 INFO [btpool0-251] [ip=10.4.5.6;ua=zimbraWebClient - FFX.X (Win);] SoapEngine - *handler exception*
 com.zimbra.common.service.ServiceException: permission denied: not an admin account
@@ -1004,7 +1004,7 @@ occurred while trying to connect siress@example.com.
 
 .Account Error - IMAP error
 ====
-[source,subs="quotes"]
+[source,subs=+quotes]
 ----
 mailbox.log.2007-06-19:2007-06-19 15:33:56,832 FATAL [*ImapServer*-2444] [name=sires@example.com;ip=127.0.0.1;] system - Fatal error occurred while handling connection
 ----

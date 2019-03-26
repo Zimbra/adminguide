@@ -24,7 +24,7 @@ by the global administrator to manage different tasks from the
 Administration Console.
 See also <<delegated_administration,Delegated Administration>> for more details.
 
-== Logging in to the Administration Console
+== Logging into the Administration Console
 
 . To launch the Administration Console in a typical installation, use
 the following URL pattern.
@@ -50,7 +50,7 @@ You can change the password - from either the Administration Console or
 the CLI - at any time.
 
 From the Administration Console, use the *Change Password* screen to set
-the new password string, and to define policy for user password
+the new password string, and to define the policy for user password
 modifications.
 
 Admin Console: ::
@@ -103,12 +103,12 @@ zmprov md <domain> zimbraAdminConsoleLogoutURL <https://example.com>
 == Managing Tasks
 
 Most {product-abbrev} tasks - such as creating accounts and Classes of Service, Server
-Status Monitoring, Domain management, Backup Scheduling and Session
+Status Monitoring, Domain management, Backup Scheduling, and Session
 management - can be managed from the Administration Console.
 
 Other configuration and maintenance tasks cannot be handled from the
 Administration Console - such as starting and stopping services and managing
-the local server configuration - and require use of the Zimbra CLI.
+the local server configuration - and require the use of the Zimbra CLI.
 
 At the Administration Console, if you need to view the attribute associated
 with a particular function, you can click on the text labels of the
@@ -231,7 +231,7 @@ Length.
 
 | 1 Get Started |
 Displays the steps essential to getting started with your {product-name}
-operations, and provides quick inks to the functions in this UI:
+operations, and provides quick links to the functions in this UI:
 
 . Install Licenses
 . Configure Back-ups
@@ -242,7 +242,7 @@ operations, and provides quick inks to the functions in this UI:
 Displays the steps you use to establish the domain(s) to be managed by the
 Collaborator. Each step is a link to the function in this UI:
 
-. Create Domain
+. Create a Domain
 . Configure GAL...
 . Configure Authentication
 
@@ -332,14 +332,14 @@ total number of Active Sync devices across servers
 Access to statistics for a selected Service Host.  You can view information
 for a selected host, as follows:
 --
-* Place and hold the cursor on the Service Host name to view popup
+* Place and hold the cursor on the Service Hostname to view popup
 license information.
 +
 image:images/admin_console_monitor_ui_license.png[License]
 
-* Right-click on the Service Host name and select *View* from the popup to
+* Right-click on the Service Hostname and select *View* from the popup to
 go to the statistics page for it. You can also double-click on the Service
-Host name to access the statistics page.
+Hostname to access the statistics page.
 +
 image:images/admin_console_monitor_ui_view.png[View]
 --
@@ -408,13 +408,13 @@ Alias*, *New*, *Invalidate Session*, *View Rights*, *Configure Grants*,
 
 Table of Distribution Lists managed by the Collaborator.  A Distribution
 List is a group of mail addresses contained in a list, with a common mail
-address. When you sen to a distribution list, you are sending to everyone
-whose address is included in the list. the *To:* address line displays the
+address. When you send to a distribution list, you are sending to everyone
+whose address is included in the list. The *To:* address line displays the
 distribution list address.
 
 Actions you can perform:
 --
-* View ID information: Hold the cursor over an Distribution List row.
+* View ID information: Hold the cursor over a Distribution List row.
 
 * Right-click on a table row, or use the Gear icon to access the following
 functions: *Delete*, *Edit*, *New Administrator*, *View Mail*, *New*, *View
@@ -542,7 +542,7 @@ functions: *Install Certificate*, *View Certificate*
 
 |Rights |
 
-Displays the various Rights managed from this Administration Console.
+Displays the various Rights that are managed from this Administration Console.
 --
 
 * Double-click on a table row to access the General Information screen for
@@ -597,7 +597,7 @@ see <<general_information_configuration,General Information Configuration>>
 
 | Attachments |
 --
-* Enable rules to reject message that include attachments of a specific
+* Enable rules to reject messages that include attachments of a specific
   extension.
 * Disable attachments from being read.
 * Convert attachments to HTML for viewing.
@@ -626,7 +626,7 @@ Enable POPS3 Service. Changes to these settings do not take effect until the
 server is restarted.
 
 |AS/AV |
-Set anti-spam and anti-virus rules.  Change to the Spam-check settings do
+Set anti-spam and anti-virus rules.  Changes to the Spam-check settings do
 not take effect until the server is restarted.
 
 | Themes |
@@ -675,8 +675,8 @@ Set parameters for backup-for standard or auto- grouped mode. For more
 information see <<backup_and_restore,Backup and Restore>>.
 
 | HSM |
-(hierarchical storage management): Configure aging of message before it is
-to be moved to secondary volume.
+(hierarchical storage management): Configure aging of messages before they are
+to be moved to the secondary volume.
 
 |License |
 --
@@ -725,9 +725,9 @@ See also <<checking_for_updates,Checking for {product-name} Software Updates>>.
 
 | Account Migration |
 View tabular details about account migrations, as detected by your
-system. This page lists total imports, and status of each. This page also
+system. This page lists total imports and the status of each. This page also
 provides the name(s) of the owners for each account migration listed. See
-also <<migrating_accounts,Migrating Accounts from a Zimbra Server>>.
+also <<migrating_accounts, Migrating Accounts from a Zimbra Server>>.
 
 |Client Upload |
 Use this page to browse for the latest version of software to be uploaded
@@ -740,7 +740,7 @@ Access a summary view of current free and total space
 also select a specific administrator from this navigation
 pane to view backup history as associated with the
 selected administrator. The history lists labels, start and end times.
-and success or failure for each backup occurrence; each of these are
+and success or failure for each backup occurrence; each of these is
 associated with the identical, displayed directory path to the backup
 target. Additional information is provided in
 <<backup_and_restore,Backup and Restore>>.
@@ -840,24 +840,24 @@ image::images/administration_console_search_ui.png[Search UI]
 View the count and table of all search results.
 
 |Accounts|
-View the count and table resulting from query for Accounts.
+View the count and table resulting from a query for Accounts.
 
 |Domains |
-View the count and table resulting from query for Domains.
+View the count and table resulting from a query for Domains.
 
 |Distribution Lists |
-View the count and table resulting from query for Distribution Lists.
+View the count and table resulting from a query for Distribution Lists.
 
 |Basic Attributes |
 Search for a user by first name, last name, display name, or account ID
 number. You can search for administrators or delegated administrators only.
 
 |Status |
-Search for account by status: Active, closed, Locked, Logout, Pending, or
+Search for an account by status: Active, Closed, Locked, Logout, Pending, or
 Maintenance.
 
 |Last Login Time |
-Search for accounts by the last login time. You can specify a data range to
+Search for accounts by the last login time. You can specify a date range to
 search.
 
 |External Email Address |
@@ -895,10 +895,10 @@ mailbox ID must include the complete ID string.
 
 . Click *Search*.
 +
-The Search page is now presented, containing results of search based on
+The Search page is now presented, containing results of the search based on
 your criteria.
 
-. View total number of results at the Navigation pane, in *Search> All Results*.
+. View the total number of results at the Navigation pane, in *Search> All Results*.
 
 === Help Center UI
 
@@ -926,7 +926,7 @@ addresses, display names, status, last logins, and descriptions (if
 configured).
 
 Each row in a table enables actions you can perform if you require
-additional information and/or access to configuration for the selected
+additional information and/or access to the configuration for the selected
 table entry.
 
 [cols="1,2,2a"]
@@ -953,7 +953,7 @@ the selection.
 
 == Message of the Day
 
-Global administrators can create message(s) of the day (MOTD) that
+Global administrators can create the message(s) of the day (MOTD) that
 administrators view when logging into the Administration Console.
 
 The configured message displays at the top left of the Administration
@@ -976,7 +976,7 @@ multiple messages to be displayed.
 
 [NOTE]
 
-When creating a message with your command entry, always place double quote
+When creating a message with your command entry, always place double-quote
 marks at the beginning and end of the message to be displayed.
 
 Creating a global message or domain-specific message.
@@ -1056,7 +1056,7 @@ image::images/administration_console_gear_icon.png[The Gear Icon]
 
 To view the available options, highlight a topic at the navigation pane or
 in the page view: In the popup, the options that are not applicable to your
-selection are desensitized: other displayed options can be used with your
+selection are disabled: other displayed options can be used with your
 selection. The following example demonstrates Gear options based on
 selection of a navigation bar topic, versus a table row entry from within
 the same page view.
@@ -1064,7 +1064,7 @@ the same page view.
 image::images/administration_console_gear_icon_2.png[The Gear Icon]
 
 The following table provides a high-level view of the operations derived
-from the Gear icon, which vary for particular functions.
+from the Gear icon, which varies for particular functions.
 
 .Gear Icon Operations
 [cols="1,1,3a",options="header"]
@@ -1152,7 +1152,7 @@ menus:
 [NOTE]
 Popup menus are not provided in the Navigation Pane.
 
-The following example demonstrates the popup options provided from a
+The following example demonstrates the popup options provided by a
 specific selection in the page view.
 
 .Popup Options
@@ -1167,7 +1167,7 @@ in the Administration Console. Applicable configuration options inside
 these containers are listed in the
 <<high_level_view_of_administration_console_ui,High-level View of Administration Console UI>>
 
-By default, all containers in a page are opened (expanded). You can opt to
+By default, all containers on a page are opened (expanded). You can opt to
 close (collapse) containers - which can free up additional space in a page
 view - by clicking on the collapse/ expand button located at the upper left
 edge of the container.

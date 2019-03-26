@@ -18,7 +18,7 @@ documents, spreadsheets and presentations straight from the Zimbra WebClient.
 The Zimbra Docs server is the heart of the service. The service hosts each document opened through a LibreOffice engine and responds to the
 client via an image upon every keystroke and change in the document.
 
-IMPORTANT: This component must be installed on one or more dedicated nodes running Ubuntu 16.04 LTS.
+IMPORTANT: This component must be installed on one or more dedicated nodes running Ubuntu 16.04 LTS, Ubuntu 18.04 LTS or Red Hat Centos 7.
 
 === Zimbra Docs Extension
 
@@ -125,7 +125,7 @@ The standalone installer is released under the MPLv2 license while the extension
 
 == Removal
 
-Before uninstalling the software the node must be removed form LDAP either from the docs node via command 
+Before uninstalling the software the node must be removed form LDAP either from the docs node via command
 
 `zdocs remove-local-server`
 
@@ -195,7 +195,7 @@ ldap-write-config
   zdocs remove-local-server
 ----
 
-=== Zimbra Docs Extension CLi - zxsuite docs
+=== Zimbra Docs Extension CLI - zxsuite docs
 On a Mailbox server, the `zxsuite docs` command is available. This command allows to check and control the Docs service's status, to force
 a configuration reload and to see the Docs Servers' status.
 
@@ -230,15 +230,16 @@ resource usage (if connected).
 ----
 
 == Troubleshooting
-.+++<u>Nothing happens when opening a document / extension requests returns 503.</u>+++
+
+.[underline]#Nothing happens when opening a document / extension requests returns 503.#
 This is most likely due to a connection issue between the mailbox server and the Docs server. Check the `mailbox.log` and see the reason for
 the connection failure. If there are no connection errors, check the Docs server with `zdocs status` on the docs node.
 
 The mailbox will log every connection and disconnection for each Docs server.
 
-.+++<u>404 error code instead of docs</u>+++
+.[underline]#404 error code instead of docs#
 The proxy configuration needs to be re-generated and the proxy restarted.
 
-.+++<u>Docs opens but a message “this is embarrassing...” appears instead of the document.</u>+++
+.[.underline]#Docs opens but a message “this is embarrassing...” appears instead of the document.#
 This happens if the Docs server cannot connect back to the mailbox server to read and write the document. Check name resolution and SSL
 certificate of mailboxd which must be valid for the Docs server that does not inherit Zimbra certificate management.

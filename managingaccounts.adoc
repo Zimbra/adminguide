@@ -16,7 +16,7 @@ pane of the Administration Console.
 |Status |Description
 
 |Active |
-Normal state for mailbox account.  Mail is delivered and users can log in
+The normal state for a mailbox account.  Mail is delivered and users can log in
 to the client interface.
 
 |Maintenance |
@@ -27,11 +27,11 @@ Note that this state is automatically set for the account during a backup
 or when importing/exporting/ restoring the account.
 
 |Pending |
-Assignment for account when it is created but not yet ready to become
+Assignment for an account when it is created but not yet ready to become
 active.  While pending, the login is disabled and messages are bounced.
 
 |Locked |
-User cannot log in but mail continues to be delivered to the account.  The
+The user cannot log in but mail continues to be delivered to the account.  The
 locked state can be set if you suspect that a mail account has been
 compromised (used in an unauthorized manner).
 
@@ -41,8 +41,7 @@ soft-delete the account before deleting it from the server.  A closed
 account does not change the account license.
 
 |LockOut |
-The automatic state that occurs if the user attempts to log in with
-incorrect password.  A LockOut cannot be administratively assigned but will
+The automatic state that occurs if the user attempts to log in with an incorrect password.  A LockOut cannot be administratively assigned but will
 occur after the number of user attempts exceeds the configured number of
 attempts allowed.  The duration of the lockout is also configurable.
 
@@ -107,7 +106,7 @@ information about dynamic distribution lists, see
 <<using_dynamic_distribution_lists,Using Dynamic Distribution Lists>>.
 
 You can see which distribution lists a user is a member of from the user's
-account Member of page.  When a Zimbra user's email address is added to a
+account "Member of" page.  When a Zimbra user's email address is added to a
 distribution list, the user's account Member Of page is updated with the
 distribution list name.  When a distribution list is deleted, the
 distribution list name is automatically removed from the account's Member
@@ -148,7 +147,7 @@ to remove the name.
 
 You can add owners to distribution lists and they manage the list from
 their ZWC account's Address Book, Distribution List folder.  Owners of a
-list can right click a distribution list and click the *Edit Group* link to
+list can right-click a distribution list and click the *Edit Group* link to
 edit a list.
 
 Besides adding and deleting members, distribution list properties that
@@ -225,7 +224,7 @@ Select from:
 . In the *Members Of* page, select distribution lists that should be direct
 or indirect members of the list.
 
-. If the distribution list should have alias, create it.
+. If the distribution list should have an alias, create it.
 
 . If this distribution list can be managed by other users, enter these
 email addresses in the *Owners* page.
@@ -467,7 +466,7 @@ zmprov mds {gal-sync-account-name-for-the-domain} {AD-data-source-name} \
 [[using_dynamic_distribution_lists]]
 == Using Dynamic Distribution Lists
 
-Dynamic distribution lists automatically manage the membership.  Users are
+Dynamic distribution lists automatically manage their membership.  Users are
 added and removed from the distribution list automatically.  When you
 create a dynamic distribution list, a member URL is specified.  This member
 URL is used to identify who should be members of the list.  You can view
@@ -476,7 +475,7 @@ page.
 
 You can create dynamic distribution lists from the Administration Console
 or from the CLI.  In the URL, you specify specific object classes that
-identifies the type of users to be added to the dynamic distribution list.
+identify the type of users to be added to the dynamic distribution list.
 For example, you can configure a dynamic distribution list with the object
 class= zimbraAccount.  In this case, when accounts are provisioned or
 accounts are deleted, the dynamic distribution list is updated.
@@ -529,8 +528,8 @@ Check this box.
 Uncheck this box.
 
 |Member URL |
-The Member URL is the type of LDAP URL filter that determine which type of
-users are added and removed in the list.
+The Member URL is an LDAP-type URL defining a filter that determines which
+users are added to and removed from the list.
 
 Type the URL for this list.  In the command, `ldap://??sub?` is the URL.
 You can add any combination of filters to this to create different types of
@@ -665,7 +664,7 @@ The mailbox move process goes through the following steps:
 * When most of the content has been moved, the account is put into
 maintenance mode
 
-* Database tables, index directories and any changed blobs are moved
+* Database tables, index directories, and any changed blobs are moved
 
 * The account is put back into active mode
 

@@ -29,20 +29,27 @@ documentation into HTML files like so:
 
 [source,bash]
 ----
-asciidoctor -b html5 -D ~/temp/8.8.9 -o index.html index.adoc
+asciidoctor -b html5 -D ~/temp/8.8.11 -o index.html index.adoc
+----
+
+PDF output can be generated as well:
+
+[source,bash]
+----
+asciidoctor-pdf -a allow-uri-read -D ~/temp/8.8.11 -o adminguide.pdf index.adoc
 ----
 
 This assumes you have a "temp" directory to receive the asciidoctor output,
-and are generating output for version 8.8.9... adjust according to your
+and are generating output for version 8.8.11... adjust according to your
 situation.
 Each section of the document is contained in its own file. You may use the
 `index.adoc` file to generate the entire document.
 
-The `images/` directory must also be copied to the output destination:
+To accompany the HTML output, the `images/` directory must also be copied to the output destination:
 
 [source,bash]
 -----
-cp -r ./images ~/temp/8.8.9/images
+cp -r ./images ~/temp/8.8.11/images
 -----
 
 When publishing the output (gh-pages branch) the "latest" link needs to be updated to
@@ -50,7 +57,7 @@ point at the new version:
 
 [source,bash]
 -----
-ln -nsf 8.8.9 latest
+ln -nsf 8.8.11 latest
 -----
 
 Additional Information
