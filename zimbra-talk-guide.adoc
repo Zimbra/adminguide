@@ -473,13 +473,13 @@ the user whether to share their entire screen or just a specific window:
 image:images/group_videochat_screensharing.png[group_videochat_screensharing.png,title="group_videochat_screensharing.png"]
 
 === Instant Meeting - video chats with external users
-The Instant Meeting feature allows to create a temporary invite-only group with video chat capabilities that can also include external users.
+The Instant Meeting feature provides a temporary invite-only group with video chat capabilities that can also include external users.
 
 To start an Instant Meeting, simply select the "Instant Meeting" option in the "New" menu in the Talk Tab
 
 image:images/talk_new_instant_meeting.png[talk_new_instant_meeting.png,title="talk_new_instant_meeting.png"]
 
-This will open the Instant Meeting Creation pop-up, where a number of users up to the maximum group size set by the Administrator can be invited.
+This will open the Instant Meeting Creation pop-up, where multiple users can be invited to participate, up to the maximum group size set by the Administrator.
 
 image:images/talk_instant_meeting_creation.png[talk_instant_meeting_creation.png,title="talk_instant_meeting_creation.png"]
 
@@ -487,21 +487,21 @@ All the features and limitations of Groups apply to Instant Meetings, including 
 
 image:images/talk_instant_meeting_options.png[talk_instant_meeting_options.png,title="talk_instant_meeting_options.png"]
 
-Attendees can exit the Instant Meeting at any time and will always be able to join back through the Instant Meeting Link or Zimbra Talk Tab.
+Attendees can exit the Instant Meeting at any time and will always be able to rejoin through the Instant Meeting Link or Zimbra Talk Tab.
 
 ==== Instant Meeting Link
-Whenever an Instant Meeting is created, a unique link is generated to allow external users to join the corresponding Video Chat. The link is sent via email upon creation to all partecipants and can be found both in the Instant Meeting creation pop-up and in the Instant Meeting's properties.
+Whenever an Instant Meeting is created, a unique link is generated to allow external users to join the corresponding Video Chat. The link is sent to all participants via email upon Instant Meeting creation, and can be found both in the Instant Meeting creation pop-up and in the Instant Meeting's properties.
 
-Upon accessing the link, attendees will need to enter their email address and a nickname in order to join:
+When joining the Instant Meeting by accessing the link, attendees will need to enter their email address and a nickname in order to join:
 
 image:images/talk_instant_meeting_login.png[talk_instant_meeting_login.png,title="talk_instant_meeting_login.png"]
 
 ==== Instant Meeting Host
-Every Instant Meetings has a "Host" - which is the user that created the Instant Meeting itself.
+Every Instant Meetings has a "Host", which is the user that created the Instant Meeting.
 
 The Host can invite new people to the Instant Meeting and can end the meeting by simply leaving it.
 
-When the host leaves the Instant Meeting, this will be ended and closed.
+When the host leaves the Instant Meeting, it will end and be closed.
 
 == Presence
 
