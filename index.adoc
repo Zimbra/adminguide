@@ -154,7 +154,7 @@ include::zimbra-talk-guide.adoc[]
 <<<
 
 :leveloffset: -1
-include::zimbra-drive-guide.adoc[]
+include::zimbra-drive-open-guide.adoc[]
 :leveloffset: +1
 
 <<<
