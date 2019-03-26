@@ -195,7 +195,7 @@ ldap-write-config
   zdocs remove-local-server
 ----
 
-=== Zimbra Docs Extension CLi - zxsuite docs
+=== Zimbra Docs Extension CLI - zxsuite docs
 On a Mailbox server, the `zxsuite docs` command is available. This command allows to check and control the Docs service's status, to force
 a configuration reload and to see the Docs Servers' status.
 

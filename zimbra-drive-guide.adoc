@@ -1,14 +1,16 @@
-Zimbra Drive
-------------
+Zimbra Open Drive
+-----------------
 
-Zimbra Drive is a client that interfaces Zimbra to third party products and services.
+Zimbra Open Drive is a client that interfaces Zimbra to third party products and services.
 
-Zimbra Drive currently works with:
+NOTE: Prior to version 8.8.11, Zimbra Open Drive was known as Zimbra Drive.
+
+Zimbra Open Drive currently works with:
 
 * Nextcloud
 * ownCloud
 
-WARNING: Data on Zimbra Drive is not hosted on the Zimbra server or on any other
+WARNING: Data on Zimbra Open Drive is not hosted on the Zimbra server or on any other
 Zimbra product. Likewise, the data is not managed by Zimbra or any incorporated
 service. Therefore, Zimbra Support does not support issues related to Nextcloud
 and ownCloud servers.
@@ -20,9 +22,9 @@ This document is written for system administrators, and it aims to provide an
 in-depth view of the product architecture and the knowledge necessary
 for solid customizations.
 
-Zimbra Drive is included in Zimbra starting in version 8.7.6 as Beta
-software and version 8.8.0 as Stable. Zimbra Drive is provided as an included
-package of Zimbra Collaboration Suite, so Zimbra Drive can be installed
+Zimbra Open Drive is included in Zimbra starting in version 8.7.6 as Beta
+software and version 8.8.0 as Stable. Zimbra Open Drive is provided as an included
+package of Zimbra Collaboration Suite, so Zimbra Open Drive can be installed
 during the Zimbra installation process.
 
 The `Installation` and `Configuration` chapters
@@ -30,7 +32,7 @@ cover the installation and the configuration of
 the product in the supported environments respectively. +
 The upgrade process and compatibility information is covered in the `Upgrade` chapter. +
 The `Uninstallation` chapter contains the procedure to uninstall
-Zimbra Drive. Advanced topics, such as how to build the software from the
+Zimbra Open Drive. Advanced topics, such as how to build the software from the
 sources, are in the `Advanced Topics` chapter.
 
 WARNING: Backups, archiving, access security and user management is not done by
@@ -48,10 +50,10 @@ Overview
 General Architecture
 ^^^^^^^^^^^^^^^^^^^^
 
-The purpose of Zimbra Drive is to connect the Zimbra end user to a
+The purpose of Zimbra Open Drive is to connect the Zimbra end user to a
 cloud service, external to Zimbra.
 
-Zimbra Drive has three parts: Zimbra Extension, Zimlet and
+Zimbra Open Drive has three parts: Zimbra Extension, Zimlet and
 Cloud App. These parts integrate external storage services and
 an authentication mechanism into the Zimbra
 Web Interface. Each Zimbra account will be linked to the external storage
@@ -60,9 +62,9 @@ service account.
 Components
 ^^^^^^^^^^
 
-Zimbra Drive includes the following components:
+Zimbra Open Drive includes the following components:
 
-1.  Zimbra Drive Extension
+1.  Zimbra Open Drive Extension
 2.  Zimlet
 3.  Cloud App
 
@@ -73,14 +75,14 @@ usability.
 Extension
 ^^^^^^^^^
 
-The Zimbra Drive extension is installed in the mailboxd component. The extension
-acts between the Zimbra Drive Zimlet and the Cloud App,
+The Zimbra Open Drive extension is installed in the `mailboxd` component. The extension
+acts between the Zimbra Open Drive Zimlet and the Cloud App,
 providing services like authentication and item actions to the Zimlet.
 
 Zimlet
 ^^^^^^
 
-The Zimbra Drive Zimlet adds a new _Drive_ tab to the user Zimbra interface, before
+The Zimbra Open Drive Zimlet adds a new _Open Drive_ tab to the user Zimbra interface, before
 the Preferences tab. With the Zimlet, user can search in the linked cloud. +
 The Zimlet component is contained in the package `com_zextras_drive_open.zip`.
 The Zimlet name is `_com_zextras_drive_open_`.
@@ -90,7 +92,7 @@ Cloud App
 ^^^^^^^^^
 
 The external services of cloud storage need a specific app with a dedicated
-API to communicate with the Zimbra Drive Extension. Zimbra Drive provides an
+API to communicate with the Zimbra Open Drive Extension. Zimbra Open Drive provides an
 app for each of the services supported.
 
 [[nextcloudowncloud]]
@@ -105,7 +107,7 @@ abstracts the version of ownCloud and Nextcloud for the extension.
 Installation
 ~~~~~~~~~~~~
 
-This chapter guides the administrator through the manual installation of Zimbra Drive.
+This chapter guides the administrator through the manual installation of Zimbra Open Drive.
 
 [[requirements]]
 Requirements
@@ -122,10 +124,10 @@ Supported versions:
 Zimbra Packages Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section describes how to install the Zimbra Drive Extension
-and the Zimbra Drive Zimlet.
+This section describes how to install the Zimbra Open Drive Extension
+and the Zimbra Open Drive Zimlet.
 
-Both the Zimbra Drive Extension and the Zimlet are installed through the official Zimbra
+Both the Zimbra Open Drive Extension and the Zimlet are installed through the official Zimbra
 installer. The Zimbra installer prompts you as follows:
 
 ....
@@ -139,7 +141,7 @@ Zimbra Already Installed
 ++++++++++++++++++++++++
 
 The Zimbra installation adds the Zimbra repositories to apt sources
-list, so Zimbra Drive can be installed through the following command:
+list, so Zimbra Open Drive can be installed through the following command:
 
 ....
 # As root, when apt-get is available
@@ -150,7 +152,7 @@ yum update
 yum install zimbra-drive
 ....
 
-Hereafter, the Zimbra Drive Extension will be enabled with the zimlet deploy
+Hereafter, the Zimbra Open Drive Extension will be enabled with the zimlet deploy
 command and a mailbox restart:
 
 ....
@@ -163,7 +165,7 @@ zmmailboxd  restart
 Cloud App Installation
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Here are the steps to install the Zimbra Drive Cloud App to the
+Here are the steps to install the Zimbra Open Drive Cloud App to the
 specific supported cloud.
 
 The cloud services currently supported are Nextcloud and ownCloud with
@@ -187,14 +189,14 @@ service in server:
 `PATHTOCLOUD/apps/zimbradrive` with the user owner of Nextcloud/ownCloud
 (E.g.: www-data): +
 `chown -R www-data:www-data PATHTOCLOUD/apps/zimbradrive/`
-4.  Enable Zimbra Drive App from Nextcloud/ownCloud Admin Interface or
+4.  Enable Zimbra Open Drive App from Nextcloud/ownCloud Admin Interface or
 with command: +
 `sudo -u www-data php PATHTOCLOUD/occ app:enable zimbradrive`
 
-At this point, the Nextcloud/ownCloud Zimbra Drive App is installed and
+At this point, the Nextcloud/ownCloud Zimbra Open Drive App is installed and
 requires configuration.
 
-On Apache Web Server, Zimbra Drive doesn’t work if the server is not
+On Apache Web Server, Zimbra Open Drive doesn’t work if the server is not
 correctly configured. Refer to these instructions for _Apache Web Server
 Configuration_ in the Nextcloud manual:
 https://docs.nextcloud.com/server/11/admin_manual/installation/source_installation.html#apache-web-server-configuration[Nextcloud
@@ -206,9 +208,9 @@ installation].
 Configuration
 ~~~~~~~~~~~~~
 
-Zimbra Drive configuration is split into the Zimbra side and the Cloud side.
-The Zimbra Drive Zimlet doesn’t need more than standard Zimlet
-configuration, so the Zimbra side requires only Zimbra Drive
+Zimbra Open Drive configuration is split into the Zimbra side and the Cloud side.
+The Zimbra Open Drive Zimlet doesn’t need more than standard Zimlet
+configuration, so the Zimbra side requires only Zimbra Open Drive
 Extension configuration. On the Cloud side, each supported cloud service
 configuration will be shown later. These are independent, and you need
 only configure for your desired cloud service.
@@ -253,16 +255,16 @@ When everything is correctly configured, the Zimbra end user creates a
 private account in the cloud service that will be paired with the Zimbra
 user account. This new cloud account inherits the Zimbra user credentials
 and appears in the user's list of Nextcloud/ownCloud interface; however
-this account is not active until the Zimbra Drive app is enabled.
+this account is not active until the Zimbra Open Drive app is enabled.
 
 Nextcloud and ownCloud have the same following configuration entries. In the
 Nextcloud/ownCloud administration panel, it must appear as a new ``Zimbra
-Drive`` entry in the left sidebar that redirect to the configuration
+Open Drive`` entry in the left sidebar that redirect to the configuration
 view. There are the following configurations:
 
 * (CheckBox) *Enable Zimbra authentication back end* +
 (Mandatory checked) On check, adds a configuration in config.php that lets
-Nextcloud/ownCloud use Zimbra Drive App class. On uncheck, removes this
+Nextcloud/ownCloud use Zimbra Open Drive App class. On uncheck, removes this
 configuration.
 * (CheckBox) *Allow Zimbra’s users to log in* +
 (Mandatory checked) Allows Zimbra users to use Nextcloud/ownCloud with
@@ -277,7 +279,7 @@ Check if the Zimbra webmail port uses SSL certification.
 Disable only if Zimbra has an untrusted certificate.
 * (InputField) *Domain Preauth Key* +
 After the Zimbra end user creates a private account with the first
-successful access in Zimbra Drive, he can log into the Nextcloud/ownCloud web
+successful access in Zimbra Open Drive, he can log into the Nextcloud/ownCloud web
 interface using Zimbra credentials. In the Nextcloud/ownCloud web
 interface, he will find a Zimbra icon in the Apps menu that opens a new
 Zimbra webmail tab without a login step. +
@@ -293,18 +295,18 @@ Upgrade
 ~~~~~~~
 
 This chapter guides administrators through the manual upgrade of
-Zimbra Drive. It’s important to pay attention to the version of each
+Zimbra Open Drive. It’s important to pay attention to the version of each
 component: the compatibility is granted only if each component has the
 same version. +
-The Zimbra Drive Zimlet and extension  can be upgraded a with Zimbra upgrade,
-but the Zimbra Drive App must be manually updated.
+The Zimbra Open Drive Zimlet and extension  can be upgraded a with Zimbra upgrade,
+but the Zimbra Open Drive App must be manually updated.
 
 [[zimbra-extension-and-zimlet-upgrade]]
 Zimbra Extension and Zimlet Upgrade
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When Zimbra is upgraded, Zimbra Drive can be
-installed directly from the installation. Zimbra Drive can be kept
+When Zimbra is upgraded, Zimbra Open Drive can be
+installed directly from the installation. Zimbra Open Drive can be kept
 upgraded in the same Zimbra major.minor versions with apt-get or yum:
 
 ....
@@ -318,10 +320,10 @@ yum update; yum install zimbra-drive
 Cloud App Upgrade
 ^^^^^^^^^^^^^^^^^
 
-Unlike the Zimbra Drive Zimlet and the Extension, the Zimbra Drive Cloud app has to be
+Unlike the Zimbra Open Drive Zimlet and the Extension, the Zimbra Open Drive Cloud app has to be
 manually upgraded on every version change.
 
-The upgrade of Zimbra Drive App in Nextcloud/ownCloud requires that
+The upgrade of Zimbra Open Drive App in Nextcloud/ownCloud requires that
 files are replaced. Perform these steps at
 installation([==subsec:NextcloudownCloudInstallation==]):
 
@@ -344,15 +346,15 @@ Uninstallation
 ~~~~~~~~~~~~~~
 
 This chapter guides the administrator through the manual
-uninstallation of Zimbra Drive and cleanup of the system.
+uninstallation of Zimbra Open Drive and cleanup of the system.
 
 [[disablePackages]]
-Disable Zimbra Drive Packages
+Disable Zimbra Open Drive Packages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Since the Zimbra Drive Extension and the Zimbra Drive Zimlet are installed as
-Zimbra packages, their uninstallation is unexpected. To disable Zimbra Drive,
-disable the Zimbra Drive Zimlet from the desired user, domain or class of service.
+Since the Zimbra Open Drive Extension and the Zimbra Open Drive Zimlet are installed as
+Zimbra packages, their uninstallation is unexpected. To disable Zimbra Open Drive,
+disable the Zimbra Open Drive Zimlet from the desired user, domain or class of service.
 
 [[remove-cloud-app]]
 Remove Cloud App
@@ -367,8 +369,8 @@ clean up and app uninstall.
 
 The clean up step deletes all Zimbra users' data from
 Nextcloud/ownCloud and is not reversible. It *requires* that Zimbra
-Drive is installed and enabled. +
-However, this clean up step can be skipped. The Zimbra Drive App can be
+Open Drive is installed and enabled. +
+However, this clean up step can be skipped. The Zimbra Open Drive App can be
 uninstalled without removing the Zimbra users' data.
 
 *Clean Up*
@@ -377,7 +379,7 @@ Before starting clean up, it’s recommended to disable Zimbra users'
 access: the configuration *Allow Zimbra’s users to log in* should be
 unchecked.
 
-The following commands delete the users created by the Zimbra Drive App and
+The following commands delete the users created by the Zimbra Open Drive App and
 clean up the table containing references to Zimbra users (replace correctly
 `mysql_pwd` and `occ_db`):
 
@@ -402,17 +404,17 @@ mysql -u root --password="${mysql_pwd}" "${occ_db}" -N -s \
 
 *App Uninstall*
 
-The Zimbra Drive App can be removed from the Nextcloud/ownCloud Admin
+The Zimbra Open Drive App can be removed from the Nextcloud/ownCloud Admin
 Interface. The configuration should be restored by unchecking
 *Enable Zimbra authentication back end*, then the Zimbra
-Drive App must be disabled from the ``Enabled Apps'' tab and uninstalled
+Open Drive App must be disabled from the ``Enabled Apps'' tab and uninstalled
 from the ``Disabled Apps``.
 
-With the previous steps, the Zimbra Drive App folder
+With the previous steps, the Zimbra Open Drive App folder
 (`PATHTOCLOUD/apps/zimbradrive`) is deleted but all the users' files
 still remain in the cloud service drive: any configuration or file that
 was not previously cleaned up is retrieved on reinstallation of the
-Zimbra Drive App.
+Zimbra Open Drive App.
 
 [[advanced]]
 Advanced Topics
@@ -422,8 +424,8 @@ Advanced Topics
 Build from Sources
 ^^^^^^^^^^^^^^^^^^
 
-This section describes the steps to build the Zimbra Drive components. The
-official Zimbra Drive source repository is hosted on
+This section describes the steps to build the Zimbra Open Drive components. The
+official Zimbra Open Drive source repository is hosted on
 https://github.com/ZeXtras/zimbra-drive[GitHub.com/ZeXtras/zimbra-drive].
 
 The build system uses a relative path. The following example assumes that
@@ -451,7 +453,7 @@ The final artifact `zimbra_drive.tgz` will be placed in the folder
 
 The `dist` folder:
 
-The archive zimbra_drive.tgz contains all components of Zimbra Drive:
+The archive zimbra_drive.tgz contains all components of Zimbra Open Drive:
 
 [[manual-installation]]
 Manual Installation
@@ -459,7 +461,7 @@ Manual Installation
 
 Manual installation is not supported.
 
-The Zimbra Drive Zimlet and the Extension are installed during the Zimbra
+The Zimbra Open Drive Zimlet and the Extension are installed during the Zimbra
 installation. Any modification to the installed Zimbra packages may lead
 to a fail during the Zimbra upgrade.
 
@@ -494,7 +496,7 @@ Initialized extension Zimbra Abstraction Layer for: zimbradrive
 Zimlet
 ++++++
 
-Deploy the Zimbra Drive Zimlet with the following command:
+Deploy the Zimbra Open Drive Zimlet with the following command:
 
 ....
 # As zimbra
@@ -511,7 +513,7 @@ Manual Upgrade
 
 Manual upgrade is not supported.
 
-The Zimbra Drive Zimlet and the Extension are upgraded during the the Zimbra
+The Zimbra Open Drive Zimlet and the Extension are upgraded during the the Zimbra
 upgrade. Any modification to the installed Zimbra packages may lead to a
 fail during the Zimbra upgrade.
 
@@ -519,7 +521,7 @@ fail during the Zimbra upgrade.
 Extension
 ^^^^^^^^^
 
-The Zimbra Drive Extension can be upgraded replacing the
+The Zimbra Open Drive Extension can be upgraded replacing the
 `zimbra-extension.jar` and `zal.jar` files in
 `/opt/zimbra/lib/ext/zimbradrive/` and performing a mailbox restart.
 
@@ -536,7 +538,7 @@ mailboxdctl restart
 Zimlet
 ^^^^^^
 
-The Zimbra Drive Zimlet can be upgraded by deploying the newest version and
+The Zimbra Open Drive Zimlet can be upgraded by deploying the newest version and
 flushing cache:
 
 ....
@@ -551,23 +553,23 @@ Manual Uninstall
 
 Manual uninstallation is not supported.
 
-Please consider disabling Zimbra Drive (see:
+Please consider disabling Zimbra Open Drive (see:
 [==sec:disablePackages==]) instead of uninstalling it. Any modification
 to the installed Zimbra packages may lead to a fail during the Zimbra
 upgrade.
 
-The manual uninstallation process of the Zimbra Drive Zimlet and the Zimbra
-Drive extension requires you to undeploy the Zimlet and clean the extension folder
+The manual uninstallation process of the Zimbra Open Drive Zimlet and the Zimbra
+Open Drive extension requires you to undeploy the Zimlet and clean the extension folder
 from zimbra.
 
-To remove the Zimbra Drive Zimlet:
+To remove the Zimbra Open Drive Zimlet:
 
 ....
 # As zimbra
 zmzimletctl undeploy com_zextras_drive_open
 ....
 
-To remove the Zimbra Drive extension:
+To remove the Zimbra Open Drive extension:
 
 ....
 # As root
@@ -597,7 +599,7 @@ is really happening.
 ** Server information: CPU, RAM, number of servers and for each
 server:
 *** Zimbra version
-*** Zimbra Drive version
+*** Zimbra Open Drive version
 *** List of the installed Zimlets
 ** Client information:
 *** Browser name and version
