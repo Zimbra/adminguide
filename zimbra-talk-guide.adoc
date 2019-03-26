@@ -210,8 +210,8 @@ to exist.
 allowed limit.
 * A user in a Group can chat with all of the others. Messages sent in a Group are viewed by all members of that Group.
 * A user in a Group can send files to all of the others. Files sent in a Group are available to all members of that Group.
-* An user in a Group can start a videoconference with all of the others.
-Group videoconferences can be joined at any time by all members of the
+* An user in a Group can start a video chat with all of the others.
+Group video chats can be joined at any time by all members of the
 Group.
 
 ==== Groups UI
@@ -260,9 +260,9 @@ image:images/paperclip.png[paperclip.png,title="paperclip.png"]
 Files sent to a group will be uploaded in a dedicated personal briefcase
 before being shared.
 
-* Starting a Group videoconference
+* Starting a Group video chat
 +
-To start a Group Videoconference, click on the "Camera" icon on the
+To start a Group video chat, click on the "Camera" icon on the
 Group's chat window.
 +
 image:images/camera.png[camera.png,title="camera.png"]
@@ -345,8 +345,8 @@ Space itself.
 * A user in a Channel can chat with all of the others. Messages sent in a Channel are viewed by all members of that channel.
 * A user in a Channel can send files to all of the others. Files sent
 in a Channel are available to all members of that channel.
-* A user in a Channel can start a videoconference with all of the
-others. Channel videoconferences can be joined at any time by all
+* A user in a Channel can start a video chat with all of the
+others. Channel video chats can be joined at any time by all
 members of the Channel.
 
 ==== Channnels UI
@@ -389,9 +389,9 @@ image:images/paperclip.png[paperclip.png,title="paperclip.png"]
 +
 Files sent to a Channel will be uploaded to a dedicated personal briefcase before being shared.
 
-* Starting a Channel videoconference
+* Starting a Channel video chat
 +
-To start a Channel Videoconference, click on the "Camera" icon on the
+To start a Channel video chat, click on the "Camera" icon on the
 Channel's chat window.
 +
 image:images/camera.png[camera.png,title="camera.png"]
@@ -410,7 +410,7 @@ then, click on "Leave" under the warning message.
 +
 image:images/leave_channel_2.jpg[leave_channel_2.jpg,title="leave_channel_2.jpg"]
 
-== Videoconferencing
+== Video Chat
 
 Videoconferencing features are available in both Groups and Channels,
 allowing multiple people to communicate in real-time using a webcam and a headset, as well as allowing them to share their screen with all
@@ -420,15 +420,15 @@ This feature is based on the WebRTC protocol, a peer-to-peer
 auto-adaptive technology that allows clients to communicate directly
 without overloading the server and whose call quality is automatically
 tweaked based on the available bandwidth - with the maximum quality
-being Full HD for both video and audio. The first time a Videoconference
+being Full HD for both video and audio. The first time a video chat
 is started, users will need to grant their browser access permissions to
 their camera and microphone.
 
-=== Videoconference UI
+=== Video Chat UI
 
 image:images/group_videochat.png[group_videochat.png,title="group_videochat.png"]
 
-The Videoconference UI is split into three main areas:
+The video chat UI is split into three main areas:
 
 * In the center, video streams are displayed with one main stream on the
 top and multiple secondary streams on the bottom, whose number depends
@@ -438,10 +438,10 @@ is visible and fully usable, and its history is saved in the group's or
 channel's chat history.
 * On the bottom left, the user's own video feed and controls (disable video, mute microphone, and share screen).
 
-Users can disconnect from an ongoing Videoconference by pressing the
+Users can disconnect from an ongoing video chat by pressing the
 "Hang up" button in their video stream's frame on the bottom left of the
-screen. Whenever a videoconference is on, users belonging to the Group
-or Channel of the videoconference will see a "Call in progress" message
+screen. Whenever a video chat is on, users belonging to the Group
+or Channel of the video chat will see a "Call in progress" message
 below the name of the Group or Channel and will be able to join by
 clicking on the "Camera" icon in the chat.
 
@@ -454,7 +454,7 @@ image:images/camera.png[camera.png,title="camera.png"]
 By default, video streams are displayed in a "first come, first served"
 basis according to the connection order between the peers.
 
-At any time, users can open the Videoconference preferences to access
+At any time, users can open the video chat preferences to access
 the "Participants" list and choose which streams to view by clicking on
 the respective user's
 
@@ -471,6 +471,37 @@ When clicking on the Screen Share button, a pop-up window appears asking
 the user whether to share their entire screen or just a specific window:
 
 image:images/group_videochat_screensharing.png[group_videochat_screensharing.png,title="group_videochat_screensharing.png"]
+
+=== Instant Meeting - video chats with external users
+The Instant Meeting feature allows to create a temporary invite-only group with video chat capabilities that can also include external users.
+
+To start an Instant Meeting, simply select the "Instant Meeting" option in the "New" menu in the Talk Tab
+
+image:images/talk_new_instant_meeting.png[talk_new_instant_meeting.png,title="talk_new_instant_meeting.png"]
+
+This will open the Instant Meeting Creation pop-up, where a number of users up to the maximum group size set by the Administrator can be invited.
+
+image:images/talk_instant_meeting_creation.png[talk_instant_meeting_creation.png,title="talk_instant_meeting_creation.png"]
+
+All the features and limitations of Groups apply to Instant Meetings, including the Video Call UI. Just like Groups, Instant Meetings appear in the Talk Tab and can be managed using the "Options" slide menu:
+
+image:images/talk_instant_meeting_options.png[talk_instant_meeting_options.png,title="talk_instant_meeting_options.png"]
+
+Attendees can exit the Instant Meeting at any time and will always be able to join back through the Instant Meeting Link or Zimbra Talk Tab.
+
+==== Instant Meeting Link
+Whenever an Instant Meeting is created, a unique link is generated to allow external users to join the corresponding Video Chat. The link is sent via email upon creation to all partecipants and can be found both in the Instant Meeting creation pop-up and in the Instant Meeting's properties.
+
+Upon accessing the link, attendees will need to enter their email address and a nickname in order to join:
+
+image:images/talk_instant_meeting_login.png[talk_instant_meeting_login.png,title="talk_instant_meeting_login.png"]
+
+==== Instant Meeting Host
+Every Instant Meetings has a "Host" - which is the user that created the Instant Meeting itself.
+
+The Host can invite new people to the Instant Meeting and can end the meeting by simply leaving it.
+
+When the host leaves the Instant Meeting, this will be ended and closed.
 
 == Presence
 
@@ -508,7 +539,7 @@ appropriate IM conversation, group or Channel.
 
 == STUN/TURN Server
 
-Since WebRTC is a peer-to-peer protocol, all users in a videoconference
+Since WebRTC is a peer-to-peer protocol, all users in a video chat
 must be able to reach each other's client in order for the communication
 to be established.
 
