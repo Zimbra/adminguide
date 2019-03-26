@@ -12,7 +12,7 @@ client interfaces and server components that can run as a single node
 configuration or be deployed across multiple servers for high availability
 and increased scalability.
 
-image::images/arch_overview.png[Architectural Overview]
+image::images/arch_overview.svg[Architectural Overview,395]
 
 The architecture includes the following core advantages:
 
