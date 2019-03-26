@@ -324,10 +324,6 @@ Activity, depicting the number of unique messages processed by the AS/AC
 system over the last 48, 30, 60, and 365 days. The polling intervals for
 the counts are posted directly beneath each chart.
 
-|Mobile Sync Statistics |
-System-wide Information page, for Mobile Sync Sessions, which reports the
-total number of Active Sync devices across servers
-
 |Server Statistics |
 Access to statistics for a selected Service Host.  You can view information
 for a selected host, as follows:

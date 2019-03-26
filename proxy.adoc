@@ -323,14 +323,8 @@ For example, users can use a web browser to connect to the proxy server at
 https://mail.example.com. The connection from users whose mailboxes live on
 mbs1.example.com is proxied to mbs1.example.com by the proxy running on
 the mail.example.com server, REST and CalDAV clients, Zimbra Connector for
-Outlook, Zimbra Connector for BES, and Zimbra Mobile Sync devices are also
+Outlook, and Zimbra Mobile Sync NG devices are also
 supported by the proxy.
-
-[NOTE]
-When ZCB is configured in {product-name}, the proxy configuration
-must be changed from the directions here. See the Zimbra wiki article
-Installing Blackberry Enterprise Server in a Zimbra Proxy Environment at
-https://wiki.zimbra.com/wiki/Installing_Blackberry_Enterprise_Server_%28ZCB/BES%29_in_a_Zimbra_Proxy_Environment.
 
 HTTP reverse proxy routes requests as follows:
 

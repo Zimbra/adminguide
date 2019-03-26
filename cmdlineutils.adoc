@@ -3982,7 +3982,7 @@ not supplied as options.
 
 === zmsyncreverseproxy
 
-Use `zmsyncreverseproxy` to reserve proxies mobile sync HTTP traffic
+Use `zmsyncreverseproxy` to reverse proxy mobile sync HTTP traffic
 between the source and forwarding server and port.  Decodes the sync
 requests/responses and logs them when verbose mode is turned on.
 

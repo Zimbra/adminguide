@@ -382,15 +382,6 @@ connections.
 A good option when Internet connections are slow or users prefer HTML-based
 messaging for navigating within their mailbox
 
-|Mobile Client |
-(Native Mail Client) Used to configure and sync the Zimbra mailbox server
-with the native mail client on a mobile device.
-
-|Touch Client |
-(Mobile Web App) Provides an experience for touch-capable mobile
-devices. Its features are a subset of the features found in the Zimbra Web
-Client, including Mail, Contacts and Calendar.
-
 |Mobile HTML Client |
 Provides mobile access to Zimbra when using the Standard Web Client
 version.
@@ -403,10 +394,6 @@ detects the screen resolution to be 800x600, users are automatically
 redirected to the standard Zimbra Web Client. Users can still choose the
 advanced ZWC but see a warning message suggesting the use of the standard
 ZWC for better screen view.
-
-When connecting to Zimbra using a mobile web browser, Zimbra automatically
-detects and defaults to the Touch Client. To use the Mobile Client, you
-must configure your mobile device to sync with the Zimbra server.
 
 == Web Services and Desktop Clients
 

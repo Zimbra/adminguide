@@ -91,10 +91,6 @@ include::backuprestore.adoc[]
 
 <<<
 
-include::mobile.adoc[]
-
-<<<
-
 include::archive.adoc[]
 
 <<<
