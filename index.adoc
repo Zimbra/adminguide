@@ -33,16 +33,6 @@ include::imap.adoc[]
 
 <<<
 
-:leveloffset: +1
-include::imap_upstream.adoc[]
-
-<<<
-
-include::remote_imap.adoc[]
-
-<<<
-
-:leveloffset: -1
 include::ldap.adoc[]
 
 <<<
