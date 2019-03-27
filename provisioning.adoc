@@ -43,6 +43,14 @@ that is assigned to the account.
 
 == Migrating Accounts and Importing Account Email
 
+--
+[WARNING]
+ZCS Account Migration within the Zimbra Admin UI is no longer supported,
+with End of Technical Guidance set for 17 December 2019.
+We recommend https://zimbra.audriga.com/[Audriga's self-service migration solution]
+as a preferred alternative for all account migrations.
+--
+
 You can provision multiple accounts at one time using the Account Migration
 Wizard from the Administration Console.  You can import accounts from
 either a generic IMAP server or from another {product-abbrev} server.
@@ -74,7 +82,7 @@ should download this file for future reference.  Choose a secure location
 to store the file as it can contain password information for the user
 accounts you provisioned.
 
-If you running a split domain configuration, you can set the SMTP host and
+If you're running a split-domain configuration, you can set the SMTP host and
 port in the wizard.  For more information about split domains, see the wiki
 article about split domains at https://wiki.zimbra.com/wiki/Split_Domain.
 
