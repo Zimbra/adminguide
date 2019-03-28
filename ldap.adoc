@@ -405,6 +405,7 @@ The mapping is configured in the `zimbraGalLdapAttrMap` attribute.
 |st |workState
 |title |jobTitle
 |mail |email
+|thumbnailPhoto |thumbnailPhoto
 |objectClass |Not currently mapped
 |===============================================================
 
