@@ -17,6 +17,10 @@ include::introduction.adoc[]
 
 <<<
 
+include::productlifecycle.adoc[]
+
+<<<
+
 include::productoverview.adoc[]
 
 <<<
