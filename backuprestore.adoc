@@ -9,6 +9,10 @@ Zimbra 8.7 and earlier include the Standard version, which is explained below.
 To use and enable the NG version of this feature with Zimbra 8.8,
 refer to the specific NG chapter later in this Guide.
 
+[WARNING]
+Standard Backup (aka Classic Backup) is deprecated and will be removed in the next release following Zimbra 8.8.12.
+Installations that have not yet migrated to new Network Edition NG Modules or ZSP are encouraged to do so.
+
 {product-name} includes a configurable backup manager that resides on every
 {product-name} server and performs both backup and restore functions. You
 do not have to stop the {product-name} server in order to run the backup
