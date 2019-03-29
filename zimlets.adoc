@@ -137,8 +137,8 @@ section.
 === Upgrading a Zimlet
 
 Use the same steps as deploying a new Zimlet to upgrade a customized
-Zimlet. The new Zimlet zip file should have the same name as the existing
-Zimlet zip file.
+Zimlet. The new Zimlet `zip` file should have the same name as the existing
+Zimlet `zip` file.
 
 Admin Console: ::
 *Home > Configure > Zimlets*, from the *Gear* icon select *Deploy*
@@ -161,7 +161,7 @@ the COS displays the Zimlets but they are not enabled.
 Deploy a Zimlet using the CLI, including modifying the COS before
 deploying.
 
-. Select a Zimlet and copy the Zimlet zip file to `/tmp` folder on your
+. Select a Zimlet and copy the Zimlet `zip` file to `/tmp` folder on your
 Zimbra server.
 
 . Login as the zimbra user `su - zimbra`
@@ -279,12 +279,12 @@ Upgrading a customized Zimlet is performed by using the same steps as those
 used to deploy a new Zimlet.
 
 [NOTE]
-The new Zimlet zip file should be named identically to the existing Zimlet
-zip file.
+The new Zimlet `zip` file should be named identically to the existing Zimlet
+`zip` file.
 
 Use steps in this section upgrade a Zimlet:
 
-. Copy the Zimlet zip file to the `/opt/zimbra/zimlets-extra` directory,
+. Copy the Zimlet `zip` file to the `/opt/zimbra/zimlets-extra` folder,
 replacing the older version.
 
 . Deploy the Zimlet
@@ -294,8 +294,8 @@ replacing the older version.
 zmzimletctl deploy <zimlet.zip file name>
 ----
 +
-The Zimlet is copied to the `/opt/zimbra/zimlets-deployed` directory. If
-your Zimlet includes a .jsp file, the .jsp file is also copied to the
+The Zimlet is copied to the `/opt/zimbra/zimlets-deployed` folder. If
+your Zimlet includes a `.jsp` file, the `.jsp` file is also copied to the
 `/opt/zimbra/jetty/webapps/zimlet/<zimletnamefolder>`.
 
 . To ensure availability of the newer version, flush the cache:

@@ -306,7 +306,7 @@ Contains Java application files
 
 |jetty/ |
 mailboxd application server instance. In this directory, the
-`webapps/zimbra/skins` directory includes the Zimbra UI theme files
+`webapps/zimbra/skins` folder includes the Zimbra UI theme files
 
 |lib/ |
 Libraries
@@ -348,17 +348,17 @@ Message store
 Contains control scripts and Perl modules
 
 |zimlets/ |
-Contains Zimlet zip files that are installed with Zimbra
+Contains Zimlet `zip` files that are installed with Zimbra
 
 |zimlets-deployed/ |
 Contains Zimlets that are available with the Zimbra Web Client
 
 |zimlets-network/ |
-Contains Zimlet zip files for features that are installed with the network
+Contains Zimlet `zip` files for features that are installed with the network
 edition
 
 |zmstat/ |
-mailboxd statistics, saved as .csv files
+mailboxd statistics, saved as `.csv` files
 
 |=======================================================================
 

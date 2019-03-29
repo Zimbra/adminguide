@@ -3,7 +3,11 @@
 :toc:
 
 [NOTE]
-*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
+Starting with Zimbra 8.8, there are two versions of this feature.
+Zimbra 8.8 provides Standard and New Generation (NG) versions.
+Zimbra 8.7 and earlier include the Standard version, which is explained below.
+To use and enable the NG version of this feature with Zimbra 8.8,
+refer to the specific NG chapter later in this Guide.
 
 {product-name} includes a configurable backup manager that resides on every
 {product-name} server and performs both backup and restore functions. You
@@ -23,7 +27,7 @@ restore functions. You do not have to stop the {product-name}
 server in order to run the backup process. The backup manager can be
 used to restore a single user, rather than having to restore the entire
 system in the event that one user's mailbox becomes corrupted. Full and
-incremental backups are saved in in `/opt/zimbra/backup`.
+incremental backups are saved in `/opt/zimbra/backup`.
 
 
 === Redo Log
@@ -157,7 +161,7 @@ uncommitted transactions.
 Redo operations are time critical, therefore a directory move is
 performed instead of a copy-then-delete function. This directory move
 can only be performed if the source and destination paths are on the
-same file system volume. In other words, the redo log and redo -archive
+same file system volume. In other words, the `redo` log and `redo-archive`
 log must be on the same file system volume because the archive files are
 a subdirectory of the redo log file system.
 
@@ -187,7 +191,7 @@ time in GMT, including milliseconds. GMT is used rather than local time to
 preserve visual ordering across daylight savings transitions.
 
 |`session.xml` |
-Metadata about this backup label for full or incremental session, such as
+Metadata about this backup label for a full or incremental session, such as
 start and stop times.
 
 |`shared_blobs/` |
@@ -243,7 +247,7 @@ Contains Lucene index files.
 
 |`incr-<timestamp>` |
 An incremental backup directory. This directory is similar to the full
-backup directory schema and includes these meta files.
+backup directory schema and includes these metafiles.
 
 |`session.xml` |
 
@@ -353,9 +357,9 @@ Specify the fields as follows, separate each field with a blank space:
 
 * minute -- 0 through 59
 * hour -- 0 through 23
-* day of month -- 1 through 31
+* day of the month -- 1 through 31
 * month -- 1 through 12
-* day of week -- 0 through 7 (0 or 7 is Sunday, or use names)
+* day of the week -- 0 through 7 (0 or 7 is Sunday, or use names)
 
 Type an asterisk (*) in the fields you are not using.
 
@@ -363,7 +367,7 @@ Type an asterisk (*) in the fields you are not using.
 ========
 * Replace the existing full backup, incremental backup and delete backup
 schedule. When you use `-R`, the complete backup schedule is replaced. If
-you use this command, remember to set the delete schedule, if you want
+you use this command, remember to set the deletion schedule, if you want
 backup sessions to be scheduled for automatic deletion. This example
 replaces the existing schedule to have full backups run on Sunday at 1
 a.m., incremental backups to run Monday through Saturday at 1 a.m., and
@@ -388,7 +392,7 @@ zmschedulebackup -A f "0 1 * * 4"
 zmschedulebackup -q
 ----
 * Save the schedule command to a text file. This would allow you to
-easily recreate the same schedule after reinstall or upgrade
+easily recreate the same schedule after a reinstall or upgrade
 +
 [source, bash]
 ----
@@ -447,9 +451,9 @@ Each crontab entry contains six fields that appear in this order:
 
 . minute (0-59 allowed)
 . hour (0-23)
-. day of month (1-31)
+. day of the month (1-31)
 . month (1-12 or names)
-. day of week (0-7 or names allowed, with both 0 and 7 representing
+. day of the week (0-7 or names allowed, with both 0 and 7 representing
 Sunday
 . string to be executed
 
@@ -466,7 +470,7 @@ address in the Administration Console.
 
 === Full Backup Process
 
-The full backup process goes through the following steps to backup the
+The full backup process goes through the following steps to back up the
 mailbox, the database, the indexes, and the LDAP directory:
 
 . Backs up the global system data including system tables and
@@ -483,14 +487,14 @@ block mail delivery and user access to that mailbox.
 next one.
 . Backs up the LDAP directory.
 
-Full backup is usually run asynchronously. When you begin the full
+A full backup is usually run asynchronously. When you begin the full
 backup, the label of the ongoing backup process is immediately
 displayed. The backup continues in the background. You can use the
 `zmbackupquery` command to check the status of the running backup at any
 time.
 
-Backup files are saved as zip files without compression. To change the
-default zip option, see <<command_line_utilities,Appendix A: Command Line Utilities>>,
+Backup files are saved as `zip` files without compression. To change the
+default `zip` option, see <<command_line_utilities,Appendix A: Command Line Utilities>>,
 zmbackup section.
 
 === Incremental Backup Process
@@ -505,7 +509,7 @@ process for incremental backup is as follows:
 entries for those accounts.
 
 . Moves the archive redo logs, created since the last backup, to the
-`<backup_target>/redologs` directory.
+`<backup_target>/redologs` folder.
 +
 Archived logs that are less than an hour old at the time of incremental
 backup are copied to the backup and are not deleted. These redologs are
@@ -593,7 +597,7 @@ zmbackupquery -a user1@example.com --type full --from "2007/07/05 12:01:15" --to
 If a backup session is interrupted because the server crashes during backup
 (not aborted), the interrupted backup session is saved as a temporary
 session. The temporary backup session is put in
-`<backup_target>/sessions_tmp` directory. You can use the `rm` command to delete the
+`<backup_target>/sessions_tmp` folder. You can use the `rm` command to delete the
 directory.
 
 == Aborting a Full Backup in Progress
@@ -647,8 +651,8 @@ The following LDAP attributes are modified:
 Standard.
 * `zimbraBackupAutoGroupedInterval` -- Set this to the interval in either
 days or weeks that backup sessions should run for a group. The default
-is 1d. Backup intervals can be 1 or more days, entered as xd (1d); or 1
-or more weeks, entered as xw (1w).
+is `1d`. Backup intervals can be 1 or more days, entered as `xd` (e.g. `1d`); or 1
+or more weeks, entered as `xw` (e.g. `1w`).
 * `zimbraBackupAutoGroupedNumGroups` -- This is the number of groups to
 spread mailboxes over. The default is 7 groups.
 
@@ -660,7 +664,7 @@ Run `zmschedulebackup -D` to set the default schedule for
 auto-grouped backups based on your `zimbraBackupAutoGroupedInterval`
 setting.
 
-One group is backed up each interval. The auto- grouped backup
+One group is backed up each interval. The auto-grouped backup
 automatically adjusts for changes in the number of mailboxes on the
 server. Each backup session backs up the following:
 
@@ -679,15 +683,15 @@ auto-grouped backup runs again the next day. This time accounts that
 have been newly provisioned and a percentage of accounts close to
 one-seventh of the total are backed up again. Accounts with the oldest
 backup date are backed up first. The backup continues with newly
-provisioned account and approximately one-seventh of accounts being
+provisioned accounts and approximately one-seventh of accounts being
 backed up daily over seven days.
 
 When backing up shared messages, if a file representing a message
 already exists in the backup, it flags this object as such and does not
 copy its content again.
 
-Backup files are saved as zip files without compression. To change the
-default zip option, see <<command_line_utilities,Appendix A: Command Line Utilities>>,
+Backup files are saved as `zip` files without compression. To change the
+default `zip` option, see <<command_line_utilities,Appendix A: Command Line Utilities>>,
 `zmbackup` section.
 
 These backup files can be used to restore the complete {product-name}
@@ -700,30 +704,28 @@ failure.
 == Backup Options
 
 The backup process can be configured to selectively backup content and
-to backup the MariaDB database.
+to back up the MariaDB database.
 
 === Backup Up content Options
 
 You can configure these backup options so that search indexes, blobs,
 and HSM blobs are not backed up during a full backup session.
 
-* `zimbraBackupSkipSearchIndex` -- Default is *FALSE*. If set to *TRUE*,
-search index is not backed up. The mailbox will have to be reindexed
+* `zimbraBackupSkipSearchIndex` -- Default is *FALSE*. If set to *TRUE*, the search index is not backed up. The mailbox will have to be reindexed
 after restoring from a backup without the search index.
 * `zimbraBackupSkipBlobs` -- Default is *FALSE*. If this is set to
 *TRUE*, blobs are not backed up. This might be useful for getting a
-quicker backup of just database data when the blobs reside on a
-fault-tolerant storage. This configuration applies to all blobs, those
+quicker backup of just database data when the blobs reside on fault-tolerant storage. This configuration applies to all blobs, those
 on the primary volumes as well as secondary (HSM) volumes.
 * `zimbraBackupSkipHsmBlobs` -- Default is *FALSE*. If this is set to
-*TRUE*, blobs on HSM volumes are no backed up. Set this if
+*TRUE*, blobs on HSM volumes are not backed up. Set this if
 `zimbraBackupSkipBlobs` is *FALSE* but you want to skip blobs on HSM
 volumes.
 
 === Backup the MariaDB Database
 
 You can configure {product-name} backups to run `mysqldump` to
-backup your MariaDB database during backup sessions. When this is enabled,
+back up your MariaDB database during backup sessions. When this is enabled,
 a `mysqldump` backup runs with each full, incremental, and auto-grouped
 backup.
 
@@ -765,7 +767,7 @@ manage running backup session by notifying you.
 Set the value for attribute `zimbraBackupMinFreeSpace` to the amount of
 free space required on the backup target disk before a backup session is
 run. If the disk has less space than the value set in the attribute, the
-backup session will not run and an email notification is sent to the
+back up session will not run and an email notification is sent to the
 administrator.
 
 [NOTE]
@@ -773,8 +775,8 @@ If you are also backing up the MariaDB database, make sure you set the value
 large enough to include the `myslqdump` file size.
 
 The value for this attribute can be specified as a percentage of the
-total disk space, for example 25%, or as number of bytes, for example
-300MB, 50GB, etc. The default value is 0, meaning the check is disabled
+total disk space, for example `25%`, or as a number of bytes, for example
+`300MB`, `50GB`, etc. The default value is `0`, meaning the check is disabled
 and backup is always allowed to start.
 
 The attribute can be set globally or by server.
@@ -793,7 +795,7 @@ zmprov ms <zmhostname> zimbraBackupMinFreeSpace <value>
 Backup sessions run if the free disk space is at least the value you
 set. If your backup file is larger than the value, the backup session
 fails. You should monitor the size of the backup files and adjust the
-attribute value if the backup require more space than the configured
+attribute value if the backup requires more space than the configured
 value.
 
 == Restoring Data
@@ -864,7 +866,7 @@ one of these options, all redo logs since the full backup you're restoring
 from are replayed
 
 [IMPORTANT]
-After you perform any of the following point-in-time restores,you should
+After you perform any of the following point-in-time restores, you should
 immediately run a complete backup for those accounts to avoid future
 restore problems with those accounts.
 
@@ -1014,7 +1016,7 @@ The offline restore process goes through the following steps.
 
 . Specified accounts to be restored are retrieved. If the command-line
 does not specify any mailbox address, the list of all mailboxes on the
-specified mail host are retrieved from Zimbra LDAP directory server.
+specified mail host is retrieved from Zimbra LDAP directory server.
 . Iterates through each mailbox:
 .. Deletes the mailbox on the server to clear any existing data
 .. Restores the last full backup of the MariaDB data, the index
@@ -1052,7 +1054,7 @@ restore that user from the last full and incremental backup sets.
 zmprov ma <account> zimbraAccountStatus maintenance
 ----
 +
-Maintenance mode prevents delivery of new emails during the restore.
+Maintenance mode prevents the delivery of new emails during the restore.
 Otherwise, the emails would be overwritten during the restore process.
 
 . Run the `zmrestore` command to restore the accounts
@@ -1208,7 +1210,7 @@ is still running, but the server hardware needs to be replaced.
 .  Block client access to the server IP address with firewall rules.
 .  Find the latest full {product-name} backup session to use.
 
-*If server is still running, to prepare the move to the new server:*
+*If the server is still running, to prepare the move to the new server:*
 
 .  Block client access to the server's IP address with firewall rules.
 .  Run a full backup of the old service, or if the backup is recent,
@@ -1228,8 +1230,8 @@ installed and configured with the same domain, hostname, passwords, etc.
 as the previous server. See the {product-name} installation guide
 for more information about preparing the server. Before you begin to
 install {product-name}, note the information you need from the old
-server including: admin account name and password, LDAP, Amavis, and
-Postfix passwords, spam training and non-spam training user account
+server including admin account name and password, LDAP, Amavis, and
+Postfix passwords, spam training, and non-spam training user account
 names, exact domain name, and the global document account name.
 
 [NOTE]
@@ -1289,7 +1291,7 @@ rm -rf /opt/zimbra/db/data/* /opt/zimbra/libexec/zmmyinit
 +
 The MariaDB service is now running.
 
-.  Copy all the files in the `/backup` directory from the old server or
+.  Copy all the files in the `/backup` folder from the old server or
 from an archive location to `/opt/zimbra/backup`.
 
 .  Restore the LDAP.
@@ -1467,11 +1469,11 @@ zmcontrol startup
 
 .  When the Zimbra mailbox server is up, run a full backup of the
 Zimbra server. The full backup must be run immediately to have the
-latest data backed up, because the latest redo log is not available.
+latest data backed up because the latest redo log is not available.
 
 === Change Local Configuration Files After Restoring Zimbra
 
-The `localconfig.xml` file, located in the `/opt/zimbra/conf` directory,
+The `localconfig.xml` file, located in the `/opt/zimbra/conf` folder,
 includes the core Zimbra server configuration, such as paths and passwords,
 This file is backed up in full and incremental backups. When you run an
 incremental or full restore, the backed-up version of the `localconfig.xml`
@@ -1488,13 +1490,12 @@ if the ``*.restore*`` file has the latest local configuration data, delete the
 
 You can backup and restore a server using the snapshot feature provided
 by the storage layer rather than using Zimbra's backup and restore
-feature. Using snapshots, you can maintain a standby site if the primary
-site fails and reroute users to the standby site to keep operations
-running.
+feature. Using snapshots, you can maintain a standby site and reroute users
+to the standby site to keep operations running if the primary site fails.
 
 Snapshots are taken for all volumes of data and are transferred to the
 standby site periodically. Data volumes that are backed up using
-snapshots include MariaDB, blobs, Lucene index, and redologs.
+snapshots include MariaDB, blobs, Lucene index, and `redologs`.
 
 When the primary site is down, the `zmplayredo` command is used to bring
 consistency to the snapshots and to reapply any changes in data to
@@ -1611,7 +1612,7 @@ backup has been made to folder: /tmp/ephemeral-backup-<date>
 Restoring ephemeral data to SSDB from a backup can only be done with a backup from
 an SSDB server.
 
-A restoration can be done in one of two ways:
+Restoration can be done in one of two ways:
 
  - import into a running server
  - override of existing data
@@ -1636,5 +1637,5 @@ leveldb-import localhost 8888 /tmp/ephemeral-backup-<date>/data
 === Backups with LDAP backend
 
 If the ephemeral backend is LDAP, a backup will not include auth tokens or CSRF
-tokens, but it will include the last logon timestamp. Upon account restore,
+tokens, but it will include the last login timestamp. Upon account restore,
 the appropriate "Last Login" value in the admin console will be restored.

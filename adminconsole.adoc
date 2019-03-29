@@ -671,7 +671,7 @@ Set parameters for backup-for standard or auto- grouped mode. For more
 information see <<backup_and_restore,Backup and Restore>>.
 
 | HSM |
-(hierarchical storage management): Configure aging of messages before they are
+(hierarchical storage management): Configure the aging of messages before they are
 to be moved to the secondary volume.
 
 |License |
@@ -706,7 +706,7 @@ image::images/administration_console_tools_and_migration_ui.png[Tools and Migrat
 |Option |Description
 
 |Downloads |
-Access Zimbra utilities, which provides downloadable zip packages - for
+Access Zimbra utilities, which provides downloadable `zip` packages - for
 general administration use, and to synchronize an individual end user -
 containing migration wizards for various platforms, and Outlook connectors.
 Additional information is provided in
@@ -754,7 +754,7 @@ described in this section.
 |=================================================
 |*{product-abbrev} Migration Wizard for Exchange/PST (32 bit)* +
 *{product-abbrev} Migration Wizard for Exchange/PST (64 bit)* |
-Get zip files to perform a server-to-server migration of mail calendar, and
+Get `zip` files to perform a server-to-server migration of mail calendar, and
 contacts, from Microsoft Exchange or PST file to the {product-name}
 Server.
 --
