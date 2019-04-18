@@ -4,11 +4,11 @@ build/
 
 # eBook build output #
 ######################
-*.epub
-*.mobi
-*.pdf
-*.zip
-*.gz
+#*.epub
+#*.mobi
+#*.pdf
+#*.zip
+#*.gz
 
 # OS generated files #
 ######################
