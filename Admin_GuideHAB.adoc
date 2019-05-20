@@ -1,0 +1,176 @@
+= Hierarchical Address Book (HAB) in Zimbra
+
+== What is a HAB?
+
+The hierarchical address book (HAB) allows users to look for recipients in their address book using organizational hierarchy. Typically, users are limited to seeing the default global address list (GAL) whose structure isn't conducive in knowing who reports to whom or to identify one John Doe from another. Being able to customize a HAB that maps to your organization's unique business structure, provides your users with an efficient method for locating internal recipients.
+
+== Using Hierarchical Address Book
+In a Hierarchical Address Book (HAB), your root organization (e.g., Zimbra) is the top-level tier. Under this top-level tier, you can add several child tiers to create a customized HAB that is segmented by division, department, or any other organizational tier you want to specify. The following figure illustrates a HAB for Zimbra with the following structure:
+
+* The top-level tier represents the root organization -- Zimbra.
+* The second-level child tiers represent the business divisions within Zimbra — Corporate Office, Engineering, Product Support, and Sales & Marketing.
+* The third-level child tiers represent departments within the Corporate Office division — Human Resources, Accounts, and Administration.
+
+.Example Hierarchy
+[#ExampleHierarchy]
+image::Images/HABHierarchy.png[]
+
+[#SeniorityIndex]
+== Seniority Index
+*Seniority Index* provides an additional level in the hierarchy. When creating a HAB, use this parameter to rank individuals or organizational groups by seniority within these organizational tiers. This ranking specifies the order in which HAB displays recipients or groups. A higher seniority index ensures that a user or group appears above another with a lower seniority index.
+
+* `100` for Vice President
+* `50` for Administration Operations Manager
+* `25` for Business Administrator
+
+NOTE: If the *Seniority Index* parameter isn't set or is equal for two or more users, the HAB sorting order lists the users and groups in ascending alphabetical order.
+
+== Configuring hierarchical address books
+
+[#CreateOU]
+=== Create an organizational unit (OU)
+
+==== Format
+ zmprov createHABOrgUnit <domain name of OU> <OU Name>
+
+==== Example
+ zmprov createHABOrgUnit example.com ZimbraOU
+
+==== Explanation
+_ZimbraOU_ as an organizational unit created.
+
+[#createHABGroup]
+=== Create groups within this OU
+You have to create a group and assign an email address for each department.
+
+==== Format
+
+ zmprov createHABGroup <name of the group> <name of OU> <group email address>
+
+==== Example
+
+In this series of commands, we create *8* HAB groups -- as per the <<ExampleHierarchy>>.
+
+ zmprov createHABGroup Zimbra ZimbraOU zimbra@example.com
+
+ zmprov createHABGroup CorporateOffice ZimbraOU CorpOffice@example.com
+
+ zmprov createHABGroup Engineering ZimbraOU eng@example.com
+
+ zmprov createHABGroup ProdSupport ZimbraOU prodsupport@example.com
+
+ zmprov createHABGroup SalesAndMarketing ZimbraOU sales-mark@example.com
+
+ zmprov createHABGroup HumanResources ZimbraOU hr@example.com
+
+ zmprov createHABGroup Accounts ZimbraOU accounts@example.com
+
+ zmprov createHABGroup Administration ZimbraOU administration@example.com
+
+
+[#CreateHierarchy]
+=== Create Hierarchy
+
+Each of these groups (except Zimbra) needs to be assigned a parent group to create a hierarchy.
+
+==== Format
+
+ zmprov addHABGroupMember ParentGroupEmailAddress ChildGroupEmailAddress
+
+In this series of commands, we designate *7* HAB groups -- except Zimbra because it is root -- as per the hierarchy in the figure <<ExampleHierarchy>>.
+
+For this, we add *Human Resources*, *Accounts*, and *Administration* to *Corporate Office*; and add *Corporate Office*, *Engineering*, *Product Support*, and *Sales & Marketing* to *Zimbra*.
+
+ zmprov addHABGroupMember CorpOffice@example.com hr@example.com
+
+ zmprov addHABGroupMember CorpOffice@example.com accounts@example.com
+
+ zmprov addHABGroupMember CorpOffice@example.com administration@example.com
+
+ zmprov addHABGroupMember zimbra@example.com CorpOffice@example.com
+
+ zmprov addHABGroupMember zimbra@example.com eng@example.com
+
+ zmprov addHABGroupMember zimbra@example.com prodsupport@example.com
+
+ zmprov addHABGroupMember zimbra@example.com sales-mark@example.com
+
+[#GetZimbraId]
+=== Get Zimbra ID
+
+`zimbraId` is a unique identifier associated with each email address. To <<#AddUsers, assign users to groups>> and to <<#SpecifyRoot, specify a group as root>>.
+
+IMPORTANT: For this example, and everywhere else we have used a placeholder (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) for `zimbraId`.
+
+==== Format
+
+ zmprov gdl <group email address> zimbraId
+
+==== Example
+
+ zmprov gdl zimbra@example.com zimbraId
+
+==== Example Output
+
+ # distributionList zimbra@example.com memberCount=4
+ zimbraId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+==== Explanation
+_zimbra@example.com_ is the email address of the group which is to become root.
+
+[#AddUsers]
+=== Add users to Groups
+
+This example adds the users _Jane Doe_ and _John Smith_ to the group named _CorporateOffice_ without affecting other existing members.
+
+==== Format
+
+ zmprov addHABGroupMember <group email address> <user's email address>
+
+==== Example
+
+ zmprov addHABGroupMember hr@example.com jane.doe@example.com
+
+ zmprov addHABGroupMember accounts@example.com john.smith@example.com
+
+[#CreateSortOrder]
+=== Set Sort Order
+Configure the sort order for groups in the HAB. Groups with higher seniority index appear above groups with lower seniority index.
+
+==== Format
+
+ zmprov modifyHABGroupSeniority <zimbra ID> <seniority index>
+
+==== Example
+
+To have _Engineering_ appear above _CorporateOffice_ -- irrespective of their names and alphabetical order, get <<#GetZimbraId, Zimbra ID>>, decide on a number in place of `SeniorityIndexNumber`, and run the below command.
+
+Assign _CorporateOffice_ a seniority index of 90
+
+ zmprov modifyHABGroupSeniority xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx 90
+
+Assign _Engineering_ a seniority index of 100
+
+ zmprov modifyHABGroupSeniority xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx 100
+
+IMPORTANT: Commands used to set seniority index for groups also set <<SeniorityIndex>> for users.
+
+[#SpecifyRoot]
+=== Specify the root organization for the HAB
+
+A group needs to be specified as root so that other groups can be added child groups to comply with the organizational hierarchy.
+
+Run below command to make _zimbra@example.com_ as root.
+
+ zmprov md 'example.com' zimbraHierarchicalAddressBookRoot xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+=== Did it work?
+
+. Log in to Zimbra client.
+. Click *New Message*.
+. In the *Compose* window, click the *To* field.
+. On *Select Addresses* window, locate the *Show Names from:* drop-down on top right corner.
+. Choose *Organizational Address Book*.
+. The address book in a hierarchical format appears in the left pane.
++
+image::Images/HABStructure-zimbra.png[]
