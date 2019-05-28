@@ -1,3 +1,4 @@
+[[hierarchical_address_book]]
 = Hierarchical Address Book (HAB) in Zimbra
 
 == What is a HAB?
@@ -158,11 +159,20 @@ IMPORTANT: Commands used to set seniority index for groups also set <<SeniorityI
 [#SpecifyRoot]
 === Specify the root organization for the HAB
 
-A group needs to be specified as root so that other groups can be added child groups to comply with the organizational hierarchy.
+A group needs to be specified as root so that other groups can be added child groups to comply with the organizational hierarchy. Run below command to make _zimbra@example.com_ as root.
 
-Run below command to make _zimbra@example.com_ as root.
+==== Format
+
+ zmprov md <domain name> zimbraHierarchicalAddressBookRoot <ZimbraID of the group to be made root>
+
+==== Example
 
  zmprov md 'example.com' zimbraHierarchicalAddressBookRoot xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+==== Example Output
+
+ # distributionList zimbra@example.com memberCount=4
+ zimbraId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 === Did it work?
 
