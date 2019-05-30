@@ -1,15 +1,15 @@
 [[hierarchical_address_book]]
-= Hierarchical Address Book (HAB) in Zimbra
+= Hierarchical Address Book (HAB) in {product-family}
 
 == What is a HAB?
 
 The hierarchical address book (HAB) allows users to look for recipients in their address book using organizational hierarchy. Typically, users are limited to seeing the default global address list (GAL) whose structure isn't conducive in knowing who reports to whom or to identify one John Doe from another. Being able to customize a HAB that maps to your organization's unique business structure, provides your users with an efficient method for locating internal recipients.
 
 == Using Hierarchical Address Book
-In a Hierarchical Address Book (HAB), your root organization (e.g., Zimbra) is the top-level tier. Under this top-level tier, you can add several child tiers to create a customized HAB that is segmented by division, department, or any other organizational tier you want to specify. The following figure illustrates a HAB for Zimbra with the following structure:
+In a Hierarchical Address Book (HAB), your root organization (e.g., {product-family}) is the top-level tier. Under this top-level tier, you can add several child tiers to create a customized HAB that is segmented by division, department, or any other organizational tier you want to specify. The following figure illustrates a HAB for {product-family} with the following structure:
 
-* The top-level tier represents the root organization -- Zimbra.
-* The second-level child tiers represent the business divisions within Zimbra — Corporate Office, Engineering, Product Support, and Sales & Marketing.
+* The top-level tier represents the root organization -- {product-family}.
+* The second-level child tiers represent the business divisions within {product-family} — Corporate Office, Engineering, Product Support, and Sales & Marketing.
 * The third-level child tiers represent departments within the Corporate Office division — Human Resources, Accounts, and Administration.
 
 .Example Hierarchy
@@ -38,7 +38,7 @@ NOTE: If the *Seniority Index* parameter isn't set or is equal for two or more u
  zmprov createHABOrgUnit example.com ZimbraOU
 
 ==== Explanation
-_ZimbraOU_ as an organizational unit created.
+_{product-family}OU_ as an organizational unit created.
 
 [#createHABGroup]
 === Create groups within this OU
@@ -184,3 +184,5 @@ A group needs to be specified as root so that other groups can be added child gr
 . The address book in a hierarchical format appears in the left pane.
 +
 image::Images/HABStructure-zimbra.png[]
++
+. Click any group to view and select users of that group.
