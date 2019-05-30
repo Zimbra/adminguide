@@ -18,12 +18,6 @@ manage the following license types.
 |Accounts limit |
 Accounts you can create and the number of accounts created are shown.
 
-|Mobile accounts limit |
-Accounts you can create and the number of accounts created are shown.
-
-|Touch client accounts limit |
-Accounts that can have the touch client mobile feature enabled.
-
 |MAPI accounts limit |
 Accounts that can use Zimbra Connector for Microsoft Outlook (ZCO).
 
@@ -238,12 +232,9 @@ of the Open Source Edition. The following is a list of some of the major
 functions that are no longer available upon license expiration:
 
 * Backup/Restore
-* Zimbra Mobile (ActiveSync)
-* Zimbra Touch Client
 * Exchange Web Services (EWS) -- _a separately licensed add-on_
 * High-Fidelity Document Preview
 * Zimbra Connector for Outlook
-* Zimbra Connector for Blackberry
 * S/MIME
 
 If you maximize your licensed user limit, you are no longer able to

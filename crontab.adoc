@@ -18,9 +18,9 @@ The fields are separated by blank spaces or tabs.
 
 |minute |0 through 59
 |hour |0 through 23
-|day of month |1 through 31
+|day of the (month) |1 through 31
 |month |1 through 12
-|day of week |0 through 7 (0 or 7 is Sunday, 1 is Monday, etc., or use names)
+|day of the (week) |0 through 7 (0 or 7 is Sunday, 1 is Monday, etc., or use names)
 |command |This is the complete sequence of commands to be executed for the job
 
 |=======================================================================

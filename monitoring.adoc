@@ -836,7 +836,7 @@ The following key value pairs are currently supported and may be recorded in log
 * `ds` -- name of the Data Source being operated on
 * `port` -- server port to which the client connected
 * `oport` -- originating port number of request
-* `oproto` -- originating protocol of request. This can be passed by internal components that make SOAP requests on behalf of a user (e.g. MTA and IMAPd)
+* `oproto` -- originating protocol of request. This can be passed by internal components that make SOAP requests on behalf of a user (e.g. MTA)
 
 The example below is a record showing that
 on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP `10.1.1.136`.
@@ -1172,7 +1172,7 @@ the Zimbra Utilities Downloads page on the Administration Console.  When a
 newer version of ZCO is released before a new version of {product-abbrev}, you can
 upload the newer ZCO msi file to the {product-abbrev} server from the Administration
 Console.  The file is uploaded to the
-`/opt/zimbra/jetty/webapps/zimbra/downloads` directory.
+`/opt/zimbra/jetty/webapps/zimbra/downloads` folder.
 
 Admin Console: ::
 *Home > Tools and Migration > Client Upload*

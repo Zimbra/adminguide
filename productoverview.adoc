@@ -12,7 +12,7 @@ client interfaces and server components that can run as a single node
 configuration or be deployed across multiple servers for high availability
 and increased scalability.
 
-image::images/arch_overview.png[Architectural Overview]
+image::images/arch_overview.svg[Architectural Overview,395]
 
 The architecture includes the following core advantages:
 
@@ -306,7 +306,7 @@ Contains Java application files
 
 |jetty/ |
 mailboxd application server instance. In this directory, the
-`webapps/zimbra/skins` directory includes the Zimbra UI theme files
+`webapps/zimbra/skins` folder includes the Zimbra UI theme files
 
 |lib/ |
 Libraries
@@ -348,17 +348,17 @@ Message store
 Contains control scripts and Perl modules
 
 |zimlets/ |
-Contains Zimlet zip files that are installed with Zimbra
+Contains Zimlet `zip` files that are installed with Zimbra
 
 |zimlets-deployed/ |
 Contains Zimlets that are available with the Zimbra Web Client
 
 |zimlets-network/ |
-Contains Zimlet zip files for features that are installed with the network
+Contains Zimlet `zip` files for features that are installed with the network
 edition
 
 |zmstat/ |
-mailboxd statistics, saved as .csv files
+mailboxd statistics, saved as `.csv` files
 
 |=======================================================================
 
@@ -382,15 +382,6 @@ connections.
 A good option when Internet connections are slow or users prefer HTML-based
 messaging for navigating within their mailbox
 
-|Mobile Client |
-(Native Mail Client) Used to configure and sync the Zimbra mailbox server
-with the native mail client on a mobile device.
-
-|Touch Client |
-(Mobile Web App) Provides an experience for touch-capable mobile
-devices. Its features are a subset of the features found in the Zimbra Web
-Client, including Mail, Contacts and Calendar.
-
 |Mobile HTML Client |
 Provides mobile access to Zimbra when using the Standard Web Client
 version.
@@ -403,10 +394,6 @@ detects the screen resolution to be 800x600, users are automatically
 redirected to the standard Zimbra Web Client. Users can still choose the
 advanced ZWC but see a warning message suggesting the use of the standard
 ZWC for better screen view.
-
-When connecting to Zimbra using a mobile web browser, Zimbra automatically
-detects and defaults to the Touch Client. To use the Mobile Client, you
-must configure your mobile device to sync with the Zimbra server.
 
 == Web Services and Desktop Clients
 

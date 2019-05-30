@@ -1376,7 +1376,7 @@ zimbra@test:~$ zxsuite backup getItem admin@example.com 24700 backup_path�
                blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
 ....
 
-If the item is an email, you will be able to recover a standard .eml file
+If the item is an email, you will be able to recover a standard `.eml` file
 through the following steps:
 
 * Identify the latest valid state
@@ -1392,7 +1392,7 @@ through the following steps:
 
 `blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=`
 
-* Use gzip to uncompress the BLOB file into an .eml file
+* Use gzip to uncompress the BLOB file into an `.eml` file
 ....
 zimbra@test:~$ gunzip -c /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ= > /tmp/restored.eml
 
@@ -1414,7 +1414,7 @@ Date: Fri, 12 Jul 2013 16:35:43 +0200 (CEST)
 Jul 12 16:35:42 test zmconfigd[14198]: Service status change: test.example.com mailboxd changed from stopped to running
 ....
 
-* Done! You can now import the .eml file into the appropriate mailbox
+* Done! You can now import the `.eml` file into the appropriate mailbox
 using your favorite client.
 
 [[items-not-restored-because-identified-as-invalid-items]]

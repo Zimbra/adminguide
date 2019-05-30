@@ -15,7 +15,7 @@ ABQ::
     The Allow/Block/Quarantine function provided by the NG Modules
     gives system administrators control over which devices are allowed
     to sync via ActiveSync.
-    
+
 Account Policy::
     Class of Service as exposed in Zimbra administration console.
 
@@ -99,8 +99,8 @@ Failover::
 
 FQDN::
     Fully qualified domain name.  The hostname and the path to the host.
-    For example, www.Zimbra.com is a fully qualified domain name.  www is
-    the host, Zimbra is the second-level domain, and .com is the top level
+    For example, `www.zimbra.com` is a fully qualified domain name where `www` is
+    the host, `zimbra` is the second-level domain, and `.com` is the top level
     domain.
 
 GAL::

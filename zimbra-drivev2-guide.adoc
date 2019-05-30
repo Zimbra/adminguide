@@ -1,4 +1,4 @@
-= Zimbra Drive v2 Documentation
+= Zimbra Drive
 
 
 == Introduction

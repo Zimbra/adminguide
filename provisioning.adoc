@@ -43,6 +43,14 @@ that is assigned to the account.
 
 == Migrating Accounts and Importing Account Email
 
+--
+[WARNING]
+ZCS Account Migration within the Zimbra Admin UI is no longer supported,
+with End of Technical Guidance set for 17 December 2019.
+We recommend https://zimbra.audriga.com/[Audriga's self-service migration solution]
+as a preferred alternative for all account migrations.
+--
+
 You can provision multiple accounts at one time using the Account Migration
 Wizard from the Administration Console.  You can import accounts from
 either a generic IMAP server or from another {product-abbrev} server.
@@ -52,10 +60,6 @@ Only accounts on {product-abbrev} 7.2 or later can be migrated to {product-abbre
 
 You can also import account names to provision from an XML file that you
 create.
-
-[NOTE]
-To migrate from other types of server, see the {product-abbrev} Migration
-Guides for Exchange and for Lotus Domino servers.
 
 You can run the migration wizard one time to provision accounts and import
 data or you can run the migration wizard the first time to provision the
@@ -68,13 +72,13 @@ accounts.  The options are to have {product-abbrev} randomly create passwords fo
 account or to set the same password on each account.  You have the option
 to force users to change the password when they sign in the first time.
 
-When the provisioning is complete, the wizard generates a .csv file with a
+When the provisioning is complete, the wizard generates a `.csv` file with a
 list of new accounts.  This includes the passwords that are generated.  You
 should download this file for future reference.  Choose a secure location
 to store the file as it can contain password information for the user
 accounts you provisioned.
 
-If you running a split domain configuration, you can set the SMTP host and
+If you're running a split-domain configuration, you can set the SMTP host and
 port in the wizard.  For more information about split domains, see the wiki
 article about split domains at https://wiki.zimbra.com/wiki/Split_Domain.
 
@@ -112,7 +116,7 @@ for the password.  The password can be from 6 to 64 characters.
 
 Default = 8 characters
 
-If you select to generate a random password, you must download the .csv
+If you select to generate a random password, you must download the `.csv`
 file that is created so that you can give the password information to each
 user.
 
@@ -185,8 +189,8 @@ found on the server and how many of those accounts are already created on
 .  Review the report generated and then click *Next*.  The accounts are
 provisioned on the {product-name} server.
 
-.  Download the .csv file that lists the provisioned accounts and their
-passwords.  The .csv file is deleted when you close the wizard.  If you do
+.  Download the `.csv` file that lists the provisioned accounts and their
+passwords.  The `.csv` file is deleted when you close the wizard.  If you do
 not download the file, you cannot access the report later.
 
 === Migrating Accounts from Generic IMAP Servers
@@ -222,7 +226,7 @@ for the password.  The password can be from 6 to 64 characters.
 
 Default = 8 characters
 
-If you select to generate a random password, you must download the .csv
+If you select to generate a random password, you must download the `.csv`
 file that is created so that you can give the password information to each
 user.
 
@@ -295,8 +299,8 @@ dialog also shows the password options you configured.
 . Review the report generated and then click *Next*.  The accounts are
 provisioned on the {product-name} server.
 
-. Download the .csv file that lists the provisioned accounts and their
-passwords.  The .csv file is deleted when you close the wizard.  If you do
+. Download the `.csv` file that lists the provisioned accounts and their
+passwords.  The `.csv` file is deleted when you close the wizard.  If you do
 not download the file, you cannot access the report later.
 
 === Migrating Accounts using an XML File
@@ -330,8 +334,8 @@ correct, fix your XML file before proceeding.
 If you clicked *Next*, the accounts are provisioned on the {product-name}
 server.
 
-. Download the .csv file that lists the provisioned accounts and their
-passwords.  The .csv file is deleted when you close the wizard.  If you do
+. Download the `.csv` file that lists the provisioned accounts and their
+passwords.  The `.csv` file is deleted when you close the wizard.  If you do
 not download the file, you cannot access the report later.
 
 === Importing Email for Selected Accounts

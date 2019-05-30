@@ -2201,12 +2201,12 @@ Modules).
 Admin Console: ::
 *Home > Configure > Admin Extensions*
 
-Save the module Zip file to the computer you use to access the
+Save the module `zip` file to the computer you use to access the
 Administration Console.
 
 . From the *Gear* icon, select *Deploy* to present the *Deploying a Zimlet
 or an extension* dialog.
-. Browse to the custom module Zip file you need to upload.
+. Browse to the custom module `zip` file you need to upload.
 . Click *Deploy*.
 +
 The file is uploaded and the extension is immediately deployed on the
@@ -2215,7 +2215,7 @@ server.
 === Removing An Admin Extension Module
 
 Deleting an Admin Extension results in removal of the selected extension
-and all associated files. This action does not delete the originating zip
+and all associated files. This action does not delete the originating `zip`
 file.
 
 Admin Console: ::

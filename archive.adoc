@@ -1,8 +1,8 @@
 = Archiving and Discovery
 :toc:
 
-Zimbra Archiving and Discovery is an optional feature that enables you
-archive messages that were delivered to or sent by {product-name} and
+Zimbra Archiving and Discovery is an optional feature that enables
+archiving of messages that were delivered to or sent by {product-name} and
 to search across mailboxes.
 
 The installation of the archiving feature provides the {product-abbrev} discovery tool
@@ -12,7 +12,7 @@ archiving to be enabled on the Zimbra MTAs.
 Archiving is configured on a per account basis. Each account enabled for
 archiving requires a Zimbra archive license. When archiving is enabled for
 an account, a copy of all email from or to that account is forked at the
-MTA, and a copy of the message is delivered to a predefined archive
+MTA and a copy of the message is delivered to a predefined archive
 mailbox. The archiving process is transparent to account users.
 
 Discovery allows you to conduct a search for email messages across live and
@@ -56,7 +56,7 @@ Thanks, A
 
 The message received in User B’s archive mailbox contains additional
 *X-Envelope-From* and *X-Envelope-To* headers. These headers show the
-realemail address the message was sent from and each of the email
+real email address the message was sent from and each of the email
 addresses that the message was sent to.
 
 ----
@@ -114,11 +114,11 @@ deployment or on a multi-server deployment.
 
 If the mailbox server and the MTA server reside on the same node, you
 configure and enable archiving as a single process. If your mailbox and MTA
-servers are on separate nodes, the zimbra-archive package is installed
+servers are on separate nodes, the `zimbra-archive` package is installed
 first on at least one mailbox server and then the archiving component is
 enabled on each MTA in the deployment.
 
-=== Installing zimbra-archiving in a Single-Server Environment
+=== Installing `zimbra-archiving` in a Single-Server Environment
 
 The following scenario assumes that the LDAP, MTA, mailstore and archiving
 servers are on the same node.
@@ -130,13 +130,13 @@ process.
 
 . Accept the license agreement and type *Yes* to run the upgrade.
 
-. Type *Yes* for zimbra-archiving when presented with the packages to be
+. Type *Yes* for `zimbra-archiving` when presented with the packages to be
 installed.
 
 The upgrade process begins and the archiving package is installed. At
 this point, the Discovery feature is installed and can be used.
 
-To enable archiving, switch user to *zimbra* and enable archiving on the
+To enable archiving, switch to the *zimbra* user and enable archiving on the
 MTA server.
 [source,bash]
 ----
@@ -149,10 +149,10 @@ Restart the server.
 zmcontrol restart
 ----
 
-=== Installing zimbra-archiving in a Multi-Server Environment
+=== Installing `zimbra-archiving` in a Multi-Server Environment
 
 The following upgrade scenario is adding a new server that is dedicated as
-a archiving server to your {product-name} environment.
+an archiving server to your {product-name} environment.
 
 Before beginning the install process, record the following information.
 You need this information when you install the archiving server. Run the
@@ -278,14 +278,14 @@ name when `zmconfigarchive` is run.
 
 The `amavisd-new` server process controls account archiving as well as
 antivirus and anti-spam processes. The `zmarchivectl` command can be used to
-start, stop, restart or obtain the status of the amavisd-new server process
+start, stop, restart or obtain the status of the `amavisd-new` server process
 that controls account archiving. Caution should be taken when starting or
 stopping the archiving process as it is a shared server process between
 archiving, antivirus, and anti-spam processes. Performing actions on any of
 them affect any of the other services that may be enabled in your
 deployment.
 
-If you want to disable archiving and not antivirus, or anti-spam services,
+If you want to disable archiving but not antivirus or anti-spam services,
 disable the respective service either through the CLI or through the
 Administration Console.
 
@@ -384,8 +384,8 @@ mailbox search tool.
 === Cross Mailbox Search from the Administration Console
 
 The discovery tool, *Search Mail*, is added to *Tools and Migration* on the
-Navigation pane when the archiving package is added. To set up a cross
-mailbox search you configure the following information.
+Navigation pane when the archiving package is added. To set up a cross-mailbox
+search you configure the following information.
 
 Admin Console: ::
 *Home > Tools and Migration > Search Mail*, from the *Gear* icon select *New*
@@ -400,7 +400,7 @@ mailbox for each separate search.
 A target mailbox is like any other mailbox and can have any features or
 preferences that are defined by the COS or by account. Target mailboxes are
 listed in the Administration Console Accounts list. You might want to give
-the target mailboxes account names that identifies them as target mailboxes
+the target mailboxes account names that identify them as target mailboxes
 for cross-mailbox searches and configure a COS specific for target
 mailboxes to be able to manage access.
 
