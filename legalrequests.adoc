@@ -113,16 +113,16 @@ To modify by COS, type `zmprov mc {cosname} ...`.
 
 You can create a query for the user's mailbox using the REST URL format to
 search for specific types of email messages and attachments and have these
-messages zipped and saved to your computer. This zip file can be forwarded
+messages zipped and saved to your computer. This `zip` file can be forwarded
 to a requesting law enforcement agency.
 
-Email message is displayed as an .eml file name after the subject line.
+Email message is displayed as an `.eml` file name after the subject line.
 The attachments are saved in the format that they were delivered.
 
-=== Creating a Mailbox Snapshot Zip File
+=== Creating a Mailbox Snapshot `zip` File
 
 You must be logged into the {product-abbrev} Administration Console to
-create the zip file. You create a query for one account at a time.
+create the `zip` file. You create a query for one account at a time.
 
 . In the Administration Console address field of the browser, after
 *7071/*, type:
@@ -133,7 +133,7 @@ For example:
 +
 image::images/mailbox_snapshot_zip_file.png[Address Bar]
 +
-In the above example, the search query is requesting a zip file of all
+In the above example, the search query is requesting a `zip` file of all
 email messages and attachments in the Inbox after June 13, 2008 for an
 account called user1.
 +
@@ -148,5 +148,5 @@ asking if you want to navigate away from this page.
 
 . Click *OK*.
 
-. Choose where you want to save the zip file. This zip file is ready to be
+. Choose where you want to save the `zip` file. This `zip` file is ready to be
 delivered.

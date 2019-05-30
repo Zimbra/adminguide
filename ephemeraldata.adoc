@@ -8,7 +8,7 @@ There are 3 main types of ephemeral data stored in LDAP during normal operation 
       - CSRF Tokens (`zimbraCsrfTokenData`)
 
 On small systems, storage of these types of ephemeral data may be done in the LDAP Server.
-However, mail systems with large numbers of active users have been found to overload LDAP for short lived data storage.
+However, mail systems with large numbers of active users have been found to overload LDAP for short-lived data storage.
 Therefore, the preferred option is to store this ephemeral data using an external server.
 
 NOTE: This document does not cover how to install and maintain the ephemeral storage server.
@@ -37,9 +37,9 @@ Frequent authentication requests place a high load on Ephemeral Data storage bac
 == Configuring a Running {product-name} to Use SSDB
 
 Configuring an already running {product-name} installation
-to utilize `SSDB` instead of `LDAP` for short lived data storage is done through the following process:
+to utilize `SSDB` instead of `LDAP` for short-lived data storage is done through the following process:
 
-1. Install `SSDB` and note the ip address and port configured since you will
+1. Install `SSDB` and note the IP address and port configured since you will
    need this data for the next steps. Refer to
    <<ssdb-configuration-options.adoc#ssdb_configuration_options>> for more information.
 2. Migrate any existing short-lived data to `SSDB` using the `/opt/zimbra/bin/zmmigrateattrs` command.
@@ -58,8 +58,8 @@ sudo su - zimbra
 /opt/zimbra/bin/zmmigrateattrs ssdb:<ip address|hostname>:port # substituting your server values
 ----
 
-You may use either an ip address or a hostname for the host portion of the destination URL.
-Either way, you will need to ensure it resolves to the proper ip address on all machines in the cluster.
+You may use either an IP address or a hostname for the host portion of the destination URL.
+Either way, you will need to ensure it resolves to the proper IP address on all machines in the cluster.
 If the provided SSDB address does not resolve to a functioning backend, the migration process will terminate.
 
 
@@ -83,7 +83,7 @@ Information about the latest migration process can be viewed by running the comm
 If the migration is currently in progress, this command may have to be run from a new terminal window.
 This command will output three pieces of information:
 
-1. The status of the migration: one of IN_PROGRESS, COMPLETED, or FAILED
+1. The status of the migration: one of IN_PROGRESS, COMPLETED or FAILED
 2. The URL of the SSDB backend acting as the destination
 3. A timestamp of when the migration process was initiated
 
@@ -156,7 +156,7 @@ for auth tokens; `data:crumb:expiration` for CSRF tokens.
 
 === Migration CSV Output
 
-Each run of `zmmigrateattrs` generates a CSV file in `/opt/zimbra/data/tmp/` directory. The file contains migration info
+Each run of `zmmigrateattrs` generates a CSV file in the `/opt/zimbra/data/tmp/` folder. The file contains migration info
 for every migrated account, such as the number of attributes migrated. Note that it is possible for this to be zero,
 which can happen if all ephemeral data for an account is already present in the destination store.
 

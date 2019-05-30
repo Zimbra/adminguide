@@ -71,7 +71,7 @@ double quotes.
 === Location of Command-Line Utilities
 
 The command-line tools available for administrators are all located in
-the `/opt/zimbra/bin` directory on the {product-name} server.
+the `/opt/zimbra/bin` folder on the {product-name} server.
 
 [[cli_commands]]
 == Zimbra CLI Commands
@@ -1602,7 +1602,7 @@ zmarchivesearch {-m <user@domain.com>} {-q <query_string>} [-o <offset>] [-l <li
 |Long Name |Short Name |Description
 
 |--dir |-d |
-`<arg>` Directory to write messages to.  If none is specified, then only the
+`<arg>` Folder to write messages to.  If none is specified, then only the
 headers are fetched.  Filenames are generated in the form
 `RESULTNUM_ACCOUNT-ID_MAILITEMID`
 
@@ -1709,7 +1709,7 @@ Include search index in full backup.  If this is unspecified, the server
 config is used.
 
 |--noZip | |
-Backs up blobs as individual files rather than in zip files.
+Backs up blobs as individual files rather than in `zip` files.
 
 |--server |-s |
 `<arg>` Mail server host name.  For format, use either the plain host name or
@@ -1723,11 +1723,11 @@ Runs full backup synchronously.
 `/opt/zimbra/backup`.
 
 |--zip |-z |
-Backs up blobs in compressed zip files.  Ignored if `--zipStore` is
+Backs up blobs in compressed `zip` files.  Ignored if `--zipStore` is
 specified.
 
 |--zipStore | |
-Backup blobs in zip file without compression.  (default)
+Backup blobs in `zip` file without compression.  (default)
 
 |=======================================================================
 
@@ -1876,9 +1876,9 @@ blank space.  Specify the fields as follows:
 
 * minute -- 0 through 59
 * hour -- 0 through 23
-* day of month -- 1 through 31
+* day of the (month) -- 1 through 31
 * month -- 1 through 12
-* day of week -- 0 through 7 (0 or 7 is Sunday, or use names)
+* day of the (week) -- 0 through 7 (0 or 7 is Sunday, or use names)
 
 Type an asterisk (`*`) in the fields you are not using.
 
@@ -1923,14 +1923,14 @@ Replaces the current schedule with the default schedule.
 3+|*Options that will be passed to zmbackup*
 
 |no compression |-n |
-Backs up blobs as individual files rather than in zip files
+Backs up blobs as individual files rather than in `zip` files
 
 |compress |-z |
-Backs up blobs in compressed zip files.  Ignored if `--zipStore` is
+Backs up blobs in compressed `zip` files.  Ignored if `--zipStore` is
 specified.
 
 |--zipStore | |
-Backs up blobs in zip file without compression.
+Backs up blobs in `zip` file without compression.
 
 |target |-t |
 Can be used only to designate a full back target location.  The default is
@@ -2518,7 +2518,7 @@ zmmboxsearch {-m <arg>} {-q <arg>} [-o <arg>] [-l <arg>] [-d <arg>] [options]
 |Long Name |Short Name |Description
 
 |--dir |-d |
-`<arg>` Directory to write the messages to.  If none is specified, then
+`<arg>` Folder to write the messages to.  If none is specified, then
 only the headers are fetched.  Files names are generated in the form
 `RESULTNUM_ACCOUNT-ID_MAILITEMID`.
 
@@ -3049,11 +3049,11 @@ zmmailbox -z -m user@example.com gms
 ----
 ====
 
-.Backup mailbox content in a zip file
+.Backup mailbox content in a `zip` file
 ====
 
 When you use `zmmailbox` to backup individual mailboxes, you can save
-the file as either a zip file or a tgz file.  The default settings for
+the file as either a `zip` file or a tgz file.  The default settings for
 the information that is saved in these formats is different.
 
 [cols=",,",options="header",]
@@ -3071,7 +3071,7 @@ the information that is saved in these formats is different.
 |Tasks            |    |X
 |=======================================================================
 
-To include all the mailbox content in a zip file, you must enable the meta
+To include all the mailbox content in a `zip` file, you must enable the meta
 data.  Type as:
 
 [source,bash]
@@ -3710,7 +3710,7 @@ zmtrainsa <user> <spam|ham> [folder]
 === zmtzupdate
 
 Use `zmtzupdate` to update time zone changes in existing appointments for
-specific users or all users.  A .ics rule file should first be created to
+specific users or all users.  An `.ics` rule file should first be created to
 run with this command.  A rule file lists a series of rules to match a time
 zone and the replacement time zone definitions.  More information about
 this command can be found at:
@@ -3741,7 +3741,7 @@ are updated.  The default cut off time is January 1st, 2008.
 Displays help information.
 
 |--rulefile | |
-Specifies the .ics XML file that should be used to update time zone
+Specifies the `.ics` XML file that should be used to update time zone
 definitions.
 
 |--server |-s |
@@ -3982,7 +3982,7 @@ not supplied as options.
 
 === zmsyncreverseproxy
 
-Use `zmsyncreverseproxy` to reserve proxies mobile sync HTTP traffic
+Use `zmsyncreverseproxy` to reverse proxy mobile sync HTTP traffic
 between the source and forwarding server and port.  Decodes the sync
 requests/responses and logs them when verbose mode is turned on.
 

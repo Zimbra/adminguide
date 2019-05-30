@@ -31,7 +31,7 @@ From a COS, you can manage the following functions:
 * Advanced settings including attachment settings, quotas, and
 password login policies.
 
-* Web Client Versions (Advanced, Standard, and Mobile clients).
+* Web Client Versions (Advanced and Standard).
 
 * Web Services and Desktop Clients (EWS, MAPI and more).
 

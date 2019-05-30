@@ -309,7 +309,7 @@ other location.
 
 The account data is saved as a tar-gzipped (tgz) archive file so that it
 can be imported to restore their account.  Individual contacts are saved as
-.csv files, and individual calendar files are saved as .ics files.  The
+.csv files, and individual calendar files are saved as `.ics` files.  The
 data are copied, not removed from the user's account.
 
 The exported account data file can be viewed with an archive program such
@@ -799,8 +799,8 @@ data, including mail, contacts, calendar, tasks, and Briefcase folders.
 They can export specific items in their account and save the data to their
 computer or other location.  The account data is saved as a tar-gzipped
 (tgz) archive file so that it can be easily imported to restore their
-account.  Individual contacts are saved as .csv files, and individual
-calendar files are saved as .ics files.  The data are not removed from
+account.  Individual contacts are saved as `.csv` files, and individual
+calendar files are saved as `.ics` files.  The data are not removed from
 their accounts.  The exported account data file can be viewed with an
 archive program such as WinRAR archiver.  Any of these files can be
 imported into their account from the same page.

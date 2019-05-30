@@ -17,6 +17,10 @@ include::introduction.adoc[]
 
 <<<
 
+include::productlifecycle.adoc[]
+
+<<<
+
 include::productoverview.adoc[]
 
 <<<
@@ -33,16 +37,6 @@ include::imap.adoc[]
 
 <<<
 
-:leveloffset: +1
-include::imap_upstream.adoc[]
-
-<<<
-
-include::remote_imap.adoc[]
-
-<<<
-
-:leveloffset: -1
 include::ldap.adoc[]
 
 <<<
@@ -98,10 +92,6 @@ include::monitoring.adoc[]
 <<<
 
 include::backuprestore.adoc[]
-
-<<<
-
-include::mobile.adoc[]
 
 <<<
 
@@ -164,7 +154,7 @@ include::zimbra-talk-guide.adoc[]
 <<<
 
 :leveloffset: -1
-include::zimbra-drive-guide.adoc[]
+include::zimbra-drive-open-guide.adoc[]
 :leveloffset: +1
 
 <<<

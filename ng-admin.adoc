@@ -701,7 +701,7 @@ The Admin NG Log Path
 The Admin NG Module stores all monthly reports, together with the
 logs used to generate the Monthly reports and to provide
 information via the `Admin Log Browser` feature, in a path inside the
-`/opt/zimbra/conf/` directory (default `/opt/zimbra/conf/zextras/zxadmin/`).
+`/opt/zimbra/conf/` folder (default `/opt/zimbra/conf/zextras/zxadmin/`).
 This particular default path has been chosen because it is the only directory
 that CANNOT be deleted during a Zimbra update.
 

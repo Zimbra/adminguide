@@ -5,9 +5,9 @@
 :product-short: Zimbra
 :product-family: Zimbra
 :product-provider: Zimbra
-:product-version: 8.8.11
-:product-release-date: December 2018
-:copyright-year: 2018
+:product-version: 8.8.12
+:product-release-date: March 2019
+:copyright-year: 2019
 
 :icons: font
 :title-logo-image: images/zimbra-logo.jpg

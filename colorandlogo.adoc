@@ -6,9 +6,6 @@ You can change the logo and base colors of the Zimbra Web Client themes
 without having to customize individual {product-name} themes.  This
 can be done from the administration console or the CLI.
 
-With Touch Client, you can change the logo but modification to theme colors
-is not currently supported.
-
 == Changing Theme Color and Logos on the Zimbra Web Client
 
 Base colors for themes, and custom logos can be configured as a global
@@ -313,74 +310,5 @@ To change the logo displayed on the Zimbra Web Client main page:
 +
  zmcontrol restart
 
-*Changing the Logo on the Touch Client*
-
-Use information in this section to find out how to prepare and place
-your logo image file(s) for replacement of the default Zimbra images in
-the user interfaces.
-
 [NOTE]
 _Not currently supported:_ Logo modification for the Zimbra Web Client.
-
-You can globally replace the {product-name} logo with your
-company's logo by replacing the image files in specific paths, as
-described in the following topics:
-
-* Company log for {product-abbrev} Touch Client Login and Splash Screens.
-* Watermark for Bottom-right Display in Email Message.
-* Bookmark Image for Springboard.
-
-[NOTE]
-_These image files will not survive an upgrade. Therefore, be
-sure to keep a backup and repeat the replacement process after an
-upgrade._
-
-*Company log for {product-abbrev} Touch Client Login and Splash Screens*
-
-The image displays on white background.
-
-[cols=",,",options="header",]
-|=======================================================================
-| |*For Low DPI Devices* |*For High DPI Devices*
-
-|Size Requirement: |300 x 65 |600 x 130
-
-|File location: |
-`/skins/_base/logos/TouchLonginBanner.png` |
-`/skins/_base/logos/TouchLonginBanner@2x.png`
-
-|=======================================================================
-
-*Watermark for Bottom-right Display in Email Message*
-
-[cols=",,",options="header",]
-|=======================================================================
-| |*For Low DPI Devices* |*For High DPI Devices*
-
-|Size Requirement: |200 x 45 |400 x 90
-
-|File location: |
-`/skins/_base/logos/TouchWatermarkBanner.png` |
-`/skins/_base/logos/TouchWatermarkBanner@2x.png`
-
-|=======================================================================
-
-*Bookmark Image for Springboard*
-
-[cols=",,",options="header",]
-|=======================================================================
-| |*For Low DPI Devices* |*For High DPI Devices*
-
-|Size Requirement: |Mobile phone: 57 x 57 |Mobile phone: 114 x 114
-
-|File Location: |
-`/img/logo/Icon.png` |
-`/img/logo/Icon@2x.png`
-
-|Size Requirement: |Tablet: 72 x 72 |Tablet: 144 x 144
-
-|File Location: |
-`/img/logo/Icon~ipad.png` |
-`/img/logo/Icon~\iPad@2x.png`
-
-|=======================================================================

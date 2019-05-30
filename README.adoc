@@ -45,7 +45,7 @@ situation.
 Each section of the document is contained in its own file. You may use the
 `index.adoc` file to generate the entire document.
 
-To accompany the HTML output, the `images/` directory must also be copied to the output destination:
+To accompany the HTML output, the `images/` folder must also be copied to the output destination:
 
 [source,bash]
 -----

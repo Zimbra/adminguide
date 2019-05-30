@@ -1057,10 +1057,21 @@ Infrequent Access Storage Class
 
 HSM NG is compatible with the `Amazon S3 Standard - Infrequent access`
 storage class and will set any file larger than the `Infrequent Access
-Threshold` value to this storage class.
+Threshold` value to this storage class as long as the option has been enabled on the volume.
 
 For more information about Infrequent Access, please refer to the
 https://aws.amazon.com/s3/storage-classes[official Amazon S3
+Documentation].
+
+[[intelligent-tiering-storage-class]]
+Intelligent Tiering Storage Class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+HSM NG is compatible with the `Amazon S3 - Intelligent Tiering`
+storage class and will set the appropriate Intelligent Tiering flag on all files, as long as the option has been enabled on the volume.
+
+For more information about Intelligent Tiering, please refer to the
+https://aws.amazon.com/about-aws/whats-new/2018/11/s3-intelligent-tiering/[official Amazon S3
 Documentation].
 
 [[item-deduplication]]
