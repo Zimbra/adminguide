@@ -1,27 +1,20 @@
 = Zimbra Administration Console
 :toc:
 
-The Zimbra Administration Console is a browser-based user interface that
-allows you to centrally manage Zimbra servers and user accounts.
+The Zimbra Administration Console is a browser-based user interface where you can centrally manage Zimbra servers and user accounts.
 
 == Administrator Accounts
 
 When you log in to the Administration Console, the tasks you are
-authorized to perform display on the Navigation pane. These tasks are
-based on the rights assigned to the administrator role.
+authorized to perform display on the Navigation pane. These tasks appear as per the rights assigned to the administrator role.
 
 Two types of administrator accounts can be created to manage {product-name}:
 
-* *Global Administrators* have full privileges to manage servers,
-global settings, domains, and accounts as well as create other
-administrators. One global administrator account is created when the
-software is installed. Additional global administrator accounts can be
-created. You can perform administration tasks from the Administration
-Console or the command line.
+Global Administrators:: They have full privileges to manage servers,
+global settings, domains, and accounts as well as create other administrators. The software installation creates one global administrator account. You can perform administration tasks from the *Administration
+Console* or the command line.
 
-* *Delegated Administrators* are granted customized administrator roles
-by the global administrator to manage different tasks from the
-Administration Console.
+Delegated Administrators:: Global administrators create Delegated Administrators and grant them customized roles to manage different tasks from the *Administration Console*.
 See also <<delegated_administration,Delegated Administration>> for more details.
 
 == Logging into the Administration Console
@@ -38,8 +31,8 @@ the following URL pattern.
 |7071 |The default HTTP listen port.
 |====================================================
 
-. At the login screen, enter the complete administrator address - as
-*admin@domain.com* - and the password that was configured during
+. On the login screen, enter the complete administrator address - e.g.
+*admin@domain.com* - and the password set during
 server installation of {product-name}.
 +
 image::images/administration_console.png[Administration Console]
@@ -106,14 +99,12 @@ Most {product-abbrev} tasks - such as creating accounts and Classes of Service, 
 Status Monitoring, Domain management, Backup Scheduling, and Session
 management - can be managed from the Administration Console.
 
-Other configuration and maintenance tasks cannot be handled from the
-Administration Console - such as starting and stopping services and managing
-the local server configuration - and require the use of the Zimbra CLI.
+Administration Console cannot manage configuration and maintenance tasks -- starting and stopping services and managing
+the local server configuration -- and require the use of the Zimbra CLI.
 
 At the Administration Console, if you need to view the attribute associated
 with a particular function, you can click on the text labels of the
-configuration page currently in view to view the information in a
-popup. Guide text is also provided from these popups, as demonstrated in
+configuration page currently in view to view the information in a popup. Guide text is also provided from these popups, as demonstrated in
 the following illustration.
 
 .Viewing Attributes at the Administration Console
@@ -153,29 +144,25 @@ image::images/administration_console_ui.png[Administration Console]
     <9> Viewing Pane
     <10> Navigation Pane
 
-The displays and options in the navigation pane and viewing pane change in
-accordance with your selections. Other portions of the UI -- arrow buttons,
+The displays and options in the navigation pane and viewing pane change following your selections. Other portions of the UI -- arrow buttons,
 search field, screen refresh, current location/path, current login, and
 Help -- always remain in view.
 
 The Gear Icon image:images/gear_icon.png[Gear Icon] is displayed with
-certain screens, to enable quick access to functions associated with the
+specific screens, to enable quick access to functions associated with the
 functions provided in the screens. For more information about the Gear
-icon, see <<using_the_gear_icon,Using the Gear icon>>
+icon, see <<using_the_gear_icon, Using the Gear icon>>
 
 === Home Navigation Pane
 
-The options provided in the *Home* navigation pane are categorically
-defined under the *Home* directory. Some of the options lead to
+The options provided in the *Home* navigation pane are under the *Home* directory. Some of these options lead to
 configuration pages; others lead to pages containing reports, as
-associated with your selections.
+per your selections.
 
-The illustration at right is an expanded view of the options currently
+The illustration on the right is an expanded view of the options currently
 supported in the Navigation Pane.
 
-Your current position in the hierarchy is always displayed at the upper
-bar of the page currently in view, and you can use multiple options for
-dismissing the current view:
+The top bar of the page, currently in view, displays your current position in the hierarchy. You can use multiple options for dismissing the current view:
 
 * To return to a previous page or go to a next page, click the left or
 right arrows.
@@ -197,8 +184,7 @@ The Navigation pane options are described in the following topics:
 [[home_ui]]
 === Home UI
 
-The *Home* screen is the default, login view, which provides the *Home*
-navigation pane and the Home page. This page provides a snapshot view of
+The *Home* screen is the default, login view, which provides the *Home* navigation pane and the Home page. This page provides a snapshot view of
 system status and a series of quick access links for essential tasks.
 
 image::images/administration_console_home_ui.png[Home UI]
@@ -305,16 +291,12 @@ following operations:
 |Message Count |
 System-wide Information page, for Message Counts, to examine charts
 depicting counts over the last 48, 30, 60, and 365 days. The information
-provided is based on the number of recipients of messages using either SMTP
-or LMTP. The polling intervals for the counts are posted directly beneath
-each chart.
+provided is as per the number of recipients using either SMTP or LMTP for messaging. The polling intervals for the counts are posted directly beneath each chart.
 
 |Message Volume |
 System-wide Information page, for Message Volume, to view charts depicting
-the number of recipients of messages-using either SMTP or LMTP-and
-associated message sizes. These counts are shown in periods over the last
-48, 30, 60, and 365 days. The polling intervals for the counts are posted
-directly beneath each chart.
+the number of recipients of messages-using either SMTP or LMTP-and associated message sizes. These counts are for the last
+48 hours, 30, 60, and 365 days. The polling intervals for the counts are posted directly beneath each chart.
 
 |Anti-Spam/Anti-Virus |
 System-wide Information page, for Anti-Spam/Anti-Virus
@@ -345,7 +327,7 @@ image:images/admin_console_monitor_ui_view.png[View]
 --
 For the selected Server, the Server Statistics navigation pane provides
 options to view Disk, Session, Mailbox Quota, Message Count, Message
-Volume, and Anti- Spam/Anti-Virus Activity.
+Volume and Anti- Spam/Anti-Virus Activity.
 
 |Mail Queues |
 Tab pages from which to view counts of Deferred, Incoming, Active, Held,
@@ -358,10 +340,7 @@ summary filtering information and Message details.
 [[manage_ui]]
 === Manage UI
 
-The *Manage* screen provides the *Manage* navigation pane and the *Manage*
-pages, which display the tables categorically provided as Accounts,
-Aliases, Distribution Lists, and Resources that are currently managed by
-Collaborator.
+The *Manage* screen provides the *Manage* navigation pane, and the *Manage* pages, which display the tables categorically provided as Accounts, Aliases, Distribution Lists, and Resources that are currently managed by Collaborator.
 
 image::images/administration_manage_ui.png[Manage UI]
 
@@ -379,7 +358,7 @@ image::images/administration_manage_ui.png[Manage UI]
 |=======================================================================
 |*Option* |*Description*
 |Accounts (count) |
-Table of accounts managed by the Collaborator.
+It is a table of accounts managed by the Collaborator.
 Actions you can perform:
 --
 * View ID information from a popup display: Hold the cursor over an
@@ -392,7 +371,7 @@ Mail*, *New*, *Invalidate Session*, *View Rights*, *Configure Grants*,
 --
 
 |Aliases (count) |
-Table of Aliases managed by the Collaborator. Each alias is an email
+It is a  table of Aliases managed by the Collaborator. Each alias is an email
 address that forwards all email to a specified account.
 
 Actions you can perform:
@@ -406,24 +385,18 @@ Alias*, *New*, *Invalidate Session*, *View Rights*, *Configure Grants*,
 --
 |Distribution Lists (count) |
 
-Table of Distribution Lists managed by the Collaborator.  A Distribution
-List is a group of mail addresses contained in a list, with a common mail
-address. When you send to a distribution list, you are sending to everyone
-whose address is included in the list. The *To:* address line displays the
-distribution list address.
+It is a  table of Distribution Lists managed by the Collaborator.  A distribution list is a feature that allows you to maintain a list of email addresses and send messages to all of them at once. When you send to a distribution list, you are sending to everyone whose address is in the list. The *To:* address line displays the distribution list address.
 
 Actions you can perform:
 --
 * View ID information: Hold the cursor over a Distribution List row.
-
 * Right-click on a table row, or use the Gear icon to access the following
 functions: *Delete*, *Edit*, *New Administrator*, *View Mail*, *New*, *View
 Rights*, *Configure Grants*, *Search Mail*.
 --
 
 |Resources (count) |
-Table of Resources managed by the Collaborator. A Resource is a location or
-a piece of equipment that can be scheduled for meetings.
+It is a  table of Resources managed by the Collaborator. A Resource is a location or a piece of equipment that is available when you schedule meetings.
 
 Actions you can perform:
 --
@@ -439,7 +412,7 @@ Rights*, *Configure Grants*, *Search Mail*.
 === Configure UI
 
 The *Configure* screen provides the *Configure* navigation pane and the
-*Configure* pages, which enable configurations for individual and/or
+*Configure* pages, which enable configurations for individual and
 global components.
 
 image::images/administration_console_configure_ui.png[Configure UI]
@@ -457,7 +430,7 @@ image::images/administration_console_configure_ui.png[Configure UI]
 |=======================================================================
 |*Option* |*Description*
 |Class of Service |
-Displays the COSs managed from this AdministrationConsole.
+It displays all the COSs that can be managed from this AdministrationConsole.
 --
 * Double-click on a table row to access the configuration screens for the
 selected COS,
@@ -469,7 +442,7 @@ functions: *New*, *Delete*, *Edit*, *Duplicate*
 --
 
 |Domains |
-Displays the domains managed from this Administration Console.
+It displays all the domains managed from this Administration Console.
 --
 * Double-click on a table row to access the configuration screens for the
 selected domain,
@@ -482,7 +455,7 @@ Authentication*, *View Accounts*, *Add a Domain Alias*, *Configure Grants*
 --
 
 |Servers |
-Displays the servers managed from this Administration Console.
+It displays all the servers managed from this Administration Console.
 --
 * Double-click on a table row to access the configuration screens for the
 selected server,
@@ -515,7 +488,7 @@ functions: *Deploy*, *Undeploy*, *Toggle Status*
 --
 
 |Admin Extensions |
-Displays the Admin Extensions managed from this Administration Console.
+It displays the Admin Extensions managed from this Administration Console.
 --
 
 * Double-click on a table row to access the configuration screens for the
@@ -542,7 +515,7 @@ functions: *Install Certificate*, *View Certificate*
 
 |Rights |
 
-Displays the various Rights that are managed from this Administration Console.
+It displays the various rights managed from this Administration Console.
 --
 
 * Double-click on a table row to access the General Information screen for
@@ -571,14 +544,9 @@ functions: *Add*, *Delete*, *Edit*
 [[global_settings_ui]]
 === Global Settings UI
 
-Global Settings define the default global values for servers, accounts,
-COS, and domains. These default values and parameters apply if the
-values and parameters have not been explicitly defined in settings
-configures elsewhere.
+Global Settings define the default global values for servers, accounts, COS, and domains. If you have not defined the values and parameters explicitly in settings configurations, these default values and parameters apply.
 
-The defaults for Global Settings are configured during installation. You
-can change the settings at any time from Global Settings at the
-Administration Console.
+You can change the defaults for Global Settings configured during installation, from Administration Console Global Settings.
 
 .Global Settings UI
 [cols="1,3a",options="header",]
@@ -619,15 +587,14 @@ see <<mta_configuration,MTA Configuration>>.
 
 |IMAP |
 Enable IMAP service. Changes to these settings do not take effect until the
-server is restarted.
+server restarts.
 
 |POP |
-Enable POPS3 Service. Changes to these settings do not take effect until the
-server is restarted.
+Enable POPS3 Service. Changes to these settings do not take effect until the server restarts.
 
 |AS/AV |
 Set anti-spam and anti-virus rules.  Changes to the Spam-check settings do
-not take effect until the server is restarted.
+not take effect until the server restarts.
 
 | Themes |
 --
@@ -652,18 +619,14 @@ with external guests
 
 |Retention Policy |
 Set up a retention and deletion time threshold for items in user folders.
-Retention and deletion policies can be configured as a global setting or
-your can configure COS-level policies instead of inheriting from the global
+You can configure retention and deletion policies as a global setting or as COS-level policies instead of inheriting from the global
 settings.
 
 |Proxy |
-Set parameters for Web Proxy and Mail Proxy. Tools are also provided for
-setting Advanced Proxy parameters.
+Set parameters for Web Proxy, Mail Proxy, or Advanced Proxy parameters.
 
 |S/MIME |
-(Secure Multipurpose Internet Mail Extensions): Configure the LDAP settings
-on the S/MIME tab (if S/MIME feature has been enabled). Users will use LDAP
-servers to retrieve private keys.
+(Secure Multipurpose Internet Mail Extensions): Configure the LDAP settings on the S/MIME tab (if S/MIME feature is enabled). You use LDAP servers to retrieve private keys.
 
 |ACL |
 (Access Control List): Go to ACE (Access Control Entry) configuration for
@@ -675,8 +638,7 @@ Set parameters for backup-for standard or auto- grouped mode. For more
 information see <<backup_and_restore,Backup and Restore>>.
 
 | HSM |
-(hierarchical storage management): Configure aging of messages before they are
-to be moved to the secondary volume.
+(hierarchical storage management): Configure the age of messages before they move to the secondary volume.
 
 |License |
 --
@@ -688,8 +650,7 @@ to be moved to the secondary volume.
 [[tools_and_migration_ui]]
 === Tools and Migration UI
 
-The *Tools and Migration* screen provides the *Tools and Migration*
-navigation pane, for access to system software management and system
+The *Tools and Migration* screen provides the *Tools and Migration* navigation pane, for access to system software management and system
 backup/restore. Administrators can access and download specific wizards
 and tools from this page.
 
@@ -710,9 +671,7 @@ image::images/administration_console_tools_and_migration_ui.png[Tools and Migrat
 |Option |Description
 
 |Downloads |
-Access Zimbra utilities, which provides downloadable zip packages - for
-general administration use, and to synchronize an individual end user -
-containing migration wizards for various platforms, and Outlook connectors.
+Access Zimbra utilities, which provides downloadable zip packages - for general administration use, and to synchronize an individual end user - containing migration wizards for various platforms, and Outlook connectors.
 Additional information is provided in
 <<downloadable_wizards_and_connectors,Downloadable Wizards and Connectors>>.
 
@@ -735,14 +694,13 @@ to your system. After selecting the image, you can use the *Upload* button
 on this page to complete the software upload.
 
 |Backups |
-Access a summary view of current free and total space
-(MB) based on the most recent system backup. You can
+Access a summary view of current free and total space (MB) based on the most recent system backup. You can
 also select a specific administrator from this navigation
 pane to view backup history as associated with the
-selected administrator. The history lists labels, start and end times.
+selected administrator. The history lists labels, start and end times,
 and success or failure for each backup occurrence; each of these is
-associated with the identical, displayed directory path to the backup
-target. Additional information is provided in
+associated with a similarly displayed directory path to the backup
+target. Additional information is in
 <<backup_and_restore,Backup and Restore>>.
 
 |=======================================================================
@@ -763,8 +721,7 @@ contacts, from Microsoft Exchange or PST file to the {product-name}
 Server.
 
 |*{product-abbrev} Migration Wizard for Domino* |
-Get zip files to perform a server-to-server migration of mail, calendar,
-and contacts from IBM Domino to the {product-name} Server.
+Get zip files to perform a server-to-server migration of mail, calendar, and contacts from IBM Domino to the {product-name} Server.
 
 |*Legacy {product-abbrev} Migration Wizard for Exchange* |
 --
@@ -774,7 +731,7 @@ Exchange/PST.
 --
 
 |*Zimbra Connector for Outlook MSI Customizer* |
-Present text file containing functions you can use to customize the
+A text file containing functions you can use to customize the
 standard ZCO MSI. Server name, port, other variables particular to an
 organization can be customized.
 
@@ -816,7 +773,7 @@ distribution lists in the Content pane.
 select a searchable name from the displayed list of matched strings.
 
 * You can also use the Zimbra mailbox ID number to search for an
-account. However, to return a search from a mailbox ID, the complete ID
+account. However, to return a search from a mailbox ID, the entire ID
 string must be entered in the search.
 
 image::images/administration_console_search_ui.png[Search UI]
@@ -926,7 +883,7 @@ addresses, display names, status, last logins, and descriptions (if
 configured).
 
 Each row in a table enables actions you can perform if you require
-additional information and/or access to the configuration for the selected
+additional information and access to the configuration for the selected
 table entry.
 
 [cols="1,2,2a"]
@@ -939,8 +896,7 @@ Display ID details for the selection, similar to the example at right
 image::images/administration_console_tools_in_collaborator_tables.png[Tools]
 
 |Right-click |
-Access the popup menu for a selected table row. The popup menus from a
-common table may differ from row to row, as demonstrated in the
+Access the popup menu for a selected table row. The popup menus from the same table may differ from row to row, as demonstrated in the
 following examples. |
 Accounts and Aliases: Dist Lists and Resources:
 
@@ -1001,8 +957,7 @@ messages.
 When removing a message with your command entry, use
 the following guidelines for individual and multiple deletions:
 --
-* Place a minus sign (-) before the attribute, and double quote marks at
-the beginning and end of an individual message to be deleted.
+* Place a minus sign (-) before the attribute, and enclose an individual message between double quotes to delete it.
 
 * Use single quote marks with the attribute to remove all messages.
 --
@@ -1031,8 +986,7 @@ navigating the Administration Console, in the following topics:
 [[gui_roadmap]]
 === GUI Roadmap
 
-A high-level view of the Administration Console UI is provided in the
-following illustration.
+The following illustration shows a high-level view of the Administration Console UI.
 
 [[high_level_view_of_administration_console_ui]]
 .High-level View of Administration Console UI
@@ -1044,21 +998,17 @@ image::images/high_level_view_of_admin_console_ui.png[High-level View of Adminis
 === Popup Menu Options
 
 You can select options to perform on a selected entity from the
-navigation pane from the Gear icon or a topical popup menu.
+navigation pane accessed via the Gear icon or a context menu.
 
 [[using_the_gear_icon]]
 ==== Using the Gear icon
 
-The *Gear* icon is always located at the upper right edge of the page
-view if pertinent to selectable items in the displayed page.
+The *Gear* icon is on the upper right edge of the page
+view if related to selectable items in the displayed page.
 
 image::images/administration_console_gear_icon.png[The Gear Icon]
 
-To view the available options, highlight a topic at the navigation pane or
-in the page view: In the popup, the options that are not applicable to your
-selection are disabled: other displayed options can be used with your
-selection. The following example demonstrates Gear options based on
-selection of a navigation bar topic, versus a table row entry from within
+To view the available options, highlight a topic in the navigation pane or the page view; the Gear options not applicable to your selection appear disabled. The following example demonstrates Gear options based on a selected navigation bar topic, versus a table row entry from within
 the same page view.
 
 image::images/administration_console_gear_icon_2.png[The Gear Icon]
@@ -1106,7 +1056,7 @@ Edit, Flush Cache, Enable Proxy, Disable Proxy
 Save, Download, Update License, Activate License, Manually Activate License
 
 |Zimlets |
-Deploy, Undeploy, Toggle Status
+Deploy, Remove, or Toggle Status
 
 |Admin Extensions |
 Deploy, Undeploy
@@ -1123,7 +1073,7 @@ View
 |Global ACL |
 Add, Delete, Edit
 
-.3+|*Tools and Migration*
+.3+| *Tools and Migration*
 |Software Updates |
 Save, Check Now
 
@@ -1150,7 +1100,7 @@ You can elect to access options to perform on a selection by using popup
 menus:
 
 [NOTE]
-Popup menus are not provided in the Navigation Pane.
+Navigation Pane does not feature the context (popup) menu.
 
 The following example demonstrates the popup options provided by a
 specific selection in the page view.
@@ -1162,10 +1112,7 @@ image::images/administration_console_popup_menus.png[Popup Options]
 
 === Containers
 
-A wide range of Configuration options are logically grouped into containers
-in the Administration Console. Applicable configuration options inside
-these containers are listed in the
-<<high_level_view_of_administration_console_ui,High-level View of Administration Console UI>>
+Containers in the Administration Console feature a wide range of configuration options.  <<high_level_view_of_administration_console_ui,High-level View of Administration Console UI>> lists the configuration options in these containers.
 
 By default, all containers on a page are opened (expanded). You can opt to
 close (collapse) containers - which can free up additional space in a page
