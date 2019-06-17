@@ -61,8 +61,6 @@ include::ephemeraldata.adoc[]
 
 <<<
 
-<<<
-
 include::ssdb-configuration-options.adoc[]
 
 <<<
@@ -72,6 +70,10 @@ include::cos.adoc[]
 <<<
 
 include::customizingaccounts.adoc[]
+
+<<<
+
+include::HAB.adoc[]
 
 <<<
 
