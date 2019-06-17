@@ -35,7 +35,11 @@ NOTE: If the *Seniority Index* parameter isn't set or is equal for two or more u
  zmprov createHABOrgUnit <domain name of OU> <OU Name>
 
 ==== Example
+<<<<<<< HEAD
  zmprov createHABOrgUnit example.com {product-name}OU
+=======
+ zmprov createHABOrgUnit example.com ZimbraOU
+>>>>>>> 3f7be724f9110d601ba438bbca39aed06483bcaf
 
 ==== Explanation
 _{product-family}OU_ as an organizational unit created.
@@ -52,7 +56,11 @@ You have to create a group and assign an email address for each department.
 
 In this series of commands, we create *8* HAB groups -- as per the <<ExampleHierarchy>>.
 
+<<<<<<< HEAD
  zmprov createHABGroup {product-name} ZimbraOU zimbra@example.com
+=======
+ zmprov createHABGroup Zimbra ZimbraOU zimbra@example.com
+>>>>>>> 3f7be724f9110d601ba438bbca39aed06483bcaf
 
  zmprov createHABGroup CorporateOffice ZimbraOU CorpOffice@example.com
 
