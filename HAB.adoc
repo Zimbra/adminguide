@@ -1,26 +1,15 @@
 [[hierarchical_address_book]]
-<<<<<<< Updated upstream:HAB.adoc
 = Hierarchical Address Book (HAB) in {product-family}
-=======
-= Hierarchical Address Book (HAB) in {product-name}
->>>>>>> Stashed changes:Admin_GuideHAB.adoc
 
 == What is a HAB?
 
 The hierarchical address book (HAB) allows users to look for recipients in their address book using organizational hierarchy. Typically, users are limited to seeing the default global address list (GAL) whose structure isn't conducive in knowing who reports to whom or to identify one John Doe from another. Being able to customize a HAB that maps to your organization's unique business structure, provides your users with an efficient method for locating internal recipients.
 
 == Using Hierarchical Address Book
-<<<<<<< Updated upstream:HAB.adoc
 In a Hierarchical Address Book (HAB), your root organization (e.g., {product-family}) is the top-level tier. Under this top-level tier, you can add several child tiers to create a customized HAB that is segmented by division, department, or any other organizational tier you want to specify. The following figure illustrates a HAB for {product-family} with the following structure:
 
 * The top-level tier represents the root organization -- {product-family}.
 * The second-level child tiers represent the business divisions within {product-family} — Corporate Office, Engineering, Product Support, and Sales & Marketing.
-=======
-In a Hierarchical Address Book (HAB), your root organization (e.g., {product-name}) is the top-level tier. Under this top-level tier, you can add several child tiers to create a customized HAB that is segmented by division, department, or any other organizational tier you want to specify. The following figure illustrates a HAB for {product-name} with the following structure:
-
-* The top-level tier represents the root organization -- {product-name}.
-* The second-level child tiers represent the business divisions within {product-name} — Corporate Office, Engineering, Product Support, and Sales & Marketing.
->>>>>>> Stashed changes:Admin_GuideHAB.adoc
 * The third-level child tiers represent departments within the Corporate Office division — Human Resources, Accounts, and Administration.
 
 .Example Hierarchy
@@ -49,11 +38,7 @@ NOTE: If the *Seniority Index* parameter isn't set or is equal for two or more u
  zmprov createHABOrgUnit example.com {product-name}OU
 
 ==== Explanation
-<<<<<<< Updated upstream:HAB.adoc
 _{product-family}OU_ as an organizational unit created.
-=======
-_{product-name}OU_ as an organizational unit created.
->>>>>>> Stashed changes:Admin_GuideHAB.adoc
 
 [#createHABGroup]
 === Create groups within this OU

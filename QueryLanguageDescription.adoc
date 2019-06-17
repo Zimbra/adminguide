@@ -1,0 +1,127 @@
+[[query_language_description]]
+== Query language description
+This advanced topic describes in detail the search grammar used for Zimbra 's Search feature. Some type of query is always applied to produce the view that you see in the interface.
+
+=== Search Language Structure
+Simple searches can be done by just entering a word into the search field. Bare words (words without a search operator) are interpreted to search in the 'content:' operator -- this matches any text in the message.
+
+More advanced searches can be done by specifying a search operator. A search operator is a special keyword followed by a colon, followed by some other parameter specific to that operator. For example:
+
+* *in: inbox* the operator is "in" and the parameter is " inbox" - this returns messages which are in the folder named " inbox"
+
+* *from:someone* the operator is "from" and the parameter is "someone" - this returns messages which have the word "someone" in their email address
+
+You can prefix any keyword with the word "not" to specify items that do not have that criterion, for example *not in: inbox*. Search is not case sensitive, "in:inbox" is the same as "in:Inbox". The minus sign (-) is a synonym for NOT So: *not in:inbox* is the same as *-in:inbox*
+
+In most cases, it is not necessary to include punctuation-type characters in your search string, as these are ignored by the search code. There are certain times where this is not true (for example, searching for a time '9:30' in a message) and in those cases you should enclose the search parameter in quotation marks. For example: subject:"9:30" will return messages which have the string 9:30 in the subject.
+
+Allowable characters in the search parameter:
+
+* The following characters cannot be anywhere in a search parameter unless it is enclosed by quotes: ~ `' ! # $ % ^ & * ( ) _ ? / { }[ ] ; :`
+
+* The following characters are allowed in a search parameter as long as they are not the first character: - + < >
+
+Note: Special characters, such as trademark symbols that are part of a word, are removed when the word is indexed for search. They are ignored in a search. For example, a search for Zimbra™ finds all references to Zimbra, including those without the trademark symbol.
+
+=== Multiple Search Terms
+If multiple search terms are entered (separated by spaces), they are " ANDed" together by default. in:inbox tim means "return me messages which are in the inbox AND which have the word tim in them". For searches using multiple criteria, you can either find items that match one of the specified criteria or all of them. You can perform both types of searches using the Advanced search builder.
+
+For all search panes other than the Basic search, the rules are:
+
+* Searching for messages that match any of the specified criteria is called an 'OR' search, because if the message contains either X or Y, then it is considered a match. For Advanced search panes with multiple check boxes, making multiple selections within a single pane creates an 'OR 'search for those items.
+
+* Searching for messages that contain both X and Y is called an 'AND' search, because the message must meet all the specified criteria in order to be considered a match. For Advanced server panes with check boxes, opening multiple instances of the same pane and making different check box selections in each one causes the criteria to be specified as an 'AND' search.
+
+Only "OR" appears in a query. If you selected as an option to show the search query in the Search bar as you make selections in the Advanced search, the Search text box updates to show the resulting query. With the 'AND' type of search, the word 'AND' does not appear.
+
+TIP: Using parenthesis with AND and OR. Words within parentheses are considered as a unit. For example from: (john thomas) is equivalent to from:john AND from: thomas. If you use OR in the parenthesis, from:(john or smith), the search is for results from:john OR from: thomas.
+
+==== Using * as a wildcard in Search
+The asterisk (*) can be used as a wildcard at the end of a word in a search to find content that contains words that have similar spellings.
+
+Use the asterisk `\*` as a wildcard. For example, the search string `do*` returns items such as do, dog, door, etc.
+
+NOTE: A double-byte asterisk sign in a search query is not considered a wildcard character and is ignored when the search runs.
+
+=== Keyword Descriptions and Examples
+content::
+
+Specifies text that the message must contain. For example, content:bananas finds all items containing the word "bananas".
+
+from::
+
+Specifies a sender name or email address that is in the From header. This can be text, as in "John Smith III", an email address such as " joe@acme.com", or a domain such as " zimbra.com".
+
+to::
+
+Same as from: except that it specifies one of the people to whom the email was addressed in the To: header.
+
+cc::
+
+Same as from: except that it specifies a recipient in the Cc: header of the message.
+
+subject::
+
+Specifies text that must appear in the subject header of the message. An example might be subject:new vacation policy.
+
+in::
+
+Specifies a folder. For example, in:sent would show all items in your Sent folder.
+
+has::
+
+Specifies an attribute that the message must have. The types of object you can specify are "attachment", "phone", or " url". For example, has:attachment would find all messages which contain one or more attachments of any type.
+
+filename::
+
+Specifies an attachment file name. For example, filename: query.txt would find messages with a file attachment named " query.txt".
+
+type::
+
+Specifies a search within attachments of a specified type. The types of attachment you can specify are "text", "word", "excel", and " pdf". For example, type:word "hello" finds messages with attachments that are Microsoft Word documents and searches within those attachments for the word "hello".
+
+attachment::
+
+Specifies any item with a certain type of attachment. For example, attachment:word would find all messages with a Word file attachment.
+
+NOTE: If you did not find an attachment that was written in a non-western language, see Search Issues with Non-Western Language Attachments.
+
+is::
+
+Searches for messages with a certain status. Allowable values are "unread", "read", "flagged", " unflagged", "sent", "draft", "received", "replied", " unreplied", "forwarded", unforwarded", "anywhere", "remote" (in a shared folder), "local", "sent". For example, is: unread will find all unread messages.
+
+date::
+
+Use this keyword to specify a date, using the format that is default for your browser's locale (for US English the format is mm/ dd/ yyyy). For example, date:2/1/2010 would find messages dated February 1, 2010. The greater than (>) or less than (<) symbols can be used instead of after or before. >= and <= are also allowed.
+
+after::
+
+Specifies mail sent after a certain date. For example, after:2/1/2010 specify mail sent after February 1, 2010.
+
+before::
+
+Same as after: except specifies mail sent before the specified date.
+
+size::
+
+Specifies messages whose total size, including attachments, is a specified number of bytes, kilobytes, or megabytes  For example, size:12 kb would find messages that are exactly 12K in size. The greater than (>) or less than (<) symbols can be used instead of bigger or smaller.
+
+larger::
+
+Similar to size: except specifies greater than the specified size.
+
+smaller::
+
+Similar to size: except specifies smaller than the specified size.
+
+solo::
+
+Finds email messages that do not have a reply to them yet.
+
+tag::
+
+Finds messages which have been tagged with a specified tag. For example, tag:amber will find message that have a tag called "amber" applied.
+
+priority::
+
+Finds messages, tasks or calendar items based on "high" "low" priority. For example, priority:high will find items with a priority setting of high..
