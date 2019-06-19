@@ -1,8 +1,8 @@
 = Licensing
 :toc:
 
-A Zimbra license is required in order to create accounts. When you
-purchase, renew, or change the Zimbra license, you update the Zimbra server
+To create accounts, you require a Zimbra license. When you
+purchase, renew, or change the Zimbra license, you must update the Zimbra server
 with the new license information.
 
 == License Types
@@ -16,34 +16,33 @@ manage the following license types.
 | License limitations |To set maximum number of...
 
 |Accounts limit |
-Accounts you can create and the number of accounts created are shown.
+It shows the number of accounts you can create and the accounts already created.
 
 |Mobile accounts limit |
-Accounts you can create and the number of accounts created are shown.
+It shows the number of accounts you can create and the accounts already created for mobile devices.
 
 |Touch client accounts limit |
 Accounts that can have the touch client mobile feature enabled.
 
 |MAPI accounts limit |
-Accounts that can use Zimbra Connector for Microsoft Outlook (ZCO).
+It is a count of accounts that can use Zimbra Connector for Microsoft Outlook (ZCO).
 
 |Exchange web services (EWS) accounts limit |
 Accounts that can use EWS for connecting to an Exchange server. EWS is a
 separately licensed add-on.
 
 |High-fidelity document preview |
-Accounts that can use the High-Fidelity document preview. LibreOffice must
-be installed.
+It shows the accounts that can use the High-Fidelity document preview. The installation of LibreOffice is mandatory to use this feature.
 
 |Archiving accounts limit |
-New archive accounts allowable. The archive feature must be installed.
+It shows the number of accounts on which you can enable archiving and the count of accounts which already have archiving feature. The installation of the archiving feature is mandatory to use this feature.
 
 |=======================================================================
 
 == License Requirements
 
 To try out {product-name}, you can obtain trial versions free of
-charge. Once your system is installed in a production environment, you will
+charge. Once you set up the system in a production environment, you
 need to purchase a subscription or a perpetual license.
 
 [cols="25,75",options="header",grid="rows"]
@@ -56,7 +55,7 @@ trial license allows you to create up to 50 users. It expires in 60 days.
 
 |Trial extended |
 Free of charge: Allows you to create up to 50 users and is valid for an
-extended period of time. Obtainable from Zimbra Sales by contacting
+extended time; obtainable from Zimbra Sales by contacting
 sales@zimbra.com or calling 1-972-407-0688.
 
 |Subscription |
@@ -67,10 +66,8 @@ effective date, and expiration date of the subscription license
 |Perpetual |
 Purchased: This license is similar to a subscription license and is valid
 for a specific {product-name} system, is encrypted with the number of
-Zimbra accounts (seats) you have purchased, the effective date, and an
-expiration date of 2099-12-31. When you renew your support agreement, no
-new perpetual license is sent to you, but your Account records in the
-systems is updated with your new support end date.
+Zimbra accounts (seats) you have purchased, the effective date, and an expiration date of 2099-12-31. When you renew your support agreement, you do not receive a new perpetual license, but your Account records in the
+systems updates with your new support end date.
 
 |=======================================================================
 
@@ -88,15 +85,14 @@ System accounts are specific accounts used by {product-name}. They
 include the spam filter accounts for junk mail (spam and ham), virus
 quarantine account for email messages with viruses, and GALsync account if
 you configure GAL for your domain. Do not delete these accounts! These
-accounts do not count against your license
+accounts do not count against your license.
 
 |Administrator account |
-Administrator and delegated administrator accounts count against your
-license
+Administrator and delegated administrator accounts count against your license
 
 |User account |
 User accounts count against your license account limit. When you delete an
-account, the license account limit reflects the change
+account, the license account limit reflects the change.
 
 |Alias account .3+^.^|Not applicable
 |Distribution list
@@ -108,7 +104,7 @@ account, the license account limit reflects the change
 
 All network edition installations require license activation. New
 installations have a 10 day grace period from the license issue date before
-requiring activation. Your license can be activated in the Administration Console.
+they require activation. You can activate your license in the Administration Console.
 
 Admin Console: ::
 *Home > Configure > Global Settings > License*, from the *Gear* icon select
@@ -121,17 +117,15 @@ maintain network feature functionality.
 
 Licenses are automatically activated if the {product-name} server has a
 connection to the Internet and can communicate with the Zimbra License
-server. If you are unable to automatically activate your license, see
-<<manual_license_activation,Manual License Activation>>.
+server. If you are unable to activate your license automatically, see <<manual_license_activation,Manual License Activation>>.
 
 [[manual_license_activation]]
 === Manual License Activation
 
 For systems that do not have external access to the Zimbra License server,
-you can use the https://support.zimbra.com/[Zimbra Support Portal] to
-manually activate your license. Go to the Zimbra website at www.zimbra.com
+you can use the https://support.zimbra.com/[Zimbra Support Portal] to activate your license manually. Go to the Zimbra website at www.zimbra.com
 and click *Support* to display the Zimbra Technical Support page. Click the
-*{product-name} Suport* link to display the Zimbra Support Portal page.
+*{product-name} Support* link to display the Zimbra Support Portal page.
 Enter your email and password to log in.
 
 If you have problems accessing the Zimbra Support Portal, contact Zimbra
@@ -140,7 +134,7 @@ Support at support@zimbra.com.
 === When Licenses are not Installed or Activated
 
 If you fail to install or activate your {product-name} server license, the
-following scenarios describe how your {product-name} server will be
+following scenarios describe how your {product-name} server is
 impacted.
 
 [cols="25,75",options="header",grid="rows"]
@@ -148,8 +142,7 @@ impacted.
 |License Condition |Description/Impact
 
 |Not installed |
-{product-name} defaults to single user mode where all features limited by
-license are limited to one user.
+{product-name} defaults to single user mode where all features limited by the license are limited to one user.
 
 |Not valid |
 {product-name} defaults to single user mode.
@@ -164,11 +157,11 @@ after 10 days.
 
 |In grace period |
 The license ending date has passed and is within the 30 day grace
-period. All features limited by license are still enabled, but
+period. All features limited by the license are still enabled, but
 administrators might see license renewal prompts.
 
 | Expired |
-The license ending date has passed and the 30 day grace period has
+The license ending date has passed, and the 30 day grace period has
 expired. The {product-name} server defaults to the feature set of the Open
 Source Edition.
 
@@ -178,17 +171,16 @@ Source Edition.
 
 On the Zimbra website, go to Downloads to obtain a trial license from the
 Zimbra Downloads area. Contact Zimbra sales regarding a trial extended
-license, or to purchase a subscription license or perpetual license, by
+the license, or to purchase a subscription license or perpetual license, by
 emailing sales@zimbra.com.
 
-The subscription and perpetual license can only be installed on the
-{product-name} system for which it is purchased. Only one Zimbra license is
-required for your {product-name} environment. This license sets the number
-of accounts that can be created.
+You can install the subscription, and perpetual license only on the
+{product-name} system you purchased. You require only one Zimbra license for your {product-name} environment. This license sets the number
+of accounts you can create.
 
-Current license information, including the number of accounts purchased,
-the number of accounts used, and the expiration date, can be viewed from
-*Home > Configure > Global Settings > License*.
+You can view the current license information, including the number of accounts purchased,
+the number of accounts used, and the expiration date by navigating to 
+*Home* > *Configure* > *Global Settings* > License* on the <<#_zimbra_administration_console, Admin Console>>.
 
 == Managing Licenses
 
@@ -217,8 +209,8 @@ used can be viewed from
 
 
 When the number of accounts created is equal to the number of accounts
-purchased you will not be able to create new accounts. You can purchase
-additional accounts or you can delete existing accounts. Contact Zimbra
+purchased, you cannot create new accounts. You can purchase
+additional accounts, or you can delete existing accounts. Contact Zimbra
 sales to purchase additional accounts.
 
 You must renew your license within 30 days of the expiration date.
@@ -228,13 +220,10 @@ Administration Console, a reminder notice is displayed.
 === License Expiration
 
 When your {product-name} Network Edition License expires, a license
-expiration warning appears in the administrative console and web interface
-for all users. From the date of the license expiration, there is a 30-day
-grace period during which the warning message is displayed, but no features
+expiration warning appears in the administrative console and web interface for all users. From the date of the license expiration, there is a 30-day grace period during which you see the warning message, but no features
 are disabled.
 
-Upon expiration of the grace period, the server reverts to the feature set
-of the Open Source Edition. The following is a list of some of the major
+Upon the expiration of the grace period, the server reverts to the feature set of the Open Source Edition. The following is a list of some of the major
 functions that are no longer available upon license expiration:
 
 * Backup/Restore
@@ -250,8 +239,7 @@ If you maximize your licensed user limit, you are no longer able to
 create or delete accounts.
 
 If you do not plan to renew your license, you can regain the ability to
-create or delete accounts by upgrading to {product-name} free and open
-source software (FOSS). You should choose the same version of FOSS that you
+create or delete accounts by upgrading to {product-name} free and open source software (FOSS). You should choose the same version of FOSS that you
 are currently running on the {product-name} Network Edition for this
 transition, after which you can upgrade to the latest version of
 {product-name} FOSS.
@@ -259,8 +247,8 @@ transition, after which you can upgrade to the latest version of
 === Renewal
 
 When the number of accounts created is equal to the number of accounts
-purchased you will not be able to create new accounts. You can purchase
-additional accounts or you can delete existing accounts. Contact Zimbra
+purchased, you cannot create new accounts. You can purchase
+additional accounts, or you can delete existing accounts. Contact Zimbra
 sales to purchase additional accounts.
 
 You must renew your license within 30 days of the expiration date.
@@ -270,8 +258,7 @@ Administration Console, a reminder notice is displayed.
 == Updating Your License
 
 When you renew or change the Zimbra license, you update {product-name}
-mailbox servers with the new license information. This operation be
-performed from either the CLI or the Administration Console.
+mailbox servers with the new license information. You renew or change the Zimbra License from either the CLI or the Administration Console.
 
 [source, bash]
 ----
@@ -298,5 +285,5 @@ now uploaded.
 . Click *Activate License*. Upgraded {product-name} versions require
 an immediate activation to maintain network feature functionality.
 
-Your license information is updated automatically. The cached account
-license count is automatically refreshed on each mailbox server.
+Your license information is updated automatically. Zimbra refreshes the cached account
+license count on each mailbox server.

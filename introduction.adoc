@@ -1,28 +1,23 @@
 [[introduction]]
 = Introduction
 
-{product-name} is a full-featured messaging and collaboration
-solution that includes email, address book, calendaring, tasks, and Web
+{product-name} is a full-featured messaging and collaboration solution that includes email, address book, calendaring, tasks, and Web
 document authoring.
 
 == Audience
 
-This guide is intended for system administrators responsible for
+This guide is for system administrators responsible for
 installing, maintaining, and supporting the server deployment of
 {product-name}.
 
-Readers of this guide should have the following recommended knowledge
-and skill sets:
+Readers of this guide should have the following recommended knowledge and skill sets:
 
-* Familiarity with the associated technologies and standards Linux
-operating system, and open source concepts
+* Familiarity with the associated technologies and standards Linux operating system, and open source concepts
 * Industry practices for mail system management
 
 == Third-Party Components
 
-Where possible, {product-name} adheres to existing industry
-standards and open source implementations for backup management, user
-authentications, operating platform, and database management. However,
+Where possible, {product-name} adheres to existing industry standards and open source implementations for backup management, user authentications, operating platform, and database management. However,
 Zimbra only supports the specific implementations described in the
 {product-name} architecture overview in the Product Overview
 chapter as officially tested and certified for the {product-name}.
