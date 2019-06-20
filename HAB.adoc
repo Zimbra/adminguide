@@ -3,10 +3,10 @@
 
 == What is a HAB?
 
-The hierarchical address book (HAB) allows users to look for recipients in their address book using organizational hierarchy. Typically, users are limited to seeing the default global address list (GAL) whose structure isn't conducive in knowing who reports to whom or to identify one John Doe from another. Being able to customize a HAB that maps to your organization's unique business structure, provides your users with an efficient method for locating internal recipients.
+The hierarchical address book (HAB) allows users to look for recipients in their address book using organizational hierarchy. Typically, users only see the default global address list (GAL) whose structure doesn't help understand who reports to whom or to identify one John Doe from another. Being able to customize a HAB, which maps to your organization's unique business structure, provides your users with an efficient method for locating internal recipients.
 
 == Using Hierarchical Address Book
-In a Hierarchical Address Book (HAB), your root organization (e.g., {product-family}) is the top-level tier. Under this top-level tier, you can add several child tiers to create a customized HAB that is segmented by division, department, or any other organizational tier you want to specify. The following figure illustrates a HAB for {product-family} with the following structure:
+In a Hierarchical Address Book (HAB), your root organization (e.g., {product-family}) is the top-level tier. Under this top-level tier, you can add several child tiers to create a customized HAB that is segmented by division, department, or any other organizational level you want to specify. The following figure illustrates a HAB for {product-family} with the following structure:
 
 * The top-level tier represents the root organization -- {product-family}.
 * The second-level child tiers represent the business divisions within {product-family} — Corporate Office, Engineering, Product Support, and Sales & Marketing.
@@ -159,7 +159,7 @@ IMPORTANT: Commands used to set seniority index for groups also set <<SeniorityI
 [#SpecifyRoot]
 === Specify the root organization for the HAB
 
-A group needs to be specified as root so that other groups can be added child groups to comply with the organizational hierarchy. Run below command to make _zimbra@example.com_ as root.
+A group needs to be specified as root so that other groups can be added as child groups to comply with the organizational hierarchy. Run below command to make _zimbra@example.com_ as root.
 
 ==== Format
 
@@ -179,10 +179,50 @@ A group needs to be specified as root so that other groups can be added child gr
 . Log in to Zimbra client.
 . Click *New Message*.
 . In the *Compose* window, click the *To* field.
-. On *Select Addresses* window, locate the *Show Names from:* drop-down on top right corner.
+. On *Select Addresses* window, locate the *Show Names from:* drop-down on the top right corner.
 . Choose *Organizational Address Book*.
 . The address book in a hierarchical format appears in the left pane.
 +
 image::Images/HABStructure-zimbra.png[]
 +
 . Click any group to view and select users of that group.
+
+== Manage Organisational Units (OUs)
+[#list-OU]
+=== List Organisational Units (OUs)
+There can be multiple organizational units in a domain. This command lists all the OUs in a specified domain.
+
+==== Format
+ zmprov listHABOrgUnit <domain name of OU>
+
+==== Example
+ zmprov listHABOrgUnit example.com ZimbraOU
+
+==== Explanation
+All OUs in _example.com_ listed.
+
+[#rename-OU]
+=== Rename Organisational Units (OUs)
+This command renames the specified OU in a domain.
+
+==== Format
+ zmprov renameHABOrgUnit <domain name of OU> <OU Name> <New name for OU>
+
+==== Example
+ zmprov renameHABOrgUnit example.com ZimbraOU ZMXOU
+
+==== Explanation
+_{product-family}OU_ renamed to _ZMXOU_.
+
+[#delete-OU]
+=== Rename Organisational Units (OUs)
+This command deletes the specified OU in a domain.
+
+==== Format
+ zmprov renameHABOrgUnit <domain name of OU> <OU Name>
+
+==== Example
+ zmprov renameHABOrgUnit example.com ZimbraOU
+
+==== Explanation
+_{product-family}OU_ deleted.
