@@ -747,7 +747,7 @@ target. Additional information is provided in
 ==== Downloadable Wizards and Connectors
 
 Use the *Tools and Migration* screen *Downloads* option to get the tools
-described in this section. Check <<##zimbra-pst-migration, Zimbra PST Migration>> to migrate Outlook PSTs to {product-name}.
+described in this section. Check <<#zimbra-pst-migration, Zimbra PST Migration>> to migrate Outlook PSTs to {product-name}.
 
 .Administrator Tools and Migration Options
 [cols=",a"]
