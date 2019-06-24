@@ -1,0 +1,130 @@
+[#zimbra-pst-migration]
+== Zimbra PST Migration Wizard
+The Zimbra PST Migration Wizard helps migrate Microsoft Outlook personal folders (`PST`) files to Zimbra Collaboration (ZCS).
+
+The tool runs in two modes:
+
+* Migration wizard with a graphical interface
+* Migration utility which uses a command line interface 
+
+== Migration Wizard GUI
+Zimbra PST Migration Wizard is an application that helps users migrate their `PST` files to Zimbra Collaboration Server using a very intuitive interface.
+
+The tool has 4 phases:
+
+Source:: Locate and select the `PST` file to migrate to Zimbra Collaboration Server.
+Destination:: Enter login credentials associated with Zimbra Collaboration Server.
+Options:: Specify folders, items, and other available options for migration.
+Results:: View migration status, including progress, errors, and warnings.
+
+[#source-info]
+=== Source Information
+. Click *Source*.
+. Click `...` beside *PST File* field to open a file browser window.
+. Navigate to and choose the `PST` file to migrate to Zimbra Collaboration Server.
+. Choose a log detail level. Logs are written to folder `%temp%/ZimbraMigration` and are useful for diagnosing migration issues. Support may request logs when you require assistance. We recommend that you set the log level to *Verbose* while becoming familiar with the tool.
++
+IMPORTANT: Logs are automatically deleted after seven days to conserve disk space, so take backup copies if you require assistance after seven days of performing a migration. During migration, you can open a log file by clicking *Open Log File* on the *Results* page.
++
+. Click *Next*.
+
+[#destination-info]
+=== Destination Information
+An administrator creates the account for you on the Zimbra Collaboration Server and gives you the migration tool application and the following information which you need to migrate your `PST` files.
+
+. In the *Destination* dialog, box, enter below details.
+ Hostname:: This is the domain name of the Zimbra server.
+ Port:: The port number used by the server is usually `80` for non-secure connections and `443` for secure connections.
+ Use Secure Connection:: Select the option for SSL secure communication with ZCS.
+ Username::  Enter your ZCS account email address as *\name@domain.com*.
+ Password:: Enter your ZCS account password.
+ . Click *Next*.
+
+[#select-options]
+=== Selecting Options to Migrate
+. Under *Item Types*, choose items to import.
+. Choose *Additional Folders* to migrate *Sent*, *Deleted Items* (Trash), and *Junk* (Spam) folders.
+. *Filters*: Choose below filter options to skip unwanted `PST` items during migration.
+ * *Migrate On or After*: This option filters out messages from before the provided date. The tool skips the migration of messages before this date.
+ * *Maximum message size*: The message size includes the message and attachments. Leave the field blank to use the Zimbra Collaboration server setting for maximum message size.
+** If you set a value here, this value cannot be larger than the global MTA setting for the maximum size of a message. The default maximum message size is 0 (indicating no size limit).
++
+NOTE: Setting *0* as maximum size does not override the limits specified in the Zimbra Collaboration server.
+
+  *Skip these folders, and their children (separate with a comma)*:: Enter names of folders, and all its subfolders, separated by a comma, to skip their migration.
+  *Skip previously migrated items*:: Select this box to skip migration of Previously migrated items.
++
+NOTE: You can view and change the Maximum size of a message value from the Administration Console *Configure* -> *Global Settings* -> *MTA* tab.
++
+. Click *Save* to save configuration information in a file which can be loaded later using the Load button on the <<#source-info>> page when you next run the migration tool.
+. Click *Back* to go back and change specifics in <<#source-info>> or <<#destination-info>>.
+. Click *Migrate* to begin the migration process.
+
+=== Viewing Migration Results
+In the Results dialog, view the migration status of the `PST` file, including progress, errors, and warnings.
+
+To view the results log, double click your account. A new tab opens and displays the account log information.
+
+ Account:: This shows the migration status. The progress bar shows the state of the migration, accompanied by status messages. *Min/Avg/Max* are the minimum, average and maximum times (in milliseconds) to migrate items in that account. Read/Write indicate proportionally how much time is spent reading data from the source vs. writing data to the Zimbra Collaboration server. These figures are useful for detecting network/server bottlenecks. For example, 90%:10% would indicate the source is the bottleneck.
+ ** Double-click your account name in Accounts, and an individual tab shows folder-by-folder migration status, along with folder-by-folder bottleneck statistics mentioned above. Click *X* on the appropriate tab to close view.
+ Open Log File:: Opens the log file associated with your `PST` file's migration. The Log files are at `%temp%\ZimbraMigration\Logs\*.log`. Each migration generates several log files. `*migrate.log` contains overall migration session data. `*migrate-SUMMARY.log` contains a summary of key events from the migration session. In addition there will be one log for each account migrated -- `*migrate [src-account-name]` to `[dest-account-name].log`.
+ Stop:: Click Stop to stop the migration. To restart, go back to the previous view, and click the Migrate button.
+ Exit:: Click Exit to close the migration tool.
+
+== Migration Wizard CLI
+Zimbra PST Migration Wizard also has a command line interface to help users migrate their `PST` files to Zimbra Collaboration Server using one command with multiple, intuitively named, arguments.
+
+The command requires a configuration file (`XML`) and a `PST` file.
+[#create-config-file]
+=== Creating Configurations file
+. Launch {product-name}.
+. Specify <<#source-info, Source Information>>.
+. Specify <<#destination-info, Destination Information>>.
+. <<#select-options, Select options>> applicable to current migration.
++
+NOTE: Options chosen here can be overridden by specifying the arguments available in the command line utility.
++
+. Once done, click *Save* to save the above configurations as an `XML` file.
+
+=== Running the Utility
+Format::
+`ZimbraMigrationConsole ConfigxmlFile=<path to XML file> [arg1] [arg2] ...`
+
+Example::
+`ZimbraMigrationConsole ConfigxmlFile=../Config.xml Calendar=true Contacts=true`
+
+Explanation::
+The tool migrated Calendar and Contacts from the PST mentioned in the `XML` file
+
+NOTE: The tool accepts multiple other arguments which are precisely like when <<#select-options, selecting options>> to migrate. Run the utility with `-Help` as a switch to see all supported arguments.
+
+// [cols=2*,options="header"]
+// |===
+// | Argument | Description
+// | `ConfigxmlFile=`           |   Location of the `xml` file. Must include the entire path to `xml` file.
+// | `DataFile=`                |   PST file for the user to be migrated. Must include the entire path to `xml` file.
+// | `ZimbraHost=`              |   The Zimbra server hostname
+// | `ZimbraPort=`              |   The Zimbra port
+// | `ZimbraID=`                |   The Zimbra user ID.
+// | `ZimbraPwd=`               |   Password for Zimbra
+// | `Mail=`                    |   `true` or `false`. Set `true` to migrate all emails. If not specified, option specified when <<#create-config-file>>, is considered.
+// | `Calendar=`                |   `true` or `false`. Set `true` to migrate Calendar and appointments.
+// | `Contacts=`                |   `true` or `false`. `true` to migrate Contacts.
+// | `Tasks=`                   |   `true` or `false`. `true` to migrate Tasks.
+// | `Sent=`                    |   `true` or `false`. `true` to migrate Sent.
+// | `DeletedItems=`            |   `true` or `false`. `true` to migrate DeletedItems.
+// | `Junk=`                    |   `true` or `false`. `true` to migrate Junk.
+// | `LogLevel=`                |   Debug, Info, Trace. This option provides various levels of logging
+// | `IsSkipFolders=`           |   `true` or `false`. This option provides skipping of folders
+// | `FoldersToSkip=`           |   comma separated folder names to be skipped
+// | `IsOnOrAfter=`             |   `true` or `false`. This option provides the date filter to migration
+// | `MigrateOnOrAfter=`        |   Date in the format YYYY-MM-DD. Items from this date and after get migrated
+// | `IsMaxMessageSize=`        |   `true` or `false`. This option provides the maxmessagesize filter to migration
+// | `MaxMessageSize=`          |   a numeric value. Items whose size falls into this category after get migrated
+// | `IsSkipPrevMigratedItems=` |   `true` or `false`. To skip previously migrated items
+// | `Silent=`                  |   `true` or `false`. `true` to suppress 'Press any key'
+// |===
+
+IMPORTANT: Arguments, when specified in the command line utility, override options selected while creating the configurations file.
+
+Once the command runs successfully, the console displays the status of the migration.

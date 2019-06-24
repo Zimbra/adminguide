@@ -53,6 +53,10 @@ include::adminconsole.adoc[]
 
 <<<
 
+include:ZimbraPSTMigration.adoc[]
+
+<<<
+
 include::configuration.adoc[]
 
 <<<
