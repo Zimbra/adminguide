@@ -99,7 +99,7 @@ For this, we add *Human Resources*, *Accounts*, and *Administration* to *Corpora
 [#GetZimbraId]
 === Get Zimbra ID
 
-`zimbraId` is a unique identifier associated with each email address. To <<#AddUsers, assign users to groups>> and to <<#SpecifyRoot, specify a group as root>>.
+`zimbraId` is a unique identifier associated with an email address. It is used to <<#AddUsers, assign users to groups>> and to <<#SpecifyRoot, specify a group as root>>.
 
 IMPORTANT: For this example, and everywhere else we have used a placeholder (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) for `zimbraId`.
 
