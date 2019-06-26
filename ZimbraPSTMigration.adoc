@@ -94,7 +94,7 @@ Example::
 `ZimbraMigrationConsole ConfigxmlFile=../Config.xml Calendar=true Contacts=true`
 
 Explanation::
-The tool migrated Calendar and Contacts from the PST mentioned in the `XML` file
+The tool migrates Calendar and Contacts from the PST mentioned in the `XML` file
 
 NOTE: The tool accepts multiple other arguments which are precisely like when <<#select-options, selecting options>> to migrate. Run the utility with `-Help` as a switch to see all supported arguments.
 
