@@ -4,18 +4,19 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.9">
+<meta name="generator" content="Asciidoctor 2.0.7">
 <meta name="author" content="v8.8.15, June 2019">
 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 <title>Zimbra Collaboration Administrator Guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
-/* Uncomment @import statement to use as custom stylesheet */
+/* Uncomment @import statement when using as custom stylesheet */
 /*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
-audio,video{display:inline-block}
+audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
+script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
 a{background:none}
 a:focus{outline:thin dotted}
@@ -220,8 +221,8 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
-.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .listingblock>.content{position:relative}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
 .listingblock:hover code[data-lang]::before{display:block}
@@ -264,8 +265,7 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
 table.tableblock{max-width:100%;border-collapse:separate}
 p.tableblock:last-child{margin-bottom:0}
-td.tableblock>.content>:last-child{margin-bottom:-1.25em}
-td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
+td.tableblock>.content{margin-bottom:-1.25em}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
 table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
 table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
@@ -448,7 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_license">License</a></li>
-<li><a href="#introduction">Introduction</a>
+<li><a href="#_introduction">Introduction</a>
 <ul class="sectlevel2">
 <li><a href="#_audience">Audience</a></li>
 <li><a href="#_third_party_components">Third-Party Components</a></li>
@@ -724,6 +724,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#backup-ng-guide">Backup Next Generation NG</a>
 <ul class="sectlevel2">
 <li><a href="#real-time-scan">Real Time Scan</a></li>
+<li><a href="#blobless-backup-mode">Blobless Backup Mode</a></li>
 <li><a href="#smartscan">SmartScan</a></li>
 <li><a href="#purge">Purge</a></li>
 <li><a href="#external-backup">External Backup</a></li>
@@ -732,6 +733,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#external-restore">External Restore</a></li>
 <li><a href="#restore-deleted-account">Restore Deleted Account</a></li>
 <li><a href="#item-restore">Item Restore</a></li>
+<li><a href="#raw-restore">Raw Restore</a></li>
 <li><a href="#disaster-recovery">Disaster Recovery</a></li>
 <li><a href="#unrestorable-items">Unrestorable Items</a></li>
 <li><a href="#docoherencycheck">doCoherencyCheck</a></li>
@@ -767,6 +769,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#zimbra-stores">Zimbra Stores</a></li>
 <li><a href="#domoveblobs">doMoveBlobs</a></li>
 <li><a href="#volume-management">Volume Management</a></li>
+<li><a href="#centralized-storage">Centralized Storage</a></li>
 <li><a href="#policy-management">Policy Management</a></li>
 <li><a href="#_volumes_on_amazon_s3_compatible_services">Volumes on Amazon S3 Compatible Services</a></li>
 <li><a href="#item-deduplication">Item Deduplication</a></li>
@@ -826,22 +829,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#advanced-topics">Advanced Topics</a></li>
 </ul>
 </li>
-<li><a href="#_zimbra_talk_v2">Zimbra Talk V2</a>
+<li><a href="#_zimbra_connect">Zimbra Connect</a>
 <ul class="sectlevel2">
-<li><a href="#_what_is_zimbra_talk_v2">What is Zimbra Talk V2</a></li>
+<li><a href="#_what_is_zimbra_connect">What is Zimbra Connect</a></li>
 <li><a href="#_licensing_2">Licensing</a></li>
-<li><a href="#_zimbra_chat_and_zimbra_talk_v2">Zimbra Chat and Zimbra Talk V2</a></li>
-<li><a href="#_zimbra_talk_v2_zimlet_installation">Zimbra Talk V2 Zimlet installation</a></li>
-<li><a href="#_zimbra_talk_v2_administration">Zimbra Talk V2 administration</a></li>
+<li><a href="#_zimbra_chat_and_zimbra_connect">Zimbra Chat and Zimbra Connect</a></li>
+<li><a href="#_zimbra_connect_zimlet_installation">Zimbra Connect Zimlet installation</a></li>
+<li><a href="#_zimbra_connect_administration">Zimbra Connect administration</a></li>
 <li><a href="#_browser_compatibility">Browser compatibility</a></li>
 <li><a href="#_ui">UI</a></li>
-<li><a href="#_groups_spaces_and_channels">Groups, Spaces and Channels</a></li>
+<li><a href="#_instant_messaging_and_corporate_communication">Instant Messaging and Corporate Communication</a></li>
 <li><a href="#_video_chat">Video Chat</a></li>
 <li><a href="#_presence">Presence</a></li>
 <li><a href="#_unread_messages">Unread Messages</a></li>
 <li><a href="#_chat_history">Chat History</a></li>
 <li><a href="#_stunturn_server">STUN/TURN Server</a></li>
-<li><a href="#_cli">CLI</a></li>
 </ul>
 </li>
 <li><a href="#_zimbra_open_drive">Zimbra Open Drive</a>
@@ -858,7 +860,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_zimbra_drive">Zimbra Drive</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_introduction_2">Introduction</a></li>
 <li><a href="#_features">Features</a></li>
 <li><a href="#_differences_between_briefcase_and_drive">Differences between Briefcase and Drive</a></li>
 <li><a href="#_drive_v2_ui">Drive V2 UI</a></li>
@@ -870,7 +872,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_zimbra_docs">Zimbra Docs</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction_2">Introduction</a></li>
+<li><a href="#_introduction_3">Introduction</a></li>
 <li><a href="#_components_3">Components</a></li>
 <li><a href="#_document_management_flow">Document Management Flow</a></li>
 <li><a href="#_networking_and_ports">Networking and ports</a></li>
@@ -908,7 +910,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_abq_soap_api">Appendix D: ABQ - SOAP API</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction_3">Introduction</a></li>
+<li><a href="#_introduction_4">Introduction</a></li>
 <li><a href="#_abq_api">ABQ API</a></li>
 </ul>
 </li>
@@ -962,29 +964,26 @@ Buffalo, New York 14202</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="introduction">Introduction</h2>
+<h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Zimbra Collaboration is a full-featured messaging and collaboration
-solution that includes email, address book, calendaring, tasks, and Web
-document authoring.</p>
+<p>Zimbra Collaboration is a full-featured messaging and collaboration solution that includes email, address book, calendaring, tasks, and Web document authoring.</p>
 </div>
 <div class="sect2">
 <h3 id="_audience">Audience</h3>
 <div class="paragraph">
-<p>This guide is intended for system administrators responsible for
-installing, maintaining, and supporting the server deployment of
-Zimbra Collaboration.</p>
+<p>This guide is for system administrators responsible for installing, maintaining, and supporting the server deployment of Zimbra Collaboration.</p>
 </div>
 <div class="paragraph">
-<p>Readers of this guide should have the following recommended knowledge
-and skill sets:</p>
+<p>Readers of this guide should have the following recommended knowledge and skill sets:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Familiarity with the associated technologies and standards Linux
-operating system, and open source concepts</p>
+<p>Familiarity with the associated technologies and standards</p>
+</li>
+<li>
+<p>Linux operating system and open source concepts</p>
 </li>
 <li>
 <p>Industry practices for mail system management</p>
@@ -995,23 +994,16 @@ operating system, and open source concepts</p>
 <div class="sect2">
 <h3 id="_third_party_components">Third-Party Components</h3>
 <div class="paragraph">
-<p>Where possible, Zimbra Collaboration adheres to existing industry
-standards and open source implementations for backup management, user
-authentications, operating platform, and database management. However,
-Zimbra only supports the specific implementations described in the
-Zimbra Collaboration architecture overview in the Product Overview
-chapter as officially tested and certified for the Zimbra Collaboration.
-This document might occasionally note when other tools are available in
-the marketplace, but such mention does not constitute an endorsement or
-certification.</p>
+<p>Where possible, Zimbra Collaboration adheres to existing industry standards and open source implementations for backup management, user authentication, operating platform, and database management.
+However, it only supports the specific implementations described in the Zimbra Collaboration architecture overview in the Product Overview chapter as officially tested and certified.
+This document might occasionally note when other tools are available in the marketplace, but such mention does not constitute an endorsement or certification.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_support_and_contact_information">Support and Contact Information</h3>
 <div class="paragraph">
-<p>Visit <a href="https://www.zimbra.com"><strong>www.zimbra.com</strong></a> to join the community and to be a part of
-building the best open source messaging solution. We appreciate your
-feedback and suggestions.</p>
+<p>Visit <a href="https://www.zimbra.com"><strong>www.zimbra.com</strong></a> to join the community and to be a part of building the best open source messaging solution.
+We appreciate your feedback and suggestions.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1043,8 +1035,8 @@ feedback and suggestions.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Let us know what you like about the product and what you would like to
-see in the product. Post your ideas to the Zimbra Forum.</p>
+<p>Let us know what you like about the product and what you would like to see in the product.
+Post your ideas to the Zimbra Forum.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -8427,7 +8419,7 @@ Options chosen here can be overridden by specifying the arguments available in t
 </dd>
 <dt class="hdlist1">Explanation</dt>
 <dd>
-<p>The tool migrated Calendar and Contacts from the PST mentioned in the <code>XML</code> file</p>
+<p>The tool migrates Calendar and Contacts from the PST mentioned in the <code>XML</code> file</p>
 </dd>
 </dl>
 </div>
@@ -24961,37 +24953,27 @@ needed.</p>
 <h2 id="_legal_requests_for_information">Legal Requests for Information</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The legal intercept feature makes copies of email messages that are sent,
-received, or saved as drafts from targeted accounts and sends these
-messages to a designated &#8220;shadow&#8221; email address.</p>
+<p>The Legal Intercept feature makes copies of email messages sent, received, or saved as drafts from targeted accounts and sends these messages to a designated &#8220;shadow&#8221; email address.</p>
 </div>
 <div class="paragraph">
-<p>Legal Intercept can be configured to send the complete content of the
-message or to send only the header information. When a targeted account
-sends, receives, or saves a draft message, an intercept message is
-automatically created to forward copies of the messages as attachments to
-the specified email address.</p>
+<p>Legal Intercept can be configured to send the complete content of the message or to send only the header information. When a targeted account sends, receives, or saves a draft message, an intercept message is automatically created to forward copies of the messages as attachments to the specified email address.</p>
 </div>
 <div class="sect2">
 <h3 id="_legal_intercept_settings">Legal Intercept Settings</h3>
 <div class="paragraph">
-<p>The legal intercept feature can be configured either for a Class of Service
-or for individual accounts. The feature is configured from the CLI, using
-<code>zmprov</code>.</p>
+<p>The Legal Intercept feature can be configured either for a Class of Service or an individual account.
+The feature is configured from the CLI, using <code>zmprov</code>.</p>
 </div>
 <div class="paragraph">
-<p>The only required configuration to set up legal intercept is to enable the
-feature&#8201;&#8212;&#8201;<code>zimbraInterceptAddress</code>&#8201;&#8212;&#8201;on target accounts or COS.</p>
+<p>The only required configuration to set up Legal Intercept is to enable the feature&#8201;&#8212;&#8201;<code>zimbraInterceptAddress</code>&#8201;&#8212;&#8201;on target accounts or COS.</p>
 </div>
 <div class="paragraph">
-<p>You can enable the attribute zimbraInterceptSendHeadersOnly to send only
-the header information of the email message instead of sending the
-complete message.</p>
+<p>You can enable the attribute <code>zimbraInterceptSendHeadersOnly</code> to send only the header information of the email message instead of sending the complete message.</p>
 </div>
 <div class="sect3">
 <h4 id="_setting_up_legal_intercept">Setting Up Legal Intercept</h4>
 <div class="paragraph">
-<p>Specify the intercept address where the intercepted messages are sent.</p>
+<p>Specify the intercept address to receive intercepted messages.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -25004,7 +24986,7 @@ complete message.</p>
 </div>
 </li>
 <li>
-<p>If enabling intercept for an account:</p>
+<p>If enabling Intercept for an account:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="bash">zmprov ma &lt;accountname@example.com&gt; zimbraInterceptAddress &lt;account@intercept.example.com&gt;</code></pre>
@@ -25014,14 +24996,13 @@ complete message.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>If you are going to use the default intercept message template and From
-address (postmaster@&lt;youraddress.com&gt;), legal intercept is set up.</p>
+<p>If you are going to use the default intercept message template and From address (<code>postmaster@&lt;yourdomain.com&gt;`</code>), a Legal Intercept is set up.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_setting_up_legal_intercept_to_forward_message_header">Setting Up Legal Intercept to Forward Message Header</h4>
+<h4 id="_setting_up_legal_intercept_to_forward_the_message_header">Setting Up Legal Intercept to Forward the Message Header</h4>
 <div class="paragraph">
-<p>To forward the header information, not the complete message for an account:</p>
+<p>To forward the header information, instead of the complete message for an account:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -25032,27 +25013,27 @@ address (postmaster@&lt;youraddress.com&gt;), legal intercept is set up.</p>
 <div class="sect3">
 <h4 id="_modifying_the_intercept_cover_email_message">Modifying the Intercept Cover Email Message</h4>
 <div class="paragraph">
-<p>An email message is automatically created to forward copies of the
-intercepted messages as attachments. The default message includes:</p>
+<p>An email message is automatically created to forward copies of the intercepted messages as attachments.
+The default message includes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>From</strong> address is &#8220;postmaster@&lt;example.com&gt;&#8221;</p>
+<p><strong>From</strong> address is &#8220;postmaster@&lt;yourdomain.com&gt;&#8221;</p>
 </li>
 <li>
-<p><strong>Subject</strong> line &#8220;Intercept message for &lt;<a href="mailto:account@example.com">account@example.com</a>&gt;
+<p><strong>Subject</strong> line &#8220;Intercept message for &lt;<a href="mailto:account@yourdomain.com">account@yourdomain.com</a>&gt;
 &lt;interceptedmessage subject&gt;&#8221;</p>
 </li>
 <li>
-<p><strong>Message</strong> &#8220;Intercept message for &lt;<a href="mailto:account@example.com">account@example.com</a>&gt;.<br>
+<p><strong>Message</strong> &#8220;Intercept message for &lt;<a href="mailto:account@yourdomain.com">account@yourdomain.com</a>&gt;.<br>
 Operation=&lt;type of message&gt;, folder=&lt;foldername&gt;, folder ID=&lt;#&gt;&#8221;.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The cover email message can be modified. Use the following parameters to
-modify the email message.</p>
+<p>The cover email message can be modified.
+Use the following parameters to modify the email message.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -25091,8 +25072,7 @@ modify the email message.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Use steps in this section to change the from name, the subject line, or
-text in the message body:</p>
+<p>Use steps in this section to change the from-name, the subject line, or text in the message body:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -25141,26 +25121,22 @@ To modify by COS, type <code>zmprov mc {cosname} &#8230;&#8203;</code>.
 <div class="sect2">
 <h3 id="_creating_mailbox_snapshots_for_legal_discovery">Creating Mailbox Snapshots for Legal Discovery</h3>
 <div class="paragraph">
-<p>You can create a query for the user&#8217;s mailbox using the REST URL format to
-search for specific types of email messages and attachments and have these
-messages zipped and saved to your computer. This <code>zip</code> file can be forwarded
-to a requesting law enforcement agency.</p>
+<p>You can create a query for the user&#8217;s mailbox using the REST URL format to search for specific types of email messages and attachments and have these messages zipped and saved to your computer.
+This <code>zip</code> file can be forwarded to a requesting law enforcement agency.</p>
 </div>
 <div class="paragraph">
-<p>Email message is displayed as an <code>.eml</code> file name after the subject line.
-The attachments are saved in the format that they were delivered.</p>
+<p>The email message appears as an <code>.eml</code> file name after the subject line.
+The attachments get saved in the format that they were delivered.</p>
 </div>
 <div class="sect3">
 <h4 id="_creating_a_mailbox_snapshot_zip_file">Creating a Mailbox Snapshot <code>zip</code> File</h4>
 <div class="paragraph">
-<p>You must be logged into the ZCS Administration Console to
-create the <code>zip</code> file. You create a query for one account at a time.</p>
+<p>You must be logged into the ZCS Administration Console to create the <code>zip</code> file. You create a query for one account at a time.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>In the Administration Console address field of the browser, after
-<strong>7071/</strong>, type:</p>
+<p>In the Administration Console address field of the browser, after the port number <strong>7071/</strong>, type:</p>
 <div class="paragraph">
 <p><code>home/&lt;username&gt;?fmt=zip&amp;query=&lt;searchquerystring&gt;</code></p>
 </div>
@@ -25173,28 +25149,24 @@ create the <code>zip</code> file. You create a query for one account at a time.<
 </div>
 </div>
 <div class="paragraph">
-<p>In the above example, the search query is requesting a <code>zip</code> file of all
-email messages and attachments in the Inbox after June 13, 2008 for an
-account called user1.</p>
+<p>In the above example, the search query is requesting a <code>zip</code> file of all accounts called <code>user1</code>.</p>
 </div>
 <div class="paragraph">
-<p>You can use any search operators that are used for searching in
-ZCS. For example, you can search by folder (in:folder_name),
-by sender&#8217;s name (from:&lt;someone&gt;), and you can use multiple search
-terms. See the Search Tips wiki page for keyword examples,
-<a href="https://wiki.zimbra.com/wiki/Search_Tips" class="bare">https://wiki.zimbra.com/wiki/Search_Tips</a>.</p>
+<p>You can use any search operators supported for searching in ZCS.
+For example, you can search by folder (<code>in:folder_name</code>), by sender&#8217;s name (<code>from:&lt;someone&gt;</code>), and you can use multiple search terms.
+See the Search Tips wiki page for keyword examples, <a href="https://wiki.zimbra.com/wiki/Search_Tips" class="bare">https://wiki.zimbra.com/wiki/Search_Tips</a>.</p>
 </div>
 </li>
 <li>
-<p>Press <strong>Enter</strong> or the arrow to create the zip. A <strong>Confirm</strong> box displays,
-asking if you want to navigate away from this page.</p>
+<p>Press <strong>Enter</strong> or the arrow to create the zip.
+A <strong>Confirm</strong> box displays, asking if you want to navigate away from this page.</p>
 </li>
 <li>
 <p>Click <strong>OK</strong>.</p>
 </li>
 <li>
-<p>Choose where you want to save the <code>zip</code> file. This <code>zip</code> file is ready to be
-delivered.</p>
+<p>Choose where you want to save the <code>zip</code> file.
+This <code>zip</code> file is ready to be delivered.</p>
 </li>
 </ol>
 </div>
@@ -26745,6 +26717,61 @@ the mailbox.</p>
 </div>
 </div>
 <div class="sect2">
+<h3 id="blobless-backup-mode">Blobless Backup Mode</h3>
+<div class="paragraph">
+<p>Blobless Backup Mode is a new feature that avoids backing up item blobs while still safeguarding all other item-related information.</p>
+</div>
+<div class="paragraph">
+<p>This mode is designed to take advantage of advanced storage capabilities of the storage solution such as built-in backup or data replication optimizing both the backup module&#8217;s disk space usage and restore speed.</p>
+</div>
+<div class="sect3">
+<h4 id="blobless-requirements">Blobless Backup Requirements</h4>
+<div class="paragraph">
+<p>These requirements must be met to enable Blobless Backup Mode:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The server is running Zimbra 8.8.15 or higher.</p>
+</li>
+<li>
+<p>No "independent" third-party volumes must exist: Blobless Backup Mode is only compatible with local volumes and centralized third-party volumes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Blobless Backup Mode is storage-agnostic and can be enabled on any server or infrastructure that meets the requirements above regardless of the specific storage vendor.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="how-blobless-backup-mode-works">How Blobless Backup Mode works</h4>
+<div class="paragraph">
+<p>Blobless Backup Mode works exactly as its default counterpart: the RealTime Scanner takes care of backing up item changes while the SmartScan manages domain/cos/account consistency, the only difference between the two is that in Blobless Backup Mode the backup contains no items of kind <code>blob</code> while still saving all metadata and transaction history.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s essential to consider that once enabled, Blobless Backup Mode affects the entire server and no blobs get backed up regardless of the target volume and HSM policies.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="restoring-data-from-a-blobless-backup-dataset">Restoring Data from a Blobless Backup dataset</h4>
+<div class="paragraph">
+<p>To date, Blobless Backup Mode is only compatible with the "Raw Restore" operation. In the future, additional restore operations will become compatible with blobless datasets.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enabling-blobless-backup-mode">Enabling Blobless Backup Mode</h4>
+<div class="paragraph">
+<p>Blobless Backup Mode can be enabled or disabled through the <code>backupBloblessMode</code> NG attribute at global and server level:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>zxsuite config global set attribute backupBloblessMode value true
+zxsuite config server set mail.example.com attribute backupBloblessMode value true</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="smartscan">SmartScan</h3>
 <div class="sect3">
 <h4 id="what-is-the-smart-scan">What is the SmartScan?</h4>
@@ -27742,11 +27769,195 @@ Shows item with id = 1 belonging to account a7300a00-56ec-46c3-9773-c6ef7c4f3636
 </div>
 <div class="paragraph">
 <p>She then calls the Administrator to restore the deleted item.
-Knowing the itemID and the email address, the Administrator runs the following
-as the <code>zimbra</code> user to restore the missing item:</p>
+Knowing the itemID and the email address, the Administrator runs the following as the <code>zimbra</code> user to restore the missing item:</p>
 </div>
 <div class="paragraph">
 <p><code>zxsuite backup doItemRestore <a href="mailto:user@domain.com">user@domain.com</a> 339</code></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="raw-restore">Raw Restore</h3>
+<div class="paragraph">
+<p>The "Raw Restore" operation is a new DR-type restore operation that is compatible with both standard and blobless backup.
+In contrast to similar restore modes such as the External Restore, the Raw Restore operates at a lower level restoring all item metadata maintaining the original IDs for all objects restored.</p>
+</div>
+<div class="paragraph">
+<p>The Raw Restore restores the source server&#8217;s Centralized Storage configuration.
+This step ensures that any data stored inside of a Centralized Storage is immediately available.
+ If you are using local or independent third-party volumes, it is easy to move the item BLOBs from the primary storage or to restore those from a backup using the Blob Restore operation.</p>
+</div>
+<div class="sect3">
+<h4 id="differences-between-external-restore-and-raw-restore">Differences between External Restore and Raw Restore</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">External Restore</th>
+<th class="tableblock halign-left valign-top">Raw Restore</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Can be used on any Zimbra version regardless of the source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must match the very same Zimbra version and patch level as those on the source server</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Does not restore any setting</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restores Centralized Storage settings</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Does not support blobless Backup Paths</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is designed for blobless Backup Paths and compatible with standard Backup Paths</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Does restore item BLOBs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Does not restore item BLOBs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restored objects get created anew</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restored objects maintain their original ID</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="what-will-be-restored">What <strong>will</strong> be restored</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Centralized Storage configuration and settings</p>
+</li>
+<li>
+<p>Domains</p>
+</li>
+<li>
+<p>Classes of Service</p>
+</li>
+<li>
+<p>Distribution lists</p>
+</li>
+<li>
+<p>Mailboxes</p>
+</li>
+<li>
+<p>Mailbox preferences</p>
+</li>
+<li>
+<p>Item metadata</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="what-will-not-be-restored">What <strong>will not</strong> be restored</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Item Blobs</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running-a-raw-restore">Running a Raw Restore</h4>
+<div class="paragraph">
+<p>The Raw Restore is only available through the <code>zxsuite</code> CLI tool:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[zimbra@mail ~]$ zxsuite backup doRawRestore
+Perform a disaster recovery
+
+Syntax:
+   zxsuite backup doRawRestore {source_path} [attr1 value1 [attr2 value2...]]
+
+
+PARAMETER LIST
+
+NAME                     TYPE                  EXPECTED VALUES    DEFAULT
+source_path(M)           String
+notifications(O)         Email Address[,..]
+skipProvisioning(O)      Boolean               true|false         false
+deleteWhenConflict(O)    Boolean               true|false         false
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite backup doRawRestore /my/backup/path notifications user1@example.com,user2@example.com skipProvisioning false deleteWhenConflict false
+Performs a Raw Restore without restoring provisioning or deleting a mailbox when ids are conflicting, and sends notifications to user1@example.com and user2@example.com
+The disaster recovery operation does not perform blob restore, use doRestoreBlobs when needed.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="usage-scenarios">Usage scenarios</h4>
+<div class="paragraph">
+<p><strong>Restore of a single-server infrastructure</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Setup a new server (install Zimbra, configure Global and Server settings).</p>
+</li>
+<li>
+<p>Manually create any local or independent 3rd-party volume as it was on the original server.</p>
+</li>
+<li>
+<p>Start a Raw Restore using to restore domains, CoS mailboxes, and item metadata (mailboxes won&#8217;t be accessible until this step completes).</p>
+</li>
+<li>
+<p>If the source backup was not running in Blobless Mode, run zxsuite backup doRestoreBlobs for all volumes to restore item BLOBS.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Loss of a single mailbox node in a multiserver infrastructure</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a new mailbox node to the infrastructure.</p>
+</li>
+<li>
+<p>Manually create any local or independent 3rd-party volume as it was on the original server.</p>
+</li>
+<li>
+<p>Start a Raw Restore using the <code>skipProvisioning true</code> parameter to restore item metadata (mailboxes won&#8217;t be accessible until this step completes).</p>
+</li>
+<li>
+<p>If the source backup was not running in Blobless Mode, run zxsuite backup doRestoreBlobs for all volumes to restore item BLOBS.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Loss of multiple mailbox servers in an infrastructure</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Setup a new empty infrastructure (all servers and roles, setting up Global and Server configuration).</p>
+</li>
+<li>
+<p>Delete default <code>admin</code>, <code>gal</code>, <code>ham</code>, and <code>spam</code> accounts.</p>
+</li>
+<li>
+<p>On all mailbox servers, manually create any local or independent 3rd-party volume as it was on the original server.</p>
+</li>
+<li>
+<p>On the first mailbox server, start a Raw Restore using to restore domains, CoS mailboxes, and item metadata (mailboxes won&#8217;t be accessible until this step completes).</p>
+</li>
+<li>
+<p>On all other mailbox servers, start a Raw Restore using the <code>skipProvisioning true</code> parameter to restore item metadata.</p>
+</li>
+<li>
+<p>Once steps 3 and 4 complete, If the source backup was not running in Blobless Mode run <code>zxsuite backup doRestoreBlobs</code> for all volumes on all mailbox servers to restore item BLOBS.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -31731,6 +31942,101 @@ Usage example:
 zxsuite hsm doVolumeToVolumeMove sourceVolume destVolume
 Moves the whole contents of sourceVolume to destVolume</pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="centralized-storage">Centralized Storage</h3>
+<div class="paragraph">
+<p>The Centralized Storage feature allows to use an S3 bucket to host data coming from multiple servers at the same time sharing the same directory structure, as opposed to "independent" volumes which are self-contained and whose directory structure is strictly related to the server and volume itself.</p>
+</div>
+<div class="paragraph">
+<p>This allows for better data management in large multistore environments and greatly improves mailbox move speed.</p>
+</div>
+<div class="sect3">
+<h4 id="enabling-centralized-storage">Enabling Centralized Storage</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create the centralized volume on any one of your servers using the <code>zxsuite hsm doCreateVolume</code> command.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha">
+<li>
+<p>All volume types except for FileBlob are compatible;</p>
+</li>
+<li>
+<p>Make sure to add the centralized TRUE flag to set the volume as a Centralized Storage;</p>
+</li>
+<li>
+<p>The full syntax for the command depends on the storage type;</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Once the Centralized Volume has been created, use the <code>zxsuite doCreateVolume Centralized</code> command on all other mailbox servers to copy the Centralized Volume&#8217;s configuration from the first server and add it to the volume list.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha">
+<li>
+<p>The full syntax for the command is zxsuite hsm doCreateVolume Centralized {server_name} {volume_name}</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="centralized-storage-structure">Centralized Storage Structure</h4>
+<div class="paragraph">
+<p>Storage Structure
+Data is stored in a Centralized Volume plainly, as the main directory of the volume contains a single empty directory for each server connected to the volume and a directory for each mailbox stored in it at the very same level.</p>
+</div>
+<div class="paragraph">
+<p>In the following example, servers 3aa2d376-1c59-4b5a-94f6-101602fa69c6 and 595a4409-6aa1-413f-9f45-3ef0f1e560f5 are both connected to the same Centralized volume, where 3 mailboxes are stored. As you can see, the effective server where the mailboxes are hosted is irrelevant to the storage.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>_
+|- 3aa2d376-1c59-4b5a-94f6-101602fa69c6/
+|- 595a4409-6aa1-413f-9f45-3ef0f1e560f5/
+|- ff46e039-28e3-4343-9d66-92adc60e60c9/
+\
+ |-- 357-104.msg
+ |-- 368-115.msg
+ |-- 369-116.msg
+ |-- 373-120.msg
+ |-- 374-121.msg
+ |-- 375-122.msg
+ |-- 376-123.msg
+ |-- 383-130.msg
+|- 4c022592-f67d-439c-9ff9-e3d48a8c801b/
+\
+ |-- 315-63.msg
+ |-- 339-87.msg
+ |-- 857-607.msg
+ |-- 858-608.msg
+ |-- 859-609.msg
+ |-- 861-611.msg
+ |-- 862-612.msg
+ |-- 863-613.msg
+ |-- 864-614.msg
+ |-- 865-615.msg
+ |-- 866-616.msg
+ |-- 867-617.msg
+ |-- 868-618.msg
+|- dafd5569-4114-4268-9201-14f4a895a3d5/
+\
+ |-- 357-104.msg
+ |-- 368-115.msg
+ |-- 369-116.msg
+ |-- 373-120.msg
+ |-- 374-121.msg
+ |-- 375-122.msg
+ |-- 376-123.msg
+ |-- 383-130.msg
+ |-- 384-131.msg</pre>
 </div>
 </div>
 </div>
@@ -37567,54 +37873,112 @@ xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@54
 </div>
 </div>
 <div class="sect1">
-<h2 id="_zimbra_talk_v2">Zimbra Talk V2</h2>
+<h2 id="_zimbra_connect">Zimbra Connect</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_what_is_zimbra_talk_v2">What is Zimbra Talk V2</h3>
+<h3 id="_what_is_zimbra_connect">What is Zimbra Connect</h3>
 <div class="paragraph">
-<p>Zimbra Talk V2 integrates a fully fledged corporate instant messaging platform inside the Zimbra WebClient, including Group and Corporate Messaging, File Sharing, Screen Sharing and informal Videoconferencing capabilities.</p>
+<p>New for Zimbra Collaboration 8.8.15,
+Zimbra Connect integrates a fully fledged corporate instant messaging platform inside the Zimbra WebClient, including Group and Corporate Messaging, File Sharing, Screen Sharing and informal Video Chat capabilities.</p>
 </div>
 <div class="sect3">
-<h4 id="_differences_with_zimbra_talk_legacy">Differences with Zimbra Talk (Legacy)</h4>
+<h4 id="_differences_with_zimbra_talk_v2">Differences with Zimbra Talk V2</h4>
 <div class="paragraph">
-<p>The main differences between Zimbra Talk V2 and the legacy Zimbra Talk
-implementation are the following:</p>
+<p>The main differences between Zimbra Connect and Zimbra Talk V2 implementation are the following:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>No third-party products involved</p>
-</li>
-<li>
-<p>No additional resources required</p>
-</li>
-<li>
-<p>Improved usability and UI</p>
-</li>
-<li>
-<p>No installation required (the Zimbra Talk V2 core is included in Zimbra
-Network Edition starting from version 8.8.8)</p>
-</li>
-<li>
-<p>Peer-to-Peer protocols to avoid overloading Zimbra</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>On a practical level, Zimbra Talk V2 is both easier to use and to manage and
-provides more features to end users.</p>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 60. Back-end</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Zimbra Talk V2</th>
+<th class="tableblock halign-left valign-top">Zimbra Connect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supports XMPP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No XMPP Support</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No dedicated API Set</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Features a dedicated API set and client protocol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client/Server communication is SOAP-based</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client/Server communication is based on WebSockets</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 61. Front-end</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Zimbra Talk V2</th>
+<th class="tableblock halign-left valign-top">Zimbra Connect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User interaction is based on a buddy list</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User interaction is based on the GAL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Buddy list-based minimal UI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">History-based minimal UI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bulkier, more crowded UI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lighter, less cluttered UI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Space settings are defined in the space itself</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Space settings are defined by the space&#8217;s "General" channel</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User-based video and audio feed control - users can autonomously mute/stop other user&#8217;s audio and video feed only affecting themselves.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host-based video and audio feed control - host can mute a participant or stop a video feed affecting all participants. Users can still mute/stop their feeds.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 62. Features</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Zimbra Talk V2</th>
+<th class="tableblock halign-left valign-top">Zimbra Connect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File exchange is available in Chats, Groups, and Channels</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File exchange will be available in Chats, Groups, and Channels starting with Zimbra 8.8.15p2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instant Meeting is available</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instant Meeting will be available starting with Zimbra 8.8.15p1</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_frontend_features">Frontend Features</h4>
 <div class="paragraph">
-<p>Zimbra Talk V2 includes the following front-end features:</p>
+<p>Zimbra Connect includes the following front-end features:</p>
 </div>
 <div class="ulist">
 <ul>
-<li>
-<p>Buddy List management and Presence</p>
-</li>
 <li>
 <p>Message delivery and read awareness</p>
 </li>
@@ -37628,10 +37992,10 @@ provides more features to end users.</p>
 <p>Corporate Messaging (Spaces and Channels)</p>
 </li>
 <li>
-<p>Group Videoconferencing</p>
+<p>Group Video Calls</p>
 </li>
 <li>
-<p>Channel Videoconferencing w/ unlimited participants</p>
+<p>Channel Video calls</p>
 </li>
 <li>
 <p>File Sharing</p>
@@ -37648,7 +38012,7 @@ provides more features to end users.</p>
 <div class="sect3">
 <h4 id="_backend_features">Backend Features</h4>
 <div class="paragraph">
-<p>Zimbra Talk V2 includes the following backend features:</p>
+<p>Zimbra Connect includes the following backend features:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -37656,14 +38020,10 @@ provides more features to end users.</p>
 <p>COS and User availability</p>
 </li>
 <li>
-<p>XMPP compatibility for 1-to-1 IM</p>
-</li>
-<li>
 <p>Built-in TURN server compatibility</p>
 </li>
 <li>
-<p>No core installation needed. Zimlet installation through a package
-manager.</p>
+<p>No core installation needed. Zimlet installation through a package manager.</p>
 </li>
 <li>
 <p>No configuration needed</p>
@@ -37681,102 +38041,133 @@ manager.</p>
 <div class="sect2">
 <h3 id="_licensing_2">Licensing</h3>
 <div class="paragraph">
-<p>Zimbra Talk V2 is licensed on a per-user basis. License information is
-included in the Network Edition license file just as for any other
-Zimbra NE feature. Its Advanced features can be enabled by Global Admins
-to any number of users up to the limit allowed by the license, and only
-«advanced» users count towards any licensing limit.</p>
+<p>Zimbra Connect is licensed on a per-user basis. License information is included in the Network Edition license file just as for any other Zimbra NE feature.
+Global Admins can enable its Advanced features for any number of users up to the limit allowed by the license, and only "advanced" users count towards any licensing limit.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_zimbra_chat_and_zimbra_talk_v2">Zimbra Chat and Zimbra Talk V2</h3>
+<h3 id="_zimbra_chat_and_zimbra_connect">Zimbra Chat and Zimbra Connect</h3>
 <div class="paragraph">
-<p>Zimbra Chat and Zimbra Talk V2 are not compatible and interoperable,
-meaning that the two products cannot coexist on any Zimbra NE
-infrastructure. The Zimbra Chat zimlet is uninstalled during the
-installation process of the Zimbra Talk V2 Zimlet package. However, Zimbra Talk V2
-includes all «basic» IM features provided by Zimbra Chat which will
-be automatically enabled for all users who don’t have access to the
-«advanced» Zimbra Talk V2 features. «Advanced» users are able to use all
-of the product’s features with other «advanced» users and to use 1-to-1
-Instant Messaging with «basic» users, while «Basic» users are allowed to
-use the basic 1-to-1 features with all other users.</p>
+<p>Zimbra Chat and Zimbra Connect are neither compatible nor interoperable, meaning that the two products cannot coexist on any Zimbra NE infrastructure.
+The Zimbra Chat zimlet gets uninstalled during the installation process of the Zimbra Connect Zimlet package.
+However, Zimbra Connect includes all <em>basic</em> IM features provided by Zimbra Chat, which automatically gets enabled for all users who don’t have access to the <em>advanced</em> Zimbra Connect features.
+<em>Advanced</em> users can use all of the product’s features with other <em>advanced</em> users and can use 1-to-1 Instant Messaging with <em>basic</em> users, while <em>Basic</em> users can use the basic 1-to-1 features with all other users.</p>
 </div>
 <div class="paragraph">
-<p>All users start off as «Basic» users, and the «Advanced» features can be
-enabled by Global and Delegated admins.</p>
+<p>All users start as «Basic» users, and the «Advanced» features can be enabled by Global and Delegated admins.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_zimbra_talk_v2_zimlet_installation">Zimbra Talk V2 Zimlet installation</h3>
+<h3 id="_zimbra_connect_zimlet_installation">Zimbra Connect Zimlet installation</h3>
 <div class="paragraph">
-<p>The Zimbra Talk V2 Zimlet is available in the Zimbra repository and can be
-easily installed and upgraded through the operating system&#8217;s package
-manager.</p>
+<p>The Zimbra Connect Zimlet is available in the Zimbra repository and can be easily installed and upgraded through the operating system&#8217;s package manager.</p>
 </div>
 <div class="sect3">
-<h4 id="_zimbra_talk_v2_zimlet_installation_on_red_hat_and_centos">Zimbra Talk V2 Zimlet installation on Red Hat and CentOS</h4>
+<h4 id="_zimbra_connect_zimlet_installation_on_red_hat_and_centos">Zimbra Connect Zimlet installation on Red Hat and CentOS</h4>
 <div class="paragraph">
-<p>On Red Hat and CentOS, simply run</p>
+<p>To install the Zimlet on Red Hat and CentOS, run:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>yum install zimbra-talk</pre>
+<pre>yum install zimbra-connect</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>to install the Zimlet.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_zimbra_talk_v2_zimlet_installation_on_ubuntu">Zimbra Talk V2 Zimlet installation on Ubuntu</h4>
+<h4 id="_zimbra_connect_zimlet_installation_on_ubuntu">Zimbra Connect Zimlet installation on Ubuntu</h4>
 <div class="paragraph">
-<p>On Ubuntu, simply run</p>
+<p>To install the Zimlet on Ubuntu, run:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>apt-get install zimbra-talk</pre>
+<pre>apt-get install zimbra-connect</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>to install the Zimlet.</p>
+<p>Installing the Zimlet removes any Zimbra Chat components from the server automatically.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_migrating_from_zimbra_talk_to_zimbra_connect">Migrating from Zimbra Talk to Zimbra Connect</h4>
+<div class="paragraph">
+<p>While Zimbra Talk and Zimbra Connect can coexist on a server, as their core components and Zimlets are compatible with each other, this is strongly discouraged as the two share the same Database, and to fully use Connect the database content must be migrated from Talk format to Connect format.</p>
 </div>
 <div class="paragraph">
-<p>Installing the Zimlet will automatically remove any Zimbra Chat
-components from the server, as Zimbra Talk V2 includes all the Zimbra Chat
-features.</p>
+<p>In order to migrate Talk data to Connect, use the <code>doImportChannels</code> command:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[zimbra@mailserver ~]$ zxsuite connect doImportChannels
+Syntax:
+   zxsuite connect doImportChannels [attr1 value1 [attr2 value2...]]
+
+
+PARAMETER LIST
+
+NAME                                   TYPE       EXPECTED VALUES
+delete_destination_before_import(O)    Boolean    true|false
+
+(M) == mandatory parameter, (O) == optional parameter</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This operation can execute multiple times, but it&#8217;s a one-way process and cannot be reverted: once users are switched to Connect (by disabling the Talk Zimlet and enabling the Connect Zimlet), it&#8217;s not possible to move their Connect data back to Talk.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_zimbra_talk_v2_administration">Zimbra Talk V2 administration</h3>
+<h3 id="_zimbra_connect_administration">Zimbra Connect administration</h3>
 <div class="paragraph">
-<p>In the Zimbra Administration Console, a new section is added to the
-lefthand menu of both Classes of Service and Users that allows to:</p>
+<p>Zimbra Connect features can be enabled and disabled via the <code>zxsuite config</code> command line utility:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Enable Zimbra Talk V2 «Advanced» features for that CoS/User</p>
+<p>Enable Zimbra Connect «Advanced» features</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Property: <code>teamChatEnabled</code></p>
 </li>
 <li>
-<p>Enable or disable the chat history for that CoS/User</p>
-</li>
-<li>
-<p>Enable or disable Videoconferencing for that CoS/User</p>
+<p>Available in: COS, account</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>The same options can also be found in the «Global Settings» section of
-the Admin Console.</p>
+</li>
+<li>
+<p>Enable or disable the chat history</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Property: <code>historyEnabled</code></p>
+</li>
+<li>
+<p>Available in:  global, server, COS, account</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enable or disable Video Chat</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Property: <code>videoChatEnabled</code></p>
+</li>
+<li>
+<p>Available in: global, server, COS, account</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_browser_compatibility">Browser compatibility</h3>
 <div class="paragraph">
-<p>Zimbra Talk V2 features are available on all browsers officially
-supported by the Zimbra Web Client, with some client-side limitations:</p>
+<p>Zimbra Connect features are available on all browsers officially supported by the Zimbra Web Client, with some client-side limitations:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -37789,20 +38180,13 @@ supported by the Zimbra Web Client, with some client-side limitations:</p>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Browser</th>
-<th class="tableblock halign-left valign-top">IM Panel</th>
-<th class="tableblock halign-left valign-top">Talk Tab</th>
+<th class="tableblock halign-left valign-top">Quick Access Sidebar</th>
+<th class="tableblock halign-left valign-top">Connect Tab</th>
 <th class="tableblock halign-left valign-top">Videochat</th>
 <th class="tableblock halign-left valign-top">Screen sharing</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Internet Explorer 9/10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Internet Explorer 11+</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
@@ -37841,209 +38225,168 @@ supported by the Zimbra Web Client, with some client-side limitations:</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Google Chrome users must install the "Zextras Companion" extension in
-order to use the Screen Sharing feature, publicly available in the
-Chrome Web Store.</p>
+<p>Google Chrome users must install the "Zextras Companion" extension in order to use the Screen Sharing feature, publicly available in the Chrome Web Store.</p>
 </div>
 <div class="paragraph">
-<p>Firefox users must be sure to be running at least version 52 of the
-browser in order to be able to use the Screen Sharing feature.</p>
+<p>Firefox users must be sure to be running at least version 66 of the browser to be able to use the Screen Sharing feature.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_ui">UI</h3>
 <div class="paragraph">
-<p>The Zimbra Talk V2 UI is developed in REACT and seamlessly integrated with
-the Zimbra Web Client. It is composed of two client-side components: the
-IM Panel and the fully featured Talk Tab.</p>
+<p>The Zimbra Connect UI is developed in PREACT and seamlessly integrated with the Zimbra Web Client.
+It is composed of two client-side components: the Quick Access Sidebar and the fully featured Connect Tab.</p>
 </div>
 <div class="paragraph">
-<p>The IM Panel is inherited from Zimbra Chat and allows for quick Instant
-Messaging, both for 1-to-1 and group conversations. Advanced Zimbra Talk V2
-features such as File Sharing and Videoconferencing are available in the
-IM Pane only for users who have the Zimbra Talk V2 feature set enabled either at
-account or COS level. This is available to both Basic and Advanced
-users.</p>
+<p>The Quick Access Sidebar allows for quick Instant Messaging, both for 1-to-1 and group conversations.
+Advanced Zimbra Connect features such as File Sharing and Video Chat are available in the IM Pane only for users who have the Zimbra Connect feature set enabled either at account or COS level.</p>
 </div>
 <div class="paragraph">
-<p>The Talk Tab is the full-sized Zimbra Talk V2 UI, which contains all corporate
-instant messaging features such as Spaces and Channels. This is only
-available to Advanced users.</p>
+<p>The Connect Tab is the full-sized Zimbra Connect UI, which contains all corporate instant messaging features such as Spaces and Channels.
+The tab itself is available for both Basic and Advanced users, but corporate features are only available to Advanced users.</p>
 </div>
 <div class="sect3">
-<h4 id="_im_panel">IM Panel</h4>
+<h4 id="_quick_access_sidebar">Quick Access Sidebar</h4>
 <div class="paragraph">
-<p>The IM Panel is inherited from Zimbra Chat and includes the very same
-features for "Basic" users as well as a few new additions for "Advanced"
-users, such as groups, file sharing and videoconferencing.</p>
+<p>The Quick Access Sidebar displays the last people, groups, and channels the user has interacted with and allows to open a quick chat window with all of those.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/im_panel_1.png" alt="im_panel_1.png" title="im_panel_1.png"></span></p>
+<p>It is available for both "Basic" users and "Advanced" users and provides additional features for the latter.</p>
 </div>
 <div class="paragraph">
-<p>Advanced features such as File Sharing and Videoconferencing can be
-found in the options menu on the top-right corner of the IM window.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/im_panel_features_1.png" alt="im_panel_features_1.png" title="im_panel_features_1.png"></span></p>
+<p><span class="image"><img src="images/connect_quick_chat_1.png" alt="connect_quick_chat_1.png" height="200" title="connect_quick_chat_1.png"></span>
+<span class="image"><img src="images/connect_quickaccess_sidebar_1.png" alt="connect_quickaccess_sidebar_1.png" height="400" title="connect_quickaccess_sidebar_1.png"></span></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_talk_tab">Talk Tab</h4>
+<h4 id="_connect_tab">Connect Tab</h4>
 <div class="paragraph">
-<p>The Talk Tab is a fully fledged Zimbra feature tab that can be
-interacted with in the same way as all other feature tabs (e.g. Mail or
-Calendar).</p>
+<p>The Connect Tab is a fully fledged Zimbra feature tab that can be interacted with in the same way as all other feature tabs (e.g., Mail or Calendar).</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/accessing_1.jpg" alt="accessing_1.jpg" title="accessing_1.jpg"></span></p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/home.jpg" alt="home.jpg" title="home.jpg"></span></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_buddy_list_management_and_conversations">Buddy List Management and Conversations</h4>
-<div class="paragraph">
-<p>The same Buddy List and Conversations found in the IM Panel can be also
-found in the "Buddies" section of the Talk Tab.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/buddies_list.jpg" alt="buddies_list.jpg" title="buddies_list.jpg"></span></p>
+<p><span class="image"><img src="images/connect_home_1.jpg" alt="connect_home_1.jpg" title="connect_home_1.jpg"></span></p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_groups_spaces_and_channels">Groups, Spaces and Channels</h3>
+<h3 id="_instant_messaging_and_corporate_communication">Instant Messaging and Corporate Communication</h3>
+<div class="sect3">
+<h4 id="_1_to_1_chat">1-to-1 chat</h4>
 <div class="paragraph">
-<p>End users will be faced with three new "concepts" in Zimbra Talk V2:
-Groups, Spaces, and Channels.</p>
+<p>One-to-one Chats can start from either the Quick Access Sidebar or the Connect Tab:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>on the former, select one of the available entries (based on your chat history) and start chatting with that person right away</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/connect_new_chat_2.png" alt="connect_new_chat_2.png" title="connect_new_chat_2.png"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>on the latter click on "New," then "New Chat" and select the person you want to chat with from the GAL</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/connect_new_chat_1.png" alt="connect_new_chat_1.png" title="connect_new_chat_1.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Recent 1-to-1 chats appear in the "Conversations" section of the Connect Tab and the Quick Access Sidebar (round icon).</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_groups">Groups</h4>
 <div class="paragraph">
-<p>Groups are the basic way of communicating with multiple people at the
-same time (up to 5 total). Those are non-persistent entities that are
-not tied to any specific space: any user can create a group inviting
-people from their Buddy List and any group member can invite more people
-in the same way. When all users leave a group, the group itself ceases
-to exist.</p>
+<p>Groups are how users communicate with multiple people at the same time (by default up to 5 total).
+Those are non-persistent entities not tied to any specific space. Any user can create a group inviting people, and any group member can invite more people in the same way.
+When all users leave a group, the group itself ceases to exist.</p>
 </div>
 <div class="sect4">
 <h5 id="_groups_features">Groups Features</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>A user in a Group can add more users to the Group itself up to the
-allowed limit.</p>
+<p>A user in a Group can add more users to the Group itself up to the allowed limit.</p>
 </li>
 <li>
-<p>A user in a Group can chat with all of the others. Messages sent in a Group are viewed by all members of that Group.</p>
+<p>A user in a Group can chat with all of the others.
+All members of that Group can view all messages sent to the Group.</p>
 </li>
 <li>
-<p>A user in a Group can send files to all of the others. Files sent in a Group are available to all members of that Group.</p>
+<p>A user in a Group can send files to all of the others.
+Files sent in a Group are available to all members of that Group.</p>
 </li>
 <li>
 <p>An user in a Group can start a video chat with all of the others.
-Group video chats can be joined at any time by all members of the
-Group.</p>
+Group video chats can be joined at any time by all members of the Group.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Global Administrators can change the allowed maximum number of group members in the Zimbra Connect section of the Global settings in the Admin Console.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_groups_ui">Groups UI</h5>
 <div class="paragraph">
-<p>Groups are contained in a dedicated section of the Talk Tab, which
-allows access to all Group-related features:</p>
+<p>Recent Group chats appear in the "Conversations" section of the Connect Tab and the Quick Access Sidebar (rounded square icon).</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p>Creating a Group</p>
 <div class="paragraph">
-<p>To create a new Group, click on the "New Group" button in the "Groups"
-section of the Talk Tab</p>
+<p>To create a new Group, click on the "New" button in the Connect Tab, and select "New Group."</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/create_new_group_1.jpg" alt="create_new_group_1.jpg" title="create_new_group_1.jpg"></span></p>
+<p><span class="image"><img src="images/connect_create_new_group_1.jpg" alt="connect_create_new_group_1.jpg" title="connect_create_new_group_1.jpg"></span></p>
 </div>
 <div class="paragraph">
-<p>then, add the Group&#8217;s title, select the buddies you wish to invite and
-click on "Create"</p>
+<p>then, add the Group&#8217;s title, select the buddies you wish to invite and click on "Create."</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/create_new_group_2.jpg" alt="create_new_group_2.jpg" title="create_new_group_2.jpg"></span></p>
+<p><span class="image"><img src="images/connect_create_new_group_2.jpg" alt="connect_create_new_group_2.jpg" title="connect_create_new_group_2.jpg"></span></p>
 </div>
 </li>
 <li>
-<p>Inviting a buddy to a Group</p>
+<p>Inviting a participant to a Group</p>
 <div class="paragraph">
-<p>To invite one or more buddies to a Group, first expand the Group&#8217;s
-options and click on "Invite"</p>
+<p>To invite one or more buddies to a Group expand the Group&#8217;s Info, select the users to be added and click on "Save."</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/add_buddy_to_group_1.jpg" alt="add_buddy_to_group_1.jpg" title="add_buddy_to_group_1.jpg"></span></p>
-</div>
-<div class="paragraph">
-<p>then select the buddies you want to invite and click on "Invite" when
-done.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/add_buddy_to_group_2.jpg" alt="add_buddy_to_group_2.jpg" title="add_buddy_to_group_2.jpg"></span></p>
+<p><span class="image"><img src="images/connect_add_user_to_group_1.jpg" alt="connect_add_user_to_group_1.jpg" title="connect_add_user_to_group_1.jpg"></span></p>
 </div>
 </li>
 <li>
-<p>Sending an email to all members of a Group</p>
+<p>Starting a Group Video Chat</p>
 <div class="paragraph">
-<p>To send an email to all members of a Group, click on the "New Mail"
-button in the Group&#8217;s options.</p>
+<p>To start a Group video chat, click on the "Camera" icon on the top of the Group&#8217;s chat window.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/new_mail_group_1.png" alt="new_mail_group_1.png" title="new_mail_group_1.png"></span></p>
-</div>
-</li>
-<li>
-<p>Sending a file to all members of a Group</p>
-<div class="paragraph">
-<p>To send a file to all members of a group, click on the "paperclip" icon
-in the Group&#8217;s chat window.</p>
+<p><span class="image"><img src="images/connect_group_start_videochat_1.jpg" alt="connect_group_start_videochat_1.jpg" title="connect_group_start_videochat_1.jpg"></span></p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/paperclip.png" alt="paperclip.png" title="paperclip.png"></span></p>
-</div>
-<div class="paragraph">
-<p>Files sent to a group will be uploaded in a dedicated personal briefcase
-before being shared.</p>
-</div>
-</li>
-<li>
-<p>Starting a Group video chat</p>
-<div class="paragraph">
-<p>To start a Group video chat, click on the "Camera" icon on the
-Group&#8217;s chat window.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/camera.png" alt="camera.png" title="camera.png"></span></p>
-</div>
-<div class="paragraph">
-<p>Any member of the Group can join the call at any time by clicking on the
-same button.</p>
+<p>Any member of the Group can join the call at any time by clicking on the same button.</p>
 </div>
 </li>
 <li>
 <p>Leaving a Group</p>
 <div class="paragraph">
-<p>To leave a Group, first click on "Leave Group" in the Group&#8217;s properties</p>
+<p>To leave a Group, first, click on "Leave Group" in the Group&#8217;s Info</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/leave_group_1.jpg" alt="leave_group_1.jpg" title="leave_group_1.jpg"></span></p>
+<p><span class="image"><img src="images/connect_leave_group_1.png" alt="connect_leave_group_1.png" title="connect_leave_group_1.png"></span></p>
 </div>
 <div class="paragraph">
-<p>then, click on "Leave" under the warning message.</p>
+<p>then, click on "Yes" under the warning message.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/leave_group_2.jpg" alt="leave_group_2.jpg" title="leave_group_2.jpg"></span></p>
+<p><span class="image"><img src="images/connect_leave_group_2.png" alt="connect_leave_group_2.png" title="connect_leave_group_2.png"></span></p>
 </div>
 </li>
 </ul>
@@ -38054,30 +38397,21 @@ same button.</p>
 <h4 id="_spaces">Spaces</h4>
 <div class="paragraph">
 <p>Spaces are a themed container that can hold any number of Channels.
-Think of a Space as a community center where people gather to discuss
-different topics in dedicated areas (named Channels).</p>
+Think of a Space as a community center where people gather to discuss different topics in dedicated areas (named Channels).</p>
 </div>
 <div class="sect4">
 <h5 id="_spaces_features">Spaces Features</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Each space has a unique name and topic. The name cannot be changed
-after creating the space while the Topic can be changed by clicking the
-"Edit" icon next to the topic itself.</p>
+<p>Each space has a unique name and topic.
+You may change both the name and the Topic by clicking on the relevant field in the Space&#8217;s settings.</p>
 </li>
 <li>
-<p>Users in a space can send an email to all members of that very same space by clicking on the "New Mail" button below the space&#8217;s name and
-topic.</p>
+<p>Members can leave a space at any time.</p>
 </li>
 <li>
-<p>Members can leave a space at any time by clicking the "Leave Space"
-button.</p>
-</li>
-<li>
-<p>Members can create new channels and invite new people to the space
-using the appropriate buttons (respectively, "New Channel" and
-"Invite").</p>
+<p>Space Administrators can create new channels and invite new people to the space using the appropriate buttons.</p>
 </li>
 </ul>
 </div>
@@ -38085,79 +38419,76 @@ using the appropriate buttons (respectively, "New Channel" and
 <div class="sect4">
 <h5 id="_spaces_ui">Spaces UI</h5>
 <div class="paragraph">
-<p>Spaces are contained in a dedicated section of the Talk Tab, which
-allows access to all Space-related features:</p>
+<p>Spaces appear in a dedicated section of the Connect Tab, which gives access to all Space-related features:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p>Creating a Space</p>
 <div class="paragraph">
-<p>To create a new Space, first click on the "New Space" button in the
-"Spaces" section of the Talk Tab</p>
+<p>To create a new Space, click on the "New" button in the Connect Tab, and select "New Space."</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/new_space_1.jpg" alt="new_space_1.jpg" title="new_space_1.jpg"></span></p>
+<p><span class="image"><img src="images/connect_new_space_1.jpg" alt="connect_new_space_1.jpg" title="connect_new_space_1.jpg"></span></p>
 </div>
 <div class="paragraph">
-<p>then, enter the Space&#8217;s name and topic, select any buddies to invite and
-finally, click on "Create".</p>
+<p>then, enter the Space&#8217;s name and topic, select any users to invite and finally, click on "Save."</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/new_space_2.jpg" alt="new_space_2.jpg" title="new_space_2.jpg"></span></p>
-</div>
-</li>
-<li>
-<p>Sending an email to all members of a Space</p>
-<div class="paragraph">
-<p>To send an email to all members of a Space, click on the "New Mail"
-button in the Space&#8217;s options.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/new_mail_space_1.png" alt="new_mail_space_1.png" title="new_mail_space_1.png"></span></p>
+<p><span class="image"><img src="images/connect_new_space_2.jpg" alt="connect_new_space_2.jpg" title="connect_new_space_2.jpg"></span></p>
 </div>
 </li>
 <li>
 <p>Leaving a Space</p>
 <div class="paragraph">
-<p>To leave a Space, click on the "Leave Space" in the Space&#8217;s properties.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/leave_space_1.jpg" alt="leave_space_1.jpg" title="leave_space_1.jpg"></span></p>
+<p>To leave a Space, click on the "Leave Space" in the Space&#8217;s General Channel Info.</p>
 </div>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Participants can leave a space at any time, while a Space Administrator can only leave a space if there is at least one other Space Administrator.</p>
+</div>
+<div class="paragraph">
+<p>Both need to be invited to join the space again, and former Space Administrators get invited as regular participants but can be granted Administrator rights again.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_space_settings">Space Settings</h5>
+<div class="paragraph">
+<p>Its General Channel Info defines a Space&#8217;s settings (see below).</p>
+</div>
+<div class="paragraph">
+<p>The Space&#8217;s creator is also the first Space Administrator and can grant the same rights to any other user by clicking on the crown icon in the appropriate entry of the participant list.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/connect_space_acls_1.png" alt="connect_space_acls_1.png" title="connect_space_acls_1.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Only Space Administrators can invite new participants, create new channels, kick people, and delete channels within the space.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_channels">Channels</h4>
 <div class="paragraph">
-<p>Channels are topic-defined areas inside of the same space. Those can
-contain any number of users, and unlike groups, users are able to
-autonomously join any Channel in a Space they are in instead of being
-invited to it by a member.</p>
+<p>Channels are topic-defined areas inside of the same space.
+Those can contain any number of users, and unlike Groups, users can autonomously join any Channel in a Space they are in instead of being invited to it by a member.</p>
 </div>
 <div class="paragraph">
-<p>Every time a new Space is created, a "General" channel is automatically
-created within it, which all users automatically join when they join the
-Space itself.</p>
+<p>Each new Space has a "General" channel automatically created within it, which defines the space&#8217;s properties (e.g., Title and Topic) and which all users automatically join when they join the Space.</p>
 </div>
 <div class="sect4">
 <h5 id="_channels_features">Channels Features</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>A user in a Channel can chat with all of the others. Messages sent in a Channel are viewed by all members of that channel.</p>
+<p>A user in a Channel can chat with all of the others.
+All members of that channel can view all messages sent on the Channel.</p>
 </li>
 <li>
-<p>A user in a Channel can send files to all of the others. Files sent
-in a Channel are available to all members of that channel.</p>
-</li>
-<li>
-<p>A user in a Channel can start a video chat with all of the
-others. Channel video chats can be joined at any time by all
-members of the Channel.</p>
+<p>A user in a Channel can start a video chat with all of the others.
+Channel video chats can be joined at any time by all members of the Channel.</p>
 </li>
 </ul>
 </div>
@@ -38165,92 +38496,69 @@ members of the Channel.</p>
 <div class="sect4">
 <h5 id="_channnels_ui">Channnels UI</h5>
 <div class="paragraph">
-<p>Channels are contained in Spaces within the Talk Tab and all of the
-Channel-related features are managed there, by:</p>
+<p>Channels appear in Spaces within the Connect Tab and all of the Channel-related features are managed there, by:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p>Creating a Channel</p>
 <div class="paragraph">
-<p>To create a new Channel, first click on the "New Channel" button within
-a Space</p>
+<p>To create a new Channel, click on the "New" button, and select "New Channel."</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/new_channel_1.jpg" alt="new_channel_1.jpg" title="new_channel_1.jpg"></span></p>
+<p><span class="image"><img src="images/connect_new_channel_1.png" alt="connect_new_channel_1.png" title="connect_new_channel_1.png"></span></p>
 </div>
 <div class="paragraph">
-<p>then, enter the Channel&#8217;s name and topic, select any buddies to invite
-and finally, click on "Create".</p>
+<p>then select:</p>
 </div>
+<div class="olist loweralpha">
+<ol class="loweralpha">
+<li>
+<p>the Space that should contain the Channel (<em>mandatory</em>)</p>
+</li>
+<li>
+<p>the Channel&#8217;s name (<em>mandatory</em>)</p>
+</li>
+<li>
+<p>the Channel&#8217;s topic (<em>optional</em>)</p>
 <div class="paragraph">
-<p><span class="image"><img src="images/new_channel_2.jpg" alt="new_channel_2.jpg" title="new_channel_2.jpg"></span></p>
+<p>finally, click on "Save."</p>
+</div>
+</li>
+</ol>
 </div>
 </li>
 <li>
 <p>Joining a Channel</p>
 <div class="paragraph">
-<p>To join a Channel, click on the Channel itself and then on "Join
-Channel"</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/join_channel_1.jpg" alt="join_channel_1.jpg" title="join_channel_1.jpg"></span></p>
-</div>
-</li>
-<li>
-<p>Inviting a Buddy to a Channel</p>
-<div class="paragraph">
-<p>To invite one or more buddies to a Channel, click on the "Invite" button
-under "Channel Participants", select the buddies you wish to add and
-then click on "Invite"</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/invite_to_channel_1.jpg" alt="invite_to_channel_1.jpg" title="invite_to_channel_1.jpg"></span></p>
-</div>
-</li>
-<li>
-<p>Sending a file to all members of a Channel</p>
-<div class="paragraph">
-<p>To send a file to all members of a Channel, click on the "paperclip" icon in the Channel&#8217;s chat window.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/paperclip.png" alt="paperclip.png" title="paperclip.png"></span></p>
-</div>
-<div class="paragraph">
-<p>Files sent to a Channel will be uploaded to a dedicated personal briefcase before being shared.</p>
+<p>To join a Channel, click on the Channel label and then on "Join Channel."</p>
 </div>
 </li>
 <li>
 <p>Starting a Channel video chat</p>
 <div class="paragraph">
-<p>To start a Channel video chat, click on the "Camera" icon on the
-Channel&#8217;s chat window.</p>
+<p>To start a Channel video chat, click on the "Camera" icon on the Channel&#8217;s chat window.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/camera.png" alt="camera.png" title="camera.png"></span></p>
+<p><span class="image"><img src="images/connect_group_start_videochat_1.jpg" alt="connect_group_start_videochat_1.jpg" title="connect_group_start_videochat_1.jpg"></span></p>
 </div>
 <div class="paragraph">
-<p>Any member of the Channel can join the call at any time by clicking on
-the same button.</p>
+<p>Any member of the Channel can join the call at any time by clicking on the same button.</p>
 </div>
 </li>
 <li>
 <p>Leaving a Channel</p>
 <div class="paragraph">
-<p>To leave a Channel, first click on "Unsubscribe Channel" in the
-Channel&#8217;s properties</p>
+<p>To leave a Channel, first, click on the red "Leave Channel" entry in the Channel&#8217;s Info</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/leave_channel_1.jpg" alt="leave_channel_1.jpg" title="leave_channel_1.jpg"></span></p>
-</div>
-<div class="paragraph">
-<p>then, click on "Leave" under the warning message.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/leave_channel_2.jpg" alt="leave_channel_2.jpg" title="leave_channel_2.jpg"></span></p>
+<p><span class="image"><img src="images/connect_leave_channel_1.png" alt="connect_leave_channel_1.png" title="connect_leave_channel_1.png"></span></p>
 </div>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Both normal users and Space Admins can leave a channel at any time and join it afterward.</p>
 </div>
 </div>
 </div>
@@ -38258,144 +38566,58 @@ Channel&#8217;s properties</p>
 <div class="sect2">
 <h3 id="_video_chat">Video Chat</h3>
 <div class="paragraph">
-<p>Videoconferencing features are available in both Groups and Channels,
-allowing multiple people to communicate in real-time using a webcam and a headset, as well as allowing them to share their screen with all
-other attendees.</p>
+<p>Video Chat features are available in 1-to-1 chats, Groups, and Channels, allowing multiple people to communicate in real-time using a webcam and a headset, as well as allowing them to share their screen with all other attendees.</p>
 </div>
 <div class="paragraph">
-<p>This feature is based on the WebRTC protocol, a peer-to-peer
-auto-adaptive technology that allows clients to communicate directly
-without overloading the server and whose call quality is automatically
-tweaked based on the available bandwidth - with the maximum quality
-being Full HD for both video and audio. The first time a video chat
-is started, users will need to grant their browser access permissions to
-their camera and microphone.</p>
+<p>The WebRTC protocol is the foundation for this feature.
+WebRTC is a peer-to-peer auto-adaptive technology that allows clients to communicate directly without overloading the server.
+Call quality is automatically tweaked based on the available bandwidth, with the maximum quality being <em>Full HD</em> for both video and audio.
+When starting their first video chat, users need to grant their browser access permissions to their camera and microphone.</p>
 </div>
 <div class="sect3">
 <h4 id="_video_chat_ui">Video Chat UI</h4>
 <div class="paragraph">
-<p><span class="image"><img src="images/group_videochat.png" alt="group_videochat.png" title="group_videochat.png"></span></p>
+<p><span class="image"><img src="images/connect_group_videochat.png" alt="connect_group_videochat.png" title="connect_group_videochat.png"></span></p>
 </div>
 <div class="paragraph">
-<p>The video chat UI is split into three main areas:</p>
+<p>The video chat UI has three main areas:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>In the center, video streams are displayed with one main stream on the
-top and multiple secondary streams on the bottom, whose number depends
-on the screen&#8217;s resolution and window size.</p>
+<p>The center displays video streams with a single (main) stream on the top and multiple secondary streams on the bottom.
+The total number depends on the screen&#8217;s resolution and window size.</p>
 </li>
 <li>
-<p>On the top left, the Group&#8217;s or Channel&#8217;s instant messaging chat. This
-is visible and fully usable, and its history is saved in the group&#8217;s or
-channel&#8217;s chat history.</p>
+<p>On the left is the Group&#8217;s or Channel&#8217;s instant messaging chat.
+This chat is visible and entirely usable, and its history gets retained in the group&#8217;s or channel&#8217;s chat history.</p>
 </li>
 <li>
-<p>On the bottom left, the user&#8217;s own video feed and controls (disable video, mute microphone, and share screen).</p>
+<p>On the bottom left appear the user&#8217;s video feed and controls (disable video, mute microphone, and share screen).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Users can disconnect from an ongoing video chat by pressing the
-"Hang up" button in their video stream&#8217;s frame on the bottom left of the
-screen. Whenever a video chat is on, users belonging to the Group
-or Channel of the video chat will see a "Call in progress" message
-below the name of the Group or Channel and will be able to join by
-clicking on the "Camera" icon in the chat.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/call_in_progress.png" alt="call_in_progress.png" title="call_in_progress.png"></span></p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/camera.png" alt="camera.png" title="camera.png"></span></p>
+<p>Users can disconnect from an ongoing video chat by pressing the "Hang up" button in their video stream&#8217;s frame on the bottom left of the screen.
+Whenever a video chat is on, users belonging to the Group or Channel of the video chat see a "Call in progress" message below the name of the Group or Channel and may join by clicking on the "Camera" icon in the chat.</p>
 </div>
 <div class="sect4">
 <h5 id="_video_stream_control">Video Stream Control</h5>
 <div class="paragraph">
-<p>By default, video streams are displayed in a "first come, first served"
-basis according to the connection order between the peers.</p>
+<p>Video streams are displayed in a "first come, first served" basis according to the connection order between the peers.</p>
 </div>
 <div class="paragraph">
-<p>At any time, users can open the video chat preferences to access
-the "Participants" list and choose which streams to view by clicking on
-the respective user&#8217;s</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/videoconference_partecipants.png" alt="videoconference_partecipants.png" title="videoconference_partecipants.png"></span></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>The "Eye" icon next to a participant&#8217;s name will display or hide that
-participant&#8217;s video stream.</p>
-</li>
-<li>
-<p>The "Sound" icon next to a participant&#8217;s name will block the audio
-stream coming from that participant, effectively muting it for the user.</p>
-</li>
-</ul>
+<p>Every participant can mute their audio stream or stop their video stream.</p>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_screen_sharing">Screen Sharing</h5>
 <div class="paragraph">
-<p>When clicking on the Screen Share button, a pop-up window appears asking
-the user whether to share their entire screen or just a specific window:</p>
+<p><span class="image"><img src="images/connect_videochat_screensharing_1.png" alt="connect_videochat_screensharing_1.png" title="connect_videochat_screensharing_1.png"></span></p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/group_videochat_screensharing.png" alt="group_videochat_screensharing.png" title="group_videochat_screensharing.png"></span></p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_instant_meeting_video_chats_with_external_users">Instant Meeting - video chats with external users</h4>
-<div class="paragraph">
-<p>The Instant Meeting feature provides a temporary invite-only group with video chat capabilities that can also include external users.</p>
-</div>
-<div class="paragraph">
-<p>To start an Instant Meeting, simply select the "Instant Meeting" option in the "New" menu in the Talk Tab</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/talk_new_instant_meeting.png" alt="talk_new_instant_meeting.png" title="talk_new_instant_meeting.png"></span></p>
-</div>
-<div class="paragraph">
-<p>This will open the Instant Meeting Creation pop-up, where multiple users can be invited to participate, up to the maximum group size set by the Administrator.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/talk_instant_meeting_creation.png" alt="talk_instant_meeting_creation.png" title="talk_instant_meeting_creation.png"></span></p>
-</div>
-<div class="paragraph">
-<p>All the features and limitations of Groups apply to Instant Meetings, including the Video Call UI. Just like Groups, Instant Meetings appear in the Talk Tab and can be managed using the "Options" slide menu:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/talk_instant_meeting_options.png" alt="talk_instant_meeting_options.png" title="talk_instant_meeting_options.png"></span></p>
-</div>
-<div class="paragraph">
-<p>Attendees can exit the Instant Meeting at any time and will always be able to rejoin through the Instant Meeting Link or Zimbra Talk Tab.</p>
-</div>
-<div class="sect4">
-<h5 id="_instant_meeting_link">Instant Meeting Link</h5>
-<div class="paragraph">
-<p>Whenever an Instant Meeting is created, a unique link is generated to allow external users to join the corresponding Video Chat. The link is sent to all participants via email upon Instant Meeting creation, and can be found both in the Instant Meeting creation pop-up and in the Instant Meeting&#8217;s properties.</p>
-</div>
-<div class="paragraph">
-<p>When joining the Instant Meeting by accessing the link, attendees will need to enter their email address and a nickname in order to join:</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/talk_instant_meeting_login.png" alt="talk_instant_meeting_login.png" title="talk_instant_meeting_login.png"></span></p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_instant_meeting_host">Instant Meeting Host</h5>
-<div class="paragraph">
-<p>Every Instant Meetings has a "Host", which is the user that created the Instant Meeting.</p>
-</div>
-<div class="paragraph">
-<p>The Host can invite new people to the Instant Meeting and can end the meeting by simply leaving it.</p>
-</div>
-<div class="paragraph">
-<p>When the host leaves the Instant Meeting, it will end and be closed.</p>
+<p>When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window.
+After choosing, the screen sharing feed replaces the user&#8217;s webcam feed for all participants.</p>
 </div>
 </div>
 </div>
@@ -38403,13 +38625,11 @@ the user whether to share their entire screen or just a specific window:</p>
 <div class="sect2">
 <h3 id="_presence">Presence</h3>
 <div class="paragraph">
-<p>Presence management is inherited from Zimbra Chat and works the same
-way: users can choose one of the four available status messages and
-after a period of inactivity defined in the user&#8217;s preferences, the
-status is automatically set to "Away" (this latter feature has been
-temporarily disabled and will be re-enabled in one of the next Zimbra
-8.8.8 patches). As part of the presence system, all messages are now
-displayed with a variable number of check symbols:</p>
+<p>Presence is managed automatically in Zimbra Connect: whenever a user logs in, regardless of whether the Connect Tab has the focus, they appear as <strong>online</strong>.</p>
+</div>
+<div class="paragraph">
+<p>As part of the user presence system, all messages get displayed with a variable number of check symbols:
+<span class="image"><img src="images/connect_message_delivered_1.png" alt="connect_message_delivered_1.png" title="connect_message_delivered_1.png"></span></p>
 </div>
 <div class="ulist">
 <ul>
@@ -38424,69 +38644,51 @@ displayed with a variable number of check symbols:</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="images/unread_messages_tips_1.jpg" alt="unread_messages_tips_1.jpg" title="unread_messages_tips_1.jpg"></span></p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_unread_messages">Unread Messages</h3>
 <div class="paragraph">
-<p>The number of unread messages in any conversation, Group or Channel is
-always displayed on the top-right corner of the conversation, Group or
-Channel itself.</p>
+<p>The number of unread messages in any conversation, Group or Channel appears on the right side of the conversation, Group, or Channel.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/message_delivered_tick.png" alt="message_delivered_tick.png" title="message_delivered_tick.png"></span></p>
-</div>
-<div class="paragraph">
-<p><em>Example of a message delivered to the server but not yet read by all
-recipients.</em></p>
+<p><span class="image"><img src="images/connect_unread_messages_1.png" alt="connect_unread_messages_1.png" title="connect_unread_messages_1.png"></span></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_chat_history">Chat History</h3>
 <div class="paragraph">
-<p>Chat History for all 1-to-1 chats, groups, and channels is available in
-the very same window (e.g. enter a Channel to see all of that channel’s
-history) and messages delivered to offline users will appear in the
-appropriate IM conversation, group or Channel.</p>
+<p>Chat History for each 1-to-1 Chat, Group, and Channel is available in the very same window (e.g., enter a Channel to see all of that channel’s history) and messages delivered to offline users appear in the appropriate IM conversation, Group or Channel.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_stunturn_server">STUN/TURN Server</h3>
 <div class="paragraph">
-<p>Since WebRTC is a peer-to-peer protocol, all users in a video chat
-must be able to reach each other&#8217;s client in order for the communication
-to be established.</p>
+<p>Since WebRTC is a peer-to-peer protocol, all users in a video chat must be able to reach each other&#8217;s client for the connections to get established.</p>
 </div>
 <div class="paragraph">
-<p>Should this not be possible, because of NAT rules on the network or
-because of a Service Provider&#8217;s policy, using a TURN server will ensure
-proper communication between all peers. Zimbra Talk V2 is designed to
-allow using a STUN/TURN server out of the box by simply adding the TURN
-server&#8217;s URL and login information in the zimlet configuration.</p>
+<p>Should this not be possible, because of NAT rules on the network or because of a Service Provider&#8217;s policy, using a TURN server ensures proper communication between all peers.
+Zimbra Connect is designed to allow using a STUN/TURN server out of the box by simply adding the TURN server&#8217;s URL and login information in the zimlet configuration.</p>
 </div>
 <div class="sect3">
-<h4 id="_setting_up_zimbra_talk_v2_to_use_a_turn_server">Setting up Zimbra Talk V2 to use a TURN server</h4>
+<h4 id="_setting_up_zimbra_connect_to_use_a_turn_server">Setting up Zimbra Connect to use a TURN server</h4>
 <div class="paragraph">
-<p>A dedicated set of TURN configuration tools is available via CLI through
-the <code>zxsuite chat iceServer</code> command:</p>
+<p>A dedicated set of TURN configuration tools is available via CLI through the <code>zxsuite connect iceServer</code> command:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>zimbra@mailserver:~$ zxsuite chat iceServer
+<pre>zimbra@mailserver:~$ zxsuite connect iceServer
 
 Edit the list of ice servers which will be used to establish connections for video calls.
 Configuration available for global(default), cos or account.
 
   add                      - add ice server candidates using global (default), cos or account
-                             zxsuite chat iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+                             zxsuite connect iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
 
   remove                   - remove ice server candidates using global (default), cos or account
-                             zxsuite chat iceServer remove {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+                             zxsuite connect iceServer remove {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
 
   get                      - get ice server candidates using global (default), cos or account
-                             zxsuite chat iceServer get [attr1 value1 [attr2 value2...]]</pre>
+                             zxsuite connect iceServer get [attr1 value1 [attr2 value2...]]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -38495,7 +38697,7 @@ Configuration available for global(default), cos or account.
 <div class="literalblock">
 <div class="content">
 <pre>Syntax:
-   zxsuite chat iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+   zxsuite connect iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
@@ -38510,147 +38712,15 @@ cos(O)           String    default
 
 Usage example:
 
-zxsuite chat iceserver add turn:turn.example.com credential mysecret username myuser
-zxsuite chat iceserver add turn:turn.example.com credential mysecret username myuser account testaccount@example.com</pre>
+zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser
+zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser account testaccount@example.com</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Multiple TURN servers can be added to handle different users or Classes
-of Service (defined through the <code>user</code> and <code>cos</code> optional parameters of
-the command above).</p>
+<p>Multiple TURN servers can be added to handle different users or Classes of Service (defined through the <code>user</code> and <code>cos</code> optional parameters of the command above).</p>
 </div>
 <div class="paragraph">
-<p>On the TURN server side, having a single user and authenticating with
-their username and secret key is highly suggested for ease-of-use reasons,
-as a 1:1 correspondence between Zimbra users and TURN users is not
-necessary.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_cli">CLI</h3>
-<div class="paragraph">
-<p>Basic Usage:</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat {action} [options]</code></p>
-</div>
-<div class="paragraph">
-<p>Running a command without arguments will display the command&#8217;s usage
-message.</p>
-</div>
-<div class="paragraph">
-<p>Running <code>zxsuite chat</code> without any command will display the list of
-available commands.</p>
-</div>
-<div class="sect3">
-<h4 id="_zimbra_talk_v2_cli">Zimbra Talk V2 CLI</h4>
-<div class="paragraph">
-<p>::
-  <strong>doAddBuddies</strong> - Makes two users chat buddies</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat doAddBuddies {user1} {user2} [attr1 value1 [attr2 value2&#8230;&#8203;]]</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>doCleanup</strong> - Remove deleted users/friendships (executed periodically)</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat doCleanup</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>doMakeBuddies</strong> - Makes all users in a distribution list friends with
-  each other</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat doMakeBuddies {distribution_list}</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>doRemoveBuddies</strong> - Unbuddy two users</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat doRemoveBuddies {user1} {user2}</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>doRestartService</strong> - restart a given service</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat doRestartService {service_name}</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>doStartService</strong> - start a given service</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat doStartService {service_name}</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>doStopService</strong> - stop a given service</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat doStopService {service_name}</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>getAccountStatus</strong> - Get current account status</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat getAccountStatus {account}</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>getBuddyList</strong> - Shows a user&#8217;s buddyList</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat getBuddyList {account}</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>getProperty</strong> - Get configuration properties</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat getProperty [attr1 value1 [attr2 value2&#8230;&#8203;]]</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>getRooms</strong> - list rooms</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat getRooms [attr1 value1 [attr2 value2&#8230;&#8203;]]</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>getServerStatus</strong> - Get current chat server status</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat getServerStatus</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>getServices</strong> - show the current status of all services for this module</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat getServices</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>iceServer</strong> - Edit the list of ice servers which will be used to establish connections for video calls. Configuration available for
-  global(default), cos or account.</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat iceServer</code></p>
-</div>
-<div class="paragraph">
-<p>::
-  <strong>setProperty</strong> - Set configuration property</p>
-</div>
-<div class="paragraph">
-<p><code>zxsuite chat setProperty {property_name} {property_value}</code></p>
+<p>On the TURN server side, it is strongly recommended to have a single user,  authenticated with a username and secret key, for ease-of-use reasons as a 1:1 correspondence between Zimbra users and TURN users is not necessary.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -39552,7 +39622,7 @@ java -cp /opt/zimbra/lib/ext/zimbradrive/zimbradrive-extension.jar \
 <h2 id="_zimbra_drive">Zimbra Drive</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_introduction">Introduction</h3>
+<h3 id="_introduction_2">Introduction</h3>
 <div class="paragraph">
 <p>Zimbra Drive v2 is a new Zimbra component that provides both a fully fledged file storage system integrated with the Zimbra WebClient and a replacement to the old "Briefcase" component.</p>
 </div>
@@ -39991,7 +40061,7 @@ Syntax:
 <h2 id="_zimbra_docs">Zimbra Docs</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_introduction_2">Introduction</h3>
+<h3 id="_introduction_3">Introduction</h3>
 <div class="paragraph">
 <p>Zimbra Docs is based on a heavily customized LibreOffice online package allowing for collaborative editing of
 documents, spreadsheets and presentations straight from the Zimbra WebClient.</p>
@@ -41099,7 +41169,7 @@ Commands</a></p>
 <div class="sect4">
 <h5 id="account_provisioning_cmds">Account Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 60. <code>zmprov</code>&#8201;&#8212;&#8201;Account Provisioning Commands</caption>
+<caption class="title">Table 63. <code>zmprov</code>&#8201;&#8212;&#8201;Account Provisioning Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -41338,7 +41408,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 <div class="sect4">
 <h5 id="calendar_resource_provisioning_cmds">Calendar Resource Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 61. <code>zmprov</code>&#8201;&#8212;&#8201;Calendar Resource Provisioning Commands</caption>
+<caption class="title">Table 64. <code>zmprov</code>&#8201;&#8212;&#8201;Calendar Resource Provisioning Commands</caption>
 <colgroup>
 <col style="width: 40%;">
 <col style="width: 60%;">
@@ -41384,7 +41454,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 <div class="sect4">
 <h5 id="free_busy_cmds">Free Busy Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 62. <code>zmprov</code>&#8201;&#8212;&#8201;Free Busy Commands</caption>
+<caption class="title">Table 65. <code>zmprov</code>&#8201;&#8212;&#8201;Free Busy Commands</caption>
 <colgroup>
 <col style="width: 40%;">
 <col style="width: 60%;">
@@ -41422,7 +41492,7 @@ accented characters that cannot be used: ã, é, í, ú, ü, ñ.
 <div class="sect4">
 <h5 id="domain_provisioning_cmds">Domain Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 63. <code>zmprov</code>&#8201;&#8212;&#8201;Domain Provisioning Commands</caption>
+<caption class="title">Table 66. <code>zmprov</code>&#8201;&#8212;&#8201;Domain Provisioning Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -41530,7 +41600,7 @@ updated when a domain is renamed.
 <div class="sect4">
 <h5 id="cos_provisioning_cmds">COS Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 64. <code>zmprov</code>&#8201;&#8212;&#8201;COS Provisioning Commands</caption>
+<caption class="title">Table 67. <code>zmprov</code>&#8201;&#8212;&#8201;COS Provisioning Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -41609,7 +41679,7 @@ updated when a domain is renamed.
 <div class="sect4">
 <h5 id="server_provisioning_cmds">Server Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 65. <code>zmprov</code>&#8201;&#8212;&#8201;Server Provisioning Commands</caption>
+<caption class="title">Table 68. <code>zmprov</code>&#8201;&#8212;&#8201;Server Provisioning Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -41685,7 +41755,7 @@ updated when a domain is renamed.
 <div class="sect4">
 <h5 id="config_provisioning_cmds">Config Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 66. <code>zmprov</code>&#8201;&#8212;&#8201;Config Provisioning Commands</caption>
+<caption class="title">Table 69. <code>zmprov</code>&#8201;&#8212;&#8201;Config Provisioning Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -41744,7 +41814,7 @@ updated when a domain is renamed.
 <div class="sect4">
 <h5 id="distribution_list_provisioning_cmds">Distribution List Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 67. <code>zmprov</code>&#8201;&#8212;&#8201;Distribution List Provisioning Commands</caption>
+<caption class="title">Table 70. <code>zmprov</code>&#8201;&#8212;&#8201;Distribution List Provisioning Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -41851,7 +41921,7 @@ nested.
 <div class="sect4">
 <h5 id="mailbox_cmds">Mailbox Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 68. <code>zmprov</code>&#8201;&#8212;&#8201;Mailbox Commands</caption>
+<caption class="title">Table 71. <code>zmprov</code>&#8201;&#8212;&#8201;Mailbox Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -41937,7 +42007,7 @@ at a time.
 <div class="sect4">
 <h5 id="_miscellaneous_provisioning_commands">Miscellaneous Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 69. <code>zmprov</code>&#8201;&#8212;&#8201;Miscellaneous Provisioning Commands</caption>
+<caption class="title">Table 72. <code>zmprov</code>&#8201;&#8212;&#8201;Miscellaneous Provisioning Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -42009,7 +42079,7 @@ authenticate to allow for single-sign on.  Used in conjunction with
 <div class="sect4">
 <h5 id="logs_cmds">Logs Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 70. <code>zmprov</code>&#8201;&#8212;&#8201;Logs Commands</caption>
+<caption class="title">Table 73. <code>zmprov</code>&#8201;&#8212;&#8201;Logs Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -42068,7 +42138,7 @@ logging categories.</p>
 <div class="sect4">
 <h5 id="search_cmds">Search Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 71. <code>zmprov</code>&#8201;&#8212;&#8201;Search Commands</caption>
+<caption class="title">Table 74. <code>zmprov</code>&#8201;&#8212;&#8201;Search Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -42110,7 +42180,7 @@ logging categories.</p>
 <div class="sect4">
 <h5 id="share_provisioning_cmds">Share Provisioning Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 72. <code>zmprov</code>&#8201;&#8212;&#8201;Share Provisioning Commands</caption>
+<caption class="title">Table 75. <code>zmprov</code>&#8201;&#8212;&#8201;Share Provisioning Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -42135,7 +42205,7 @@ logging categories.</p>
 <div class="sect4">
 <h5 id="unified_communication_service_cmds">Unified Communication Service Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 73. <code>zmprov</code>&#8201;&#8212;&#8201;Unified Communication Service Commands</caption>
+<caption class="title">Table 76. <code>zmprov</code>&#8201;&#8212;&#8201;Unified Communication Service Commands</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -42185,7 +42255,7 @@ logging categories.</p>
 <div class="sect4">
 <h5 id="imap_pop_proxy_cmds">IMAP/POP Proxy Commands</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 74. <code>zmprov</code>&#8201;&#8212;&#8201;IMAP/POP Proxy Commands</caption>
+<caption class="title">Table 77. <code>zmprov</code>&#8201;&#8212;&#8201;IMAP/POP Proxy Commands</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
@@ -42614,7 +42684,7 @@ mailbox index by running <code>reIndexMailbox (rim)</code>.</p>
 </div>
 </div>
 <table id="zmprov_log_categories" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 75. <code>zmprov</code>&#8201;&#8212;&#8201;Log Categories</caption>
+<caption class="title">Table 78. <code>zmprov</code>&#8201;&#8212;&#8201;Log Categories</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -48032,7 +48102,7 @@ ZIMBRAEND -- DO NOT EDIT ANYTHING BETWEEN THIS LINE AND ZIMBRASTART</pre>
 <h2 id="_abq_soap_api">Appendix D: ABQ - SOAP API</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_introduction_3">Introduction</h3>
+<h3 id="_introduction_4">Introduction</h3>
 <div class="paragraph">
 <p>New for Zimbra Collaboration 8.8.15:
 The "Allow/Block/Quarantine" feature allows for granular access control of mobile devices connecting to the server.
@@ -48595,7 +48665,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-06-25 16:32:37 +0530
+Last updated 2019-06-27 15:42:06 -0400
 </div>
 </div>
 <style>
