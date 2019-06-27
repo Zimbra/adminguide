@@ -7,7 +7,7 @@
 :product-version: 8.8.15
 :copyright-year: 2019
 
-This repository contains the code necessary to build the Zimbra Administration Guide.
+This repository contains the code necessary to build the {doc-name}.
 
 This guide is for system administrators responsible for installing, maintaining, and supporting the server deployment of {product-family}.
 
@@ -43,7 +43,7 @@ To accompany the HTML output, the `images/` folder must also be copied to the ou
 cp -r ./images ~/temp/{product-version}/images
 -----
 
-When publishing the output (gh-pages branch) the "latest" link needs to be updated to point at the new version:
+When publishing the output (`gh-pages` branch) the "latest" link needs to be updated to point at the new version:
 
 [source,bash,subs=attributes+]
 -----
@@ -65,11 +65,8 @@ image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[CC BY-SA] Synacor, Inc
 
 (C) 2016-{copyright-year} by Synacor, Inc.
 
-This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
-International License unless another license agreement between you and
-Synacor, Inc. provides otherwise. To view a copy of this license, visit
-https://creativecommons.org/licenses/by-sa/4.0 or send a letter to Creative
-Commons, PO Box 1866, Mountain View, CA 94042, USA.
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License unless another license agreement between you and Synacor, Inc. provides otherwise.
+To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/4.0 or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 Synacor, Inc. +
 40 La Riviere Drive, Suite 300 +

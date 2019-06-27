@@ -108,6 +108,40 @@ Scan on the given account is triggered BEFORE the restore.
 This fixes any misaligned data and sanitizes the backed up metadata for
 the mailbox.
 
+[[blobless-backup-mode]]
+== Blobless Backup Mode
+Blobless Backup Mode is a new feature that avoids backing up item blobs while still safeguarding all other item-related information.
+
+This mode is designed to take advantage of advanced storage capabilities of the storage solution such as built-in backup or data replication optimizing both the backup module's disk space usage and restore speed.
+
+[[blobless-requirements]]
+=== Blobless Backup Requirements
+These requirements must be met to enable Blobless Backup Mode:
+
+* The server is running Zimbra 8.8.15 or higher.
+* No "independent" third-party volumes must exist: Blobless Backup Mode is only compatible with local volumes and centralized third-party volumes.
+
+Blobless Backup Mode is storage-agnostic and can be enabled on any server or infrastructure that meets the requirements above regardless of the specific storage vendor.
+
+[[how-blobless-backup-mode-works]]
+=== How Blobless Backup Mode works
+Blobless Backup Mode works exactly as its default counterpart: the RealTime Scanner takes care of backing up item changes while the SmartScan manages domain/cos/account consistency, the only difference between the two is that in Blobless Backup Mode the backup contains no items of kind `blob` while still saving all metadata and transaction history.
+
+It's essential to consider that once enabled, Blobless Backup Mode affects the entire server and no blobs get backed up regardless of the target volume and HSM policies.
+
+[[restoring-data-from-a-blobless-backup-dataset]]
+=== Restoring Data from a Blobless Backup dataset
+To date, Blobless Backup Mode is only compatible with the "Raw Restore" operation. In the future, additional restore operations will become compatible with blobless datasets.
+
+[[enabling-blobless-backup-mode]]
+=== Enabling Blobless Backup Mode
+Blobless Backup Mode can be enabled or disabled through the `backupBloblessMode` NG attribute at global and server level:
+
+....
+zxsuite config global set attribute backupBloblessMode value true
+zxsuite config server set mail.example.com attribute backupBloblessMode value true
+....
+
 [[smartscan]]
 SmartScan
 ---------
@@ -931,11 +965,98 @@ Let's say a user moves one item to the trash...
 `2013-07-18 15:25:08,962 INFO  [btpool0-4364://localhost/service/soap/FolderActionRequest] [name=user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailbox - Emptying 9 items from /Trash, removeSubfolders=true.`
 
 She then calls the Administrator to restore the deleted item.
-Knowing the itemID and the email address, the Administrator runs the following
-as the `zimbra` user to restore the missing item:
+Knowing the itemID and the email address, the Administrator runs the following as the `zimbra` user to restore the missing item:
 
 `zxsuite backup doItemRestore user@domain.com 339`
 
+[[raw-restore]]
+== Raw Restore
+The "Raw Restore" operation is a new DR-type restore operation that is compatible with both standard and blobless backup. 
+In contrast to similar restore modes such as the External Restore, the Raw Restore operates at a lower level restoring all item metadata maintaining the original IDs for all objects restored.
+
+The Raw Restore restores the source server's Centralized Storage configuration.
+This step ensures that any data stored inside of a Centralized Storage is immediately available.
+ If you are using local or independent third-party volumes, it is easy to move the item BLOBs from the primary storage or to restore those from a backup using the Blob Restore operation.
+
+[[differences-between-external-restore-and-raw-restore]]
+=== Differences between External Restore and Raw Restore
+[cols=",",options="header",]
+|===
+|External Restore |Raw Restore
+|Can be used on any Zimbra version regardless of the source    |Must match the very same Zimbra version and patch level as those on the source server
+|Does not restore any setting    |Restores Centralized Storage settings
+|Does not support blobless Backup Paths |Is designed for blobless Backup Paths and compatible with standard Backup Paths
+|Does restore item BLOBs    |Does not restore item BLOBs
+|Restored objects get created anew |Restored objects maintain their original ID
+|===
+
+[[what-will-be-restored]]
+==== What *will* be restored
+* Centralized Storage configuration and settings
+* Domains
+* Classes of Service
+* Distribution lists
+* Mailboxes
+* Mailbox preferences
+* Item metadata
+
+[[what-will-not-be-restored]]
+==== What *will not* be restored
+* Item Blobs
+
+[[running-a-raw-restore]]
+=== Running a Raw Restore
+The Raw Restore is only available through the `zxsuite` CLI tool:
+
+....
+[zimbra@mail ~]$ zxsuite backup doRawRestore
+Perform a disaster recovery
+
+Syntax:
+   zxsuite backup doRawRestore {source_path} [attr1 value1 [attr2 value2...]]
+
+
+PARAMETER LIST
+
+NAME                     TYPE                  EXPECTED VALUES    DEFAULT
+source_path(M)           String
+notifications(O)         Email Address[,..]
+skipProvisioning(O)      Boolean               true|false         false
+deleteWhenConflict(O)    Boolean               true|false         false
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite backup doRawRestore /my/backup/path notifications user1@example.com,user2@example.com skipProvisioning false deleteWhenConflict false
+Performs a Raw Restore without restoring provisioning or deleting a mailbox when ids are conflicting, and sends notifications to user1@example.com and user2@example.com
+The disaster recovery operation does not perform blob restore, use doRestoreBlobs when needed.
+....
+
+[[usage-scenarios]]
+=== Usage scenarios
+*Restore of a single-server infrastructure*
+
+1. Setup a new server (install Zimbra, configure Global and Server settings).
+2. Manually create any local or independent 3rd-party volume as it was on the original server.
+3. Start a Raw Restore using to restore domains, CoS mailboxes, and item metadata (mailboxes won't be accessible until this step completes).
+4. If the source backup was not running in Blobless Mode, run zxsuite backup doRestoreBlobs for all volumes to restore item BLOBS.
+
+*Loss of a single mailbox node in a multiserver infrastructure*
+
+1. Add a new mailbox node to the infrastructure.
+2. Manually create any local or independent 3rd-party volume as it was on the original server.
+3. Start a Raw Restore using the `skipProvisioning true` parameter to restore item metadata (mailboxes won't be accessible until this step completes).
+4. If the source backup was not running in Blobless Mode, run zxsuite backup doRestoreBlobs for all volumes to restore item BLOBS.
+
+*Loss of multiple mailbox servers in an infrastructure*
+
+1. Setup a new empty infrastructure (all servers and roles, setting up Global and Server configuration).
+2. Delete default `admin`, `gal`, `ham`, and `spam` accounts.
+3. On all mailbox servers, manually create any local or independent 3rd-party volume as it was on the original server.
+4. On the first mailbox server, start a Raw Restore using to restore domains, CoS mailboxes, and item metadata (mailboxes won't be accessible until this step completes).
+5. On all other mailbox servers, start a Raw Restore using the `skipProvisioning true` parameter to restore item metadata.
+6. Once steps 3 and 4 complete, If the source backup was not running in Blobless Mode run `zxsuite backup doRestoreBlobs` for all volumes on all mailbox servers to restore item BLOBS.
 
 [[disaster-recovery]]
 Disaster Recovery
