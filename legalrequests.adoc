@@ -1,32 +1,23 @@
 = Legal Requests for Information
+include::settings.adoc[]
 :toc:
 
-The legal intercept feature makes copies of email messages that are sent,
-received, or saved as drafts from targeted accounts and sends these
-messages to a designated "`shadow`" email address.
+The Legal Intercept feature makes copies of email messages sent, received, or saved as drafts from targeted accounts and sends these messages to a designated "`shadow`" email address.
 
-Legal Intercept can be configured to send the complete content of the
-message or to send only the header information. When a targeted account
-sends, receives, or saves a draft message, an intercept message is
-automatically created to forward copies of the messages as attachments to
-the specified email address.
+Legal Intercept can be configured to send the complete content of the message or to send only the header information. When a targeted account sends, receives, or saves a draft message, an intercept message is automatically created to forward copies of the messages as attachments to the specified email address.
 
 == Legal Intercept Settings
 
-The legal intercept feature can be configured either for a Class of Service
-or for individual accounts. The feature is configured from the CLI, using
-`zmprov`.
+The Legal Intercept feature can be configured either for a Class of Service or an individual account.
+The feature is configured from the CLI, using `zmprov`.
 
-The only required configuration to set up legal intercept is to enable the
-feature -- `zimbraInterceptAddress` -- on target accounts or COS.
+The only required configuration to set up Legal Intercept is to enable the feature -- `zimbraInterceptAddress` -- on target accounts or COS.
 
-You can enable the attribute zimbraInterceptSendHeadersOnly to send only
-the header information of the email message instead of sending the
-complete message.
+You can enable the attribute `zimbraInterceptSendHeadersOnly` to send only the header information of the email message instead of sending the complete message.
 
 === Setting Up Legal Intercept
 
-Specify the intercept address where the intercepted messages are sent.
+Specify the intercept address to receive intercepted messages.
 
 * If enabling intercept by COS:
 +
@@ -35,19 +26,18 @@ Specify the intercept address where the intercepted messages are sent.
 zmprov mc <cosname> zimbraInterceptAddress <account@intercept.example.com>
 ----
 
-* If enabling intercept for an account:
+* If enabling Intercept for an account:
 +
 [source,bash]
 ----
 zmprov ma <accountname@example.com> zimbraInterceptAddress <account@intercept.example.com>
 ----
 
-If you are going to use the default intercept message template and From
-address (postmaster@<youraddress.com>), legal intercept is set up.
+If you are going to use the default intercept message template and From address (`postmaster@<yourdomain.com>``), a Legal Intercept is set up.
 
-=== Setting Up Legal Intercept to Forward Message Header
+=== Setting Up Legal Intercept to Forward the Message Header
 
-To forward the header information, not the complete message for an account:
+To forward the header information, instead of the complete message for an account:
 [source,bash]
 ----
 zmprov ma <accountname@example.com> zimbraInterceptSendHeadersOnly TRUE
@@ -55,19 +45,19 @@ zmprov ma <accountname@example.com> zimbraInterceptSendHeadersOnly TRUE
 
 === Modifying the Intercept Cover Email Message
 
-An email message is automatically created to forward copies of the
-intercepted messages as attachments. The default message includes:
+An email message is automatically created to forward copies of the intercepted messages as attachments.
+The default message includes:
 
-* *From* address is "`postmaster@<example.com>`"
+* *From* address is "`postmaster@<yourdomain.com>`"
 
-* *Subject* line "`Intercept message for <account@example.com>
+* *Subject* line "`Intercept message for <account@yourdomain.com>
 <interceptedmessage subject>`"
 
-* *Message* "`Intercept message for <account@example.com>. +
+* *Message* "`Intercept message for <account@yourdomain.com>. +
 Operation=<type of message>, folder=<foldername>, folder ID=<#>`".
 
-The cover email message can be modified. Use the following parameters to
-modify the email message.
+The cover email message can be modified.
+Use the following parameters to modify the email message.
 
 [cols="s,",options=""]
 |=======================================================================
@@ -80,8 +70,7 @@ modify the email message.
 |NEWLINE         |Used for formatting multi-line message bodies.
 |=======================================================================
 
-Use steps in this section to change the from name, the subject line, or
-text in the message body:
+Use steps in this section to change the from-name, the subject line, or text in the message body:
 
 * To change the *From* name:
 +
@@ -111,21 +100,17 @@ To modify by COS, type `zmprov mc {cosname} ...`.
 
 == Creating Mailbox Snapshots for Legal Discovery
 
-You can create a query for the user's mailbox using the REST URL format to
-search for specific types of email messages and attachments and have these
-messages zipped and saved to your computer. This `zip` file can be forwarded
-to a requesting law enforcement agency.
+You can create a query for the user's mailbox using the REST URL format to search for specific types of email messages and attachments and have these messages zipped and saved to your computer.
+This `zip` file can be forwarded to a requesting law enforcement agency.
 
-Email message is displayed as an `.eml` file name after the subject line.
-The attachments are saved in the format that they were delivered.
+The email message appears as an `.eml` file name after the subject line.
+The attachments get saved in the format that they were delivered.
 
 === Creating a Mailbox Snapshot `zip` File
 
-You must be logged into the {product-abbrev} Administration Console to
-create the `zip` file. You create a query for one account at a time.
+You must be logged into the {product-abbrev} Administration Console to create the `zip` file. You create a query for one account at a time.
 
-. In the Administration Console address field of the browser, after
-*7071/*, type:
+. In the Administration Console address field of the browser, after the port number *7071/*, type:
 +
 `home/<username>?fmt=zip&query=<searchquerystring>`
 +
@@ -133,20 +118,16 @@ For example:
 +
 image::images/mailbox_snapshot_zip_file.png[Address Bar]
 +
-In the above example, the search query is requesting a `zip` file of all
-email messages and attachments in the Inbox after June 13, 2008 for an
-account called user1.
+In the above example, the search query is requesting a `zip` file of all accounts called `user1`.
 +
-You can use any search operators that are used for searching in
-{product-abbrev}. For example, you can search by folder (in:folder_name),
-by sender's name (from:<someone>), and you can use multiple search
-terms. See the Search Tips wiki page for keyword examples,
-https://wiki.zimbra.com/wiki/Search_Tips.
+You can use any search operators supported for searching in {product-abbrev}.
+For example, you can search by folder (`in:folder_name`), by sender's name (`from:<someone>`), and you can use multiple search terms. 
+See the Search Tips wiki page for keyword examples, https://wiki.zimbra.com/wiki/Search_Tips.
 
-. Press *Enter* or the arrow to create the zip. A *Confirm* box displays,
-asking if you want to navigate away from this page.
+. Press *Enter* or the arrow to create the zip.
+A *Confirm* box displays, asking if you want to navigate away from this page.
 
 . Click *OK*.
 
-. Choose where you want to save the `zip` file. This `zip` file is ready to be
-delivered.
+. Choose where you want to save the `zip` file. 
+This `zip` file is ready to be delivered.

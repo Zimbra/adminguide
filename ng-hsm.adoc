@@ -725,6 +725,73 @@ zxsuite hsm doVolumeToVolumeMove sourceVolume destVolume
 Moves the whole contents of sourceVolume to destVolume
 ....
 
+[[centralized-storage]]
+Centralized Storage
+-------------------
+The Centralized Storage feature allows to use an S3 bucket to host data coming from multiple servers at the same time sharing the same directory structure, as opposed to "independent" volumes which are self-contained and whose directory structure is strictly related to the server and volume itself.
+
+This allows for better data management in large multistore environments and greatly improves mailbox move speed.
+
+[[enabling-centralized-storage]]
+Enabling Centralized Storage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Create the centralized volume on any one of your servers using the `zxsuite hsm doCreateVolume` command.
+ a. All volume types except for FileBlob are compatible;
+ b. Make sure to add the centralized TRUE flag to set the volume as a Centralized Storage;
+ c. The full syntax for the command depends on the storage type;
+2. Once the Centralized Volume has been created, use the `zxsuite doCreateVolume Centralized` command on all other mailbox servers to copy the Centralized Volume's configuration from the first server and add it to the volume list.
+ a. The full syntax for the command is zxsuite hsm doCreateVolume Centralized {server_name} {volume_name}
+
+[[centralized-storage-structure]]
+Centralized Storage Structure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Storage Structure
+Data is stored in a Centralized Volume plainly, as the main directory of the volume contains a single empty directory for each server connected to the volume and a directory for each mailbox stored in it at the very same level.
+
+In the following example, servers 3aa2d376-1c59-4b5a-94f6-101602fa69c6 and 595a4409-6aa1-413f-9f45-3ef0f1e560f5 are both connected to the same Centralized volume, where 3 mailboxes are stored. As you can see, the effective server where the mailboxes are hosted is irrelevant to the storage.
+
+....
+_
+|- 3aa2d376-1c59-4b5a-94f6-101602fa69c6/
+|- 595a4409-6aa1-413f-9f45-3ef0f1e560f5/
+|- ff46e039-28e3-4343-9d66-92adc60e60c9/
+\
+ |-- 357-104.msg
+ |-- 368-115.msg
+ |-- 369-116.msg
+ |-- 373-120.msg
+ |-- 374-121.msg
+ |-- 375-122.msg
+ |-- 376-123.msg
+ |-- 383-130.msg
+|- 4c022592-f67d-439c-9ff9-e3d48a8c801b/
+\
+ |-- 315-63.msg
+ |-- 339-87.msg
+ |-- 857-607.msg
+ |-- 858-608.msg
+ |-- 859-609.msg
+ |-- 861-611.msg
+ |-- 862-612.msg
+ |-- 863-613.msg
+ |-- 864-614.msg
+ |-- 865-615.msg
+ |-- 866-616.msg
+ |-- 867-617.msg
+ |-- 868-618.msg
+|- dafd5569-4114-4268-9201-14f4a895a3d5/
+\
+ |-- 357-104.msg
+ |-- 368-115.msg
+ |-- 369-116.msg
+ |-- 373-120.msg
+ |-- 374-121.msg
+ |-- 375-122.msg
+ |-- 376-123.msg
+ |-- 383-130.msg
+ |-- 384-131.msg
+....
+
 [[policy-management]]
 Policy Management
 -----------------
