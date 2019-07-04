@@ -53,13 +53,15 @@ include::adminconsole.adoc[]
 
 <<<
 
+include::ZimbraPSTMigration.adoc[]
+
+<<<
+
 include::configuration.adoc[]
 
 <<<
 
 include::ephemeraldata.adoc[]
-
-<<<
 
 <<<
 
@@ -72,6 +74,10 @@ include::cos.adoc[]
 <<<
 
 include::customizingaccounts.adoc[]
+
+<<<
+
+include::HAB.adoc[]
 
 <<<
 
@@ -149,7 +155,7 @@ include::zimbra-chat-guide.adoc[]
 
 <<<
 
-include::zimbra-talk-guide.adoc[]
+include::zimbra-connect-guide.adoc[]
 
 <<<
 

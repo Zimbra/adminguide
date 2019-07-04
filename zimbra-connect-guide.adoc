@@ -1,0 +1,462 @@
+:zconnect-name: Zimbra Connect
+= {zconnect-name}
+:toc:
+
+== What is {zconnect-name}
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::["{product-version}" == "8.8.15"]
+New for {product-name} {product-version},
+endif::[]
+//
+{zconnect-name} integrates a fully fledged corporate instant messaging platform inside the Zimbra WebClient, including Group and Corporate Messaging, File Sharing, Screen Sharing and informal Video Chat capabilities.
+
+=== Differences with Zimbra Talk V2
+
+The main differences between {zconnect-name} and Zimbra Talk V2 implementation are the following:
+
+.Back-end
+[cols=",",options="header",]
+|===
+|Zimbra Talk V2 |Zimbra Connect
+|Supports XMPP |No XMPP Support
+|No dedicated API Set    |Features a dedicated API set and client protocol
+|Client/Server communication is SOAP-based    |Client/Server communication is based on WebSockets
+|===
+
+.Front-end
+[cols=",",options="header",]
+|===
+|Zimbra Talk V2 |Zimbra Connect
+|User interaction is based on a buddy list    |User interaction is based on the GAL
+|Buddy list-based minimal UI    |History-based minimal UI
+|Bulkier, more crowded UI    |Lighter, less cluttered UI
+|Space settings are defined in the space itself    |Space settings are defined by the space's "General" channel
+|User-based video and audio feed control - users can autonomously mute/stop other user's audio and video feed only affecting themselves.    |Host-based video and audio feed control - host can mute a participant or stop a video feed affecting all participants. Users can still mute/stop their feeds.
+|===
+
+.Features
+[cols=",",options="header",]
+|===
+|Zimbra Talk V2 |Zimbra Connect
+|File exchange is available in Chats, Groups, and Channels    |File exchange will be available in Chats, Groups, and Channels starting with Zimbra 8.8.15p2
+|Instant Meeting is available    |Instant Meeting will be available starting with Zimbra 8.8.15p1
+|===
+
+=== Frontend Features
+
+{zconnect-name} includes the following front-end features:
+
+* Message delivery and read awareness
+* 1-to-1 Instant Messaging
+* Group Messaging
+* Corporate Messaging (Spaces and Channels)
+* Group Video Calls
+* Channel Video calls
+* File Sharing
+* Screen Sharing
+* Emojis
+
+=== Backend Features
+
+{zconnect-name} includes the following backend features:
+
+* COS and User availability
+* Built-in TURN server compatibility
+* No core installation needed. Zimlet installation through a package manager.
+* No configuration needed
+* Peer-to-Peer WebRTC protocol to avoid server load
+* Dedicated audit log
+
+== Licensing
+
+{zconnect-name} is licensed on a per-user basis. License information is included in the Network Edition license file just as for any other Zimbra NE feature.
+Global Admins can enable its Advanced features for any number of users up to the limit allowed by the license, and only "advanced" users count towards any licensing limit.
+
+== Zimbra Chat and {zconnect-name}
+
+Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist on any Zimbra NE infrastructure. 
+The Zimbra Chat zimlet gets uninstalled during the installation process of the {zconnect-name} Zimlet package.
+However, {zconnect-name} includes all _basic_ IM features provided by Zimbra Chat, which automatically gets enabled for all users who don’t have access to the _advanced_ {zconnect-name} features.
+_Advanced_ users can use all of the product’s features with other _advanced_ users and can use 1-to-1 Instant Messaging with _basic_ users, while _Basic_ users can use the basic 1-to-1 features with all other users.
+
+All users start as «Basic» users, and the «Advanced» features can be enabled by Global and Delegated admins.
+
+== {zconnect-name} Zimlet installation
+
+The {zconnect-name} Zimlet is available in the Zimbra repository and can be easily installed and upgraded through the operating system's package manager.
+
+=== {zconnect-name} Zimlet installation on Red Hat and CentOS
+
+To install the Zimlet on Red Hat and CentOS, run:
+
+....
+yum install zimbra-connect
+....
+
+=== {zconnect-name} Zimlet installation on Ubuntu
+
+To install the Zimlet on Ubuntu, run:
+
+....
+apt-get install zimbra-connect
+....
+
+Installing the Zimlet removes any Zimbra Chat components from the server automatically.
+
+=== Migrating from Zimbra Talk to Zimbra Connect
+While Zimbra Talk and Zimbra Connect can coexist on a server, as their core components and Zimlets are compatible with each other, this is strongly discouraged as the two share the same Database, and to fully use Connect the database content must be migrated from Talk format to Connect format.
+
+In order to migrate Talk data to Connect, use the `doImportChannels` command:
+
+....
+[zimbra@mailserver ~]$ zxsuite connect doImportChannels
+Syntax:
+   zxsuite connect doImportChannels [attr1 value1 [attr2 value2...]]
+
+
+PARAMETER LIST
+
+NAME                                   TYPE       EXPECTED VALUES
+delete_destination_before_import(O)    Boolean    true|false
+
+(M) == mandatory parameter, (O) == optional parameter
+....
+
+This operation can execute multiple times, but it's a one-way process and cannot be reverted: once users are switched to Connect (by disabling the Talk Zimlet and enabling the Connect Zimlet), it's not possible to move their Connect data back to Talk.
+
+== {zconnect-name} administration
+
+Zimbra Connect features can be enabled and disabled via the `zxsuite config` command line utility:
+
+* Enable {zconnect-name} «Advanced» features
+** Property: `teamChatEnabled`
+** Available in: COS, account
+* Enable or disable the chat history
+** Property: `historyEnabled`
+** Available in:  global, server, COS, account
+* Enable or disable Video Chat
+** Property: `videoChatEnabled`
+** Available in: global, server, COS, account
+
+== Browser compatibility
+
+{zconnect-name} features are available on all browsers officially supported by the Zimbra Web Client, with some client-side limitations:
+
+[cols=",,,,",options="header",]
+|======================================================
+|Browser |Quick Access Sidebar |Connect Tab |Videochat |Screen sharing
+|Internet Explorer 11+ |Yes |Yes |No |No
+|Microsoft Edge |Yes |Yes |No |No
+|Mozilla Firefox |Yes |Yes |Yes |Yes
+|Google Chrome |Yes |Yes |Yes |Yes (w/ extension)
+|Safari |Yes |Yes |Yes |No
+|======================================================
+
+Google Chrome users must install the "Zextras Companion" extension in order to use the Screen Sharing feature, publicly available in the Chrome Web Store.
+
+Firefox users must be sure to be running at least version 66 of the browser to be able to use the Screen Sharing feature.
+
+== UI
+
+The {zconnect-name} UI is developed in PREACT and seamlessly integrated with the Zimbra Web Client.
+It is composed of two client-side components: the Quick Access Sidebar and the fully featured Connect Tab.
+
+The Quick Access Sidebar allows for quick Instant Messaging, both for 1-to-1 and group conversations.
+Advanced {zconnect-name} features such as File Sharing and Video Chat are available in the IM Pane only for users who have the {zconnect-name} feature set enabled either at account or COS level.
+
+The Connect Tab is the full-sized {zconnect-name} UI, which contains all corporate instant messaging features such as Spaces and Channels.
+The tab itself is available for both Basic and Advanced users, but corporate features are only available to Advanced users.
+
+=== Quick Access Sidebar
+
+The Quick Access Sidebar displays the last people, groups, and channels the user has interacted with and allows to open a quick chat window with all of those.
+
+It is available for both "Basic" users and "Advanced" users and provides additional features for the latter.
+
+image:images/connect_quick_chat_1.png[connect_quick_chat_1.png,title="connect_quick_chat_1.png", 200]
+image:images/connect_quickaccess_sidebar_1.png[connect_quickaccess_sidebar_1.png,title="connect_quickaccess_sidebar_1.png", 400]
+
+=== Connect Tab
+
+The Connect Tab is a fully fledged Zimbra feature tab that can be interacted with in the same way as all other feature tabs (e.g., Mail or Calendar).
+
+image:images/connect_home_1.jpg[connect_home_1.jpg,title="connect_home_1.jpg"]
+
+== Instant Messaging and Corporate Communication
+
+=== 1-to-1 chat
+
+One-to-one Chats can start from either the Quick Access Sidebar or the Connect Tab:
+
+* on the former, select one of the available entries (based on your chat history) and start chatting with that person right away
+
+image:images/connect_new_chat_2.png[connect_new_chat_2.png,title="connect_new_chat_2.png"]
+
+* on the latter click on "New," then "New Chat" and select the person you want to chat with from the GAL
+
+image:images/connect_new_chat_1.png[connect_new_chat_1.png,title="connect_new_chat_1.png"]
+
+Recent 1-to-1 chats appear in the "Conversations" section of the Connect Tab and the Quick Access Sidebar (round icon).
+
+=== Groups
+
+Groups are how users communicate with multiple people at the same time (by default up to 5 total). 
+Those are non-persistent entities not tied to any specific space. Any user can create a group inviting people, and any group member can invite more people in the same way.
+When all users leave a group, the group itself ceases to exist.
+
+==== Groups Features
+
+* A user in a Group can add more users to the Group itself up to the allowed limit.
+* A user in a Group can chat with all of the others.
+All members of that Group can view all messages sent to the Group.
+* A user in a Group can send files to all of the others.
+Files sent in a Group are available to all members of that Group.
+* An user in a Group can start a video chat with all of the others.
+Group video chats can be joined at any time by all members of the Group.
+
+Global Administrators can change the allowed maximum number of group members in the Zimbra Connect section of the Global settings in the Admin Console.
+
+==== Groups UI
+Recent Group chats appear in the "Conversations" section of the Connect Tab and the Quick Access Sidebar (rounded square icon).
+
+* Creating a Group
++
+To create a new Group, click on the "New" button in the Connect Tab, and select "New Group."
++
+image:images/connect_create_new_group_1.jpg[connect_create_new_group_1.jpg,title="connect_create_new_group_1.jpg"]
++
+then, add the Group's title, select the buddies you wish to invite and click on "Create."
++
+image:images/connect_create_new_group_2.jpg[connect_create_new_group_2.jpg,title="connect_create_new_group_2.jpg"]
+
+* Inviting a participant to a Group
++
+To invite one or more buddies to a Group expand the Group's Info, select the users to be added and click on "Save."
++
+image:images/connect_add_user_to_group_1.jpg[connect_add_user_to_group_1.jpg,title="connect_add_user_to_group_1.jpg"]
+
+* Starting a Group Video Chat
++
+To start a Group video chat, click on the "Camera" icon on the top of the Group's chat window.
++
+image:images/connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
++
+Any member of the Group can join the call at any time by clicking on the same button.
+
+* Leaving a Group
++
+To leave a Group, first, click on "Leave Group" in the Group's Info
++
+image:images/connect_leave_group_1.png[connect_leave_group_1.png,title="connect_leave_group_1.png"]
++
+then, click on "Yes" under the warning message.
++
+image:images/connect_leave_group_2.png[connect_leave_group_2.png,title="connect_leave_group_2.png"]
+
+=== Spaces
+
+Spaces are a themed container that can hold any number of Channels.
+Think of a Space as a community center where people gather to discuss different topics in dedicated areas (named Channels).
+
+==== Spaces Features
+
+* Each space has a unique name and topic.
+You may change both the name and the Topic by clicking on the relevant field in the Space's settings.
+* Members can leave a space at any time.
+* Space Administrators can create new channels and invite new people to the space using the appropriate buttons.
+
+==== Spaces UI
+
+Spaces appear in a dedicated section of the Connect Tab, which gives access to all Space-related features:
+
+* Creating a Space
++
+To create a new Space, click on the "New" button in the Connect Tab, and select "New Space."
++
+image:images/connect_new_space_1.jpg[connect_new_space_1.jpg,title="connect_new_space_1.jpg"]
++
+then, enter the Space's name and topic, select any users to invite and finally, click on "Save."
++
+image:images/connect_new_space_2.jpg[connect_new_space_2.jpg,title="connect_new_space_2.jpg"]
+
+* Leaving a Space
++
+To leave a Space, click on the "Leave Space" in the Space's General Channel Info.
+
+Participants can leave a space at any time, while a Space Administrator can only leave a space if there is at least one other Space Administrator.
+
+Both need to be invited to join the space again, and former Space Administrators get invited as regular participants but can be granted Administrator rights again.
+
+==== Space Settings
+Its General Channel Info defines a Space's settings (see below).
+
+The Space's creator is also the first Space Administrator and can grant the same rights to any other user by clicking on the crown icon in the appropriate entry of the participant list.
+
+image:images/connect_space_acls_1.png[connect_space_acls_1.png,title="connect_space_acls_1.png"]
+
+Only Space Administrators can invite new participants, create new channels, kick people, and delete channels within the space.
+
+=== Channels
+
+Channels are topic-defined areas inside of the same space.
+Those can contain any number of users, and unlike Groups, users can autonomously join any Channel in a Space they are in instead of being invited to it by a member.
+
+Each new Space has a "General" channel automatically created within it, which defines the space's properties (e.g., Title and Topic) and which all users automatically join when they join the Space.
+
+==== Channels Features
+
+* A user in a Channel can chat with all of the others. 
+All members of that channel can view all messages sent on the Channel.
+* A user in a Channel can start a video chat with all of the others.
+Channel video chats can be joined at any time by all members of the Channel.
+
+==== Channnels UI
+
+Channels appear in Spaces within the Connect Tab and all of the Channel-related features are managed there, by:
+
+* Creating a Channel
++
+To create a new Channel, click on the "New" button, and select "New Channel."
++
+image:images/connect_new_channel_1.png[connect_new_channel_1.png,title="connect_new_channel_1.png"]
++
+then select:
+
+a. the Space that should contain the Channel (_mandatory_)
+b. the Channel's name (_mandatory_)
+c. the Channel's topic (_optional_)
++
+finally, click on "Save."
+
+* Joining a Channel
++
+To join a Channel, click on the Channel label and then on "Join Channel."
+
+* Starting a Channel video chat
++
+To start a Channel video chat, click on the "Camera" icon on the Channel's chat window.
++
+image:images/connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
++
+Any member of the Channel can join the call at any time by clicking on the same button.
+
+* Leaving a Channel
++
+To leave a Channel, first, click on the red "Leave Channel" entry in the Channel's Info
++
+image:images/connect_leave_channel_1.png[connect_leave_channel_1.png,title="connect_leave_channel_1.png"]
+
+Both normal users and Space Admins can leave a channel at any time and join it afterward.
+
+== Video Chat
+
+Video Chat features are available in 1-to-1 chats, Groups, and Channels, allowing multiple people to communicate in real-time using a webcam and a headset, as well as allowing them to share their screen with all other attendees.
+
+The WebRTC protocol is the foundation for this feature.
+WebRTC is a peer-to-peer auto-adaptive technology that allows clients to communicate directly without overloading the server.
+Call quality is automatically tweaked based on the available bandwidth, with the maximum quality being _Full HD_ for both video and audio. 
+When starting their first video chat, users need to grant their browser access permissions to their camera and microphone.
+
+=== Video Chat UI
+
+image:images/connect_group_videochat.png[connect_group_videochat.png,title="connect_group_videochat.png"]
+
+The video chat UI has three main areas:
+
+* The center displays video streams with a single (main) stream on the top and multiple secondary streams on the bottom.
+The total number depends on the screen's resolution and window size.
+* On the left is the Group's or Channel's instant messaging chat.
+This chat is visible and entirely usable, and its history gets retained in the group's or channel's chat history.
+* On the bottom left appear the user's video feed and controls (disable video, mute microphone, and share screen).
+
+Users can disconnect from an ongoing video chat by pressing the "Hang up" button in their video stream's frame on the bottom left of the screen. 
+Whenever a video chat is on, users belonging to the Group or Channel of the video chat see a "Call in progress" message below the name of the Group or Channel and may join by clicking on the "Camera" icon in the chat.
+
+==== Video Stream Control
+
+Video streams are displayed in a "first come, first served" basis according to the connection order between the peers.
+
+Every participant can mute their audio stream or stop their video stream.
+
+==== Screen Sharing
+
+image:images/connect_videochat_screensharing_1.png[connect_videochat_screensharing_1.png,title="connect_videochat_screensharing_1.png"]
+
+When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window. 
+After choosing, the screen sharing feed replaces the user's webcam feed for all participants.
+
+== Presence
+
+Presence is managed automatically in {zconnect-name}: whenever a user logs in, regardless of whether the Connect Tab has the focus, they appear as *online*.
+
+As part of the user presence system, all messages get displayed with a variable number of check symbols:
+image:images/connect_message_delivered_1.png[connect_message_delivered_1.png,title="connect_message_delivered_1.png"]
+
+* 0 checks, message not delivered to the server
+* 1 check, message delivered to the server
+* 2 checks, message viewed by all users
+
+== Unread Messages
+
+The number of unread messages in any conversation, Group or Channel appears on the right side of the conversation, Group, or Channel.
+
+image:images/connect_unread_messages_1.png[connect_unread_messages_1.png,title="connect_unread_messages_1.png"]
+
+== Chat History
+
+Chat History for each 1-to-1 Chat, Group, and Channel is available in the very same window (e.g., enter a Channel to see all of that channel’s history) and messages delivered to offline users appear in the appropriate IM conversation, Group or Channel.
+
+== STUN/TURN Server
+
+Since WebRTC is a peer-to-peer protocol, all users in a video chat must be able to reach each other's client for the connections to get established.
+
+Should this not be possible, because of NAT rules on the network or because of a Service Provider's policy, using a TURN server ensures proper communication between all peers.
+{zconnect-name} is designed to allow using a STUN/TURN server out of the box by simply adding the TURN server's URL and login information in the zimlet configuration.
+
+=== Setting up {zconnect-name} to use a TURN server
+
+A dedicated set of TURN configuration tools is available via CLI through the `zxsuite connect iceServer` command:
+
+....
+zimbra@mailserver:~$ zxsuite connect iceServer
+
+Edit the list of ice servers which will be used to establish connections for video calls.
+Configuration available for global(default), cos or account.
+
+  add                      - add ice server candidates using global (default), cos or account
+                             zxsuite connect iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+  remove                   - remove ice server candidates using global (default), cos or account
+                             zxsuite connect iceServer remove {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+  get                      - get ice server candidates using global (default), cos or account
+                             zxsuite connect iceServer get [attr1 value1 [attr2 value2...]]
+....
+
+The "add" subcommand is used to add a new TURN server:
+
+....
+Syntax:
+   zxsuite connect iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+PARAMETER LIST
+
+NAME             TYPE      EXPECTED VALUES
+url(M)           String    turn:turn.example.com:3478?transport=udp
+username(O)      String    myuser
+credential(O)    String    mysecretkey
+account(O)       String    user@example.com
+cos(O)           String    default
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser
+zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser account testaccount@example.com
+....
+
+Multiple TURN servers can be added to handle different users or Classes of Service (defined through the `user` and `cos` optional parameters of the command above).
+
+On the TURN server side, it is strongly recommended to have a single user,  authenticated with a username and secret key, for ease-of-use reasons as a 1:1 correspondence between Zimbra users and TURN users is not necessary.
