@@ -155,7 +155,7 @@ include::zimbra-chat-guide.adoc[]
 
 <<<
 
-include::zimbra-talk-guide.adoc[]
+include::zimbra-connect-guide.adoc[]
 
 <<<
 
