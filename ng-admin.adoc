@@ -29,7 +29,7 @@ From the Administration Zimlet
 In the `Delegated Admins` section of the Admin NG tab in the
 Administration Zimlet, click the `Add` button.
 
-You will be be prompted for the following information:
+You will be prompted for the following information:
 
 * Account: The email address to which you want to grant Delegated Admin rights.
 * Domain: The domain on which the Delegated Admin will have control.
