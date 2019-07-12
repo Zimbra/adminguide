@@ -72,7 +72,7 @@ Usage example:
 
 zxsuite admin doAddDelegationSettings john@example.com example.com viewMail true adminQuota -1
 Adds John as delegated administrator of domain example.com, with the right to view user mail on such domain and
-no right to grand quotas to users.
+no right to grant quotas to users.
 
 zxsuite admin doAddDelegationSettings john@example.com example.com adminQuota 0
 Adds John as delegated administrator of domain example.com, with the right to assign unlimited quotas to users.
