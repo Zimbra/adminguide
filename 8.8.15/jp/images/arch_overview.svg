@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="224.6mm" height="172.84mm" version="1.1" viewBox="0 0 224.60014 172.84296" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:osb="http://www.openswatchbook.org/uri/2009/osb" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <metadata>
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g transform="translate(13.797 -122.57)">
+    <g transform="matrix(.17076 0 0 .17076 4.1202 101.73)">
+      <path d="m284 122.06a57.912 57.912 0 0 0 -47.408 24.703 43.709 43.709 0 0 0 -15.591 -2.928 43.709 43.709 0 0 0 -43.709 43.709 43.709 43.709 0 0 0 0.25 4.256 50.165 50.165 0 0 0 -46.766 50.045 50.165 50.165 0 0 0 49.657 50.139l-0.022 0.03h157.04a57.912 57.912 0 0 0 57.912 -57.912 57.912 57.912 0 0 0 -53.596 -57.695 57.912 57.912 0 0 0 -57.785 -54.342z" color="#000000" color-rendering="auto" fill="#0087c3" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal"/>
+    </g>
+    <g transform="translate(-55.664 -76.575)" fill="#0087c3" stroke="#0087c3">
+      <rect transform="rotate(-90)" x="-248.27" y="103" width="20.465" height="3.7891" stroke-width=".15445"/>
+      <path transform="matrix(0 .832 1 0 -164.69 177.63)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" stroke-width=".27956"/>
+    </g>
+    <g transform="translate(-5.0473 7.8802)">
+      <rect x="29.13" y="154.52" width="51.627" height="6" fill="#fff" stroke="#0087c3" stroke-width=".255"/>
+      <text x="29.752462" y="159.39485" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="29.752462" y="159.39485" font-family="sans-serif" stroke-width=".26458">HTTPS IMAPS POP3S</tspan></text>
+    </g>
+    <g transform="translate(83.506 -76.575)" fill="#0087c3" stroke="#0087c3">
+      <rect transform="rotate(-90)" x="-248.27" y="103" width="20.465" height="3.7891" stroke-width=".15445"/>
+      <path transform="matrix(0 .832 1 0 -164.69 177.63)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" stroke-width=".27956"/>
+    </g>
+    <g transform="translate(66.368 9.6107)">
+      <rect x="114.65" y="152.79" width="14.709" height="6" fill="#fff" stroke="#0087c3" stroke-width=".255"/>
+      <text x="115.29079" y="157.53532" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="115.29079" y="157.53532" font-family="sans-serif" stroke-width=".26458">SMTP</tspan></text>
+    </g>
+    <g transform="matrix(.17076 0 0 .17076 143.29 101.73)">
+      <path d="m284 122.06a57.912 57.912 0 0 0 -47.408 24.703 43.709 43.709 0 0 0 -15.591 -2.928 43.709 43.709 0 0 0 -43.709 43.709 43.709 43.709 0 0 0 0.25 4.256 50.165 50.165 0 0 0 -46.766 50.045 50.165 50.165 0 0 0 49.657 50.139l-0.022 0.03h157.04a57.912 57.912 0 0 0 57.912 -57.912 57.912 57.912 0 0 0 -53.596 -57.695 57.912 57.912 0 0 0 -57.785 -54.342z" color="#000000" color-rendering="auto" fill="#0087c3" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal"/>
+    </g>
+  </g>
+  <g transform="translate(13.797 -122.57)">
+    <rect x="95.28" y="256.92" width="19.836" height="32.706" rx="1.1501" ry="1.4883" fill="#0087c3" stroke="#0087c3" stroke-width=".21842"/>
+    <rect x="98.383" y="260.89" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+    <rect x="98.383" y="265.12" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+    <rect x="98.383" y="269.35" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+    <ellipse cx="105.11" cy="285.92" rx=".98095" ry=".94712" fill="#fff" stroke="#fff" stroke-width=".231"/>
+    <text x="90.952057" y="295.32193" fill="#000000" font-family="sans-serif" font-size="6.35px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="90.952057" y="295.32193" font-family="sans-serif" font-size="6.35px" stroke-width=".26458">Mailboxd</tspan></text>
+    <g transform="matrix(.58768 0 0 .5861 50.815 138.75)">
+      <circle cx="109.52" cy="242.83" r="10.086" fill="#f15922" stroke="#fff" stroke-width=".231"/>
+      <path d="m115.98 246.9c0 0.29-0.05 0.5-0.17 0.61-0.11 0.12-0.3 0.17-0.57 0.17h-11.1c-0.2 0-0.37-0.05-0.5-0.17-0.16-0.14-0.24-0.34-0.24-0.61v-7.97c0-0.19 0.08-0.36 0.23-0.5 0.16-0.15 0.33-0.22 0.51-0.22h11.1c0.25 0 0.44 0.07 0.56 0.2 0.12 0.14 0.18 0.31 0.18 0.52zm-8.55-3.96-3.29-3.25v6.6zm7.29-4.03h-10.05l4.21 4.21c0.37 0.37 0.64 0.56 0.81 0.56 0.18 0 0.45-0.19 0.82-0.56zm-0.02 7.98-3.31-3.3-0.54 0.53c-0.31 0.31-0.7 0.47-1.16 0.47-0.45 0-0.84-0.16-1.15-0.47l-0.54-0.53-3.31 3.3zm0.55-0.6v-6.6l-3.29 3.25z" clip-rule="evenodd" fill="#fff" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" stroke-width=".01"/>
+    </g>
+    <g transform="translate(2.864 -.8265)">
+      <rect x="70.497" y="259.1" width="20.806" height="5.8064" fill="#fff" opacity=".78" stroke="#f15922" stroke-width=".19357"/>
+      <text x="73.971367" y="263.65646" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="73.971367" y="263.65646" font-family="sans-serif" font-size="4.9389px" stroke-width=".26458">Index</tspan></text>
+    </g>
+    <g transform="translate(6.5097 2.1369)">
+      <rect x="62.854" y="273.05" width="24.803" height="5.8228" fill="#fff" opacity=".78" stroke="#f15922" stroke-width=".17719"/>
+      <text x="64.887169" y="277.74625" fill="#000000" font-family="sans-serif" font-size="6.35px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="64.887169" y="277.74625" font-family="sans-serif" font-size="4.9389px" stroke-width=".26458">MariaDB</tspan></text>
+    </g>
+    <rect x="73.363" y="282.6" width="20.804" height="5.8039" fill="#fff" opacity=".78" stroke="#f15922" stroke-width=".19607"/>
+    <text x="76.829597" y="287.14832" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="76.829597" y="287.14832" font-family="sans-serif" font-size="4.9389px" stroke-width=".26458">Store</tspan></text>
+    <g transform="matrix(.39365 0 0 .39365 127.53 238.86)" fill="#0087c3" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m84.51 117.07v10a17.5 5 0 0 0 17.5 5 17.5 5 0 0 0 17.5 -5v-10"/>
+      <path d="m84.51 107.07v10a17.5 5 0 0 0 17.5 5 17.5 5 0 0 0 17.5 -5v-10"/>
+      <path d="m84.51 97.069v10a17.5 5 0 0 0 17.5 5 17.5 5 0 0 0 17.5 -5v-10"/>
+      <path d="m102.01 92.069a17.5 5 0 0 0 -17.5 5 17.5 5 0 0 0 17.5 5 17.5 5 0 0 0 17.5 -5 17.5 5 0 0 0 -17.5 -5z"/>
+    </g>
+    <text x="161.08369" y="295.16177" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="161.08369" y="295.16177" font-family="sans-serif" stroke-width=".26458">SSDB</tspan></text>
+    <rect transform="scale(-1)" x="-153.85" y="-285.56" width="25.999" height="3.7891" fill="#a7a9ac" stroke="#a7a9ac" stroke-width=".17408"/>
+    <path transform="matrix(-.832 0 0 -1 198.49 553.28)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#a7a9ac" stroke="#a7a9ac" stroke-width=".27956"/>
+    <g transform="translate(-38.693 -1.2638)">
+      <rect x="169.46" y="280.34" width="20.91" height="9.4209" fill="#fff" stroke="#a7a9ac" stroke-width=".255"/>
+      <text x="179.80037" y="283.90274" fill="#000000" font-family="sans-serif" font-size="3.5278px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:1.25" xml:space="preserve"><tspan x="179.80037" y="283.90274" text-align="center" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Ephemeral</tspan><tspan x="179.80037" y="288.31247" text-align="center" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Data</tspan></text>
+    </g>
+    <path transform="matrix(.832 0 0 -1 83.569 553.28)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#a7a9ac" stroke="#a7a9ac" stroke-width=".27956"/>
+  </g>
+  <g transform="translate(13.797 -122.57)">
+    <g transform="translate(-55.584 -74.613)">
+      <rect x="95.28" y="256.92" width="19.836" height="32.706" rx="1.1501" ry="1.4883" fill="#0087c3" stroke="#0087c3" stroke-width=".21842"/>
+      <rect x="98.383" y="260.89" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="265.12" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="269.35" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <ellipse cx="105.11" cy="285.92" rx=".98095" ry=".94712" fill="#fff" stroke="#fff" stroke-width=".231"/>
+      <text x="96.243729" y="295.32193" fill="#000000" font-family="sans-serif" font-size="6.35px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="96.243729" y="295.32193" font-family="sans-serif" font-size="6.35px" stroke-width=".26458">Proxy</tspan></text>
+      <ellipse cx="115.21" cy="281.25" rx="5.9273" ry="5.9113" fill="#f15922" stroke="#fff" stroke-width=".13557"/>
+      <g clip-rule="evenodd" fill="#fff" fill-rule="evenodd" shape-rendering="geometricPrecision" stroke-width=".0058689">
+        <path d="m114.97 280.67 3.4321-0.43958-1.3105-3.1884-0.45251 1.0726c-2.721-0.53921-3.485-0.1348-4.6192 1.5414 1.5397-0.75606 2.5388-1.0315 3.7847-0.29891z" image-rendering="optimizeQuality"/>
+        <path d="m115.39 281.43-3.4262 0.43957 1.3105 3.1884 0.45251-1.0726c2.7151 0.53921 3.485 0.1348 4.6133-1.5414-1.5397 0.75606-2.5388 1.0315-3.7788 0.29305z" image-rendering="optimizeQuality"/>
+      </g>
+    </g>
+    <g transform="translate(-100.71 -38.752)">
+      <rect x="95.28" y="256.92" width="19.836" height="32.706" rx="1.1501" ry="1.4883" fill="#0087c3" stroke="#0087c3" stroke-width=".21842"/>
+      <rect x="98.383" y="260.89" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="265.12" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="269.35" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <ellipse cx="105.11" cy="285.92" rx=".98095" ry=".94712" fill="#fff" stroke="#fff" stroke-width=".231"/>
+      <text x="104.76494" y="295.32193" fill="#000000" font-family="sans-serif" font-size="6.35px" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:1.25" xml:space="preserve"><tspan x="104.76494" y="295.32193" font-family="sans-serif" font-size="6.35px" stroke-width=".26458" text-align="center" text-anchor="middle" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Mailboxd UI</tspan></text>
+      <ellipse cx="115.12" cy="280.47" rx="5.9273" ry="5.9113" fill="#f15922" stroke="#fff" stroke-width=".13557"/>
+      <g clip-rule="evenodd" fill="#fff" fill-rule="evenodd" shape-rendering="geometricPrecision">
+        <path d="m115.2 277.6c0.87717 0 1.5909 0.70969 1.5909 1.5866 0 0.87479-0.71377 1.5866-1.5909 1.5866-0.8793 0-1.5909-0.71185-1.5909-1.5866 0-0.87695 0.71163-1.5866 1.5909-1.5866zm0 0.14151c0.79977 0 1.449 0.64538 1.449 1.4451 0 0.79761-0.64927 1.4451-1.449 1.4451-0.80191 0-1.449-0.64751-1.449-1.4451 0-0.79975 0.64712-1.4451 1.449-1.4451z" image-rendering="optimizeQuality" stroke-width=".002147"/>
+        <path d="m116.15 279.65v0.57677c0.27733-0.28517 0.47943-0.6025 0.47727-1.0163-0.0172-0.0729-0.0602-0.0922-0.13114-0.0557-0.0108 0.0579-0.0538 0.0729-0.12899 0.0429-0.043-0.1415-0.18059-0.16723-0.32249-0.18867 0.0731-0.0622 0.18489-0.12008 0.24294 0.0215 0.0795 0.0236 0.11394-0.0257 0.19349 0.0236 0.0451 4e-3 0.0881 2e-3 0.1333 6e-3 -0.0688-0.62394-0.1505-0.37308-0.50954-0.4953-0.14618-0.18224-0.18058-0.0536-0.16553 0.27017-0.0881 0.0279-0.2021 0.1072-0.0731 0.25944-0.36548 0.30017-0.18275 0.65609 0.28379 0.55532z" image-rendering="optimizeQuality" stroke-width=".002147"/>
+        <polygon transform="matrix(.0021499 0 0 .0021441 72.242 249.26)" points="19346 13795 19343 13822 19341 13847 19344 13855 19349 13864 19356 13873 19363 13882 19370 13891 19379 13900 19388 13908 19398 13917 19409 13925 19420 13933 19431 13941 19443 13949 19455 13956 19467 13964 19480 13971 19493 13978 19505 13985 19518 13992 19531 13999 19543 14006 19556 14013 19568 14020 19580 14027 19592 14033 19603 14040 19614 14047 19624 14054 19634 14061 19643 14068 19651 14075 19659 14082 19672 14097 19659 14113 19654 14120 19649 14128 19645 14135 19641 14142 19639 14149 19637 14156 19635 14163 19634 14169 19634 14176 19634 14182 19635 14189 19636 14195 19637 14201 19639 14207 19642 14213 19645 14219 19648 14225 19652 14231 19656 14236 19660 14242 19665 14247 19670 14252 19675 14257 19681 14262 19687 14267 19693 14271 19700 14276 19706 14280 19713 14284 19720 14288 19735 14296 19731 14313 19728 14321 19726 14329 19723 14337 19720 14345 19717 14353 19713 14361 19710 14368 19706 14376 19703 14383 19699 14390 19696 14398 19692 14405 19689 14412 19686 14419 19683 14426 19680 14434 19677 14441 19675 14448 19673 14455 19671 14462 19669 14469 19668 14477 19667 14484 19666 14491 19666 14499 19666 14506 19667 14514 19668 14522 19670 14530 19670 14532 19675 14531 19686 14531 19696 14534 19704 14540 19711 14546 19717 14552 19724 14559 19729 14565 19735 14570 19740 14573 19743 14575 19746 14575 19749 14575 19752 14572 19758 14566 19768 14552 19779 14539 19790 14525 19801 14513 19812 14500 19824 14488 19835 14477 19847 14465 19858 14454 19870 14443 19881 14433 19892 14422 19904 14412 19914 14402 19925 14393 19936 14383 19946 14373 19955 14364 19965 14354 19974 14345 19982 14336 19990 14327 19998 14317 20005 14308 20011 14299 20017 14289 20022 14280 20026 14271 20030 14261 20033 14251 20035 14242 20036 14231 20037 14224 20037 14218 20035 14212 20033 14207 20030 14203 20027 14198 20022 14194 20016 14191 20009 14187 20001 14184 19992 14181 19981 14179 19970 14177 19959 14175 19946 14174 19926 14174 19919 14161 19914 14155 19910 14148 19905 14141 19900 14135 19895 14128 19890 14122 19884 14115 19878 14109 19872 14103 19866 14097 19859 14091 19852 14085 19845 14080 19838 14075 19831 14070 19823 14066 19815 14061 19807 14057 19799 14054 19790 14051 19781 14048 19772 14045 19762 14043 19753 14042 19743 14041 19732 14040 19722 14040 19711 14040 19700 14041 19689 14043 19673 14046 19655 14036 19641 14028 19628 14019 19615 14010 19603 14000 19591 13991 19580 13981 19570 13971 19560 13962 19552 13953 19544 13943 19537 13935 19530 13927 19525 13919 19521 13912 19519 13905 19517 13898 19519 13889 19525 13883 19532 13880 19540 13878 19548 13877 19558 13877 19569 13878 19580 13880 19593 13883 19607 13887 19621 13893 19636 13900 19653 13908 19669 13918 19680 13925 19682 13924 19687 13918 19691 13912 19694 13903 19695 13893 19697 13882 19698 13869 19699 13856 19702 13843 19706 13830 19713 13816 19723 13804 19736 13793 19752 13783 19773 13776 19794 13772 19804 13763 19817 13752 19831 13742 19844 13733 19858 13725 19871 13717 19883 13710 19894 13703 19904 13697 19912 13691 19919 13685 19923 13681 19925 13678 19925 13676 19925 13675 19923 13673 19917 13670 19907 13665 19899 13659 19890 13652 19882 13645 19875 13637 19868 13629 19861 13621 19855 13612 19849 13603 19844 13594 19839 13585 19835 13576 19831 13567 19827 13558 19825 13549 19822 13540 19820 13532 19819 13524 19818 13516 19818 13508 19819 13500 19820 13493 19822 13487 19825 13480 19829 13475 19834 13470 19840 13466 19847 13464 19855 13464 19863 13465 19866 13466 19867 13465 19867 13464 19864 13459 19859 13453 19853 13446 19845 13439 19835 13432 19825 13426 19814 13420 19802 13416 19791 13413 19780 13412 19770 13413 19766 13414 19763 13422 19758 13436 19754 13449 19751 13462 19748 13475 19745 13487 19743 13499 19741 13511 19740 13523 19739 13534 19738 13545 19737 13555 19736 13565 19735 13575 19735 13584 19734 13593 19734 13602 19733 13610 19733 13618 19732 13625 19731 13633 19730 13639 19728 13645 19726 13651 19723 13657 19720 13662 19716 13667 19711 13671 19705 13673 19699 13675 19692 13676 19682 13675 19659 13659 19640 13646 19625 13634 19612 13622 19601 13611 19592 13601 19586 13591 19581 13580 19579 13570 19578 13561 19580 13551 19583 13543 19588 13535 19593 13527 19599 13520 19606 13514 19613 13507 19620 13501 19627 13494 19634 13487 19641 13480 19648 13473 19654 13465 19660 13457 19665 13448 19669 13439 19672 13429 19674 13418 19675 13407 19674 13394 19672 13380 19667 13382 19659 13387 19649 13393 19639 13399 19628 13406 19615 13414 19603 13423 19589 13433 19575 13443 19561 13454 19547 13466 19532 13479 19517 13492 19502 13506 19488 13522 19473 13538 19459 13554 19445 13572 19431 13590 19419 13610 19406 13630 19395 13651 19384 13673 19374 13695 19366 13719 19358 13743 19352 13769" image-rendering="optimizeQuality"/>
+        <path d="m114.77 277.84c0.36549-0.0579 0.69442-0.0429 0.99326 0.06 0.12255 0.31089-0.37838 0.35591-0.50523 0.55532-0.20639 6e-3 -0.0774-0.51888-0.39773-0.52531-0.0602-2e-3 -0.11609-0.0515-0.0903-0.0901z" image-rendering="optimizeQuality" stroke-width=".002147"/>
+        <path d="m112.98 277.6h4.4735c0.13143 0 0.23757 0.10586 0.23757 0.23693v2.6668c0 0.13107-0.10614 0.23694-0.23757 0.23694h-4.4735c-0.13143 0-0.23758-0.10587-0.23758-0.23694v-2.6668c0-0.13107 0.10615-0.23693 0.23758-0.23693zm-0.49032-0.6856h5.4541c0.19208 0 0.34878 0.15628 0.34878 0.34784v3.8968c0 0.19157-0.1567 0.34784-0.34878 0.34784h-5.4541c-0.19208 0-0.34878-0.15627-0.34878-0.34784v-3.8968c0-0.19156 0.1567-0.34784 0.34878-0.34784zm-0.16681 4.9454h5.7877c0.10615 0 0.18197 0.0807 0.18197 0.18148v1.5628c0 0.0958-0.0758 0.18149-0.18197 0.18149h-5.7877c-0.10615 0-0.18197-0.0857-0.18197-0.18149v-1.5628c0-0.10082 0.0758-0.18148 0.18197-0.18148zm3.7608 0.54444h1.4962c0.0859 0 0.1567 0.0655 0.1567 0.15124 0 0.0857-0.0708 0.15123-0.1567 0.15123h-1.4962c-0.0859 0-0.15164-0.0655-0.15164-0.15123 0-0.0857 0.0657-0.15124 0.15164-0.15124z" image-rendering="optimizeQuality" stroke-width=".005048"/>
+      </g>
+    </g>
+    <text x="18.003693" y="269.65262" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="18.003693" y="274.02237" font-family="sans-serif" stroke-width=".26458"/></text>
+    <rect x="59.109" y="267.69" width="27.203" height="3.8128" fill="#5f6062" stroke="#5f6062" stroke-width=".17862"/>
+    <path transform="matrix(.832 0 0 1 15.8 0)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#5f6062" stroke="#5f6062" stroke-width=".27956"/>
+    <g transform="translate(-6.35)" fill="#5f6062" stroke="#5f6062">
+      <rect transform="rotate(-90)" x="-262.8" y="53.955" width="35.114" height="3.7891" stroke-width=".20231"/>
+      <path transform="matrix(0 -.832 1 0 -213.74 298.18)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" stroke-width=".27956"/>
+    </g>
+    <g transform="translate(-6.35)">
+      <rect x="45.32" y="262.05" width="20.966" height="15.497" fill="#fff" stroke="#5f6062" stroke-width=".231"/>
+      <text x="48.054764" y="268.43201" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="48.054764" y="268.43201">HTTPS</tspan><tspan x="48.054764" y="274.60562">POP3S</tspan></text>
+    </g>
+    <rect transform="scale(-1,1)" x="-47.751" y="230.84" width="24.962" height="3.841" fill="#5f6062" stroke="#5f6062" stroke-width=".17174"/>
+    <path transform="matrix(-.832 0 0 1 93.166 -36.831)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#5f6062" stroke="#5f6062" stroke-width=".27956"/>
+    <g transform="translate(-48.244 2.4346)">
+      <rect x="74.262" y="227.08" width="17.517" height="6.2883" fill="#fff" stroke="#5f6062" stroke-width=".255"/>
+      <text x="75.159912" y="232.0211" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="75.159912" y="232.0211" font-family="sans-serif" stroke-width=".26458">HTTPS</tspan></text>
+    </g>
+    <g transform="translate(-73.596 -39.372)">
+      <rect x="78.59" y="223.27" width="33.115" height="5.7714" fill="#fff" stroke="#f15922" stroke-width=".22861"/>
+      <text x="80.100708" y="227.6792" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="80.100708" y="227.6792" font-family="sans-serif" stroke-width=".26458">Memcached</tspan></text>
+    </g>
+  </g>
+  <g transform="translate(13.797 -122.57)">
+    <g transform="translate(43.298 -74.704)">
+      <rect x="95.28" y="256.92" width="19.836" height="32.706" rx="1.1501" ry="1.4883" fill="#0087c3" stroke="#0087c3" stroke-width=".21842"/>
+      <g transform="matrix(.58815 0 0 .58609 102.62 206.74)">
+        <g>
+          <circle transform="translate(-23.732 -81.874)" cx="44.972" cy="208.65" r="10.086" fill="#f15922" stroke="#fff" stroke-width=".231"/>
+          <polygon transform="matrix(.0085937 0 0 .0085937 -56.621 -11.78)" points="8709 16176 8709 16316 8659 16316 8661 16122 9051 16122 9047 15893 9112 15893 9111 16122 9498 16122 9498 16316 9447 16316 9447 16176" clip-rule="evenodd" fill="#fff" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision"/>
+          <rect x="17.766" y="120.76" width="6.9695" height="4.2281" clip-rule="evenodd" fill="#fff" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" stroke-width=".0085937"/>
+          <rect x="15.498" y="128.31" width="4.9414" height="4.0218" clip-rule="evenodd" fill="#fff" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" stroke-width=".0085937"/>
+          <rect x="22.158" y="128.31" width="4.9414" height="4.0218" clip-rule="evenodd" fill="#fff" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" stroke-width=".0085937"/>
+        </g>
+      </g>
+      <rect x="98.383" y="260.89" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="265.12" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="269.35" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <ellipse cx="105.11" cy="285.92" rx=".98095" ry=".94712" fill="#fff" stroke="#fff" stroke-width=".231"/>
+      <text x="96.772896" y="295.32193" fill="#000000" font-family="sans-serif" font-size="6.35px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="96.772896" y="295.32193" font-family="sans-serif" font-size="6.35px" stroke-width=".26458">LDAP</tspan></text>
+    </g>
+    <g fill="#f15922" stroke="#f15922">
+      <rect transform="scale(-1)" x="-136.83" y="-262.28" width="8.983" height="3.7891" stroke-width=".10233"/>
+      <path transform="matrix(-.832 0 0 -1 198.49 530)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" stroke-width=".27956"/>
+    </g>
+    <g fill="#f15922" stroke="#f15922">
+      <rect transform="rotate(-90)" x="-257.96" y="146.42" width="30.301" height="3.7891" stroke-width=".18793"/>
+      <path transform="matrix(0 -.832 1 0 -121.3 298.3)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" stroke-width=".27956"/>
+    </g>
+    <g transform="translate(2.9864 26.351)">
+      <rect x="133.25" y="231.27" width="25.453" height="6" fill="#fff" stroke="#f15922" stroke-width=".255"/>
+      <text x="134.44942" y="236.06357" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="134.44942" y="236.06357" font-family="sans-serif" stroke-width=".26458">LDAP TLS</tspan></text>
+    </g>
+    <g transform="translate(14.73 31.649)">
+      <rect x="108.09" y="152.16" width="13.641" height="5.7614" fill="#fff" stroke="#f15922" stroke-width=".23861"/>
+      <text x="109.44602" y="156.71146" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="109.44602" y="156.71146" fill="#000000" font-family="sans-serif" stroke-width=".26458">DNS</tspan></text>
+    </g>
+  </g>
+  <g transform="translate(13.797 -122.57)">
+    <g transform="translate(83.693 -74.774)">
+      <rect x="95.28" y="256.92" width="19.836" height="32.706" rx="1.1501" ry="1.4883" fill="#0087c3" stroke="#0087c3" stroke-width=".21842"/>
+      <rect x="98.383" y="260.89" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="265.12" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="269.35" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <ellipse cx="105.11" cy="285.92" rx=".98095" ry=".94712" fill="#fff" stroke="#fff" stroke-width=".231"/>
+      <text x="98.360397" y="295.32193" fill="#000000" font-family="sans-serif" font-size="6.35px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="98.360397" y="295.32193" font-family="sans-serif" font-size="6.35px" stroke-width=".26458">MTA</tspan></text>
+      <g transform="matrix(.38241 0 0 .38243 26.276 226.16)">
+        <g transform="translate(125.55 -26.643)">
+          <circle transform="matrix(1.5379 0 0 1.5379 -39.579 -163.16)" cx="95.283" cy="216.01" r="10.086" fill="#f15922" stroke="#fff" stroke-width=".231"/>
+          <path d="m110.17 177.3 8.07-4.66-6.59-6.59v3.15c-7.34-0.34-8.78 3.88-8.08 9.73 1.18-4.09 3.45-6.3 7.3-5.76z" clip-rule="evenodd" fill="#fff" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" stroke-width=".01"/>
+          <polygon transform="matrix(.01 0 0 .015458 58.501 90.705)" points="4422 4612 4702 4309 4982 4612 5262 4916 4918 4916 4918 5657 4467 5657 4467 4916 4142 4916" clip-rule="evenodd" fill="#fff" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision"/>
+        </g>
+      </g>
+    </g>
+    <rect transform="rotate(-90)" x="-262.74" y="187.17" width="35.083" height="3.7891" fill="#f6861f" stroke="#f6861f" stroke-width=".20222"/>
+    <rect transform="scale(-1)" x="-176.68" y="-270.74" width="48.832" height="3.7891" fill="#f6861f" stroke="#f6861f" stroke-width=".23858"/>
+    <g transform="translate(-3.5419 28.357)">
+      <rect x="180.11" y="234.26" width="25.321" height="11.846" fill="#fff" stroke="#f6861f" stroke-width=".23657"/>
+      <text x="181.01262" y="239.50714" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="181.01262" y="239.50714" font-family="sans-serif" stroke-width=".26458">SMTP out</tspan></text>
+      <text x="181.46179" y="244.29822" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="181.46179" y="244.29822" font-family="sans-serif" stroke-width=".26458">LMTP in</tspan></text>
+    </g>
+    <path transform="matrix(-.832 0 0 -1 198.49 538.47)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#f6861f" stroke="#f6861f" stroke-width=".27956"/>
+    <path transform="matrix(0 -.832 1 0 -80.557 298.3)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#f6861f" stroke="#f6861f" stroke-width=".27956"/>
+    <g transform="translate(-4.476 12.811)">
+      <rect x="164.75" y="170.92" width="17.108" height="6" fill="#fff" stroke="#f15922" stroke-width=".255"/>
+      <text x="166.05595" y="175.57275" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="166.05595" y="175.57275" font-family="sans-serif" stroke-width=".26458">AS/AV</tspan></text>
+    </g>
+  </g>
+  <g transform="translate(13.797 -122.57)">
+    <g transform="translate(-.20765 -74.704)">
+      <rect x="95.28" y="256.92" width="19.836" height="32.706" rx="1.1501" ry="1.4883" fill="#0087c3" stroke="#0087c3" stroke-width=".21842"/>
+      <rect x="98.383" y="260.89" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="265.12" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <rect x="98.383" y="269.35" width="13.598" height="1.8942" rx="1.1501" ry="1.4883" fill="#fff"/>
+      <ellipse cx="105.11" cy="285.92" rx=".98095" ry=".94712" fill="#fff" stroke="#fff" stroke-width=".231"/>
+      <text x="94.656227" y="295.32193" fill="#000000" font-family="sans-serif" font-size="6.35px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="94.656227" y="295.32193" font-family="sans-serif" font-size="6.35px" stroke-width=".26458">IMAPD</tspan></text>
+      <ellipse cx="115.25" cy="281.26" rx="5.9298" ry="5.9182" fill="#f15922" stroke="#fff" stroke-width=".13568"/>
+      <path d="m118.14 279.52v3.1148c0 0.0385-0.0145 0.0722-0.0434 0.10109-0.0579 0.0529-0.14953 0.0529-0.20259 0l-1.558-1.579c-0.0531-0.0578-0.0531-0.14924 5e-3 -0.2022l1.5436-1.5261c0.0289-0.0289 0.0675-0.0481 0.11095-0.0481 0.0772 0 0.1447 0.0626 0.1447 0.13961zm-5.3011-0.10111 1.558 1.5357c0.0531 0.0529 0.0531 0.14443 0 0.2022l-1.5532 1.5742c-0.0241 0.0289-0.0627 0.0481-0.10611 0.0481-0.0772 0-0.13989-0.0674-0.13989-0.14443v-3.1148c0-0.0337 0.01-0.0722 0.0386-0.1011 0.0531-0.0529 0.14471-0.0529 0.20259 0zm0.14953-0.4092h1.013l0.96471 0.96284c0.18812 0.18775 0.49201 0.18775 0.68495 0l0.9599-0.96284h1.1335c0.0386 0 0.0772 0.0144 0.1013 0.0433 0.0579 0.0578 0.0579 0.14443 0 0.2022l-1.9873 1.9786-5e-3 0.01c-0.0917 0.0915-0.17365 0.16368-0.24601 0.21182-0.0916 0.0578-0.16882 0.0915-0.24118 0.0915-0.0675 0-0.14953-0.0337-0.23635-0.0915-0.0772-0.0481-0.15918-0.12036-0.25083-0.21182l-1.9873-1.9834c-0.0289-0.024-0.0482-0.0626-0.0482-0.1059 0-0.0818 0.0627-0.14443 0.14471-0.14443zm3.2849 2.2482 1.5628 1.5646c0.0241 0.0241 0.0386 0.0578 0.0386 0.0963 0 0.0818-0.0627 0.14443-0.13988 0.14443h-4.7271c-0.0386 0-0.0772-0.01-0.11094-0.0433-0.0531-0.0529-0.0531-0.14443 0-0.19739l1.5628-1.5598c0.0579-0.0577 0.14953-0.0577 0.20259-5e-3l0.25565 0.25515c0.0579 0.0578 0.12541 0.1011 0.19777 0.12999l5e-3 5e-3c0.0772 0.0289 0.15918 0.0433 0.246 0.0433 0.0917 0 0.17365-0.0144 0.246-0.0433 0.0724-0.0289 0.13989-0.077 0.2026-0.13479l0.25082-0.25035h5e-3v-5e-3c0.0531-0.0529 0.14471-0.0529 0.20259 0zm-0.20259 5e-3v-5e-3z" clip-rule="evenodd" fill="#fff" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" stroke-width=".0048189"/>
+      <path d="m116.91 278.05c0.13988 0.13962 0.13988 0.3707 0 0.51031l-1.3506 1.3432c-0.13989 0.13961-0.3666 0.13961-0.50648 0l-1.3458-1.3432c-0.13989-0.13961-0.13989-0.37069 0-0.51031 0.19294-0.17812 0.72836 0.22146 1.2107 0.4044v-1.8679c0-0.12999 0.10612-0.24071 0.23635-0.24071h0.36177c0.13024 0 0.23636 0.11072 0.23636 0.24071v1.8486c0.45342-0.19257 0.9406-0.54882 1.1577-0.38514z" clip-rule="evenodd" fill="#fff" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" stroke-width=".0048189"/>
+      <path d="m116.91 284.16c0.13988-0.13961 0.13988-0.3707 0-0.51031l-1.3506-1.3432c-0.13989-0.13961-0.3666-0.13961-0.50648 0l-1.3458 1.3432c-0.13989 0.13961-0.13989 0.3707 0 0.51031 0.19294 0.17812 0.72836-0.22146 1.2107-0.4044v1.8679c0 0.12999 0.10612 0.24071 0.23635 0.24071h0.36177c0.13024 0 0.23636-0.11072 0.23636-0.24071v-1.8486c0.45342 0.19257 0.9406 0.54882 1.1577 0.38514z" clip-rule="evenodd" fill="#fff" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision"/>
+    </g>
+    <rect x="65.801" y="194.64" width="23.77" height="3.8242" fill="#0087c3" stroke="#0087c3" stroke-width=".16722"/>
+    <path transform="matrix(.832 0 0 1 19.324 -73.043)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#0087c3" stroke="#0087c3" stroke-width=".27956"/>
+    <path transform="matrix(-.832 0 0 1 136.36 -73.043)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#0087c3" stroke="#0087c3" stroke-width=".27956"/>
+    <g transform="translate(-23.361 -34.443)">
+      <rect x="92.668" y="227.69" width="17.231" height="6.2869" fill="#fff" stroke="#0087c3" stroke-width=".24193"/>
+      <text x="93.725311" y="232.61998" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="93.725311" y="232.61998" font-family="sans-serif" stroke-width=".26458">IMAPS</tspan></text>
+    </g>
+    <path transform="matrix(0 -.832 1 0 -164.69 298.3)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" fill="#0087c3" stroke="#0087c3" stroke-width=".27956"/>
+    <g fill="#0087c3" stroke="#0087c3">
+      <rect transform="rotate(-90)" x="-248.27" y="103" width="20.465" height="3.7891" stroke-width=".15445"/>
+      <path transform="matrix(0 .832 1 0 -164.69 177.63)" d="m84.618 272.56-0.0078-2.9044-0.0078-2.9044 2.5192 1.4454 2.5192 1.4454-2.5114 1.459z" stroke-width=".27956"/>
+    </g>
+    <g transform="translate(24.704 7.4369)">
+      <rect x="71.567" y="228.28" width="16.769" height="6" fill="#fff" stroke="#0087c3" stroke-width=".255"/>
+      <text x="73.213547" y="233.06915" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="73.213547" y="233.06915" font-family="sans-serif" stroke-width=".26458">SOAP</tspan></text>
+    </g>
+  </g>
+</svg>
