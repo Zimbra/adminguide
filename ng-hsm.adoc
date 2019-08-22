@@ -1589,17 +1589,21 @@ Syntax:
 
 PARAMETER LIST
 
-NAME                  TYPE               EXPECTED VALUES                                                          DEFAULT
-name(M)               String             maybe an account name: john@example.com or a domain name: example.com
-destinationHost(M)    String
-sourceHost(O)         String             used if a domain name is specified into name parameter
-stage(O)              Multiple choice    blobs|db|chat_db|ldap|backup|reindex|delete|all                          all
-compress(O)           Boolean            true|false                                                               true
-checkDigest(O)        Boolean            if false skip digest calculation and check                               true
-overwrite(O)          Boolean            true|false                                                               false
-threads(O)            Integer                                                                                     10
-hsm(O)                Boolean            true|false                                                               true
-notifications(O)      Email Address
+NAME                       TYPE             EXPECTED VALUES                                      DEFAULT
+destinationHost(M)         String                                                                
+accounts(O)                String[,..]      john@example.com,smith@example.com[,...]             
+domains(O)                 String[,..]      example.com,test.com[,...]                           
+input_file(O)              String                                                                
+stages(O)                  String[,..]      blobs|backup|data|account data=blobs+backup[,...]    blobs,backup,account
+compress(O)                Boolean          true|false                                           true
+checkDigest(O)             Boolean          if false skip digest calculation and check           true
+overwrite(O)               Boolean          true|false                                           false
+threads(O)                 Integer                                                               1
+hsm(O)                     Boolean          true|false                                           true
+notifications(O)           Email Address                                                         
+ignore_partial(O)          Boolean          true|false                                           false
+drop_network_backup(O)     Boolean          true|false                                           false
+read_error_threshold(O)    Integer                                                               
 
 (M) == mandatory parameter, (O) == optional parameter
 
@@ -1608,19 +1612,6 @@ Usage example:
 zxsuite HSM NG domailboxmove john@example.com mail2.example.com
 Move mailbox for account john@example.com to mail2.example.com host
 ....
-*Parameters*
-
-* _sourceHost_: Used only if a domain name is specified in the name parameter,
-acts like the command was issued from this host.
-* _stage_: It's possible to submit only a single stage at a time, just for test
-purposes or to not reissue a previously completed stage.
-* _compress_: If true, blobs will be compressed just before being sent through
-the network.
-* _checkDigest_: If true, a digest check will be made for each blob (digest
-is taken from the item's db entry).
-* _overwrite_: If false, and digest check is correct, blob files will not be overwritten.
-* _threads_: Number of threads used on heavy stages.
-* _hsm_: If true, an HSM operation will be submitted after the mailbox is successfully moved.
 
 *doMailboxMove Details*
 
@@ -1638,15 +1629,10 @@ enough space available or the user just belongs to the destination host.
 * All data is moved at a low-level and will not be changed except for some small things
 like mailbox id.
 
-* The operation is made up of 7 stages: blobs|db|chat_db|ldap|backup|reindex|delete. For each mailbox:
+* The operation is made up of 3 stages: blobs|backup|account. For each mailbox:
     ** blobs: All blobs are copied from the source server to the destination server.
-    ** db: All database entries are copied from the source server to the destination server.
-    ** chat_db: All chat db information is copied from the source server to the destination server.
-    ** ldap: zimbraMailHost LDAP attribute is updated and all account caches are flushed.
     ** backup: All backup entries are copied from the source server to the destination server.
-    ** reindex: Start a mailbox reindex.
-    ** delete:  All blobs and db entries are deleted from the source server,
-    backup items are also marked as deleted.
+    ** account: All database and LDAP entries are updated, effectively moving the mailbox. 
 
 * All of the stages are executed sequentially. If a single stage is specified,
 the mailbox is parked in maintenance mode throughout the entire operation. On
