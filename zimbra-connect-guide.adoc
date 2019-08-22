@@ -453,8 +453,8 @@ cos(O)           String    default
 
 Usage example:
 
-zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser
-zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser account testaccount@example.com
+zxsuite connect iceServer add turn:turn.example.com credential mysecret username myuser
+zxsuite connect iceServer add turn:turn.example.com credential mysecret username myuser account testaccount@example.com
 ....
 
 Multiple TURN servers can be added to handle different users or Classes of Service (defined through the `user` and `cos` optional parameters of the command above).
