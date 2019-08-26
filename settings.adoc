@@ -9,6 +9,7 @@
 :product-release-date: June 2019
 :copyright-year: 2019
 
+:imagesdir: images/
 :icons: font
 :title-logo-image: images/zimbra-logo.jpg
 :favicon: images/favicon.ico

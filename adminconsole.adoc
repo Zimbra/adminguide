@@ -42,7 +42,7 @@ the following URL pattern.
 *admin@domain.com* - and the password that was configured during
 server installation of {product-name}.
 +
-image::images/administration_console.png[Administration Console]
+image::administration_console.png[Administration Console]
 
 === Modifying Administrator Passwords
 
@@ -59,7 +59,7 @@ Admin Console: ::
 Double click select _user account_ *or* from the *Gear* icon, select
 *Change Password* from the popup menu.
 
-image::images/administration_console_password.png[Change Password]
+image::administration_console_password.png[Change Password]
 
 [source,bash]
 ----
@@ -121,10 +121,10 @@ the following illustration.
 [cols=",a",options=""]
 |================================================
 |Click the field label to view the Attribute popup. |
-image::images/administration_console_viewing_attributes.png[Viewing Attributes]
+image::administration_console_viewing_attributes.png[Viewing Attributes]
 |With the attribute popup in view, click *More* to view guidetext about
 the field. |
-image::images/administration_console_viewing_attributes_2.png[Viewing Attributes]
+image::administration_console_viewing_attributes_2.png[Viewing Attributes]
 |================================================
 --
 
@@ -140,7 +140,7 @@ displayed to provide status information and options you can select to
 navigate to the configuration and viewing options described in this user
 guide.
 
-image::images/administration_console_ui.png[Administration Console]
+image::administration_console_ui.png[Administration Console]
 
     <1> Go to Previous or Next page
     <2> Current Location/Path
@@ -201,7 +201,7 @@ The *Home* screen is the default, login view, which provides the *Home*
 navigation pane and the Home page. This page provides a snapshot view of
 system status and a series of quick access links for essential tasks.
 
-image::images/administration_console_home_ui.png[Home UI]
+image::administration_console_home_ui.png[Home UI]
 
     <1> Go to Previous or Next page
     <2> Search
@@ -263,7 +263,7 @@ The *Monitor* screen provides the Monitor navigation pane and the
 Monitor pages, which display various itemizations about servers
 monitored by the Collaborator.
 
-image::images/administration_console_monitor_ui.png[Monitor UI]
+image::administration_console_monitor_ui.png[Monitor UI]
 
     <1> Go to Previous or Next page
     <2> Search
@@ -359,7 +359,7 @@ pages, which display the tables categorically provided as Accounts,
 Aliases, Distribution Lists, and Resources that are currently managed by
 Collaborator.
 
-image::images/administration_manage_ui.png[Manage UI]
+image::administration_manage_ui.png[Manage UI]
 
     <1> Go to Previous or Next page
     <2> Search
@@ -438,7 +438,7 @@ The *Configure* screen provides the *Configure* navigation pane and the
 *Configure* pages, which enable configurations for individual and/or
 global components.
 
-image::images/administration_console_configure_ui.png[Configure UI]
+image::administration_console_configure_ui.png[Configure UI]
 
     <1> Go to Previous or Next page
     <2> Search
@@ -689,7 +689,7 @@ navigation pane, for access to system software management and system
 backup/restore. Administrators can access and download specific wizards
 and tools from this page.
 
-image::images/administration_console_tools_and_migration_ui.png[Tools and Migration UI]
+image::administration_console_tools_and_migration_ui.png[Tools and Migration UI]
 
 
     <1> Go to Previous or Next page
@@ -845,7 +845,7 @@ select a searchable name from the displayed list of matched strings.
 account. However, to return a search from a mailbox ID, the complete ID
 string must be entered in the search.
 
-image::images/administration_console_search_ui.png[Search UI]
+image::administration_console_search_ui.png[Search UI]
 
     <1> Go to Previous or Next page
     <2> Search Options
@@ -933,7 +933,7 @@ help and documentation, which you can access with the links provided in
 the *Help* *Center* screen. Use this page, also, to access community
 forums and to view expert responses to the top migration questions.
 
-image::images/administration_console_help_center_ui.png[Help Center UI]
+image::administration_console_help_center_ui.png[Help Center UI]
 
     <1> Go to Previous or Next page
     <2> Search
@@ -962,7 +962,7 @@ table entry.
 |Hold cursor |
 Display ID details for the selection, similar to the example at right
 (invoked from an Accounts row). |
-image::images/administration_console_tools_in_collaborator_tables.png[Tools]
+image::administration_console_tools_in_collaborator_tables.png[Tools]
 
 |Right-click |
 Access the popup menu for a selected table row. The popup menus from a
@@ -970,7 +970,7 @@ common table may differ from row to row, as demonstrated in the
 following examples. |
 Accounts and Aliases: Dist Lists and Resources:
 
-image::images/administration_console_tools_in_collaborator_tables_2.png[Tools]
+image::administration_console_tools_in_collaborator_tables_2.png[Tools]
 
 |Double-click
 Leave the current page, and go to the configuration tools you can use for
@@ -985,7 +985,7 @@ administrators view when logging into the Administration Console.
 The configured message displays at the top left of the Administration
 Console for each administrative login (similar to the example below).
 
-image::images/motd.png[Message of the Day]
+image::motd.png[Message of the Day]
 
 The message can be closed, replaced, or removed.
 
@@ -1063,7 +1063,7 @@ following illustration.
 [[high_level_view_of_administration_console_ui]]
 .High-level View of Administration Console UI
 --
-image::images/high_level_view_of_admin_console_ui.png[High-level View of Administration Console UI]
+image::high_level_view_of_admin_console_ui.png[High-level View of Administration Console UI]
 --
 
 [[popup_menu_options]]
@@ -1078,7 +1078,7 @@ navigation pane from the Gear icon or a topical popup menu.
 The *Gear* icon is always located at the upper right edge of the page
 view if pertinent to selectable items in the displayed page.
 
-image::images/administration_console_gear_icon.png[The Gear Icon]
+image::administration_console_gear_icon.png[The Gear Icon]
 
 To view the available options, highlight a topic at the navigation pane or
 in the page view: In the popup, the options that are not applicable to your
@@ -1087,7 +1087,7 @@ selection. The following example demonstrates Gear options based on
 selection of a navigation bar topic, versus a table row entry from within
 the same page view.
 
-image::images/administration_console_gear_icon_2.png[The Gear Icon]
+image::administration_console_gear_icon_2.png[The Gear Icon]
 
 The following table provides a high-level view of the operations derived
 from the Gear icon, which varies for particular functions.
@@ -1183,7 +1183,7 @@ specific selection in the page view.
 
 .Popup Options
 ====
-image::images/administration_console_popup_menus.png[Popup Options]
+image::administration_console_popup_menus.png[Popup Options]
 ====
 
 === Containers
@@ -1198,4 +1198,4 @@ close (collapse) containers - which can free up additional space in a page
 view - by clicking on the collapse/ expand button located at the upper left
 edge of the container.
 
-image::images/administration_console_containers.png[Containers]
+image::administration_console_containers.png[Containers]

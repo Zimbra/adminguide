@@ -30,7 +30,7 @@ the LDAP database on the directory server.
 The Zimbra clients connect through the Zimbra server, which connects to
 LDAP.
 
-image::images/ldap_traffic_flow.png[LDAP Traffic Flow]
+image::ldap_traffic_flow.png[LDAP Traffic Flow]
 
 == LDAP Directory Hierarchy
 
@@ -45,7 +45,7 @@ grants, COS, servers, mime types, and Zimlets.
 The Zimbra LDAP Hierarchy figure shows the Zimbra LDAP hierarchy.  Each
 type of entry (object) has certain associated object classes.
 
-image::images/ldap_directory_hierarchy.png[LDAP Directory Hierarchy]
+image::ldap_directory_hierarchy.png[LDAP Directory Hierarchy]
 
 An LDAP directory entry consists of a collection of attributes and has a
 globally unique distinguished name (`dn`).  The attributes allowed for an

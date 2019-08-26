@@ -116,7 +116,7 @@ You must be logged into the {product-abbrev} Administration Console to create th
 +
 For example:
 +
-image::images/mailbox_snapshot_zip_file.png[Address Bar]
+image::mailbox_snapshot_zip_file.png[Address Bar]
 +
 In the above example, the search query is requesting a `zip` file of all accounts called `user1`.
 +

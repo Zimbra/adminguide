@@ -14,7 +14,7 @@ In a Hierarchical Address Book (HAB), your root organization (e.g., {product-fam
 
 .Example Hierarchy
 [#ExampleHierarchy]
-image::images/HABHierarchy.png[]
+image::HABHierarchy.png[]
 
 [#SeniorityIndex]
 == Seniority Index
@@ -183,7 +183,7 @@ A group needs to be specified as root so that other groups can be added as child
 . Choose *Organizational Address Book*.
 . The address book in a hierarchical format appears in the left pane.
 +
-image::images/HABStructure-zimbra.png[]
+image::HABStructure-zimbra.png[]
 +
 . Click any group to view and select users of that group.
 

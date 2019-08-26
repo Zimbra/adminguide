@@ -27,7 +27,7 @@ Zimbra Drive v2 does not follow the usual mailbox-driven behaviors when it comes
 
 == Drive V2 UI
 
-image::images/drive_ui.png[Zimbra Drive V2 UI]
+image::drive_ui.png[Zimbra Drive V2 UI]
 
 . Quick Access navigation panel;
 . Folder navigation panel;
@@ -41,18 +41,18 @@ image::images/drive_ui.png[Zimbra Drive V2 UI]
 === Upload and Download
 To upload a file to Drive v2, either click on the "Upload" button above the file list or drag and drop any number of files from your computer to the main Drive window.
 
-image::images/drive_upload.png[Upload a file]
+image::drive_upload.png[Upload a file]
 
 To download a file from Drive v2, right-click on it and select "Download":
 
-image::images/drive_download.png[Download a file]
+image::drive_download.png[Download a file]
 
 Any file and folder in Drive v2 can be renamed by right-clicking on it and selecting the "Rename" option in the context menu.
 
 === Navigation
 Briefcase items are part of the mailbox’s folder and item hierarchy, while Drive v2 has its own internal folder structure and navigation. Navigating through Drive v2 folders is done through the Navigation Bar on top of the UI instead of through a tree view and folders are visible in the main section of the UI above files.
 
-image::images/drive_navigation.png[Navigate through folders and files]
+image::drive_navigation.png[Navigate through folders and files]
 
 On top of the standard folder-based navigation, a "Quick Access" menu is available on the left side of the UI, which allows to quickly view the following types of items:
 • "Preferred Items" – items marked with the "Star" option available in the right-click context menu;
@@ -64,7 +64,7 @@ On top of the standard folder-based navigation, a "Quick Access" menu is availab
 === Folder Creation
 To create a folder in Drive v2, click on the "New" button above the file list and select "Folder":
 
-image::images/drive_newfolder.png[Create a new folder]
+image::drive_newfolder.png[Create a new folder]
 
 === Sharing
 Being separated from the mailbox’s item hierarchy, Drive v2 files and folders can be shared independently.
@@ -72,11 +72,11 @@ Sharing permissions can be chosen among 3 options: "View", "Edit" and "Edit and 
 
 To share a file or a folder, right-click on it and select "Edit Shares". After entering the email address of the destination user and selecting the sharing permissions, click the (+) button to add the share to the list:
 
-image::images/drive_addshare.png[Share an item (folder or file)]
+image::drive_addshare.png[Share an item (folder or file)]
 
 To edit or delete a share, simply click on the dropdown permission selector to change the sharing permissions of the file/folder or click the trash bin icon to delete the share:
 
-image::images/drive_editshare.png[Edit an existing share]
+image::drive_editshare.png[Edit an existing share]
 
 In Drive v2 sharing rights are only "positive", so it’s not possible to share an item with a lower permission than its parent, e.g. if a folder is shared with "Edit" permissions it’s not possible to share one of its items with "View" rights with the same person.
 
@@ -84,11 +84,11 @@ In Drive v2 sharing rights are only "positive", so it’s not possible to share 
 When deleted, Drive v2 items are not put into the Trash like every other item type in Zimbra, as such items are marked for deletion instead.
 To mark a file or a folder for deletion, right-click on it and select "Mark for Deletion":
 
-image::images/drive_deletefile.png[Mark an item for deletion]
+image::drive_deletefile.png[Mark an item for deletion]
 
 Items marked for deletion are displayed on the bottom of the file list with a strikethrough line and can be deleted permanently clicking on the "Delete Permanently" entry within the right-click context menu of a file marked for deletion while the "Restore" entry will unmark the file:
 
-image::images/drive_restorepermdelete.png[Restore or permanently delete a file]
+image::drive_restorepermdelete.png[Restore or permanently delete a file]
 
 While any user with "Edit" or "Edit and Share" rights on an item or folder can mark it for deletion, only the original owner can delete it permanently.
 
@@ -99,11 +99,11 @@ The InfoBox is a collapsible element that contains all information and controls 
 
 To display the Infobox, click on the "(i)" button on the top-right of the Drive v2 UI:
 
-image::images/drive_infobutton.png[Open the InfoBox]
+image::drive_infobutton.png[Open the InfoBox]
 
 The infobox will appear on the right side of the screen:
 
-image::images/drive_infobox.png[The InfoBox]
+image::drive_infobox.png[The InfoBox]
 
 Top-to-bottom, the InfoBox contains:
 
@@ -128,11 +128,11 @@ As of this release, Drive v2 files are stored in the Current Primary volume as a
 Integration with Zimbra Docs
 If the Zimbra Docs zimlet is correctly installed, dedicated document options will appear in the "New" button above the file list:
 
-image::images/drive_docsintegration.png[Create documents with Zimbra Docs]
+image::drive_docsintegration.png[Create documents with Zimbra Docs]
 
 When right-clicking on a compatible file, an "Open with Docs" option will also appear:
 
-image::images/drive_openwithdocs.png[Open files stored in Drive with Docs]
+image::drive_openwithdocs.png[Open files stored in Drive with Docs]
 
 Furthermore, Zimbra Docs will also allow for previews of compatible document formats to be displayed in the InfoBox.
 
