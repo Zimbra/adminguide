@@ -90,9 +90,8 @@ Open document
 == Networking and ports
 All mailbox servers will need to be able to directly communicate with the Docs Server over port 8443 (HTTPS Backend), which must be open on both ends.
 
-The Docs Server communicates with the Extension through port 9091, so incoming traffic from all mailbox and proxy servers to that port must
-be allowed. The Docs Server component must also be able to directly communicate with the master LDAP server as well as with all Proxy
-servers.
+The Docs Server communicates with the Extension through port 9980, so incoming traffic from all mailbox and proxy servers to that port must be allowed.
+The Docs Server component must also be able to directly communicate with the master LDAP server as well as with all Mailbox servers.
 
 == Installation and Configuration
 
