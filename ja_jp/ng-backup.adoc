@@ -1,0 +1,1791 @@
+[[backup-ng-guide]]
+= Backup Next Generation NG
+
+[[real-time-scan]]
+== Real Time Scan
+
+[[what-is-the-real-time-scanner]]
+=== Real Time Scannerとは
+
+Real Time Scannerは、Backup NGの革新的な機能です。システム内で発生した全てのイベントは即時、ZimbraのRedoLogに記録され、登録されます。つまり、アカウントをいつでも前の状態に戻すことができるため、全タイプの復元を秒刻みの精度で実現することができます。
+
+[[how-does-it-work]]
+=== 機能
+
+Real Time Scannerは、RedoLogが提供する情報フローに追随する形でメールサーバーの全イベントをほぼリアルタイムで読み込んでいます。そして、アイテム作成やメタデータ更新などの同様の操作をそのデータ構造内に「複製」します。どのデータもバックアップで上書きされることがないため、各アイテムは個々の履歴を持つことができます。
+
+[[managing-the-real-time-scanner]]
+=== Real Time Scannerの管理
+
+
+[[enabling-the-real-time-scanner]]
+==== Real Time Scannerを有効にする
+
+[[via-the-administration-zimlet]]
+===== 管理拡張機能から
+
+* バックアップNGタブを選択します。
+
+* Real Time Scannerの下にある `有効` ボタンを押下します。
+
+*注意: Real Time Scannerを初めて有効にする場合や停止した後に再び有効にする場合は即時のフルスキャンが必要です。Real Time Scannerの下にある有効ボタンをクリックするとフルスキャンを促す警告メッセージが表示されます。*
+
+[[via-the-cli]]
+===== CLIから
+
+CLIからReal Time Scanを有効にするには次のとおり、Backup NGモジュールのプロパティ
+`ZxBackup_RealTimeScanner` を `true` に設定します。
+
+....
+zxsuite backup setProperty ZxBackup_RealTimeScanner TRUE
+....
+
+[[disabling-the-real-time-scanner]]
+==== Real Time Scannerを無効にする
+
+[[via-the-administration-zimlet-1]]
+===== 管理拡張機能から
+
+* バックアップNGタブを選択します。
+
+* Real Time Scannerの下にある `無効` ボタンを押下します。
+
+[[via-the-cli-1]]
+===== CLIから
+
+CLIからReal Time Scanを無効にするには次のとおり、Backup NGモジュールのプロパティ `ZxBackup_RealTimeScanner` を `false` に設定します。
+
+....
+zxsuite backup setProperty ZxBackup_RealTimeScanner FALSE
+....
+
+[[why-should-i-disable-the-real-time-scanner]]
+===== Real Time Scannerの無効が必要な場面
+
+Real Time Scannerの無効が必要となる場面は唯一、複数のドメインの外部復元を実施している間だけです。サーバーに高い負荷をかけないための安全策として実施します。インポート後は、再度Real Time Scannerを有効にし、指示されたとおりにSmartScanを実行してください。
+
+[[limitations-and-safety-scan]]
+==== 制約とSafety Scan
+
+Real Time Scannerでデータを復元する際の主な制約
+
+* *空にされたフォルダ* - 右クリックで開くメニューにある `フォルダを空にする` ボタンをユーザーが使用するとき。
+
+この場合、Backup NGはReal Time Scanで保存されたメタデータを読み込むことでのアイテムステータス判別ができません。この結果、復元前の対象アカウントに対するアカウントスキャンが開始されます。
+
+アカウントスキャンは不整合データを修正し、メールボックスのバックアップメタデータをきれいにします。
+
+[[smartscan]]
+== SmartScan
+
+[[what-is-the-smart-scan]]
+=== SmartScanとは
+
+SmartScanは、バックアップシステムの健康状態のための主要な一貫性チェックです。 `スマート` である理由は、前回のSmartScan以降に変更されたアカウントだけを処理対象とするためです。これにより、システムパフォーマンスを向上させ、スキャン時間を大幅に短縮することができます。
+
+デフォルトでは、SmartScanの実行は毎夜予定されています(管理拡張機能のバックアップNGタブ内 `Scanオペレーションを定期実行させる` がオンの場合)。週に一度、ユーザーが設定した曜日に、SmartScanと合わせて行なわれるパージにより、保持期間の過ぎた削除済みアイテムがBackup NGのデータストアからクリアされます。
+
+[[how-does-it-work-1]]
+=== 機能
+
+Backup NGエンジンは、Zimbraデータストア内の全アイテムをスキャンし、前回のSmartScan以降に更新されたアイテムを検索します。そして古いエントリを更新し、バックアップに存在しないアイテムを作成します。同時に、バックアップ内に存在するもののZimbraデータストアに存在しないアイテムには削除フラグを付けます。
+
+その後、バックアップ内のドメインやアカウント、提供サービス、そしてサーバー設定が全LDAPデータおよび設定のダンプと同じになるように、バックアップ内にある設定のメタデータが全て更新されます。
+
+[[when-is-a-smart-scan-executed]]
+=== SmartScanの実行タイミング
+
+* Backup NGモジュールが開始されるとき。
+* 日次。ただし、管理拡張機能の“Scanオペレーションを定期実行させる”がオンの場合のみ。
+* 以前無効にしたReal Time Scannerを管理拡張機能から再び有効にする場合。
+
+[[running-a-smart-scan]]
+=== SmartScanの実行
+
+[[starting-the-scan-via-the-administration-zimlet]]
+==== 管理拡張機能から開始する
+
+管理拡張機能から開始する方法
+
+* 管理拡張機能を開きます。
+
+* バックアップNGタブをクリックします(有効なライセンスがあること)。
+
+* `Run Smartscan` 実行ボタンをクリックします。
+
+[[starting-the-scan-via-the-cli]]
+==== CLIから開始する
+
+CLIからフルスキャンを開始するには `doSmartScan` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup doSmartScan [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+名前                データ型
+notifications(O)    Email Address[,..]
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup dosmartscan notifications user1@example.com,user2@example.com
+SmartScanを実施し、通知をuser1@example.comとuser2@example.comに送信します。
+....
+
+[[checking-the-status-of-a-running-scan]]
+==== スキャン実行状態の確認
+
+CLIから実行中のスキャンの状態を確認するには `monitor` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup monitor {operation_uuid} [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+名前                 データ型
+operation_uuid(M)    Uiid
+operation_host(O)    String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+[[purge]]
+== パージ
+
+[[what-is-the-backup-purge]]
+=== バックアップパージとは
+バックアップパージはクリーンアップ処理です。`データバックアップ保持期間ポリシー` で定義されている保持期間を過ぎた削除済みアイテムを全て、バックアップパスから削除します。
+
+[[how-does-it-work-2]]
+=== 機能
+
+パージエンジンは、全削除済みアイテムのメタデータをスキャンして、最終更新(削除)日時が保持期間を過ぎているアイテムを全て削除します。
+
+アイテムBLOB が1つまたはそれ以上の有効なメタデータファイルから参照されている場合、Backup NGに含まれる重複排除機能のため、そのBLOB自体は削除されません。
+
+Backup NGのバックアップ対象であるSPostfixのカスタマイズも、バックアップパスのパージポリシーに準拠します。管理拡張機能の `バックアップNG` タブ内 `古いカスタマイズをパージ` のチェックを外せば、これを変更することができます。
+
+[[when-is-a-backup-purge-executed]]
+=== バックアップパージの実行タイミング
+
+* 週次。ただし、管理拡張機能の“Scanオペレーションを定期実行させる”がオンの場合のみ。
+* 管理コンソールまたはCLIからマニュアル操作で開始した場合。
+
+[[infinite-retention]]
+=== 無期限保持
+
+`データバックアップ保持期間ポリシー` が `0` に設定された場合、無期限を意味するため、バックアップパージは即座に終了します。保持期間を過ぎる削除済みアイテムがなくなるためです。
+
+[[running-a-backup-purge]]
+=== バックアップパージの実行
+
+[[starting-the-backup-purge-via-the-administration-zimlet]]
+==== 管理拡張機能からバックアップパージを開始する
+
+管理拡張機能からバックアップパージ開始する方法
+
+* バックアップNGタブをクリックします(有効なライセンスがあること)。
+
+* 画面右上にある `Purge実行` ボタンをクリックします。
+
+[[starting-the-backup-purge-via-the-cli]]
+==== CLIからバックアップパージを開始する
+
+CLIからフルスキャンを開始するには `doPurge` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup doPurge [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+名前              データ型
+purgeDays(O)      String
+backup_path(O)    Path
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup dopurge purgeDays 30 backup_path /opt/zimbra/backup/backup_name
+....
+
+[[checking-the-status-of-a-running-backup-purge]]
+==== バックアップパージ実行状態の確認
+
+CLIから実行中のパージ状態を確認するには `monitor` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup monitor {operation_uuid} [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+名前                 データ型
+operation_uuid(M)    Uiid
+operation_host(O)    String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+[[external-backup]]
+== 外部バックアップ
+
+[[what-is-the-external-backup]]
+=== 外部バックアップとは
+外部バックアップは、Backup NGのバックアップタイプの一つです。メールシステムのスナップショットを作成し、ディザスタリカバリ時や移行時の使用に備えます。エクスポートされたデータは重複排除され、圧縮されます。ディスク利用率や転送時間、I/Oを最適化するためです。
+
+[[how-does-it-work-3]]
+=== 機能
+Backup NGエンジンは、Zimbraデータストアの全データをスキャンし、選択されたフォルダへその(重複排除済みかつ圧縮済み)全アイテムを保存します。
+
+[[folder-permissions]]
+==== フォルダ権限
+
+バックアップ先フォルダに対する読み書き権限が *zimbra* ユーザーにあることを確認してください。
+
+下記コマンドを使用して、エクスポート用ディレクトリを作成できます。
+
+_mkdir /opt/zimbra/backup/yourdestfolder_
+
+_chown -R zimbra:zimbra /opt/zimbra/backup/yourdestfolder_
+
+[[preparing-the-migration]]
+==== 移行準備
+
+エラーのリスクを最小限に留めるため、移行前に次の保守手順を実施してください。
+
+* コマンド _/opt/zimbra/libexec/zmfixperms --verbose --extended_ を使用して、Zimbraの権限をダブルチェックします(rootで実行)。
+* 全メールボックスを再インデックス化します。
+* _zxsuite hsm doCheckBlobs_ ユーティリティにて、BLOBの整合性をチェックします。
+
+[[running-an-external-backup]]
+=== 外部バックアップの実行
+
+[[via-the-administration-zimlet-2]]
+==== 管理拡張機能から
+
+管理拡張機能から外部バックアップを開始する方法
+
+* バックアップNGタブをクリックします。
+
+* `インポート/エクスポート` の下にある `エクスポートバックアップ` ボタンをクリックし、エクスポートウィザードを開きます。
+
+* エクスポート先パスをテキストボックスに入力し、次へを押下します。システムはそのエクスポート先のフォルダが空かどうか、'zimbra'ユーザーに読み書き権限があるかどうかをチェックします。
+
+* エクスポートしたいドメインを選択し、次へを押下します。
+
+* 選択したドメインが全てオペレーション概要に表示されていることを確認します。処理が完了した際に通知を送るあて先のメールアドレスを追加で入力できます。ただし、管理者アカウントと操作を開始した管理者にはデフォルトで通知されます。
+
+[[via-the-cli-2]]
+==== CLIからの場合
+
+CLIから外部バックアップを開始するには `doExport` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup doExport {destination_path} [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+名前                   データ型                初期値
+destination_path(M)    Path
+domains(O)             Domain Name[,..]      all
+notifications(O)       Email Address[,..]
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup doexport /opt/zimbra/backup/ domains example.com notifications john@example.com
+example.comのバックアップを/opt/zimbra/backup/へ送り、john@example.comに通知します。
+....
+
+[[scheduling-script]]
+=== 予約スクリプト
+
+NGのCLIを使用して外部バックアップ処理を予約することができます。社内あるいは法的な理由から、日次・週次・月次バックアップを継続取得する際に便利です。
+
+[[restore-on-new-account]]
+== 新アカウントへの復元
+
+[[what-is-the-restore-on-new-account]]
+=== 新アカウントへの復元とは
+
+新アカウントへの復元処理では、処理時点のメールボックスの内容およびプリファレンスを新たに作成したアカウントに即座に復元します。 元アカウントが変更されることはありません。このため、メールボックス全体をロールバックすることなく、１件以上の削除済みアイテムをユーザーのアカウントに復元できます。このタイプの復元を行なう際はセキュリティの観点から、GALから新しく作成したアカウントを隠すかどうかを選択することもできます。
+
+[[how-does-it-work-4]]
+=== 機能
+
+新アカウントへの復元処理が開始されると、新しいアカウント(復元先アカウント)が作成されます。選択されている元アカウントにその時点で存在するアイテムは、フォルダ構成やそのユーザーのデータも含め全てが復元先アカウントに再作成されます。`HSMポリシーを適用する` のチェックがオンでない限り、復元されるアイテムは全て現在のプライマリストアに登録されます。
+
+WARNING: 新しいアカウントにデータを復元した場合、共有アイテムの整合性は保たれていません。元の共有ルールが、復元先アカウントのIDではなく、元アカウントのIDを参照しているためです。
+
+[[running-a-restore-on-new-account-via-the-administration-zimlet]]
+=== 管理拡張機能から新アカウントへの復元処理を実行する
+
+新アカウントへの復元処理を行なう方法は２つあります。
+
+[[from-the-accounts-tab]]
+==== アカウントリストから
+
+Zimbra管理コンソールの `アカウント` タブから行なう復元処理の場合、サーバー内に現在存在しているユーザーに対し、処理を行なうことができます。 +
+削除済みユーザーを復元する必要がある場合は、管理拡張機能から復元処理を行なってください。
+
+* 管理コンソール画面左ウィンドウから `アカウント` を選択してアカウントリストを表示します。
+
+* リストが表示されたら復元対象となる(元)アカウントをクリックにて選択します。
+
+* 上部メニューバーのギアアイコンを押下して `復元` ボタンをクリックします。
+
+* 復元方法に `新アカウントへの復元` を選択し、新しい(復元先)アカウントの名称をテキストボックスに入力します。GALから新しいアカウントを隠すどうかを選択できます。選択し終わったら、`次へ` を押下します。
+
+* 復元の日付を選択します。年月日はミニカレンダーから選択できます。時間はドロップダウンメニューで選択します。分と秒はテキストボックスに入力します。全て設定し終わったら、`次へ` を押下します。
+
+* これまで選択・入力した内容がオペレーション概要に表示されていることを確認します。処理が完了した際に通知を送るあて先のメールアドレスを追加で入力できます。ただし、管理者アカウントと操作を開始した管理者にはデフォルトで通知されます。
+
+`完了` をクリックすると復元処理が開始します。
+
+[[running-a-restore-on-new-account-via-the-cli]]
+=== CLIから新アカウントへの復元を実行
+
+CLIから新アカウントへの復元を開始するにはdoRestoreOnNewAccountコマンドを使用します。
+
+....
+構文:
+   zxsuite backup doRestoreOnNewAccount {source_account} {destination_account} {"dd/MM/yyyy HH:mm:ss"|last} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前                       データ型                期待値
+source_account(M)          Account Name
+destination_account(M)     Account Name/ID
+date(M)                    Date                  `dd/MM/yyyy HH:mm:ss`|last
+restore_chat_buddies(O)    Boolean               true|false
+notifications(O)           Email Address[,..]
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup dorestoreonnewaccount John NewJohn `28/09/2012 10:15:10`
+Johnのアカウントを、新しいアカウントNewJohnに復元します。
+....
+
+
+[[undelete-restore]]
+== 削除取り消しによる復元
+
+[[what-is-undelete-restore]]
+=== 削除取り消しによる復元とは
+
+削除取り消しによる復元は、Backup NGの復元タイプの一つです。管理者はメールボックスから一定期間内に削除されたアイテムを全て復元して、そのメールボックス内の専用のZimbraフォルダに格納することができます。
+
+[[how-does-it-work-5]]
+=== 機能
+
+削除取り消しによる復元処理は、バックアップデータストアから `削除` フラグ付きアイテムを検索し、検索したアイテムを対象メールボックス内の専用フォルダに復元します。
+警告：ユーザーの快適な操作性を目的として、全ての復元済アイテムからIMAP `削除済` フラグを外してZimbraウェブクライアント上に表示しています。
+
+[[running-an-undelete-restore]]
+=== 削除取り消しによる復元の実行
+
+[[via-the-administration-console]]
+==== 管理コンソールから
+
+* 管理コンソール画面左ウィンドウから `アカウント` を選択してアカウントリストを表示します。
+
+* リストが表示されたら復元対象となる(元)アカウントをクリックにて選択します。
+
+* 上部メニューバーのギアアイコンを押下して `復元` ボタンをクリックします。
+
+* 復元方法に `削除取り消し` を選択し、`次へ` を押下します。
+
+* 復元の日付を選択します。年月日はミニカレンダーから選択できます。時間はドロップダウンメニューで選択します。分と秒はテキストボックスに入力します。全て設定し終わったら、`次へ` を押下します。
+
+* これまで選択・入力した内容がオペレーション概要に表示されていることを確認します。処理が完了した際に通知を送るあて先のメールアドレスを追加で入力できます。ただし、管理者アカウントと操作を開始した管理者にはデフォルトで通知されます。
+
+* `完了` をクリックすると復元処理が開始します。
+
+[[via-the-cli-3]]
+==== CLIから
+
+CLIから削除取り消しを開始するには `doUndelete` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup doUndelete {account} {"dd/MM/yyyy HH:mm:ss"|first} {"dd/MM/yyyy HH:mm:ss"|last} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前                データ型                期待値
+account(M)          Account Name
+start_date(M)       Date                  `dd/MM/yyyy HH:mm:ss`|first
+end_date(M)         Date                  `dd/MM/yyyy HH:mm:ss`|last
+notifications(O)    Email Address[,..]
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup doundelete John `08/10/2012 10:15:00` last
+Johnのアカウントで2012/08/10 10:15:00からこれまでに作成され存在している全アイテムについて、削除取り消し処理を実行します。
+....
+
+[[external-restore]]
+== 外部復元
+
+[[what-is-the-external-restore]]
+=== 外部復元とは
+
+外部復元は、Backup NGの復元タイプの一つです。
+
+[[how-does-it-work-6]]
+=== 機能
+
+外部復元は、外部のバックアップに格納されているデータ、メタデータ、設定データの全てを現在のZimbraサーバーに追加します。
+
+下記にインポート手順のワークフローを示します。
+
+*フェーズ１*
+
+* _''処理の開始'' 通知_
+* サーバーバックアップデータの読み込み
+* 空ドメインの作成
+* 必要な提供サービス(COS)の作成(インポート対象アカウントで正常に使用されているもののみ)
+* 空DLの作成
+* 空アカウントの作成
+* 全アカウントの属性の復元
+* 全ドメインの属性の復元
+* 全DLの属性と共有情報の復元
+* _''フェーズ１ フィードバック'' 通知_
+
+*フェーズ２*
+
+* 全アイテムの復元
+
+*フェーズ３*
+
+* 全マウントポイントとデータソースの復元
+* _全体フィードバック込みの ''処理の完了'' 通知_
+
+[[before-you-start-1]]
+=== 開始前の準備
+
+復元先サーバーのBackup NGが初期化済みの場合、メモリ使用およびI/Oパフォーマンスの向上のため、Real Time Scannerを無効にしてください。
+
+移行に使用するディスクスペースとI/Oのオーバーヘッドの削減のため、インポート中はアドバンストユーザーはZimbraのRedoLogを無効化または調整するという選択肢もあります。
+
+インポート前に現在のプライマリボリュームを圧縮することでディスクスペースを更に削減することも可能です。移行後に圧縮済プライマリボリュームを使用したくない場合は、新しいプライマリボリュームを圧縮なしで作成し、それを `現在の` プライマリボリュームとして設定した後、古いボリュームを `セカンダリ` に切り替えることもできます。この一連の作業はHSM NGモジュールで実施可能です。
+
+[[running-an-external-restore]]
+=== 外部復元の実行
+
+[[via-the-administration-zimlet-3]]
+==== 管理コンソールから
+
+* バックアップNGタブをクリックします。
+
+* `インポート/エクスポート` の下にある `インポートバックアップ` ボタンをクリックし、インポートウィザードを開きます。
+
+* インポート元パスをテキストボックスに入力し、次へを押下します。システムはインポート元フォルダに有効なバックアップが入っているかどうか、'zimbra'ユーザーに読み書き権限があるかどうかをチェックします。
+
+* インポートしたいドメインを選択し、次へを押下します。
+
+* インポートしたいアカウントを選択し、次へを押下します。
+
+* これまで選択・入力した内容が全てオペレーション概要に表示されていることを確認します。処理が完了した際に通知を送るあて先のメールアドレスを追加で入力できます。ただし、管理者アカウントと操作を開始した管理者にはデフォルトで通知されます。
+
+[[via-the-cli-4]]
+==== CLIから
+
+CLIから外部バックアップを開始するには `doExternalRestore` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup doExternalRestore {source_path} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前                          データ型               期待値              初期値
+source_path(M)                Path
+accounts(O)                   Account Name[,..]                       all
+domains(O)                    Domain Name[,..]                        all
+filter_deleted(O)             Boolean              true|false         true
+skip_system_accounts(O)       Boolean              true|false         true
+skip_aliases(O)               Boolean              true|false         false
+skip_distribution_lists(O)    Boolean              true|false         false
+provisioning_only(O)          Boolean              true|false         false
+skip_coses(O)                 Boolean              true|false         false
+notifications(O)              Email Address
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup doexternalrestore /opt/zimbra/backup/restorePath/ accounts john@example.com,jack@example.com domains example.com filter_deleted false skip_system_accounts false
+/opt/zimbra/backup/restorePath/にあるバックアップから、全システムアカウントを含むexample.comドメインの復元と、アカウントjohn@example.comおよびアカウントjack@example.comの復元を行ないます。
+....
+
+[[speeding-up-the-restore-through-multithreading]]
+=== マルチスレッドによる復元の高速化
+
+`concurrent_accounts` パラメーターを使用すると同時に複数アカウントの復元ができ、結果的に復元処理を高速化できます。  *管理コンソールにこの機能はありません。*
+
+WARNING: 同時復元するアカウント数の影響でリソース消費量がすぐに上昇するということはありませんが、リソース量は必要です。このため、同時に復元するアカウント数は少数から始め、お使いのサーバーのパフォーマンス性能を考慮しながら徐々に増加するようにしてください。
+
+....
+使用例:
+
+zxsuite backup doExternalRestore /tmp/external1 domains example0.com,example1.com concurrent_accounts 5
+
+/tmp/external1にあるバックアップからシステムアカウントを除くドメインexample0.comとドメインexample1.com ドメインの復元を5アカウント同時に行ないます。
+....
+
+[[after-the-restore-message-deduplication]]
+=== 復元後：メッセージの重複排除
+
+外部復元処理の実行後は、HSM NGモジュールを使用してボリューム全体の重複排除を行なうことを強く推奨します。アカウントを順次インポートする際、従来の自動重複排除機能が十分に処理されない場合があるためです。
+
+[[restore-deleted-account]]
+== 削除済みアカウントの復元
+
+[[what-is-the-restore-deleted-account]]
+=== 削除済みアカウントの復元とは
+
+削除済みアカウント復元処理では、メールボックス削除時点のメールボックスの内容とプリファレンスを新たに作成したアカウントに復元します。
+
+[[how-does-it-work-7]]
+=== 機能
+
+削除済みアカウント復元処理が開始されると、新しいアカウント(復元先アカウント)が作成されます。削除時点で元アカウントに存在していたアイテムはフォルダ構成やそのユーザーのデータも含めて全て、復元先アカウントに再作成されます。 `HSMポリシーを適用する` のチェックがオンでない限り、復元されたアイテムは全て現在のプライマリストアに登録されます。
+
+WARNING: 新たに作成したアカウントにデータを復元した場合、共有アイテムの整合性は保たれていません。元の共有ルールが、復元先アカウントのIDではなく、元アカウントのIDを参照しているためです。
+
+[[from-the-backup-ng-tab]]
+==== バックアップNGタブから
+
+* 管理コンソール画面左ウィンドウからバックアップを選択して、`バックアップNG` タブを表示します。
+
+* 上部バーにある `削除済みアカウントの復元` ボタンをクリックします。
+
+* 復元の日付を選択します。年月日はミニカレンダーから選択できます。時間はドロップダウンメニューで選択します。分と秒はテキストボックスに入力します。全て設定し終わったら、`次へ` を押下します。
+
+* リストが表示されたら復元対象となる(元)アカウントをクリックにて選択します。
+
+* 新しい(復元先)アカウントの名称をテキストボックスに入力します。GALから新しいアカウントを隠すどうかを選択できます。選択し終わったら、`次へ` を押下します。
+
+* これまで選択・入力した内容がオペレーション概要に表示されていることを確認します。処理が完了した際に通知を送るあて先のメールアドレスを追加で入力できます。ただし、管理者アカウントと操作を開始した管理者にはデフォルトで通知されます。
+
+* `完了` をクリックすると復元処理が開始します。
+
+[[item-restore]]
+== アイテムの復元
+
+[[what-is-the-item-restore]]
+=== アイテムの復元とは
+
+アイテムの復元は、Backup NGの復元タイプの一つです。
+
+[[how-does-it-work-8]]
+=== 機能
+
+単一アイテムをバックアップからそのオーナーアカウントに復元します。どのタイプのアイテムもこの方法で復元することができます。
+
+[[running-an-item-restore]]
+=== アイテムの復元の実行
+
+[[via-the-administration-zimlet-4]]
+==== 管理拡張機能から
+
+アイテム復元機能は、CLIからのみ使用できます。
+
+[[via-the-cli-5]]
+==== CLIから
+
+CLIからアイテムの復元を開始するには `doItemRestore` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup doItemRestore {account_name} {item_id} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前                 データ型
+account_name(M)      Account Name
+item_id(M)           Integer
+restore_folder(O)    String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup doitemrestore john@example.com 4784
+メールボックスjohn@example.comに、アイテム4784を復元します。
+....
+
+[[how-to-obtain-the-itemid]]
+===== itemID取得方法
+
+`itemID` とはメールボックス内アイテムを特定できる一意のコードであり、アイテム関連 `メタデータ` の一つです。
+
+ほかの全てのメタデータ同様、該当アカウントの `items`
+ディレクトリ内のファイル
+`[backup path]/accounts/[accountID]/items/[last 2 digits of itemID]/[itemID]`
+に格納されています。
+
+例:
+
+アカウント4a217bb3-6861-4c9f-80f8-f345ae2897b5のアイテム2057 の場合、デフォルトのバックアップパスは下記になります。 +
+`/opt/zimbra/backup/ng/accounts/4a217bb3-6861-4c9f-80f8-f345ae2897b5/items/57/2057`
+
+メタデータは平文テキストファイルに入っているため、 `grep` や `find`
+などのツールを使って内容を検索することができます。ファイル内のメタデータを更に読みやすく表示するにはコマンド `zxsuite
+backup getItem` を使用します。
+
+....
+構文:
+   zxsuite backup getItem {account} {item} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前              データ型             期待値          初期値
+account(M)        Account Name/ID
+item(M)           Integer
+backup_path(O)    Path                                          /opt/zimbra/backup/ng/
+dump_blob(O)      Boolean            true|false                 false
+date(O)           Date               dd/mm/yyyy hh:mm:ss|all    last
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup getitem a7300a00-56ec-46c3-9773-c6ef7c4f3636 1
+アカウントa7300a00-56ec-46c3-9773-c6ef7c4f3636に紐づくIDが1のアイテムを表示します。
+
+コマンドgetItem の場合、パラメーターが必要です。
+
+構文:
+   zxsuite backup getItem {account} {item} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前              データ型             期待値          初期値
+account(M)        Account Name/ID
+item(M)           Integer
+backup_path(O)    Path                                          /opt/zimbra/backup/ng/
+dump_blob(O)      Boolean            true|false                 false
+date(O)           Date               dd/mm/yyyy hh:mm:ss|all    last
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup getitem a7300a00-56ec-46c3-9773-c6ef7c4f3636 1
+アカウントa7300a00-56ec-46c3-9773-c6ef7c4f3636に紐づくID=1のアイテムを表示します。
+....
+
+[[real-life-example]]
+===  ''実際の''例
+
+ユーザーが、あるアイテムをゴミ箱に入れたとします。
+
+`2013-07-18 15:22:01,495 INFO  [btpool0-4361://localhost/service/soap/MsgActionRequest [name=user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailop - moving Message (id=339) to Folder Trash (id=3)`
+
+そして、そのゴミ箱を空にしたとします。
+
+`2013-07-18 15:25:08,962 INFO  [btpool0-4364://localhost/service/soap/FolderActionRequest] [name=user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailbox - Emptying 9 items from /Trash, removeSubfolders=true.`
+
+ユーザーはその後、その削除したアイテムの復元を管理者に依頼します。管理者はそのメールアドレスおよびitemIDを確認し、`zimbra` ユーザーにて以下を実行することでこのアイテムを復元します。
+
+`zxsuite backup doItemRestore user@domain.com 339`
+
+
+[[disaster-recovery]]
+== ディザスタリカバリ
+
+[[the-disaster]]
+=== ディザスタ
+
+[[what-can-go-wrong]]
+==== 悪化要因
+
+下記のうち１つ以上当てはまる場合、発生している問題を `ディザスタ` として分類します。
+
+* (/や/opt/zimbra/などの)重要なファイルシステムで1つ以上のハードウェア障害が起きている。
+* 重要なファイルシステムの内容が内部要因もしくは外部要因により、使用できなくなっている(不注意による *rm** の使用や外部からの侵入など)。
+* Zimbraサービスをホストしている物理マシンあるいは仮想化インフラに関するハードウェア障害が起きている。
+* ソフトウェアまたはOSのアップデート/アップグレードにおいて重大な障害が起きている。
+
+[[minimizing-the-chances]]
+==== 機会を最小減に抑えるには
+
+ディザスタの発生機会を最小減に抑えるための提案を以下に記します。
+
+* 重要なファイルシステムは必ず複数のデバイスに保存する(/や/opt/zimbra/やNGのバックアップパス)。
+* サーバーに監視/アラートシステムを導入し、問題を即座に検知できるようにする。
+* 緻密な更新計画・移行計画を立てる。
+
+[[the-recovery]]
+=== リカバリ
+
+[[how-to-recover-your-system]]
+==== リカバリ方法
+
+システムのリカバリは２つのステップに分かれます。
+
+* 基盤システムのリカバリ(OSインストールおよび設定、Zimbraインストールおよび基本設定)。
+* データリカバリ(ドメイン設定、ユーザー設定、提供サービス(COS)、メールボックスの内容を含む使用可能な最新のデータをZimbraサーバーに再インポート)。
+
+[[how-can-backup-ng-help-with-recovery]]
+==== リカバリに際し、Backup NGができること
+
+`インポートバックアップ` 機能を使用すれば、２つ目のステップのリカバリを簡単かつ安全に実現できます。
+
+旧サーバーのバックアップパスをインポート元パスに指定した場合、Zimbraの基本環境を旧サーバーで最後に使用できていたときの状態にまで復元することができます。
+
+これは単にディザスタリカバリで考えられるシナリオの１つでしかありません。より高度なシナリオや技術に関しては、Zimbra Wikiに記載されています。
+
+[[the-recovery-process]]
+==== リカバリ処理
+
+* 新サーバーにZimbraをインストールし、サーバー設定とグローバル設定を行ないます。
+* 新サーバーにNetwork NGモジュールをインストールします。
+* 旧サーバーのバックアップフォルダを新サーバーにマウントします。これができない場合は使用可能な最新の外部バックアップもしくは最新コピーのいずれかを使用してください。
+ 次のCLIコマンドを使用すると新サーバーで外部復元が始まります。
+* 次のCLIコマンドを使用すると新サーバーで外部復元が始まります。
+
+`zxsuite backup doExternalRestore /path/to/the/old/store`
+
+* 外部復元処理はドメイン、アカウント、配布リストを即座に作成します。この、復元の第一段階の終了後(Network NGモジュールの通知を確認してください)すぐに、ユーザーが利用できるようなシステム状態になっています。メールやメールボックス内のほかのアイテムは、この後で復元されることになります。
+
+[[settings-and-configs]]
+==== 設定
+
+サーバー設定とグローバル設定はバックアップされますが、復元については自動では行なわれません。Zimbraと上流で統合しているBackup NGの場合、異なるOS/Zimbraバージョン/ネットワーキング/ストレージでセットアップされたサーバーにも制約なくデータを復元できます。ただし、Network NGモジュールの実行が可能な最低限のZimbraバージョンでなければなりません。
+
+旧サーバーの完全なコピーを作成する場合も、旧サーバー設定をコピー後に新しい環境でその設定を調整する場合も、Backup NGの便利なコマンド `getServerConfig` が使用できます。
+
+....
+zimbra@test:~$ zxsuite backup getServerConfig
+command getServerConfig requires more parameters
+
+
+構文:
+   zxsuite backup getServerConfig {standard|customizations} [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+
+名前              データ型             期待値                                 初期値
+type(M)           Multiple choice    standard|customizations
+date(O)           String             `dd/MM/yyyy HH:mm:ss`|"last"|"all"
+backup_path(O)    Path                                                     /opt/zimbra/backup/ng/
+file(O)           String             Path to backup file
+query(O)          String             section/id/key
+verbose(O)        String                                                   false
+colors(O)         String                                                   false
+
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+
+使用例:
+
+
+zxsuite backup getserverconfig standard date last
+サーバー設定とグローバル設定の最新のバックアップデータを表示します。
+zxsuite backup getserverconfig standard file /path/to/backup/file
+現在のサーバーバックアップの代わりにバックアップファイルの内容を表示します。
+zxsuite backup getserverconfig standard date last query zimlets/com_zimbra_ymemoticons colors true verbose true
+com_zimbra_ymemoticons zimletの全設定を色鮮やかな出力でわかりやすく表示します。
+....
+
+なお、下記にて最新のバックアップ設定が表示されます。
+
+....
+zxsuite backup getServerConfig standard backup_path /your/backup/path/ date last query / | less
+....
+
+引数 `query` を変更することで、特定の設定を表示させることができます。以下、例。
+
+....
+zimbra@test:~$ zxsuite backup getServerConfig standard date last backup_path /opt/zimbra/backup/ng/ query serverConfig/zimbraMailMode/test.domain.com
+
+
+config date_______________________________________________________________________________________________28/02/2014 04:01:14 CET
+test.domain.com____________________________________________________________________________________________________________both
+....
+
+ディレクトリ \{zimbrahome}/conf/ と \{zimbrahome}/postfix/conf/ もバックアップされます。
+
+....
+zimbra@test:~$ zxsuite backup getServerConfig customizations date last verbose true
+ATTENTION: These files contain the directories {zimbraHome}/conf/ and {zimbraHome}/postfix/conf/ compressed into a single archive.
+           Restore can only be performed manually. Do it only if you know what you're doing.
+
+
+
+
+        archives
+
+
+                filename                                                    customizations_28_02_14#04_01_14.tar.gz
+                path                                                        /opt/zimbra/backup/ng/server/
+                modify date                                                 28/02/2014 04:01:14 CET
+....
+
+[[vms-and-snapshots]]
+=== VMとスナップショット
+
+近年急速な進化を遂げた仮想化によるソリューションの到来により、ZCSのようなサーバーソリューションの配備に今や最もよく利用されている手法がVM(仮想マシン)です。
+
+ほとんどのハイパーバーザーに、カスタマイズ可能なスナップショット機能とスナップショットベースのVMバックアップシステムが備わっています。
+ディザスタの際は、Backup NGの `外部復元` 機能にてサーバーのバックアップパスをインポート元パスに指定することで、最新のスナップショットへのロールバックおよび失ったデータのインポートを行なうことが可能です。
+
+[[disaster-recovery-from-a-previous-vm-state]]
+==== 前回のVM状態からディザスタリカバリを行なう
+
+スナップショットベースのVMバックアップシステムでは、有効状態にあるVMを `凍結した` コピーの保持とその状態へのロールバックが可能です。データ整合性を確実に100％にするには電源オフ状態にあるVMのスナップショットコピーを取得することが望ましいですが、必須ではありません。
+
+*こうしたシステムを利用してロールバック時に失ったデータをインポートするには、バックアップパスがスナップショットの一部でないこと(例：VMWare ESX/iでvdiskをIndependent Persistentに設定することで発生)、変更されないことが必須の条件です。*
+
+Backup NGを使用して以前のマシン状態からディザスタリカバリを行なうには、下記を実施する必要があります。
+
+* ユーザーからのアクセスも送受信メールの配信もない、孤立したネットワーク上の別の(クローン)VMに、使用可能な最新のバックアップを復元します。
+* クローンの電源をオンにし、Zimbraの開始を待ちます。
+* Backup NGのReal Time Scannerを無効にします。
+* 改ざんされていないバックアップパスが入った仮想ディスクにそのクローンを接続、(別のパスに)リンクさせます。
+* バックアップパスをインポート元パスに指定し、外部復元処理を開始します。
+
+上記によりディザスタリカバリが迅速に行なわれ、バックアップパス内の全アイテムの解析および失ったアイテムのインポートが実行されます。この手順は必要に応じて何度も繰り返すことが可能ですが、この実行中はユーザーからのアクセスもメール配信も停止します。
+
+復元が完了したら、どの機能も問題なく利用できること、ユーザーからのアクセスおよびメール配信が復元されることを確認してください。
+
+[[the-aftermath]]
+=== その後
+
+[[what-now]]
+==== 他にすべきこと
+万が一、ディザスタよりも前のコンテンツを復元する必要がある場合は、新しいバックアップパスを初期化し、その古いコンテンツをそこに格納してください。
+
+[[unrestorable-items]]
+== 復元できないアイテム
+
+[[how-can-i-check-if-all-of-my-items-have-been-restored]]
+=== 全アイテムが復元されているかどうかをチェックする方法
+
+チェックはとても簡単です。復元処理が完了したあと適切に `処理完了` 通知を受けとっていることを確認するだけです。管理拡張機能の `通知` タブでもこの内容を確認できます。なお、管理拡張機能の `コア` セクションに `Notification E-Mail recipient address(メールで通知するアドレス)` として指定したメールアドレス宛にも通知メールは送信されます。通知タブのskipped itemsセクションには復元されていないアイテム一覧がアカウントごとに記載されます。
+
+通知タブの `skipped items` セクションには復元されていないアイテム一覧がアカウントごとに記載されます。
+
+....
+  [...]
+  - stats -
+  Restored Items: 15233
+  Skipped Items:  125
+  Unrestored Items: 10
+
+  - unrestored items -
+  account: account1@domain.com
+  unrestored items: 1255,1369
+
+  account: account2@domain.com
+  unrestored items: 49965
+
+  account: account14@domain.com
+  unrestored items: 856,13339,45200, 45655
+  [...]
+....
+
+[[skipped-items-vs.-unrestored-items]]
+==== Skipped Items と Unrestored Items
+
+* `Skipped` item (スキップされたアイテム): 現在の復元処理あるいは以前の復元処理で、すでに復元されているアイテムです。
+* `Unrestored` item(復元されていないアイテム): 復元処理中の問題により、復元されなかったアイテムです。
+
+[[why-some-of-my-items-have-not-been-restored]]
+=== アイテムが復元されなかった理由
+
+様々な要因が考えられますが、よくある理由は以下のとおりです。
+
+* *読み込みエラー*: I/O例外または権限問題のため、アイテムの生データまたはメタデータファイルが読み込めない。
+* *壊れたアイテム*: アイテムの生データまたはメタデータファイルの読み込みはできるが、内容が壊れている。
+* *無効なアイテム*: アイテムの生データまたはメタデータファイルの読み込みができ、内容も正常だが、Zimbraがこのアイテムの登録を拒否する。
+
+[[how-can-i-identify-unrestored-items]]
+=== 復元されていないアイテムの見分け方
+
+見分ける方法は２つあります。１つはCLIから、もう１つはZimbraウェブクライアントからです。前者はバックアップ/インポートパス内のアイテム検索に有用です。後者は対象サーバー内アイテムの閲覧に使用できます。
+
+[[identifying-unrestorable-items-through-the-cli]]
+==== 復元できないアイテムをCLIから見分ける
+
+CLIの `getItem` コマンドを使って、バックアップパス/外部バックアップから全情報を抽出し、アイテムとその関連メタデータを表示することができます。
+
+このコマンドの構文は下記のとおりです。
+....
+   zxsuite backup getItem {account} {item} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前               データ型             期待値                     初期値
+account(M)        Account Name/ID
+item(M)           Integer
+backup_path(O)    Path                                          /opt/zimbra/backup/ng/
+dump_blob(O)      Boolean            true|false                 false
+date(O)           Date               dd/mm/yyyy hh:mm:ss|all    last
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+_account2@domain.com_ に紐づくitemID= _49965_ のアイテムの生データとメタデータ情報をBLOBの全ダンプも込みで抽出するコマンドは、以下になります。
+
+`zxsuite backup getItem account2@domain.com 49965 dump_blob true`
+
+[[identifying-unrestorable-items-through-the-zimbra-webclient]]
+==== 復元できないアイテムをZimbraウェブクライアントから見分ける
+
+`処理完了` の通知にあるunrestored items (復元されていないアイテム) のカンマ区切りの一覧は、Zimbra ウェブクライアントからアイテム検索を行なう際の検索引数に流用できます。
+
+以下、その手順です。
+
+* 対象サーバーのZimbra管理コンソールにログインします。
+* `メールを表示` 機能を使って、復元されていないアイテムが存在するアカウントにアクセスします。
+* 検索ボックスに、*item:* の後に続けて、itemIDのカンマ区切りの一覧を入力します。
+
+`例` +
+`item: 856,13339,45200,45655`
+
+WARNING: 検索は検索を実施したタブ内でのみ機能します。このため `メール` タブの検索結果が0件だった場合、 `連絡先` タブ、 `カレンダー` タブ、 `タスク` タブ、 `ブリーフケース` タブでも同様に検索してみてください。
+
+[[how-can-i-restore-unrestored-items]]
+=== 復元されていないアイテムを復元する方法
+
+復元されていないアイテムは、そのアイテム自体あるいは現Zimbraのセットアップに問題があることをはっきりと示すサインです。もし1度復元に失敗していたとしても、アイテムを復元できる可能性はあります。
+
+次の項では、復元できないアイテムに対処する際に役立つヒントをいくつか紹介します。
+
+[[items-not-restored-because-of-a-read-error]]
+==== 読み込みエラーのために復元できないアイテムの場合
+
+アイテムの復元が不可能となりうる読み込みエラーの場合、下記にて明確に区別してください。
+
+* *ハード* エラー: 復元不可能なデータ損失の要因となるハードエラー障害およびその他の `壊滅的な` エラー。
+* *ソフト* エラー: 権限誤りやファイルシステムエラー、RAID問題(例：壊れたRAID1ミラーリング)など、`壊滅的ではない` エラー。
+
+ハードエラーの場合、ほぼ対処のしようがありませんが、ソフトエラーの場合は次のガイドに沿って、回避または緩和することが可能です。
+
+* システムファイルチェックを実行。
+* RAIDディスクセットアップを使用中の場合、(RAIDレベルに合わせて)起こりうる問題をひととおりチェック。
+* バックアップ/インポートパス、そのサブフォルダ、フォルダ内のファイル全てにに対し、zimbraユーザーに読み書き権限があること。
+* ネットワーク共有をしているファイルシステムのリンク品質をチェック。品質が低い場合、rsyncを使用したデータ転送を行なうことを検討してください。
+* バックアップ・インポートパスのリモートでのマウントにSSHfsを使用している場合、マウントのコマンドをrootで実行していること、そして `-o allow_other` オプションを使用していることを確認してください。
+
+[[items-not-restored-because-identified-as-broken-items]]
+==== 壊れたアイテムとして判別されたために復元できないアイテムの場合
+
+復元されていないアイテムのカテゴリーの中で、`救済できる可能性` が最も低いカテゴリーです。
+
+アイテムの壊れ具合によっては、前の状態またはオブジェクトの生データに復元できる可能性はあります(メールの場合のみ)。状態の確認に、CLIの `getItem` コマンドを実行します。
+
+....
+   zxsuite backup getItem {account} {item} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前               データ型             期待値                      初期値
+account(M)        Account Name/ID
+item(M)           Integer
+backup_path(O)    Path                                          /opt/zimbra/backup/ng/
+dump_blob(O)      Boolean            true|false                 false
+date(O)           Date               dd/mm/yyyy hh:mm:ss|all    last
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+`backup_path` パラメーターにはインポートパスを、 `date` パラメーターには `all` を設定すると、その壊れたアイテム分の使用可能状態が全て表示されます。
+
+....
+zimbra@test:~$ zxsuite backup getItem admin@example.com 24700 backup_path /mnt/import/ date all
+       itemStates                              
+               start_date                                                  12/07/2013 16:35:44
+               type                                                        message
+               deleted                                                     true
+               blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
+               start_date                                                  12/07/2013 17:04:33
+               type                                                        message
+               deleted                                                     true
+               blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
+               start_date                                                  15/07/2013 10:03:26
+               type                                                        message
+               deleted                                                     true
+               blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
+....
+
+アイテムがメールであれば、次の手順で標準の.eml形式のファイルに復元することができます。
+
+* 最新の有効な状態を表します。
+
+....
+/mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
+              start_date                                                  15/07/2013 10:03:26
+              type                                                        message
+              deleted                                                     true
+              blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
+....
+* `blob path` を表します。
+
+`blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=`
+
+* gzipを使ってBLOBファイルを.eml形式のファイルに解凍します。
+....
+zimbra@test:~$ gunzip -c /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ= > /tmp/restored.eml
+
+zimbra@test:~$ cat /tmp/restored.eml
+
+Return-Path: zimbra@test.example.com
+
+Received: from test.example.com (LHLO test.example.com) (192.168.1.123)
+by test.example.com with LMTP; Fri, 12 Jul 2013 16:35:43 +0200 (CEST)
+
+Received: by test.example.com (Postfix, from userid 1001) id 4F34A120CC4; 
+Fri, 12 Jul 2013 16:35:43 +0200 (CEST)
+To: admin@example.com
+From: admin@example.com
+Subject: Service mailboxd started on test.example.com
+Message-Id: <20130712143543.4F34A120CC4@test.example.com>
+Date: Fri, 12 Jul 2013 16:35:43 +0200 (CEST)
+
+Jul 12 16:35:42 test zmconfigd[14198]: Service status change: test.example.com mailboxd changed from stopped to running
+....
+
+* 完了です。これ以後はお好きなクライアントを使用して、該当のメールボックスにこのeml形式のファイルをインポートします。
+
+[[items-not-restored-because-identified-as-invalid-items]]
+==== 無効なアイテムとして判別されたために復元できないアイテムの場合
+
+`無効` なアイテムとして判別されたために復元できないアイテムの場合
+形式上問題はないのにZimbra LMTP Validatorにより登録拒否されるのが、無効なアイテムとして判別されたアイテムです。これは、Zimbraの旧バージョンで作成したアイテムをそれよりも新しいバージョンにインポートする際によく起こります。非常に頻繁に検証のルールが更新されるため、Zimbraのある特定のバージョンで有効だと判別されたメッセージであっても、それより新しいバージョンでも有効と判断されるとは限りません。
+
+インポート中に復元できなかったアイテムが大量発生した場合、一時的にLMTP Validatorを無効にしてから再度インポートすることを検討してもよいかもしれません。これは次のように実施します。
+
+* ZimbraのLMTP Validatorを無効にするにはzimbraユーザーで下記コマンドを実行します。
+
+`zmlocalconfig -e zimbra_lmtp_validate_messages=false`
+
+* インポートが完了したら、LMTP Validatorの実行を有効にします。
+
+`zmlocalconfig -e zimbra_lmtp_validate_messages=true`
+
+WARNING: これは苦肉の策です。LMTP validatorに無効と判断されたアイテムは、表示やモバイルシンクのエラー要因となりうるため、自身の責任の範囲内で使用するようにしてください。
+
+[[docoherencycheck]]
+== doCoherencyCheck
+
+[[what-is-the-coherency-check]]
+=== 一貫性チェックとは
+
+`一貫性チェックは` 、SmartScanが実施するチェックよりも更に深くバックアップパスのチェックを行ないます。
+
+SmartScanは `増分` を対象とするため、前回のSmartScan以降に修正されたアイテムのみチェックしますが、一貫性チェックはバックアップパスにあるメタデータおよびBLOBを全てチェックします。
+
+SmartScanは壊れたメタデータやBLOBを検知することを目的とし設計されています。
+
+[[how-does-it-work-9]]
+=== 機能
+
+一貫性チェックは、バックアップパスに存在する全てのメタデータおよびその関連するBLOBの統合性を検証します。つまり、あらゆるエラーを発見できるようにしています。このため、 `fixBackup` オプションにてチェックを行い、オーファン(孤立している)または壊れたメタデータ/BLOBをバックアップパス内専用ディレクトリに移動します。
+
+[[when-should-a-coherency-check-be-executed]]
+=== 一貫性チェックを実施するタイミング
+
+* 定期的な正常稼動の確認時(3ヶ月ごとまたは半年ごとなど)。
+* システム障害の後。
+* バックアップパスの入っているファイルシステムまたはストレージデバイスに何らかの問題が発生した後。
+
+SmartScanが壊れたアイテム候補を検知した場合、自動で一貫性チェックが開始します。
+
+WARNING: 一貫性チェックはI/O消費が高いため、必ずオフピークの時間帯にのみ実施するようにしてください。
+
+
+[[running-a-coherency-check]]
+=== 一貫性チェックの実行
+
+[[starting-the-check-via-the-administration-zimlet]]
+==== 管理拡張機能からチェックを開始する場合
+
+管理拡張機能には一貫性チェック機能がありません。
+
+[[starting-the-check-via-the-cli]]
+==== CLIからチェックを開始する場合
+
+CLIから一貫性チェックを開始するには `doCoherencyCheck` を使用します。
+
+....
+構文:
+   zxsuite backup doCoherencyCheck {backup_path} [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+名前                 データ型                  期待値             初期値
+backup_path(M)      Path
+accounts(O)         Account Name/ID[,..]                       all
+checkZimbra(O)      Boolean                 true|false         false
+fixBackup(O)        Boolean                 true|false         false
+notifications(O)    Email Address[,..]
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup docoherencycheck /opt/zimbra/backup/ng/ accounts jack@exmaple.com,john@exmaple.com
+JackとJohnのアカウントについて/opt/zimbra/backup/ng/の一貫性チェックを行ないます。
+zxsuite backup docoherencycheck /opt/zimbra/backup/ng/ fixBackup true
+/opt/zimbra/backup/ng/の一貫性チェックを行ない、メタデータから参照されていないBlobファイルと壊れたバックアップファイルをバックアップの外へ移動します。
+....
+
+[[checking-the-status-of-a-running-check]]
+==== チェック実行状況の確認
+
+実行中のスキャンの状態をCLIから確認するには `monitor` コマンドを使用します。
+
+....
+構文:
+   zxsuite backup monitor {operation_uuid} [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+名前                  データ型
+operation_uuid(M)    Uiid
+operation_host(O)    String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+[[taking-additional-and-offsite-backups-of-backup-ngs-datastore]]
+== Backup NGデータストアの追加バックアップとオフサイトバックアップ
+
+[[who-watches-the-watchmen]]
+=== 誰が見張りを見張るのか。
+
+バックアップシステムを保持することは、すばらしく安全なデータ損失対策です。一方、できうる限りで最高レベルの信頼性を実現するためには、各バックアップシステムは広義の `バックアップ対策` の一部でなければなりません。本当の意味でのバックアップ対策が実施されない場合は見当違いのセキュリティ対策となるため、実際には世界最高のバックアップシステムであっても、別方向から破綻します。
+
+バックアップ対策を練り上げることは容易ではありませんし、ときとして `バックアップしたデータを失ったらどうしよう` などという疑問の前に、立ちふさがることになります。これを回避できるかどうかは結局、バックアップの作成方法と管理状況次第となります。バックアップデータを全て損失する可能性が高いのは、RAID1+0設定を利用した専用のSAN上にバックアップデータを格納している場合よりも、単一のSATA IIディスクにデータとバックアップの両方を格納している場合と言えるでしょう。
+
+ここでは、Backup NGデータストアのバックアップ作成およびそれをオフサイトへ格納することによるバックアップ対策向上のベストプラクティスを提案します。
+
+[[making-an-additional-backup-of-backup-ngs-datastore]]
+=== Backup NGデータストアの追加バックアップを作成する
+
+* *原子性*: トランザクションが終了した場合にのみ、コミットとディスクへ書き込みが行なわれる。
+* *一貫性*: コミットされたトランザクションはすべて有効であり、無効なトランザクションの場合は、コミットもディスクへの書き込みもされない。
+* *独立性*: 全てのトランザクションは順次実行され、同一アイテムに対して同時に1つ以上のトランザクションが発生しない。
+* *永続性*: 一度コミットされたトランザクションは、 (電源切れやハードウェア障害などの) トラブルがあっても変わらない。
+
+このため、非常に簡単にバックアップを作成できます。最善 (かつ最も容易) な作成方法は、 *http://rsync.samba.org/[rsync]* を使用することです。指定するオプションやパラメーターは様々な要素、例えば同期対象のデータ量や利用中のストレージによって異なりますが、トランスポートにリモートシェルを利用する代わりにrsyncデーモンに接続したほうが、データ転送が著しく高速化します。
+
+Backup NGデータストアの追加バックアップをrsyncで作成するときにZimbraやReal Time Scannerを停止させる必要はありません。またこの同期はいつでも停止可能な上、その後必要に応じて再実行することもできます。
+
+[[storing-your-backup-ngs-datastore-backup-offsite]]
+=== Backup NGデータストアのバックアップをオフサイトに格納する
+
+前項で記載したとおり、Backup NGデータストアのバックアップは簡単に作成できる上、rsyncを利用することで、バックアップをリモート地点にへ容易に格納できます。
+
+こうしたセットアップの際にバックアップ対策を最適にするベストプラクティスを下記のとおり推奨します。
+
+* rsyncバックアップをスケジューリングする際は、次のrsyncインスタンスまでの間隔を充分にとり、必ず転送が完了するようにしてください。
+* --deleteオプションを使用してください。元サーバーで削除されているファイルがバックアップ先サーバーでも削除されるようになるため不整合を防ぐことができます。
+**  `--delete` オプションを使用したためにかなり時間がかかるようになったと感じた場合は２つのrsyncインスタンスをスケジューリングするようにしてください。１つは `--delete` オプション付きで週次パージ後に実行されるもの、もう１つはこのオプションを付けないものです。
+* 転送はBackup NGのバックアップパスから開始し、必ずフォルダツリー全体が再帰的に転送されるようにしてください。サーバー設定のバックアップおよびマップファイルも転送対象です。
+* バックアップ先ファイルシステムをcase sensitive(大文字・小文字を区別するよう)にしてください(Backup NGのバックアップパスと同様)。
+* リモート地点から直接、復元しようとしている場合、使用するサーバーのzimbraユーザーには転送対象データに対する読み書き権限があることを確認してください。
+* 転送速度がお使いのストレージのスループットよりもかなり速い場合、処理が遅くなることを想定するようにしてください(逆も同様)。
+
+[[additionaloffsite-backup-f.a.q.]]
+=== 追加/オフサイトのバックアップに関するFAQ
+
+[[why-shouldnt-i-use-the-export-backup-feature-of-backup-ng-instead-of-rsync]]
+rsyncの代わりとして、Backup NGの `エクスポートバックアップ` 機能を使わないほうがよいのはなぜでしょうか。
+
+主な理由を下記に示します。
+
+*  `エクスポートバックアップ` は移行目的で設計されています。移行の最後で `スナップショット` をエクスポートするため、増分対応できるようには設計されていません。毎回エクスポートバックアップを実行するたびに、前回実施したときと同じだけの時間がかかりますが、rsyncは時間効率がかなり良いです。
+* Backup NGの処理である以上、エクスポートバックアップ処理の実行中に開始された処理はすべて、エクスポートバックアップが完了するまで、キューに並びます。
+*  `エクスポートバックアップ` 処理は、rsyncよりもシステムリソースへの影響が大きいです。
+* 万が一エクスポートバックアップ処理を停止することになった場合は、スクラッチからスタートする必要があります。再実行はできません。
+
+[[can-i-use-this-for-disaster-recovery]]
+ディザスタリカバリでオフサイトバックアップを使用してもよいですか？
+
+はい。ただし、バックアップパスがまだ利用可能な状態であれば、バックアップパスを使用するほうが好ましいです。アイテムと設定の全てが、利用できる最新の状態に復元されるためです。ただし、もしバックアップパスが損なわれているようであれば、追加/オフサイトバックアップを使用することができます。
+
+[[can-i-use-this-to-restore-data-on-the-server-the-backup-copy-belongs-to]]
+バックアップコピーが入っているサーバー上で復元に使用してもよいですか？
+
+はい。ただし、`外部復元` 処理では実行しないでください。アイテムやフォルダ名が同一であるためです。
+
+バックアップパスのコピーから非常に類似しているサーバーへデータ復元する最適な手順は下記のとおりです。
+
+* Real Time Scannerを停止。
+* バックアップパスを、データ復元に使用したいコピーに変更。
+* `新アカウントへの復元処理` または `削除済みアカウントの復元処理` のいずれかを実行。
+* 復元処理が完了したら、バックアップパスを元に戻す。
+* Real Time Scannerを開始。SmartScanがバックアップデータ更新をトリガー。
+
+[[can-i-use-this-to-create-an-activestandby-infrastructure]]
+Active-Standbyインフラの作成に使用してもよいですか？
+
+よくありません。`外部復元処理`
+では削除が一切行なわれないためです。外部復元処理を何回か実行すると、メールボックスは不要な内容でいっぱいになります。元のメールボックスでは削除されているアイテムでも、`スタンバイ` サーバー
+では削除されないためです。
+
+
+`外部復元処理` は、その処理が始まると同時にアカウントが利用できるように設計されています。このため復元中も、メールの送受信が可能です。
+
+[[are-there-any-other-ways-to-do-an-additionaloffsite-backup-of-my-system]]
+システムの追加/オフサイトバックアップを行なう方法は他にありますか？
+
+もちろんあります。本書で紹介したよりも良好な方法もあることでしょう。ここでは主なケースに当てはまるガイドを記載するに留めています。
+
+[[multistore-informations]]
+== マルチストア関連情報
+
+[[backup-ng-and-multistores]]
+
+[[backup-ng-in-a-multistore-environment]]
+=== マルチストア環境におけるBackup NG
+
+
+[[command-execution-in-a-multistore-environment]]
+==== マルチストア環境でのコマンド実行
+
+新しいNetwork管理拡張機能では、簡単なマルチサーバー管理を実現できます。あるサーバーのZimbra管理コンソールにログインしてバックアップNGタブから別のサーバーを選択し、その別サーバーのバックアップ処理を全て実行することが可能です。
+
+別サーバーのバックアップ処理を全て実行することが可能です。
+
+* マルチストア環境の場合、`新アカウントへの復元処理` では、必ずその元のアカウントのメールボックスサーバー内に新しいアカウントが作成されます。
+* 全ての処理においてそのログは、処理を開始させたサーバーではなく、対象サーバー内に記録されます。
+* 処理を行なう対象サーバーを間違えて選択した場合、Zimbraが自動で正しいサーバーにその処理のリクエストを移します。
+
+[[backup-and-restore]]
+==== バックアップと復元
+
+マルチストア環境でのバックアップと復元は、シングルストア環境と全く同等に機能します。
+
+管理拡張機能から別々に多様なサーバーを設定・管理することになりますが、特定の処理、例えばライブでのフルスキャンや全てのオペレーションの停止は、 _zxsuite_ CLI の _--hostname all_servers_ オプションを使用して、全メールストアに“拡める”ことができます。このことはBackup NGの設定にもあてはまります(詳細はWikiページのCLIを参照してください)。
+
+バックアップ処理と復元処理は下記のように管理されます。
+
+* SmartScanは、管理拡張機能からはシングルサーバーに対して、CLIからは複数サーバーに対して実行可能です。
+* 復元は、Zimbra管理コンソールの `アカウント` タブ、管理拡張機能のBackup NGメニューの各サーバータブ、CLIから開始可能です。方法による相違点は下記のとおりです。
+
+[cols=",",options="header",]
+|=======================================================================
+|処理実施箇所: |オプション
+|`アカウントタブ` |選択したアカウントの復元を、該当サーバー内で自動で開始します。
+
+|`サーバータブ` |選択したサーバーを復元させる権限のあるアカウントであれば、復元「元」に指定できます。
+
+|`CLI` |どのサーバーのどのアカウントも復元可能ですが、サーバーが自動選択されることはありません
+|=======================================================================
+
+[[export-and-import]]
+==== エクスポートとインポート
+
+マルチストア環境で実行される際に最も違いのある機能はエクスポートとインポートです。
+
+基本的なシナリオを以下、記します。
+
+[[export-from-a-singlestore-and-import-to-a-multistore]]
+===== シングルストアからエクスポートし、マルチストアへインポートする
+
+シングルドメインの複数アカウントを別のストアへインポートすると、他のサーバー内メールボックスと共有中のアイテムとの整合性が全て失われます。
+
+CLIからコマンドを利用して、別のサーバーへインポートしたアカウント分の共有を修正することができます。
+
+[[export-from-a-multistore-and-import-to-a-single-or-multistore]]
+===== マルチストアからエクスポートし、シングルストアまたはマルチストアへインポートする
+
+ここでは２通りのシナリオを紹介します。
+
+* `ミラー` インポート: インポート元とインポート先のメールストア数が同一、かつ、各エクスポートが別のシングルサーバーにインポートされる場合。他のサーバー内メールボックスと共有中のアイテムとの整合性が全て失われます。CLI コマンド `doCheckShares` と `doFixShares` を利用して、共有の整合性のチェックと修正が可能です(下記コマンドを参照ください)。
+
+
+* `混合` インポート: インポート元とインポート先のサーバー数が同一もしくは異なる。そして、ドメインあるいはアカウントがマニュアル操作により別のマルチサーバーにインポートされる場合。他のサーバー内メールボックスと共有中のアイテムのと整合性が全て失われます。CLI コマンド `doCheckShares` と `doFixShares` を使用して、共有の整合性をチェック・修正することができます(下記コマンドを参照ください)。
+
+[[the-docheckshares-and-dofixshares-commands]]
+==== コマンド `doCheckShares` と `doFixShares`
+
+`doCheckShares` は、ローカルアカウントにある全ての共有情報を解析して、エラーがあればレポートします。
+
+....
+zimbra@test:~$ zxsuite help backup doCheckShares
+
+構文:
+   zxsuite backup doCheckShares
+
+
+使用例:
+
+zxsuite backup doCheckShares
+Check all shares on local accounts
+....
+
+`doFixShares` は、移行により全ての共有情報の不整合を修正します。
+
+....
+zimbra@test:~$ zxsuite help backup doFixShares
+
+構文:
+   zxsuite backup doFixShares {import_idmap_file}
+
+
+パラメーターリスト
+
+名前                     データ型
+import_idmap_file(M)    String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup doFixShares idmap_file
+Fixes the shares' consistency after an import according to the
+mapping contained in the /opt/zimbra/backup/ng/idmap_file
+....
+
+[[operation-queue-and-queue-management]]
+== 処理キューとキュー管理
+
+[[backup-ngs-operation-queue]]
+=== Backup NGの処理キュー
+
+Backup NGの各処理は開始後、FIFOキューに並びます。スケジュールとマニュアル操作のどちらからでも平等です。ある処理が(完了または終了により)キューから外れるとすぐその次の処理が実行されます。
+
+次の処理はキューシステムの影響を受けます。
+
+* 外部バックアップ
+* 全ての復元処理
+* Smartscan
+
+Backup NGの設定に対する変更は、キューには入らず即座に適用されます。
+
+[[operation-queue-management]]
+=== 処理キューの管理
+
+[[through-the-administration-console]]
+==== 管理コンソールから
+
+[[viewing-the-queue]]
+===== キューを表示する
+
+処理キューを表示するには、管理拡張機能の `通知`
+タブへ遷移し、 `オペレーションキュー`
+ボタンをクリックします。
+
+WARNING: 管理拡張機能ではBackup NGとHSM NG両方の処理キューを１つのビューに表示しています。これは単に設計上のものであり、この２つのキューは独立しています。すなわち、Backup NGの処理とHSM NGの処理が同時に実行していることもあります。
+
+[[emptying-the-queue]]
+===== キューを空にする
+
+現行処理を停止してBackup NGの処理キューを空にするには、管理拡張機能の `バックアップNG` タブにある、`全てのBackupオペレーションを停止` ボタンをクリックします。
+
+[[through-the-cli]]
+==== CLIから
+
+[[viewing-the-queue-1]]
+===== キューを表示する
+
+Backup NGの処理キューを表示させるには、コマンド `getAllOperations` を使用します。
+
+....
+zimbra@server:~$ zxsuite help backup getAllOperations
+
+構文:
+   zxsuite backup getAllOperations [attr1 value1 [attr2 value2...
+
+
+パラメーターリスト
+
+名前           データ型     期待値             初期値
+verbose(O)    Boolean    true|false         false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup getAllOperations
+実行中またはキューにある処理を全て表示します。
+....
+
+[[emptying-the-queue-1]]
+===== キューを空にする
+Backup NGの現行処理を停止してキューを空にするには、コマンド `doStopAllOperations` を使用します。
+
+....
+zimbra@mail:~$ zxsuite help backup doStopAllOperations
+
+構文:
+   zxsuite backup doStopAllOperations
+
+
+使用例:
+
+zxsuite backup doStopAllOperations
+全ての実行中処理を停止します。
+....
+
+[[removing-a-single-operation-from-the-queue]]
+===== キューから処理を1件外す
+
+現行処理を停止、または、キューから特定の処理を外すにはコマンド `doStopOperation` を使用します。
+
+....
+zimbra@mail:~$ zxsuite help backup doStopOperation
+
+構文:
+   zxsuite backup doStopOperation {operation_uuid}
+
+
+パラメーターリスト
+
+名前                  データ型
+operation_uuid(M)    Uiid
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite backup doStopOperation 30ed9eb9-eb28-4ca6-b65e-9940654b8601
+ID=30ed9eb9-eb28-4ca6-b65e-9940654b8601の処理を停止します。
+....
+
+[[cos-level-backup-management]]
+== 提供サービス (COS) レベルのバックアップ管理
+
+[[what-is-cos-level-backup-management]]
+=== 提供サービスレベルのバックアップ管理とは
+
+提供サービスレベルのバックアップ管理では、ストレージ利用を抑える目的で、提供サービス(COS)全体に対するBackup NG機能を全て、無効にすることができます。
+
+[[how-does-cos-level-backup-management-work]]
+=== 提供サービス(COS)レベルのバックアップ管理機能
+
+[[what-happens-if-i-disable-the-backup-ng-module-for-a-class-of-service]]
+==== 提供サービスに対するBackup NGモジュールを無効にするとどうなるか
+
+* COS内のアカウントは全て、Real Time Scannerの対象外になります。
+* TCOS内のアカウントが、エクスポートバックアップ機能でエクスポート対象となることはありません。
+* COS内のアカウントは、バックアップシステムでは `削除済み` として扱われることになります。つまり、データ保持期限が過ぎたら、こうしたアカウントにおける全データが、バックアップストアからパージされることになります。提供サービスに対するバックアップを再度有効化すると、これはリセットされます。
+
+[[how-is-the-backup-enabledbackup-disabled-information-saved]]
+==== `バックアップが有効か無効か` に関する情報の保存方法
+
+提供サービスに対するバックアップを無効にすると、提供サービスの `備考` 項目に *$\{ZxBackup_Disabled}* という指標が加わります。
+
+備考項目が編集可かつ利用可である限り、この指標を変更または削除すれば、提供サービスに対するバックアップを再び有効にすることができます。
+
+[[incremental-migration-with-backup]]
+== BackupNGを利用した増分移行
+
+[[description]]
+=== 概要説明
+
+* 本書では、Backup NGを利用した増分移行の実施方法を説明します。
+* 商用環境の移行向けに特化して設計しています。また、その際に、システム停止時間を最短化することと、ユーザーにとって透過性のあるものを目指して設計しています。
+* 正しく計画し、正しく実行された場合は、システム停止に陥ることはありません。また、ユーザーへの影響も限りなくゼロに近づきます。
+* _本書に記載のCLIコマンドは特に記載がない限り、すべてzimbraユーザーで実行する必要があります。_
+
+[[what-will-be-migrated]]
+=== 移行対象
+
+* メールとメールフォルダ
+* 連絡先と連絡先リスト
+* 予定とカレンダー
+* タスクとタスクリスト
+* ファイルとブリーフケース
+* 共有情報
+* ユーザーのプリファレンス
+* ユーザー設定
+* 提供サービス(COS)の設定
+* ドメイン設定
+
+[[what-will-not-be-migrated]]
+=== 移行対象外
+
+* サーバー設定(参照用に移行されますが復元はされません)
+* グローバル設定(参照用に移行されますが復元はされません)
+* カスタマイズ内容(Postfix, Jetty等)
+* 処理中に移動または削除されたアイテムは、移行先サーバーにて移動も削除もされません。
+* 処理中に変更されたプリファレンス(パスワード等)は、各インポートでリセットされます。
+
+WARNING: 増分移行は、サーバーtoサーバーのミラーリングをセットアップするためには設計されていません。元サーバーをミラーしたコピーを複数インポートにて作成しても、*ミラーしたコピー* は作成されません。インポート処理では削除が一切行なわれないからです。
+
+[[pre-migration-checks]]
+=== 移行前チェック
+
+[[servers]]
+==== サーバー
+
+* 移行元サーバー：Backup NGまたはZimbra Suite Plusが起動しているZimbraサーバーであれば、移行元とすることができます。
+* 移行先サーバー：Backup NGまたはZimbra Suite Plusが起動しているZimbraサーバーであれば、移行先とすることができます。
+
+[[storage]]
+==== ストレージ
+
+* 移行元サーバー：移行元サーバー上でBackup NGが現在有効でない場合、`/opt/zimbra/store/` のフォルダサイズと _同等の_ 、空ディスク容量があることを確認してください(通常、エクスポートされるサイズはオリジナルのサイズの70パーセントまで削減されます。エクスポートされるデータはgzipアルゴリズムを使って圧縮され、また、全てのzimbraアイテムは重複排除されれるためです)。
+* 移行先サーバー: `/opt/zimbra/store/` のフォルダサイズと、移行元サーバーにある `エクスポート` フォルダサイズを合算したサイズよりも大きな空ディスク容量があることを確認してください。
+
+[[data-transfer]]
+==== データ転送
+
+データの転送方法は様々ですが、rsyncによる手段を推奨します。速度と利便性の観点で妥当であるためです。
+
+主要なデータ転送は、まだ移行元サーバーが稼働中かつ機能している間に行なわれます。ただし、転送はネットワーク経由で実行されるため、事前に緻密な転送計画を作成してください。そうすることで、移行前に *全データ* を転送しておくことができます。
+
+[[alternative-ways-to-transfer-your-data]]
+==== データ転送の代替案
+
+要求に沿うのであれば、リモートマウントからドライブの物理的な移動まで、転送手段は何でもかまいません。
+
+....
+Never underestimate the bandwidth of a station wagon full of tapes hurtling down the highway.
+--Tanenbaum, Andrew S. (1996). Computer Networks. New Jersey: Prentice-Hall. p. 83. ISBN 0-13-349945-6.
+....
+
+[[dns]]
+=== DNS
+
+`実際の` DNS上のMXレコードのTTLの値を300に設定してください。移行元サーバーと移行先サーバー間の切り替えが早くなります。
+
+[[the-setup]]
+=== セットアップ
+
+[[step-1-coherency-checks]]
+=== 手順１：一貫性チェック
+
+データ関連の問題が発生しないように、移行元サーバーにて下記チェックを実行してください。
+
+* https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Zimbra_NG_HSM/Advanced_Volume_Operations#doCheckBlobs[zxsuite hsm doCheckBlobs]:
+ZimbraのメタデータとBLOB間の一貫性をチェックします。
+* http://wiki.zimbra.com/wiki/Zmdbintegrityreport[zmdbintegrityreport]:
+Zimbraのデータベースの完全性をチェックします。
+
+エラーが見つかった場合は修正してください。
+
+全てのメールボックスを再インデックス化することも推奨します。
+
+[[step-2-network-ng-modules-setup]]
+=== 手順２：Network NGモジュールのセットアップ
+
+両サーバーともに下記を実行して、Real Time Scannerを無効にしてください。
+
+....
+zxsuite backup setProperty ZxBackup_RealTimeScanner false
+....
+
+WARNING: データエクスポートには、専用のデバイスを使用することを強く推奨します。エクスポートのパフォーマンスを向上させるためと、稼働中のシステムのパフォーマンスに対する影響を抑えるためです。
+
+デバイスを、パス `/opt/zimbra/backup/` にリンクさせてください。zimbraユーザーにはこのパスに対する読み書き権限がなければなりません。
+
+[[step-3-data-export-smartscan]]
+=== 手順３：データのエクスポート (SmartScan)
+
+移行元サーバー上で下記を実行して、SmartScanを実行してください。
+
+....
+zxsuite backup doSmartScan
+....
+
+全データがデフォルトのバックアップパス (/opt/zimbra/backup/ng/) にエクスポートされることになります。
+
+[[pro-tip-single-domains-export]]
+==== 虎の巻：単一ドメインのエクスポート
+
+全てのドメインを移行するのではなく、１つまたは複数のドメインだけを移行することもできます。その場合は、SmartScanの *代わりに*、次のコマンドを実行します。
+
+....
+zxsuite backup doExport /path/to/export/folder/ domains yourdomain.com,yourdomain2.com[..]
+....
+
+留意すべきこととして、`SmartScan` での方法で開始した場合は、移行中ずっとその方法で貫かなければなりません。そしてもし、`単一ドメイン` での方法で開始した場合は、移行中ずっとその方法で貫く必要があります。この2つの方法は混在させられません。
+
+[[data-export-smartscan-via-the-administration-zimlet]]
+===== 管理拡張機能からデータのエクスポート (SmartScan)
+
+管理拡張機能からデータのエクスポートを行なうこともできます。
+
+[[step-4-data-synchronization]]
+=== 手順４：データの同期
+
+WARNING: エクスポートしたデータを移行先サーバーへ移動するとき、移行先サーバーにある移動先フォルダが、Backup NGのバックアップパスでないことを確認してください。移行先サーバーでBackup NGをすでに使用中、または使用予定がある場合、障害の要因になりかねません。
+
+_(rsync以外の方法でデータ転送を行なう場合は、この手順を飛ばしてかまいません)_
+
+_rsync_ を使って、/opt/zimbra/backup/ng/に格納されているデータを、移行先サーバーにあるディレクトリへとコピーしてください (対象フォルダに対する読み書き権限がzimbraユーザーにあることを確認してください) 。 _screen_ や _tmux_ などのターミナルマルチプレクサを使用してください。この処理は、ネットワーク速度や対象データの量によっては、かなりの長時間がかかるかもしれません。
+
+....
+[以下コマンドをRootで実行します]
+rsync -avH /opt/zimbra/backup/ng/ root@desinationserver:/path/for/the/data/
+....
+
+[[alternate-synchronization-method]]
+==== その他同期方法
+
+提案した方法は、帯域幅の広い環境の場合に最良であるものの、最初の同期には、大量のデータが対象となりえます。Rsyncでの方法が遅いと感じる場合には、デバイス (もしくは仮想環境で実行中であればそのおおもとのディスクファイル) の物理的な移動を検討することになるかもしれません。
+
+ディスクを移動した後、リモートで、移行元サーバーへリンクを戻すことができます (例えば、SSHFS) 。なぜなら移行時に行なわれる、追加の同期では、比較にならないほど少量のデータが対象となるからです。また、この場合は、移行元サーバー上のデバイスを/opt/zimbra/backup/ng/として再リンクさせ、そこに、全ての必要な権限を付与しておいてください。
+
+[[step-5-first-import]]
+=== 手順5：初回インポート
+
+エクスポートしたデータ全てを移行先サーバーへインポートします。
+
+....
+zxsuite backup doExternalRestore /path/for/the/data/
+....
+
+Network NGが移行先サーバーへデータをインポートします。
+
+''注意: この手順後は、編集も削除もしないこと''
+
+[[first-import-via-the-administration-zimlet]]
+==== 管理拡張機能からの初回インポート
+
+管理拡張機能を使用してデータのインポートをするという選択肢もあります。管理拡張機能からのインポート中、インポートされているアカウントリストのシステムアカウント (GalSync、Ham、Spam、Quarantineなど) は全て削除されることに留意してください。
+
+[[step-5-alternate-first-import-for-large-migrations-advanced-users-only]]
+=== 手順5(別案)：大規模移行時の初回インポート (精通しているユーザーのみ)
+
+ここからは、エクスポート・インポートに何時間もあるいは何日もかかるような巨大インフラの移行を予定している管理者が移行を行なうための別案を紹介します。
+
+全データを移行先サーバーへインポートする代わりに、`プロビジョニングのみ` のインポートを実行することで、ドメイン、提供サービス、アカウントのみ、移行先サーバーに作成し、メールボックスの全内容を移行対象外とすることができます。
+
+....
+zxsuite backup doExternalRestore /path/for/the/data/ provisioning_only TRUE
+....
+
+上記コマンドを実行後、メールフローを新サーバーへと切り替えます。切り替えが完了したら、`実際の` インポートを開始します。
+
+....
+zxsuite backup doExternalRestore /path/for/the/data/
+....
+
+システムユーザーの接続先が、移行先サーバーになります。移行先サーバーでは、古いメールの復元中ですが、新しいメールは配信されることになります。
+
+このアプローチにはメリットとデメリットがあります。
+
+*メリット*
+
+* アイテムは一度しかインポートされず、その後も修正や削除がされないため、`標準の` 増分移行に比べると、この方法は不整合を減らすことになります。
+* 移行元サーバーでの影響を抑えるオプションがあります (例：移行元サーバーを急いで閉鎖する場合には都合が良いです) 。
+
+*デメリット*
+
+* 処理のタイミングによっては、システムユーザーへの影響が高まります。ユーザーがメールボックスを使用している間も、アイテムは復元中だからです。
+* 稼働中のシステムでインポートを行なうため、速度低下が気になるかもしれません。
+
+[[the-situation-so-far]]
+=== これまでの状況
+
+この時点で、ほとんどのデータが移行先サーバーへインポートされました。移行元サーバーはまだ稼働中で、機能しています。これから、実際の移行の準備をします。
+
+[[the-migration]]
+=== 移行
+
+[[step-6-pre-migration-checks]]
+=== 手順6：移行前チェック
+
+メールフローを切り替える前に、必ず、移行先サーバーにおける稼動準備が整っていることを確認してください(ファイヤーフォール、DNS設定、セキュリティシステムなど)。
+
+[[step-7-the-switch]]
+=== 手順7：切り替え
+
+この手順の終わりには、移行先サーバーが稼動し、機能するようになります。
+
+* 手順３、手順４、手順５を繰り返します(新しいデータのみエクスポート・同期される)。
+* メールフローを新サーバーへ切り替えます。
+* 移行元サーバーにメールが一切届かなくなったら、手順３、手順４、手順５を繰り返します。
+
+移行先サーバーは、現在稼動中で、機能しています。
+
+[[step-8-post-migration-checks]]
+=== 手順8：移行後のチェック
+
+次のコマンドを実行して、共有の不整合をチェックします。
+
+....
+zxsuite backup doCheckShares
+....
+
+不整合が見つかった場合は次のコマンドを実行します。これにより１つめの引数に使用したインポートマップファイルを解析し、不整合な共有をすべて修正します。
+
+....
+zxsuite backup doFixShares
+....
+
+マップファイルは、移行先サーバーのバックアップパス内にある `map_[source_serverID]` です。
+
+[[step-9-galsync]]
+=== 手順9：Galsync
+
+Zimbra管理コンソールから、インポートした全てのGalSyncアカウントを削除します。その後必要に応じて、インポートした全てのドメインについてGalSyncアカウントを新たに作成します。そして、次のコマンドを使用して、全てのGalSyncアカウントを再同期化します。
+
+....
+zmgsautil forceSync -a galsync.randomstring@domain.com -n [resourcename]
+....
+
+[[step-10-message-deduplication]]
+=== 手順10：メッセージの重複排除
+
+移行後はHSM NGモジュールを使って、ボリューム重複排除を実行することを強く推奨します。
+
+[[what-now-1]]
+=== 今後
+
+* 新サーバーにあるBackup NGを初期化し、全てのデータに問題がないことを確認します。
+
+[[incremental-migration-faq]]
+=== 増分移行に関するFAQ
+
+[[q-do-i-need-a-valid-license-in-order-to-perform-an-incremental-migration]]
+==== Q: 増分移行を行なうには、有効なライセンスが必要でしょうか。
+
+はい。試用版または購入版、いずれかのライセンスが必要です。
+
+[[q-what-will-be-migrated]]
+==== Q: 移行対象となるものは何ですか。
+
+サーバー設定を除き、下記を含めた全てが移行対象です。
+
+* ユーザーのデータ
+* ユーザーのプリファレンス
+* 提供サービスの設定
+* ドメイン設定
+
+[[q-will-i-lose-my-shares-will-i-need-to-re-configure-all-my-shares]]
+==== Q: 共有は破棄されますか？ 既存の共有は全て再設定する必要がありますか？
+
+いいえ、そのようなことありません。
+
+[[q-how-should-i-transfer-the-exported-data-between-my-servers]]
+==== Q: エクスポートデータのサーバー間での転送はどのように行なえばよいでしょうか。
+
+自身の求めているものに沿うのであれば、転送手段は何でもかまいません。何を求めているのか、それだけは整理しておく必要はあります。
+
+迅速なデータ移動をお望みですか？ その場合、USBディスクをサーバー間で物理的に移動する手段は適していないかもしれません。
+
+信頼性のおける手段でのデータ移動をお望みですか？ その場合、お使いのインターネット回線が不安定なときは、エクスポートフォルダをSSHFS経由で移行先サーバーへリンクさせる手段は適していないかもしれません。

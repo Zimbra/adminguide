@@ -1,0 +1,191 @@
+[[hierarchical_address_book]]
+= {product-family} の階層制度アドレス帳 (Hierarchical Address Book、HAB)
+
+== HAB について
+
+階層制度のアドレス帳 (HAB) ではユーザー様がアドレス帳に部署の単位で宛先を検索することが可能となります。ほとんどの場合、ユーザー様はデフォルトのグローバルアドレス帳（GAL)のデフォルト単位のみをアクセスできますので、部署の詳細、同じ名前の人の区別、などを簡単に特定できない状況です。HABを実際のビジネス単位へカスタマイズすることで、ユーザー様に内部の宛先をより効率的に検索することが可能となります。
+
+== 階層制度アドレス帳の運用について
+階層制度アドレス帳 (HAB) では、ルート会社（例えば {product-family}）がトップレベルとなります。そのトップレベルの下に複数の子レベルを追加し、異なる部署や課、などを自由に指定することができます。以下の図では、以下の仕様の {product-family} 用の HAB の事例を紹介しています。
+
+* トップレベルはルート会社を示している、つまり {product-family} です。
+* 子レベルに {product-family} の異なるビジネス課を示している、つまり管理課, エンジニア課, カスタマーサポート課, および営業部です。
+* さらなる子レベルに各管理課, エンジニア課, カスタマーサポート課, および営業部に別れている部署やチームを示しています。
+
+.階層制度の事例
+[#ExampleHierarchy]
+image::HABHierarchy.png[]
+
+[#SeniorityIndex]
+== 年功序列
+*年功序列* は階層制度にさらなるカスタマイズできるレベルとなります。HABを作成する際、このパラメータで特定のユーザーや部署を各レベル内で年功序列のランクを与えることが可能です。このランクでは、HABが表示する宛先の人物やグループの順番を指定されます。年功序列が高いほど、リストの順番が他のユーザーやグループの先に表示されます。例えば：
+
+* 副社長を `100` 
+* 本部のオペレーションマネジャーを `50`
+* ビジネスの管理者を `25` 
+
+[NOTE]
+*年功序列* のパラメータが設定していない、またはほかのユーザーアカウントと一致している場合、HABの基準順番はアルファベット順となります。
+
+== 階層制度アドレス帳の設定方法について
+
+[#CreateOU]
+=== organizational unit (OU) を作成する
+
+==== 操作コマンド
+ zmprov createHABOrgUnit <OUのドメイン名> <OU名>
+
+==== 実例
+ zmprov createHABOrgUnit example.com ZimbraOU
+
+==== 詳細
+_{product-family}OU_ as an organizational unit created.
+
+[#createHABGroup]
+=== この OU にグループを作成する
+各部署にグループを作成し、メールアドレスを関連させる必要があります。
+
+==== 操作コマンド
+
+ zmprov createHABGroup <グループ名> <OU名> <グループのメールアドレス>
+
+==== 実例
+
+以下のコマンドでは、<<ExampleHierarchy>> を参考し、*8* の HAB グループを作成します。
+
+ zmprov createHABGroup Zimbra ZimbraOU zimbra@example.com
+
+ zmprov createHABGroup CorporateOffice ZimbraOU CorpOffice@example.com
+
+ zmprov createHABGroup Engineering ZimbraOU eng@example.com
+
+ zmprov createHABGroup ProdSupport ZimbraOU prodsupport@example.com
+
+ zmprov createHABGroup SalesAndMarketing ZimbraOU sales-mark@example.com
+
+ zmprov createHABGroup HumanResources ZimbraOU hr@example.com
+
+ zmprov createHABGroup Accounts ZimbraOU accounts@example.com
+
+ zmprov createHABGroup Administration ZimbraOU administration@example.com
+
+
+[#CreateHierarchy]
+=== 階層制度を作成する
+
+階層制度を作成するため、（Zimbra のグループ以外に）各グループ親のグループを関連する必要があります。
+
+==== 操作コマンド
+
+ zmprov addHABGroupMember ParentGroupEmailAddress ChildGroupEmailAddress
+
+==== 実例
+
+以下のコマンドでは、<<ExampleHierarchy>> の階層制度を参考し、Zimbra のグループがルートのグループであるため、*7* の HAB グループに親グループを指定します。
+
+以下では、*Human Resources*, *Accounts*, および *Administration* の親グループを *Corporate Office* に指定し、*Corporate Office*, *Engineering*, *Product Support*, および *Sales & Marketing* の親グループを *Zimbra* に指定します。
+
+ zmprov addHABGroupMember CorpOffice@example.com hr@example.com
+
+ zmprov addHABGroupMember CorpOffice@example.com accounts@example.com
+
+ zmprov addHABGroupMember CorpOffice@example.com administration@example.com
+
+ zmprov addHABGroupMember zimbra@example.com CorpOffice@example.com
+
+ zmprov addHABGroupMember zimbra@example.com eng@example.com
+
+ zmprov addHABGroupMember zimbra@example.com prodsupport@example.com
+
+ zmprov addHABGroupMember zimbra@example.com sales-mark@example.com
+
+[#GetZimbraId]
+=== Zimbra ID を取得する
+
+`zimbraId` は各メールアドレスに関連している一意的に指定されている認識IDです。このパラメータでは <<#AddUsers, ユーザーをグループに閲覧すること>> および <<#SpecifyRoot, グループがルートとして指定する>> ことができます。
+
+要注意：以下の事例、および他の事例にも、`zimbraId` を代表するために仮の値 (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx) を使用しています。
+
+==== 操作コマンド
+
+ zmprov gdl <グループのメールアドレス> zimbraId
+
+==== 実例
+
+ zmprov gdl zimbra@example.com zimbraId
+
+==== 実例の出力
+
+ # distributionList zimbra@example.com memberCount=4
+ zimbraId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+==== 詳細
+ルートのグループとして指定するグループのメールアドレスは_zimbra@example.com_ です。
+
+[#AddUsers]
+=== グループへユーザーを追加する
+
+以下の事例では、他のユーザーへ影響を与えずに _CorporateOffice_ のグループへ _Jane Doe_ と _John Smith_ のユーザーを追加します。
+
+==== 操作コマンド
+
+ zmprov addHABGroupMember <グループのメールアドレス> <ユーザーのメールアドレス>
+
+==== 実例
+
+ zmprov addHABGroupMember hr@example.com jane.doe@example.com
+
+ zmprov addHABGroupMember accounts@example.com john.smith@example.com
+
+[#CreateSortOrder]
+=== 年功序列を設定する
+HAB でグループが表示する順番を指定します。年功序列が高いグループが他のグループより先表示されます。
+
+==== 操作コマンド
+
+ zmprov modifyHABGroupSeniority <zimbra ID> <年功序列>
+
+==== 実例
+
+グループ名とアルファベット順を問わず、_Engineering_ のグループを _CorporateOffice_ の上に表示させるため、 <<#GetZimbraId, Zimbra ID>> を取得し、`SeniorityIndexNumber` に指定する年功序列の重要性を特定し、以下のコマンドを実行します。
+
+_CorporateOffice_ に年功序列を 90 に指定する
+
+ zmprov modifyHABGroupSeniority xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx 90
+
+_Engineering_ に年功序列を 100 に指定する
+
+ zmprov modifyHABGroupSeniority xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx 100
+
+要注意：グループに年功序列を指定しますと、そのグループにあるユーザーにも <<SeniorityIndex>> が設定されます。
+
+[#SpecifyRoot]
+=== HAB のルート会社を指定する
+
+階層制度を作成するために1つのグループをルートのグループとして指定し、他のグループがそのグループの子グループとして指定する必要があります。なお、以下のコマンドでは、 _zimbra@example.com_ をルートとして指定します。
+
+==== 操作コマンド
+
+ zmprov md <ドメイン名> zimbraHierarchicalAddressBookRoot <ルートとして指定するグループの ZimbraID>
+
+==== 実例
+
+ zmprov md 'example.com' zimbraHierarchicalAddressBookRoot xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+==== 実例の出力
+
+ # distributionList zimbra@example.com memberCount=4
+ zimbraId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+=== 正常に設定されたことを確認する方法
+
+. Zimbra のウェブクライアントへログインします。
+. *新しいメッセージ* をクリックします。
+. メールの *作成* ウィンドウにて、*宛先* のボタンをクリックします。
+. *アドレスを選択* のウインドウにて、右上から *名前の表示元* ドロップダウンメニューをクリックします。
+. *階層制度アドレス帳* を選択します。
+. 左側のリストに階層制度アドレス帳が表示されます。
++
+image::HABStructure-zimbra.png[]
++
+. グループをクリックしますと、そのグループにあるユーザーを閲覧し、メールの宛先として選択することが可能です。

@@ -1,0 +1,211 @@
+[appendix]
+[[zcs_crontab_jobs]]
+= {product-abbrev} Crontab ジョブ
+
+Crontabを使用して、Zimbraサーバーで定期実行するコマンドをスケジューリングします。
+
+== Crontabの読み方
+
+rontabファイルの各エントリは6つの項目で構成されており、以下のように分、時、日、月、曜日、コマンドという順で指定します。
+
+各項目は空のスペース、またはタブで区切ります。
+
+[cols="1,4",options="header",]
+|=======================================================================
+|項目 |説明
+
+|分 |0 から  59
+|時 |0 から  23
+|日 |1 から  31
+|月 |1 から  12
+|曜日 |0 から  7 (0 または 7 が日曜日、1は月曜日など、
+ または英語名)
+|コマンド |ジョブで実行する正確なコマンド文です。
+
+|=======================================================================
+
+アスタリスク (*) を使う場合、その項目で利用可能な全ての値という意味です。例えば、時の項目にアスタリスクを使った場合、「毎時」の意味になります。
+
+== {product-abbrev} Cron ジョブ
+
+サーバーにZimbraユーザーでログオンし、`crontab - l` を実行すると{product-abbrev}のcrontabを閲覧できます。
+
+=== スケジューリングされたジョブ
+{product-abbrev}には以下のcronジョブがスケジュールされています。
+
+==== ログのプルーニング (剪定)
+
+ログのプルーニングにて `/opt/zimbra/log` から8日間経過したログを削除します。このジョブは朝の2:30AMに実行されます。
+
+==== ステータスのログ
+
+`zmstatuslog` が `zmcontrol status` を呼び出し、syslogにデータを出力します。
+
+これは主にLoggerがデータを読み取り、管理コンソールのステータスを最新に更新するためです。ステータスログは２分ごとに実行されます。
+
+==== バックアップ
+
+完全と増分のバックアップは、 `zmschedulebackup` のコマンドで設定されたスケジュールどおりに実行されます。デフォルトの設定では完全バックアップは毎週土曜朝の1:00AMにスケジュールされています。増分のバックアップは日曜から金曜の朝1:00AMにスケジュールされています。
+
+また、デフォルトでは、1か月経過したバックアップは毎月1日の12:00AMに削除されます。
+
+=== crontab.store のジョブ
+
+==== ログのプルーニング (剪定)
+
+ログのプルーニングにて、 `/opt/zimbra/mailboxd/logs` から8日間経過したログを削除します。このジョブは朝の2:30AMに実行されます。
+
+==== Quarantineディレクトリのクリーンアップ
+
+ウイルスや迷惑メールとして識別されたメールは直ちに削除はされず、隔離されます。7日間経過したメッセージは毎朝1:00AMに削除されます。
+
+==== テーブルのメンテナンス
+
+データベース内の全テーブルに対して `ANALYZE TABLE` 文を実行し、すべてのインデックスの統計を更新します。これにより、SQLクエリオプティマイザがSQL文の実行時に適切なインデック取り出せるようにします。このスクリプトは日曜朝1:30AMに実行されます。
+
+==== データベースの不整合を報告する
+
+`zmdbintegrityreport` を毎週実行し、SQL のデータベースのデータ破壊をチェックします。破壊が確認されたら管理者へ通知します。この実行中は、I/O消費が膨大になる可能性があります。問題であると判断した場合は、{product-abbrev}のcrontabを編集して
+`zmdbintegrityreport` が起動する頻度を変更することもできます。このレポートは日曜日の23:00に実行されます。
+
+大規模な環境の場合、以下のコマンドでこの機能を無効化できます。
+[source,bash]
+----
+zmlocalconfig -e zmdbintegrityreport_disabled=TRUE
+----
+
+無効化する場合、通常スケジュールのメンテナンス中や{product-abbrev}のアップグレード実行前に、マニュアル操作にてこの統合レポートを実行することを推奨します。
+
+==== データ破壊を防ぐために複数のmysqldを監視する
+
+データ破壊が発生しうるケースを検出するためのmysqldプロセスが実行中かどうかを確認するスクリプトを実行します。1つ以上のmysqldプロセスが実行中である場合、通知メールが送信されます。このスクリプトは5分ごとに実行されます。
+
+=== crontab.loggerのジョブ
+
+==== ログの処理
+
+`zmlogprocess` を10分間ごとに実行してログを確認させ、MTAのメトリクス (AS/AV、ボリューム、カウント、など) を生成させます。
+
+==== 日次レポート
+
+`logger` のパッケージがインストールされるとcrontab内に日次メールレポートが自動的にスケジュールされます。レポートは毎朝11:30に実行され、管理者のメールアドレスに送信されます。
+
+=== crontab.mtaのジョブ
+
+==== キューのログ
+
+Syslog経由で `zmqueue` のレポートステータスがレビューされます。これはLoggerのデータです。ステータスは10分ごとに更新されます。
+
+==== 迷惑メールのトレーニング
+
+`zmtrainsa` のスクリプトを有効にして、迷惑メールと迷惑ではないメールとして分別されたメッセージをSpamAssassinアプリへ渡します。SpamAssassinは迷惑メールと迷惑ではないメールについての手がかりを学習します。このジョブは1つのZimbra MTAのみで実行する必要があります。ジョブは毎夜23:00に実行されます。
+
+==== 迷惑メールのトレーニングのクリーンアップ
+
+`zmtrainsa` は毎日、迷惑メール用と迷惑ではないメール用のメールボックスをそれぞれ空にします。このジョブは23:45に実行されます。
+
+==== 迷惑Bayesの自動期限切れ
+
+迷惑Bayesの自動期限切れにより、SpamAssassinのBayesデータベースを維持します。迷惑メールの処理時間が可能な限り迅速に行なわれるように、データベースのサイズを管理します。これは毎夜23:20に実行されます。
+
+==== amavisd/tmpのクリーンアップ
+
+このジョブでamavisdの一時ファイルをクリーンアップします。朝の5:15と夜の20:15に実行されます。
+
+== シングルサーバーのcrontab –l実例：
+.`crontab -l` の出力内容
+====
+----
+# ZIMBRASTART -- DO NOT EDIT ANYTHING BETWEEN THIS LINE AND ZIMBRAEND
+#
+# Log pruning
+#
+30 2 * * * find /opt/zimbra/log/ -type f -name *.log* -mtime +8 -exec rm {} \; > /dev/null 2>&1
+35 2 * * * find /opt/zimbra/log/ -type f -name *.out.???????????? -mtime +8 -exec rm {} \; > /dev/null 2>&1
+#
+# Status logging
+#
+*/2 * * * * /opt/zimbra/libexec/zmstatuslog
+#
+# Backups
+#
+# BACKUP BEGIN
+0 1 * * 6 /opt/zimbra/bin/zmbackup -f -a all
+0 1 * * 0-5 /opt/zimbra/bin/zmbackup -i
+0 0 * * * /opt/zimbra/bin/zmbackup -del 1m
+# BACKUP END
+#
+# crontab.ldap
+#
+#
+#
+# crontab.store
+#
+# Log pruning
+#
+30 2 * * * find /opt/zimbra/mailboxd/logs/ -type f -name \*log\* -mtime +8 -exec rm {} \; > /dev/null 2>&1
+30 2 * * * find /opt/zimbra/log/ -type f -name stacktrace.\* -mtime +8 -exec rm {} \; > /dev/null 2>&1
+#
+# Table maintenance
+#
+30 1 * * 7 /opt/zimbra/libexec/zmmaintaintables >> /dev/null 2>&1
+#
+
+# # Report on any database inconsistencies
+#
+0 23 * * 7 /opt/zimbra/libexec/zmdbintegrityreport -m
+#
+# Monitor for multiple mysqld to prevent corruption
+
+*/5 * * * * /opt/zimbra/libexec/zmcheckduplicatemysqld -e > /dev/null 2>&1
+#
+# crontab.logger
+#
+# process logs
+#
+00,10,20,30,40,50 * * * * /opt/zimbra/libexec/zmlogprocess > /tmp/logprocess.out 2>&1
+#
+# Graph generation
+#
+10 * * * * /opt/zimbra/libexec/zmgengraphs >> /tmp/gengraphs.out 2>&1
+#
+# Daily reports
+10 1 * * * /opt/zimbra/libexec/zmdailyreport -m
+#
+
+#
+crontab.mta
+#
+#
+# Queue logging
+#
+0,10,20,30,40,50 * * * * /opt/zimbra/libexec/zmqueuelog
+#
+# Spam training
+0 23 * * * /opt/zimbra/bin/zmtrainsa >> /opt/zimbra/log/spamtrain.log 2>&1
+#
+# Spam training cleanup
+#
+45 23 * * * /opt/zimbra/bin/zmtrainsa --cleanup >> /opt/zimbra/log/spamtrain.log 2>&1
+#
+# Dspam cleanup
+#
+0 1 * * * [ -d /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.sig ] && find /opt/zimbra/dspam/var/dspam/data/z/i/zimbra/zimbra.sig/ -type f -name \*sig -mtime +7 -exec rm {} \; > /dev/null 2>&1
+8 4 * * * [ -f /opt/zimbra/data/dspam/system.log ] && /opt/zimbra/dspam/bin/dspam_logrotate -a 60 -l /opt/zimbra/data/dspam/system.log
+8 8 * * * [ -f /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.log ] && /opt/zimbra/dspam/bin/dspam_logrotate -a 60 -l /opt/zimbra/data/dspam/data/z/i/zimbra/zimbra.log
+#
+# Spam Bayes auto-expiry
+#
+20 23 * * * /opt/zimbra/libexec/sa-learn -p /opt/zimbra/conf/salocal.cf --dbpath /opt/zimbra/data/amavisd/.spamassassin --siteconfigpath /opt/zimbra/conf/spamassassin --force-expire --sync > /dev/null 2>&1
+#
+# Clean up amavisd/tmp
+#
+15 5,20 * * * find /opt/zimbra/data/amavisd/tmp -maxdepth 1 -type d -name 'amavis-*' -mtime +1 -exec rm -rf {} \; > /dev/null 2>&1
+#
+# Clean up the quarantine dir
+#
+0 1 * * * find /opt/zimbra/data/amavisd/quarantine -type f -mtime +7 -exec rm -f {} \; > /dev/null 2>&1
+
+ZIMBRAEND -- DO NOT EDIT ANYTHING BETWEEN THIS LINE AND ZIMBRASTART
+----
+====

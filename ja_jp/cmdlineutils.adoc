@@ -1,0 +1,3551 @@
+[appendix]
+[[command_line_utilities]]
+= コマンドラインのユティリティ
+:toc:
+
+コマンドラインインターフェース (CLI) では{product-name}機能の作成、編集および削除することができます。管理コンソールは {product-name}機能の作成、編集および削除することができます。管理コンソールは{product-name}の管理に使用するメインツールですが、CLIからしか変更できない機能も存在しています。
+
+CLIのユティリティでは以下を実行できます。
+
+* アカウントのプロビジョニング
+* バックアップと復元
+* サービスの停止と起動
+* メールボックスの移動
+* クロスメールボックスの検索
+* 自己署名した証明書のインストール
+* ローカル設定
+
+[NOTE]
+基本的にアカウントの管理は管理コンソールで行うべきです。
+
+== ツール情報全般
+
+{product-name}のコマンドラインのユティリティは基準のUNIX構文に従っています。コマンドを使用する際、以下のガイドラインを参照してください。
+
+* CLIコマンドはZimbraユーザーとして実行します、つまり +
+`su - zimbra`
+
+* 実際のCLIコマンドは小文字・大文字を区別しています。小文字で入力する必要があります。
+
+* コマンドを入力後、キーボードの *Enter* キーを押します。
+
+* CLIコマンドの後に `-h` を入力しますとコマンドの使用方法を返します。
++
+例: `zmprov -h` では `zmprov` のユティリティに関連しているオプションをすべてリストします。
+
+* 各オペレーションはコマンドラインのオプションで実行します。ほとんどのオプションに正式名と略式名が存在します。例えば、以下の2つのコマンドは同じ操作です。
++
+[source,bash]
+----
+zmprov createAccount joe@domain.com test123
+
+zmprov ca joe@domain.com test123
+----
+
+
+=== コマンドの構文
+
+各ツールの構文を表示する際、以下のルールで必要、オプション、そして代理値を示します。
+
+* {`属性値`} のようなブラケットは必要な情報
+
+* [`属性値`] のようなブラケットはオプションの値や情報
+
+* {`a|b|c`} または [`a|b|c`] のように、複数のオプションがパイプ `|` で分けられている場合、 "a" または "b" または "c" という意味です。
+
+* 属性値に空スペースが含まれている場合、値をクォーテーションマークで囲います。
+
+=== コマンドラインユティリティの場所
+
+管理者のコマンドラインツールは {product-name} サーバーの `/opt/zimbra/bin` ディレクトリに存在します。
+
+[[cli_commands]]
+== Zimbra CLI コマンド
+
+image:cli.png[CLI]
+
+以下のテーブルに `/opt/zimbra/bin` のCLIコマンドをリストアップします。
+
+[cols="1m,3",options="header",]
+|=======================================================================
+|CLI |説明
+
+|antispam-mysqladmin |
+迷惑メールのSQLサーバー管理ユーティリティ
+
+|antispam-mysql |
+迷惑メールのSQLクライアント
+
+|antispam-mysql.server |
+迷惑メールのSQLインスタンスの開始/停止
+
+|ldap |
+ZimbraLDAPの起動、停止、またはステータス確認
+
+|ldapsearch |
+LDAPサーバー上で検索を実施
+
+|logmysqladmin |
+Logger SQLインスタンスへmysqladminコマンドを送信する
+
+|mysql |
+メールボックスSQLインスタンスへの双方向コマンドラインを入力
+
+|mysql.server |
+メールボックスSQLインスタンスの起動/停止
+
+|mysqladmin |
+メールボックスSQLインスタンスへ管理者コマンドを送信する
+
+|postconf |
+Postfix設定の閲覧、または編集する
+
+|postfix |
+Postfixの起動、停止、リロード、フラッシュ、確認、アップグレード設定
+
+|qshape |
+Postfixのキューを時間と送信/受信者ドメインに関して検査する
+
+|zmaccts |
+アカウントをリストし、ドメインにあるアカウントのステータスを示す
+
+|zmamavisdctl |
+Amavis-D Newの起動、停止、再起動、またはステータス確認
+
+| zmantispamctl |
+迷惑メール対策サービスの起動、停止、リロード、ステータス確認
+
+|zmantivirusctl |
+ウイルス対策サービスの起動、停止、リロード、ステータス確認
+
+|zmantispamdbpasswd |
+迷惑メール対策のSQLデータベースのパスワード変更
+
+|zmapachectl |
+Apacheサービス(スペルチェック使用)の起動、停止、リロード、ステータス確認
+
+|zmarchiveconfig |
+アーカイブ機能の閲覧、編集、または設定のためのコマンド
+
+|zmarchivectl |
+アーカイブ機能の起動、停止、リロード、ステータス確認
+
+|zmarchivesearch |
+アカウントにアーカイブを検索する
+
+|zmauditswatchctl |
+auditswatchの起動、停止、再起動、リロード、ステータス確認
+
+|zmbackup |
+指定メールホストに完全と増分バックアップを実施する
+
+|zmbackupabort |
+実行中のバックアップを強制的に停止する
+
+|zmbackupquery |
+特定の完全バックアップを検索する
+
+|zmblobchk |
+Zimbraブロブストアの整合性をチェックする
+
+|zmcalchk |
+Zimbraカレンダー内の予定と参加者の整合性をチェックする
+
+|zmcbpolicydctl |
+Cluebringer policydが有効の場合、サービスの起動、停止および再起動
+
+|zmconfigdctl |
+MTA設定のデーモンを起動、停止、終了(kill)、再起動、ステータス確認
+
+|zmcertmgr |
+自己署名と商用署名の証明書を管理する
+
+|zmclamdctl |
+ClamAVの起動、停止、ステータス確認
+
+|zmcleaniplanetics |
+iPlanetICSカレンダーファイルをクリーンする
+
+|zmcontrol |
+Zimbraサーバーの起動、停止、再起動、ステータス確認。また、インストールされているZimbraバージョンの確認も可能
+
+|zmconvertctl |
+コンバージョンサーバーの起動、停止、変換されている添付ファイルのコンバージョン/インデックス状況を確認
+
+|zmdevicesstats |
+各サーバーの一意のActiveSyncデバイス(端末)ID
+
+|zmgdcutil |
+(デバイス(端末)数の取得) 特定のサーバーを指定せず、システム上にあるすべてのデバイスを返す
+
+|zmdumpenv |
+サーバー環境の一般情報を表示する
+
+|zmgsautil |
+グローバルアドレスブック(GAL)同期コマンドユーティリティ。GAL syncアカウントの作成と削除およびマニュアル操作での同期を実行する
+
+|zmhostname |
+Zimbraサーバーのホスト名を取得する
+
+|zmhsm |
+HSMセッションの起動、停止、ステータス確認
+
+|zmitemdatafile |
+ {product-abbrev} がRESTのインポート/エクスポートに使用するtgzファイルの展開と圧縮する
+
+|zmjava |
+Zimbra固有の環境設定でJavaを実行する
+
+|zmjavaext |
+拡張ベースのjarを含め、Zimbra固有の環境設定とJavaを実行する
+
+|zmldappasswd |
+LDAPパスワードを変更する
+
+|zmlicense |
+Zimbraのライセンス閲覧とインストール
+
+|zmlmtpinject |
+テストのツール
+
+|zmlocalconfig |
+Zimbraサーバーのローカル設定の取得、または編集
+
+|zmloggerctl |
+ZimbraのLoggerサービス起動、停止、リロード、ステータス確認
+
+|zmloggerhostmap |
+zmhostnameへDNSホスト名をマニュアル操作でマッピングする
+
+|zmlogswatchctl |
+ログを監視しているswatchの起動、停止、ステータス確認
+
+|zmmailbox |
+メールボックスの管理タスク実行
+
+|zmmailboxdctl |
+メールボックス機能(zmmailboxd)の起動、停止、リロード、ステータス確認
+
+|zmmboxsearch |
+メッセージと添付ファイルを複数のメールボックスに対して検索する(クロスメールボックス検索)
+
+|zmmboxmove |
+7.1.3以降。指定したメールボックスを別のZimbraサーバーへ移動する
+
+|zmmboxmovequery |
+7.1.3以降。サーバーで実行中のメールボックスの移動をクエリする
+
+|zmpurgeoldmbox |
+7.1.3以降。メールボックス移動後、古いサーバーからメールボックスをパージする
+
+|zmmemcachedctl |
+memcachedサーバーの起動、停止、再起動
+
+|zmmetadump |
+アイテムのメタデータを人が読めるフォーマットへダンプするサポートツール
+
+|zmmilterctl |
+ZimbraのMilterサーバーが有効の場合、起動、停止、再起動
+
+|zmmtaconfigdctl |
+ {product-abbrev} 7.0より、このコマンドは使用しません。`zmconfigdctl` を使用してください。
+
+|zmmtactl |
+MTAの起動、停止、ステータス確認
+
+|zmmypasswd |
+SQLパスワードを変更する
+
+|zmmysqlstatus |
+メールボックスのSQLプロセスのステータス確認
+
+|zmnginxconf |
+リバースプロキシ設定を返すコマンドラインユティリティ
+
+|zmnginxctl |
+Zimbraのリバースプロキシの起動、停止、再起動
+
+|zmplayredo |
+定期的に保存されたスナップショットよりデータを復元する。スナップショットを使用してスタンドバイサイトへ情報をバックアップ・復元するユーザーは、このコマンドを使用します
+
+|zmprov |
+アカウント、ドメイン、配布リスト、エイリアスの作成を含む、Zimbra LDAP内でのすべてのプロビジョニングタスクを実行する
+
+|zmproxyconfgen |
+nginxのプロキシ設定を発行する
+
+|zmproxyctl |
+IMAPのプロキシサービスの起動、停止、再起動、ステータス確認
+
+|zmproxypurge |
+１つ以上のmemcachedサーバーからPOP/IMAPのルート情報をパージする
+
+|zmpython |
+ZimbraのJavaライブラリへアクセス可能なPythonスクリプトの実行機能。ZCSのクラスパスを設定し、Jython interpreterを起動する
+
+|zmredodump |
+デバッグのためにRedoログの内容をダンプするサポートツール
+
+|zmrestore |
+指定したメールホストに完全、または増分の復元を実行する
+
+|zmrestoreldap |
+LDAPのバックアップからアカウントを復元する
+
+|zmrestoreoffline |
+Zimbraサーバー(つまりmailboxdのプロセス)がオフラインの時に完全な復元を実行する
+
+|zmsaslauthdctl  |
+saslauthd(認証)の起動、停止、ステータス確認
+
+|zmschedulebackup |
+バックアップをスケジュールし、Cronテーブルにコマンドを追加する
+
+|zmshutil |
+他のzmスクリプト用に使用しているため、使用禁止
+
+|zmskindeploy |
+スキンを配備する
+
+|zmsoap |
+SOAPフォーマットでメール、アカウントおよび管理情報を出力する
+
+|zmspellctl |
+スペルチェックサーバーの起動、停止、ステータス確認
+
+|zmsshkeygen |
+ZimbraのSSH暗号化キーを発行する
+
+|zmstat-chart |
+ディレクトリに収集したzmstatデータからチャートを生成する
+
+|zmstat-chart-config |
+管理コンソールにチャートを生成するためのコンフィグXML情報を出力する
+
+|zmstatctl |
+zmstatのデータ収集プロセスの起動、停止、ステータス確認、またはログのローテーション
+
+|zmstorectl |
+Zimbraストアサービス(zmmailboxd, MariaDB)の起動、停止、ステータス確認
+
+|zmswatchctl |
+モニタリングで使用するswatchプロセスの起動、停止、ステータス確認
+
+|zmsyncreverseproxy |
+モバイルシンク用リバースプロキシの実行
+
+|zmthrdump |
+スレッドダンプを開始し、データをタイムスタンプ付きのファイルに保存する
+
+|zmtlsctl |
+ウェブサーバーモードをHTTP、HTTPS、混合の、いずれかのコミュニケーションプロトコルへと設定する
+
+|zmtrainsa |
+メッセージが迷惑メールかどうかを迷惑メール対策フィルターに学習させる
+
+|zmtzupdate |
+コマンドラインでタイムゾーンの変更を処理できる方法を提供する
+
+|zmupdateauthkeys |
+ `zmsshkeygen` で生成したssh暗号化キーを取得する
+
+|zmvolume |
+Zimbraメールボックスサーバーのストレージボリュームを管理する
+
+|zmzimletctl |
+Zimletの配備と設定
+
+|=======================================================================
+
+=== CLI に非ASCII文字を使用する場合
+
+CLIに非ASCII文字を使用している場合、文字が正常に表示されるように、CLIコマンドを実行する前に、この設定を希望するUTF-8バージョンへと変更する必要があります。変更するには、以下のコマンドを使用します。
+
+`export LC_All=<UTF_locale>`
+
+[IMPORTANT]
+ZimbraユーザーのデフォルトロケールはLANG=Cです。{product-abbrev}サービスを起動するためにこの設定が必要です。デフォルトのLANG=Cを変更するとamavisd-newに関するパフォーマンス問題の可能性があります。
+
+=== zmprov (プロビジョニング)
+
+ツール `zmprov` はアカウント、エイリアス、ドメイン、提供サービス、配布リストおよびカレンダーリソースの作成を含めたZimbra LDAPのプロビジョニングタスクをすべて実行します。各操作はコマンドラインの正式名と省略名で実行します。
+
+コマンド使用の構文は `zmprov [コマンド] [属性値]`
+
+影響のある属性値だけを編集し、変更していない値の再入力が必要なくなるように、編集の構文ではプレフィックスの　"+" や "-" も含めることが出来ます。
+
+*  `+` を使用し、既存の値を変更せず、特定の属性に新しいインスタンスを追加します。
+
+*  `-` を使用し、属性から特定のインスタンスを削除します。
+
+以下の事例ではuser 1に"blue"の値を `zimbraZimletUserProperties`
+の属性へ追加し、他の値は変更しません。
+
+[source,bash]
+----
+zmprov ma user1 +zimbraZimletUserProperties "com_company_testing:favoriteColor:blue"
+----
+
+zmprovを使用できるタスクは `zmprov -h` でリストアップできます。タスクエリアは次のセクションに分かれています。
+
+[cols="1m,1m,2",options="header",]
+|==================================================================
+|正式名 | 略式名 | 構文、実例、備考
+|--help |-h |使用方法を表示する
+|--file |-f |インプットのストリームとしてファイルを使用する
+|--server |-s |{ホスト}[:{ポート}] サーバーホスト名とオプションのポート
+|--ldap |-l |SOAPの代わりにLDAPでプロビジョンする
+|--logpropertyfile |-L |log4jのプロパティファイル、`-l` と同時使用時のみ有効
+|--account {名前} |-a |認証するためのアカウント名
+|--password {パスワード} |-p |アカウントのパスワード
+|--passfile {ファイル} |-P |ファイルからパスワードを読み込む
+|--zadmin |-z |
+認証用の管理者アカウントとパスワードをlocalconfigからのZimbra管理者名とパスワードを使用する
+|--authtoken {認証トークン} |-y |
+コマンドラインで認証のトークンストリング(JSONフォーマット形式必須)を使用する
+|--authtokenfile {認証トークンのファイル} |-Y |
+コマンドラインで認証のトークンストリング(JSONフォーマット形式必須)をファイルから読み込む
+|--verbose |-v |
+詳細(verbose)モード(完全な例外スタックトレースをダンプする)
+|--debug |-d |デバッグモード(SOAPメッセージをダンプする)
+|--master |-m |LDAPのマスターを使用する。 `-l` を同時に使用する場合のみ有効
+|--replace |-r |
+localconfigキーである `zmprov_saveguarded_attrs` に設定された、セーフガードなマルチバリューの属性を書き替えることを許可する
+
+|==================================================================
+
+
+コマンドは以下のトピックス内に簡略的に分類分けされています。
+
+* <<account_provisioning_cmds,アカウントプロビジョニングコマンド>>
+
+* <<calendar_resource_provisioning_cmds,カレンダーリソースプロビジョニングコマンド>>
+
+* <<free_busy_cmds,フリービジーコマンド>>
+
+* <<domain_provisioning_cmds,ドメインプロビジョニングコマンド>>
+
+* <<cos_provisioning_cmds,提供サービスプロビジョニングコマンド>>
+
+* <<server_provisioning_cmds,サーバープロビジョニングコマンド>>
+
+* <<config_provisioning_cmds,設定プロビジョニングコマンド>>
+
+* <<distribution_list_provisioning_cmds,配布リストプロビジョニングコマンド>>
+
+* <<mailbox_cmds,メールボックスコマンド>>
+
+* <<logs_cmds,ログコマンド>>
+
+* <<search_cmds,検索コマンド>>
+
+* <<share_provisioning_cmds,共有プロビジョニングコマンド>>
+
+* <<unified_communication_service_cmds,ユニファイド・コミュニケーションサービスコマンド>>
+
+* <<imap_pop_proxy_cmds,IMAP/POPプロキシコマンド>>
+
+[[account_provisioning_cmds]]
+==== アカウントプロビジョニングコマンド
+
+.`zmprov` -- アカウントプロビジョニングコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+|addAccountAlias (aaa) |
+{name@domain \| id \| adminName} {alias@domain}|
+zmprov aaa joe@domain.com joe.smith@engr.domain.com
+
+|checkPasswordStrength (cps) |
+{name@doman \| id} {password} |
+
+zmprov cps joe@domain.com test123
+
+[NOTE]
+このコマンドはパスワードの古さや履歴を確認しません
+
+|createAccount (ca) |
+{name@domain} {password} [attr1 value1]... |
+zmprov ca joe@domain.com test123 displayName JSmith
+
+|createDataSource (cds) |
+{name@domain} {ds-type} {ds-name} zimbraDataSourceEnabled {TRUE \| FALSE} zimbraDataSourceFolderId {folder-id} [attr1 value1 [attr2 value2]...] |
+
+|createIdentity (cid) |
+{name@domain} {identity-name} [attr1 value1 [attr2 value2]...] |
+
+|createSignature (csig) |
+{name@domain} {signature-name} [attr1 value1 [attr2 value2]...] |
+
+|deleteAccount (da) |
+{name@domain \| id \| adminName} |
+zmprov da joe@domain.com
+
+|deleteDataSource (dds) |
+{name@domain \| id} {ds-name \| ds-id} |
+
+|deleteIdentity (did) |
+{name@domain \| id} {identity-name} |
+
+|deleteSignature (dsig) |
+{name@domain \| id} {signature-name} |
+
+|getAccount (ga) |
+{name@domain \| id \| adminName} |
+zmprov ga joe@domain.com
+|getAccountMembership (gam) |
+{name@domain \| id} |
+
+|getAllAccounts (gaa) |
+[-v] [domain] |
+Must include `-l`/`--ldap`
+zmprov -l gaa
+zmprov -l gaa -v domain.com
+
+|getAllAdminAccounts (gaaa) |
+|
+zmprov gaaa
+
+|getDataSources (gds) |
+{name@domain \| id} [arg1 [arg2]...] |
+
+|getIdentities (gid) |
+{name@domain \| id} [arg1 [arg2]...] |
+
+|getSignatures (gsig) |
+{name@domain \| id} [arg1 [arg2]...] |
+
+|modifyAccount (ma) |
+{name@domain \| id \| adminName} [attr1 value1]... |
+zmprov ma joe@domain.com zimbraAccountStatus maintenance
+
+|modifyDataSource (mds) |
+{name@domain \| id} {ds-name \| ds-id} [attr1 value1 [attr2 value2]...] |
+
+|modifyIdentity (mid) |
+{name@domain \| id} {identity-name} [attr1 value1 [attr2 value 2]...] |
+
+|modifySignature (msig) |
+{name@domain \| id} {signature-name \| signature-id} [attr1 value1 [attr2 value2]...] |
+
+|removeAccountAlias (raa) |
+{name@domain \| id \| adminName} {alias@domain} |
+zmprov raa joe@domain.com joe.smith@engr.domain.com
+
+|renameAccount (ra) |
+{name@domain \| id} {newname@domain} |
+zmprov ra joe@domain.com joe23@domain.com
+
+[NOTE]
+アカウント名の変更後は、そのアカウントに対する完全バックアップを実行することを推奨します。
+
+zmbackup -f -s <servername.com> -a <newaccountname@servername.com>
+
+|setAccountCOS (sac) |
+{name@domain \| id \| adminName} {cos-name \| cos-id} |
+zmprov sac joe@domain.com FieldTechnician
+
+|setPassword (sp) |
+{name@domain \| id \| adminName} {password} |
+zmprov sp joe@domain.com test321
+
+[NOTE]
+パスワードにはアクセント付きの文字を使用できません。使用できない文字の例： a, e, i, u, u, n
+
+|=======================================================================
+
+[[calendar_resource_provisioning_cmds]]
+==== カレンダーリソースプロビジョニングコマンド
+
+.`zmprov` -- カレンダーリソースプロビジョニングコマンド
+[cols="2m,3",options="header",]
+|=======================================================================
+|コマンド |構文
+
+|createCalendarResource (ccr) |
+{name@domain} [attr1 value1 [attr2 value2]...]
+
+|deleteCalendarResource (dcr) |
+{name@domain \| id}
+
+|getAllCalendarResources (gacr) |
+[-v] [domain]
+
+
+|getCalendarResource (gcr) |
+{name@domain \| id}
+
+|modifyCalendarResource (mcr) |
+{name@domain \| id} [attr1 value1 {attr2 value2]...]
+
+|purgeAccountCalendarCache (pacc) |
+{name@domain} [...]
+
+|renameCalendarResource (rcr) |
+{name@domain \| id} {newName@domain}
+
+|=======================================================================
+
+[[free_busy_cmds]]
+==== フリービジーコマンド
+
+.`zmprov` -- フリービジーコマンド
+[cols="2m,3",options="header",]
+|=======================================================================
+|コマンド |構文
+
+|getAllFbp (gafbp) | [-v]
+
+|getFreebusyQueueInfo (gfbqi) | [{provider-name}]
+
+|pushFreebusy (pfb) | {domain \| account-id} [account-id...]
+
+|pushFreebusyDomain (pfbd) | {domain}
+
+|purgeFreebusyQueue (pfbg) | [{provider-name}]
+|=======================================================================
+
+[[domain_provisioning_cmds]]
+==== ドメインプロビジョニングコマンド
+
+.`zmprov` -- ドメインプロビジョニングコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|countAccount (cta) |
+{domain \| id} |
+各COS、COS IDおよびCOSに設定しているアカウント数をリストアップします
+
+|createAliasDomain (cad) |
+{alias-ドメイン名} {local-ドメイン名 \| id} [attr1 value1 [attr2 value2]...] |
+
+|createDomain (cd) |
+{domain} [attr1 value1]... |
+zmprov cd mktng.domain.com zimbraAuthMech zimbra
+
+|deleteDomain (dd) |
+{domain \| id} |
+zmprov dd mktng.domain.com
+
+|getDomain (gd) |
+{domain \| id} |
+zmprov gd mktng.domain.com
+
+|getDomainInfo (gdi) |
+name \| id \| virtualHostname {value} [attr1 [attr2]...] |
+
+|getAllDomains (gad) |
+[-v] |
+
+|modifyDomain (md) |
+{domain \| id} [attr1 value1]... |
+zmprov md domain.com zimbraGalMaxResults 500
+[NOTE]
+ `zimbraDomainRenameInfo` をマニュアル操作で編集しないでください。ドメイン名を変更した際に自動的に更新されます。
+
+|renameDomain (rd) |
+{domain \| id} {newDomain} |
+
+[NOTE]
+`renameDomain` は `zmprov -l/--ldap` と共にしか使用できません。
+|=======================================================================
+
+[[cos_provisioning_cmds]]
+==== 提供サービスプロビジョニングコマンド
+
+.`zmprov` -- 提供サービスプロビジョニングコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|copyCos (cpc) |
+{src-cos-name \| id} {dest-cos-name} |
+
+|createCos (cc) |
+{} [attr1 value1]... |
+zmprov cc Executive zimbraAttachmentsBlocked FALSE zimbraAuthTokenLifetime 60m zimbraMailQuota 100M zimbraMailMessageLifetime 0
+
+|deleteCos (dc) |
+{name \| id} |
+zmprov dc Executive
+
+|getCos (gc) |
+{name \| id} |
+zmprov gc Executive
+
+|getAllCos (gac) |
+[-v] |
+zmprov gac -v
+
+|modifyCos (mc) |
+{name \| id} [attr1 value1]... |
+zmprov mc Executive zimbraAttachmentsBlocked TRUE
+
+|renameCos (rc) |
+{name \| id} {newName} |
+zmprov rc Executive Business
+|=======================================================================
+
+
+[[server_provisioning_cmds]]
+==== サーバープロビジョニングコマンド
+
+.`zmprov` -- サーバープロビジョニングコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|createServer (cs) |
+{} [attr1 value1]... |
+
+|deleteServer (ds) |
+{name \| id} |
+zmprov ds domain.com
+
+|getServer (gs) |
+{name \| id} |
+zmprov gs domain.com
+
+|getAllServers (gas) |
+[-v] |
+zmprov gas
+
+|modifyServer (ms) |
+{name \| id} [attr1 value1]... |
+zmprov ms domain.com zimbraVirusDefinitionsUpdateFrequency 2h
+
+|getAllMtaAuthURLs (gamau) | |
+saslauthd.confのMTA認証に使用するべきサーバーをsaslauthd.confへ追加するために使用します
+
+|getAllMemcachedServers (gamcs) | |
+memcachedサーバーをリストアップします(nginx使用)
+
+|=======================================================================
+
+[[config_provisioning_cmds]]
+==== 設定プロビジョニングコマンド
+
+.`zmprov` -- 設定プロビジョニングコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|getAllConfig (gacf) |
+[-v] |
+すべてのLDAP設定が表示されます
+
+|getConfig (gcf) |
+{name} |
+
+|modifyConfig (mcf) |
+attr1 value1 |
+LDAP設定を変更します
+
+|createXMPPComponent (csc) |
+{short-name} {domain} {server} {classname} {category} {type} [attr1 value1 [attr2 value2]...] |
+
+|deleteXMPPComponent (dxc) |
+{xmpp-component-name} |
+
+|getXMPPComponent (gxc) |
+{name@domain} [attr1 [attr2]...] |
+
+|modifyXMPPComponent (mxc) |
+{name@domain} [attr1 value1 [attr2 value2]...] |
+
+|=======================================================================
+
+[[distribution_list_provisioning_cmds]]
+==== 配布リストプロビジョニングコマンド
+
+.`zmprov` -- 配布リストプロビジョニングコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|createDistributionList (cdl) |
+{list@domain} |
+zmprov cdl needlepoint-list@domain.com
+
+|addDistributionListMember (adlm) |
+{list@domain \| id} {member@domain} |
+zmprov adlm needlepoint-list@domain.com singer23@mail.free.net
+
+|removeDistributionListMember (rdlm) |
+{list@domain \| id} |
+zmprov rdlm needlepoint-list@domain.com singer23@mail.free.net
+
+|getAlldistributionLists (gadl) |
+[-v] |
+
+|getDistributionListmembership (gdlm) |
+{name@domain \| id} |
+[NOTE]
+ダイナミックグループをネストすることはできないため `gdlm` はダイナミックグループに使用できません
+
+|getDistributionList (gdl) |
+{list@domain \| id} |
+zmprov gdl list@domain.com
+
+|modifyDistributionList (mdl) |
+{list@domain \| id} attr1 value1 [attr2 value2]... |
+zmprov md list@domain.com
+
+|deleteDistributionList (ddl) |
+{list@domain \| id} |
+
+|addDistributionListAlias (adla) |
+{list@domain \| id} {alias@domain} |
+
+|removeDistributionListAlias (rdla) |
+{list@domain \| id} {alias@domain} |
+
+|renameDistributionList (rdl) |
+{list@domain \| id} {newName@domain} |
+
+|=======================================================================
+
+[[mailbox_cmds]]
+==== メールボックスコマンド
+
+.`zmprov` -- メールボックスコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|getMailboxInfo (gmi) |
+{account} |
+
+|getQuotaUsage (gqu) |
+{server} |
+
+|recalculateMailboxCounts (rmc) |
+{name@domain \| id} |
+
+未読メッセージカウントと割り当て容量の使用率がメールボックスの実際データと一致しない場合、このコマンドを使用することでメールボックス割り当て容量の使用率と未読メッセージ数を再計算できます。
+
+[IMPORTANT]
+メールボックス割り当て容量の使用率とメッセージカウントの再計算は、オフピークの時間帯に、一度に一つのメールボックスに対して実行されるようにスケジュールすることを推奨します。
+
+|reIndexMailbox (rim) |
+{name@domain \| id} {start \| status \| cancel} [type \| id]... |
+
+|compactIndexMailbox (cim) |
+{name@domain \| id} {start \| status} |
+
+|verifyIndex (vi) |
+{name@domain \| id} |
+
+|getIndexStats (gis) |
+{name@domain \| id} |
+
+|selectMailbox (sm) |
+{アカウント名} [{zmmailbox commands}] |
+
+|unlockMailbox (ulm) |
+{name@domain \| id} [hostname] |
+
+メールボックスを移動しようとして失敗した後にメールボックスを解除する際、そのホスト名をパラメーターに指定するだけです。
+
+|=======================================================================
+
+==== その他のプロビジョニングコマンド
+
+.`zmprov` -- その他のプロビジョニングコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|countObjects (cto) |
+{type} [-d {domain \| id}] |
+
+`countObjects` は `zmprov -l/--ldap` でのみ使用可能です。
+
+|createBulkAccounts (cabulk) |
+{domain} {namemask} {作成アカウント数} |
+
+|describe (desc) |
+[[-v] [-ni] [{entry-type}]] \| [-a {attribute-name}] |
+全ての属性名を出力します (アカウント、ドメイン、提供サービス、サーバーなど)
+
+|flushCache (fc) |
+[-a] {acl \| locale \| skin \| uistrings \| license \| all \| account \| config \| glo \| balgrant \| cos \| domain \| galgroup \| group \| mime \| server \| zimlet \| <extension-cache-type>} [name1 \| id1 [name2 \| i d2]...] |
+
+特定のタイプのLDAP エントリキャッシュをフラッシュします。  参照: <<zimbra_ldap_service,Zimbra LDAP サービス>>
+
+|generateDomainPreAuth Key (gdpak) |
+{domain \| id} |
+事前認証キーを作成し、信用できるサードパーティをシングルサインオンできるようにします。
+`GenerateDomainPreAuth` とともに使用します。
+
+|generateDomainPreAuth (gdpa) |
+{domain \| id} {} {name \| id \| foreignPrincipal} {timestamp \| 0} {expires \| 0} |
+比較用にpreAuthの値を生成します。
+
+|syncGal (syg) |
+{domain} [{token}] |
+
+|getAccountLogger (gal) |
+[-s /--server hostname] {name@domain \| id} |
+
+|=======================================================================
+
+[[logs_cmds]]
+==== ログコマンド
+
+.`zmprov` -- ログコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|addAccountLogger (aal) |
+{name@domain \| id} {logging-category} {debug \| info \| warn \| error} |
+指定したアカウントにカスタムのログレベルを設定します。
+
+|getAccountLoggers (gal) |
+[-s/--server hostname] {name@domain \| id} {logging-category} {debug \| info \| warn \| error} |
+
+|getAllAccountLoggers (gaal) |
+[-s/--server hostname] |
+各カスタムログレベルのアカウントを返します。
+
+|removeAccountLogger (ral) |
+[-s/ --server hostname] {name@domain \| id} {logging-category} |
+名前@ドメインを指定した場合、そのアカウントのカスタムのログレベルを削除します。それ以外の場合、すべてのアカウントからカスタムのログレベルを削除します。
+
+|resetAllLoggers (rlog)  |
+[-s/--server hostname] |
+すべてのアカウントのログレベルを削除し、 `/opt/zimbra/conf/log4j.properties` をリロードします
+
+|=======================================================================
+
+ログレベルのカテゴリ一覧は <<zmprov_log_categories,`zmprov` ログのカテゴリ>> をご覧ください。
+
+[[search_cmds]]
+==== 検索コマンド
+
+.`zmprov` -- 検索コマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|searchGAL (sg) |
+{domain} {} |
+`zmprov sg joe`
+
+|autoCompleteGal (acg) |
+{domain} {} |
+
+|searchAccounts (sa) |
+[-v] {ldap-query} [limit] [offset] [sortBy {attribute}] [sortAscending 0 \| 1] [domain {domain}] |
+
+|searchCalendarResources (scr) |
+[-v] domain {attr op value} [attr op value]... |
+
+|=======================================================================
+
+[[share_provisioning_cmds]]
+==== 共有プロビジョニングコマンド
+
+.`zmprov` -- 共有プロビジョニングコマンド
+
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|getShareInfo (gsi) |
+{owner-name \| owner-id} |
+
+|=======================================================================
+
+[[unified_communication_service_cmds]]
+==== ユニファイド・コミュニケーションサービスコマンド
+
+.`zmprov` -- ユニファイド・コミュニケーションサービスコマンド
+[cols="1m,2m,2a",options="header",]
+|=======================================================================
+|コマンド |構文 |例/備考
+
+|createUCService (cucs) |
+{} [attr1 value1 [attr2 value2]...] |
+
+|deleteUCService (ducs) |
+{name \| id} |
+
+|getAllUCServices (gaucs) |
+[-v] |
+
+|getUCService (gucs) |
+[-e] {name \| id} [attr1 [attr2]...] |
+
+|modifyUCService (mucs) |
+{name \| id} [attr1 value1 [attr2 value2]...] |
+
+|renameUCService (rucs) |
+{name \| id} {newName} |
+
+|=======================================================================
+
+[[imap_pop_proxy_cmds]]
+==== IMAP/POPプロキシコマンド
+
+.`zmprov` -- IMAP/POPプロキシコマンド
+[cols="1m,2",options="header",]
+|=======================================================================
+|コマンド |例/備考
+
+|getAllReverseProxyURLs (garpu) |
+リバースプロキシ参照に使用するサーバーをnginx.confへ追加するために使用します。
+
+|getAllReverseProxy Backends (garpb)|
+`zimbraReverseProxyLookupTarget=TRUE` を持つサーバーの一覧を応答します。
+
+基本的にプロキシからの検索リクエストを受けられる状態のメールボックスサーバーです。
+
+|getAllReverseProxyDomains (garpd) |
+`ZimbraSSLCertificate
+zimbraVirtualHostname` および `zimbraVirtualIPAddress` を設定したドメインのリストを返します。これでプロキシがカスタム/ドメイン証明を提供できるドメインリストを設定できます。
+
+
+|=======================================================================
+
+==== zmprov の例
+
+.新規アカウントとパスワードを作成し、デフォルトCOSに割り合てる
+====
+[source,bash]
+----
+zmprov ca <アカウント@ドメイン> <パスワード>
+----
+====
+
+.新規アカウントとパスワードを作成し、特定のCOSに割り合てる
+====
+この場合、COSのIDが必要となります。COSのIDの確認方法
+[source,bash]
+----
+zmprov gc <提供サービス名>
+
+zmprov ca <アカウント@ドメイン> <パスワード> zimbraCOS <提供サービスのID番号>
+----
+====
+
+.新規アカウントを作成し、内部で認証しないパスワードを指定する
+====
+[source,bash]
+----
+zmprov ca <アカウント@ドメイン> ''
+----
+空のシングルクォートが必要で、ローカルパスワードが存在しないことを示します。
+====
+
+.バッチプロセスで複数のアカウントを作成可能
+====
+詳細については <<provisioning_user_accounts, ユーザーアカウントのプロビジョニング>> を参照してください。
+====
+
+.バルクプロビジョニング
+====
+詳細については、 https://wiki.zimbra.com/wiki/Bulk_Provisioning[Bulk_Provisioning] を参照してください。
+====
+
+.アカウントにエイリアスを追加する
+====
+[source,bash]
+----
+zmprov aaa <アカウント@ドメイン> <エイリアス@ドメイン>
+----
+====
+
+.配布リストを作成する
+====
+[source,bash]
+----
+zmprov cdl <配布リスト名@ドメイン>
+----
+配布リストのIDが返答されます。
+
+====
+
+.配布リストへメンバーを追加する
+====
+[source,bash]
+----
+zmprov adlm <配布リスト名@ドメイン> <メンバー@ドメイン>
+----
+[TIP]
+管理コンソールでは複数メンバーを同時に追加できます。
+====
+
+.管理者のパスワードを変更する
+====
+
+パスワードを変更するアドレスを入力することで、このコマンドで他のアカウントのパスワード変更も可能です。
+
+[source,bash]
+----
+zmprov sp <管理アカウント@ドメイン> <パスワード>
+----
+====
+
+.Zimbra LDAPに対して認証を行なうドメインを作成する
+====
+[source,bash]
+----
+zmprov cd <ドメイン名> zimbraAuthMech zimbra
+----
+====
+
+.デフォルトドメインを設定する
+====
+[source,bash]
+----
+zmprov mcf zimbraDefaultDomain <ドメイン名>
+----
+====
+
+.すべてのCOSと属性値をリストアップする
+====
+[source,bash]
+----
+zmprov gac -v
+----
+====
+
+.ドメイン内のすべてのユーザーアカウントをリストアップする (domain.com)
+====
+[source,bash]
+----
+zmprov gaa domain.com
+----
+====
+
+.すべてのユーザーアカウントと設定をリストアップする
+====
+[source,bash]
+----
+zmprov gaa -v domain.com
+----
+====
+
+.シングルサーバー上のLoggerを有効にする
+====
+[source,bash]
+----
+zmprov ms <サーバー名> +zimbraServiceEnabled logger
+----
+
+そしてLoggerを起動するためにzmloggerctl startを実行します。
+====
+
+.マルチバリューの属性に特定の値が設定されているかどうかを確認する
+====
+[source,bash]
+----
+zmprov gs <サーバー名> 属性=値
+----
+
+例えば、zmprov gs example.com zimbraServiceEnabled=ldap を実行しますとLdapのサービスが有効かどうかが確認できます。
+====
+
+.パージ期間を変更する
+====
+
+パージ期間を変更する場合、 `zimbraMailPurgeSleepInterval` で、次のメールボックスに移動するまでサーバーが「スリープ」しておく必要がある時間を指定します。
+
+[source,bash]
+----
+zmprov ms <サーバー名> zimbraMailPurgeSleepInterval <Xm>
+----
+
+*X* はメールボックスのパージが実行されるまでの時間、 *m* は分を表します。 *<xh>* で時間でも使用できます。
+====
+
+.通知メールのテンプレートを カスタマイズ
+[[custom_new_mail_notification]]
+====
+
+例61:通知メールのテンプレートを `zimbraNewMailNotification` でカスタマイズできます。別のメールボックスでメールを受信したことを通知するデフォルトメールは、Postmasterより送信されます。このテンプレートを変更するには受信するメールボックスアカウントを編集します。編集できる変数は次のとおりです。
+
+* ${SENDER_ADDRESS}
+* ${RECIPIENT_ADDRESS}
+* ${RECIPIENT_DOMAIN}
+* ${NOTIFICATION_ADDRESSS}
+* ${SUBJECT}
+* ${NEWLINE}
+
+上記のどの変数でもメールの *件名*、
+*送信元*、 *本文* に表示させるかを特定できます。 以下の例では *name@domain.com* で受信する通知メールの本文を変更しています。また、zmprov mcを使用して、提供サービス内のテンプレートも変更できます。コマンドは1行でまとめて入力します。
+
+[source,bash]
+----
+zmprov ma <アカウント@ドメイン> zimbraNewMailNotificationBody 'Important message from ${SENDER_ADDRESS}.${NEWLINE}Subject:${SUBJECT}'
+----
+====
+
+.SMS通知をCOS、アカウント、またはドメインで有効化する
+====
+[source,bash]
+----
+zmprov mc <default> zimbingaFeatureCalendarReminderDeviceEmailEnabled TRUE
+zmprov ma <アカウント名> zimbraFeatureCalendarReminderDeviceEmailEnabled TRUE
+zmprov md <ドメイン名> zimbraFeatureCalendarReminderDeviceEmailEnabled TRUE
+----
+====
+
+.アクティビティストリーム機能を提供サービス、またはアカウントに対し有効化する
+====
+[source,bash]
+----
+zmprov mc <default> zimbraFeaturePriorityInboxEnabled TRUE
+zmprov ma <アカウント名> zimbraFeaturePriorityInboxEnabled TRUE
+----
+====
+
+==== CLIからオートグループのバックアップを設定する
+
+グローバル設定にバックアップ方法を設定すると、特定のサーバーにオートグループのバックアップ方法を使用したくない場合に、サーバーごとの設定をオーバーライドできます。
+
+オートグループのバックアップをセットアップする場合、zmprov CLIを使用してLDAPの属性値を変更します。コマンドを以下の構文で入力します。
+
+[source,bash]
+----
+zmprov mcf <LDAPの属性> <値>
+----
+
+また、`zmprov ms` を使用してサーバーレベルの属性値も設定できます。
+
+以下のLDAP属性値が変更されます。
+
+* `zimbraBackupMode` --   `Auto-Grouped` に設定します。デフォルトは
+`Standard` です。
+
+* `zimbraBackupAutoGroupedInterval` -- 各グループにバックアップのセッションを実行する日数か週数を設定します。デフォルトは1日です。バックアップの期間は1日以上(`xd`)または1週以上(`xw`)を設定できます。
+
+* `zimbraBackupAutoGroupedNumGroups` -- メールボックスを振り分けるグループ数です。デフォルトは7グループです。
+
+[[conversation_threading]]
+==== スレッドのデフォルト値を変更する
+
+メッセージを共通のスレッドとしてグループ化することができます。デフォルトではReferencesヘッダー項目によりメッセージをスレッド化します。Referencesヘッダーが存在しない場合、件名を使用します。、提供サービスまたは個々のアカウントごとに、デフォルトのオプションを変更できます。
+
+[source,bash]
+----
+zmprov mc [提供サービス名] zimbraMailThreadingAlgorithm [type]
+----
+
+使用可能なtypeは以下です。
+
+* *none* -- スレッド化が実行されません。
+
+* *subject* -- メッセージは件名のみでスレッド化されます。
+
+* *strict* -- スレッドのメッセージヘッダー(References, In-Reply-To, Message-ID, およびResent-Message-ID) のみスレッド化されます。件名の確認は行いません。
+
+* *references* -- "strict" とほぼ同様のロジックですが、メッセージをスレッド化している際に、Thread-Indexヘッダーが標準と異なる場合も考慮しています。つまり、ReferencesとIn-Reply-Toヘッダーのない返信メッセージについては、件名をベースとしたスレッド化にフォールバックします。
+
+* *subjrefs* -- "references" と同様のロジックですが、件名が変更されるとスレッドは２つに分割されます。
+
+==== 破損したインデックスを検出する
+
+`zmprov verifyIndex` で指定したメールボックスのインデックスの正常チェックを行います。標準出力へ診断情報を書き込みます。問題が検出された場合、失敗のステータスが返されます。
+
+`verifyIndex` は、実行中にインデックスをロックし、インデックスにあるすべてのバイトを確認します。そのため、Cronジョブのような定期ベースでの実行は推奨しません。システムの診断が必要となった場合にのみ、zmprov verifyIndexのコマンドを使用すべきです。
+
+[source,bash]
+----
+zmprov verifyIndex <アカウント名@ドメイン>
+----
+
+`verifyIndex` でインデックスが破損されていると返した場合、`reIndexMailbox (rim)` を実行することでメールボックスのインデックスを修正できます。
+
+[source,bash]
+----
+zmprov rim <アカウント名@ドメイン> start
+----
+
+[[zmprov_log_categories]]
+.`zmprov` -- ログのカテゴリ
+[cols="1m,3",options="",]
+|============================================
+|zimbra.account |アカウントのオペレーション
+|zimbra.acl |ACLオペレーション
+|zimbra.backup |バックアップと復元
+|zimbra.cache |Inmemoryのキャッシュオペレーション
+|zimbra.calendar |カレンダーのオペレーション
+|zimbra.dav |DAVのオペレーション
+|zimbra.dbconn |データベース接続のトレース
+|zimbra.extensions |サーバー拡張のロード
+|zimbra.filter |メールフィルター
+|zimbra.gal |GALのオペレーション
+|zimbra.imap |IMAPプロトコルのオペレーション
+|zimbra.index |インデックスのオペレーション
+|zimbra.io |ファイルシステムのオペレーション
+|zimbra.ldap |LDAPのオペレーション
+|zimbra.lmtp |LMTPのオペレーション(受信メール)
+|zimbra.mailbox |通常のメールボックスのオペレーション
+|zimbra.misc |その他
+|zimbra.op |メールボックスのステータス変更
+|zimbra.pop |POPプロトコルのオペレーション
+|zimbra.redolog |Redoログのオペレーション
+|zimbra.security |セキュリティイベント
+|zimbra.session |ユーザーセッションのトレッキング
+|zimbra.smtp |SMTPのオペレーション(送信メール)
+|zimbra.soap |SOAPプロトコル
+|zimbra.sqltrace |SQLトレース
+|zimbra.store |メールストアのディスクオペレーション
+|zimbra.sync |同期クライアントのオペレーション
+|zimbra.system |スタートアップ/シャットダウンなどのシステムメッセージ
+|zimbra.wiki |Wikiのオペレーション
+|zimbra.zimlet |Zimletのオペレーション
+|============================================
+
+=== zmaccts
+
+このコマンドですべてのアカウントと、それぞれのステータス、作成された日時および最終ログインされた日時をリストアップします。ドメインの要約ではアカウント合計数とステータスが表示されます。
+
+==== 構文
+
+[source,bash]
+----
+zmaccts
+----
+
+=== zmarchiveconfig
+
+アーカイブのメールボックスを設定するコマンドです。略式のコマンド、または正式名のコマンドを使用して、同じ機能を実行できます。
+
+==== 構文
+
+[source,bash]
+----
+zmarchiveconfig [値] [コマンド] [コマンドの値]...
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--help |-h |
+コマンドで使用できるオプションを表示します
+
+|--server |-s |
+(ホスト名)[:(ポート)] サーバーのホスト名とオプションのポート番号を表示します
+
+|--account |-a |
+(アカウント名) 認証するアカウント名を返します
+
+|--ldap |-l |
+LDAP経由でアーカイブをプロビジョンする
+
+|--password |-p |
+(パスワード) 認証アカウントのパスワードを返します
+
+|--passfile |-P |
+(ファイル) ファイルからパスワードを読み込みます
+
+|--zadmin |-z |
+Zimbraの管理者/パスワードをローカルから使用する
+
+|--debug |-d |
+デバッグモードへ切り替えます(SOAPメッセージをダンプする)
+
+3+|*“cmd”で使用可能なアクション*
+
+|enable <アカウント> | |
+
+[archive-address <aaddr> [archive-cos <cos>] [archive-create <TRUE/FALSE>]
+[archive-password <pa [zimbraAccountAttrName <archive-attr-value]+
+
+|disable <アカウント> | |
+
+|=======================================================================
+
+
+=== zmarchivectl
+
+Zimbraアカウントのアーカイブの起動、停止、リロード、またはステータスを確認するコマンドです。
+
+==== 構文
+
+[source,bash]
+----
+zmarchivectl start|stop|reload|status
+----
+
+=== zmarchivesearch
+
+アカウントアーカイブに対して検索を行なうコマンドです。特定の条件に一致するアーカイブを検索し、ディレクトリへコピーを保存できます。
+
+==== 構文
+
+[source,bash]
+----
+zmarchivesearch {-m <ユーザー@ドメイン>} {-q <クエリのストリング>} [-o <offset>] [-l <制限>] [-d <アウトプットのディレクトリ>]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--dir |-d |
+<値>メッセージを書き込むディレクトリです。指定していない場合、ヘッダーのみ取得します。ファイル名は以下のフォーマットで生成されます。
+RESULTNUM_ACCOUNT-ID_MAILITEMID
+
+|--help |-h |
+ヘルプメッセージを表示します。
+
+|--limit |-l |
+<値> 返す結果数を制限する。デフォルトは25です。
+
+|--mbox |-m |
+<値> 検索するアーカイブアカウント名
+
+|--offset |-o |
+<値> 結果リストが開始するところを指定する。デフォルトは0です。
+
+|--query |-q |
+<値> アーカイブ検索のクエリストリング
+
+|--server |-s |
+<値> メールサーバーのホスト名。localhostはデフォルトです。
+
+|--verbose |-v |
+検索中にステータスメッセージのプリントを許可する。
+
+|=======================================================================
+
+
+.特定のサーバーに対してアーカイブを検索し、アーカイブのコピーを指定されたディレクトリへ保存します。
+====
+[source,bash]
+----
+zmarchivesearch -m user1@yourdomain.com -q "in:sent" -o 0 -l 30 -d /var/tmp
+----
+====
+
+=== zmbackup
+
+指定したメールホストの完全バックアップと増分バックアップを実行するツールです。
+
+この機能には略式名と正式名のオプションがあります。略式名のオプションはシングルのダッシュ(-)で始まり、正式名のオプションはダブルダッシュ(--)で始まります。例えば、`-f` は `--fullBackup` と同じオプションです。
+
+==== 構文
+
+`-f`, `-i`, または `-del` を指定する必要があります。
+
+[source,bash]
+----
+zmbackup {-f | -i | del} {-a <値>} [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--account |-a |
+<値> 複数のアカウントメールアドレスを空のスペースで区切るか、あるいはallにてすべてのアカウントを指定します。オートグループのバックアップの場合、このオプションは指定しません。システムは毎晩のバックアップ対象アカウントを把握しているからです。
+
+|--debug |-d |
+デバッグのため、診断を表示する。
+
+|--delete |-del |
+<値> 指定したラベル、日時(YYYY/MM/DD[-hh:mm:ss])以前のバックアップ、または特定期間 (nn(d \| m \| y])のバックアップを削除する。
+
+|--excludeBlobs | |
+完全バックアップからブロブを除外する。指定していない場合、サーバーの設定を使用する。
+
+|--excludeHsmBlobs | |
+完全バックアップからHSMボリュームのブロブを除外する。指定していない場合、サーバーの設定を使用する。
+
+|--excludeSearchIndex | |
+完全バックアップから検索のインデックスを除外する。指定していない場合、サーバーの設定を使用する。
+
+|--fullBackup |-f |
+完全バックアップを開始する。オートグループのバックアップの場合、このオプションは、前回の完全バックアップから追加されたRedoログをコピーします(増分のバックアップの主な動作)。
+
+|--help |-h |
+このコマンドの使用オプションを表示する。
+
+|--incrementalBackup |-i |
+増分バックアップを開始する。オートグループバックアップの場合、このオプションを使用できません。
+
+|--includeBlobs | |
+完全バックアップにブロブを含む。指定していない場合、サーバーの設定を使用します。
+
+|--includeHsmBlobs | |
+完全バックアップにHSMボリュームのブロブを含む。指定していない場合、サーバー設定を使用します。
+
+|--includeSearchIndex | |
+完全バックアップに検索インデックスを含む。指定していない場合、サーバーの設定を使用します。
+
+|--noZip | |
+ブロブをzipファイルよりも、独自ファイルとしてバックアップします。
+
+|--server |-s |
+<値> メールサーバーのホスト名。フォーマットはプレインのホスト名、またはserver.domain.comの名です。デフォルトはlocalhostの名です。
+
+|--sync |-sync |
+完全のバックアップを同期的に実行します。
+
+|--target |-t |
+<値> ターゲットのバックアップ保存場所を指定します。デフォルトは`/opt/zimbra/backup`です。
+
+|--zip |-z |
+圧縮したzipファイルへブロブをバックアップします。 `--zipStore` が指定されている場合、無視されます。
+
+|--zipStore | |
+圧縮していないzipファイルへブロブをバックアップします。(デフォルト)
+
+|=======================================================================
+
+==== 例
+
+以下の例ではサーバー (`-s`) は `server1.domain.com`です。保存ターゲットはデフォルトのディレクトリ(`/opt/zimbra/backup`)の場合、(`-t`)を指定する必要はありません。
+
+.*server1* のすべてのメールボックスに対し完全バックアップを実行する
+====
+[source,bash]
+----
+zmbackup -f -a all -s server1.domain.com
+----
+====
+
+.*server1* の最新の完全バックアップ以降増分のバックアップをすべてのメールボックスに対し実行する
+====
+[source,bash]
+----
+zmbackup -i -a all -s server1.domain.com
+----
+====
+
+.*server1* の *user1* のメールボックスのみを完全にバックアップする。
+====
+[source,bash]
+----
+zmbackup -f -a user1@domain.com -s server1
+----
+[NOTE]
+アカウントを指定している場合、ホスト名にはフルドメイン名である必要はありません。
+====
+
+.*server1* の*user1* のメールボックスへ増分のバックアップを実行する。
+====
+[source,bash]
+----
+zmbackup -i -a user1@domain.com -s server1
+----
+====
+
+=== zmblobchk
+
+Zimbraのブロブストア
+(`/opt/zimbra/store`)の整合性チェックを実行するコマンドです。データベースのメタデータのマッチングをせずにファイルをチェックし、メモを保存します。ファイルのサイズ情報が正常であることもチェックします。
+
+==== 構文
+[source,bash]
+----
+zmblobchk [オプション] start
+----
+
+意図しないブロブチェックの実行を回避するため、Startのコマンドが必要です。IDの値はカンマで区切ります。
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--export-dir | |
+<パス> データベースのエクスポートファイル用のターゲットディレクトリ
+
+|--help |-h |
+ヘルプのメッセージを表示する。
+
+|--mailboxes |-m |
+<メールボックスのID> チェックするメールボックスを指定する。指定していない場合、すべてのメールボックスをチェックする。
+
+|--missing-blob-delete-item | |
+ブロブが存在していない場合、そのアイテムを削除する。
+
+|--no-export | |
+エクスポートせずにアイテムを削除する。
+
+|--skip-size-check | |
+ブロブのサイズチェックを実行しない。
+
+|--unexpected-blob-list | |
+<パス> 予期せぬブロブのパスをファイルに記録する。
+
+|--verbose |-v |
+詳細のアウトプット、エラーにスタックトレースを表示する。
+
+|--volumes | |
+<ボリュームID> チェックするボリュームを指定する。指定していない場合、すべてのボリュームをチェックする。
+
+|=======================================================================
+
+=== zmcalchk
+
+Zimbraカレンダーの予定の整合性チェックを実行し、不整合の場合はメール通知を送信します。例えば、カレンダーのイベントにすべての参加者と管理者がイベントの開始/終了時や会議の繰り返し予定を承諾しているかどうかを確認します。
+
+time-specsの詳細については`zmmailbox help appointment` の出力内容を参考にしてください。
+
+==== 構文
+[source,bash]
+----
+zmcalchk [-d] [-n <種類>] <ユーザー名> <開始のtime-spec> <終了のtime-spec>
+----
+
+==== 説明
+
+[cols="1m,3",options="header",]
+|=======================================================================
+|略式名 |説明
+
+|-d |
+デバッグ情報を表示
+
+|-m |
+確認する最大の参加者数を指定する。デフォルトは50です。
+
+|-n |
+`-n none \| user \| organizer \| attendee \| all`
+
+予定に同期していない場合、特定のユーザーへ通知メッセージを送信する。
+
+|=======================================================================
+
+=== zmschedulebackup
+
+バックアップをスケジュールし、Cronテーブルへコマンドを追加するコマンドです。
+
+以下はデフォルトのスケジュールです。
+
+* 毎週土曜日で01:00に完全バックアップ実施  (`0 1 * * 6`)
+* 毎週日曜日から金曜日に01:00に増分のバックアップ実施  (`0 1 * * 0-5`)
+
+各crontabエントリは、空のスペースで区切られた5項目から成るシングルラインです。  各項目は以下のフォーマットを使用します。
+
+* 分 -- 0 から 59
+* 時 -- 0 から 23
+* 日 -- 1 から 31
+* 月 -- 1 から 12
+* 曜日 -- 0 から 7 (0 または 7 は日曜日、または曜日名を使用する)
+
+使用しない期間にアスタリスク (`*`) を入力します。
+
+このコマンドにより、自動的にスケジュールがcrontabへ書き込まれます。
+
+==== 構文
+[source,bash]
+----
+zmschedulebackup {-q|-s|-A|-R|-F|-D}[f|i|d|] ["スケジュール内容"]
+----
+
+==== 説明
+
+[cols="1m,1m,2a",options="header",]
+|=======================================================================
+|正式名  |略式名 |説明
+
+|help |-h |
+このコマンドで使用できるオプションを表示します。
+
+|query |-q |
+デフォルトのコマンド。   現在のZimbraバックアップスケジュールを表示します。
+
+|save |-s |
+スケジュールを保存します。  スケジュールコマンドをテキストファイルなどへ保存することで、システムを復元した際にバックアップのスケジュールを早く再生成できるようになります。
+
+|flush |-F |
+現在のスケジュールを削除し、スケジュールされているバックアップをすべてキャンセルします。
+
+|append |-A |
+現在のスケジュールへ指定したバックアップを追加します。
+
+|replace |-R |
+現在のスケジュールを指定したスケジュールで上書きします。
+
+|default |-D |
+現在のスケジュールをデフォルトのスケジュールで上書きします。
+
+
+3+|*zmbackupへ転送されるオプション*
+
+|no compression |-n |
+ブロブをzipファイルよりも独自ファイルとしてバックアップします。
+
+|compress |-z |
+ブロブを圧縮したzipファイルにバックアップします。   `--zipStore` を指定した場合、無視されます。
+
+|--zipStore | |
+ブロブを圧縮せずにzipファイルへバックアップします。
+
+|target |-t |
+完全バックアップを保存するターゲット場所を指定します。デフォルトは `/opt/zimbra/backup` です。
+
+[NOTE]
+増分のバックアップを保存するターゲット場所は指定できません。スケジュールした増分のバックアップにターゲット (`-t`)
+場所のオプションを追加した場合、無視されます。
+
+|account |-a |
+特定のアカウント。  デフォルトはすべてのアカウント。
+
+|--mail-report | |
+レポートを管理者へ送信します。
+
+|--server | |
+メールサーバーのホスト名。  localhostはデフォルト。
+
+|--sync | |
+完全バックアップを同期的に実行します。
+
+|--excludeBlobs | |
+完全バックアップからブロブを除外します。指定していない場合、サーバーの設定を使用します。
+
+|--includeBlobs | |
+完全バックアップにブロブを含む。指定していない場合、サーバーの設定を使用します。
+
+|--excludeHsmBlobs | |
+完全バックアップからHSMボリュームのブロブを除外します。  指定していない場合、サーバーの設定を使用します。
+
+|--includeHsmBlobs | |
+完全バックアップにHSMボリュームのブロブを含みます。指定していない場合、サーバーの設定を使用します。
+
+|--excludeSearchIndex | |
+完全バックアップから検索インデックスを除外します。指定していない場合、サーバーの設定を使用します。
+
+|--includeSearchIndex | |
+完全バックアップに検索インデックスを含みます。指定していない場合、サーバーの設定を使用します。
+
+3+|*Cron schedule* -- バックアップの種類: `<i \| f \| d 値>`
+
+|incremental backup |i |
+`<時間指定>` 増分バックアップ
+
+オートグループのバックアップモードの場合、増分のバックアップは使用されません。
+
+|full backup |f |
+完全バックアップ
+
+|delete |d <値> |
+バックアップを削除する。  `<値>` は `n(d \| m \| y)`
+
+|=======================================================================
+
+==== バックアップのスケジュール例
+
+.デフォルトの完全と増分のバックアップをスケジュールする
+====
+[source,bash]
+----
+zmschedulebackup -D
+----
+====
+
+.現在のスケジュールを新しいスケジュールにて上書きする
+====
+[source,bash]
+----
+zmschedulebackup -R f ["スケジュール内容"]
+----
+====
+
+.現在のスケジュールに新しい完全バックアップを追加する
+====
+[source,bash]
+----
+zmschedulebackup -A f ["スケジュール内容"]
+----
+====
+
+.現在のスケジュールに新しい増分バックアップを追加する
+====
+[source,bash]
+----
+zmschedulebackup -A i ["スケジュール内容"]
+----
+====
+
+.現在のスケジュールを表示する
+====
+[source,bash]
+----
+zmschedulebackup -q
+----
+====
+
+.スケジュールを1行で表示する
+====
+1行のコマンドとしてスケジュールを表示します。これをテキストファイルへコピー・保存しておき、アプリケーションの復元が必要な場合に使用できるようにします。
+[source,bash]
+----
+zmschedulebackup -s
+----
+====
+
+=== zmbackupabort
+
+バックアッププロセスを強制的に停止するコマンドです。停止する前にバックアップのラベルを確認する必要があります。バックアップ実施後にラベルが表示されます。ラベルが不明な場合、zmbackupqueryを使用して確認することができます。
+
+*復元プロセスを停止するには*
+
+実行中の復元を `zmbackupabort -r` にて強制的に停止することができます。復元中のアカウントの復元が完了したら、復元のプロセスが停止します。コマンドは復元していないアカウントを返します。
+
+==== 構文
+[source,bash]
+----
+zmbackupabort [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--debug |-d |
+デバッグ用の診断を表示します。
+
+|--help |-h |
+このコマンドで使用できるオプションを表示します。
+
+|--label |-lb |
+`<値>` 停止するバックアップのラベル。
+
+ラベル名を調べるため、zmbackupqueryを使用できます。
+
+|--restore |-r |
+実行中の復元を強制的に停止します。
+
+|--server |-s |
+`<値>` メールサーバーのホスト名。使用形式はプレインのホスト名、またはserver.domain.comの名前。デフォルトはlocalhostの名前です。
+
+|--target |-t |
+`<値>` バックアップを保存するターゲット場所を指定します。
+
+デフォルトは `/opt/zimbra/backup` です。
+
+|=======================================================================
+
+=== zmbackupquery
+
+zmbackupquery で完全バックアップのセットを検索します。このコマンドで、特定の完全バックアップセット、特定の日時以降の完全バックアップのセット、またはバックアップディレクトリにあるすべてのバックアップのセットを検索できます。
+
+あるアカウントの特定の時間の最適な完全バックアップを確認するには、以下のようなコマンドを実行します。
+
+[source,bash]
+----
+zmbackupquery -a <アカウントのメールアドレス> --type full --to <復元する日時>
+----
+
+==== 構文
+[source,bash]
+----
+zmbackupquery [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--account |-a |
+`<値>` 複数のアカウントメールアドレスを空のスペースで区切るか、あるいはallですべてのアカウントを指定します。
+
+|--debug |-d |
+デバッグのために診断情報を表示します。
+
+|--help |-h |
+このコマンドで使用できるオプションを表示します。
+
+|--from | |
+`<値>` 指定した日時以降のバックアップをリストアップします。
+
+|--label |-lb |
+`<値>` クエリする完全バックアップのセッションラベル。ラベルの例： `backup200507121559510`
+
+|--server |-s |
+`<値>` メールサーバーのホスト名。プレインなホスト名、またはserver.domain.nameを使用します。デフォルトはlocalhostの名前です。
+
+|--target |-t |
+`<値>` バックアップの保存先の場所を指定します。 (デフォルトは
+`/opt/zimbra/backup`)
+
+|--to | |
+`<値>` 指定した日時以前のバックアップをリストアップします。
+
+|--type | |
+`<値>` クエリするバックアップの種類、 "full" または "incremental"。指定していない場合、両方をクエリします。
+
+|--verbose |-v |
+詳細なステータス情報を返します。
+
+|=======================================================================
+
+日時を以下のフォーマットで指定します。
+
+[cols="m",options=""]
+|=======================================================================
+|2008/12/16 12:19:23
+|2008/12/16 12:19:23 257
+|2008/12/16 12:19:23.257
+|2008/12/16-12:19:23-257
+|2008/12/16-12:19:23
+|20081216.121923.257
+|20081216.121923
+|20081216121923257
+|20081216121923
+|=======================================================================
+
+年、月、日、時、分、秒、とオプションでミリ秒を指定します。
+
+月/日/時/分/秒は0を付けて必ず2桁の数字を使用します、ミリ秒は3桁の数字です。
+
+時は24時間形式を指定します。時間はローカルのタイムゾーンとなります。
+
+=== zmrestore
+
+指定したメールホストに対して、完全と増分の復元を実行するツールです。特定のアカウントを指定するか、アカウントを指定していない場合、バックアップにあるすべてのアカウントが復元されます。また、特定の時間まで復元することができます。
+
+この機能には、略式名と正式名のオプションがあります。略式名のオプションはシングルダッシュ(-)で始まり、正式名のオプションはダブルダッシュ(--)で始まります。例えば、 `-rf` は `--restorefullBackupOnly` と同じオプションです。
+
+==== 構文
+[source,bash]
+----
+zmrestore [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--account |-a |
+`<値>` アカウントのメールアドレスを指定します。空スペースでアカウントを区切る、またはallですべてのアカウントを復元します。
+
+|--backedupRedologs |-br |
+バックアップされたRedoログのみを実行し、アーカイブや現在のRedoログを無視します。
+
+|--continueOnError |-c |
+エラーが発生した際に他のアカウントの復元を続けます。
+
+|--createAccount |-ca |
+アカウントにプレフィックスを追加した新しいターゲットアカウントへの復元します。
+
+(`-pre` のオプションを使用しているコマンドのみ有効)
+
+|--debug |-d |
+デバッグのため、診断情報を表示します。
+
+|--excludeBlobs | |
+ブロブを復元しません(HSMも)。
+
+|--excludeHsmBlobs | |
+HSMブロブを復元しません。
+
+|--excludeSearchIndex | |
+検索インデックスを復元しません。
+
+|--help |-h |
+このコマンドで使用できるオプションを表示します。
+
+|--label |-lb |
+`<値>` 復元する完全バックアップのレベル。指定していない場合、最新の完全バックアップへ復元します。
+
+|--prefix |-pre |
+`<値>` 元アカウント名に追加するプレフィックス。
+
+|--restoreAccount |-ra |
+ディレクトリサービスへアカウントを復元します。
+
+|--restoreToIncrLabel | |
+`<値>` 指定した増分バックアップまで以前のRedoログをすべて適用します。
+
+|--restoreToRedoSeq | |
+`<値>` 指定したRedoログシーケンスまで適用します。
+
+|--restoreToTime | |
+`<値>` 指定した時間までRedoログを適用します。
+
+|--restorefullBackupOnly |-rf |
+完全バックアップまで復元し、そのバックアップ以降の増分バックアップを適用しません。
+
+|--server |-s |
+`<値>` メールサーバーのホスト名。プレインホスト名、またはserver.domain.comを使用します。デフォルトはlocalhostの名前です。
+
+|--skipDeletes | |
+Trueの場合、Redoログの適用で削除のアクションを適用しません。
+
+|--skipDeletedAccounts | |
+指定したアカウントが削除された、またはバックアップ時に存在しなかったアカウントを復元しません (このオプションは必ず `-a all` のオプションで使用します)。
+
+|--systemData |-sys |
+グローバルテーブルとローカル設定を復元します。
+
+|--target |-t |
+`<値>` バックアップを保存しているターゲットを指定します。デフォルトは
+`/opt/zimbra/backup` です。
+
+|=======================================================================
+
+==== 例
+
+.*server1* のすべてのアカウントを完全に復元します。
+====
+最新の完全バックアップと増分バックアップ以降について、*server1* のすべてのアカウントを完全に復元します。
+[source,bash]
+----
+zmrestore -a all -s server1.domain.com
+----
+====
+
+.*server1* に最新の完全バックアップまで復元します。
+====
+*server1* の全アカウントについて最新の完全バックアップまで復元し、それ以降の増分バックアップを実行しません。
+[source,bash]
+----
+zmrestore -rf -a all -s server1.domain.com
+----
+====
+
+.ターゲットアカウントのバックアップのデータから新しいアカウントを作成します。
+====
+新しいアカウント名はnew_user1@domain.comとなります。
+[source,bash]
+----
+zmrestore -a user1@domain.com -ca -pre new_
+----
+====
+
+=== zmrestoreoffline (オフラインの復元)
+
+`zmrestoreoffline` を実行するための条件は以下となります。
+
+- mailboxd が起動していない
+- SQL データベースが起動している
+- LDAP ディレクトリサーバが起動している
+
+実行条件
+
+==== 構文
+[source,bash]
+----
+zmrestoreoffline [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--account |-a |
+`<値>` アカウントのメールアドレスを指定します。空のスペースでアカウントを区切るか、またはallですべてのアカウントを復元します。このオプションは *必須* です。
+
+|--backedupRedologsOnly |-br |
+バックアップに保存したRedoログのみを実行し、アーカイブや現在のRedoログを除外します。
+
+|--continueOnError |-c |
+エラーが発生しても他のアカウントの復元を続けます。
+
+|--createAccount |-ca |
+アカウントをプレフィックスが追加した新しいターゲットアカウントへ復元します。
+
+|--debug |-d |
+デバッグのため、診断情報を表示します。
+
+|--help |-h |
+このコマンドで使用できるオプションを表示します。
+
+|--ignoreRedoErrors | |
+Trueの場合、Redoログの再適用中のすべてのエラーを無視します。
+
+|--label |-lb |
+`<値>` 復元する完全バックアップのラベル。指定していない場合、最新の完全バックアップへ復元します。
+
+|--prefix |-pre |
+`<プレフィックス>` 元アカウント名に追加するプレフィックス。
+
+|--restoreAccount |-ra |
+ディレクトリサービスのアカウントを復元します。
+
+|--restoreToIncrLabel | |
+`<値>` 以前のRedoログを指定した増分バックアップまで適用します。
+
+|--restoreToRedoSeq | |
+`<値>` 指定したRedoログシーケンスまで適用します。
+
+|--restoreToTime | |
+`<値>` 指定した時間までRedoログを適用します。
+
+|--restoreFullBackupOnly |-rf |
+完全バックアップまで復元し、そのバックアップ以降の増分バックアップは適用しません。
+
+|--server |-s |
+`<値>` メールサーバーのホスト名。プレインホスト名、またはserver.domain.comを使用します。デフォルトはlocalhostの名前です。`-s` を指定する場合、ローカルホストでなければなりません。
+
+|--skipDeletedAccounts | -skipDeletedAccounts |
+指定したアカウントが削除された、またはバックアップ時に存在しなかったアカウントを復元しません (このオプションは必ず `-a all` のオプションで使用します)。
+
+|--systemData |-sys |
+グローバルテーブルとローカル設定を復元します。
+
+|--target |-t |
+`<値>` バックアップを保存しているターゲットを指定します。デフォルトは `/opt/zimbra/backup` です。
+
+|=======================================================================
+
+==== 例
+
+`zmrestoreoffline` を実行する前に、LDAPのディレクトリサーバーが起動中である必要があります。
+
+.*server1* のすべてのアカウントを完全に復元する
+====
+*server1* の完全バックアップおよびその後に発生した増分バックアップを使用し、すべてのアカウントを完全に復元します。
+
+[source,bash]
+----
+zmrestoreoffline -s server1.domain.com
+----
+====
+
+=== zmrestoreldap
+
+LDAPのバックアップからアカウントを復元するツールです。
+
+==== 構文
+[source,bash]
+----
+zmrestoreldap {-lb <値>} {-t <値>} [オプション]
+----
+
+==== 説明
+
+[cols="1m,3",options="header",]
+|=======================================================================
+|略式名 |説明
+
+|-lb |
+`<値>` 復元の元に使用するセッションラベル。例えば `full200612291821113`
+
+|-t |
+`<値>` バックアップの保存ターゲット場所を指定します。デフォルトは
+`/opt/zimbra/backup` です。
+
+|-lbs |
+バックアップにあるすべてのセッションラベルをリストアップします。
+
+|-l |
+ファイルにあるアカウントをリストアップします。
+
+|-a |
+`<値>` 指定したアカウントを復元します。 アカウント名を空のスペースで区切ります。
+
+|=======================================================================
+
+=== zmcontrol (サービスの起動/停止/再起動)
+
+サービスを起動、停止、または再起動するコマンドです。インストールしている {product-name} のバージョンの確認も可能です。
+
+==== 構文
+[source,bash]
+----
+zmcontrol [ -v -h ] command [値]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+| | -v |
+ {product-abbrev} のソフトウェアバージョンを表示します。
+
+| |-h |
+このコマンドで使用できるオプションを表示します。
+
+| |-H |
+ホスト名 (localhost)
+
+
+3+|*“cmd”で使用可能なアクション*
+
+2+|`maintenance` |
+メンテナンスモードへ切り替えます。
+
+2+|`restart` |
+ホストにあるサービスとマネージャーをすべて再起動します。
+
+2+|`shutdown` |
+ホストにあるサービスとマネージャーをすべて停止します。マネージャーが停止している場合、ステータスのクエリができません。
+
+2+|`start` |
+ホストにあるサービスとマネージャーをすべて起動します。
+
+2+|`startup` |
+ホストにあるサービスとマネージャーをすべて起動します。
+
+2+|`status` |
+ホストのサービスステータスを返します。
+
+2+|`stop` |
+すべてのサービスを停止しますがマネージャーは継続して動作します。
+
+|=======================================================================
+
+=== zmmboxsearch (クロスメールボックス検索)
+
+複数のメールボックスを検索するには `zmmboxsearch` のCLIコマンドを使用します。特定の条件に一致するメッセージや添付ファイルを複数のメールボックスに対して検索し、特定のディレクトリへメッセージのコピーを保存できます。
+
+==== 構文
+[source,bash]
+----
+zmmboxsearch {-m <値>} {-q <値>} [-o <値>] [-l <値>] [-d <値>] [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--dir |-d |
+`<値>` メッセージを書き込むディレクトリ。指定していない場合、ヘッダーのみが取得されます。ファイル名は以下のフォーマットで生成されます。
+`RESULTNUM_ACCOUNT-ID_MAILITEMID (結果番号_アカウントID_メールのアイテムID)`
+
+|--help |-h |
+ヘルプ情報を表示します。
+
+|--limit |-l |
+検索結果に返すアイテム数の制限を指定します。 デフォルトは25です。
+
+|--mbox |-m |
+`<値>` カンマ区切りリストで検索するメールボックス。  リストにUID、メールアドレス、`/サーバー/メールボックスID` または `*`
+
+|--offset |-o |
+`<値>` 結果の開始時点を指定します。デ  フォルトは0です。
+
+|--query |-q |
+`<値>` 検索のクエリストリング
+
+|--server |-s |
+`<値>` メールサーバーのホスト名。デフォルトはlocalhostです。
+
+|--verbose |-v |
+検索中にステータスメッセージを表示します。
+
+|=======================================================================
+
+==== 例
+
+以下の例では指定したサーバーにある２つのメールボックスの受信トレイを検索し、メッセージのコピーを指定したディレクトリへ保存します。
+
+.クロスメールボックス検索
+====
+[source,bash]
+----
+zmmboxsearch -m user1@yourdomain.com,user2@yourdomain.com -q "in:inbox" -d /var/tmp
+----
+====
+
+=== zmmboxmove
+
+メールボックスの移動にzmmboxmoveのCLIコマンドを使用します。移動先のサーバーは移動のプロセスを全体的に管理します。 `zmmboxmove` のコマンドを使用することで、アカウントのロックアウト期間を飛躍的に短縮させることができます。
+
+`zmmboxmove` のCLIコマンドではZimbraサーバー同士でメールボックスを移動できます。同じLDAPサーバーを使用しているZimbraサーバー間でメールボックスを移動できます。ファイルは全て新しいサーバーへコピーされ、LDAPは更新されます。メールボックスが新しいサーバーへ移動完了した後、元のサーバーにコピーが残されますが、元のメールボックスはクローズのステータスになります。元のメールボックスへのログインはできませんし、メールは配信されません。管理者は、すべてのメールボックス内容が正常に移動されたことを確認した上で元のメールボックスを削除するようにしてください。
+
+==== 構文
+[source,bash]
+----
+zmmboxmove -a <email> --from <src> --to <dest> [--sync]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--account |-a |
+`<値>` 移動するアカウントのメールアドレス。
+
+|--help |-h |
+このコマンドで使用できるオプションを表示します。
+
+|--from |-f |
+`<値>` メールサーバーのホスト名。   `--account` に指定したメールボックスが存在するサーバーを記載する必要があります。
+
+|--to |-t |
+`<値>` 移動先のサーバー。
+
+|--sync |-sync
+|同期的に実行します。
+
+|=======================================================================
+
+=== zmmboxmovequery
+
+サーバーの転入と転出、両方向含め、実行中のメールボックス移動をCLIコマンドの `zmmboxmovequery` で検索します。
+
+==== 構文
+[source,bash]
+----
+zmmboxmovequery -a <アカウント@ドメイン> [-s <クエリするサーバー>]
+----
+
+=== zmpurgeoldmbox
+
+メールボックス移動が完了後、 `zmpurgeoldmbox` のCLIコマンドで元のサーバーから元のメールボックスを削除します。
+
+==== 構文
+[source,bash]
+----
+zmpurgeoldmbox -a <アカウント@ドメイン> [-s <削除するサーバー>]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--account |-a |
+`<値>` 削除するアカウントのメールアドレス。
+
+|--help |-h |
+このコマンドで使用できるオプションを表示します。
+
+|--server |-s |
+`<値>` メールサーバーのホスト名。アカウントが元々に存在したサーバー名を記載する必要があります。
+
+|=======================================================================
+
+=== zmgsautil
+
+`zmgsautil` のCLIコマンドでGAL Syncアカウントの作成、削除およびLDAPデータをGAL Syncアカウントへ強制的に同期することができます。
+
+ドメインにGALを設定したとき、GAL Syncのアカウントが自動で作成されます。アカウント作成と、完全の同期を実行するポーリング期間は、管理コンソールで管理します。
+
+GAL Syncアカウントの属性値や設定を確認する場合、アカウントに対して `zmprov gds` を実行します。
+
+[cols="1m,2a",options="header",]
+|=======================================================================
+|正式名 |説明
+
+|createAccount |
+GAL Syncアカウントを作成します。これは管理コンソールで実行するようにしてください。
+
+"server" パラメーターが必要です。
+
+`-a {アカウント名} -n {データソース名} --domain {ドメイン名} -t zimbra\|ldap -s {サーバー} [-f {フォルダ名}] [-p {ポーリング期間}]`
+
+|addDataSource |
+サーバーにデータソースを設定している際、 `/Contacts` 以外のフォルダ名を指定する必要があります。データソースフォルダ名は一意でなければなりません。
+
+`-a {アカウント名} -n {データソース名} --domain {ドメイン名} -t zimbra\|ldap [-f {フォルダ名}] [-p {ポーリング期間}]`
+
+|deleteAccount |
+GAL Syncアカウントと、LDAPサーバーへの参照を削除します。アカウントは管理コンソールから削除することも可能です。
+
+`deleteAccount [-a {Galsyncアカウント名}\|-i {アカウントID}]`
+
+|trickleSync |
+最新と更新した連絡先データのみを同期します。
+
+`[-a {Galsyncアカウント名}\|-i {アカウントID}]` +
+`[-d {データソースID}] [-n {データソース名}]`
+
+上記のデータソースIDはLDAPのデータソースIDです。  上記のデータソース名は、GAL Syncアカウント内にLDAPとの同期のために作成した連絡先リスト(フォルダ)です。
+
+trickleSyncを実行するようにCron jobを設定できます。
+
+|fullSync |
+すべてのLDAP連絡先データを同期します。管理コンソールにも設定できます。
+
+`[-a {Galsyncアカウント名}\|-i {アカウントID}]` +
+`[-d {データソースID}] [-n {データソース名}]`
+
+|forceSync |
+フィルター、属性値のマッピング、またはLDAPのサーバー属性に変更があれば、このオプションでGALを完全にリロードします。
+
+`[-a {Galsyncアカウント名}\|-i {アカウントID}]` +
+`[-d {データソースID}] [-n {データソース名}]`
+
+|=======================================================================
+
+=== zmldappasswd
+
+CLIコマンドの `zmldappasswd` を使って、ローカルサーバー上のLDAPのパスワードを変更できます。マルチサーバーの環境ではこのコマンドはLDAPのマスターサーバーでのみ実行します。
+
+このコマンドをオプションと共に使用することで、他のパスワードを変更できます。
+
+セキュリティと監査のため、以下のパスワードは{product-abbrev}で生成されます。
+
+* *LDAP Admin password*  管理用のマスターLDAPパスワード。
+
+* *LDAP Root password*  内部のLDAP動作に使用します。
+
+* *LDAP Postfix password*  LDAPサーバーへPostfixユーザーを識別させるために使用するパスワードであり、MTAサーバー上に設定されています。これは、LDAPのマスターサーバー上のパスワードと一致させる必要があります。
+
+* *LDAP Amavis password*  LDAPサーバーへAmavisユーザーを識別させるために使用するパスワードであり、MTAサーバー上に設定されています。これは、LDAPのマスターサーバー上のパスワードと一致させる必要があります。
+
+* *LDAP Replication password*  LDAPサーバーへLDAPのレプリカユーザーを識別させるために使用するパスワードであり、LDAPのマスターサーバー上のパスワードと一致させる必要があります。
+
+==== 構文
+[source,bash]
+----
+zmldappasswd [-h] [-r] [-p] [-l] 新しいパスワード
+----
+
+==== 説明
+
+[cols="1m,3",options="header",]
+|=======================================================================
+|Name |構文, 例, 備考
+
+|-h |
+ヘルプを表示します。
+
+|-a |
+`ldap_amavis-password` を変更します。
+
+|-b |
+`ldap_bes_searcher_password` を変更します。
+
+|-l |
+`ldap_replication_password` を変更します。
+
+|-p |
+`ldap_postfix_password` を変更します。
+
+|-n |
+`ldap_nginx_password` を変更します。
+
+|-r |
+`ldap_root_passwd` を変更します。
+
+|-c |
+レプリカの設定データベース内のパスワードを更新します。
+`-1` を使用する必要があります。加えて、マスター上のパスワードを変更した後に、レプリカ上で実行する必要があります。
+
+2+| *`a`, `l`, `p`, `r` のいずれかのみ指定可。オプションを含めない場合、`zimbra_ldap_password` が変更されます。*
+
+|=======================================================================
+
+=== zmlocalconfig
+
+このコマンドでZimbraサーバーのローカル設定の編集、または閲覧ができます。`zmlocalconfig -i` を使用することで、管理者が設定可能な属性値を確認できます。
+
+==== 構文
+[source,bash]
+----
+zmlocalconfig [オプション]
+----
+
+ローカル設定を確認する場合 `zmlocalconfig` を実行します。
+
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--config |-c |
+`<値>` 設定が保存されているファイル。
+
+|--default |-d |
+`[値]` にリストアップされているキーのデフォルト値を表示します。
+
+|--edit |-e |
+設定ファイルを編集し、指定したキーと属性値を変更します。
+`[値]` は「キー=値」のフォーマットです。
+
+|--force |-f |
+変更することが危険な可能性のあるキーの値を編集します。
+
+|--help |-h |
+このツールで使用できるヘルプを表示します。
+
+|--info |-i |
+サポートしているプロパティをリストアップします。
+
+|--format |-m |
+`<値>` 値を以下のフォーマットで表示します。 +
+`プレイン` (デフォルト), `xml`, `シェル`, `nokey`
+
+|--changed |-n |
+`[値]` にリストアップされているキーのなかで、デフォルトの値が変更されている値を表示します。
+
+|--path |-p |
+使用する設定ファイルを表示します。
+
+|--quiet |-q |
+ログを記録しません。
+
+|--random |-r |
+編集のオプションに使用します。指定した属性はランダムのパスワードストリングへ設定されます。
+
+|--show |-s |
+パスワードのストリングを強制的に表示します。
+
+|--unset |-u |
+設定のキーを削除します。元からのデフォルト値があるキーの場合、値が空のストリングへ設定されます。
+
+|--expand |-x |
+値を展開します。
+
+|--zimbraAmavisMaxServers | |
+Amavisdの同時実行数を管理します (デフォルト 10)。
+
+|--zimbraClamAVMaxThreads | |
+ClamAVの同時実行数を管理します (デフォルト 10)。
+
+|=======================================================================
+
+=== zmmailbox
+
+メールボックスの管理に `zmmailbox` のツールを使用します。管理者がアカウントと共に新しいメールボックスのプロビジョニング、メールボックス問題のデバッグおよび移行を行なうのに役立つコマンドです。
+
+`zmprov` コマンド内で `zmmailbox` のコマンドを実行できます。`zmprov` 内で `selectMailbox` を実行しますと、指定したメールボックスへ `zmmailbox` コマンドを実行できます。exitを実行するまで自由に `zmmailbox` のコマンドを実行できます。exitにより `zmprov` へ返されます。アカウントを作成する際に、特定のフォルダ、タグおよび保存された検索を、同時に作成したいときに便利です。
+
+==== 構文
+[source,bash]
+----
+zmmailbox [値] [コマンド] [コマンドの値]...
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|略式名 |正式名 |構文、実例、備考
+
+|-h |--help |
+使用方法を表示します。
+
+|-f |--file |
+インプットストリームとしてファイルを使用します。
+
+|-u |--url |
+`http[s]://{ホスト}[:{ポート}]` サーバーのホスト名とオプションのポートです。`-z/-a` の場合は管理のポートを使用する必要があります。
+
+|-a |--account |
+認証するアカウント名。
+
+|-z |--zadmin |
+ローカル設定にあるZimbra管理名とパスワードを管理/パスワードに使用します。
+
+|-y |--authtoken {認証トークン} |
+コマンドラインで認証トークンのストリング(JSONのフォーマットが必要)を使用します。
+
+|-Y |--authtoken {認証トークンのファイル} |
+コマンドラインで認証トークンのストリング(JSONのフォーマットが必要)をファイルから使用します。
+
+|-m |--mailbox {} |
+開くメールボックスを指定します。他のオプションを指定していない場合、認証アカウントとターゲットアカウントの両方の役目を使用できます。
+
+| |--auth {} |
+認証するアカウント名を指定します。`--admin-priv` を使用していない限り、デフォルト `--mailbox` のアカウントです。
+
+|-A |--admin-priv |
+管理者の権限でリクエストを実行します。
+
+|-p |--password {パスワード} |
+管理者アカウントのパスワード、またはメールボックス。
+
+|-P |--passfile {ファイル} |
+ファイルからパスワードを読み込みます。
+
+|-t |--timeout |
+タイムアウト(秒)。
+
+|-v |--verbose |
+詳細のモード(スタックトレースに例外の全ての情報をダンプします)。
+
+|-d |--debug |
+デバッグモード(SOAPメッセージをダンプします)。
+
+|=======================================================================
+
+様々なメールボックスで使用できる特定のCLIツールもあります。CLIのヘルプには以下の使用方法の詳細が記載してあります。
+
+
+[cols="1m,2",options="",]
+|=======================================================================
+|zmmailbox help admin |
+管理に関するコマンドのヘルプ
+
+|zmmailbox help commands |
+すべての `zmmailbox` コマンドのヘルプ
+
+|zmmailbox help appointment |
+予定に関連しているコマンドのヘルプ
+
+|zmmailbox help contact |
+連絡先に関連しているコマンドのヘルプ(連絡先リスト)
+
+|zmmailbox help conversation |
+スレッドに関連しているコマンドのヘルプ
+
+|zmmailbox help filter |
+フィルターに関連しているコマンドのヘルプ
+
+|zmmailbox help folder |
+フォルダに関連しているコマンドのヘルプ
+
+|zmmailbox help item |
+アイテムに関連しているコマンドのヘルプ
+
+|zmmailbox help message |
+メッセージに関連しているコマンドのヘルプ
+
+|zmmailbox help misc |
+その他のコマンドに関連しているコマンドのヘルプ
+
+|zmmailbox help right |
+権限に関連しているコマンドのヘルプ
+
+|zmmailbox help search |
+検索に関連しているコマンドのヘルプ
+
+|zmmailbox help tag |
+タグに関連しているコマンドのヘルプ
+
+|=======================================================================
+
+==== 例
+
+.フォルダとタグの作成
+====
+アカウントを作成した際、特定なタグやフォルダを先に生成したい場合があります。`zmprov` の中で `selectMailbox(sm)` を実行すると `zmmailbox` にアクセスできます。
+
+[source,bash]
+----
+$ zmprov
+prov> ca user10@domain.example.com test123
+9a993516-aa49-4fa5-bc0d-f740a474f7a8
+prov> sm user10@domain.example.com
+mailbox: user10@domain.example.com, size: 0 B, messages: 0, unread: 0
+mbox user10@domain.example.com> createFolder /Archive
+257
+mbox user10@domain.example.com> createTag TODO
+64
+mbox user10@domain.example.com> createSearchFolder /unread "is:unread"
+258
+mbox user10@domain.example.com> exit
+prov>
+----
+====
+
+.アカウントのメールボックスサイズを確認する
+====
+[source,bash]
+----
+zmmailbox -z-m アカウント@ドメイン gms
+----
+====
+
+.管理の認証トークンを使用し、メールボックスへリクエストを送信する
+====
+`emptyDumpster` のコマンドを使用している場合に管理の認証トークンが必要です。
+`--admin-priv` を使用しますと、代理認証せずにターゲットメールボックスを使用します。
+[source,bash]
+----
+zmmailbox -z --admin-priv -m foo@example.com emptyDumpster
+----
+====
+
+.指定したメールボックスのコマンドに `--admin-priv` を使用する
+====
+[source,bash]
+----
+zmmailbox -z
+mbox> sm --admin-priv アカウント@ドメイン
+----
+====
+
+.代表の管理ユーザーとして認証する
+====
+認証しますと別のユーザーのメールボックスへログインできます。認証するユーザーは委任された管理者であり、ターゲットのメールボックスに `adminLoginAs`  の権限が与えられている必要があります。認証のオプションは非管理者の認証トークンを使用します。認証するアカウントを指定するには `--auth` のオプションを使用し、認証するアカウントを指定します。以下の例ではユーザーbarでログインし、fooのメールボックスを開きます。
+
+[source,bash]
+----
+$ zmmailbox --auth bar@example.com -p password -m foo@example.com
+----
+====
+
+.アカウントのメールボックスサイズを確認する
+====
+[source,bash]
+----
+zmmailbox -z -m アカウント@ドメイン gms
+----
+====
+
+.メールボックス内容をzipファイルにバックアップする
+====
+
+個々のメールボックスを `zmmailbox` を使用してバックアップする場合、zip、またはtgzファイルとしてファイルを保存できます。各フォーマットへの保存するデフォルト設定は、以下のように情報によって異なります
+
+[cols=",,",options="header",]
+|=======================================================================
+|ファイル            |TGZ |ZIP
+|ブリーフケース        |X   |X
+|カレンダー           |    |X
+|スレッド            |    |X
+|連絡先            |X   |X
+|削除済みメッセージ    |X   |X
+|送信した連絡先      |    |X
+|受信トレイ          |X   |X
+|送信済み           |X   |X
+|送信済みメッセージ    |X   |X
+|タスク              |    |X
+|=======================================================================
+
+すべてのメールボックス内容をzipファイルに含む場合、以下のようにメタデータを有効化する必要があります。
+
+[source,bash]
+----
+zmmailbox -z -m アカウント@ドメイン gru "?fmt=zip&meta=1" > <ファイル名.zip>
+----
+====
+
+=== zmtlsctl
+
+ウェブサーバーの `zimbraMailMode` をHTTP、HTTPS、Mixed、Both、またはRedirectのコミュニケーションのプロトコルへ設定するコマンドです。 デフォルトの設定はHTTPSです。
+
+[IMPORTANT]
+ `zmtlsctl` の設定がZCOの *セキュア接続設定* へも影響します。自己証明の環境にあるZCOユーザーについて、クライアントのWindows証明書ストアへルートCAの証明書を追加しないと警告メッセージが表示されます。Zimbraの
+https://wiki.zimbra.com/wiki/ZCO_Connection_Security[ZCO Connection
+Security] Wiki記事を参照してください。
+
+* *HTTP* : HTTPのみアクセス可能。例えば http://zimbra.domain.com
+
+* *HTTPS* : HTTPS のみアクセス可能(デフォルト)。例えば
+https://zimbra.domain.com であり、 http:// への接続は拒否されます。
+
+* *Mixed(混合)* : ユーザーがhttp://へ接続した際、ログインのみがhttps://へ切り替え、通常のセッションはhttp://へ戻されます。ユーザーがhttps://へ接続した際、https://から切り替わることはありません。
+
+* *Both(両方)* : ユーザーはhttp://、またはhttps://をどちらへもアクセス可能であり、セッションで最初にアクセスしたモードからは切り替わりません。
+
+* *Redirect(リダイレクト)*  : ユーザーがhttp://へ接続した際、Mixedモードと同様にhttps://へ切り替わりますが、セッションが継続されている間はhttps://のままです。
+
+すべてのモードではバックエンドの管理トラフィックにSSLの暗号化を使用しています。
+
+[IMPORTANT]
+HTTP/ポート80にリスナーが存在しないこと、HTTPでクライアントのアプリケーションが認証されないことおよびクライアントのアプリケーションと交換するデータが暗号化されること、については `zimbraMailMode` が *HTTPS* の場合のみ可能です。
+
+モードの変更を適用するためには、*Mailboxd* の停止と再起動が必要です。
+
+[NOTE]
+HTTPSへスイッチする場合は、{product-abbrev}のインストール中に/opt/zimbra/ssl/zimbra/server/server.crt で生成された自己署名済み証明書を使用します。ZCOユーザーの場合、CAの証明書をサーバーへ配備していないと、セキュアZCOのプロファイルが証明書信用ダイアログを表示します。詳細についてはZimbraの
+https://wiki.zimbra.com/wiki/ZCO_Connection_Security[ZCO Connection
+Security] Wiki記事を参照してください。
+
+==== 構文
+[source,bash]
+----
+zmtlsctl [モード]
+----
+
+`モード` = `http`, `https`, `mixed`, `both`, `redirect`
+
+==== 実行する手順
+
+. `zmtlsctl [モード]` を入力し、キーボードの *ENTER* キーを押します。
+. `zmmailboxdctl stop` を入力し、キーボードの *ENTER* キーを押します。
+. mailboxdの停止が完了しましたら、 `zmmailboxdctl start` を入力し、 *ENTER* キーを押します。
+
+==== リダイレクト使用の制限について
+
+* 多くのクライアントアプリは、サーバーへの最初のHTTPリクエストに認証のリクエストも送信します(「ブラインド認証」)。つまり、クライアントのアプリケーションをHTTPSへ転送される前に、この認証のリクエストがわかりやすい/暗号化されていない状態で送信されてしまいます。
+
+* Redirectモードは、man-in-the-middleの攻撃や、意図的、非意図的に無効なサーバーへのリダイレクトを起こす可能性があります。あるいは、ユーザーがサーバー名を間違えて入力した場合に、そのサーバーに対して証明書ベースでの確認が行えない場合があります。
+
+* 多くのクライアントのアプリケーションではユーザーがリダイレクトされたかどうかを認識できない場合があります(例えば、ActiveSync)。そのため、認証のリクエストが暗号化されていない場合でも、ユーザーはHTTPを使用し続けることになります。
+
+=== zmhsm
+
+HSMセッションの起動、停止(アボート)およびステータスを確認できるコマンドです。メッセージがストレージボリュームへ移動されるしきい値は管理コンソールの *サーバー > ボリューム* ページから設定します。
+
+==== 構文
+[source,bash]
+----
+zmhsm {abort|start|status} {サーバー} <名前>
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--abort |-a |
+現在のHSMセッションを強制的に停止します。処理中のメールボックスのメッセージが *アボート* を実行前に移動されていなかった場合、そのメールボックスのメッセージはプライマリボリュームから移動されません。セカンダリーボリュームへ移動されたメッセージがプライマリボリュームへ戻されることはありません。
+
+|--help |-h |
+ツールで使用できるオプションのヘルプを表示します。
+
+|--server |-s |
+`<値>` メールサーバーのホスト名。デフォルトは `[値]`
+
+|--start |-t |
+HSMプロセスをマニュアル操作で起動します。
+
+|--status |-u |
+前回のHSMセッションのステータスを表示します。
+
+|=======================================================================
+
+=== zmlicense
+
+`zmlicense` ライセンスの確認とインストールを行なうコマンドです。また、管理コンソールの *グローバル設定  >
+ライセンス* のページから、ライセンスの確認とインストールを行なうことができます。
+
+==== 構文
+[source,bash]
+----
+zmlicense [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--check |-c |
+有効なライセンスがインストールされているか確認します。
+
+|--help |-h |
+ツールで使用できるオプションのヘルプを表示します。
+
+|--install |-i |
+`<値>` 指定したライセンスファイルをインストールします。
+
+|--ldap |-l |
+LDAPサーバーのみにインストールします。
+
+|--print |-p |
+ライセンス情報を表示します。
+
+|=======================================================================
+
+=== zmmetadump
+
+アイテムのメタデータを人が読めるような内容へダンプするサポートツールです。
+
+==== 構文
+[source,bash]
+----
+zmmetadump -m <メールボックスID/メールアドレス> -i <アイテムID>
+----
+または
+[source,bash]
+----
+zmmetadump -f <暗号化したメタデータが含まれているファイル>
+----
+
+=== zmmypasswd
+
+`zimbra_mysql_password` を変更するコマンドです。 `--root` のオプションを使用した場合、`mysql_root_passwd` が変更されます。両方のユースケースでは新しいパスワードにてMariaDBを更新します。ルートのパスワードをオーバーライドするため権限テーブルを一時的にスキップしてMariaDBサーバーを開始する方法の詳細についてはMariaDBのドキュメントを参照してください。
+
+[NOTE]
+変更の適用には、再起動が必要です。
+
+==== 構文
+[source,bash]
+----
+zmmypasswd [--root] <新しいパスワード>
+----
+
+=== zmplayredo
+
+バックアップと復元の運用としてストレージレイヤのスナップショット機能を使用している場合、このコマンドでバックアップデータを復元できます。バックアップしたデータが現在の状態まで復元されるため、復元のプロセス中のデータ損失を防ぐことができます。
+
+==== 構文
+[source,bash]
+----
+zmplayredo <オプション>
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--fromSeq | |
+`<値>` 指定したRedoログのシーケンスからスナップショットを再適用します。
+
+|--fromTime | |
+`<値>` 指定した時間からスナップショットを適用します。
+
+|--help |-h |
+コマンドのヘルプ情報を表示します。
+
+|--logfiles | |
+`<値>` 指定したログファイルを順番に再実行します。
+
+|--mailboxId | |
+`<値>` 指定したメールボックスにスナップショットを適用します。
+
+|--queueCapacity | |
+`<値>` 各再実行スレッドのキューの許容量に制限を指定します。デフォルトは100です。
+
+|--stopOnError | |
+エラーが発生した際、適用を停止します。
+
+|--threads | |
+`<値>` 平行のRedoスレッドを指定します。デフォルトは50です。
+
+|--toSeq | |
+`<値>` 指定したRedoログシーケンスまでスナップショットを再適用します。
+
+|--toTime | |
+`<値>` 指定した時間までスナップショットを適用します。
+
+|=======================================================================
+
+
+時間はローカルのタイムゾーンで指定します。年、月、日、時、分、秒、そしてオプションのミリ秒を指定します。月/日/時/分/秒について、0を加えて2桁の数字で指定し、ミリ秒は3桁の数字で指定します。時は24時間形式を使用します。
+
+
+=== zmproxyconfgen
+
+nginxのプロキシ設定ファイルを生成する。LDAPの設定を読み込み、テンプレートの変数を上書きし、最終のnginx設定を生成します。
+
+==== 構文
+[source,bash]
+----
+ProxyConfGen [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--config |-c |
+`<値>` 設定の値をオーバーライドします。 `<値>` は
+`名称=値` です。有効な属性名を確認するには `-d` や `-D` を使用します。
+
+|--defaults |-d |
+デフォルトの変数マップを返します。
+
+|--definitions |-D |
+LDAPの情報を読み込み、オーバーライドを適用した属性値のマップを返します。
+
+|--help |-h |
+ヘルプの情報を表示します。
+
+|--include-dir |-i |
+`<値>` 設定ファイルが書き込まれるディレクトリのパス(`$workdir/conf` に関連)を返します。
+
+|--dry-run |-n |
+設定を書き込ませず、実行した場合に書き込むファイルを返します。
+
+|--prefix |-p |
+`<値>` 設定ファイルのプレフィックスを返します。デフォルトは `nginx.conf` です。
+
+|--template-prefix |-P |
+`<値>` テンプレートファイルのプレフィックスを返します。デフォルトは `$prefix` です。
+
+|--server |-s |
+`<値>` 有効なサーバーオブジェクトを指定します。指定したサーバーの属性をベースとした設定が生成されます。デフォルトではグローバル設定の値に基づき、設定が生成されます。
+
+|--templatedir |-t |
+`<値>` プロキシのテンプレートディレクトリを指定する。デフォルトは
+`$workdir/conf/nginx/templates` です。
+
+|--verbose |-v |
+詳細なデータを返します。
+
+|--workdir |-w |
+`<値>` プロキシのワークディレクトリを指定します。デフォルトは `/opt/zimbra` です。
+
+|=======================================================================
+
+=== zmproxypurge
+
+1つか複数のmemcachedサーバーからPOP/IMAPのプロキシルート情報をパージします。使用可能のmemcachedサーバーは `zmprov gamcs` オプションで出力されます。必要に応じてサーバーのポートを指定することもできます。
+
+==== 構文
+[source,bash]
+----
+ProxyPurgeUtil [-v] [-i] -a アカウント [-L アカウントのリスト] [キャッシュ1] [キャッシュ2]...]
+----
+
+==== 説明
+
+[cols="1m,1m,2a",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--help |-h |
+このツールで使用できるオプションのヘルプを示します。
+
+|--verbose |-v |
+詳細なデータを表示します。
+
+|--info |-i |
+アカウントのルート情報を表示します。
+
+|--account |-a |
+アカウント名を表示します。
+
+|--list |-L |
+アカウントのリストを含むファイルを表示します。1行につき1アカウント。
+
+|--output |-o |
+詳細ルート情報で返すフォーマットを指定します。デフォルトで以下の情報が表示します。
+
+* キャッシュサーバー
+* アカウント名
+* ルート情報
+
+|cacheN | |
+(オプションのコマンド)
+サーバー:ポートの形式で、他のmemcacheサーバーを指定します。
+
+|=======================================================================
+
+=== zmredodump
+
+デバッグ用に使用されるこのコマンドは、Redoログファイルの内容をダンプします。ユーザーが問題をデバッグしている際、特定のオプションと共に `zmredodump` を実行するように、Zimbraサポートから要請されることもあります。
+
+すべてのRedoログファイルで複数ログファイル/ディレクトリを指定することが可能であり、各ディレクトリのRedoログは昇順にソートされ、処理されます。
+
+==== 構文
+[source,bash]
+----
+zmredodump [オプション] <redolog ファイル/ディレクトリ> [...]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--help |-h |
+ヘルプメッセージを表示します。
+
+| |-m |
+カンマまたは空スペース区切りでメールボックスのIDを指定します。空スペースを区切りとしている場合、すべてのメールボックスIDのリストをクォーテーションで囲む必要があります。
+
+すべてのRedoログファイルの内容をダンプする場合、このオプションを使用しないでください。
+
+|--no-offset | |
+各Redoログダンプにファイルのオフセットとサイズを表示しない場合に指定します。
+
+|--quiet |-q |
+クワイエットモードを有効にします。ログのファイル名とエラーのみを返したい場合に使用する。最小限の出力内容でRedoログの整合性を確認するために使用します。
+
+|--show-blob | |
+ ブロブの内容を表示します。指定したアイテムのブロブの開始は `<START OF
+BLOB>` と終了は `<END OF BLOB>` で示します。
+
+|=======================================================================
+
+=== zmskindeploy
+
+簡単にZWCへスキンを配備するコマンドです。このツールにより、スキンの配備の処理、すべてのZWCユーザーへのスキン有効化、そして、新しいスキン使用のためのサーバー再起動を行ないます。
+
+////
+//リンクしている記事は ZCS 8.x より古いバージョンを対象しています。
+このツールの詳細については、以下のWikiを参照してください。
+https://wiki.zimbra.com/index.php?title=About_Creating_ZCS_Themes.
+////
+
+==== 構文
+[source,bash]
+----
+zmskindeploy <スキンのディレクトリ、またはzipファイルへのパス>
+----
+
+=== zmsoap
+
+メール、アカウントおよび管理情報をSOAPのフォーマットで返します。
+
+==== 構文
+[source,bash]
+----
+zmsoap [オプション] {path1} [path2]...
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--help |-h |
+使用方法の情報を返します。
+
+|--mailbox |-m |
+`<アカウント名>` メールボックスのアカウント名をします。メールとアカウントのリクエストはこのアカウントへ送信されます。`-a` と `-z` を指定していない場合、この属性値は認証にも使用されます。
+
+|--target | |
+`<アカウント名>` リクエストが送信されるターゲットのアカウントをします。非管理者のセッションのみに使用します。
+
+|--admin name |-a |
+`<アカウント名>` 認証する管理アカウント名をします。
+
+|--zadmin |-z |
+認証するZimbra管理者名とパスワードをします。
+
+|--password |-p |
+`<パスワード>` アカウントのパスワードをします。
+
+|--passfile |-P |
+`<パスワード>` ファイルからパスワードを読み込みます。
+
+|--element |-e |
+`<パスワード>` ルートのエレメントパスをします。指定した場合、スラッシュ(`/`) で始まらないパス値はこのエレメントに関連します。
+
+|--type |-t |
+`<種類>` SOAPのリクエスト種類をします。 `mail`, `account`,
+または `admin` を返します。
+
+|--url |-u |
+`<http[s]://...>` サーバーのホスト名とオプションのポート値をします。
+
+|--verbose |-v |
+SOAPリクエストと他のステータス情報をします。
+
+|path | |
+`<[パス]...>` エレメントまたは属性パスと値を表示します。おおまかには次のXPathの構文に従います。 `[/]エレメント1[/エレメント2][/@属性][=値]`
+
+|=======================================================================
+
+=== zmstat-chart
+
+CPU、IO、mailboxd、MTAキュー、MariaDBの統計情報を収集し、csvデータファイルに対し、スクリプトを実行し、その利用詳細をさまざまなチャートにて表示します。CSVファイルは `/opt/zimbra/zmstat/` に保存されます。
+パフォーマンスチャートのデータを収集するため、zmstatを有効化する必要があります。
+
+パフォーマンスチャート用データの収集のため、zmstatを有効化する方法
+
+. 以下のコマンドを実行します。 `zmprov ms {ホスト名} zimbraServerEnable stats`
+. 以下のコマンドでサーバーを再起動します。
++
+[source,bash]
+----
+zmcontrol stop
+zmcontrol start
+----
+
+==== 構文
+[source,bash]
+----
+zmstat-chart -s <値> -d <値> [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--aggregate-end-at | |
+`<値>` 指定した場合、総計の計算は指定したタイムスタンプで終了します。フォーマットは `MM/dd/yyyy HH:mm:ss`
+
+|--aggregate-start-at | |
+`<値>` 指定した場合、総計の計算は指定したタイムスタンプから開始します。フォーマットは `MM/dd/yyyy HH:mm:ss`
+
+|--end-at | |
+`<値>` 指定した場合、指定したタイムスタンプの後のサンプルは無視されます。フォーマットは `MM/dd/yyyy HH:mm:ss`
+
+|--start-at | |
+`<値>` 指定した場合、指定したタイムスタンプの前のサンプルは無視されます。
+
+|--title | |
+`<値>` チャートに表示するタイトルを指定します。デフォルトはsrcdirの最終ディレクトリ名です。
+
+|--no-summary | |
+要約のデータ生成が含まれません。
+
+|--conf |-c |
+`<値>` 設定XMLファイルを使用しチャートを生成します。
+
+|--destdir |-d |
+`<値>` 生成したチャートファイルの保存先。
+
+|--srcdir | |
+csvファイルが存在するディレクトリ(複数可能)を指定します。CSVファイルは `zmstat/` の下の日付ごとのディレクトリへ移動します。
+
+|=======================================================================
+
+=== zmstat-chart-config
+
+LDAPノード、実行しているプロセスなどサーバー設定を考慮して、テンプレートから
+`/opt/zimbra/conf/zmstat-chart.xml` を生成します。
+
+=== zmstatctl
+
+`zmstat` のデータ収集プロセスの管理スクリプトです。監視プロセスの開始と停止、ステータスの確認やログのローテーションを実行します。
+
+==== 構文
+[source,bash]
+----
+zmstatctl start|stop|status|rotate
+----
+
+=== zmthrdump
+
+{product-abbrev} サーバープロセスにスレッドダンプを実行し、アウトプットファイルを返します。また、スレッドダンプをファイルに保存したり、ログファイルにタイムスタンプを追加するオプションもあります。
+
+==== 構文
+[source,bash]
+----
+zmthrdump [-h] [-i] [-t <タイムアウトの秒間>] [-p <pidのファイル>] [-f <ファイル>] [-o <アウトプットファイル>]
+----
+
+==== 説明
+
+[cols="1m,3",options="header",]
+|=======================================================================
+|略式名 |説明
+
+|-h |
+ヘルプメッセージを表示します。
+
+|-i |
+LOGFILEにSIGQUITを実行する前にタイムスタンプを追加します。
+
+|-p |
+SIGQUITを送信するためにPIDファイルを指定します。デフォルト値は
+`zmmailboxd_java.pid` です。
+
+
+|-f |
+スレッドダンプのアウトプットを保存するLOGFILEを指定します。デフォルトは `zmmailbox.out` です。
+
+|-o |
+スレッドダンプのアウトプットファイルを指定します。デフォルトはstdoutです。
+
+|-t |
+プロセスが無反応の状態になった場合に停止するまでのタイムアウト(秒間)値を指定します。デフォルトは30秒です。
+
+|=======================================================================
+
+=== zmtrainsa
+
+迷惑メール対策のフィルターを学習させるためのコマンドです。このコマンドは自動的に毎晩実行され、ユーザーがメールボックス内で迷惑または迷惑ではないとしてフラグしたメッセージをSpamAssassinのフィルターに学習させます。SpamAssassinの
+<<spamassassin_sa_update_tool,SpamAssassin's sa-update tool>>はSpamAssassinに含まれています。このツールはSpamAssassin社のSpamAssassinによるルールをアップデートします。ツールは `/opt/zimbra/common/bin` にインストールされます。
+
+`zmtrainsa` のコマンドはマニュアル操作でユーザーのフォルダを迷惑メールのトレーニング用メールボックスへ転送することができます。あるアカウントに対してマニュアル操作で `zmtrainsa` を実行した場合、迷惑メール(spam)のデフォルトフォルダはJunkです。迷惑メールではない(ham)のデフォルトフォルダは受信トレイです。
+
+==== 構文
+[source,bash]
+----
+zmtrainsa <ユーザー> <spam|ham> [フォルダ名]
+----
+
+=== zmtzupdate
+
+特定のユーザー、または全ユーザーに既存の予定のタイムゾーンの変更をアップデートします。このコマンドを実行するためには、.icsのルールファイルを事前に作成する必要があります。ルールファイルには、タイムゾーンと変更するタイムゾーンを一致させる定義のルールが一通り含まれています。このコマンドに関する詳細な情報は以下のWikiページを参照してください。
+https://wiki.zimbra.com/wiki/Changing_ZCS_Time_Zones
+
+
+==== 構文
+[source,bash]
+----
+zmtzupdate --rulefile <ルールファイル> -a <"all" または特定のメールアドレスのリスト> [--sync] [--after <タイムスタンプ>]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名* |略式名 |説明
+
+|--account |-a |
+`<値>` 空スペースで区切ったアカウントのメールアドレスリストです。"all"を使用するとすべてのアカウントを更新します。
+
+|--after | |
+`<値>` この項目に指定した日時以降の予定を更新します。デフォルトのカットオフ時間は2008 年1月1日です。
+
+|--help |-h |
+ヘルプ情報を表示します。
+
+|--rulefile | |
+タイムゾーン定義を更新する.ics XMLファイルを指定します。
+
+|--server |-s |
+`<値>` メールサーバーのホスト名を指定します。デフォルトはlocalhostです。
+
+|--sync | |
+指定した場合、サーバーが依頼したアカウントの処理がすべて完了するまで `zmtzupdate` のコマンドがブロックします。デフォルト値はnoです。
+
+|=======================================================================
+
+=== zmvolume
+
+CLIからストレージのボリュームを管理するコマンドです。ボリュームは管理コンソールの *サーバー > ボリューム* ページより簡単に管理できます。
+
+==== 構文
+[source,bash]
+----
+zmvolume {-a|-d|-l|-e|-dc|-sc} [オプション]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |略式名 |説明
+
+|--add |-a |
+ボリュームを追加します。
+
+|--compress |-c |
+`<値>` BLOBを圧縮します。 "true" または "false"。
+
+|--compressionThreshold |-ct |
+圧縮のしきい値。 デフォルトは4KB。
+
+|--delete |-d |
+ボリュームを削除します。
+
+|--displayCurrent |-dc |
+現在のボリュームを表示します。
+
+|--edit |-e |
+ボリュームを編集します。
+
+|--help |-h |
+このツールで使用できるオプションのヘルプを示します。
+
+|--id |-id |
+`<値>` ボリュームID。
+
+|--list |-l |
+ボリュームをリストアップします。
+
+|--name |-n |
+`<値>` ボリューム名。
+
+|--path |-p |
+`<値>` ルートパス。
+
+|--server |-s |
+`<値>` メールサーバーのホスト名。
+デフォルトはlocalhost。
+
+|--setCurrent |-sc |
+現在のボリュームを設定します。
+
+|--type |-t |
+`<値>` ボリューム種類 (primaryMessage, secondaryMessage, または index)。
+
+|--turnOffSecondary |-ts |
+セカンダリーメッセージボリュームを無効化します。
+
+|=======================================================================
+
+=== zmzimletctl
+
+Zimletの管理やサーバーにあるZimletをすべてリストアップするコマンドです。詳細については <<zimlets,Zimlets>>を参照してください。ほとんどのZimletの配備はZimbraの管理コンソールから処理できます。
+
+==== 構文
+[source,bash]
+----
+zmzimletctl [-l] {コマンド} [<zimlet.zip>|<config.xml>|<zimlet>]
+----
+
+==== 説明
+
+[cols="1m,2",options="header",]
+|=======================================================================
+|正式名 | 説明
+
+|deploy |
+`<zimlet.zip>` LDAPサーバーにZimletのエントリを作成し、サーバーにZimletファイルをインストールし、デフォルトの提供サービスへアクセス許可を与え、Zimletを有効にします。
+
+|undeploy |
+`<zimlet>` ZimbraサーバーからZimletをアンインストールします。
+
+|install |
+`<zimlet.zip>` ホストにZimletファイルをインストールします。
+
+
+|ldapDeploy |
+`<zimlet>` ZimletエントリをLDAPへ追加します。
+
+|enable |
+`<zimlet>` Zimletを有効化します。
+
+|disable |
+`<zimlet>` Zimletを無効化します。
+
+|acl |
+`<zimlet> <提供サービス1> {grant \| deny} \| [<提供サービス2> {grant\|deny}...]`
+
+提供サービスへgrant\|denyのアクセス許可を与えます。
+
+|listAcls |
+`<zimlet名>` ZimletのACLをリストします。
+
+|listZimlets |
+サーバーにあるすべてのZimletの詳細をリストアップします。
+
+|getConfigTemplate |
+`<zimlet.zip>` Zimlet.zipファイルから設定のテンプレートを取得します。
+
+|configure |
+`<config.xml>` 設定をインストールします。
+
+|listPriority |
+現在のZimlet優先度を表示します(0は高い、9は低い)。
+
+|setPriority |
+`<zimlet>` Zimletの優先度を設定します。
+
+|=======================================================================
+
+=== zmproxyconfig
+
+Zimbraプロキシを管理できるコマンド。Zimbraプロキシをインストール後に設定を変更する必要がある場合にのみ、使用するようにしてください。詳細については <<zimbra_proxy_server,Zimbra Proxy Server>>を参照してください。
+
+[NOTE]
+{product-abbrev} 6.0まではこのコマンドは `zmproxyinit` と呼ばれていました。
+
+==== 構文
+[source,bash]
+----
+/opt/zimbra/libexec/zmproxyconfig [-h] [-o] [-m] [-w] [-d [-r] [-s] [-a w1:w2:w3:w4] [-i p1:p2:p3:p4] [-p p1:p2:p3:p4] [-x メールモード]] [-e [-a w1:w2:w3:w4] [-i p1:p2:p3:p4] [-p p1:p2:p3:p4] [-x メールモード]] [-f] -H ホスト名
+----
+
+==== 説明
+
+[cols="1m,3",options="header",]
+|=======================================================================
+|略式名 |説明
+
+|-h |
+ヘルプメッセージを表示します。
+
+|-H |
+プロキシを有効/無効にするサーバーのホスト名。
+
+|-a |
+使用するウェブポートのコロン区切りリスト。フォーマット：
+*HTTP-STORE:HTTP-PROXY:HTTPS-STORE:HTTPS-PROXY* (例: 8080:80:8443:443)
+
+|-d |
+プロキシを無効化します。
+
+|-e |
+プロキシを有効化します。
+
+|-f |
+memcachedポート、検索クエリおよびPOP/IMAPスロットリングの完全リセット。
+
+|-i |
+使用するIMAPポートのコロン区切りリスト。フォーマット：
+*IMAP-STORE:IMAP-PROXY:IMAPS-STORE:IMAPS-PROXY* (例: 7143:143:7993:993)
+
+|-m |
+メールプロキシの部分を切り替えます。
+
+|-o |
+有効化されているチェックをオーバーライドします。
+|-p |
+使用するPOPポートのコロン区切りリスト。フォーマット:
+*POP-STORE:POP-PROXY:POPS-STORE:POPS-PROXY* (例: 7110:110:7995:995)
+
+|-r |
+リモートホストへ実行します。サーバーがLDAPマスターで正常に設定している必要があります。
+
+|-s |
+無効にした際、CleartextをFALSE (セキュアモード) に設定します。
+
+|-t |
+ストアサーバーに対して、リバースプロキシ検索のターゲットを無効化します。`-d` が存在する場合のみ有効なオプションです。サーバーのプロキシ機能がすべて停止することを目的としている前提であるかどうかを確認してください。
+
+|-w |
+ウェブプロキシの部分を切り替えます。
+
+|-x |
+無効にした際に使用する `zimbraMailMode` (デフォルトはHTTP)。
+
+|=======================================================================
+
+`hostname` は編集するサーバーの `zimbra_server_hostname` LC key 値です。
+
+必要なオプションは `-f` のみ、または `-f` と `-d` か `-e` です。
+
+*以下に注意してください*
+
+* `-d` や  `-e` には `-m` と `-w` のいずれかまたは両方が必要
+* `-i` または  `-p` には  `-m` が必要
+* `-a` には  `-w` が必要
+* ストアの場合 `-x` は `-w` と `-d` が必要
+* プロキシの場合 `-x` は `-w` が必要
+
+オプションとして指定していない場合、 `-a`, `-i`, `-p`, `-x` のデフォルト値は以下となります。
+
+[cols="1m,2,2",options=""]
+|=======================================================================
+|-a |有効な場合のデフォルト: 8080:80:8443:443  |無効な場合のデフォルト: 80:0:443:0
+|-i |有効な場合のデフォルト: 7143:143:7993:993 |無効な場合のデフォルト: 143:7143:993:7993
+|-p |有効な場合のデフォルト: 7110:110:7995:995 |無効な場合のデフォルト: 110:7110:995:7995
+|-x |ストアが無効な場合のデフォルト: http |プロキシが有効/無効な場合のデフォルト: http
+|=======================================================================
+
+=== zmsyncreverseproxy
+
+zmsyncreverseproxyのコマンドでプロキシのモバイルシンクHTTP通信用のソースと転送サーバー＆ポートを予約します。詳細モードが有効な場合、同期のリクエストと返答をデコードし、ログへ記録します。
+
+==== 構文
+[source,bash]
+----
+zmsyncreverseproxy [-v] [-d] [-L log4j.properties] -p <ポート番号> -fs <転送サーバー> -fp <転送ポート> [-sv 同期バージョン]
+----
+
+==== 説明
+
+[cols="1m,1m,2",options="header",]
+|=======================================================================
+|正式名 |Short |説明
+
+|--help |-h |
+ヘルプ内容を表示します。
+
+|--verbose |-v |
+詳細モード、完全な例外スタックトレースをダンプします。
+
+|--debug |-d |
+デバッグモード、デコードされた同期メッセージをダンプします。
+
+|--port |-p |
+サービスが監視するポート。
+
+|--forwardserver |-fs |
+リクエストの転送先サーバー。
+
+|--forwardport |-fp |
+リクエストの転送先サーバーのポート番号。
+
+|--syncversions |-sv |
+サポートしているActive Syncバージョン。
+
+|--logpropertyfile |-L |
+`log4j` のプロパティファイル、-lでの使用のみ有効です。
+
+|=======================================================================
