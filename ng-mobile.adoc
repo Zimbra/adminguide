@@ -192,9 +192,7 @@ breaches to a minimum.
 Provisioning Features Available on Your Client
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Not all provisioning features are available on all clients. A good
-comparison of Exchange ActiveSync clients can be found on
-http://en.wikipedia.org/wiki/Comparison_of_Exchange_ActiveSync_clients[Wikipedia]
+Not all provisioning features are available on all clients.
 
 [[network-ng-modules-and-mdm]]
 Network NG and MDM

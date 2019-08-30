@@ -293,7 +293,7 @@ Remember that only *empty* volumes can be deleted.
 
 IMPORTANT: Beginning with release 8.8.9, all volume creation and update commands have been updated, as the `storeType` argument is now required.
 
-The `storeType` argument is *mandatory*, it is always the on the first position and accepts any one value corresponding to the <<S3-compatible-services, S3-Compatible Services>> listed previously.
+The `storeType` argument is *mandatory*, it is always the on the first position and accepts any one value corresponding to the <<s3-compatible-services, S3-Compatible Services>> listed previously.
 The arguments that follow in the command now depend on the selected `storeType`.
 
 ===== FileBlob (Local)

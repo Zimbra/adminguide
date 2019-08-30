@@ -229,8 +229,7 @@ Quota
 Let's examine these scenario one by one.
 
 [[a-global-admin-grants-a-user-a-higher-quota-than-the-allowed-domain-quota]]
-A Global Admin grants a user a higher quota than the allowed Domain
-Quota
+A Global Admin grants a user a higher quota than the allowed Domain Quota
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Since the Domain Quota applies to a given domain, not to a given Admin,
@@ -238,8 +237,7 @@ the effective quota for the user will be the maximum quota allowed by
 the `Domain Quota` setting.
 
 [[a-delegated-admin-grants-a-user-a-higher-quota-than-the-allowed-domain-quota]]
-A Delegated Admin grants a user a higher quota than the allowed Domain
-Quota
+A Delegated Admin grants a user a higher quota than the allowed Domain Quota
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this case, the effective quota for the user will be the maximum quota
