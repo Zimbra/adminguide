@@ -11,6 +11,20 @@ This repository contains the code necessary to build the {doc-name}.
 
 This guide is for system administrators responsible for installing, maintaining, and supporting the server deployment of {product-family}.
 
+== Images in the Documentation
+
+Any images to be included in the documentation must have their source files stored in the `images` folder, with the following guidelines:
+
+* *Assign a meaningful name:* The name of an image should indicate what the content of the image is.
+* *Do not replace images:* Once an image source file has been merged to `develop` or `master` branches of the repository, the image is considered immutable.
+If an update or new version of an image is required, then it should be added as a new image with a version number in its name, so it is clear for translators that images have changed. For example, `system-overview.jpg` could be updated with `system-overview-v2.jpg`, with corresponding changes to the file(s) that include the image so they include the new version.
+* *Images must render in html & pdf output:* The `asciidoctor-pdf` tool should produce a `pdf` file with your image intact.
+If an image does not render, *your PR will be rejected*.
+* *Take care with SVG fonts:* link:https://asciidoctor.org/docs/asciidoctor-pdf/#fonts-in-svg-images[If you’re using fonts in your SVG, and you want those fonts to be preserved, those fonts must be defined in the Asciidoctor PDF theme file.]
+* *Use "pure" SVGs:* The SVG renderrer used by `asciidoctor-pdf` only supports "pure" SVGs, not the SVG/HTML/CSS hybrid that are sometimes targeted for web viewing.
+If your image editor supports export of SVG files without the additional info, use that.
+Test your images - a hybrid SVG will render as a black rectangle in `pdf`.
+
 == Building the Documentation
 
 The {doc-name} is written using link:http://asciidoc.org/[AsciiDoc].
@@ -23,14 +37,14 @@ Once you have Asciidoctor installed and working, you can build the documentation
 
 [source,bash,subs=attributes+]
 ----
-asciidoctor -b html5 -D ~/temp/{product-version} -o index.html index.adoc
+asciidoctor -b html5 -D ~/temp/{product-version} -o {doc-filename}-{product-version}.html index.adoc
 ----
 
 PDF output can be generated as well:
 
 [source,bash,subs=attributes+]
 ----
-asciidoctor-pdf -a allow-uri-read -D ~/temp/{product-version} -o {doc-filename}.pdf index.adoc
+asciidoctor-pdf -a allow-uri-read -D ~/temp/{product-version} -o {doc-filename}-{product-version}.pdf index.adoc
 ----
 
 This assumes you have a "temp" directory to receive the asciidoctor output, and are generating output for version {product-version}... adjust according to your situation.
@@ -48,6 +62,162 @@ When publishing the output (`gh-pages` branch) the "latest" link needs to be upd
 [source,bash,subs=attributes+]
 -----
 ln -nsf {product-version} latest
+-----
+
+Finally, the `index.html' file in the root folder needs to be updated to include appropriate links for the new version's documents.
+Use your favorite text editor to complete this task before committing and pushing the updated `gh-pages` branch to the repo.
+
+== Localization and translations
+
+=== Source organization
+
+NOTE: The Best Practice for managing translations would be to replace translatable strings in the English `adoc` files with localized strings from language-specific `po` files.
+Until that is in place, translated `adoc` source and images are stored in locale-specific folders.
+
+The source repo structure is shown below, and has the following characteristics:
+
+* The top level folder, `{doc-filename}`, contains the US English (`en_us`) documentation source, which is informally designated as the "Master" documentation.
+This is where all primary information is authored and updated.
+* The Master `settings.adoc` file contains version information for the release, including all translations.
+There should be no locale-specific `settings.adoc` files.
+* There is a Master `images` folder to be used by all locales, except in the case of translated images.
+* Each locale has its own folder under the "Master", named using the link:https://www.iso.org/iso-639-language-codes.html[ISO-639 Language Code] + link:https://www.iso.org/iso-3166-country-codes.html[ISO-3166 Country Code] to name it.
+For example, the Japanese translation appears under `ja_jp`.
+* Each locale may have its own `images` folder.
+Images take up a lot of space, so translations must not copy all the ones in the Master `images` folder, rather they should be used as-is where feasible.
+* If any images *require* translation for a locale, then the translated image should be added to the locale's `images` folder.
+Where translated images are to be embedded, the path to the image will need to explicitly indicate the locale, e.g., `image::ja_jp/images/<image-name.jpg>`.
+
+ en_us Master                     Translations
+         +----+
++--------+    |
+|             |
+| adminguide  |
+|             |
++---+---------+
+    |
+    |            +----+
+    |   +--------+    |
+    |   |             |
+    +---+   images    |
+    |   |             |
+    |   +-------------+
+    |                                  +----+
+    +---- settings.adoc       +--------+    |
+    |                         |             |
+    +-------------------------+    ja_jp    |
+    |                         |             |
+    |                         +---+---------+
+    |                             |
+    |                             |            +----+
+    |     en_us sources           |   +--------+    |
+    |                             |   |             |
+    +--+- index.adoc              +---+   images    |
+       +-    ...                  |   |             |
+                                  |   +-------------+
+                                  |
+                                  |     ja_jp sources
+                                  |
+                                  +--+- index.adoc
+                                     +-    ...
+
+=== Published doc organization
+
+The documentation output is "published" by being pushed to the `gh-pages` branch, which is automatically hosted as a public website by `GitHub.io`.
+Each published release-version of the {doc-name} appears in its own release folder.
+
+Translations of documentation are published under the release-version folders, in a structure that is similar to the source organization.
+For example, consider two versions of the {doc-name} with Japanese translations:
+
+         +----+
++--------+    |
+|             |
+|      /      |
+|             |
++--+----------+
+   |                     en_us Master                     Translations
+   +--+- index.html              +----+
+   |  +- style.css      +--------+    |
+   |                    |             |
+   +--------------------+   8.8.12    |
+   |                    |             |
+   |                    +---+---------+
+   |                        |
+   |                        |            +----+
+   |                        |   +--------+    |
+   |                        |   |             |
+   |                        +---+   images    |
+   |                        |   |             |                +----+
+   |                        |   +-------------+       +--------+    |
+   |                        |                         |             |
+   |                        +-------------------------+    ja_jp    |
+   |                        |                         |             |
+   |                        |                         +---+---------+
+   |                        |                             |
+   |                        |                             |            +----+
+   |                        |     en_us docs              |   +--------+    |
+   |                        |                             |   |             |
+   |                        +--+- adminguide-8.8.12.html  +---+   images    |
+   |                           +- adminguide-8.8.12.pdf   |   |             |
+   |                                                      |   +-------------+
+   |                                                      |
+   |                              +----+                  |     ja_jp docs
+   |                     +--------+    |                  |
+   |                     |             |                  +--+- adminguide-8.8.12.html
+   +---------------------+   8.8.15    |                     +- adminguide-8.8.12.pdf
+                         |             |
+                         +---+---------+
+                             |
+                             |            +----+
+                             |   +--------+    |
+                             |   |             |
+                             +---+   images    |
+                             |   |             |                +----+
+                             |   +-------------+       +--------+    |
+                             |                         |             |
+                             +-------------------------+    ja_jp    |
+                             |                         |             |
+                             |                         +---+---------+
+                             |                             |
+                             |                             |            +----+
+                             |     en_us docs              |   +--------+    |
+                             |                             |   |             |
+                             +--+- adminguide-8.8.15.html  +---+   images    |
+                                +- adminguide-8.8.15.pdf   |   |             |
+                                                           |   +-------------+
+                                                           |
+                                                           |     ja_jp docs
+                                                           |
+                                                           +--+- adminguide-8.8.15.html
+                                                              +- adminguide-8.8.15.pdf
+
+This structure ensures that the relative path to images is the same in both source and published folders, yet the published versions for each release are collected together.
+
+=== Building translations
+
+:locale: ja_jp
+
+Here is an example of building the Japanese documentation:
+
+[source,bash,subs=attributes+]
+----
+asciidoctor -b html5 -D ~/temp/{product-version}/{locale} -o {doc-filename}-{product-version}-{locale}.html {locale}/index.adoc
+----
+
+PDF output can be generated as well:
+
+[source,bash,subs=attributes+]
+----
+asciidoctor-pdf -a allow-uri-read -D ~/temp/{product-version}/{locale} -o {doc-filename}-{product-version}-{locale}.pdf index.adoc
+----
+
+NOTE: The `asciidoctor-pdf` tool does not support all languages yet, so the PDF output is optional.
+
+The localized `images/` folder must also be copied to the output destination:
+
+[source,bash,subs=attributes+]
+-----
+cp -r ./{locale}/images ~/temp/{product-version}/{locale}/images
 -----
 
 == Additional Information
