@@ -157,7 +157,7 @@ Running a reindex of all mailboxes is also suggested.
 
 [[MIG-88-step-2-network-ng-modules-setup]]
 Step 2: Network NG Setup
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Disable the Real Time Scanner on both servers:
 

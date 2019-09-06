@@ -16,7 +16,7 @@ This chapter provides information about the Product Life Cycle stages of Zimbra 
 
 |ZCS Migration Wizard for Exchange
 |This tool is supported only for PST file import, with End of Technical Guidance set for 31 December 2020.
-We recommend [https://zimbra.audriga.com Audriga's self-service migration solution] as a preferred alternative for all account migrations.
+We recommend https://zimbra.audriga.com[Audriga's self-service migration solution] as a preferred alternative for all account migrations.
 
 |ZCS Migration Wizard for Domino
 |Deprecated

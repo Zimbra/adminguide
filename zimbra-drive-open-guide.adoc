@@ -115,7 +115,7 @@ Requirements
 
 * Root-level access to the underlying operating system.
 * Administrative access to an external cloud supported service (see
-[==subsec:supportedClouds==]). +
+<<supportedClouds>>). +
 Supported versions:
 ** Nextcloud 9, 10, 11
 ** ownCloud 9.0, 9.1, 10
@@ -201,7 +201,7 @@ correctly configured. Refer to these instructions for _Apache Web Server
 Configuration_ in the Nextcloud manual:
 https://docs.nextcloud.com/server/11/admin_manual/installation/source_installation.html#apache-web-server-configuration[Nextcloud
 installation] or in the ownCloud manual:
-https://doc.owncloud.org/server/10.0/admin_manual/installation/source_installation.html#apache-web-server-configuration[ownCloud
+https://doc.owncloud.org/server/10.0/admin_manual/installation/manual_installation.html#configure-the-web-server[ownCloud
 installation].
 
 [[configuration]]
@@ -325,7 +325,7 @@ manually upgraded on every version change.
 
 The upgrade of Zimbra Open Drive App in Nextcloud/ownCloud requires that
 files are replaced. Perform these steps at
-installation([==subsec:NextcloudownCloudInstallation==]):
+installation(<<subsec:NextcloudownCloudInstallation>>):
 
 1.  Copy `zimbradrive.tar.gz` in Nextcloud/ownCloud drive +
 `scp zimbradrive.tar.gz root@cloud:/tmp`
@@ -350,7 +350,7 @@ uninstallation of Zimbra Open Drive and cleanup of the system.
 
 [[disablePackages]]
 Disable Zimbra Open Drive Packages
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Since the Zimbra Open Drive Extension and the Zimbra Open Drive Zimlet are installed as
 Zimbra packages, their uninstallation is unexpected. To disable Zimbra Open Drive,
@@ -554,7 +554,7 @@ Manual Uninstall
 Manual uninstallation is not supported.
 
 Please consider disabling Zimbra Open Drive (see:
-[==sec:disablePackages==]) instead of uninstalling it. Any modification
+<<disablePackages>>) instead of uninstalling it. Any modification
 to the installed Zimbra packages may lead to a fail during the Zimbra
 upgrade.
 
