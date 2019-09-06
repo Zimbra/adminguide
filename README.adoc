@@ -80,13 +80,14 @@ The source repo structure is shown below, and has the following characteristics:
 This is where all primary information is authored and updated.
 * The Master `settings.adoc` file contains version information for the release, including all translations.
 There should be no locale-specific `settings.adoc` files.
-* There is a Master `images` folder to be used by all locales, except in the case of translated images.
 * Each locale has its own folder under the "Master", named using the link:https://www.iso.org/iso-639-language-codes.html[ISO-639 Language Code] + link:https://www.iso.org/iso-3166-country-codes.html[ISO-3166 Country Code] to name it.
 For example, the Japanese translation appears under `ja_jp`.
-* Each locale may have its own `images` folder.
+* There is a Master `images` folder to be used by all locales, except in the case of translated images.
+* Each locale may have its own `images` folder, named using the Language Code + Country Code just like the source folder.
 Images take up a lot of space, so translations must not copy all the ones in the Master `images` folder, rather they should be used as-is where feasible.
-* If any images *require* translation for a locale, then the translated image should be added to the locale's `images` folder.
+* If any images *require* translation for a locale, then the translated image should be added to the locale's images folder.
 Where translated images are to be embedded, the path to the image will need to explicitly indicate the locale, e.g., `image::ja_jp/images/<image-name.jpg>`.
+* The value for `imagesdir` set by `settings.adoc` should be left as-is, pointing at the Master `images` folder.
 
  en_us Master                     Translations
          +----+
@@ -100,8 +101,12 @@ Where translated images are to be embedded, the path to the image will need to e
     |   +--------+    |
     |   |             |
     +---+   images    |
-    |   |             |
-    |   +-------------+
+    |   |             |                +----+
+    |   +------+------+       +--------+    |
+    |          |              |             |
+    |          +--------------+    ja_jp    |
+    |                         |             |
+    |                         +-------------+
     |                                  +----+
     +---- settings.adoc       +--------+    |
     |                         |             |
@@ -109,17 +114,10 @@ Where translated images are to be embedded, the path to the image will need to e
     |                         |             |
     |                         +---+---------+
     |                             |
-    |                             |            +----+
-    |     en_us sources           |   +--------+    |
-    |                             |   |             |
-    +--+- index.adoc              +---+   images    |
-       +-    ...                  |   |             |
-                                  |   +-------------+
-                                  |
-                                  |     ja_jp sources
-                                  |
-                                  +--+- index.adoc
-                                     +-    ...
+    |     en_us sources           |     ja_jp sources
+    |                             |
+    +--+- index.adoc              +--+- index.adoc
+       +-    ...                     +-    ... 
 
 === Published doc organization
 
@@ -148,49 +146,54 @@ For example, consider two versions of the {doc-name} with Japanese translations:
    |                        |   |             |
    |                        +---+   images    |
    |                        |   |             |                +----+
-   |                        |   +-------------+       +--------+    |
+   |                        |   +-----+-------+       +--------+    |
+   |                        |         |               |             |
+   |                        |         +---------------+    ja_jp    |
+   |                        |                         |             |
+   |                        |                         +-------------+
+   |                        |
+   |                        |                                  +----+
+   |                        |                         +--------+    |
    |                        |                         |             |
    |                        +-------------------------+    ja_jp    |
    |                        |                         |             |
-   |                        |                         +---+---------+
+   |                        |                         +-------------+
+   |                        |                             | 
+   |                        |     en_us docs              |     ja_jp docs
    |                        |                             |
-   |                        |                             |            +----+
-   |                        |     en_us docs              |   +--------+    |
-   |                        |                             |   |             |
-   |                        +--+- adminguide-8.8.12.html  +---+   images    |
-   |                           +- adminguide-8.8.12.pdf   |   |             |
-   |                                                      |   +-------------+
-   |                                                      |
-   |                              +----+                  |     ja_jp docs
-   |                     +--------+    |                  |
-   |                     |             |                  +--+- adminguide-8.8.12.html
-   +---------------------+   8.8.15    |                     +- adminguide-8.8.12.pdf
-                         |             |
-                         +---+---------+
-                             |
-                             |            +----+
-                             |   +--------+    |
-                             |   |             |
-                             +---+   images    |
-                             |   |             |                +----+
-                             |   +-------------+       +--------+    |
-                             |                         |             |
-                             +-------------------------+    ja_jp    |
-                             |                         |             |
-                             |                         +---+---------+
-                             |                             |
-                             |                             |            +----+
-                             |     en_us docs              |   +--------+    |
-                             |                             |   |             |
-                             +--+- adminguide-8.8.15.html  +---+   images    |
-                                +- adminguide-8.8.15.pdf   |   |             |
-                                                           |   +-------------+
-                                                           |
-                                                           |     ja_jp docs
-                                                           |
-                                                           +--+- adminguide-8.8.15.html
-                                                              +- adminguide-8.8.15.pdf
-
+   |                        +--+- adminguide-8.8.12.html  +--+- adminguide-8.8.12-ja_jp.html
+   |                           +- adminguide-8.8.12.pdf      +- adminguide-8.8.12-ja_jp.pdf
+   |
+   |                             +----+
+   |                    +--------+    | 
+   |                    |             |
+   +--------------------+   8.8.15    |
+                        |             |
+                        +---+---------+
+                            |
+                            |            +----+
+                            |   +--------+    |
+                            |   |             |
+                            +---+   images    |
+                            |   |             |                +----+
+                            |   +-----+-------+       +--------+    |
+                            |         |               |             |
+                            |         +---------------+    ja_jp    |
+                            |                         |             |
+                            |                         +-------------+
+                            |
+                            |                                  +----+
+                            |                         +--------+    |
+                            |                         |             |
+                            +-------------------------+    ja_jp    |
+                            |                         |             |
+                            |                         +-------------+
+                            |                             | 
+                            |     en_us docs              |     ja_jp docs
+                            |                             |
+                            +--+- adminguide-8.8.15.html  +--+- adminguide-8.8.15-ja_jp.html
+                               +- adminguide-8.8.15.pdf      +- adminguide-8.8.15-ja_jp.pdf
+   
 This structure ensures that the relative path to images is the same in both source and published folders, yet the published versions for each release are collected together.
 
 === Building translations
@@ -217,7 +220,7 @@ The localized `images/` folder must also be copied to the output destination:
 
 [source,bash,subs=attributes+]
 -----
-cp -r ./{locale}/images ~/temp/{product-version}/{locale}/images
+cp -r ./images/{locale} ~/temp/{product-version}/images/{locale}
 -----
 
 == Additional Information
