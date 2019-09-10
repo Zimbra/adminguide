@@ -386,6 +386,21 @@ image:images/connect_videochat_screensharing_1.png[connect_videochat_screenshari
 When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window. 
 After choosing, the screen sharing feed replaces the user's webcam feed for all participants.
 
+== Instant Meetings
+Instant Meetings are one-shot Video Chats that can be attended by external users as well as internal users. Only users with the Advanced Connect features enabled can start Instant Meetings, but any internal or external user can attend.
+
+To create an Instant Meeting, click on the "New" button in the Connect Tab and select Instant Meeting.
+
+Then, fill in the attendee list by entering any internal or external email address in the text box and pressing enter to add it to the list. Once all attendees are added, press "Save" to send an email notification to all participants and start the Instant Meeting.
+
+=== Instant Meeting UI
+The Instant Meeting feature uses the very same UI as any internal Video Chat session.
+
+=== URLs and Ports
+To build URLs and links (e.g. for External Shares) Zimbra Connect uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.
+
+Should any of the two not be set up, the system will always fall back to the `zimbraServiceHostname` and `zimbraMailPort` or `zimbraMailSSLPort` server-level properties.
+
 == Presence
 
 Presence is managed automatically in {zconnect-name}: whenever a user logs in, regardless of whether the Connect Tab has the focus, they appear as *online*.
