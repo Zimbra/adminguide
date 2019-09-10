@@ -1,9 +1,9 @@
 [float]
-image:https://www.zimbra.com/wp-content/uploads/2016/06/zimbra-logo-color-282-1.png[Zimbra,link=https://www.zimbra.com] Zimbra Administration Guide
+image:https://www.zimbra.com/wp-content/uploads/2016/06/zimbra-logo-color-282-1.png[Zimbra,link=https://www.zimbra.com] Zimbra Administration Guide in Japanese
 ===================================================================================================================================================
 
 This repository contains the code necessary to build the Zimbra
-Administration Guide.
+Administration Guide in Japanese.
 
 This guide is intended for system administrators responsible for
 installing, maintaining, and supporting the server deployment of
@@ -12,31 +12,15 @@ Zimbra.
 Building the Documentation
 --------------------------
 
-The Zimbra Administration Guide is written using
-link:http://asciidoc.org/[AsciiDoc]. Specifically, it is intended to be
-processed with link:http://asciidoctor.org/[Asciidoctor].
-
-As a prerequisite to building the documentation, you will need to have
-already installed and configured
-link:http://asciidoctor.org/[Asciidoctor]. Check the
-link:http://asciidoctor.org/docs/user-manual/#installation-quick-start[Installation
-Quick Start] in the
-link:http://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] for
-information on how to get started.
+Please refer to the link:../README.adoc[Master README] about the preparation
+of Asciidoctor.
 
 Once you have Asciidoctor installed and working, you can build the
 documentation into HTML files like so:
 
 [source,bash]
 ----
-asciidoctor -b html5 -D ~/temp/8.8.11 -o index.html index.adoc
-----
-
-PDF output can be generated as well:
-
-[source,bash]
-----
-asciidoctor-pdf -a allow-uri-read -D ~/temp/8.8.11 -o adminguide.pdf index.adoc
+asciidoctor -b html5 -D ~/temp/8.8.11 -o index.html ja_jp/index.adoc
 ----
 
 This assumes you have a "temp" directory to receive the asciidoctor output,
@@ -52,13 +36,8 @@ To accompany the HTML output, the `images/` folder must also be copied to the ou
 cp -r ./images ~/temp/8.8.11/images
 -----
 
-When publishing the output (gh-pages branch) the "latest" link needs to be updated to
-point at the new version:
-
-[source,bash]
------
-ln -nsf 8.8.11 latest
------
+When publishing the output (gh-pages branch) the index.html needs to be updated to
+point at the generated Japanese version.
 
 Additional Information
 ----------------------
@@ -74,7 +53,7 @@ For additional product information check the https://wiki.zimbra.com[Zimbra Wiki
 
 License
 -------
-:copyright-year: 2018
+:copyright-year: 2019
 image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[CC BY-SA] Synacor, Inc., {copyright-year}
 
 (C) 2016-{copyright-year} by Synacor, Inc.
@@ -85,7 +64,7 @@ Synacor, Inc. provides otherwise. To view a copy of this license, visit
 https://creativecommons.org/licenses/by-sa/4.0 or send a letter to Creative
 Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-Synacor, Inc., 2016 +
+Synacor, Inc., +
 40 La Riviere Drive, Suite 300 +
 Buffalo, New York 14202
 
