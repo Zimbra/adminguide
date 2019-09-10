@@ -1,6 +1,11 @@
 [float]
-image:https://www.zimbra.com/wp-content/uploads/2016/06/zimbra-logo-color-282-1.png[Zimbra,link=https://www.zimbra.com] Zimbra Administration Guide in Japanese
-===================================================================================================================================================
+= image:https://www.zimbra.com/wp-content/uploads/2016/06/zimbra-logo-color-282-1.png[Zimbra,link=https://www.zimbra.com] Zimbra Administration Guide in Japanese
+
+:product-family: Zimbra
+:doc-name: {product-family} Administration Guide
+:doc-filename: adminguide
+:product-version: 8.8.15
+:copyright-year: 2019
 
 This repository contains the code necessary to build the Zimbra
 Administration Guide in Japanese.
@@ -9,8 +14,7 @@ This guide is intended for system administrators responsible for
 installing, maintaining, and supporting the server deployment of
 Zimbra.
 
-Building the Documentation
---------------------------
+== Building the Documentation
 
 Please refer to the link:../README.adoc[Master README] about the preparation
 of Asciidoctor.
@@ -20,11 +24,11 @@ documentation into HTML files like so:
 
 [source,bash]
 ----
-asciidoctor -b html5 -D ~/temp/8.8.11 -o index.html ja_jp/index.adoc
+asciidoctor -b html5 -D ~/temp/{product-version} -o {doc-filename}-{product-version}.html ja_jp/index.adoc
 ----
 
 This assumes you have a "temp" directory to receive the asciidoctor output,
-and are generating output for version 8.8.11... adjust according to your
+and are generating output for version {product-version}... adjust according to your
 situation.
 Each section of the document is contained in its own file. You may use the
 `index.adoc` file to generate the entire document.
@@ -33,14 +37,13 @@ To accompany the HTML output, the `images/` folder must also be copied to the ou
 
 [source,bash]
 -----
-cp -r ./images ~/temp/8.8.11/images
+cp -r ./images/ja_jp ~/temp/{product-version}/images/
 -----
 
 When publishing the output (gh-pages branch) the index.html needs to be updated to
 point at the generated Japanese version.
 
-Additional Information
-----------------------
+== Additional Information
 
 Visit https://www.zimbra.com[*www.zimbra.com*] to join the community and to
 be a part of building the best open source messaging solution. We
@@ -51,9 +54,8 @@ learn more about Zimbra.
 
 For additional product information check the https://wiki.zimbra.com[Zimbra Wiki].
 
-License
--------
-:copyright-year: 2019
+== License
+
 image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[CC BY-SA] Synacor, Inc., {copyright-year}
 
 (C) 2016-{copyright-year} by Synacor, Inc.
