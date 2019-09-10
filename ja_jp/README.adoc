@@ -22,7 +22,7 @@ of Asciidoctor.
 Once you have Asciidoctor installed and working, you can build the
 documentation into HTML files like so:
 
-[source,bash]
+[source,bash,subs=attributes+]
 ----
 asciidoctor -b html5 -D ~/temp/{product-version} -o {doc-filename}-{product-version}.html ja_jp/index.adoc
 ----
@@ -35,7 +35,7 @@ Each section of the document is contained in its own file. You may use the
 
 To accompany the HTML output, the `images/` folder must also be copied to the output destination:
 
-[source,bash]
+[source,bash,subs=attributes+]
 -----
 cp -r ./images/ja_jp ~/temp/{product-version}/images/
 -----
