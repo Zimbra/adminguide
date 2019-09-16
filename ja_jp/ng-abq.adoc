@@ -1,0 +1,346 @@
+= ABQ サービス
+:toc:
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::[{product-version} == 8.8.9]
+{product-name} {product-version} で追加された:
+endif::[]
+//
+"Allow/Block/Quarantine" で追加された機能は、サーバへ接続するモバイルデバイスの個別アクセス管理が可能です。これは「事前型」のセキュリティ機能であるため、サーバへ初めて接続した際に稼働し、許可されているデバイスのみに同期を行えるように設計しています。この機能では完全の管理者は運用中のシステムネットワーク上ですべてのモバイルデバイスを監視できます。
+現時点では、CLI のツールのみを提供しており、ウェブ上の GUI をリリースする予定です。
+
+== コンポネントの詳細について
+ABQ 機能では3つのメインコンポネントが含まれています：
+
+- デバイスの管理リスト
+- 認証するエンジン
+- CLIツールのセット
+
+=== デバイスの管理リスト
+"ABQリスト"と呼ばれるデバイスの管理リストには NG の設定エンジンで許可しているデバイスの情報が保管しています。
+CLI でデバイスの "Device ID" を取得することで、別の CLI コマンドでデバイス管理リストへそのデバイスを追加することが可能です。
+
+また、さらなるアクセス制限として、特定デバイスにサーバと同期できるアカウントに制限することも可能です。
+
+注意：モジュールの起動時では、デバイス管理リストが空であれば、Zimbra サーバが以前から認識しているモバイルデバイスはすべて *Allowed* としてインポートします。
+
+=== 認証エンジン
+認証エンジンはデバイスをデバイス管理リストに確認し、適切の ABQ ステータスを設定します。
+
+各ルールは Device ID で特定するデバイスから接続するすべてのアカウントへ適用します。device_id/account_id または device_id/accountName 等のルールである場合、そのデバイスにある特定のアカウントへのみ適用します。
+
+=== CLI ツール
+CLI ツールで管理者がデバイス管理リスト、およびデバイスの同期ステータスを直接に操作し、以下のような活動が可能です。
+
+- デバイス管理リストを閲覧する
+- Quarantined と Blocked のデバイスを閲覧する
+- デバイス管理リストへデバイスを追加する
+- デバイスのステータスを "Quarantine" から "Allowed" や "Blocked" へ移動する
+- デバイスの同期ステータスを変更する
+
+管理者が ABQ を有効化している環境にデバイスのステータスを変更する際、指定した新しいステータスにより、デバイスがサーバとすべてのフォルダー同期を強制的に再実行する場合がありますので、ユーザーは直ちに発生した現象を説明する<<_ダミーデータ,_dummy virtual mailbox_>>へ誘導されるか、再同期が必要となる実際のメールボックスへ誘導されます。
+
+== ABQ モード
+ABQ 機能はサーバとの同期を開始するすべてのモバイルデバイスに起動し、4つのモードとして稼働するように設定できます：
+"Permissive", "Interactive", "Strict” および "Disabled"。 この属性値はクラスタ内にグローバルの設定となります。
+
+=== "Permissive" モードについて：
+認証エンジンが無効化しておりますので、ユーザー認証とアカウントステータスの確認が完了後、同期が開始します。特定デバイスのアクセスを拒否することが可能ですが、アクセス拒否を指定していないデバイスはすべて同期可能の状態です。
+
+=== "Interactive" モードについて：
+ユーザー認証とアカウントステータスの確認が完了後、デバイス管理システムはデバイスから送信する "Device ID" を許可しているデバイスリストに確認します。
+
+- デバイス/アカウントの組み合わせが「許可」のリストにあれば、同期が開始します。
+- デバイス/アカウントの組み合わせがデバイスのリストに指定していないが、デバイスが「許可」のリストにあれば、同期が開始します。
+- デバイスが「許可」のリストに指定したいない場合、同期が保留され、ユーザーに "Quarantine" 状態の通知メールが送信し、接続が "Quarantine" のステータスに変わります。
+
+管理者が定時的に通知を受信することが可能です。なお、通知メールでは新しい Quarantine されたデバイスのみが報告されます。
+通知の詳細を確認した上、管理者が適切の CLI ツールを活用し、各デバイスへの同期を許可か拒否することが可能です。
+
+=== "Strict" モードについて：
+ユーザー認証とアカウントステータスの確認が完了後、デバイス管理システムはデバイスから送信する "Device ID" を許可しているデバイスリストに確認します。
+
+- デバイス/アカウントの組み合わせ、またはデバイスのみが「許可」のリストにあれば、同期が開始します。
+- デバイスが「許可」のリストに指定したいない場合、同期が完全に拒否され、ユーザーに "Blocked" 状態の通知メールが送信します。
+
+=== "Disabled" モードについて：
+ABQ が無効化しており、確認が行わず、ポリシーが適用されません。
+
+== ABQ モード管理
+現在のモードは以下のコマンドで確認できます：
+
+[source,bash]
+----
+zxsuite config global get attribute abqMode
+----
+ABQモードは以下のコマンドで変更することが可能です：
+
+[source,bash]
+----
+zxsuite config global set attribute abqMode value [Permissive|Interactive|Strict|Disabled]
+----
+
+== ダミーデータ
+この機能は「ダミーメール」と「ダミーメールボックス」を活用し、デバイスにアクセス許可を得るために同期を一旦保留する（Interactiveモード）、または "blocked" 状態をお知らせする（Permissiveモード、Interactiveモード、およびStrictモード）。
+
+ダミーメールボックスは「受信トレイ」のフォルダーのみを持つ仮想メールボックスであり、デバイスがQuarantine、またはBlockedのステータスでのみデバイスへ同期します。該当のダミーメールボックスに含まれているダミーメールのメッセージは事前に指定した通知メッセージであり、ユーザー様にデバイスのステータスを知らせするためのものです。現時点では、これらのメッセージのカスタマイズができない状態であり、今後の更新で異なる言語へ翻訳される予定です。デバイスの ABQ ステータスが変更する度、デバイスの同期ステートがリセットされます。
+
+エンドユーザー様に発生していることを明確に通知でいるように設計しております。この仕様がなければ、同期が理由なしで失敗するのみなので、エンドユーザー様が原因と特定できず、サポートのヘルプデスクへの依頼が増加することを想定していました。
+
+== 通知
+管理者が NG モジュール属性値の `abqNotificationsInterval` にて、リ秒単位で Quarantine となったデバイスの通知を受信することが可能です。
+
+現在の設定は以下のコマンドで確認できます。
+
+[source,bash]
+----
+zxsuite config global get attribute abqNotificationsInterval
+----
+
+以下のコマンドで設定を更新することが可能です。
+
+[source,bash]
+----
+zxsuite config global set attribute abqNotificationsInterval value [delay in milliseconds]
+----
+デフォルトでは、`abqNotificationsInterval` が「0」となっていますので、通知の送受信が行いません。
+
+=== ABQ サービスのステータスについて
+ABQ サービスのステータスは以下のコマンドで確認できます。
+
+[source,bash]
+----
+zxsuite mobile getServices
+----
+
+Mobile NG モジュールのデフォルトサービス管理で本サービスの停止や起動することが可能です。
+
+[source,bash]
+----
+zxsuite mobile doStartService abq
+zxsuite mobile doStopService abq
+----
+
+なお、モードがDisabledの場合、ABQサービスが自動的に開始せず、デバイスの同期は常に許可します。
+
+== ABQ CLI
+利用可能の ABQ CLI コマンドのリストは以下のコマンドで確認することが可能です。
+
+[source,bash]
+----
+$ zxsuite mobile abq
+
+Allow/Block/Quarantine mobile devices management
+モバイルデバイス管理 許可／ブロック／隔離
+
+    list                    - デバイスのリスト
+                              zxsuite mobile ABQ list [attr1 value1 [attr2 value2...] ]
+
+    add                     - デバイスの追加／インポート
+                              zxsuite mobile ABQ add [attr1 value1 [attr2 value2...] ]
+
+    allow                   - 隔離されたデバイスの同期を許可します。
+                              zxsuite mobile ABQ allow {device_id}
+
+    block                   - 隔離されたデバイスの同期を拒否します。
+                              zxsuite mobile ABQ block {device_id}
+
+    set                     - デバイスの同期状態を設定します。
+                              zxsuite mobile ABQ set {device_id} {Allowed|Blocked|Quarantined}
+
+    delete                  - ABQからデバイスを削除します。
+                              zxsuite mobile ABQ delete {device_id}
+
+    setNotificationInterval - 新しく隔離されたデバイスの通知間隔を設定します。
+                              zxsuite mobile ABQ setNotificationInterval {45m|6h|1d|0}
+----
+
+=== ABQ "list" コマンドについて
+すべてのデバイスの ABQ ステータスを表示します。"status" のオプションを活用することで、指定したステータスのデバイスのみを表示させることも可能です。
+
+[source,bash]
+----
+$ zxsuite mobile abq list
+デバイスをリスト表示します。
+
+構文:
+   zxsuite mobile ABQ list [attr1 value1 [attr2 value2...] ]
+
+
+パラメーターリスト
+
+名前        タイプ    期待値
+status(O)   String  Allowed|Blocked|Quarantined
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+----
+
+実例：
+
+[source,bash]
+----
+[zimbra@mail ~]$ zxsuite mobile abq list
+
+        devices
+
+                device_id   androidc133785981
+                status      Quarantined
+
+                device_id   androidc1024711770
+                status      Blocked
+
+                device_id   SAMSUNG1239862958
+                status      Allowed
+----
+
+=== ABQ "import" コマンドについて
+このコマンドはファイルから device ID のリストをインポートし、必ず2つのパラメータを指定する必要があります：
+改行でDevice IDを区切ったリストのインプットファイル、およびインポートしたデバイスに指定するステータスです。
+
+[source,bash]
+----
+[zimbra@mail ~]$ zxsuite mobile abq import
+importコマンドは、より多くのパラメータを必要とします。
+
+構文:
+    zxsuite mobile ABQ import {Path to file} {Allowed|Blocked|Quarantined}
+
+パラメーターリスト
+
+名前            タイプ        期待値
+input_file(M)   String      Path to file
+status(M)       String      Allowed|Blocked|Quarantined
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile ABQ import /path/to/file Allowed
+----
+
+実例：
+
+[source,bash]
+----
+[zimbra@mail ~]$ zxsuite mobile abq import /tmp/list Allowed
+3 devices added
+
+[zimbra@mail ~]$ cat /tmp/list
+androidc133785981
+androidc1024711770
+SAMSUNG1239862958/user@domain.com
+----
+
+上記の実例では、`androidc133785981` と `androidc1024711770` のデバイスはアカウントを問わずに同期が許可しておりますが、`SAMSUNG1239862958` のデバイスでは `user@domain.com` のアカウントのみに同期が許可していることを示しています。
+
+=== ABQ "allow" コマンドについて
+このコマンドは Quarantined デバイスへのみ使用するコマンドであり、デバイスステータスを *Allowed* へ変更します。
+
+[source,bash]
+----
+$ zxsuite mobile abq allow
+隔離されたデバイスの同期を許可します。
+
+構文:
+   zxsuite mobile ABQ allow {device_id} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前            タイプ      期待値
+device_id(M)    String
+account(O)      String    27ee8dd9-d813-4ca7-a988-580df0027a58|user1@example.com
+
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+----
+
+=== ABQ "block" コマンドについて
+このコマンドは Quarantined デバイスへのみ使用するコマンドであり、デバイスステータスを *Blocked* へ変更します。
+
+[source,bash]
+----
+$ zxsuite mobile abq block
+隔離されたデバイスの同期を拒否します。
+
+構文:
+   zxsuite mobile ABQ block {device_id} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前            タイプ      期待値
+device_id(M)    String
+account(O)      String    27ee8dd9-d813-4ca7-a988-580df0027a58|user1@example.com
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+----
+
+=== ABQ "set" コマンドについて
+特定デバイス（既存のデバイス、または不明のデバイス）に任意のステータスを設定します。
+
+[source,bash]
+----
+$ zxsuite mobile abq set
+デバイスの同期状態を設定します。
+
+構文:
+   zxsuite mobile ABQ set {device_id} {Allowed|Blocked|Quarantined} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前            タイプ      期待値
+device_id(M)    String
+status(M)       String    Allowed|Blocked|Quarantined
+account(O)      String    27ee8dd9-d813-4ca7-a988-580df0027a58|user1@example.com
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+----
+
+=== ABQ "delete" コマンドについて
+デバイスをすべてのリストから削除します。
+
+[source,bash]
+----
+$ zxsuite help mobile abq delete
+ABQからデバイスを削除します。
+
+構文:
+   zxsuite mobile ABQ delete {device_id} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前            タイプ      期待値
+device_id(M)    String
+account(O)      String    27ee8dd9-d813-4ca7-a988-580df0027a58|user1@example.com
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+----
+
+=== ABQ "setNotificationInterval" コマンドについて
+新しく Quarantine されたデバイスの通知期間を設定する。
+
+[source,bash]
+----
+$ zxsuite mobile abq setNotificationInterval
+setNotificationIntervalコマンドは、より多くのパラメーターを必要とします。
+
+構文:
+    zxsuite mobile ABQ setNotificationInterval {45m|6h|1d}
+
+パラメーターリスト
+
+名前            タイプ        期待値
+interval(M)     String      45m|6h|1d
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+新しく隔離されたデバイスを45分毎に通知します。
+    zxsuite mobile abq setNotificationInterval 45m
+新しく隔離されたデバイスを6時間毎に通知します。
+    zxsuite mobile abq setNotificationInterval 6h
+新しく隔離されたデバイスを毎日に通知します。
+    zxsuite mobile abq setNotificationInterval 1d
+新しく隔離されたデバイスの通知を無効にします。
+    zxsuite mobile abq setNotificationInterval 0
+----

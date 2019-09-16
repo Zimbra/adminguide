@@ -1,0 +1,262 @@
+[[zimlets]]
+= Zimlets
+:toc:
+
+Zimletを使用することで、Zimbraウェブクライアントに {product-abbrev} とサードパーティの製品を合体し、ユーザー環境を強化できます。Zimletではユーザーが受け取ったサードパーティからのメールメッセージにより、その情報を閲覧したりやり取りを行なうことが可能です。Zimbraの提供サービスを編集することで、ZWCのオーバービューペインからユーザーはZimletを利用できるようになります。
+
+{product-abbrev} にはいくつか前もって設定されたZimletが含まれています。また、独自のZimletを作成することやZimbraウェブサイトのZimlet Galleryからダウンロードすることも可能です。
+
+ZCSに含まれた設定済みZimletを有効にすると、ユーザーは以下の機能を使用できます。
+
+* 日付や時刻上にマウスを合わせて、カレンダー内の内容を確認する。
+
+* 名前やメールアドレス上にマウスを合わせて、名前に関する詳細情報をアドレスブック内から参照する。
+
+* 電話番号を右クリックし、ソフトウェア電話で発信する。
+
+* 日付を右クリックし、会議やイベント予定を新規で作成する。
+
+* 名前、住所、電話番号を右クリックし、連絡先リストの情報を更新する。
+
+独自Zimletの作成に関する詳細はZimbra WikiのZimbra Developmentページを参照してください。
+
+== 管理コンソールでZimletを管理する
+
+Zimbraの管理コンソールから以下のZimlet管理タスクを使用できます。
+
+* Zimletを配備する。配備により、LDAPサーバーにZimletのエントリが作成され、サーバーにZimletのファイルがインストール・有効化され、デフォルト提供サービスでZimletが利用できるようになります。
+
+* 提供サービスやアカウントごとにZimletの使用可・不可を設定する。
+
+* Zimletを強制する。
+
+* Zimletを無効化する。Zimletはサーバーに残りますが、使用されません。
+
+* Zimletの配備を解除する。配備を解除すると、Zimletが提供サービスやZimletのリストから削除されますが、サーバーからはZimletのアンインストールはされません。
+
+[NOTE]
+管理コンソール上ではZimletをアンインストールすることができません。
+
+=== カスタムZimletを配備する
+
+ZimbraウェブサイトのZimlet GalleryからカスタムのZimletをダウンロードし、配備できます。Zimletが配備されたら、デフォルト提供サービスの全ユーザーは直ちに使用できるようになります。Zimletが別の提供サービスへ直接に配備されていない場合、その提供サービスにこのZimletがリストアップされますが有効化はされていません。
+
+
+管理コンソール: ::
+*ホーム > 設定 > Zimlets* へ遷移。*ギア* メニューから配備をクリックします。
+
+// divide definition above from list below
+. 配備したいZimletを選択し、*配備* をクリックします。
++
+Zimletがサーバーへ配備されます。Zimletの配備されるサーバー名と配備状況を表示する画面が表示されます。
+
+. *完了* をクリックします。
++
+Zimletが有効であることをZimletのページで確認できます。
+
+=== Zimletを有効、無効、または必須にする
+
+Zimletの有効、無効、または必須を設定できます。また、トグル機能でインストール済みのZimletが対象のユーザーに利用可能かどうかを選択できます。
+
+管理コンソール: ::
+*ホーム > 設定 > 提供サービス -> _提供サービス名_ -> Zimlet*
+
+.Zimletの操作ステータス設定
+[cols="1,4",options="header",]
+|=======================================================================
+|設定 |説明
+
+|必須 |
+Zimletがユーザーのアカウントで必ず有効。必須のZimletはユーザーのZimletページに表示されません。
+
+|無効 |
+対象の提供サービスのユーザーに対し、即座にZimletを無効化します。
+
+|有効 |
+配備されたZimletがすべて有効化されます。
+
+|=======================================================================
+
+[NOTE]
+ユーザーはアカウントの *プリファレンス> Zimlet* のページにて、任意のZimletを自由に有効化・無効化できます。Zimletを必須に設定した場合、ユーザー側では無効化できません。
+
+=== Zimletの配備を解除する
+
+Zimletの配備を解除した場合、すべての提供サービスから削除したあとにLDAPから削除されます。
+
+管理コンソール: ::
+*ホーム > 設定 > Zimlets*
+
+. 配備を解除する _Zimlet_ を選択します。
+. 画面の右上 *ギア* メニューから *配備解除* を選択します。
+. *はい* をクリックし、Zimletの配備を解除します。
+
+=== Zimletにプロキシに許可したドメインを追加する
+
+プロキシ許可ドメインによって、どの外部ドメインがZimlet経由でアクセス可能かを設定できます。 {product-abbrev}に含まれているZimletに関しては、プロキシ許可ドメインは既に設定されています。他のZimletをダウンロードし配備した場合、追加プロキシドメイン名を追加することもできます。
+
+管理コンソール: ::
+*ホーム > 設定 > 提供サービス*
+
+. 編集する _提供サービス名_ を選択します。
+
+. *詳細設定* ページにて、*プロキシ許可ドメイン* の設定属性へスクロールダウンします。
+
+. ドメインを追加する場合、*ドメインを追加* のボタンをクリックします。
+
+. ドメイン入力が完了したら、画面の右上の *保存* をクリックします。
+
+=== Zimletのアップグレード
+
+カスタムZimletをアップグレードする場合、Zimletの配備と同様の手順を使用します。なお、新しいZimletのzipファイル名は既存Zimletのzipファイル名と同じである必要があります。
+
+
+管理コンソール: ::
+*ホーム > 設定 > Zimlet* へ遷移し、*ギア* メニューから *配備* をクリックします。
+
+. アップグレード完了後にアップグレードしたZimletを提供するため、 *Zimletキャッシュをフラッシュ* をチェックします。
+. アップグレードする _Zimlet名_ を選択し、*配備* をクリックします。
+. *完了* をクリックします。
+
+== コマンドラインでZimletを管理する
+
+次のZimlet管理タスクは、CLIから実行することができます。
+
+=== Zimletを配備する
+
+Zimletを配備すると、デフォルト提供サービスに指定されている全ユーザーへ直ちに有効化されます。Zimletを別の提供サービスへ配備しない場合、その提供サービスのZimletのリストには表示されますが、有効化はされません。
+
+デプロイ前の提供サービスの修正も含めた、CLIからのZimlet配備手順は以下のとおりです。
+
+. Zimletを選択し、ZimletのzipファイルをZimbraサーバーの `/tmp` フォルダへコピーします。
+
+. サーバーへZimbraユーザーとしてログインします。 `su - zimbra`
+
+. 以下のコマンドでZimletを配備します。
++
+[source,bash]
+----
+zmzimletctl deploy /tmp/<zimlet>.zip
+----
+
+=== Zimletにプロキシに許可したドメインを追加する
+
+Zimletを配備する際、Zimletで情報を正常に得るために呼ばれることになるドメインアドレスを、対象の提供サービスの属性 `zimbraProxyAllowedDomains` に設定する必要があります。
+
+以下のコマンドでこの属性 `zimbraProxyAllowedDomains` を設定できます。
+[source,bash]
+----
+zmprov mc <COSname> +zimbraProxyAllowedDomains '*.example.com'
+----
+
+ドメイン名 `example.com` の前に `*` を追加する必要があります。 .
+
+このZimletを有効化した全ての提供サービスに設定する必要があります。
+
+=== Zimletを配備し、提供サービスへのアクセスを許可する
+
+Zimletをデフォルト提供サービス以外の提供サービスへ配備する場合
+
+. Zimbraユーザーとしてログインします。`su - zimbra`
+. Gallery からのZimletのファイルを  */tmp* のフォルダへコピーします。
+. デフォルト提供サービスへZimletを配備します。
++
+[source,bash]
+----
+zmzimletctl deploy /tmp/<zimlet>.zip
+----
+
+. 他の提供サービスへ配備する場合、以下のコマンドを実行します。
++
+[source,bash]
+----
+zmzimletctl acl <zimletname> <cosname1> grant
+----
++
+上記のコマンドで `cosname1` へのアクセスを許可します。同時に複数の提供サービスへ許可することも可能です。
++
+[source,bash]
+----
+zmzimletctl acl <zimletname> <cosname1> grant <cosname2> grant
+----
+
+. Zimletにプロキシ許可ドメインを使用する場合、以下のコマンドを各提供サービスで実行し、適切なドメインの許可を追加します。
++
+[source,bash]
+----
+zmprov mc <COSname1> +zimbraProxyAllowedDomains '*.example.com'
+zmprov mc <COSname2> +zimbraProxyAllowedDomains '*.example.com'
+----
+
+=== Zimletのリストを表示する
+
+`zmzimletctl` を実行すると現在インストールされているZimletのリストが表示されます。
+
+[source,bash]
+----
+zmzimletctl listZimlets all
+----
+
+サーバーおよびLDAPにインストールされているZimlet、そして各提供サービスで使用可能なZimletがリストに表示されます。
+
+=== Zimletの設定を変更する
+
+Zimletによっては、配備後に追加の設定が必要になる場合もあります。
+
+Zimbraの設定テンプレートを使用することで、設定テンプレートを変更して、それから新しい設定ファイルをZimbraサーバーへインストールすることが可能です。
+
+Zimlet設定を変更するには:
+
+. 以下のコマンドで設定テンプレートを抽出します。
++
+[source,bash]
+----
+zmzimletctl getConfigTemplate <zimlet.zip>
+----
+
+. テンプレートに対して必要な編集を行ないます。必要な属性のみを編集するように注意してください。編集を完了後、ファイルを保存します。
++
+[NOTE]
+複数のカスタムZimletをご利用の場合、LDAPの設定を更新する前に `config_template.xml` を別のファイル名して、上書きされないようにしてください。
+
+. zmzimletctlコマンドでLDAPの設定を更新します。なお、設定テンプレートのファイル名を変更した場合、config_template.xmlを新しいファイル名に入れ替えてください。
++
+[source,bash]
+----
+zmzimletctl configure config_template.xml
+----
+
+=== Zimletのアップグレード
+
+カスタマイズしたZimletのアップグレードは、Zimletを新しく配備する手順と同様に実行します。
+[NOTE]
+新しいZimlet zipファイルは、既存のZimlet zipファイルと区別しやすい名称にしてください。
+
+Zimletのアップグレード手順
+
+. Zimletのzipファイルを `/opt/zimbra/zimlets-extra` のディレクトリへコピーして、古いバージョンに上書きします。
+
+. 以下のコマンドでZimletを配備します。
++
+[source,bash]
+----
+zmzimletctl deploy <zimlet.zip file name>
+----
++
+Zimletが `/opt/zimbra/zimlets-deployed` のディレクトリへコピーされます。Zimletに.jspのファイルが含まれていた場合、その.jspファイルも
+`/opt/zimbra/jetty/webapps/zimlet/<zimletnamefolder>` にコピーされます。
+
+. 新しいバージョンを適用するため、キャッシュをフラッシュします。
++
+[source,bash]
+----
+zmprov flushCache zimlet
+----
+
+=== Zimbra Gallery
+
+ZimbraのウェブサイトにあるZimlet GalleryからZimletをダウンロードし配備できます。 https://www.zimbra.org/extend/ へ遷移し、Zimbra Gallery セクションのExtensionへスクロールしてください。
+
+=== カスタムなZimletの開発
+
+カスタムのZimlet設計に関する詳細については、Zimbra WikiのZimlet Developer Guideを参照してください。 https://wiki.zimbra.com.

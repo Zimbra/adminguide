@@ -1,0 +1,1006 @@
+[[monitoring_zcs_servers]]
+= {product-abbrev} サーバーの監視
+:toc:
+
+{product-name} ({product-abbrev}) では、Zimbraサーバーの状態、使用容量、メールのフローの監視のため、以下の機能を提供しています。
+
+* Zimbra のLoggerパッケージでサーバーの統計やステータスの収集・表示と日次夜間レポートを発行します。
+* メールボックスの割り当て容量監視
+* MTAのメールキュー監視
+* ログファイル
+
+また、特定のエラーメッセージでSNMPトラップを作成し、SNMPのツールで監視することができます。
+
+[NOTE]
+システム全体のヘルスチェックはこのドキュメントの範囲対象外です。
+
+== Zimbra Logger
+
+LoggerにはSyslogの情報収集とレポート作成のツールが含まれています。Loggerのインストールは任意ですが、インストールしていない場合、サーバーの統計やステータス情報は収集されません。
+
+複数の {product-name} サーバーをご利用の環境では、Loggerは一つのメールボックスサーバーのみで有効にします。このサーバーはサーバー監視のホストとなります。監視ホストは他の{product-name}サーバーのステータスをすべて確認し、Zimbraの管理コンソール上に情報を表示します。リアルタイムでサービスのステータス、MTA、迷惑メール対策/ウイルス対策トラフィック、パフォーマンスの統計を表示できます。また、Loggerは日次で、毎日のメッセージ数、平均到達遅延、発生したエラーなどのメール運用状況レポートを作成します。
+
+[NOTE]
+マルチサーバーの環境では、各サーバーにsyslog設定ファイルをセットアップし、管理コンソール上でサーバー統計が表示できるようにしてください。加えて、Loggerのホストを有効にする必要があります。 {product-name} のインストール時にこの設定をしていない場合、今すぐ実行してください。
+
+=== サーバー統計を有効にする
+
+サーバーの統計を有効にすると、過去の48時間、30日間、60日間、1年間の間に処理したメッセージ分の、インバウンドのメッセージボリューム、インバウンドのメッセージ数、迷惑メール対策/ウイルス対策アクティビティ、ディスクの使用容量を、システム全体やサーバー単位で確認できます。
+
+. 各サーバーでRootユーザーにて
+`/opt/zimbra/libexec/zmsyslogsetup` を実行します。サーバー統計の収集ができるようにSyslog設定ファイルが更新されます。
+
+. Loggerの監視ホストでは、リモートマシンのsyslogメッセージを受けとるために *syslog* を有効化します。 詳細は https://wiki.zimbra.com/wiki/Configuring-Logger-Host を確認してください。
+
+[NOTE]
+上記の手順はシングルサーバーの環境では必要ありません。
+
+=== サーバーステータスを監視する
+
+管理コンソール: ::
+*ホーム > 監視*
+
+*Server Status* のページに、すべてのサーバーとサービス、それらのステータス、最後にチェックされたサーバーステータスがリストアップされます。サーバーには、MTA、LDAP、メールボックスサーバーが含まれています。サービスにはMTA、LDAP、メールボックス、SNMP、迷惑メール対策、ウイルス対策、スペルチェック、Loggerが含まれています。
+
+停止しているサーバーを始動するには `zmcontrol` のCLIコマンドを使用します。管理コンソールからもサービスの開始と停止ができます。
+
+=== サーバーのサービスの有効化/無効化
+
+管理コンソール: ::
+*ホーム > 設定 > サーバー -> _サーバー名_*
+
+サーバーのサービスは *サーバー -> _サーバー名_*
+ページで有効化/無効化します。ナビゲーションペインの *サービス* をクリックし、有効化/無効化するサービスを選択します。
+
+=== サーバーのパフォーマンス統計
+
+LoggerのパッケージをZimbraのメールボックスサーバーへインストールした場合、サーバー統計には、メッセージ数、メッセージボリューム、迷惑メール対策/ウイルス対策のアクティビティが棒グラフで表示されます。過去の48時間、30日間、60日間、365日間の情報を表示します。
+
+ナビゲーションペインで各サーバー統計を選択すると、すべてのメールボックスサーバーを統合した統計が表示されます。「サーバー統計」にて、特定のサーバーをダブルクリックすると、そのサーバーの関連統計のみ、閲覧できます。また、サーバー固有の情報としてディスクの使用容量、セッション情報、メールボックスの割り当て容量も閲覧できます。
+
+システム全体の情報は次のとおりです。
+
+* *メッセージ数* -- メッセージのトランザクション数。トランザクションとは、ユーザーごとの(Postfixによる)メッセージSMTP受信または(mailboxdによる)LMTP配信です。例えば、メッセージ1件が3人へ送信されるとき、トランザクション数は6です。PostfixへのSMTPが3回、mailboxdへのLMTPが3回です。メッセージ数は6回ごとに増分します。
+
+* *メッセージボリューム* -- 1時間単位と1日間単位で処理したバイトサイズを表示します。グラフは全体のインバウンドデータをバイト単位で表示します。
+
+* *迷惑メール対策/ウイルス対策アクティビティ* -- 迷惑メールやウイルスがあるかどうかを検査したメッセージ数と、迷惑メールとしてタグ付けされたまたはウイルスが感染していると判断されたメッセージ数が表示されます。AS/AVの合計は、スキャンされたメッセージごとに１つ増えます。メッセージ1件が3人へ送信されるとき、AS/AVではメッセージ1件しか処理されません。
++
+メッセージ数と迷惑メール対策/ウイルス対策アクティビティのグラフは、以下の理由によりメッセージ数が異なります。
+
+** システム構成によってはアウトバウンドメッセージのチェックが必要とされないため、Amavisdのフィルターを通過しない可能性があります。
+
+** メッセージの宛先へ配信される前に、メッセージはAmavisdで迷惑メールやウイルスがスキャンされています。メッセージ数はメッセージを実際に受信者が受信した件数を表します。
+
+サーバー固有の情報には以下も含まれます。
+
+* *ディスク* -- 選択したサーバーの使用中のディスク容量と空のディスク容量が表示されます。直近の1時間、1日、1か月、1年間の情報が表示されます。
+
+* *セッション* -- アクティブなウェブクライアント、管理者、IMAPのセッション情報が表示されます。オープンされているアクティブセッション、ログインユーザー、セッションが作成された日時、セッションが最後にアクセスされた日時を確認できます。
+
+* *メールボックスの割り当て容量* -- 各アカウントの情報が、メールボックスサイズの降順に表示されます。詳細は
+<<monitoring_mailbox_quotas,メールボックスの割り当て容量を監視する>> を参照してください。
+
+=== Loggerのメールレポートを設定する
+
+Loggerは、メールのアクティビティについてのレポートを毎日23:30に発行し、管理者のメールアドレスへ送信します。
+
+レポートに含まれるアカウント数を設定できます。デフォルトは、送信者アカウントが25、受信者アカウントが25です。
+
+* 受信アカウントの最大数を変更します。
++
+[source,bash]
+----
+zmlocalconfig -e zimbra_mtareport_max_recipients=<数字>
+----
+
+* 送信アカウントの最大数を変更します。
++
+[source,bash]
+----
+zmlocalconfig -e zimbra_mtareport_max_senders=<数字>
+----
+
+== ディスク容量の通知を設定する
+
+定期的にディスクの使用容量を確認し、ディスクの空き容量が少ない際にはサービスの継続維持のための対策をとることが重要です。ディスク空き容量が少なくなると、管理者アカウントに警告メールメッセージが自動送信されます。デフォルトの設定では、ディスク使用率85%で警告メッセージが、ディスク使用率95%で重要な警告メッセージが送信されます。
+
+この条件は変更可能です。`zmlocalconfig` を使用し、警告メッセージのためのディスクのしきい値を変更します。
+
+* 警告のメッセージ
++
+[source,bash]
+----
+zmdisklog_warn_threshold
+----
+
+* 重要な警告メッセージ
++
+[source,bash]
+----
+zmdisklog_critical_threshold
+----
+
+zmcontrolでのサービス起動時にこのしきい値を超えていると、サービスの開始前に警告が表示されます。ディスクをクリーンアップして、空き容量を増やしてください。
+
+== サーバーの監視
+
+{product-name} サーバーでは、複数のパフォーマンス用統計を収集しているため、問題や負荷の障害のトラブルシューティングに役立ちます。
+
+管理コンソール: ::
+*ホーム > 監視 > 高度な統計*
+
+*高度な統計* のページにて、CPU, IO, mailboxd, MTAのキュー、MariaDBなどのコンポーネントについての統計情報に基づく様々な図表を高度なグラフのオプションで生成できます。
+
+高度な統計グラフを表示するには、グループ項目から１つ選択し、カウンターリストから表示する情報を特定します。
+
+幅広いデータから情報を取得できます。
+
+* *cpu.csv* -- CPUの使用率。このグループは、CPU使用をトラッキングし続けるカウンターを含みます(iowait, idle, system, user, time等)。 CPU情報はサーバーレベルやプロセスレベルでトラッキングできます。
+
+* *df.csv* -- ディスクの使用率。ディスクパーティションごとにトラッキングされます。
+
+* *fd.csv* -- ファイル記述子のカウント。システムファイルの記述子の使用超過時間をトラッキングし続けます。主に「ファイル記述子が足りない」エラーをトラッキングするための機能です。
+
+* *mailboxd.csv* -- {product-name} サーバーとJVMの統計。Mailboxdの統計がほぼ全てです。役に立つカウンター値にはheap_used, heap_free, imap_conn, soap_sessions, pop_conn, db_conn_count があります。
+
+* *mtaqueue.csv* --  Postfixのキュー。メッセージ数とバイト単位でのサイズにによって、メールのキューサイズを計算します。
+
+* *proc.csv* -- Zimbraプロセスのプロセス統計です。例えば、mailboxd/java, MariaDB, OpenLDAP など。
+
+* *soap.csv* -- SOAPリクエストのプロセス時間。
+
+* *threads.csv* -- JVMのスレッドカウント。接頭語が一致しているスレッド数を数えます。
+
+* *vm.csv* -- (vmstatコマンドからの)Linux VMの統計。
+
+* *io-x.csv* と *io.csv* -- `iostat(1)` のコマンド (`io-x.csv`
+と `iostat -x`) からのストアデータ。
+
+== DoSのフィルター条件を設定する
+
+過剰な負荷をかけるリクエストはdenial-of-serviceフィルター (DoSFilter) により制限されます。DoSFilterでは、短時間に大量のリクエストを送信しているクライアントを抑制します。
+
+なお、DosFilter は HTTP と HTTPS リクエストにのみ適用されますので、他のプロトコル、たとえば POP3、IMAP、および SMTP には適用されません。ご利用の環境に合わせて設定を変更できます。{product-abbrev}ではデフォルトでDoSFilterは有効です。DoSFilterの無効化は推奨しません。連続でのログイン失敗を回避する詳細につきましては、 <<cos.adoc#passwordpolicy,ログインポリシーを管理する>> をご参照ください。
+
+=== False Positiveを判断する
+
+時折、Zimbra Connector for Outlook (ZCO)、モバイルActiveSyncのクライアント、あるいはzmprovコマンドを何か
+実行することで、DoSFilterが起動されることがあります。そうすると、Zimbraのメールボックスサービスは使用できなくなります。DoSFilterが適用されたかどうかを以下のログから確認できます。
+
+* `/opt/zimbra/log/sync.log`
+
+.DoSFilterを表示している `sync.log` のエントリ
+====
+[source,subs=+quotes]
+----
+2013-01-15 15:52:20,426 WARN [qtp1635701107-91:https://x.x.x.x/
+Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5ddddd3NR&DeviceType=iPhone&Cmd=FolderSync][name=zsupport2@domain.com;mid=64;ip=10.1.2.3;Cmd=FolderSync;DeviceID=Appl5K0113UN3NR;Version=12.1;] sync - *Service exception com.zimbra.common.service.ServiceException: error while proxying request to target server: HTTP/1.1 503 Service Unavailable*
+ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5K0113UN3NR&DeviceType=iPhone&Cmd=FolderSync:1358286740426:c5ca7f36bb0a038f Code:service.PROXY_ERROR Arg:(url, STR,"http://mail.domain.com:80/service/soap/SyncRequest"
+----
+====
+
+* `/opt/zimbra/log/zmmailboxd.out`
+
+.DoSFilterを表示している `zmmailboxd.out` のエントリ
+====
+[source,subs=+quotes]
+----
+2013-01-15 15:57:32.537:WARN:oejs.*DoSFilter:DOS ALERT*:ip=127.0.1.1,session=null,user=null
+----
+====
+
+=== DOSFilterの設定をカスタマイズする
+
+以下の属性を使用して、zmprovでDoSFilterを設定します。これらの属性は、グローバル設定またはサーバー設定として設定できます。サーバーに設定すると、サーバー設定がグローバル設定をオーバーライドします。
+
+設定は変更できますが、デフォルトの設定を推奨します。
+
+[cols="2,3a",options="header",]
+|=======================================================================
+|属性 |説明
+
+|*DoSFilterの延長期間* +
+`zimbraHttpDosFilterDelay-Millis` |
+
+レート制限を超えたリクエストに与えられる延長期間です。デフォルトの値は-1です。
+
+* -1 = リクエストを拒否する。
+* 0 = 延長期間なし(直ちに処理)。
+* その他の値 =  延長期間。単位はミリ秒(ms)。
+
+[source,bash]
+----
+zmprov mcf zimbraHttpDosFilterDelayMillis {x}
+----
+
+|*1秒間にリクエストできる最大DoSFilter 数* +
+`zimbraHttpDosFilterMaxRequestsPerSec` |
+
+一つの接続の1秒あたりの最大リクエスト数です。この値以外のリクエストは抑制されます。デフォルトの値は30で最小値は1です。
+
+[source,bash]
+----
+zmprov mcf zimbraHttpDosFilterMaxRequestsPerSec {x}
+----
+
+|*DoSFilter IP アドレスのホワイトリスト* +
+`zmprov mcf zimbraHttpThrottleSafeIPs {x.x.x.x,192.168.x.x}` |
+
+DoSFilterの適用時、無視されるIPアドレス。デフォルトの値はありませんが、以下のループバックIPはデフォルトでホワイトリストに記載されています。
+
+* 127.0.0.1
+* ::1
+
+IPアドレスはカンマで区切ります。
+
+[source,bash]
+----
+zmprov mcf zimbraHttpThrottleSafeIPs {addresses}
+----
+
+|=======================================================================
+
+
+上記属性の変更後は、メールボックスサーバーの再起動が必要です。
+
+
+[source,bash]
+----
+zmmailboxdctl restart
+----
+
+=== {product-abbrev} 8.0.3 以降のバージョンでのチューニング課題
+
+* *{product-abbrev} メンバーサーバー* --  シングルのマスターLDAPで管理している{product-abbrev}サーバーは自動的にIPアドレスでホワイトリストに記載されます。こうしたホストは *GetAllServersRequest* から分かります。　`zmprov gas` として入力してください。
+
+* *外部プロビジョンのホスト/SOAP API* -- 外部プロビジョンのホストをIPホワイトリストに追加して、DoSFilterが特定のリクエストを確実にブロックしないようにできます。例えば、メールボックスの再インデックスは、1秒間に複数のリクエストを発生させてDoSFilterを起動させる恐れがあります。
+
+== メールキューを使用する
+
+Zimbra MTAのメール受信時、配信管理のため、メールを次のキューに回しします：受信、アクティブ、遅延、保持、破損。
+
+*受信* のキューは受信した新着メールを保持します。各メッセージは固有のファイル名で識別されます。アクティブのキューに空きがあると、アクティブキューに移されます。通常動作では、メッセージはこのキューから即座に他のキューに移されます。
+
+*アクティブ* キューは、送信できる状態のメッセージを保持します。MTAは、アクティブキューに一度に保持できる最大メッセージ数を設定しています。ここから、メッセージはウイルス対策と迷惑メール対策のフィルターに回され、戻ってきてから、他のキューに移されます。
+
+配信できなかったメッセージは *遅延* キューに置かれます。配信失敗の理由は遅延キュー内のファイルに記録されます。このキューは、メッセージ再送信のために頻繁にスキャンされます。設定された最大配信試行回数を超えるとメッセージの送信が失敗します。メッセージは元の送信者にバウンスされます。デフォルトのバウンスキュー保持期間は5日間です。
+
+*保持* キューには、処理できなかったメッセージが置かれます。メッセージは、管理者が移動するまでこのキューに留まります。保持キューにあるメッセージが配信試行されることはありません。
+
+*破損* キューには、破損して読み込みできないメッセージが格納されます。
+
+=== バウンスキュー保持期間を変更する
+
+* MTAサーバーのバウンスキュー保持期間は5日間に設定されています。このデフォルトのキュー保持期間設定を変更します。
++
+[source,bash]
+----
+zmlocalconfig -e bounce_queue_lifetime={#}
+----
+
+* 恒久的にメッセージを送信者へ返送して、最初に遅延キューに移動することはしません。
++
+[source,bash]
+----
+zmlocalconfig -e zimbraLmtpPermanentFailureWhenOverQuota=TRUE
+----
+
+=== バウンスされたメッセージを送信者に通知する
+
+バウンスキュー保持期間でメッセージを送信者に返送する前に、送信者は、送信メッセージが配信されずに遅延キューにある旨の通知を受け取ることができます。
+
+以下の属性を設定して、送信者に警告メッセージを送信する設定をします。
+
+* まだキューにあるメッセージのヘッダーに、送信者が受け取るまでの期間を設定します。
++
+[source,bash]
+----
+zmlocalconfig -c postfix_delay_warning_time=0h
+----
+
+* MTAが配信しなかったメッセージのヘッダーに、Postmaster通知の受信者を設定します。
++
+[source,bash]
+----
+zmlocalconfig -c postfix_bounce_notice_recipient=postmaster
+----
+
+* Postmasterに報告されるエラークラスのリストを設定します。
++
+[source,bash]
+----
+zmlocalconfig -c postfix_notify_classes=resource,software
+----
+
+[NOTE]
+こうしたPostfix属性を変更することによる影響の詳細は、Postfixのドキュメントを参照してください。
+
+メールキューを管理コンソールから監視して、配信問題を確認できます。
+
+=== メールキューを閲覧する
+
+管理コンソール: ::
+*ホーム > 監視 > メールキュー*
+
+メール配信で問題が生じている場合、管理コンソールの *メールキュー* ページからメールキューを閲覧し、メール配信問題を改善できるかどうかを検討することができます。メールキューを開くと、その時点での遅延、受信、アクティブ、保持、破損のキュー内容を閲覧できます。メッセージ数、配信元、配信先も閲覧できます。
+
+キューごとの要約ペインで受信者のドメイン、起点IP、送信者のドメイン、受信者アドレス、送信者アドレスによる要約を確認できます。遅延のキューではエラーのタイプからも確認できます。要約の項目を選択すると、メッセージペインで、メッセージのエンベロープ情報の詳細を確認できます。
+
+メッセージペインでは、要約ペインで選択した検索フィルター結果であるメッセージの詳細なエンベロープ情報が表示されます。
+
+以下のメールボックスキューの動作は、キューにあるすべてのメッセージに適用されます。
+
+* *保持* で、一時的に配信停止したいメッセージを選択します。受信、アクティブ、遅延、破損のメッセージを、この保持キューに移動できます。管理者がマニュアルで別のキューに移さない限り、保待キューに留まります。
+
+* *解放* で、保持キューにあるメッセージをすべて解放します。こうしたメッセージは遅延キューに移されます。
+
+* *キューへの再配置* で、閲覧中のキューにあるメッセージをすべて再配置します。メッセージの再配置は、設定の問題で遅延していたメッセージを、その問題が修正された後に送信するために使うことができます。メッセージは再度判定されるため、これまでのペナルティはリセットされます。
+
+* *削除* で、閲覧中のキューにあるメッセージをすべて削除します。
+
+Zimbra MTA、PostfixキューファイルIDは再利用されます。メッセージの再配置や削除では、キューIDではなく、メッセージのエンベロープ情報をメモしてください。メールキューのリフレッシュ時、キューIDが別のメッセージに再利用されることが起こり得ます。
+
+=== メッセージキューをフラッシュする
+
+サーバーのすべてのメッセージは、フラッシュできます。メールキューのツールバーからフラッシュをクリックすると、配信はただちに、遅延キュー、受信キュー、アクティブキューにある全メッセージについて実行されます。
+
+[[monitoring_mailbox_quotas]]
+== メールボックスの割り当て容量を監視する
+
+メールボックスの割り当て容量は、ユーザーアカウントにある、メールメッセージ、添付ファイル、カレンダー予定、タスクに適用されます。この上限に達すると、全メールメッセージは拒否されます。ユーザーは、アカウントからメールを削除して、ゴミ箱を空にすることも含めて、容量を下回らせる必要があります。あるいは、管理者が上限を引き上げるという選択肢もあります。
+
+=== 割り当て容量を閲覧する
+
+管理コンソールの *サーバー統計* から、個々のアカウントのメールボックスの割り当て容量を確認できます。メールボックスの割り当て容量ページでは、アカウントごとのメールボックスのサイズと使用中の容量を簡単に確認できます。
+
+管理コンソール: ::
+*ホーム > 監視 > サーバー統計*
+
+// begin list
+. 統計を確認したい *_サーバー名_* を選択します。
+. ナビゲーションペインにて、*メールボックスの割り当て容量* を選択します。メールボックスの割り当て容量ページに以下の情報が表示されます。
+* 割り当て容量のカラムは、アカウントに割り当てられているメールボックスの容量を表します。割り当て容量は提供サービスまたは各アカウントに設定できます。
+* メールボックスのサイズのカラムは、現在使用中のディスク容量を表します。
+* 使用中の割り当て容量のカラムは、使用されている容量の割合を表します。
+
+=== 割り当て容量を増減させる
+
+提供サービスまたは各アカウントから、容量のしきい値を設定できます。設定すると、到達時、メールボックスの割り当て容量が上限に近い旨を知らせる警告メッセージがユーザーに自動送信されます。
+
+管理コンソール: ::
+*ホーム > 設定 > 提供サービス -> _提供サービス名_ -> 詳細設定* +
+*ホーム > 管理 > アカウント -> _アカウント名_ -> 詳細設定*
+
+// list
+. 「割り当て容量」のセクションまでスクロールダウンします。
+. 割り当て容量設定を変更します。
+. *保存* をクリックします。
+
+== MobileSyncの統計を閲覧する
+
+管理コンソールの監視セクションにある *MobileSync統計* ページには、{product-name}のシステム上で現在接続中のActiveSync端末数が表示されます。
+
+== 認証の失敗を監視する
+
+辞書攻撃や分散攻撃を防ぐために、`zmauditwatch` を設定できます。このスクリプトでは、更に高度な攻撃を検出しようとしています。そのため、認証の失敗が起きている場所とその頻度を、Zimbraメールボックスサーバーの全アカウントについて確認します。そして、管理者のメールボックスに警告通知を送信します。
+
+認証の失敗の確認タイプ
+
+* *IP/アカウントのハッシュ確認* -- デフォルトでは、IP/アカウントの組み合わせで60秒以内に10回、認証が失敗したら警告メールを送信します。
+
+* *アカウント確認* -- デフォルトでは、IPアドレスを問わず60秒以内に15回、認証が失敗したら警告メールを送信します。この確認では、特定のアカウントへのハイジャックベースの分散攻撃を検出しようとしています。
+
+* *IP確認* -- デフォルトでは、あるアカウントを問わず60秒以内に20回、認証が失敗したら警告メールを送信します。この確認では、複数アカウントをまたいだ特定のホストベースの攻撃を検出しようとしています。
+
+* *完全な認証失敗の確認* -- デフォルトでは、IPアドレスとアカウントを問わず、60秒以内に1000回、認証が失敗したら警告メールを送信します。デフォルトは、メールボックスサーバーにあるアクティブアカウントの1%になるように、修正する必要があります。
+
+メール警告のトリガーとなるデフォルト値は、以下のzmlocalconfigパラメーターで変更します。
+
+* IP/アカウントハッシュ値は、`zimbra_swatch_ipacct_threshold` を変更します。
+* アカウント確認には、 `zimbra_swatch_acct_threshold` を変更します。
+* IP確認には、 `zimbra_swatch_ip_threshold` を変更します。
+* 完全な認証失敗の確認には、
+  `zimbra_swatch_total_threshold` を変更します。
+
+`zimbra_swatch_notice_user` には、警告を受け取る必要のあるメールアドレスを設定します。
+
+== ログファイルを閲覧する
+
+{product-name} の動作やエラーは、syslogデーモン経由で統合されたシステムログとローカルファイルシステム上のZimbra専用ログファイルに記録されます。以下のログファイルがプライマリログです。調査やトラブルシューティングに使用されます。
+{product-name} の動作が記録されるローカルログは `/opt/zimbra/log` ディレクトリにあります。
+
+* *audit.log* -- このログには、ユーザーと管理者の、認証アクティビティ情報とログインの失敗が入ります。加えて、設定の変更をトラッキングできるように管理者によるアクティビティも入ります。
+
+* *clamd.log* -- このログには、ウイルス対策アプリclamdのアクティビティが入ります。
+
+* *freshclam.log* -- このログには、clamdのウイルス定義更新に関するログ情報が入ります。
+
+* *mailbox.log* -- このログは、mailboxdのlog4jサーバーログで、メールボックスサーバーのログが入ります。これには、メールボックスストア、LMTPサーバー、IMAPとPOPサーバー、Indexサーバーが含まれます。
+
+* *myslow.log* -- このスロークエリーログには、実行に `long_query_time` 以上の秒数がかかった、メールボックスサーバーの全SQL文が入ります。
++
+[NOTE]
+`long_query_time` は `/opt/zimbra/conf/my.cnf` 内に定義されています。
+
+* *spamtrain.log* -- このログには、cronから定期的にスケジュールされた `zmtrainsa` の実行中の出力が入ります。
+
+* *sync.log* -- このログには、{product-name}
+のモバイルシンク動作についての情報が入ります。
+
+その他のログ
+
+* */opt/zimbra/jetty/logs/* -- ここにJetty固有のアクティビティが記録されます。
+
+* */opt/zimbra/db/data/<hostname>.err* -- メッセージストアデータベースのエラーログです。
+
+* */opt/zimbra/logger/db/data/<hostname>.err* -- Loggerデータベースのエラーログです。
+
+システムのsyslogに記録される{product-name} のアクティビティ
+
+* */var/log/zimbra.log* -- Zimbraのsyslogで、Zimbra MTA(Postfix、amavisd、迷惑メール対策、ウイルス対策)、Logger、認証(cyrussasl)、ディレクトリ(OpenLDAP)のアクティビティの詳細が分かります。デフォルトでは、LDAPのアクティビティは `zimbra.log` にログ出力されます。
+
+=== Syslog
+
+{product-name} は、システムのsyslogデーモンを修正して、メールとローカルsyslogファシリティのデータを `/var/log/zimbra.log` に取得するようにしています。この修正により、syslogdが、{product-name} コンポーネントであるPostfix、Amavis、ClamAV、mailboxd、zmconfigd、Loggerから、 データを取得できます。SNMPモジュールはログファイルのデータを使用して、致命的なエラー用のトラップを作成します。zmloggerデーモンも、このファイルにあるデータを集めて、管理コンソールから {product-name} の使用率の統計を提供できるようにしています。
+
+デフォルトでは、mailboxdは出力内容を
+`/opt/zimbra/log/mailbox.log` にはくように設定されています。mailboxdがcentralizedsyslogdインフラを利用できるように、グローバルに、またはサーバーで下記を実行します。
+
+[source,bash]
+----
+zmprov mcf zimbraLogToSysLog TRUE
+----
+
+=== log4jを使用し、ログ情報をカスタムに設定する
+
+{product-name} サーバーは、ログマネージャーに `log4j` のJavaログパッケージを使用しています。デフォルトでは、 `log4j` にローカルシステムへログ出力させるように設定しています。他の場所に直接出力するように `log4j` を設定できます。`log4j` の利用について詳細は、`log4j` のウェブサイト
+https://logging.apache.org/log4j/2.x/[Log4j website] を確認してください。
+
+{product-abbrev}は、log4jの変更をチェックしません。全アカウントのLoggerを削除し、 `/opt/zimbra/conf/log4j.properties` 内にリロードするには、 `zmprov
+resetAllLoggers` コマンドを使用します。
+
+=== ログの詳細レベル
+
+デフォルトのログレベルは、INFO、WARNING、ERROR、FATALで作成されるログを含めるように設定されています。問題が発生し始めたら、DEBUGやTRACEのレベルを有効にできます。
+
+ログのレベルを変更するには、`log4j` のプロパティ、
+`log4j.properties` 、 `log4j.logger.zimbra` を編集します。
+
+DEBUGを有効にする場合、特定のカテゴリをデバッグすることもできます。例えば、POP動作に関するデッバグ情報を確認するには、
+`logger.zimbra.pop=DEBUG` を使用します。
+
+`log4j` 内にあらかじめ定義されているカテゴリ:
+
+[cols="2m,3",options="",]
+|====================================================
+|zimbra.account |アカウントの操作
+|zimbra.acl |ACLの操作
+|zimbra.backup |バックアップと復元
+|zimbra.cache |Inmemoryのキャッシュ操作
+|zimbra.calendar |カレンダーの操作
+|zimbra.dav |DAVの操作
+|zimbra.dbconn |データベースの接続トレース
+|zimbra.extensions |サーバー拡張のローディング
+|zimbra.filter |メールのフィルターリング
+|zimbra.gal |GALの操作
+|zimbra.imap |IMAPプロトコルの操作
+|zimbra.index |Indexの操作
+|zimbra.io |ファイルシステムの操作
+|zimbra.ldap |LDAPの操作
+|zimbra.lmtp |LMTPの操作(受信メール)
+|zimbra.mailbox |基本的なメールボックス操作
+|zimbra.misc |その他
+|zimbra.op |メールボックス状態の変更
+|zimbra.pop |POPプロトコルの操作
+|zimbra.redolog |Redoログの操作
+|zimbra.security |セキュリティイベント
+|zimbra.session |ユーザーのセッショントラッキング
+|zimbra.smtp |SMTPの操作(送信メール)
+|zimbra.soap |SOAPプロトコルの操作
+|zimbra.sqltrace |SQLのトレース
+|zimbra.store |メールストアのディスク操作
+|zimbra.sync |シンククライアントの操作
+|zimbra.system |スタットアップ/シャットダウン等のシステムメッセージ
+|zimbra.wiki |Wikiの操作
+|zimbra.zimlet |Zimletの操作
+|====================================================
+
+[NOTE]
+ログレベルへの変更は直ちに適用されます。
+
+.ログイベント
+[cols="1s,1,1,1,6",options="header",]
+|=======================================================================
+|レベル |ローカル? |Syslog |SNMPトラップ |使用時
+
+|FATAL |Y |Y |Y |
+アプリケーションを停止するか大多数のユーザーに影響が及ぶほどのかなり深刻なエラーイベントが指定されます。例えば、MariaDBのデータベースに接続できない等。
+
+|ERROR |Y |Y |N |
+アプリケーションが継続実行できるか特定のユーザーのみに影響があるようなエラーイベントが指定されます。例えば、シングルメールボックスのインデックスの破損や、メールボックスからメッセージを削除できない等。
+
+|WARN |Y |N |N |
+潜在的な問題になりそうな状況であるものの回復が可能または無視しても良いものが指定されます。例えば、ユーザーログインの失敗等。
+
+|INFO |Y |N |N |
+アプリケーションの進捗や基本的なトランザクションレベルのロギングを知らせる情報メッセージが指定されます。例えば、サーバーの起動、メールボックスの作成・削除、アカウント作成等。
+
+|DEBUG |Y |N |N |
+お客様が問題をデバッグするのに一般的に役立つようなイベント。
+
+|=======================================================================
+
+※ いくつかの重要でないメッセージ、例えばサービスの開始メッセージ、はトラップを作成します。
+
+=== プロトコルトレース
+
+プロトコルのトレースは以下のログカテゴリで使用できます。
+----
+zimbra.smtp
+zimbra.lmtp
+zimbra.soap
+zimbra.imap
+zimbra.imap-client
+zimbra.pop
+zimbra.pop-client
+----
+
+=== mailbox.logを確認する
+
+`mailbox.log` ファイルには、メールボックスサーバー上で実行されたアクション、例えば、認証セッション、LMTP、POP3、IMAP、Indexサーバーを含めて、全アクションが入ります。 `mailbox.log` を確認して、サーバーの健康状態のチェックや、問題の識別に役立てます。
+
+`mailbox.log` は、有効・無効なログイン試行、アカウントのアクティビティ、例えば、メールオープン、アイテムの削除や作成、新着メッセージのインデックス化等と、サーバーの開始・停止などのサーバーのアクティビティを記録します。メールサーバー上のアクティビティの進捗は、INFOとして記録されます。期待したアクティビティ結果にならずエラーが発生した場合、エクセプションがログに記録されます。
+
+シングルアカウントに、ログオプションをセットアップして、１ユーザー分のアカウントアクティビティをトレースできます。これにより、無関係のアカウント分のログメッセージで、mailbox.logがいっぱいにならずに済みます。
+詳細は、<<command_line_utilities,コマンドラインのユティリティ>>にある `zmprov` のその他のセクションを参照してください。
+
+*ログのパターン*
+
+デフォルト設定では、 `mailbox.log` のログメッセージは以下の Log4j パターンを使用しています：
+====
+%d %-5p [%t] [%z] %c{1} - %m%n
+====
+このパターンではデータが6ブロックとなります：
+
+* 日時 (実例: `2018-01-22 19:23:07,100`)
+* ログレベル (実例: `INFO`)
+* スレッド名 (実例: `[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`, `[Index-9]`, など)
+* {product-name} の関連
+* コンポーネント名 (実例： `soap`, `mailbox`, `mbxmgr`, など)
+* ログメッセージ *注意:* ログメッセージが複数行で記録される場合があります。ログメッセージに例外が含まれている場合、スタックトレースは必ずエラーメッセージの下に新しい行で記録されます。
+
+Log4j パターンの詳細につきましては、 https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html[Log4j PatternLayout documentation] をご参照ください。
+
+*mailbox.log のスレッド名*
+
+内部コンポーネントを特定するため、mailbox.log のスレッド名には特定のプレフィックスが付けられます。ほとんどのスレッドは次の条件で指定されます： "*{スレッドのプレフィックス}-{スレッド番号}*" または "*{スレッドのプレフィックス}-{スレッド番号}:{url}*".
+
+なお、{product-name} にはこれらの *{スレッドプレフィックス}* 値を使用しております： `btpool`, `pool`, `LmtpServer`, `ImapServer`,`ImapSSLServer`, `Pop3Server`, `Pop3SSLServer`, `ScheduledTask`, `Timer`, `AnonymousIoService`, `CloudRoutingReaderThread`, `GC`, `SocketAcceptor`, `Thread`, `qtp`.
+
+`qtp` のプレフィックスとなるスレッドは Jetty の `QueuedThreadPool` により発行しており、異なるネーム条件があります： "*qtp{ハッシュコード}-{スレッド番号}:{url}*" *{ハッシュコード}* はスレッドのオーナーとなる `QueuedThreadPool` のインスタンスのハッシュコード値となります。（詳細につきましては Java プラットフォームのドキュメンテーションから https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode()[Object::hashCode] をご参照ください)
+
+スレッド名の *{スレッド番号}* の数はスレッドファクトリ毎に一つずつ増加していきます。`mailboxd` プロセスが停止、または再起動された場合、スレッド番号がリセットされます。
+
+以下の事例のように、SOAPリクエストを処理するスレッドの記録するログメッセージは、スレッド名に送信したリクエストのURLを *{url}* に記録する場合が多いです。
+
+image:ja_jp/zwclogmessage.png[Mailbox Log Entry for SOAP]
+
+
+{product-name} の既知のバグにより、以下の事例のようにスレッド名の *{url}* 部分に、プロトコルを特定できるプロトコル情報が重複して含まれる場合があります。
+
+`[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`
+
+* mailbox.log で {product-name} の関連*
+
+ログパターンの `[%z]` セクションが {product-name} の関連性を表しており、`key=value`で属性と値のペアを「;」の文字で区切っています。値に「;」文字が含まれている場合、「;;」として記入されます。たとえば、browser UserAgent のストリングは「;」の文字がよく使われています。実例： "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"　mailbox.log ではこの UserAgent のストリングは以下のように表示されます：
+
+image:ja_jp/doublesemicolon.png[ua value with double semi-colon]
+
+現在、以下の属性と値のペアがサポートされており、異なる順番や組み合わせでログメッセージに記録される場合があります。
+
+* `ip` -- リクエストする TCP/IP クライアントの IP アドレス
+* `oip` -- 送信元の IP アドレス。NGINX のプロキシ経由でリクエストを送信した場合、この値はクライアントアプリのIPアドレスが含まれますが、`ip` の属性値はプロキシサーバの IP アドレスとなります。
+* `cid` -- 順番に増加するサーバのコネクションID - 特定のコネクションを監視する場合に役立ちます。
+* `id` -- ターゲットアカウントの ID 
+* `name` -- ターゲットアカウントの名前 (メールアドレス)
+* `aid` -- 認証されたアカウント ID。認証したアカウントとターゲットアカウントが異なる場合にのみ表示されます。
+* `aname` -- 認証されたアカウント名。認証したアカウントとターゲットアカウントが異なる場合にのみ表示されます。
+* `mid` -- リクエストしたメールボックスの ID。リクエストが mailbox と関連する場合のみ表示されます。
+* `ua`  -- クライアントのアプリケーション名 (ユーザーエージェントのこと)
+* `via` -- リクエストのプロキシチェインにあるIPアドレスとユーザーエージェントのリスト
+* `soapId` -- 特定の SOAP リクエストによるプロキシホップを監視するための ID 
+* `msgid` -- 処理中のメッセージの Message-ID ヘッダー値
+* `ds` -- 処理中のデータソース名
+* `port` -- クライアントが接続されたサーバポート番号
+* `oport` -- リクエストが送信された元ポート番号
+* `oproto` -- リクエスト元のプロトコル。これはユーザーの代理で SOAP リクエストを送信する内部コンポーネントによって行える場合があります。（例：MTA）
+
+以下の事例では、2017年10月25日の00:28にて、IP アドレス `222.173.186.17` を持つ POP3 クライアントが {product-name} サーバへ接続し、リクエストが IP `10.1.1.136` を持つローカルプロキシサーバ経由で送信されたことを示しています：
+
+image:ja_jp/poplogmessage.png[Mailbox Log Entry for POP]
+
+以下の事例では、AquaMail のモバイルアプリを使用する `user1@mydomain.com` の `IMAP STATUS` リクエストが失敗したことを示しています。ユーザー端末の IP アドレスは `72.83.144.255` (`oip` に記録しており) となっています。リクエストが {product-name} nginx proxy から IMAP サーバへ送信され、プロキシの IP アドレスが `10.4.4.138` （`ip` および `via` に記録されている) となっています。
+
+image:ja_jp/imaplogmessage.png[Mailbox Log Entry for IMAP]
+
+以下の事例では、LMTP サーバにメッセージ送信を示しています。このログメッセージの IP アドレスはローカルネットワークで実行している {product-name} MTA のものとなります。
+
+image:lmtplogmessage.png[Mailbox Log Entry for LMTP]
+
+以下の事例では、`test@mydomain.net` のメールボックスからメッセージ ID 462 を削除している `MailboxPurge` スレッドの処理を示しています。このログメッセージは外部のリクエストではなく、内部プロセスで行うため、ログメッセージに `ip`, `oip`, `port` および `via` の値が含まれていません。
+
+image:shortlogmessage.png[Mailbox Log Entry for Purge]
+
+==== ハンドラーエクセプションとスタックトレース
+
+アクティビティの進行中にエラーが発生したとき、「handler exception(ハンドラーエクセプション)」がログレコードの最後に追加され、通常のフローを中断したプロセスの実行中に起きたイベントを、管理者に知らせます。何らかのエラーが検出されたというサインです。
+
+.ハンドラーエクセプション
+====
+[source,subs=+quotes]
+----
+007-06-25 00:00:10,379 INFO [btpool0-1064] [name=nriers@example.com;mid=228;ip=10.2.3.4;ua=zimbra Desktop/0.38;] SoapEngine - *handler exception*
+----
+====
+
+時折、スタックトレースが、エクセプションの通知後に表示される場合があります。スタックトレースは、Zimbraの *mailboxd* サービスにあるスレッドと監視の情報をレポートします。この情報がデバッグに役に立ちます。トレースには、エラーが発生した場所が表れるからです。たいていは、スタックの最後の数件のエントリが問題の原因を示します。 *caused by* descriptor がログの行に含まれているなら、これが根本原因です。エラーは「501 bad address syntax」のせいで発生しました。
+
+.スタックトレース
+====
+[source,subs=+quotes]
+----
+com.example.cs.mailbox.MailServiceException: *Invalid address*: Jon R
+at com.example.cs.mailbox.*MailServiceException.internal_SEND_FAILURE* (MailServiceException.java:412)
+at com.example.cs.mailbox.*MailServiceException.SEND_ABORTED_ADDRESS_FAILURE* MailServiceException.java:416)
+...
+at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:442)
+
+*Caused by*: com.example.cs.mailbox.MailSender$SafeSendFailedException: 501 Bad address syntax; chained exception is: com.sun.mail.smtp.SMTPAddressFailedException: 501 Bad address syntax
+at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1196)
+at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:584)
+at javax.mail.Transport.send0(Transport.java:169)
+at javax.mail.Transport.send(Transport.java:98)
+at com.example.cs.mailbox.MailSender.sendMessage(MailSender.java:409)
+at com.example.cs.mailbox.MailSender.sendMimeMessage(MailSender.java:262)
+... 30 more
+----
+====
+
+==== Mailbox ログファイル
+
+`mailbox.log` ファイルは毎日ローテーションされます。Mailboxのログファイルは
+`/opt/zimbra/log` に保存されます。これまでの `mailbox.log` ファイル名には、そのファイルの作成日が付加されます。日付のないログファイルが現在のログファイルです。これらログファイルは、バックアップや削除が可能です。
+
+==== メールの問題をトラブルシューティングする
+
+エラーのため、`mailbox.log` を確認するには、問題が起こっているメールアドレスやサービス名を検索します。また、WARNやERRORのログレベルを確認し、エラーメッセージの内容を確認します。エラーを探すときは、レコードを確認し、問題が記録される前に起こったイベントをトレースします。
+
+==== システムのクラッシュ
+
+システムクラッシュ時、スタートアップのメッセージを調べ、その後スタートアップメッセージ日付より前にあるエラーを探します。以下の例では2007年6月17日に発生したメモリ不足のエラーを示しています。
+
+.スタートアップメッセージ
+====
+[source,subs="quotes"]
+----
+2007-06-25 01:56:18,725 INFO [main] [] soap - Servlet SoapServlet starting up
+----
+====
+
+スタートアップメッセージの前にあるエラーを探します。
+
+.エラーメッセージ
+====
+[source,subs=+quotes]
+----
+2007-06-17 20:11:34,194 FATAL [btpool0-3335] [name=samd@example.com;aname=abcadmin@example.com;mid=142;ip=10.3.4.5;ua=zimbraConnectorForBES/5.0.207;] system - handler exception java.lang.OutOfMemoryError: PermGen space
+----
+====
+
+==== メール配信の問題
+
+"LmtpServer" のサービスを調べます。以下の例では、スタックトレースのレポートに *caused by* として、受信者のアドレスが拒否されたことが説明されています。アドレスは正確でなければならないからです。
+
+.メール送信エラー
+====
+[source,subs=+quotes]
+----
+2007-06-25 10:47:43,008 INFO [*LmtpServer*-250]
+[name=bigen@example.com;mid=30;msgid=<1291804360.35481182793659172.JavaMail.root@example.com>;] *lmtp - rejecting message bigen@example.com: exception occurred*
+com.zimbra.cs.mailbox.MailServiceException: redirect to too failed
+at com.zimbra.cs.mailbox.MailServiceException.internal_SEND_FAILURE (MailServiceException.java:412)
+at com.zimbra.cs.mailbox.MailServiceException.SEND_FAILURE(MailServiceException.java:424)
+at com.zimbra.cs.filter.zimbraMailAdapter.executeActions(zimbraMailAdapter.java:286)
+at org.apache.jsieve.SieveFactory.evaluate(SieveFactory.java:151)
+at com.zimbra.cs.filter.RuleManager.applyRules(RuleManager.java:177)
+at com.zimbra.cs.lmtpserver.zimbraLmtpBackend.deliverMessageToLocalMailboxes(zimbraLmtpBackend.java:325)
+at com.zimbra.cs.lmtpserver.zimbraLmtpBackend.deliver(zimbraLmtpBackend.java:140)
+at com.zimbra.cs.lmtpserver.LmtpHandler.doDATA(LmtpHandler.java:441)
+at com.zimbra.cs.lmtpserver.LmtpHandler.processCommand(LmtpHandler.java:205)
+at com.zimbra.cs.tcpserver.ProtocolHandler.processConnection(ProtocolHandler.java:231)
+at com.zimbra.cs.tcpserver.ProtocolHandler.run(ProtocolHandler.java:198)
+at EDU.oswego.cs.dl.util.concurrent.PooledExecutor$Worker.run(Unknown Source)
+at java.lang.Thread.run(Thread.java:619)
+
+*Caused by:*
+com.zimbra.cs.mailbox.MailSender$SafeSendFailedException: 504 <too>: Recipient address rejected: need fully-qualified address ;
+chained exception is: com.sun.mail.smtp.SMTPAddressFailedException: 504 <too>: Recipient address rejected: need fully-qualified address
+at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1196)
+at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:584)
+at javax.mail.Transport.send0(Transport.java:169)
+at javax.mail.Transport.send(Transport.java:120)
+at com.zimbra.cs.filter.zimbraMailAdapter.executeActions(zimbraMailAdapter.java:281)
+... 10 more
+----
+====
+
+==== アカウントエラー - ログインのエラー
+
+`mailbox.log` は、IMAP、POP3、ZWC上で試行された成功ログイン・失敗ログインをすべて記録します。ログインエラーを探すなら、
+"Auth" の検索から始めます。以下の例は、IPアドレス10.4.5.6から誰かが、Zimbraウェブクライアントに管理者としてログインを試みたこと、Windows OS上でFirefoxを使用したことが分かります。ログインは却下されました。そのアカウントが管理者アカウントではなかったためです。
+
+.アカウントエラー - ログインのエラー
+====
+[source,subs=+quotes]
+----
+2007-06-25 09:16:11,483 INFO [btpool0-251] [ip=10.4.5.6;ua=zimbraWebClient - FFX.X (Win);] SoapEngine - *handler exception*
+com.zimbra.common.service.ServiceException: permission denied: not an admin account
+at com.zimbra.common.service.ServiceException.PERM_DENIED(ServiceException.java:205)
+at com.zimbra.cs.service.admin.*Auth*.handle(*Auth*.java:103)
+----
+====
+
+==== アカウントエラー - IMAP・POP関連
+
+IMAPやPOPの問題のためにログを探しているなら、
+"ImapServer/Pop3Server" を調べます。以下の例は、sires@example.comの接続試行しようとして起こった致命的なIMAPサーバーエラーを表しています。
+
+.アカウントエラー - IMAPエラー
+====
+[source,subs=+quotes]
+----
+mailbox.log.2007-06-19:2007-06-19 15:33:56,832 FATAL [*ImapServer*-2444] [name=sires@example.com;ip=127.0.0.1;] system - Fatal error occurred while handling connection
+----
+====
+
+== メッセージのヘッダーを読む
+
+各メッセージには、送信元からあて先までの、メールの道のりを表すヘッダーが含まれています。この情報は、メッセージに問題があるときにメッセージのルートをトレースするのに使用します。ZimbraのメッセージヘッダーはZimbraのウェブクライアントのメッセージ表示で閲覧できます。メッセージを右クリックして、 *元のメッセージを表示* を選択します。
+
+
+以下の内容がメッセージヘッダーに含まれています。
+
+* *Date* -- メッセージが送信された日時です。時間を指定するとき、メッセージ検索対象の開始と終了を入力して期間を指定できます。
+
+* *From* -- 送信者の名前とメールアドレス。
+
+* *To* -- 受信者の名前とメールアドレス。プライマリ受信者を示します。
+
+* *Message-ID* -- メールのルートのトレースに使用する一意の番号。
+
+* *In-Reply-To* -- 返信で返されるメッセージのメッセージIDです。関連メッセージのリンクに使用されます。
+
+* *Received: from* -- メッセージを送信したホスト名とIPアドレス。MTAからLMTPへのReceived: from情報と、ローカルホストからのReceived: from情報が表示されます。
+
+== 破損したメールボックスのインデックスを修正する
+
+メールメッセージと添付ファイルは、メールボックスへ追加される前に自動的にインデックス化されます。各メールボックスには紐づくインデックスファイルがあります。このインデックスファイルは、メールボックスからの検索結果を取得するのに必要です。
+
+メールボックスのインデックスファイルが破損した場合や誤って削除された場合、管理コンソールからメッセージを再インデックスすることが可能です。
+
+インデックス破損時、アカウント上でテキスト検索が失敗してもエラーにならないことがあります。インデックス破損の判別をするのにテキスト検索失敗のレポートは、あてにできません。破損インデックスについて、メッセージのインデックスのログを監視する必要があります。サーバーが破損インデックスを検知すると、メッセージが、WARNのログレベルでZimbraのmailbox.logにログ出力されます。ログメッセージは *Possibly corrupt index* で始まります。このメッセージが表示されたら、管理者が問題を修正する必要があります。問題の修正とは、メールボックスの再インデックスである場合が多いです。
+
+メールボックスの内容の再インデックスに必要な時間は、メールボックス内のメッセージ数によります。再インデックスが実行中もユーザーはメールボックスにアクセスできますが、インデックスされていないメッセージは検索結果に返せないため、検索結果が不完全である可能性があります。
+
+=== インデックスが破損しているかどうか確認する
+
+特定のメールボックスのインデックスに対するサニティーチェックには、コマンド `zmprov
+verifyIndex` を実行します。
+
+[source,bash]
+----
+zmprov verifyIndex <user@example.com>
+----
+
+問題が検知されると、失敗ステータスが返されるので、インデックスに対する修復を行ないます。
+
+=== 破損されたインデックスを修正・再インデックスする
+
+コマンド `reIndexMailbox` を使用して、インデックスの修正と再インデックスをします。
+
+[source,bash]
+----
+zmprov reIndexMailbox <user@example.com> start
+----
+
+_started_ のステータスが返されます。
+
+== SNMPの監視と設定
+
+=== SNMPの監視ツール
+
+サーバー監視用ソフトウェアを実装して、システムログ、CPUとディスク使用容量、その他ランタイム情報を監視したいことがあるかもしれません。
+
+{product-name} はSNMPトラップの作成のために、swatchを使用してsyslogの出力を監視します。
+
+=== SNMPの設定
+
+{product-name} には、SNMP監視のインストールパッケージが含まれています。このパッケージは、{product-name}設定の部分をなす、各サーバー({product-name}、OpenLDAP、Postfix)で実行する必要があります。
+
+トラップの送信先とするべき宛先ホストは、SNMP設定だけです。
+
+=== SNMPトラップを作成するエラー
+
+サービスの停止あるいは起動時、 {product-name} エラーメッセージがSNMPのトラップを作成します。サードバーティ製のSNMP監視ソフトウェアを使用してそのメッセージを取得し、選択したメッセージをpagerや他の警告システムに転送することができます。
+
+== MariaDBを確認する
+
+MariaDBのデータベース健康の検証するためのチェックが毎週、自動で行なわれます。このチェックに約1時間かかります。エラーが見つかると、管理者のアカウントにレポートが送信されます。MariaDBのチェックを実行するレポート名は *zmbintegrityreport* で、Crontabは週に一度このレポートを実行するように自動設定されます。
+
+[NOTE]
+MariaDBデータベースのチェック時、このレポートの実行でI/Oを膨大に消費する可能性があります。通常の場合は問題になりませんが、運用に影響が出るようであれば、zmbintegrityreportの実行頻度を変更できます。詳細は <<zcs_crontab_jobs,{product-abbrev} Contrab Jobs>>を参照してください。
+
+[[checking_for_updates]]
+== Zimbra Collaborationのソフトウェア更新を確認する
+
+{product-name}をインストールすると、{product-name}のソフトウェア更新機能は、日に1度最新の{product-name}バージョンを確認するように自動設定されます。更新があると、管理コンソールの *サーバー更新* に設定されているメールアドレスに通知メッセージが送信されます。
+
+{product-name}が更新を確認した日時は *更新* のタブに保存され、管理者が{product-name}バージョンを更新するまでメール通知が継続的に発送されます。更新のメール通知を受信したくない場合、 *更新の入手が可能になったときに通知メールを送信* のオプションを無効にします。
+
+以下の内容も設定可能です。
+
+* *更新をチェックするサーバー* -- 利用できるサーバーのリストが表示されますが、サーバーは一つだけ設定できます。選択されたサーバーは更新を確認し、www.zimbra.comからの更新レスポンスはLDAPに保存されます。
+
+* *更新をチェックする間隔* -- デフォルトは日に1度です。頻度の間隔は時間、分、秒単位で変更できます。バージョン更新の確認タスクはcron jobに設定されます。頻度の間隔が2時間未満の場合、crontabファイルを直接、修正する必要があります。
+
+* *更新URL* -- バージョン更新を確認するためにサーバーが接続するURLのアドレスです。{product-name}サーバーがアップデートを確認する場合、バージョン、プラットフォーム、ビルド番号をZimbraへ送信します。通常このURLは変更されません。
+
+* 更新の通知を受ける場合、*更新の入手が可能になったときに通知メールを送信* のオプションを有効にし、送信先と送信元のアドレスを入力します。デフォルトのアドレスは管理者のアドレスです。
+
+* 汎用的なメールが作成されます。メールの件名と内容は変更できます。
+
+* サーバーが指定されたURLをポーリングすると、その応答が表示されます。
+
+== Outlook用Zimbraコネクタを更新する
+
+Outlook用Zimbraコネクタ(ZCO)のmsiファイルは、管理コンソールにあるZimbraユーティリティのダウンロードページから入手できます。{product-abbrev} バージョンが新しくなる前にZCOの新バージョンがリリースされると、管理コンソールから新しいほうのZCOのmsiファイルを{product-abbrev}サーバーにアップロードできます。アップロードしたファイルは
+`/opt/zimbra/jetty/webapps/zimbra/downloads` にアップロードされます。
+
+管理コンソール: ::
+*ホーム > ツール、移行 > クライアントのアップロード*
+
+. アクセス可能なコンピュータに、管理コンソールの *クライアントのアップロード* ページから新しいZCOのファイルをダウンロードします。
+
+.  *参照* のボタンをクリックし、アップロードするZCOファイルを選択します。
+
+. {product-abbrev}を再起動します。
++
+[source,bash]
+----
+zmcontrol restart
+----
++
+または下記を実行します。
++
+[source,bash]
+----
+/opt/zimbra/libexec/zmupdatedownload
+----
+
+`downloads/index.html` のファイルは、最新のZCOクライアントバージョンで更新されます。この新しいファイルは管理コンソールの *ホーム > ツール、移行 > ダウンロード* のページからダウンロードできます。
+
+[NOTE]
+サーバーを再起動しないと、ZimbraユーティリティのダウンロードページにあるZCOのダウンロードリンクは、新しいダウンロード対象バージョンを選択しません。
+
+== {product-name} より送信される通知や警告
+
+=== サービスステータス変更の通知
+
+サービスの停止あるいは再開時、この通知が送信されます。
+
+==== サーバー開始の通知メッセージ
+
+----
+件名: Service <サービス名> started on <Zimbraホスト名>
+
+本文: Service status change: <Zimbraホスト名> <サービス名> changed from stopped to running
+----
+
+==== サーバー停止の通知メッセージ
+----
+件名: Service <サービス名> stopped on <Zimbraホスト名>
+
+本文: Service status change: <Zimbraホスト名> <サービス名> changed from running to stopped
+----
+
+==== ディスク利用状況の通知
+
+ディスク空き容量が少なくなった場合、管理者のアカウントに警告が通知されます。デフォルトでは、ディスクの使用容量が85%に達した場合、注意の警告が送信され、ディスクの使用容量が95%に達した場合、重大な警告が送信されます。
+
+----
+件名: Disk <ボリューム名> at ##% on <Zimbraホスト名>
+
+本文: Disk warning: <Zimbraホスト名> <ボリューム名> on device <デバイス名> at ##%
+----
+
+=== mysqldが重複のプロセスに実行している際の通知
+
+データベースの破損の原因になりそうなケースを検出するmysqldのプロセスが実行中かどうかを確認するスクリプトが実行されます。1つ以上のmysqldプロセスが実行中だとわかると、メールが作成されます。
+
+----
+件名: ZCS: Duplicate mysqld processes detected!
+
+本文: PID:$pid PPID:$ppid PGRP:$pgrp
+
+CMD: $cmdline
+
+More then $maxcnt mysqld processes are running Parent processes
+include: $procs This should be investigated immediately as it may lead to
+database corruption
+----
+
+=== SSL証明書期限切れの通知
+
+毎月初日にリポートが実行され、来たる30日以内に有効期限が満了する証明書を警告します。
+
+----
+件名: ZCS: SSL Certificates approaching expiration!
+
+本文: The Administration Console and CLI Certificate Tools guide provides
+instructions on how to replace you self-signed or commercial certificate.
+
+https://wiki.zimbra.com/index.php?title=Administration_Console_and_CLI_Certificate_Tools SSL Certificate expiration checked with $0 on <Zimbraホスト名>.
+----
+
+=== Daily report (日報)の通知
+
+loggerパッケージがインストールされると、日次のメールレポートがcrontabに自動スケジュールされます。このレポートは毎日管理者のメールボックスに送信されます。
+
+----
+件名: Daily mail report for <日>
+
+<日次のレポートデータ>
+----
+
+=== データベースの統合性チェック通知
+
+crontabに自動スケジュールされるzmdbintegityreportを週次ベースで実行することで、MariaDBデータベースをチェックします。レポートは自動的に管理者のメールボックスに送信されます。
+
+----
+件名: Database Integrity check report for <Zimbraホスト名>
+
+本文: Generating report can't run $cmd: $!
+
+Database errors found.
+
+$cmd --password=XXXXXXXX
+
+<cmd output>
+
+No errors found
+
+command failed $!
+----
+
+=== バックアップの完了通知
+
+実行するバックアップタイプの設定時、そのバックアップセッション結果の通知メッセージの受信もセットアップできます。
+
+----
+件名: ZCS BackupReport:SUCCESS
+
+本文: Server: <サーバー名>
+
+Type: incremental
+
+Status: completed
+
+Started: Fri, 2012/07/13 01:00:05.488 PDT
+
+Ended: Fri, 2012/07/13 01:10:09.842 PDT
+
+Redo log sequence range: 2 ..  2
+
+Number of accounts: 500
+----

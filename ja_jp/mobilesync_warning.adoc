@@ -1,0 +1,1 @@
+IMPORTANT: これまでのバージョンからのアップグレード/移行で、Zimbraの新規機能であるモバイル同期モジュールの有効化を予定している場合は、重要な情報である https://wiki.zimbra.com/wiki/Zimbra_Next_Generation_Modules/Things_To_Know_Before_Upgrading["Things to Know Before Upgrading"] と https://zimbra.github.io/installguides/8.8.5/jp/single.html#mobile-ng[インストールガイド] を必ず一読するようにしてください。

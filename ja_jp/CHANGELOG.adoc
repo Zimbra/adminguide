@@ -1,0 +1,20 @@
+Zimbra Administration Guide ChangeLog
+=====================================
+
+:website: https://www.zimbra.com
+
+Version 8.8.9
+-------------
+.Additions and changes
+- Added Voice Services section.
+- Added ng-abq & ng-abq-soap Sections provided by Cine @ ZeXtras.
+- Major rewrite of ng-hsm section, added more S3 compliant store types, and
+support for Primary on HSM.
+- General cleanup: added favicon, fixed broken links, spelling and format issues.
+
+Version 8.7
+-----------
+.Additions and changes
+- Initial public source version
+- Bug fixes
+- Numerous changes in formatting for asciidoc conversion.

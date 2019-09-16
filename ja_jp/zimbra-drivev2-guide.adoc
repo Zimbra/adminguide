@@ -1,0 +1,193 @@
+= Zimbra Drive
+
+
+== 要約
+Zimbra Drive v2 は Zimbra ウェブクライアントに関連させた完全なるファイルストレージシステムを提供している新しい Zimbra コンポーネントです。Zimbra Drive v2 は以前のブリーフケース機能の入り変えとなります。
+
+== 機能
+=== フロントエンド
+* ファイルのアップロード、管理、およびダウンロード
+* ファイルを自由に作成できるフォルダー構成で管理する
+* ファイルのプレビュー
+* ファイルを簡単にアクセスできるために「優先」としてマークする
+* ファイルへカスタムのメモ（説明や詳細）を追加する
+* 内部ユーザーへファイルを共有する
+* 外部ユーザー（NYI)へファイルを共有する
+* Zimbra Docs と共通する
+* ファイルの検索
+* フォルダーにベースした移動
+* 早い "stateful" 移動
+
+=== バックエンド
+* 専用の Zimbra ボリュームにファイルを保存できるオプション
+* `zxsuite drive` の CLI
+
+== ブリーフケースと Drive の違いについて
+ファイルストレージ、移動、共有、および削除について、Zimbra Drive v2 は通常のメールボックス運用の動作と異なります。以下に各機能の詳細に具体的の機能、および異なる動作の詳細を確認ください。
+
+== Drive V2 UI
+
+image::drive_ui.png[Zimbra Drive V2 UI]
+
+. アイテムを簡単にアクセスできるオプション;
+. 現在開いているフォルダー（パス内の移動も可能）;
+. 選択したアイテムの詳細を表示する;
+. 新しいアイテム（フォルダー、ドキュメント）の作成、アップロード、および検索の機能;
+. フォルダーのリスト;
+. ファイルのリスト;
+
+== 機能の詳細
+
+=== アップロードとダウンロード
+Drive v2 へファイルをアップロードする場合、ファイルリストの上にある「Upload」ボタンをクリックするか、Drive の画面にファイルをドラグ＆ドロップします。
+
+image::drive_upload.png[Upload a file]
+
+Drive v2 からファイルをダウンロードする場合、ファイルを右クリックし、「Download」をクリックします。
+
+image::drive_download.png[Download a file]
+
+また、ファイルやフォルダーを右クリックし、「Rename」のオプションでファイル名やフォルダー名を変更することも可能です。
+
+=== 移動
+ブリーフケースのアイテムはメールボックスのフォルダーとアイテムに関連していましたが、Drive v2 は異なる専用の内部フォルダー形式と移動を用意しています。Drive v2 のフォルダー移動はメールボックスと同様なフォルダーツリーではなく、UI 上の移動メニューで親のフォルダーを選択し、ファイルリストから移動するフォルダーをダブルクリックします。
+
+image::drive_navigation.png[Navigate through folders and files]
+
+フォルダーにベースした移動以外に、左側に「簡単アクセス」のメニューも提供してますので、以下のようなアイテムを簡単にアクセスできます。
+? "Starred" ? ファイルやフォルダーの右クリックで「Star」を追加したアイテムが表示します;
+? "Recently Edited" ? 最近に編集したアイテムが表示します。最近に編集したアイテム順で表示します;
+? "Shared with me" ? 他のユーザーから共有されたアイテム
+? "Shared by me" ? 他のユーザーへ共有したアイテム
+? "Trash" ? 削除したアイテム
+
+=== フォルダー作成
+Drive v2 でフォルダーを作成するため、ファイルリストの上に「New」のボタンをクリックし、「Folder」を選択します。
+
+image::drive_newfolder.png[Create a new folder]
+
+=== 共有
+メールボックスのアイテム管理と別れているため、Drive v2 のファイルとフォルダーを個別に共有することが可能です。
+共有する際に設定できる権限は "Visualize"（読み込み専用）, "Edit"（書き込み） および "Edit and Share" （書き込みと共有）? なお、Edit と Edit and Share の権限には読み込みの権限がデフォルトで含まれています。
+
+ファイルやフォルダーを共有する場合、共有するアイテムを右クリックし、「Edit Shares」をクリックします。共有先ユーザーのメールアドレスと共有の権限を指定した後、 (+) ボタンをクリックしますと共有のリストへ追加されます。
+
+image::drive_addshare.png[Share an item (folder or file)]
+
+共有の権限を変更、または削除する場合、「Edit Shares」の画面にて、更新するユーザーの権限ドロップダウンメニューに新しい権限を選択するか、ゴミ箱のアイコンでそのユーザーへの共有権限を削除します。
+
+image::drive_editshare.png[Edit an existing share]
+
+なお、Drive v2 の共有権限は「ポジティブ向け」のみなので、アイテムの親に設定した権限より低い権限で共有することができません。例えば、フォルダーに "Edit" の権限が指定している場合、そのフォルダー内のファイルを同じユーザーへ "Visualize" の権限を設定できません。
+
+=== アイテムの削除
+アイテムを削除した場合、Drive v2 のアイテムが他のアイテムと同様に Zimbra の込み箱に入らず、削除対象としてマークされるのみです。
+ファイルやフォルダーに削除対象としてマークする場合、右クリックし、「Mark for Deletion」をクリックします。
+
+image::drive_deletefile.png[Mark an item for deletion]
+
+削除対象としてマークしたアイテムはファイルリストの下にファイル名に線を引いた状態で表示されます。この状態で右クリックして、「Delete Permanently」をクリックするとファイルを完全に削除されます。また、右クリックのメニューから「Restore」をクリックしますと、ファイルに削除対象のマークが消え、ファイル名に引いた線が消えます。
+
+image::drive_restorepermdelete.png[Restore or permanently delete a file]
+
+なお、「Edit」および「Edit and Share」の権限を持つユーザーはアイテムを削除対象としてマークすることが可能ですが、そのアイテムの持ち主のみはアイテムを完全に削除することが可能です。
+
+削除対象としてマークしたアイテムをアクセスできませんので、ユーザーが削除対処のアイテムをアクセスする場合、ポップアップの警告メッセージでアイテムを復元するか、アクセスをあきらめてファイルを削除対象のままに残すように要求します。
+
+=== 詳細情報を表示する
+Drive v2 にあるファイルやフォルダーに関する詳細な情報、可能な操作アクション、および互換性があるファイル（画像、PDF、など）のプレビューを特定の詳細情報画面で表示することが可能です。
+
+詳細情報の画面を表示する場合、ファイルやアイテムを選択し、右上の「i」ボタンをクリックします。
+
+image::drive_infobutton.png[Open the InfoBox]
+
+詳細情報の画面が画面の右側に表示されます。
+
+image::drive_infobox.png[The InfoBox]
+
+この詳細情報の画面では以下の内容が含まれています。
+
+* 選択したファイルのファイル名
+* ファイルのプレビュー（非対応の形式のファイルである場合、ファイルのアイコンが表示する）
+* 右クリックのメニューで利用するアクション
+* 設定している共有の詳細情報
+* ファイルの作成や編集に関する情報
+* カスタマイズかのうの「Description」でメモや説明を任意で保存する情報
+
+== テクニカル詳細
+=== ファイルのストレージ
+ブリーフケースのファイルはメールボックスのストレージでメールメッセージと同様な方法として保存していますが、Drive v2 はノードにベースした専用のフォルダー構成を提供しています。そのため、Drive v2 のフォルダーはメールオックスとして表示しない（つまり、`zmmailbox getAllFolders` のコマンドで出力しない）。Drive v2 のメタデータが専用の HSQL データベースで保管しており、すべてのファイル（ファイルのバージョンとファイルプレビューを含め）がボリュームのルートにある専用のフォルダーへ保管します。重複ファイルの対策として、ファイル名はIDでベースした方式からハッシュにベースした方式に変わっており、ファイルの圧縮がボリュームの基準設定に従います。
+
+つまり、
+ビリーフケースでは、ファイルのパスは /opt/zimbra/store/0/[mID]/msg/0/[itemid]-[revision].msg
+Drive v2 では、ファイルのパスは /opt/zimbra/store/drive/[hash]-[revision].[extension]
+
+=== ボリューム
+現時点では、Drive v2 のファイルは現在のプライマリボリュームで保存します。
+
+Zimbra Docs との関連
+Zimbra Docs の Zimlet がインストールしている場合、ドキュメントに関する特定の追加オプションがファイルリストの上にある`New`ボタンから利用いただけます。
+
+image::drive_docsintegration.png[Create documents with Zimbra Docs]
+
+また、互換性があるファイルを右クリックしますと、"Open with Docs" のオプションも表示します。
+
+image::drive_openwithdocs.png[Open files stored in Drive with Docs]
+
+また、Zimbra Docs により、互換性があるドキュメントの形式のプレビューを表示させることも可能です。
+
+== Zimbra Drive バックアップと HSM について
+=== バックアップ NG
+Drive V2 ファイルがバックアップ NG のバックアップ対象であり、RealTime スキャンとSmartScanが Drive のファイルを認識しておりますので、特定のアクションでこれらのファイルをバックアップさせる必要はございません。
+
+新規アカウントへ復元と外部リストアのモードにもDrive v2 のファイルを復元しますが、削除したアイテムの戻し、など、他の復元モードで Drive v2 のファイルが復元されません。
+
+=== HSM NG
+Drive v2 は現在のプライマリボリューム以外のボリュームへデータを保存することが可能であり、HSMのポリシーで Drive v2 のファイルを現在のセカンダリボリューム以外でも移動することが可能であるため、Drive v2 ファイルのストレージ管理は完全に分解されている状態です。
+
+HSM ポリシーが適用した場合、Drive v2 のファイルが "document" のアイテム類で処理されます。
+
+本設定はサーバレベルで適用しますので、異なるメールボックスサーバは異なるボリュームを運用することが可能です。
+
+=== Drive のプライマリボリュームを設定する方法
+Drive のプライマリボリュームを設定する場合、まずは `zxsuite hsm getAllVolumes` のコマンドでターゲットボリュームの volumeID を確認します。
+
+volumeID を確認しましたら、以下のコマンドを実行します。
+
+```
+zxsuite config server set `zmhostname` attribute driveStore value [volumeID]
+```
+
+(上記の [volumeID] は最初のコマンドで返答した volumeID となります)
+
+=== Drive のセカンダリボリュームを設定する方法
+Drive のセカンダリボリュームを設定する場合、 `zxsuite hsm getAllVolumes` のコマンドでターゲットボリュームの volumeID を確認し、以下のコマンドを実行します。
+
+```
+zxsuite config server set `zmhostname` attribute driveSecondaryStore value [volumeID]
+```
+
+== ブリーフケースからの移管
+専用の `doImport` CLI コマンドにて、ブリーフケースのデータが Drive v2 へ移管することが可能です。
+
+```
+zimbra@test:~$ zxsuite drive doImport
+
+構文：
+   zxsuite drive doImport {john@example.com,test.com[,...]} [attr1 value1 [attr2 value2...]]
+```
+このコマンドでは移管するメールボックス、またはドメインのターゲットをコンマで区切ったリストを受け付けることが可能であり、同じコマンドに異なるターゲット類を指定することも可能です。
+
+以下の属性値で移管をカスタマイズすることが可能です。
+
+[options="header"]
+|===
+|属性                      |方式           |期待値                   |デフォルト値 |詳細
+|targets(M)                |String[,..]    |john@example.com,test.com[,...]    ||移管するターゲットのコンマ区切ったリスト
+|dryRun(O)                 |Boolean        |true か false                         |false |検証用の実行を行い、実際のデータへ影響しない
+|allVersions(O)            |Boolean        |true か false                         |false |すべてのファイルに各バージョンを移管する
+|deleteSources(O)          |Boolean        |true か false                         |false |移管が完了したファイルをブリーフケースから削除する
+|overwrite(O)              |Boolean        |true か false                         |false |既存ファイルを上書きする
+|showIgnoredAccounts(O)    |Boolean        |true か false                         |false |
+|ignoreQuota(O)            |Boolean        |true か false                         |false |移管する際にメールボックスのクォータを無視する
+|===

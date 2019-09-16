@@ -1,0 +1,482 @@
+[[_ssdb_configuration_options]]
+= SSDB インストールと設定
+
+== インストール方法について
+
+{product-name} のパッケージには SSDB サーバーが含まれておらず、{product-name} のインストールおよび構成ツールでは SSDB の設定を変更できません。最新版の SSDB をインストールする場合、SSDB の開発コミュニティに公開されている手順をご参照ください： http://ssdb.io/docs/install.html[SSDB Installation Documentation] 現時点では、{product-name} は SSDB 1.9.5 でのみ運用確認を行っております。
+なお、SSDB 1.9.5 をインストールする際にhttp://ssdb.io/docs/install.html[SSDB installation instructions] のインストール手順を参照する場合、 https://github.com/ideawu/ssdb/archive/master.zip[master.zip] ではなく、 https://github.com/ideawu/ssdb/tree/stable-1.9.5[stable-1.9.5.zip] をダウンロードします。
+
+[[ssdb_configuration_options]]
+== 設定オプションの概要
+
+本章では、`SSDB` で使用可能なオプションについて次の観点から説明します。
+
+* マスター・スレーブ間レプリカ (複製) による高い可用性
+* マスター・マスター間レプリカ (複製) による高い可用性
+* マスターサーバーの複数利用 (マルチマスター) による高い可用性をもつ拡張機能
+
+本書は、本件に関する精緻な説明するものではありません。また、本書の記載時点では、`zimbraEphemeralBackendURL` および移行用属性を変更を行なう前に、システム管理者による `SSDB` および関連パッケージのインストール・設定が完了していなければなりません。
+
+`SSDB` は https://redis.io/[Redis] クライアントとの互換性があり、また現在、{product-name} は `Reis` 互換クライアントを `SSDB` との通信に利用しています。このため、ここに記載するコンセプトの多くは、`Reis` バックエンドで適用できます。
+
+=== マスター・スレーブ間レプリカによる高い可用性
+
+==== 通常処理
+
+本書で説明するマスター・スレーブ間レプリカの実装方法では、 http://www.keepalived.org/[Keepalived] を使って、設定済みバーチャルIPアドレスを保持します。このバーチャルIPアドレスは、通常状況下であれば、マスターである `SSDB` インスタンスにバインドされています。
+
+
+image:ssdb-master-slave-normal.png[]
+
+==== フェールオーバー
+
+`Keepalived` がマスターのインスタンスでの障害を検知すると、バーチャルIPアドレスはバックアップする側へとバインドされなおされます。これにより、バックアップ側インスタンスはマスターに昇格します。
+
+
+image:ssdb-master-slave-failover.png[]
+
+
+=== マスター・マスター間レプリカによる高い可用性
+
+マスター・スレーブ間レプリカと違う点は、両 `SSDB`
+インスタンスともにオンラインであり、かつ、アクセス可能であることです。片方の変更内容を、もう片方のインスタンスがレプリケーション (複製) します。後述するセットアップ例では、フロントエンドに http://www.haproxy.org/[HAProxy] を使用します。商用の場合、プロキシサービス自体の可用性が高いものを使用する必要があることをご留意ください。
+
+image:ssdb-master-master.png[]
+
+=== マルチサーバー設定による拡張機能
+
+通常、`SSDB` も `Redis` も、単一インスタンス内にキー・スペース全体が入っています。しかし、 https://github.com/twitter/twemproxy[twemproxy] サービスなどを利用して、複数のインスタンスをフロンドエンド化することも可能です。これは、ハッシュ化のモードを多数サポートしているため、特定のキーに紐づくデータがいつも同じサーバーに格納されるように実現できます。これにより、非常に大きな環境で拡張させることができます。
+
+個々の `SSDB` インスタンスをマスター・スレーブペアに設定することで、高い可用性と拡張機能の双方を実現できます。
+
+image:ssdb-multi-master.png[]
+
+
+== マスター・スレーブ間レプリカ
+
+
+`SSDB` の可用性を高くする方法の１つは、マスター・スレーブ間レプリカにセットアップして、マスターのインスタンスが停止した場合にバックアップ側の `SSDB` インスタンスが自動で引き継ぐシステムを設定することです。本書では、この目的を遂行するための一技術を記載します。
+
+
+=== 概要
+
+`SSDB` を2つのサーバーにインストールします。１つはマスターに指定、もう1つはスレーブつまりバックアップに指定したものとして設定します。そして定期的に後者がマスターサーバーでの変更内容をレプリケーションするように設定します。
+
+`Keepalived` も両サーバーにインストールしてください。各
+`Keepalived` インスタンスが互いを監視するようになります。マスターサーバーが停止した場合、 `Keepalived` がその障害を検知し、スレーブつまりバックアップサーバーをマスターサーバーへと昇格させます。 `Keepalived` は、現マスターサーバーがどちらであろうとその現マスターサーバーにバインドされている https://en.wikipedia.org/wiki/Virtual_IP_address[バーチャルIPアドレス] を保持しています。
+
+`Keepalived` で保持されているバーチャルIPアドレスが
+`zimbraEphemeralBackendURL` にバインドされるように、{product-name}を設定します。
+
+{product-name} と `SSDB` マスター・スレーブ設定 _両方_ のインストールおよび設定が完了したら、 <<ephemeraldata.adoc#_ephemeral_data,Ephemeral Data>>章にある手順に従い、`zimbraEphemeralBackendURL` を更新してください。
+
+以下に記した例は、
+http://releases.ubuntu.com/16.04/[Ubuntu 16.04] が稼動しているサーバー上にて実施されました。
+
+=== 必要パッケージ
+
+* http://ssdb.io/[SSDB]
+* http://www.keepalived.org/[Keepalived]
+
+
+=== 前提条件
+
+ご利用中のLinuxディストリビューションに適用できる手順に従い、 `SSDB` と `Keepalived` を２つのサーバーにインストールするようにしてください。
+
+
+=== 設定
+
+次の設定手順は、
+`SSDB` が `/var/lib/ssdb` にインストールされていること、そして、同一ディレクトリ内にすべての `SSDB` 設定ファイルがあることを前提にしています。また、内部のホストアドレスが `192.168.56/24` のネットワーク上にあるものとして記載します。
+
+- `192.168.56.111` - 当初、マスターである `SSDB` サーバーのIPアドレス
+- `192.168.56.112` - 当初、スレーブである `SSDB` サーバーのIPアドレス
+- `192.168.56.120` -  `Keepalived` が保持することになるバーチャルIPアドレス
+
+
+==== 指定 (当初) マスターのSSDB設定
+
+このマシンのIPアドレスは `192.168.56.111` です。
+
+`/var/lib/ssdb/ssdb_master.conf`
+
+後述の枠内に記載されている、キーとなる設定項目は次のとおりです。
+
+- `server/ip` - 有効なIPアドレスすべてをバインド
+- `server/port` - 標準の `SSDB` ポートをバインド
+- `server/deny`, `server/allow` - `localhost` および内部 (ホスト) アドレスに対する `SSDB` アクセスを制限
+
+マスター・スレーブ間レプリカに関する設定項目のみ以下、記載します。
+
+-------------------------------------------
+# ssdb-server config
+# インデントはタブで！
+
+# このファイルへのパス、ディレクトリが存在すること。
+work_dir = ./var
+pidfile = ./var/ssdb.pid
+
+server:
+        ip: 0.0.0.0
+        port: 8888
+        deny: all
+        allow: 127.0.0.1
+        allow: 192.168.56
+
+replication:
+        binlog: yes
+        #  sync (同期) のスピード。*MB/sまで。 -1:無制限
+        sync_speed: -1
+        slaveof:
+                # sync|mirror, デフォルトはsyncです
+                #type: sync
+-------------------------------------------
+
+`/var/lib/ssdb/ssdb_slave.conf`
+
+後述の枠内に記載されている、キーとなる設定項目は次のとおりです。
+
+- `server/ip` - `localhost` をバインド
+- `server/port` - standard `SSDB` ポートをバインド
+- `slaveof/type` - `sync`
+- `slaveof/host` - `192.168.56.112` はもう片方の `SSDB` サーバー
+- `slaveof/port` - `8888` - 標準の `SSDB` ポート
+
+繰り返しますが、マスター・スレーブ間レプリカに関する設定項目のみ以下、記載します。
+
+-------------------------------------------
+# ssdb-server config
+
+# このファイルへのパス、ディレクトリが存在すること。
+work_dir = ./var_slave
+pidfile = ./var_slave/ssdb.pid
+
+server:
+        ip: 127.0.0.1
+        port: 8888
+
+replication:
+        binlog: yes
+        #  sync (同期) のスピード。*MB/sまで。 -1:無制限
+        sync_speed: -1
+        slaveof:
+                # sync|mirror, デフォルトはsyncです
+                type: sync
+                # host: <hostname>  SSDB 1.9.2 以上で利用可能。
+                ip: 192.168.56.112
+                port: 8888
+
+-------------------------------------------
+
+==== 指定 (当初) スレーブのSSDB設定
+
+このマシンのIPアドレスは `192.168.56.112` です。
+
+`ssdb_master.conf` ファイルは、対応する指定マスターサーバーと同じです。
+
+`ssdb_slave.conf` ファイルは、対応する指定マスターサーバーとほぼ同じです。次のアイテムのみ異なります。
+
+- `slaveof/ip (または host)` - `192.168.56.111` はもう片方の `SSDB`  サーバーです。
+
+==== 指定 (当初) マスターのKeepalived設定
+
+
+`/etc/keepalived/keepalived.conf`
+
+特記すべき、キーとなる設定項目は次になります。
+
+- `state` -  指定 (当初) マスターサーバーでもバックアップサーバーでも、Stateには `BACKUP` を設定。この場合、どちらのサーバーが当初 `MASTER` 状態かを決めるのに `priority` を使用します。
+- `nopreempt` - マスターサーバーが停止してバックアップサーバーがマスターサーバーへと昇格した場合、自動でオンラインに立ち上がるはずの元のマスターを、この設定ファイルの命令により、その役目を復活させないようにします。元のマスターはすでに最新の内容ではないからです。この場合、立ち上がった後は、バックアップモードで保たれることとなり、新たにマスターとなったサーバーから情報をレプリケーションするようになります。 _注意_: 停止したマスタを立ち上げるのにマニュアル操作が必要となる場合もあります。
+- `interface` - この例では `enp0s8` がインターフェース識別子で、このために `virtual_ipaddress` が定義されることとなります。 環境に適した値を選別してください。
+- `priority` - 当初の指定マスターサーバーのpriorityの値は、当初の指定バックアップサーバーのpriorityの値よりも高くなければなりません。
+- `advert_int` - 本書の例としてはデフォルト値１秒を設定しました。 `Keepalived` `1.2.21` 以上をご利用になる場合は、小数点以下を指定することができます。例 `0.1` (秒)。これを使って `Keepalived` がマスターサーバーの停止を更に迅速に検知できるようにします。
+- `notify` -  state 変更時に呼ばれるスクリプトのパスです。このスクリプトの全容は後述します。
+- `virtual_ipaddress` - `Keepalived` が保持するバーチャルIPアドレスです。
+
+-------------------------------------------
+vrrp_instance VRRP1 {
+        state BACKUP
+        nopreempt
+        interface enp0s8
+        virtual_router_id 41
+        priority 200
+		advert_int 1
+        notify /var/lib/ssdb/notify.sh
+
+        authentication {
+                auth_type PASS
+                auth_pass 1234
+        }
+        virtual_ipaddress {
+                192.168.56.120 dev enp0s8 label enp0s8:vip
+        }
+}
+-------------------------------------------
+
+
+`/var/lib/ssdb/notify.sh`
+
+以下はStateが変更されているときに `Keepalived` が呼ぶスクリプトです。ただし、`USER` に指定する値は、`SSDB` 処理のオーナーであるユーザー名にしてください。
+
+[source,bash]
+-------------------------------------------
+#!/bin/bash
+# rootで実行すること。
+
+ENDSTATE=$3
+NAME=$2
+TYPE=$1
+
+LOG=/var/log/keepalived-state-transition.log
+LOG_ERROR=0
+LOG_WARNING=1
+LOG_INFO=2
+LOG_DEBUG=3
+LOG_LEVEL=$LOG_INFO
+
+KPCFG=/etc/keepalived/keepalived.conf
+USER=<SSDB-user-name>
+PREFIX=/var/lib/ssdb
+
+
+function log {
+    lvl=$1
+    msg="$2"
+    if [ $lvl -le $LOG_LEVEL ]
+    then
+        now=$(date)
+        echo "$now [$lvl] $msg" >> $LOG
+    fi
+}
+
+function log_error {
+    log $LOG_ERROR "$1"
+}
+function log_warning {
+    log $LOG_WARNING "$1"
+}
+function log_info {
+    log $LOG_INFO "$1"
+}
+function log_debug {
+    log $LOG_DEBUG "$1"
+}
+
+function backup {
+    log_info "Transitioning to BACKUP state"
+    runuser -l $USER -c "${PREFIX}/ssdb-server ${PREFIX}/ssdb.conf -s stop"
+    runuser -l $USER -c "cp ${PREFIX}/ssdb_slave.conf ${PREFIX}/ssdb.conf"
+    runuser -l $USER -c "${PREFIX}/ssdb-server -d ${PREFIX}/ssdb.conf"
+
+}
+
+function fault {
+    log_error "keepalived is in FAULT state"
+}
+
+function master {
+    log_info "Transitioning to MASTER state"
+    runuser -l $USER -c "${PREFIX}/ssdb-server ${PREFIX}/ssdb.conf -s stop"
+    runuser -l $USER -c "cp ${PREFIX}/ssdb_master.conf ${PREFIX}/ssdb.conf"
+    runuser -l $USER -c "${PREFIX}/ssdb-server -d ${PREFIX}/ssdb.conf"
+}
+
+
+case $ENDSTATE in
+    "BACKUP") # Perform action for transition to BACKUP state
+        backup
+        exit 0
+        ;;
+    "FAULT")  # Perform action for transition to FAULT state
+        fault
+        exit 0
+        ;;
+    "MASTER") # Perform action for transition to MASTER state
+        master
+        exit 0
+        ;;
+    *)    echo "Unknown state ${ENDSTATE} for VRRP ${TYPE} ${NAME}"
+        exit 1
+        ;;
+esac
+-------------------------------------------
+
+==== 指定 (当初) バックアップのKeepalived設定
+
+
+`/etc/keepalived/keepalived.conf`
+
+このファイルはマスターノードにあるファイルとほとんど同じですが、以下が異なります。
+
+- `priority` - 当初プライオリティはマスターノードより低くします。
+- `nopreempt` オプションはありません。一度、元のマスターサーバーの停止によりバックアップサーバーがマスターサーバーとなった場合は、元のサーバーがMASTERステータスに戻る前に、システムに対して人的介入ができるようにしておく必要があるためです。
+
+-------------------------------------------
+vrrp_instance VRRP1 {
+        state BACKUP
+        interface enp0s8
+        virtual_router_id 41
+        priority 100
+        advert_int 1
+        notify /var/lib/ssdb/notify.sh
+
+        authentication {
+                auth_type PASS
+                auth_pass 1234
+        }
+        virtual_ipaddress {
+                192.168.56.120 dev enp0s8 label enp0s8:vip
+        }
+}
+-------------------------------------------
+
+バックアップサーバーの `/var/lib/ssdb/notify.sh` はマスターと同じです。
+
+== マスター・マスター間レプリカ
+
+=== 概要
+
+`SSDB` の可用性を高くするもう１つの方法は、マスター・マスター間レプリカにセットアップして、２つの `SSDB` サーバーの前段に、`Redis` プロトコルを読み解くプロキシを設定することです。このプロキシは、両サーバーの状態を監視して、停止したサーバーをその稼動状態からはずす役目があります 。
+
+２つの `SSDB` サーバーの前段に単一の `HAProxy` インスタンスを使った簡単な例を以下説明します。
+
+=== 必要パッケージ
+
+* http://ssdb.io/[SSDB]  `1.9.2` 以上のバージョンを想定した例を以下に示します。
+* http://www.haproxy.org/[HAProxy]
+
+
+=== 前提条件
+
+ご利用中のLinuxディストリビューションに適用できる手順に従い、 `SSDB` を２つのサーバーにインストールしてください。`HAProxy` を更に別のサーバーにインストールしてください。 http://www.keepalived.org/[Keepalived] は `HAProxy` サーバープールの可用性を高くするのに役立ちます。
+
+
+=== 設定
+
+==== プライマリマスターサーバーのSSDB設定
+
+注意:
+
+* マスター・マスター間レプリカに関する設定項目のみ以下、記載します。
+
+-------------------------------------------
+# ssdb-server config
+## ssdb-server config インデントはタブで！
+
+# このファイルへのパス、ディレクトリが存在すること。
+work_dir = ./var
+pidfile = ./var/ssdb.pid
+
+server:
+        ip: 0.0.0.0
+        port: 8888
+        deny: all
+        allow: 127.0.0.1
+        # e.g., 192.168.56
+        allow: <ip-address-prefix>
+
+
+replication:
+        binlog: yes
+        #  sync (同期) のスピード。*MB/sまで。 -1:無制限
+        sync_speed: -1
+        slaveof:
+                id: svc_2
+                type: mirror
+                host: <hostname-of-other-master>
+                port: 8888
+-------------------------------------------
+
+==== セカンダリマスターサーバーのSSDB設定
+
+注意:
+
+* マスター・マスター間レプリカに関する設定項目のみ以下、記載します。
+
+-------------------------------------------
+# ssdb-server config
+# インデントはタブで！
+
+# このファイルへのパス、ディレクトリが存在すること。
+work_dir = ./var
+pidfile = ./var/ssdb.pid
+
+server:
+        ip: 0.0.0.0
+        port: 8888
+        deny: all
+        allow: 127.0.0.1
+        # e.g., 192.168.56
+        allow: <ip-address-prefix>
+
+
+replication:
+        binlog: yes
+        #  sync (同期) のスピード。*MB/sまで。 -1:無制限
+        sync_speed: -1
+        slaveof:
+                id: svc_1
+                type: mirror
+                host: <hostname-of-other-master>
+                port: 8888
+
+-------------------------------------------
+
+==== HAProxy 設定
+
+注意:
+
+* `SSDB` に関する設定のみ以下、記載します。
+* `SSDB` は `Redis` というネットワークプロトコルをサポートしています。 `Redis` クライアントを使用して、`SSDB` サーバーに接続し、そこで操作することができます。これが{product-name}
+が行っていることです。
+
+-------------------------------------------
+defaults REDIS
+        mode tcp
+        timeout connect  4s
+        timeout server  30s
+        timeout client  30s
+
+frontend ft_redis
+        bind <published-ip-address>:8888 name redis
+        default_backend bk_redis
+
+backend bk_redis
+        option tcp-check
+        server R1 <first-master-ip-address>:8888 check inter 1s
+        server R2 <second-master-ip-address>:8888 check inter 1s
+
+-------------------------------------------
+
+
+== マルチサーバーでの拡張機能・レプリケーション
+
+=== 概要
+
+本書では、マスターサーバー複数設定の詳細説明はいたしません。要するに、前述の手順どおり、個別 `SSDB` マスター・スレーブペアを複数、インストール・設定することになります。各ペアは、サブセットとしてのキー・スペース全体を持つ役割があります。
+
+マスター・マスター間設定のように、 `SSDB` サーバープールの全ペアの前段に、`Redis` プロトコルを読み解くプロキシサーバーが存在します。また、特定のキーに関連する全てのリクエストが、必ず同じマスター・スレーブペアにルーティングされるために存在しているそのデータキーを、終始ハッシュ可能にしていなくてはなりません。
+
+こうした製品の１つに
+https://github.com/twitter[Twitter] から出ている https://github.com/twitter/twemproxy[twemproxy] があります。
+
+
+== LDAP 属性
+
+`SSDB` バックエンドは、`SSDB` サーバーに対するアクセス管理にリソースプールを利用します。つまり、エフェメラルデータ操作を行うスレッドは、まず、このプールでリソースを獲得します。このため、そのプールの設定管理用LDAP属性を以下２つ紹介します。
+
+`zimbraSSDBResourcePoolSize` は、プールのサイズを制御します。これにより、エフェメラルAPI操作を同時に行なうことのできるクライアントスレッド数を決定します。デフォルトでは0が設定されており、この場合、プールサイズに上限はありません。
+
+`zimbraSSDBResourcePoolTimeout` は、スレッドが例外をスローする前にリソースを待機する時間を制御します。デフォルトは0であり、この場合、時間切れはありません。プールサイズが0の場合、この属性による影響はありません。なぜなら、エフェメラルデータの操作を行なうのにスレッドがリソースの開放を待つ必要がないからです。
+
+プールサイズが有限な場合、タイムアウトの値をゼロ以外にすることを推奨します。そうでないと、一度 `SSDB` 接続が切れたときに再度確立したあとも永久にmailboxdスレッドがブロックされ続ける原因となるからです。一般的に、リソースプールはメールボックスがリソースに困らないようなサイズにしておくべきです。
+
+== {product-name} の運用負荷と合わせるように SSDB をチューニングする
+SSDB サーバへ直接に影響する {product-name} の運用負荷は認証リクエストの頻度と {product-name} ウェブクライアントと第三者 SOAP クライアントで送信される SOAP リクエストの頻度となります。各認証リクエストは SSDB に 2つか3つの書き込み作業を発生させます。書き込み作業では、zimbraLastLogonTimestamp, zimbraAuthTokens, および zimbraCsrfTokenData の値を更新します。なお、zimbraCsrfTokenData は {product-name} ウェブクライアント、などで CSRF を有効化している SOAP クライアントを利用する場合のみで更新されます。各認証された SOAP リクエストは SSDB に2つの読み込み作業を発生させます。
+
+=== 最小推奨の SSDB システム条件
+最小のシステム条件として、SSDB サーバに 2GB RAM と 1つの CPU を推奨しております。SSDB サーバに監視と設定の管理ツール、などの追加ツールを実行する予定がある場合、メモリとCPUコアの増加をご検討ください。詳細につきましては、 https://github.com/Zimbra/zm-ssdb-ephemeral-store/wiki/Zimbra-and-SSDB-Authentication-Load-Tests[Zimbra and SSDB Authentication Load Tests] をご参照ください。
+
+== おわりに
+
+エフェメラルデータのストレージ要件が単一インスタンス内で収まるような環境の場合は、シンプルなマスター・スレーブ間レプリケーションがいちばん簡単に実装できますし、リソースも最小限で済みます。マスター・マスター間レプリカの場合は、両マスターサーバー間でリクエストのロードバランスをとることができますが、双方が定期的にもう片方をレプリケーションしなければなりません。このため、整合性を保つという追加タスクが `SSDB` に課されます。

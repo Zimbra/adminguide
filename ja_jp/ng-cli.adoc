@@ -1,0 +1,609 @@
+[[cli-ng-guide]]
+= NGモジュールのCLI
+
+[[nwtwork-ng-modules-cli]]
+== Network NG モジュールのCLI
+
+[[zxsuite---network-ng-modules-command-line-interface]]
+== _zxsuite_ - Network NG モジュールのコマンドラインインターフェース
+
+[[basic-usage]]
+=== 基本的な利用方法
+
+Network NGの各モジュール(Coreも含む)は、_zxsuite_ コマンドに各サブセットを持っています。 _zxsuite_ コマンドは全て、下記構文にて呼び出されます。
+
+::
+  _zxsuite [--host|--offline] [--json] [--progress] [--sync] \{module} \{action}
+  [options]_
+
+*利用可能なスイッチ*
+
+* --host [hostname|ip] - コマンドの対象ホストを指定します。ローカルホストの場合はブランク。コマンドを全サーバーに適用する場合、all_serversを指定します。
+* --offline - Zimbraサービスが開始していない場合に指定します。一部のコマンドでは機能しません。
+* --json - コマンドの出力をJSONフォーマットにします。スクリプティングに便利です。
+* --progress - 操作のフィードバックを直接、STDOUT(標準出力)に出力します。Ctrl+Cで出力を停止できます。処理自体は停止されません。
+* --sync - コマンドをシンクロナスモードで実行し、オペレーションの実行が終了まで待ち、オペレーションの結果として以下のコードを終了に返答します。 
+  ** 0 - 成功
+  ** 1 - 失敗
+  ** 2 - 停止している
+  ** 3 - 削除された
+  ** 4 - 中断された
+
+*オンラインヘルプ:* 各コマンドごとのオンラインヘルプは
+_zxsuite help \{module} [command]_ にて確認できます。 このcommand部分を省略すると、利用できるコマンドが一覧表示されます。
+
+[[core-cli]]
+=== Core CLI
+
+基本的な利用方法
+
+zxsuite core \{action} [options]
+
+[[core-commands]]
+==== Core コマンド
+
+::
+  *getVersion* - Network NGモジュールのバージョンを表示
+
+`zxsuite core getVersion`
+
+::
+  *getProperty* - 設定用プロパティを取得
+
+`zxsuite core getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *setProperty* - 設定用プロパティを設定
+
+`zxsuite core setProperty {property_name} {property_value}`
+
+::
+  *getLicenseInfo* -  Network NGモジュールのライセンス情報を表示
+
+`zxsuite core getLicenseInfo core getLicenseInfo`
+
+::
+  *doUploadLicense* - Network NGモジュールのライセンスをアップロード
+
+`zxsuite core doUploadLicense {license_path}`
+
+::
+  *doLicenseChecks* - Network NGモジュールのライセンスをチェック
+
+`zxsuite core doLicenseChecks`
+
+::
+  *getAccountStats* - 入力されたアカウント名またはIDの統計情報を表示
+
+`zxsuite core getAccountStats {account}`
+
+::
+  *getNotification* - Network NGの通知を表示
+
+`zxsuite core getNotification [attr1 value1 [attr2 value2...`
+
+::
+  *doDeleteAllDelegatedRights* - 管理NGとZimbraの両方の管理委任設定を削除
+
+`zxsuite core doDeleteAllDelegatedRights {confirmation string}`
+
+[[update-cli]]
+=== 更新のCLI
+
+基本的な利用方法
+
+zxsuite update \{action} [options]
+
+[[update-commands]]
+==== 更新のコマンド
+
+::
+  *doCheckUpdate* - 更新情報をフェッチ
+
+`zxsuite update doCheckUpdate`
+
+::
+  *doStartService* - 入力されたサービスを開始
+
+`zxsuite update doStartService {service_name}`
+
+::
+  *doStopService* - 入力されたサービスを停止
+
+`zxsuite update doStopService {service_name}`
+
+::
+  *download* - [BETA]Network NGを使用できる最新の更新バージョンに更新。mailboxdの次回再開時にこのバージョンがロードされます。
+
+`zxsuite update download`
+
+::
+  *enable* - [BETA] Enable Network NGの自動更新機能を有効化
+
+`zxsuite update enable`
+
+::
+  *getServices* - このモジュールに対する全サービスの現ステータスを表示
+
+`zxsuite update getServices`
+
+::
+  *info* - Network NG の更新に関する情報
+
+`zxsuite update info`
+
+::
+  *start* - [BETA] 新しいNetwork NGバージョンをロード
+
+`zxsuite update start [attr1 value1 [attr2 value2...`
+
+[[backup-ng-cli]]
+=== バックアップNGの CLI
+
+基本的な利用方法
+
+zxsuite backup \{action} [options]
+
+[[backup-ng-commands]]
+==== バックアップNGのコマンド
+
+::
+  *getProperty* - 設定用プロパティを取得
+
+`zxsuite backup getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *setProperty* - 設定用プロパティを設定
+
+`zxsuite backup setProperty {property_name} {property_value}`
+
+::
+  *doSmartScan* - Smart Scanの実行
+
+`zxsuite backup doSmartScan [attr1 value1 [attr2 value2...`
+
+::
+  *doAccountScan* - 単一アカウントに対するフルスキャンの実行
+
+`zxsuite backup doAccountScan {account} [attr1 value1 [attr2 value2...`
+
+::
+  *doExport* - ドメインによる制限のあるエクスポートを実行
+
+`zxsuite backup doExport {destination_path} [attr1 value1 [attr2 value2...`
+
+::
+  *doRestoreOnNewAccount* - 新アカウントへの復元を実行
+
+`zxsuite backup doRestoreOnNewAccount {source_account} {destination_account} {dd/MM/yyyy HH:mm:ss|last} [attr1 value1 [attr2 value2...`
+
+::
+  *doEnableDisableCOS* - 指定した提供サービスに対するバックアップ機能を有効化
+
+`zxsuite backup doEnableDisableCOS {cos_name} {enable|disable}`
+
+::
+  *doUndelete* - 削除取り消しによる復元を実行
+
+`zxsuite backup doUndelete {account} dd/MM/yyyy HH:mm:ss|first} dd/MM/yyyy HH:mm:ss|last} [attr1 value1 [attr2 value2...`
+
+::
+  *doItemSearch* - アイテムの検索
+
+`zxsuite backup doItemSearch {account} [attr1 value1 [attr2 value2...`
+
+::
+  *doItemRestore* - 単一アイテムの復元を実行
+
+`zxsuite backup doItemRestore {account_name} {item_id}`
+
+::
+  *doExternalRestore* -外部復元の実行
+
+`zxsuite backup doExternalRestore {source_path} [attr1 value1 [attr2 value2...`
+
+::
+  *doStopOperation* - 実行中の単一処理を停止
+
+`zxsuite backup doStopOperation {operation_uuid}`
+
+::
+  *doStopAllOperations* - 実行中の処理を全て停止し、処理キューを空にする
+
+`zxsuite backup doStopAllOperations`
+
+::
+  *doCheckShares* - ローカルアカウントにある共有を全てチェック
+
+`zxsuite backup doCheckShares`
+
+::
+  *doFixShares* - ローカルアカウントにある全共有の修正を試行
+
+`zxsuite backup doFixShares {import_idmap_file}`
+
+::
+  *doFixOrphans* - 親のないダイジェストファイルを削除
+
+`zxsuite backup doFixOrphans [attr1 value1 [attr2 value2...`
+
+::
+  *doCoherencyCheck* - バックアップの一貫性をチェック
+
+`zxsuite backup doCoherencyCheck {backup_path} [attr1 value1 [attr2 value2...`
+
+::
+  *getAccountInfo* - あるアカウントの情報を表示
+
+`zxsuite backup getAccountInfo {account} [attr1 value1 [attr2 value2...`
+
+::
+  *getBackupInfo* - バックアップシステムの情報を表示
+
+`zxsuite backup getBackupInfo [attr1 value1 [attr2 value2...`
+
+::
+  *getMap* - バイナリのマップオブジェクトを解読可能な表にて表示
+
+`zxsuite backup getMap {file_path}`
+
+::
+  *getItem* - アイテムを解読可能な形式にて表示
+
+`zxsuite backup getItem {account} {item} [attr1 value1 [attr2 value2...`
+
+::
+  *getAvailableAccounts* - 復元可能なアカウントを全て表示
+
+`zxsuite backup getAvailableAccounts [attr1 value1 [attr2 value2...`
+
+::
+  *getAvailableDomains* - 復元可能なドメインを全て表示
+
+`zxsuite backup getAvailableDomains {dd/MM/yyyy HH:mm:ss|last} {backup_path}`
+
+::
+  *getServerConfig* - 保存されているサーバー設定を一覧表示
+
+`zxsuite backup getServerConfig dd/MM/yyyy HH:mm:ss|last|all} {standard|customizations} [attr1 value1 [attr2 value2...`
+
+::
+  *getCOSBackupStatus* - 全ての提供サービスのバックアップステータスを表示
+
+`zxsuite backup getCOSBackupStatus [attr1 value1 [attr2 value2...`
+
+::
+  *getAllOperations* - 実行中およびキューにある処理を全て表示
+
+`zxsuite backup getAllOperations`
+
+::
+  *monitor* - 実行中の処理を監視
+
+`zxsuite backup monitor {operation_uuid} [attr1 value1 [attr2 value2...`
+
+::
+  *getServices* - 全モジュールサービスの現ステータスを表示
+
+`zxsuite backup getServices`
+
+::
+  *doBackupLDAP* - LDAPをバックアップ
+
+`zxsuite backup doBackupLDAP`
+
+::
+  *doRestartService* - 指定されたサービスを再起動
+
+`zxsuite backup doRestartService {service_name}`
+
+::
+  *doRestoreBlobs* - 壊れたzimbra blobの復元を試みる"restore blobs"処理を開始
+
+`zxsuite backup doRestoreBlobs {volume_id} [attr1 value1 [attr2 value2...]]`
+
+
+[[mobile-ng-cli]]
+=== モバイル NGの CLI
+
+基本的な利用方法
+
+zxsuite mobile \{action} [options]
+
+[[mobile-ng-commands]]
+==== モバイルNGのコマンド
+
+::
+  *getProperty* - 設定用プロパティを取得
+
+`zxsuite mobile getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *setProperty* - 設定用プロパティを設定
+
+`zxsuite mobile setProperty {property_name} {property_value}`
+
+::
+  *getDeviceList* - 入力したアカウント用のデバイスを全て取得
+
+`zxsuite mobile getDeviceList {account}`
+
+::
+  *getDeviceInfo* - 入力したデバイスに関する情報を表示
+
+`zxsuite mobile getDeviceInfo {account} {device_id}`
+
+::
+  *doResetAccount* - 入力したアカウント用のデバイス状態を全てリセット
+
+`zxsuite mobile doResetAccount {account}`
+
+::
+  *doResetDevice* - シングルアカウント用デバイスのSyncState (同期状態) をリセット
+
+`zxsuite mobile doResetDevice {account} [attr1 value1 [attr2 value2...`
+
+::
+  *getAllSessions* - 保存された全てのモバイルセッションに関する情報を返す
+
+`zxsuite mobile getAllSessions`
+
+::
+  *getActiveSessions* - アクティブなモバイルセッションを全て返す
+
+`zxsuite mobile getActiveSessions`
+
+::
+  *doRemoveDevice* - デバイスのSyncState (同期状態) と履歴を全てサーバーから削除
+
+`zxsuite mobile doRemoveDevice {account} {device_id}`
+
+::
+  *getAccountLoggers* - 全てのアカウントロガーに関する情報を返す
+
+`zxsuite mobile getAccountLoggers`
+
+::
+  *doRemoveLogger* - アカウントロガーを削除
+
+`zxsuite mobile doRemoveLogger {logger_id|all_loggers}`
+
+::
+  *doAddAccountLogger* - アカウントロガーを追加
+
+`zxsuite mobile doAddAccountLogger {account} {debug|info|warn|err|crit} {log_file}`
+
+[[hsm-ng-cli]]
+=== HSM NGのCLI
+
+基本的な利用方法
+
+zxsuite powerstore \{action} [options]
+
+[[hsm-ng-commands]]
+==== HSM NGのコマンド
+
+::
+  *+setHsmPolicy* -  HSMにポリシーを１件追加
+
+`zxsuite powerstore +setHsmPolicy {hsm_policy}`
+
+::
+  *addS3Store* -  S3と互換性のあるストアを追加
+
+`zxsuite powerstore addS3Store {Name of the zimbra store} [attr1 value1 [attr2 value2...`
+
+::
+  *doCheckBlobs* - doCheckBlobs処理を開始
+
+`zxsuite powerstore doCheckBlobs {start} [attr1 value1 [attr2 value2...`
+
+::
+  *doCreateVolume* - サーバー上にボリュームを作成
+
+`zxsuite powerstore doCreateVolume {primary|secondary|index} {volume_name} {volume_path} {true|false} {compression_threshold_bytes}`
+
+::
+  *doDeduplicate* - 重複排除処理を開始
+
+`zxsuite powerstore doDeduplicate {volume_name} [attr1 value1 [attr2 value2...`
+
+::
+  *doDeleteVolume* - サーバー上の特定のボリュームを削除
+
+`zxsuite powerstore doDeleteVolume {volume_id}`
+
+::
+  *doMoveBlobs* - doMoveBlob処理を開始
+
+`zxsuite powerstore doMoveBlobs [attr1 value1 [attr2 value2...`
+
+::
+  *doRemoveHsmPolicy* - HSMからポリシーを削除
+
+`zxsuite powerstore doRemoveHsmPolicy {hsm_policy}`
+
+::
+  *doRestartService* - 入力したサービスを再開
+
+`zxsuite powerstore doRestartService {service_name}`
+
+::
+  *doStartService* - 入力したサービスを開始
+
+`zxsuite powerstore doStartService {service_name}`
+
+::
+  *doStopAllOperations* - 実行中の処理を全て停止し、処理キューを空にする
+
+`zxsuite powerstore doStopAllOperations`
+
+::
+  *doStopOperation* - 実行中の単一処理を停止
+
+`zxsuite powerstore doStopOperation {operation_uuid}`
+
+::
+  *doStopService* - 入力したサービスを停止
+
+`zxsuite powerstore doStopService {service_name}`
+
+::
+  *doUpdateVolume* - サーバー上の特定のボリュームを更新
+
+`zxsuite powerstore doUpdateVolume {volume_id} [attr1 value1 [attr2 value2...`
+
+::
+  *doVolumeToVolumeMove* - doMoveVolumeBlobs処理を開始
+
+`zxsuite powerstore doVolumeToVolumeMove {source_volume_name} {destination_volume_name}`
+
+::
+  *getAllOperations* - 実行中およびキューにある処理を全て表示
+
+`zxsuite powerstore getAllOperations [attr1 value1 [attr2 value2...`
+
+::
+  *getAllVolumes* - サーバーに存在する全ボリュームを出力
+
+`zxsuite powerstore getAllVolumes`
+
+::
+  *getHsmPolicy* - 全ポリシーを出力
+
+`zxsuite powerstore getHsmPolicy`
+
+::
+  *getProperty* - 設定用プロパティを取得
+
+`zxsuite powerstore getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *getServices* - このモジュールに対する全サービスの現ステータスを表示
+
+`zxsuite powerstore getServices`
+
+::
+  *getVolumeStats* - ボリュームに格納されているblobの数、アイテム数、占有率を表示
+
+`zxsuite powerstore getVolumeStats {volume_id} [attr1 value1 [attr2 value2...`
+
+::
+  *monitor* - 実行中の処理を監視
+
+`zxsuite powerstore monitor {operation_uuid} [attr1 value1 [attr2 value2...`
+
+::
+  *setHSMPolicy* - デフォルトのHSMポリシーを設定
+
+`zxsuite powerstore setHSMPolicy {hsm_policy}`
+
+::
+  *setProperty* - 設定用プロパティを設定
+
+`zxsuite powerstore setProperty {property_name} {property_value}`
+
+::
+  *testS3Connection* - S3バケットに対するテスト接続
+
+`zxsuite powerstore testS3Connection {s3BucketConfigurationUuid}`
+
+[[admin-ng-cli]]
+=== 管理NGの CLI
+
+基本的な利用方法
+
+zxsuite admin \{action} [options]
+
+[[admin-ng-commands]]
+==== 管理NGのコマンド
+
+::
+  *getDelegationSettings* - 委任された管理者、各ドメインの特性、「メールを表示」 の属性、管理者の割り当て可能容量を表示。
+
+`zxsuite admin getDelegationSettings [attr1 value1 [attr2 value2...`
+
+::
+  *doEditDelegationSettings*
+
+`zxsuite admin doEditDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...`
+
+::
+  *doAddDelegationSettings*
+
+`zxsuite admin doAddDelegationSettings {account} {domain} [attr1 value1 [attr2 value2...`
+
+::
+  *doRemoveDelegationSettings*
+
+`zxsuite admin doRemoveDelegationSettings {account} {domain}`
+
+::
+  *getDomainSettings* - 全ドメイン名、アカウント制限、ドメイン単位でのアカウント割り当て使用量を表示
+
+`zxsuite admin getDomainSettings`
+
+::
+  *setDomainSettings* - ドメイン単位でのアカウント割り当て使用量とアカウント制限を設定
+
+`zxsuite admin setDomainSettings {domain} [attr1 value1 [attr2 value2...`
+
+::
+  *resetDomainSettings* -グローバルアカウント制限、提供サービスごとのアカウント制限、ドメイン単位でのアカウント割り当て使用量の、選択したドメインに対するリセットを実行
+
+`zxsuite admin resetDomainSettings {domain}`
+
+::
+  *doShowAdminActivity* - 管理者が操作した記録を表示
+
+`zxsuite admin doShowAdminActivity [attr1 value1 [attr2 value2...`
+
+::
+  *doEnableDisableAdminLogging* - 管理者の操作をログに残すことの有効化・無効化
+
+`zxsuite admin doEnableDisableAdminLogging {enable|disable}`
+
+::
+  *setProperty* - 設定用プロパティを設定
+
+`zxsuite admin setProperty {property_name} {property_value}`
+
+::
+  *getProperty* - -設定用プロパティを取得
+
+`zxsuite admin getProperty [attr1 value1 [attr2 value2...`
+
+::
+  *doMonthlyReport* - 指定した月間の管理者の操作に関するレポートを作成
+
+`zxsuite admin doMonthlyReport [attr1 value1 [attr2 value2...`
+
+::
+  *getMonthlyReport* - 指定した月間の管理者の操作に関するレポートを表示
+
+`zxsuite admin getMonthlyReport [attr1 value1 [attr2 value2...`
+
+::
+  *doSetZimletRights* - 委任された管理者全員に対する管理拡張機能の権限を修正
+
+`zxsuite admin doSetZimletRights`
+
+::
+  *getAllOperations* - 実行中およびキューにある処理を全て表示
+
+`zxsuite admin getAllOperations`
+
+::
+  *doStopAllOperations* - 実行中の処理を全て停止し、処理キューを空にする
+
+`zxsuite admin doStopAllOperations`
+
+::
+  *doStopOperation* - 実行中の単一処理を停止
+
+`zxsuite admin doStopOperation {operation_uuid}`
+
+::
+  *monitor* - -実行中の処理を監視
+
+`zxsuite admin monitor {operation_uuid} [attr1 value1 [attr2 value2...`

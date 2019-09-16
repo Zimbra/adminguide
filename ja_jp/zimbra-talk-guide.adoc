@@ -1,0 +1,550 @@
+:ztalk-name: Zimbra Talk V2
+= {ztalk-name}
+:toc:
+
+== {ztalk-name} について
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::["{product-version}" == "8.8.8"]
+{product-name} {product-version} に追加されました
+endif::[]
+//
+{ztalk-name} では、グループと法人のメッセージ機能、ファイル共有、スクリーン共有、およびカジュアルのビデオコンファレンス機能が含まれているビジネス用のインスタントメッセージプラットフォームを Zimbra ウェブクライアントへ追加することが可能です。
+
+=== Zimbra Talk (レガシー）との違いについて
+
+{ztalk-name} とレガシーの Zimbra Talkについて、主に以下の違いがございます。
+
+* 第三者の製品が含まれていません
+* 追加のリソースは必要ありません
+* UI や機能の向上
+* 別のインストールが必要ありません ({ztalk-name} のコアプロセスが Zimbra ネットワーク版の ZCS 8.8.8 から含まれています)
+* Zimbra に高負荷の状態を避けるためにピアツーピアのプロトコールを運用する
+
+基本的に、{ztalk-name} がレガシーの背品より管理と運用がより楽であり、エンドユーザーへ提供できる機能が増加しています。
+
+=== フロントエンド側の機能について
+
+{ztalk-name} に以下のフロントエンド側の機能が含まれています。
+
+* 友達のリスト管理とステータス表示
+* メッセージ通信と既読状況の報告
+* 1対1のインスタントメッセージ
+* グループのメッセージ
+* 法人のメッセージ（スペースやチャネル）
+* グループのビデオコンファレンス
+* チャネルに無制限の参加者のビデオコンファレンス
+* ファイル共有
+* スクリーン共有
+* 顔文字
+
+=== バックエンド側の機能について
+
+{ztalk-name} は以下のバックエンド側の機能が含まれています。
+
+* COS とユーザーでの機能有効化
+* 1対1のIMを提供するための XMPP 互換性
+* 内部の TURN サーバ互換性
+* コアのインストール必要がありません。パッケージマネージャでのZimletインストール
+* 設定が必要ない
+* サーバ負荷を回避するため、ピアツーピアの WebRTC プロトコール
+* 専用の audit ログファイル
+
+== ライセンスについて
+
+{ztalk-name} はユーザー毎にライセンスしています。ライセンスの詳細は他の Zimbra ネットワーク版の機能と同様に、ネットワーク版のラインセスファイルに記録しております。グローバルの管理者がラインセスのユーザー上限まで、詳細の機能を有効化することが可能であり、「advanced」のユーザー様のみがライセンスの上限にカウントされます。
+
+== Zimbra Chat と {ztalk-name}
+
+Zimbra Chat と {ztalk-name} の互換性はなく、同時に運用することができません。そのため、これらの製品が同じ Zimbra ネットワーク版の環境で同時にインストールすることができません。{ztalk-name} パッケージをインストールする際に Zimbra Chat Zimlet が自動的にアンインストールされます。ただし、{ztalk-name} の基準モードでは Zimbra Chat と同一の機能を提供しており、「advanced」の {ztalk-name} 機能を提供していないユーザー様は無制限で基準モードのチャット機能を利用いただけます。「advanced」のユーザー様はすべての機能を他の「advanced」ユーザ様と利用いただき、基準モードのユーザー様と1対1のインスタントメッセージを利用できます。基準モードのユーザー様は全ユーザーへの1対1のインスタントメッセージのみを利用いただけます。
+
+デフォルトでは、すべてのユーザー様は基準のユーザーとして登録し、Zimbra の管理者がユーザーに「advanced」機能を任意で有効化することが可能です。
+
+== {ztalk-name} Zimlet のインストール方法
+
+{ztalk-name} Zimlet は Zimbra のリポジトリに提供しており、OSのパッケージマネジャーで簡単にインストールとアップグレードすることが可能です。
+
+=== Red Hat と CentOS で {ztalk-name} Zimlet のインストール手順
+
+Red Hat と CentOS では、以下のコマンドで Zimlet をインストールします。
+
+....
+yum install zimbra-talk
+....
+
+=== Ubuntu で {ztalk-name} Zimlet のインストール手順
+
+Ubuntu では、以下のコマンドで Zimlet をインストールします。
+
+....
+apt-get install zimbra-talk
+....
+
+{ztalk-name} はすべての Zimbra Chat 機能が含まれていますので、Zimlet をインストールしますと、サーバから Zimbra Chat のコンポーネントが自動的に削除します。
+
+== {ztalk-name} の管理について
+
+Zimbra 管理コンソールにて、提供サービス（COS)とユーザーアカウントのメニューに新しいセクションが追加し、以下のオプションを管理することが可能となります。
+
+* 該当の COS/ユーザーアカウントに {ztalk-name} の「Advanced」機能を有効化する
+* 該当の COS/ユーザーアカウントにチャットの履歴を有効化する
+* 該当の COS/ユーザーアカウントにビデオコンファレンス機能を有効化する
+
+なお、これらの項目も管理コンソールのグローバル設定に利用することが可能です。
+
+== ブラウザーの互換性について
+
+{ztalk-name} の機能は Zimbra ウェブクライアントをサポートしているブラウザですべて提供していますが、多少のクライアント側の制限がございます。
+
+[cols=",,,,",options="header",]
+|======================================================
+|ブラウザ |IMのパネル |Talkのタブ |ビデオチャット |スクリーン共有
+|Internet Explorer 9/10 |◎ |× |× |×
+|Internet Explorer 11+ |◎ |◎ |× |×
+|Microsoft Edge |◎ |◎ |× |×
+|Mozilla Firefox |◎ |◎ |◎ |◎
+|Google Chrome |◎ |◎ |◎ |〇 (拡張のインストールが必要)
+|Safari |◎ |◎ |◎ |×
+|======================================================
+
+Google Chrome をご利用の場合、スクリーン共有の機能を利用いただくため、"Zextras Companion" の拡張をインストールする必要があります。なお、本拡張はChrome ウェブストアで提供しています。
+
+Firefox をご利用の場合、スクリーン共有の機能を利用いただくために最低にバージョン 52 をインストールする必要があります。
+
+== UI について
+
+{ztalk-name} の UI が REACT で開発し、Zimbra ウェブクライアントと完全に関連されています。2つのクライアント側コンポーネントが含まれています、IMのパネルと完全な機能を提供しているTalkのタブです。
+
+IMのパネルは Zimbra Chat と同様の機能を運用しており、簡単に1対1のインスタントメッセージ、またはグループの会話が可能です。ファイル共有やビデオコンファレンス、などの Advanced {ztalk-name} 機能について、{ztalk-name} の Advanced 機能が有効化したユーザーアカウントにのみ IMのパネルで利用いただけます。なお、IMのパネルは {ztalk-name} の Basic と Advanced のユーザーアカウントへ両方提供しています。
+
+Talkのタブは {ztalk-name} の完全なる UI であり、すべてのインスタントメッセージ機能、例えばスペースやチャネルを提供しています。TalkのタブはAdvanced のユーザーアカウントへのみ提供しています。
+
+=== IMのパネルについて
+
+IMのパネルは Zimbra Chat と同様の機能を運用しており、Basic のユーザーアカウントに Zimbra Chat と同様の機能が提供していますが、Advanced のユーザーアカウントにはグループ、ファイル共有、およびビデオコンファレンス機能が追加しています。
+
+image:im_panel_1.png[im_panel_1.png,title="im_panel_1.png"]
+
+ファイル共有やビデオコンファレンス、などの Advanced の機能はIM画面の右上のあるオプションメニューで利用いただけます。
+
+image:im_panel_features_1.png[im_panel_features_1.png,title="im_panel_features_1.png"]
+
+=== Talkのタブ
+
+Talkのタブは他の機能タブ（例えばメールやカレンダーのタブ）と同様に完全なる機能の利用が可能です。
+
+image:ja_jp/accessing_1.jpg[accessing_1.jpg,title="accessing_1.jpg"]
+
+image:home.jpg[home.jpg,title="home.jpg"]
+
+=== 友達リストの管理と会話について
+
+IMのパネルで表示する友達リストと会話はTalkのタブの"Buddies"で利用いただけます。
+
+image:buddies_list.jpg[buddies_list.jpg,title="buddies_list.jpg"]
+
+== グループ、スペース、およびチャネルについて
+
+エンドユーザー様は {ztalk-name} で新しい「やり方」として、グループ、スペース、およびチャネルが提供しています。
+
+=== グループについて
+
+グループでは、複数の人（5人まで）を同時にコミュニケーションを取れることが可能です。グループは特定のスペースへ関連していない、継続に残るものです。ユーザーは友達リストから他のユーザーへグループの招待を送信し、グループを作成することが可能です。また、グループのメンバーは同じ方法でグループへ他のユーザーへ参加を招待することができます。全ユーザーがグループを脱落した場合、グループが消えます。
+
+==== グループの機能について
+
+* グループに参加しているユーザーが許可しているユーザー上限まで他のユーザーへグループの招待を送信できます。
+* グループに参加しているユーザーが他のユーザーとチャットすることがでいます。グループに参加している全員がそのグループへ送信したメッセージを閲覧できます。
+* グループに参加しているユーザーが他のグループのユーザーへファイル送信が可能です。グループで送信したファイルがそのグループに参加している全員にアクセスが可能です。
+* グループに参加しているユーザーが他のユーザーとのビデオチャットを開始することが可能です。また、他のグループのユーザーもグループのビデオチャットへ参加することが可能です。
+
+==== グループのUIについてGroups UI
+
+グループのTalk タブの専用場所で固定しており、以下に紹介するすべてのグループ関連機能のアクセスが可能です。
+
+* 新しいグループを作成する方法
++
+新しいグループを作成する場合、Talkタブの"Groups"場所にて、"New Group" のボタンをクリックします。
++
+image:create_new_group_1.jpg[create_new_group_1.jpg,title="create_new_group_1.jpg"]
++
+その後、グループの件名、招待を送信するお友達を選択し、"Create" をクリックします。
++
+image:create_new_group_2.jpg[create_new_group_2.jpg,title="create_new_group_2.jpg"]
+
+* 友達をグループへ招待する方法
++
+グループへ1つや複数の友達を招待する場合、グループのオプションを展開し、”Invite" をクリックします。
++
+image:ja_jp/add_buddy_to_group_1.jpg[add_buddy_to_group_1.jpg,title="add_buddy_to_group_1.jpg"]
++
+その後、招待する友達を選択し、"Invite" をクリックします。
++
+image:ja_jp/add_buddy_to_group_2.jpg[add_buddy_to_group_2.jpg,title="add_buddy_to_group_2.jpg"]
+
+* グループの全メンバーへメールを送信する方法
++
+グループの全メンバーへメールを送信する場合、グループのオプションに "New Mail" ボタンをクリックします。
++
+image:new_mail_group_1.png[new_mail_group_1.png,title="new_mail_group_1.png"]
+
+* グループの全メンバーへファイルを送信する方法
++
+グループの全メンバーへファイルを送信する場合、グループチェットの画面にペーパークリップのアイコンをクリックします。
++
+image:paperclip.png[paperclip.png,title="paperclip.png"]
++
+グループへ送信したファイルは専用のパーソナルブリーフケースへアプロードした後に共有されます。
+
+* グループのビデオチャットを開始する方法
++
+グループのビデオチャットを開始する場合、グループチャットの画面にカメラのアイコンをクリックします。
++
+image:camera.png[camera.png,title="camera.png"]
++
+なお、他のメンバーがこのカメラのアイコンをクリックすることで、実行中のビデオチャットへ参加することが可能です。
+
+* グループから脱落する方法
++
+グループから脱落する場合、グループのプロパティから "Leave Group" をクリックします。
++
+image:leave_group_1.jpg[leave_group_1.jpg,title="leave_group_1.jpg"]
++
+その後、警告メッセージの下に "Leave" をクリックします。
++
+image:leave_group_2.jpg[leave_group_2.jpg,title="leave_group_2.jpg"]
+
+=== スペースについて
+
+スペースは無制限のチャネルを持つことができるテーマのコンテナです。
+基本的に、スペースはコミュニティセンターや道の駅みたいが場所で、ユーザーが特定の場所（チャネル）で異なるトピックをチャットできます。
+
+==== スペースの機能
+
+* 各スペースは特定の名前とトピックがあります。スペース作成後に名前を変更できませんが、トピックは"Edit"のアイコンをクリックすることで編集することが可能です。
+* スペースの名前とトピックの下にある"New Mail"ボタンをクリックすることで、スペースに参加している全ユーザーへメールを送信することが可能です。
+* "Leave Space" ボタンをクリックしますと、スペースのメンバーがスペースから脱落できます。
+* スペースのメンバーは"New Channel"のボタンで新しいチャネルを作成し、"Invite"のボタンで他のユーザーをスペースに招待することが可能です。
+
+==== スペースのUIについて
+
+スペースは Talk タブの専用セクションに含まれており、以下のスペース関連の機能へアクセスできます。
+
+* スペースの作成
++
+スペースを作成する場合、Talk タブのスペース場所にて、"New Space" のボタンをクリックします。
++
+image:new_space_1.jpg[new_space_1.jpg,title="new_space_1.jpg"]
++
+その後、スペースの名前やトピックを入力し、招待する友達を選択し、"Create" をクリックします。
++
+image:new_space_2.jpg[new_space_2.jpg,title="new_space_2.jpg"]
+
+* スペースの全メンバーへメールを送信する
++
+スペースの全メンバーへメールを送信する場合、スペースのオプションに "New Mail" のボタンをクリックします。
++
+image:new_mail_space_1.png[new_mail_space_1.png,title="new_mail_space_1.png"]
+
+* スペースか脱落する
++
+スペースか脱落する場合、スペースのプロパティから "Leave Space" をクリックします。
++
+image:leave_space_1.jpg[leave_space_1.jpg,title="leave_space_1.jpg"]
+
+=== チャネルについて
+
+チャネルはスペース内にあるトピックを指定した場所です。チャネルにはユーザー数の上限がなく、ユーザーが参加しているスペースにあるチャネルを自由に参加できるので、グループと違って、参加するために招待される必要がありません。
+
+新しいスペースが作成する度、"General" のチャネルが自動的に作成され、ユーザーがスペースを参加した際に自動的に "General" へも参加します。
+
+==== チャネルの機能
+
+* チャネルのユーザーは他のチャネルのユーザーとチャットできます。チャネルへ送信したメッセージはそのチャネルの全メンバーが閲覧します。
+* チャネルのユーザーが他のチャネルのユーザーへファイルを送信することが可能です。チャネルで送信したファイルはそのチャネルにある全メンバーにアクセス可能です。
+* チャネルのユーザーが他のチャネルのユーザーとビデオチャットを開始することが可能です。他のチャネルのメンバーはチャネルに実施中のビデオチャットへ参加することが可能です。
+
+==== チャネルのUI
+
+チャネルはTalkタブにあるスペースに囲まれており、以下のチャネル関連の機能を管理できます。
+
+* チャネルの作成
++
+チャネルを作成する場合、スペース内に "New Channel" のボタンをクリックします。
++
+image:new_channel_1.jpg[new_channel_1.jpg,title="new_channel_1.jpg"]
++
+その後、チャネルの名前とトピックを入力し、招待する友達を選択し、"Create" をクリックします。
++
+image:new_channel_2.jpg[new_channel_2.jpg,title="new_channel_2.jpg"]
+
+* チャネルを参加する
++
+チャネル参加する場合、チャネルをクリックし、"Join Channel" をクリックします。
++
+image:join_channel_1.jpg[join_channel_1.jpg,title="join_channel_1.jpg"]
+
+* 友達にチャネルへ招待する
++
+チャネルへ友達へ招待する場合、"Channel Participants" の下にある "Invite" ボタンをクリックし、招待する友達を選択し、"Invite" をクリックします。
++
+image:invite_to_channel_1.jpg[invite_to_channel_1.jpg,title="invite_to_channel_1.jpg"]
+
+* チャネルの全メンバーへファイルを送信する
++
+チャネルの全メンバーへファイルを送信する場合、チャネルのチャット画面にペーパークリップのアイコンをクリックします。
++
+image:paperclip.png[paperclip.png,title="paperclip.png"]
++
+チャネルへ送信するファイルは専用のパーソナルブリーフケースへアップロードしてから共有されます。
+
+* チャネルのビデオチャットを開始する
++
+チャネルのビデオチャットを開始する場合、チャネルのチャット画面にカメラのアイコンをクリックします。
++
+image:camera.png[camera.png,title="camera.png"]
++
+チャネルのメンバーは同じカメラのアイコンをクリックすることで、実施中のビデオチャットへ参加することが可能です。
+
+* チャネルを脱落する
++
+チャネルを脱落する場合、チャネルのプロパティから "Unsubscribe Channel" をクリックします。
++
+image:leave_channel_1.jpg[leave_channel_1.jpg,title="leave_channel_1.jpg"]
++
+その後、警告メッセージの下に "Leave" をクリックします。
++
+image:leave_channel_2.jpg[leave_channel_2.jpg,title="leave_channel_2.jpg"]
+
+== ビデオチャットについて
+
+ビデオチャットの機能はグループとチャネルに提供しており、ウェブカメラとヘッドセットで複数人がリアルタイムでコミュニケーション、およびコンピュータの画面を他の参加者へ共有することが可能です。
+
+この機能は WebRTC プロトコールにペースしております。このプロトコールではピアツーピアの通信を自動的に調整する技術を活用し、サーバに高負荷を起こせずに、クライアントが直接に他の参加者とコミュニケーションを成立し、利用可能のネットワーク速度によりコールの品質が自動的に調整されます。最大の品質はビデオとオーディオのFull HDまで可能です。なお、ビデオチャットを初めて開始した場合、ユーザはブラウザにカメラとマイクロフォンへのアクセスを許可する必要があります。
+
+=== ビデオチャットのUIについて
+
+image:group_videochat.png[group_videochat.png,title="group_videochat.png"]
+
+ビデオチャットのUIは主に3つの部分に別れています。
+
+* 中央でビデオのストリームにて、メインのストリームが上で、セカンダリストリームは下に表示します。表示するストリームの数は画面の解像度、およびウィンドウサイズで異なります。
+* 左の上にグループ、またはチャネルのインスタントメッセージのチャットが表示します。このチャットは完全に表示しや利用することが可能であり、履歴がグループ、またはチャネルのチャット履歴に保存されます。
+* 左の下にユーザー自身のビデオフィードと操作オプション（ビデオの無効化、マイクロフォンをミュート、画面を共有）をアクセスすることが可能です。
+ユーザーが実施中のビデオチャットから任意で切断する場合、ビデオストリームのフレームに左下にある"hang up"のボタンをクリックします。なお、ビデオチャットが実施中であれば、そのビデオチャットを行っているグループやチャネルの名前の下に"Call in progress"のメッセージが表示し、チャットのカメラアイコンをクリックすることで参加することが可能です。
+
+image:call_in_progress.png[call_in_progress.png,title="call_in_progress.png"]
+
+image:camera.png[camera.png,title="camera.png"]
+
+==== ビデオストリームの管理操作について
+
+デフォルトとして、ビデオストリームは先着順で表示し、ピア同士のコネクション順より決められます。
+
+ユーザーはビデオチャットのプリファレンスに"participants"のリストから表示するストリームを任意で選択することが可能です。
+
+image:videoconference_partecipants.png[videoconference_partecipants.png,title="videoconference_partecipants.png"]
+
+* 参加者名の横にある「目」のアイコンでその参加者のビデオストリームを表示か非表示することを管理しています。
+* 参加者名の横にある「音」のアイコンでその参加者からのオーディオストリームを再生するかブロックすることが可能であるため、ユーザーの端末で聞こえる参加者を任意で指定することが可能です。
+
+==== 画面の共有について
+
+画面の共有ボタンをクリックした場合、ユーザーに特定のウィンドウ、または完全のデスクトップをすべて共有することを選択できる画面が表示されます。
+image:group_videochat_screensharing.png[group_videochat_screensharing.png,title="group_videochat_screensharing.png"]
+
+=== インスタントミーティング：外部ユーザーとのビデオチャット
+
+インスタントミーティング機能では、外部ユーザーを含められる、ビデオチャットの機能を運用できる一時的の招待生グループを提供することが可能となります。
+
+インスタントミーティングを開始する場合、Talk タブの "New" メニューから "Instant Meeting" をクリックします。
+
+image:talk_new_instant_meeting.png[talk_new_instant_meeting.png,title="talk_new_instant_meeting.png"]
+
+インスタントミーティングの作成画面が表示しますので、管理者が指定した最大グループのメンバー数まで招待状を送信することが可能です。
+
+image:talk_instant_meeting_creation.png[talk_instant_meeting_creation.png,title="talk_instant_meeting_creation.png"]
+
+ビデオコールのUIを含め、インスタントミーティングにすべての機能や制限が共通しています。グループと同様で、インスタントミーティングはTalkタブで表示しh、 "Options" のスライドメニューで管理することが可能です。
+
+image:talk_instant_meeting_options.png[talk_instant_meeting_options.png,title="talk_instant_meeting_options.png"]
+
+参加者がインスタントミーティングをいつでも切断することが可能であり、インスタントミーティングのリンクURL、またはZimbraのTalkタブから再接続することが可能です。
+
+==== インスタントミーティングのリンクについて
+
+インスタントミーティングを作成する度、外部ユーザーが適切のビデオチャットへ参加できるための専用リンク URL が発行されます。ミーティングのリンク URL はインスタントミーティングの作成時で参加者へメールを送信し、インスタントミーティングの作成ポップアウト画面、およびインスタントミーティングのプロパティから確認することが可能です。
+
+リンクよりインスタントミーティングへ参加する場合、参加者はメールあどれすとニックネームを記入する必要があります。
+
+image:talk_instant_meeting_login.png[talk_instant_meeting_login.png,title="talk_instant_meeting_login.png"]
+
+==== インスタントミーティングのホストについて
+
+各インスタントミーティングには「ホスト」がありますが、そのホストはインスタントミーティングを佐生精したユーザーとなります。
+
+ホストはインスタントミーティングへ追加のメンバーを招待し、切断することでミーティングを終了することも可能です。
+
+なお、ホストがインスタントミーティングから切断した場合、ミーティングが終了し、ビデオチャットが完全にクローズします。
+
+== プレゼンスについて
+
+プレゼンス管理は Zmbra Chat から同様の機能を運用して下りますので、ユーザーは4つのステータスメッセージから状態を指定し、ユーザー設定に指定した無反応に期間によりステータスが自動的に "Away" に切り替えること（現バージョンではこの機能は一時的に無効化しており、今後のZimbra 8.8.x パッチで再度に有効化する予定）も可能です。プレゼンスのシステムにより、すべてのメッセージが異なるチェックマークで表示されます。
+
+* 0 チェックマークの場合、メッセージがサーバへ通信していない状態です。
+* 1 チェックマークの場合、メッセージがサーバへ正常に通信した状態です。
+* 2 チェックマークの場合、全ユーザーがメッセージを閲覧した状態です。
+
+image:unread_messages_tips_1.jpg[unread_messages_tips_1.jpg,title="unread_messages_tips_1.jpg"]
+
+== 未既読のメッセージについて
+
+未既読のメッセージ数はチャット、グループ、およびチャネルの右上に表示されます。
+
+image:message_delivered_tick.png[message_delivered_tick.png,title="message_delivered_tick.png"]
+
+_メッセージがサーバへ正常に通信したが、全宛先がまだ閲覧していない場合の実例_
+
+== チャットの履歴について
+
+すべてのマンツーマンのチャット、グループ、およびチャネルの履歴は同じウィンドウで確認することが可能です（つまり、特定のチャネル履歴を確認する場合はそのチャネルを開きます）。オフラインのユーザーへ送信したメッセージは該当のインスタントメッセージのチャット、グループ、またはチャネルに表示されます。
+
+== STUN/TURN サーバについて
+
+WebRTCはピアツーピアのプロトコールであるため、コミュニケーションを成立する条件として、ビデオチャットにあるユーザーはすべてお互いのクライアントへ接続する必要があります。
+
+ネットワークのNATルールやサービスプロバイダーのポリシーにより、お互いのクライアントへ接続することができない場合、TURNサーバを運用することで各ピアとのコミュニケーションを正常に成立することが可能です。{ztalk-name} は Zimlet の設定で TURN サーバのURLとログイン情報を記録することのみで、初期の状態で STUN/TURN サーバを利用できるように設計しております。
+
+=== {ztalk-name} に TURN サーバを利用するように設定する方法
+
+CLI の `zxsuite chat iceServer` コマンドで専用の TURN 設定ツールを提供しています。
+
+....
+zimbra@mailserver:~$ zxsuite chat iceServer
+
+ビデオコールでコネクションを成立するための ice サーバのリストを編集する。
+グローバル（デフォルト）、提供サービス、またはアカウント単位で設定することが可能です。
+
+  add                      - グローバル（デフォルト）、提供サービス、またはアカウント単位で新しい ice サーバを追加する
+                             zxsuite chat iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+  remove                   - グローバル（デフォルト）、提供サービス、またはアカウント単位で特定の ice サーバを削除する
+                             zxsuite chat iceServer remove {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+  get                      - グローバル（デフォルト）、提供サービス、またはアカウント単位で設定している ice サーバを返答する
+                             zxsuite chat iceServer get [attr1 value1 [attr2 value2...]]
+....
+
+"add" のサブコマンドで新しい TURN サーバを追加します。
+
+....
+構文:
+   zxsuite chat iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+パラメータのリスト
+
+名前             種類          期待する値
+url(M)           ストリング    turn:turn.example.com:3478?transport=udp
+username(O)      ストリング    myuser
+credential(O)    ストリング    mysecretkey
+account(O)       ストリング    user@example.com
+cos(O)           ストリング    default
+
+(M) == 必要のパラメータ, (O) == 任意のパラメータ
+
+実例：
+
+zxsuite chat iceserver add turn:turn.example.com credential mysecret username myuser
+zxsuite chat iceserver add turn:turn.example.com credential mysecret username myuser account testaccount@example.com
+....
+
+特定のユーザー、または提供サービスのみを専用に処理するため、複数の TURN サーバを追加することが可能です。（上記のコマンドに `user`や`cos`の任意パラメータで指定します）
+
+TURN サーバ側では、ZimbraユーザーとTURNユーザーの1:1マッピングが必要ないため、設定を分かりやすくするため、専用のユーザーアカウントと秘密鍵のみを用意することを推奨しています。
+
+== CLI
+
+基準の利用：
+
+`zxsuite chat {アクション} [オプション]`
+
+コマンドに値などを指定せずに実施することで、該当するコマンドの利用詳細が返答されます。
+
+また、`zxsuite chat` でコマンドを記入せずに実行する場合、利用可能のコマンドリストが表示します。
+
+=== {ztalk-name} CLI
+
+::
+  *doAddBuddies* - 2つのユーザーをチャットの友達に指定する
+
+`zxsuite chat doAddBuddies {user1} {user2} [attr1 value1 [attr2 value2...]]`
+
+::
+  *doCleanup* - 削除したユーザー/友達を完全に削除する（定時的に自動実施されます）
+
+`zxsuite chat doCleanup`
+
+::
+  *doMakeBuddies* - 配布リストにあるユーザー全員を友達同士に指定する
+
+`zxsuite chat doMakeBuddies {distribution_list}`
+
+::
+  *doRemoveBuddies* - 1つのユーザーの友達設定を解除する
+
+`zxsuite chat doRemoveBuddies {user1} {user2}`
+
+::
+  *doRestartService* - 特定のサービスを再起動する
+
+`zxsuite chat doRestartService {service_name}`
+
+::
+  *doStartService* - 特定のサービスを開始する
+
+`zxsuite chat doStartService {service_name}`
+
+::
+  *doStopService* - 特定のサービスを停止する
+
+`zxsuite chat doStopService {service_name}`
+
+::
+  *getAccountStatus* - アカウントのステータスを取得する
+
+`zxsuite chat getAccountStatus {account}`
+
+::
+  *getBuddyList* - ユーザーの友達リストを取得する
+
+`zxsuite chat getBuddyList {account}`
+
+::
+  *getProperty* - 設定のプロパティを取得する
+
+`zxsuite chat getProperty [attr1 value1 [attr2 value2...]]`
+
+::
+  *getRooms* - ルームをリストする
+
+`zxsuite chat getRooms [attr1 value1 [attr2 value2...]]`
+
+::
+  *getServerStatus* - チャットサーバのステータスを取得する
+
+`zxsuite chat getServerStatus`
+
+::
+  *getServices* - モジュールに関連するすべてのサービスのステータスを取得する
+
+`zxsuite chat getServices`
+
+::
+  *iceServer* - ビデオコールでコネクションを成立するための ice サーバのリストを編集する。グローバル（デフォルト）、提供サービス、またはアカウント単位で設定することが可能です。
+
+`zxsuite chat iceServer`
+
+::
+  *setProperty* - 設定のプロパティを設定する
+
+`zxsuite chat setProperty {property_name} {property_value}`

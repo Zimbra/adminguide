@@ -1,0 +1,606 @@
+[[mobile-ng-guide]]
+= Mobile NG
+
+[[enable-for-whole-cos]]
+== 提供サービス (COS) のMobile NG同期を有効にする
+
+ある提供サービス(COS)全ユーザー分のMobile NGを有効にすると、その提供サービス(COS)の全ユーザーにMobile NGの全モバイル機能の利用権限が付与されます。
+
+[[how-to-enable-the-mobile-ng-module-for-all-users-in-a-class-of-service]]
+=== ある提供サービス(COS)全ユーザー分のMobile NGを有効にする
+
+[[from-the-administration-console]]
+==== 管理コンソールから
+
+管理コンソールから、ある提供サービス(COS)全ユーザー分のMobile NGを無効にする方法
+
+* Zimbra管理コンソールを開きます。
+
+* 編集したい提供サービス(COS)をダブルクリックします (左側パネル: 設定 -> 提供サービス)。
+
+* モバイルタブをクリックします。
+
+* `この提供サービス(COS)について同期を有効にする` チェックボックスをオンにします。
+
+[[from-the-zimbra-cli]]
+==== Zimbra CLIから
+
+CLIから、ある提供サービス(COS)全ユーザー分のMobile NGを有効にする方法
+
+* 'zimbra' ユーザーにて次のコマンドを実行します: *`zmprov mc COSName
+zimbraFeatureMobileSyncEnabled TRUE`*
+
+[[how-to-disable-the-mobile-ng-module-for-all-users-in-a-class-of-service]]
+=== 提供サービス(COS)の全ユーザーに対するMobile NGを無効にする
+
+[[from-the-administration-console-1]]
+==== 管理コンソールから
+
+管理コンソールから、ある提供サービス(COS)全ユーザー分のMobile NGを無効にする方法
+
+* Zimbra管理コンソールを開きます。
+* 編集したい提供サービス(COS)をダブルクリックします (左側パネル: 設定 -> 提供サービス) 。
+* モバイルタブをクリックし、`この提供サービス(COS)について同期を有効にする` チェックボックスをオフにします。
+
+[[from-the-zimbra-cli-1]]
+==== Zimbra CLIから
+
+CLIから、ある提供サービス(COS)全ユーザー分のMobile NGを無効にする方法
+
+* 'zimbra' ユーザーにて次のコマンドを実行します。: *`zmprov mc COSName
+zimbraFeatureMobileSyncEnabled FALSE`*
+
+[[note-about-settings-hierarchy]]
+===== 設定優先度に関する注意事項
+
+提供サービス(COS)レベルの設定は、ユーザーレベルの設定にオーバーライドされます。
+
+[[enable-for-single-user]]
+== シングルユーザーのMobile NGを有効にする
+シングルユーザーのMobile NGを有効にすると、そのシングルユーザーに、Mobile NGの全モバイル機能の利用権限が付与されます。
+
+[[how-to-enable-the-mobile-ng-module-for-a-single-user]]
+=== シングルユーザーのMobile NGを有効にする方法
+
+[[from-the-zimbra-administration-console]]
+==== Zimbra管理コンソールから
+
+管理コンソールから、シングルユーザーのMobile NGを有効にする方法
+
+* Zimbra管理コンソールを開きます。
+* 編集したいユーザーをダブルクリックします (左側パネル： 管理 -> アカウント)。
+* モバイルタブをクリックします。
+
+* `このアカウントに対して同期を有効にする` チェックボックスをオンにします。
+
+[[from-the-zimbra-cli-2]]
+==== Zimbra CLIから
+
+Zimbra CLIから、シングルユーザーのMobile NGを有効にする方法
+
+* 'zimbra' ユーザーにて次のコマンドを実行します。: *`zmprov ma user@domain.tld
+zimbraFeatureMobileSyncEnabled TRUE`*
+
+[[how-to-disable-the-mobile-ng-module-for-a-single-user]]
+=== シングルユーザーのMobile NGを無効にする方法
+
+[[from-the-zimbra-administration-console-1]]
+==== Zimbra管理コンソールから
+
+管理コンソールから、シングルユーザーのMobile NGを無効にする方法
+
+* Zimbra管理コンソールを開きます。
+* 編集したいユーザーをダブルクリックします (左側パネル： 管理 -> アカウント)。
+* モバイルタブをクリックし、`このアカウントに対して同期を有効にする` チェックボックスをオフにします。
+
+[[from-the-zimbra-cli-3]]
+==== ZimbraCLIから
+
+Zimbra CLIから、シングルユーザーのMobile NGを無効にする方法
+
+* 'zimbra'ユーザーにて次のコマンドを実行します: *`zmprov ma user@domain.tld
+zimbraFeatureMobileSyncEnabled FALSE`*
+
+[[note-about-settings-hierarchy-1]]
+=== 設定の優先度についての注意事項
+
+ユーザーレベルの設定は、提供サービス(COS)レベルの設定にオーバーライドします。
+
+[[the-mobile-password-feature]]
+== モバイルパスワード機能
+
+[[mobile-passwords-and-you]]
+=== モバイルパスワード機能の利用
+
+システム管理者と委任された管理者は `モバイルパスワード機能` を使用して、アカウントがExchange ActiveSync認証でのみ使用するパスワードを別途設定することができます。
+
+この機能の主な利点
+
+* 一度設定すれば記憶する必要もなく、また、他のパスワードポリシーを考える必要もない、安全なパスワード利用が徹底されます。つまり、モバイルデバイスとZimbraとの間で同期のとれているアカウントのモバイルパスワード (各モバイルデバイスに保存済) をZimbraから変更しても、その変更後のパスワードを各モバイルデバイスで再設定し直す必要はありません。
+* デバイス/クライアントに対して、認証されていないアクセスがあった場合、実際のパスワードを表示しないようにします。
+
+Webmail、POP3、IMAP、SMTPからのログインの場合に `モバイルパスワード` が有効になることはありませんし、モバイルからのログインの場合にアカウント用パスワードが有効になることもありません。
+
+[[how-to-set-a-mobile-password-for-a-mailbox]]
+=== メールボックスにモバイルパスワードを設定する方法
+
+モバイルパスワードの設定は下記のとおり簡単に行なうことができます。
+
+* Zimbra管理コンソールに入ります。
+* モバイルパスワードを設定するユーザーを選んで右クリックした後、`編集` を選択します。
+* ユーザー設定の `モバイル` タブにある `有効モバイルパスワード` チェックボックスをオンにします。
+* パスワードを `モバイルパスワード` 項目に入力し、再度同じものを `モバイルパスワードの確認` 項目に入力します。また、`ランダムパスワードボタンを生成` をクリックして、ランダムなモバイルパスワードを生成することも可能です。
+* 保存します。
+
+[[mobile-device-management-a.k.a.-mobile-provisioning]]
+== プロビジョニングとしても知られるモバイルデバイスマネジメント
+
+[[what-is-mobile-device-management]]
+=== モバイルデバイスマネジメント
+
+モバイルデバイスマネジメント
+モバイルデバイスマネジメント (MDM。プロビジョニングとしても知られる) により、管理者は1台以上のモバイルデバイスに適用するルールおよびセキュリティ設定をOTAで定義することができます。定義内容はPINポリシーから全デバイスのリモートワイプなどの `一時` コマンド、また、承認された/ブロックされたアプリケーション一覧まで、多岐に渡ります。
+
+これにより管理者は、法人モバイルデバイスの不適切またはリスクの伴う利用をさせないような制限や条件等を効果的に設定することができます。
+
+また、MDMは `私的デバイスの活用` というコーポレートポリシーに役立ちます。セキュリティ侵害のリスクを最小限に抑えながら、ユーザーに個人のモバイルデバイスを法人サーバーへ接続させることができます。
+
+[[provisioning-features-available-on-your-client]]
+==== クライアントで利用できるプロビジョニング機能
+
+すべてのクライアント上ですべてのプロビジョニング機能を利用できるわけではありません。
+http://en.wikipedia.org/wiki/Comparison_of_Exchange_ActiveSync_clients[Wikipedia]にExchange ActiveSyncクライアント同士の比較が掲載されています。
+
+[[network-ng-modules-and-mdm]]
+=== Network NGとMDM
+
+Network NGでは、Exchange ActiveSyncプロトコルバージョン14+を使った高度なMDM機能を実現します。
+
+提供サービス(COS)レベルおよびメールボックスレベルでモバイルポリシーの利用可否を設定できます。 `即時一括` またはユーザーベースでのカスタマイズのいずれも両レベルで設定可能です。`モバイル` タブにあるモバイル管理オプションを使用して各々設定します。
+
+
+[[provisioning-options]]
+==== プロビジョニングオプション
+
+利用できるプロビジョニングオプションは次のとおりです。
+
+* モバイルデバイス管理を有効にする： 現ユーザー/提供サービスについてモバイルポリシーの利用を有効または無効にします。
+* サポートしていないデバイスのアクセスを許可： プロビジョニングをサポートしていないデバイスと同期させることをユーザーに許可します。
+* ポリシーが部分的に有効なデバイスも使用可能： 適用対象ポリシーを1件以上サポートしていないデバイスと同期させることをユーザーに許可します。
+
+TIP: デフォルトでは、NG MobileSyncにおいてMDMは無効です。有効にするには、 NetworkモジュールNG -> モバイル -> 詳細設定より、オプション “モバイルデバイス管理を有効にする” にチェックを入れます。
+
+[[enforceable-policies]]
+==== 強制執行ポリシー
+
+`モバイルデバイス` 一覧の真下にある下記グループの強制執行ポリシーを利用できます。
+
+* 同期設定: 同期化の日付間隔や条件を設定します。
+* デバイス設定: カメラ、Wi-Fi、リムーバブルストレージ、Bluetoothなどのデバイス利用を有効または無効にします。
+* デバイスセキュリティ設定: パスワードの適用やパスワードに関する最低要件を定義します。
+* デバイスアプリケーション: ブラウザ、POP/IMAPクライアント、署名されていないアプリケーションなど、`標準` のデバイスアプリケーションを有効または無効にします。
+
+加えて、下記２つのリストを使ってアプリケーションのホワイトリスト/ブラックリストも管理することができます。
+
+* 承認されたアプリケーション: 変更された承認アプリケーション一覧
+* ブロックされたアプリケーション: 変更されたブロック対象アプリケーション一覧
+
+[[mobile-password]]
+==== モバイルパスワード
+
+モバイルパスワード機能は、概念としては似ていますが、モバイルデバイスマネジメント (MDM) には含まれせん。モバイルパスワード機能は、EASプロトコルの全バージョンで使用可能です。
+
+[[syncstates]]
+SyncStates
+----------
+
+[[mobile-ng-and-the-syncstate]]
+=== Mobile NG とSyncState
+
+SyncState (Synchronization Status (同期化状態) の略語) とはサーバーに保存される、サーバー・モバイルデバイス間の同期に関する情報のことです。Mobile NGとデバイス間の接続は、次の手順で確立します。
+
+* 1. デバイスはローカルフォルダとサーバー内フォルダとの同期をとるため、folderSync処理を要求します。
+
+`    ローカルフォルダ１つにつき、１件のSyncKeyを送信します (ただし、デバイスとサーバー間の接続が初めてである場合、0に設定されたSyncKeyが1件のみ送信します) 。   `
+
+* 2. サーバーは存在するフォルダを一覧で返します。
+
+`    サーバーはフォルダ１つにつき、１件のSyncKeyを送信します。`
+
+* 3. その後デバイスは対象となる全アイテムの同期をとるため、itemSync処理を要求します。
+
+`    サーバーは同期されたアイテムをSyncStateに格納します。`
+
+* 4. itemSync処理の完了後、デバイスは接続を存続させるため、'ping'コマンドを送信します。
+
+`    同期されたアカウントに変更がない限り、手順４が繰り返されます。`
+
+メールボックスで新しいアイテムが作成されるたび、あるいは既存アイテムが修正されるたびに、サーバーはデバイスにそのことを知らせます。これによりアクティブな接続 (pingコマンドを送信して存続させた接続) が閉じられ、再び手順３と手順４が繰り返されます。
+
+SyncStateは、手順２で保存されたSyncKeyと手順３で保存されたitemIDが組み合わさったものです。一意のuserID/deviceIDペアごとにサーバーに保存されます。
+
+[[sync-request]]
+==== Sync Request (同期要求)
+
+同期要求は、Mobile NGまたはクライアントから開始される実際の同期処理です。１回の同期要求で、前回の要求以降メールボックスで発生した全ての変更がデバイスに同期されます。逆もまた同様です。
+
+次の場合に同期要求が発生します。
+
+* SyncStateが変わったとき。
+* クライアント側で同期が強制されたとき。
+* 既存の `ping` の期限が切れてデバイスから新しいpingが送信されたとき(この期限はクライアント側で定義します)。
+
+[[managing-the-syncstates]]
+=== SyncStateの管理
+
+[[syncstates-via-the-administration-zimlet]]
+==== 管理拡張機能から
+
+Mobile NGの管理拡張機能では、下記２つのオプションを使って、同期しているモバイルデバイスのSyncStateを管理します。
+
+* デバイスリセット: シングルアカウントに対し、デバイスのSyncStateをリセットします。デバイスが次にサーバーに接続したタイミングで全同期が強制実行されます。
+
+* デバイスをワイプ: 全デバイスのSyncStateおよび履歴をサーバーから削除します。今後モバイルデバイスを使用しない場合、あるいは同じ会社の別の従業員にそのモバイルデバイスを渡す場合に有用な機能です。
+
+[[syncstates-via-the-cli]]
+==== CLIから
+CLIでは同期しているモバイルデバイスのSyncStateの管理に下記コマンドのいずれかを使用します。
+
+[[the-doremovedevice-command]]
+===== doRemoveDeviceコマンド
+
+....
+構文:
+   zxsuite mobile doRemoveDevice {account} {device_id}
+
+パラメーターリスト
+
+名前            データ型
+account(M)      Account Name
+device_id(M)    String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile doRemoveDevice john@example.com Appl79032X2WA4S
+JohnのAppl79032X2WA4SデバイスのSyncStateを削除します。
+....
+
+[[the-doresetaccount-command]]
+===== doResetAccountコマンド
+
+....
+構文:
+   zxsuite mobile doResetAccount {account}
+
+パラメーターリスト
+
+名前          データ型
+account(M)    Account Name
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile doResetAccount john@example.com
+Johnのアカウントの全デバイス状態をリセットします。
+....
+
+[[the-doresetdevice-command]]
+===== doResetDeviceコマンド
+
+....
+構文:
+   zxsuite mobile doResetDevice {account} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前            データ型          初期値
+account(M)      Account Name
+device_id(O)    String          all
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile doResetDevice john@example.com Appl79032X2WA4S
+JohnのAppl79032X2WA4Sというデバイスの SyncStateをリセットします。
+....
+
+[[advanced-settings]]
+== 高度な設定
+
+[[mobile-ng-performance-tuning]]
+=== Mobile NGパフォーマンスチューニング
+
+システムのパフォーマンスにあわせてMobile NGをチューニングすることができます。下記３通りのオプションがあります。
+
+[[performance-tuning-settings]]
+=== パフォーマンスチューニング設定
+
+[[available-settings]]
+==== 使用可能な設定
+
+* 通知レイテンシ (ZxMobile_NotificationsLatency): サーバー上でイベントが発生してからモバイルデバイスにその通知が届くまでの秒数。
+
+* インスタント通知を使う (ZxMobile_UseInstantNotficiations):
+インスタント通知の有効化/無効化。有効な場合、通知レイテンシをオーバーライドします。
+
+* 最大Pingハートビート (ZxMobile_MaxPingHeartbeat): 'ping'コマンド間の最長間隔。
+
+上記設定は全て管理拡張機能から編集できます。あるいはCLIから `setProperty` コマンドを使用します。
+
+[[when-to-edit-the-performance-tuning-settings]]
+==== パフォーマンスチューニング設定を編集する場合
+
+初期値はよくある状況に合わせて設定しておかなくてはなりません。下記問題に１つ以上あてはまる場合は、該当の解決方法を実施するようにしてください。
+
+[cols=",",options="header",]
+|=======================================================================
+|問題 |解決方法
+|システム負荷が高い |インスタント通知を使うを無効にする
+
+|インスタント通知を使うを無効にした後のシステム負荷が高い |通知レイテンシの値を増やす
+
+|モバイルユーザーがネットワーク利用が多いと感じている|インスタント通知を使うを無効にし、通知レイテンシの値を調整しながら上げる
+
+|デバイスは接続できるが、セッションが頻繁に途切れる |ネットワーク設定に沿いながら最大Pingハートビートを調整する
+
+|サーバーtoデバイスのアイテム同期が極めて遅い
+|通知レイテンシの値を下げ、インスタント通知を使うを有効にする
+|=======================================================================
+
+[[and-shared-folders]]
+== 共有フォルダ
+
+[[shared-folders-and-you-and-your-mobile]]
+=== 共有フォルダ機能の利用 (モバイル使用)
+
+ユーザーはNetwork NGを使用して、自身がオーナーでないフォルダをモバイルデバイスと同期させることができます。これはExchange ActiveSyncプロトコルから利用できる全タイプのアイテムで可能です。つまりメールフォルダ、共有連絡先リスト、共有カレンダーや共有タスクリストのいずれもモバイルデバイスと同期させることができます。
+
+ご利用中のクライアントによって、モバイルデバイスで実現できる機能が異なる場合があります。
+
+WARNING: すべてのクライアントがExchange ActiveSyncを利用した連絡先リスト、カレンダー、タスクリストにおける同期を複数サポートしているわけではありません。
+
+[[how-to-sync-a-shared-folder-to-your-mobile-devices]]
+=== 共有フォルダをモバイルデバイスと同期させる方法
+
+比較的上流で同期制御を行なえるように、モバイルデバイスと同期する共有フォルダをユーザー自身で選ぶことができます。
+
+[[enable-the-mobile-synchronization-for-a-folder]]
+==== フォルダのモバイルシンクを有効にする
+
+次のようにして、共有フォルダのモバイルシンクを有効にします。
+
+* Zimbraウェブクライアントにログインします。
+* 同期させたい共有フォルダを右クリックします。
+* Folder Sync Settings をドロップダウンメニューから選択します。
+* Enable synchronization for this folder チェックボックスをオンにします。
+* OKを押下します。
+
+この新フォルダはこのアカウントで接続した全モバイルデバイスと同期するようになります。
+
+[[restrictions]]
+=== 条件
+
+共有フォルダの同期には以下の条件があります。
+
+* a full account share(アカウントごと共有) を参照しているマウントポイントを同期させることはできません。
+* 共有フォルダのサブフォルダと同期することはできません。許可した場合にフォルダツリーが不完全になるためです。
+* Exchange ActiveSyncプロトコルは、リソース閲覧のみの概念を想定していません。このため、閲覧のみの共有を同期させることはできません。閲覧のみのフォルダを同期させると、サーバー・クライアント間に深刻な不整合を生み出し、エラーが多発する要因となります。
+
+[eas-filters]
+== EASフィルター
+
+EASプロトコルでは、同期に使用されるプロトコルバージョンが初回ハンドシェイク中に定義され、以降変えられることはありません。サーバーが使用可能な全プロトコルバージョンを一覧表示し、クライアントがその一覧から１つ選択します。
+
+EASフィルターという手法で、ユーザーやクライアントのサブセットで使用できるEASバージョンを制限しています。確実に適切なバージョンが使われるようにするためです。
+
+EASフィルターは複数セットアップすることができ、順次、検証されることになります (下記コマンド `getAllEASFilters`
+と `doMoveEASFilte`
+を参照してください) 。
+
+[anatomy-of-an-eas-filter]
+=== EASフィルターの構造
+EASフィルターは下記、5つのパートでできています。
+
+* `タイプ`: フィルタールールの種類を定義します。
+* `パラメーター`: フィルターリング用の識別子 (例:  デバイスのブランドやメールアドレス)。
+* `モード`: ソフトウェアが利用可能バージョンに制限をつけるか、固定のバージョン一覧を提示するかを定義します。
+* `EASバージョン`: フィルターを適用させるプロトコルバージョンが入ります。
+* `ブロッキング` 真偽値: 現フィルターが正常に一致した場合にその後、他のフィルターを実行するかどうかを定義します。
+
+[managing-eas-filters]
+=== EASフィルターの管理
+
+EASフィルターは、CLIから以下4つの専用コマンドを利用して管理します。
+
+==== zxsuite mobile getAllEASFilters
+このコマンドで、既存のフィルターすべてを一覧表示します。
+
+出力例:
+....
+
+        filters
+
+                ID                                                          0
+                mode                                                        fixed
+                rule                                                        [type = or; rules = [[type = contains; rule = outlook/] OR [type = contains; rule = microsoft.outlook]]
+                easversions                                                 14.0
+                blocking                                                    true
+
+                ID                                                          1
+                mode                                                        limit
+                rule                                                        [type = contains; rule = samsung]
+                easversions                                                 2.5
+                blocking                                                    false
+
+                ID                                                          2
+                mode                                                        limit
+                rule                                                        [type = always]
+                easversions                                                 14.1
+                blocking                                                    false
+
+
+....
+
+==== zxsuite mobile doAddEASFilter
+このコマンドで、新規EASフィルターを登録します。
+....
+zxsuite mobile doAddEASFilter
+
+構文:
+   zxsuite mobile doAddEASFilter {and|or|regex|contains|account} {text|people@example.com|account=example@ff.com,contains=android} {add|subtract|fixed|limit} {easversions} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前              データ型               期待値
+type(M)           Multiple choice    and|or|regex|contains|account
+parameter(M)      String             text|people@example.com|account=example@ff.com,contains=android
+mode(M)           Multiple choice    add|subtract|fixed|limit
+easversions(M)    String[,..]
+blocking(O)       Boolean            true|false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile doAddEASFilter contains android fixed 2.5,12.0,14.1
+ユーザーエージェント名に文字列「android」が含まれる場合に適用するプロトコルフィルターをEASバージョンプールを2.5、12.0、14.1に制限して登録します。
+
+zxsuite mobile doAddEASFilter and account=user@example.com,contains=android fixed 14.1 blocking true
+user@example.com.の場合のみ、ユーザーエージェント名に文字列「android」含まれる場合に適用するプロトコルフィルターをEASバージョンプールを14.1に制限して登録します。
+'ブロッキング'の指令があるため、この後、他のEASフィルターが実行されることはありません。
+
+....
+
+==== zxsuite mobile doDeleteEASFilter
+このコマンドで、既存のEASフィルターを削除します。
+....
+zxsuite mobile doDeleteEASFilter
+コマンドdoDeleteEASFilterにはパラメーターが必要です。
+
+構文:
+   zxsuite mobile doDeleteEASFilter {id}
+
+パラメーターリスト
+
+名前     データ型
+id(M)    Integer
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile doDeleteEASFilter 2
+ID=2のフィルターを削除します。
+フィルター一覧の表示にはコマンドzxsuite mobile getAllEASFiltersを使用します。
+....
+
+==== zxsuite mobile doMoveEASFilter
+このコマンドを使用して、EASフィルターをフィルターキュー内の別の位置に移動させます。
+....
+zxsuite mobile doMoveEASFilter
+コマンドdoMoveEASFilterにはパラメーターが必要です。
+
+構文:
+   zxsuite mobile doMoveEASFilter {from} {to}
+
+パラメーターリスト
+
+名前       データ型
+from(M)    Integer
+to(M)      Integer
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile doMoveEASFilter 0 5
+ID=0のフィルターを5の位置へと移動します。
+フィルター一覧の表示にはコマンドzxsuite mobile getAllEASFiltersを使用します。
+....
+
+[mobile-account-loggers]
+== モバイルアカウントロガー
+
+モバイルアカウントロガーとは、ユーザーのEASログ全体を専用ログファイルに出力する専用のロガーで、`sync.log` とは別の詳細さが備わっています。迅速なトラブルシューティングに役立ちます。
+
+アカウントロガーを作成する際は、次のパラメーターを指定してください。
+
+* 対象 `アカウント`
+* `ログレベル` (詳細度)
+* 専用 `ログファイル`
+* ロガーの実行中、全デバイスでアカウント同期を適用するための `ウィンドウサイズ`
+
+WARNING: アカウントロガーは、mailboxdが停止あるいは再開したときに自動削除され、mailboxdクラッシュ時は、通常継続不可能です。Logファイルに影響はありません。
+
+[account-logger-management]
+=== アカウントロガー管理
+
+アカウントロガーはCLIから下記コマンドを用いて管理します。他の方法はありません。
+
+==== zxsuite mobile doAddAccountLogger
+
+....
+zxsuite mobile doAddAccountLogger
+コマンドdoAddAccountLoggerにはパラメーターが必要です。
+
+構文:
+   zxsuite mobile doAddAccountLogger {account} {debug|info|warn|err|crit} {log_file} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前              データ型               期待値
+account(M)        Account Name
+log_level(M)      Multiple choice    debug|info|warn|err|crit
+log_file(M)       Path
+window_size(O)    Integer            a value > 0
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile doaddaccountlogger john@example.com info /tmp/john_logger
+Johnのアカウント向けinfoのアカウントロガーを/tmp/john_loggerファイル配下に作成します。
+
+zxsuite mobile doaddaccountlogger john@example.com info /tmp/john_logger window_size 1
+ウィンドウサイズを1に設定した、Johnのアカウント向けinfoのアカウントロガーを/tmp/john_loggerファイル配下に作成します。
+....
+
+==== zxsuite mobile doRemoveLogger
+....
+zxsuite mobile doRemoveLogger
+コマンドdoRemoveLoggerにはパラメーターが必要です。
+
+構文:
+   zxsuite mobile doRemoveLogger {logger_id|"all_loggers"}
+
+パラメーターリスト
+
+名前            データ型               期待値
+logger_id(M)    Multiple choice    logger_id|"all_loggers"
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite mobile doremovelogger 5
+ID = 5のアカウントロガーを削除します。
+....
+
+==== zxsuite mobile getAccountLoggers
+
+出力例:
+....
+zxsuite mobile getAccountLoggers
+
+        loggers
+
+                id                                                          7
+                level                                                       DEBUG
+                name                                                        AccountLogger
+                description                                                 Logging account user@domain.com using level debug, log file /tmp/user.log
+                remove command                                              zxsuite mobile doRemoveLogger 7
+....

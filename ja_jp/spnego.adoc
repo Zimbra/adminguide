@@ -1,0 +1,434 @@
+[appendix]
+= SPNEGOのシングルサインオンの設定方法
+
+SPNEGOプロトコルを{product-abbrev} に設定することで、Zimbraウェブクライアント (ZWC) 、またはOutlook用のZimbraコネクター (ZCO) でのシングルサインオン認証が利用できます。ZCOの設定方法については
+ <<setting_up_single_sign_on_options_for_zco,ZCOにシングルサインオンのオプションを設定する>> を参照ください。
+
+ZWCからユーザーがActive Directory経由でイントラネットへログインした際、Zimbraへの再認証なしでZWCのメールボックスへアクセスできます。
+
+{product-abbrev} サーバーを、ZWCへログインするユーザーをSPNEGO保護の下、URLへリダイレクトするように設定します。SPNEGO経由でサーバーがKerberosの認証を依頼し、ユーザーがZWCのメールボックスへリダイレクトされます。ユーザーがログアウトした場合、起動ボタンを表示するURLへリダイレクトされます。*起動* のボタンをクリックしますとZWCのログイン画面へ転送されます。
+
+[NOTE]
+インターネット上でユーザーがZWCアカウントへログインするとZWCのログインページが表示されるため、ユーザーはログインするためにZWCのパスワードを入力する必要があります。
+
+[IMPORTANT]
+SPNEGO SSOがドメインにて有効な場合、ブラウザを正常に設定する必要があります。 <<configure_your_browser,ブラウザを設定する>> を参照ください。正常に設定していないブラウザの場合はユーザー/パスワードの画面が表示されます。そして、ユーザーが正しいADのドメインユーザー名とパスワードを入力するとZimbraメールボックスへ正常に移動するか「401 Unauthorized」のエラーが表示されます。
+
+== 設定方法
+
+. KerberosのKeytabファイルを作成します。
+* Active Directoryのサービスアカウントを作成します。このアカウントはKerberosのKeytabファイルを発行するために使用します。
+* Active DirectoryサービスアカウントにサービスのPrincipal Names (SPN)ディレクトリ属性のサービスを追加します。
+* Keytabファイルを作成します。
+. {product-abbrev} サーバーにSPNEGOプロトコルを設定・有効化します。
+. ブラウザを設定します。
+
+== KerberosのKeytabファイルを作成する
+
+{product-abbrev} メールストアのサーバーごとに、Active Directoryサービスアカウントがドメイン内に作成されます。
+
+. Active Directoryのサービスアカウントを作成します。このアカウントはZimbraサーバーへ追加されるKerberosのKeytabファイルを生成するために使用します。
+
+.. Active Directoryに遷移し、 *スタート > プログラム > 管理ツール >
+Active Directoryユーザーとコンピュータ* のコンソールを起動します。
+
+.. サービスアカウントを作成するため、ADのドメイン名をクリックし、展開した内容から *ユーザー* を右クリックし、*新規 > ユーザー* をクリックします。新しいオブジェクト - ユーザーの画面になります。
++
+* *名前*: ACサービスアカウントのユーザー表示名を入力します。
+この名前に {product-abbrev} メールボックスサーバー名を使用することを推奨しています。 例: *mail1*
++
+* *ユーザーログイン名*: LDAP の
+`zimbraSpnegoAuthTargetName` サーバー属性に設定する名前です。記載してください。例: *HTTP/mail1.example.com*
++
+* *ユーザーログイン名 (Windows2000以前):*
+`setspn` と `ktpass` コマンドにある `-mapUser` 属性に使用します。 +
+Example: *mail1*
++
+* *次へ* をクリックします。
+
+.. パスワードを入力・確認します。このパスワードは以下に設定する `ktpass` コマンドの
+`-pass {AD-user-password}` パラメーターに使用します。
+
+.. *パスワードの有効期限がない* や *パスワード変更ができません*
+のオプションを有効にし、*次へ* をクリックします。
+
+.. *完了* をクリックし、ユーザーを作成します。サービスアカウント名がユーザーのディレクトリに表示されます。
+
+. `setspn` のコマンドで、サービスのPrincipal Names (SPN)としてメールボックスのサーバー名をユーザーアカウントにマッピングします。SPNはクライアントとサーバーに存在する特定のサービスの間での、相互認証プロセスに使用します。
+
+..  コマンドプロンプトから以下を実行します。 `setspn -a {userlogonname} {serviceaccountname}`
++
+.サービスのPrincipal Names (SPN)としてメールボックスのサーバー名をユーザーアカウントにマッピング
+====
+[source,bash]
+----
+setspn -a HTTP/mail1.example.com mail1
+----
+====
+
+.. SPNが登録されていることを認証するために以下を実行します。 `C:\>setspn -l \{accountname}` +
+登録されているSPNのリストが表示します。
+
+. KerberosドメインにサインインするためのKeytabファイルを作成します。WindowsサーバーツールキットのKtpassツールを使用して、Kerberos keytabを作成します。
++
+[NOTE]
+KerberosのKeytabファイルには、ユーザーパスワードに類似しているキーのリストが含まれています。作成したKeytabファイルに対するアクセス制限や監視制限を行なってください。
++
+作成するには以下のコマンドを使用します。
++
+[source,bash]
+----
+ktpass -out {keytab-file-to-produce} -princ {Service-Principal-Name}@\{the-kerberos-realm} -mapUser {AD-user} -mapOp set -pass {AD-user-password} -crypto RC4-HMAC-NT -pType KRB5_NT_PRINCIPAL
+----
++
+[cols="1m,4"]
+|=======================================================================
+|ktpass -out |
+キーがこのアウトプットファイルへ書き込まれます。
+ディレクトリの場所とKeytabファイル名を入力します。Keytabファイル名は
+`jetty.keytab`。 +
+例: `C:\Temp\spengo\jetty.keytab`
+
+|-princ |
+これはプリンシパル名です。 +
+Microsoft Windows Active Directory ドメインコントローラ設定の *手順2* に使用したプリンシパル名を入力します。 +
+例: HTTP/mail1.example.com@COMPANY.COM
+
+|-mapUser |
+ユーザーアカウントに `-princ` の値をマッピングします。
+Microsoft Windows Active Directory ドメインコントローラ設定の *手順1b* で設定した *ユーザーログイン名
+(Windows2000以前)* のADサービスアカウントのユーザー名を入力します。
+
+|-mapOp |
+マッピングを設定します。このパラメーターの値は *set* です。
+
+|-pass |
+使用するパスワードです。
+
+Microsoft Windows Active Directory ドメインコントローラ設定の  *手順1c* で設定した *ユーザーログイン名 (Windows2000以前)* のパスワードを入力します。
+
+|-crypto |
+使用する暗号化システムです。 +
+*RC4-HMAC-NT* を入力します。
+
+|-pType |
+*KRB5_NT_PRINCIPAL* を入力します。 +
+ツールキットから警告メッセージを避けるために上記の値を使用します。
+
+|=======================================================================
++
+.jetty.keytabファイル作成のため `ktpass` を使用する。
+====
+[source,bash]
+----
+ktpass -out C: \Temp\spengo\jetty.keytab -princ HTTP/mail1.example.com@COMPANY.COM -mapUser mail1 -mapOp set - pass password123 -crypto RC4-HMAC-NT -pType KRB5_NT_PRINCIPAL
+----
+
+以下のような例でコマンドを確認できます。
+
+----
+Targeting domain controller: …
+
+    Using legacy password setting method
+    Successfully mappeped HTTP/mail1.example.com to mail1.
+    Key created.
+    Output keytab to c:\Temp\spengo\jetty.keytab:
+    Keytab version: 0x502
+
+    keysize 71 HTTP HTTP/mail1.example.com@COMPANY.COM ptype 1 (KRB5_NT_PRINCIPAL) vno3 etype 0x17 (RC4-HMAC) keylength 16 (0xc383f6a25f1e195d5aef495c980c2bfe)
+----
+====
+
+. ZimbraサーバーへKeytabファイル (jetty.keytab) を転送します。手順3で作成したファイルを以下のZimbraサーバーのディレクトリへコピーします。
+`/opt/zimbra/data/mailboxd/spnego/jetty.keytab`
+
+[IMPORTANT]
+`jetty.keytab` のファイル名を変更しないでください。数多くの設定ファイルがこのファイル名を使用しています。
+
+手順1-4を繰り返し、各ZimbraメールストアのサーバーにKeytabファイル (`jetty.keytab`)
+を作成します。
+
+== {product-abbrev}を設定する
+
+各Zimbraサーバーやグローバル設定にSPNEGOの属性を設定し、ドメインのプリ認証を設定します。Zimbraサーバーを変更するにはzmprovのCLIを使用します。
+
+[NOTE]
+{product-abbrev} 環境ごとに1つのKerberos REALMのみ、サポートされます。
+
+. `zmprov mcf`
+のコマンドで以下のグローバル設定の属性を編集します。
++
+[cols="1m,2",options=""]
+|=======================================================================
+|zimbraSpnegoAuthEnabled |TRUEに設定します。
+
+|zimbraSpnegoAuthErrorURL |
+ユーザーがSPNEGOの認証に失敗した際にリダイレクトされるURLです。 `/zimbra/?ignoreLoginURL=1` に設定しますと通常のZimbraログインページへリダイレクトするため、そこでユーザーはZimbraのユーザー名とパスワードを入力する必要があります。
+
+|zimbraSpnegoAuthRealm |
+ドメインコントローラにあるKerberos realmです。
+
+Active Directoryにあるドメイン名です。 (COMPANY.COM)
+
+|=======================================================================
++
+グローバル設定の属性を変更するには以下のコマンドを実行します。
+
+..  `zmprov mcf zimbraSpnegoAuthEnabled TRUE`
+..  `zmprov mcf zimbraSpnegoAuthErrorURL '/zimbra/?ignoreLoginURL=1'`
+..  `zmprov mcf zimbraSpnegoAuthRealm <COMPANY.COM>`
+
+. 各Zimbraサーバーにて、`zmprov ms` のコマンドで以下のグローバル設定を編集します。
++
+[cols="1m,2",options="",]
+|=======================================================================
+|zimbraSpnegoAuthTargetName |
+手順1bのユーザーログイン名です。
+
+|zimbraSpnegoAuthPrincipal |
+`zimbraSpnegoAuthTargetName` に設定したユーザーログイン名とグローバル設定の `zimbraSpnegoAuthRealm` に設定したアドレスを入力します。
++
+形式:
++
+`zimbraSpnegoAuthTargetName@zimbraSpnegoAuthRealm`
+
+例: *HTTP/mail1.example.com@COMPANY.COM*
+
+|=======================================================================
++
+サーバーのグローバル設定の属性を編集するには以下のコマンドを実行します。
++
+.. `zmprov ms mail1.example.com zimbraSpnegoAuthTargetName HTTP/mail1.example.com`
+.. `zmprov ms mail1.example.com zimbraSpnegoAuthPrincipal HTTP/mail1.example.com@COMPANY.COM`
+
+. ドメインに以下の内容が設定されます。
+* Kerberos Realm
+* 仮想ホスト
+* ウェブクライアントのログインURLとUA
+* ウェブクライアントのログアウトURLとUA
+
+..  ドメインにKerberos Realmを設定します。グローバル設定の属性 `zimbraSpnegoAuthRealm` に設定したRealmです。 +
+形式:
++
+`zmprov md {domain} zimbraAuthKerberos5Realm {kerberosrealm}`
+
+..  ドメインに仮想ホストを設定します。ZimbraウェブクライアントUIの閲覧に使用できるホスト名が、Virtual-hostname-* です。 +
+形式:
++
+[source,bash]
+----
+zmprov md {domain} +zimbraVirtualHostname {virtual-hostname-1} +zimbraVirtualHostname {virtual-hostname-2}
+...
+----
+
+.. ドメインのログインURLとして許可するウェブクライアントURLとUAを設定します。
++
+** ログインURLを設定します。また、Zimbraの認証トークンの期限が切れた場合にユーザーがログインURLへリダイレクトされます。 +
+形式:
++
+`zmprov md {domain} zimbraWebClientLoginURL '../service/spnego'`
+** サポートしているプラットフォームとブラウザのみを有効にする。
++
+*zimbraWebClientLoginURLAllowedUA* はマルチバリューの属性で、値は、正規表現です。設定されていない場合、すべてのUAを許可します。複数の値が設定されている場合、UAが設定されている値のいずれかに一致している限り、アクセスが許可されます。
++
+[source,bash]
+----
+zmprov md {domain} +zimbraWebClientLoginURLAllowedUA {UA-regex-1} +zimbraWebClientLoginURLAllowedUA {UA-regex-2} ...
+----
++
+例えば、 Windows上のFirefox, Internet Explorer, Chrome,Safarと、Apple Mac上のSafariに `zimbraWebClientLoginURL` を 有効にする場合、以下のコマンドを実行します。
++
+[source,bash]
+----
+zmprov md {domain} +zimbraWebClientLoginURLAllowedUA '._Windows._Firefox/3.*'
+zmprov md {domain} +zimbraWebClientLoginURLAllowedUA '._MSIE._Windows.*'
+zmprov md {domain} +zimbraWebClientLoginURLAllowedUA '._Windows._Chrome.*'
+zmprov md {domain} +zimbraWebClientLoginURLAllowedUA '._Windows._Safari.*'
+zmprov md {domain} +zimbraWebClientLoginURLAllowedUA '._Macintosh._Safari.*'
+----
+
+..  ドメインのログアウトURLとして許可するウェブクライアントURLとUAを設定します。
++
+** ログアウトURLを設定します。ユーザーがログアウトのリンクをクリックした際にリダイレクトするURLです。
++
+[source,bash]
+----
+zmprov md {domain} zimbraWebClientLogoutURL '../?sso=1'
+----
++
+
+** サポートしているプラットフォームとブラウザのみを有効にする。
+`zimbraWebClientLogoutURLAllowedUA` はマルチバリューの属性で、値は正規表現です。設定されていない場合、すべてのUAを許可します。複数の値が設定されている場合、UAが設定されている値のいずれかに一致している限り、アクセスが許可されます。
++
+[source,bash]
+----
+zmprov md {domain} +zimbraWebClientLogoutURLAllowedUA {UA-regex-1} +zimbraWebClientLogoutURLAllowedUA {UA-regex-2} ...
+----
++
+例えば、 Windows上のFirefox, Internet Explorer, Chrome,Safarと、Apple Mac上のSafariに `zimbraWebClientLogoutURL` を 有効にする場合、以下のコマンドを実行します。
++
+[source,bash]
+----
+zmprov md {domain} +zimbraWebClientLogoutURLAllowedUA '._Windows._Firefox/3.*'
+zmprov md {domain} +zimbraWebClientLogoutURLAllowedUA '._MSIE._Windows.*'
+zmprov md {domain} +zimbraWebClientLogoutURLAllowedUA '._Windows._Chrome.*'
+zmprov md {domain} +zimbraWebClientLogoutURLAllowedUA '._Windows._Safari.*'
+----
+
+[[configure_your_browser]]
+== ブラウザを設定する
+
+SPNEGO SSO機能がドメインで有効な場合、ユーザーのブラウザを正常に設定する必要があります。正常に設定されていないとブラウザによっては、実際の動作が変化する原因になります。
+
+以下のブラウザをサポートしています。
+
+* Windows のコンピュータの場合：Internet Explorer 10.0 以降、Edge、Firefox 52 以降、Chrome, Safari
+
+* Apple Mac のコンピュータ： Safari
+
+. WindowsでのFirefoxの設定について
+
+..  Firefoxのアドレスバーに *about:config* を入力しアクセスします。 警告 -- *動作保証対象外になります！* が表示されます。
+..  *細心の注意を払って使用する* のボタンをクリックします。
+..  検索ボックスに *network.n* を入力します。URLを信頼済みドメインやURLをカンマ区切りのリストで入力します。
++
+*network.negotiate-auth.delegation-uris* をダブルクリックし、
+*http://,https://* を追加します。
++
+*network.negotiate-auth.trusted-uris* をダブルクリックし、
+*http://,https://* を追加します。
++
+_または、特定のURLを設定する場合_
++
+*network.negotiate-auth.delegation-uris* をダブルクリックし、URLを追加します。
+例えば: http://mail1.example.com,https://
+mail2.example.com
++
+*network.negotiate-auth.trusted-uris* をダブルクリックし、URLを追加します。例えば: http://mail1.example.com,https://
+mail2.example.com
+
+. WindowsにInternet Explorer, Chrome, およびSafariの設定について
+
+.. これらのブラウザは *ツール > インターネットオプション > セキュリティ > ローカルイントラネット >サイト* をアクセスします。サイトの画面にすべての属性にチェックが入れていることを確認します。
+
+..  *詳細設定* をクリックします。
+http:// および https:// のドメインサーバー (ホスト名) URLを追加します。
+.. *OK* をクリックし、ファイルをクローズします。
+.. *ツール > インターネットオプション > 詳細設定 > セキュリティ* をアクセスします。
+*統合Windows認証を使用する* にチェックを入れます。
+
+.. *OK* をクリックし、ブラウザを閉じます。
+
+. MacのSafariについて、特定の設定は必要ありません。
+
+== 環境をテストする
+
+. Windows、またはApple Macのコンピュータでドメインユーザーとしてコンピュータへログオンします。
++
+ドメインユーザーのチケットがコンピュータに保存されます。SPNEGO対応のブラウザがトークンを取得し、認証のヘッダー内にてZimbraサーバーへ送信します。
+
+. Zimbraウェブクライアントのログインページへアクセスします。ユーザー名とパスワードを入力せずにZWCの受信トレイが開くはずです。
++
+SPNEGO認証が失敗した場合、ユーザーがエラーのURLへリダイレクトされます。
+
+== トラブルシューティングのセットアップ
+
+以下の条件を満たすことを確認します。
+
+* ブラウザはイントラネットのゾーン内にある。
+* ユーザーがサーバーをIPアドレスではなく、ホスト名でアクセスしている。
+* Internet Explorer内の「統合Windows認証を使用する」のオプションが有効であり、Firefox内でホストが信頼済みとして設定されている。
+* サーバーが特定のブラウザに依存しない。
+* クライアントのKerberosシステムはドメインコントローラに認証されている。
+
+* ブラウザが「401 Unauthorized」のエラーを表示する場合、ブラウザが401に応答する認証のリクエストを正常に送信していないか、GSS-API/SPNEGOスキーマを使用していない認証を送信したと考えられます。
++
+ブラウザの設定を確認し、サポートされているブラウザ、またはプラットフォームであるようにしてください。
+
+* `zimbraSpnegoAuthErrorURL` で指定されたエラーURLへリダイレクトされた場合、SPNEGOの認証シーケンスが正常に機能していないということです。
++
+ネットワークのトレースを取得し、ブラウザが401に応答する認証ヘッダーを送信していることを確認します。また、NegotiateがNTLMではなく、GSS-API/SPNEGOを使っていることを確認します (Wiresharkのようなネットワークパケット解読プログラムを使用してください) 。
++
+ブラウザが正しいNegotiateを送信していることを確認した上で正常に機能しない場合、以下のデバッグ情報を有効化し、Zimbraのログを確認します。
++
+--
+** localconfigキーの `spnego_java_options` に以下を追加します。
++
+"`-DDEBUG=true -Dsun.security.spnego.debug=all`"
+** `log4j` に以下を追加します。
++
+`log4j.logger.org.mortbay.log=DEBUG`
+--
++
+この後、メールボックスサーバーを再起動します。
++
+デバッグのsnoop.jspにアクセス可能かどうかを確認します。
+http://{server}:{port}/spnego/snoop.jsp
++
+デバッグの出力内容がzmmailboxd.outとmailbox.logに記録されます。
+
+** この時点で考えられる原因の１つがJettyサーバーのクロックずれです。この場合、`zmmailboxd.out` 内で確認できます。クロックのずれを修正し再度試してください。
+
+== Kerberos認証にSPNEGO認証を設定する
+
+ドメイン上でKerberos認証とSPNEGOは共存できます。よくある事例として、ユーザーがSPNEGOで認証できない場合、元のZimbra LDAPへ認証せずにKerberosを使用してユーザーのプリンシパル/パスワードをKDCにて認証します。
+
+SPNEGO認証が失敗した場合、ブラウザが正常に設定されているならZimbraのログインページへリダイレクトされます。ユーザーはZimbraのユーザー名とパスワードを入力して、マニュアル操作でログインすることができます。ドメイン属性の
+`zimbraAuthMech` がパスワード認証の方法を管理します。
+`zimbraAuthMech` が「Kerberos5」に設定されている場合、ユーザーが入力するユーザー名は、有効なZimbraユーザーかどうかを識別するに使用されます。 (ユーザーはZimbra LDAPにプロビジョンされているはずであるため) その後、ZimbraからユーザーはKerberosプリンシパルへマッピングされ、Kerberosプリンシパル+パスワードがKDCにて認証されます。このKDCは、Active Directoryのドメインコントローラとして (SPNEGO認証用に) 実行しているKDCである場合も、そうでない場合もあります。
+
+[NOTE]
+各Microsoft Active DirectoryのドメインコントローラはKerberos KDCとして動作します。SPNEGO認証の場合、KDCはメールボックスサーバーから依頼されません。JettyのKeytabファイルに沿い、認証のHttpヘッダーから送信されるKerberosトークンは、ユーザーを識別・認証することができます。
+
+Kerberos認証の場合 (`zimbraAuthMech*="kerberos5"`)、メールボックスサーバーがプリンシパル+パスワードを検証するためにKDCへ依頼する必要があります。JavaのKerberosクライアント (つまりZimbraメールボックスサーバー) の場合、デフォルトのRealmとそのRealm 用KDCは、Kerberosの設定ファイルに指定されています。この設定ファイルの場所はJVM引数 `java.security.krb5.conf` で指定されます。指定されていない場合、デフォルトの場所は `/etc/krb5.conf` となります。Zimbra内でSPNEGOを有効化した場合、メールボックスサーバーの `java.security.krb5.conf` が `/opt/zimbra/jetty/etc/krb5.ini` に設定されます。このため、Kerberos認証の設定設定に有効なファイルです。
+
+メールボックスサーバーが再起動するたび、
+`/opt/zimbra/jetty/etc/krb5.ini.in` から `/opt/zimbra/jetty/etc/krb5.ini` は再度書き込みされます。そのため、設定を変更するには
+`/opt/zimbra/jetty/etc/krb5.ini` ではなく、 `/opt/zimbra/jetty/etc/krb5.ini.in` ファイルを編集する必要があります。
+
+[realms] セクションにて、kdcとadmin_serverはSPNEGO認証用には設定されませんが、Kerberos認証で必要になります。
+
+設定する場合
+
+. /opt/zimbra/jetty/etc/krb5.ini.in を編集します。
+. 既存の内容
+----
+[realms]
+%%zimbraSpnegoAuthRealm%% = {
+default_domain = %%zimbraSpnegoAuthRealm%%
+}
+----
+上記を以下の内容にて上書きします。
+----
+%%zimbraSpnegoAuthRealm%% = {
+             kdc = YOUR-KDC
+             admin_server = YOUR-ADMIN-SERVER
+             default_domain = %%zimbraSpnegoAuthRealm%%
+}
+----
+
+. YOUR-KDCとYOUR-ADMIN-SERVERには、Kerberos認証が起動しているKDC/admin_serverのホスト名を入れてください。
+
+. ファイルを保存し、メールボックスサーバーを再起動します。
+
+絶対条件としてはSPNEGOとKerberos認証のRealmを一致させる必要があります。SPNEGO認証の場合、認証ヘッダーのKerberosプリンシパルは一意のZimbraアカウントにマッピングします。Kerberos認証の場合、Zimbraアカウントは一意のKerberosプリンシパルにマッピングします。(ドメイン属性の
+`zimbraAuthKerberos5Realm` により) このマッピングは双方で同じです。
+
+[[setting_up_single_sign_on_options_for_zco]]
+== ZCOにシングルサインオンのオプションを設定する
+
+[NOTE]
+SSOのオプションを使用するには、SPNEGOを{product-abbrev}サーバーに設定する必要があります。
+
+シングルサインオンのオプションは特定のサーバーのみに使用できます。ZCOのプロファイル内で使用しているサーバー名がSPNEGOの設定と一致する必要があります。インストール前に、サーバー名が `.msi` ファイルへ組み込まれていることを確認してください。
+
+シングルサインオンのオプションを `.msi` のカスタムスクリプトに設定する場合
+
+.  サーバー名にSPNEGOに設定するサーバー名を設定します。
+`-sn <spnegoserver.example.com>`
+.  パスワードルールを設定します。 `-pw 0`
+
+[source,bash]
+----
+cscript ZmCustomizeMsi.js <path/msi-filename> -sn <spnegoserver.example.com> -pw 0
+----
