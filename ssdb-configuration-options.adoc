@@ -35,7 +35,7 @@ maintain a configured virtual IP address that is bound to the master
 `SSDB` instance under normal conditions.
 
 
-image:images/ssdb-master-slave-normal.png[]
+image:ssdb-master-slave-normal.png[]
 
 ==== Fail-over
 
@@ -44,7 +44,7 @@ backup instance is promoted to master by re-binding the virtual IP
 address to the backup.
 
 
-image:images/ssdb-master-slave-failover.png[]
+image:ssdb-master-slave-failover.png[]
 
 
 === High-availability with Master-Master replication
@@ -56,7 +56,7 @@ http://www.haproxy.org/[HAProxy] as a front-end.  Keep in mind that,
 for production, you must use a proxy service that is, itself, highly-available.
 
 
-image:images/ssdb-master-master.png[]
+image:ssdb-master-master.png[]
 
 === Horizontal Scaling via Multi-Master Configuration
 
@@ -71,7 +71,7 @@ By configuring each `SSDB` instance in master-slave configuration, you
 get both horizontal scaling and high-availability.
 
 
-image:images/ssdb-multi-master.png[]
+image:ssdb-multi-master.png[]
 
 
 == Master-Slave Replication

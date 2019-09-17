@@ -115,7 +115,7 @@ taken offline between the end of the migration and the backend URL change, migra
 
 These scenarios are demonstrated below:
 
-image:images/ephemeral-data-migration.png[]
+image:ephemeral-data-migration.png[]
 
 === Advanced Migration Options
 

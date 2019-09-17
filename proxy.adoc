@@ -64,7 +64,7 @@ This section describes the architecture and flow sequence of Zimbra proxy.
 Nginx component sends an HTTP request to {product-name} Proxy Route
 Lookup Handler component.
 +
-image:images/proxy_architecture_and_flow.png[Proxy Architecture]
+image:proxy_architecture_and_flow.png[Proxy Architecture]
 
 .  {product-name} Proxy Route Lookup Handler locates the route
 information for the account being accessed and returns this to Nginx.

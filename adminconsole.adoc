@@ -158,7 +158,7 @@ accordance with your selections. Other portions of the UI -- arrow buttons,
 search field, screen refresh, current location/path, current login, and
 Help -- always remain in view.
 
-The Gear Icon image:images/gear_icon.png[Gear Icon] is displayed with
+The Gear Icon image:gear_icon.png[Gear Icon] is displayed with
 certain screens, to enable quick access to functions associated with the
 functions provided in the screens. For more information about the Gear
 icon, see <<using_the_gear_icon,Using the Gear icon>>
@@ -331,13 +331,13 @@ for a selected host, as follows:
 * Place and hold the cursor on the Service Hostname to view popup
 license information.
 +
-image:images/admin_console_monitor_ui_license.png[License]
+image:admin_console_monitor_ui_license.png[License]
 
 * Right-click on the Service Hostname and select *View* from the popup to
 go to the statistics page for it. You can also double-click on the Service
 Hostname to access the statistics page.
 +
-image:images/admin_console_monitor_ui_view.png[View]
+image:admin_console_monitor_ui_view.png[View]
 --
 For the selected Server, the Server Statistics navigation pane provides
 options to view Disk, Session, Mailbox Quota, Message Count, Message
@@ -1095,7 +1095,7 @@ from the Gear icon, which varies for particular functions.
 .Gear Icon Operations
 [cols="1,1,3a",options="header"]
 |=======================================================================
-|Navigation Pane Topic |Selections |Options image:images/gear_icon.png[Gear Icon]
+|Navigation Pane Topic |Selections |Options image:gear_icon.png[Gear Icon]
 .2+|*Home Monitor*
 |Server Statistics |View
 |Mail Queues |Flush

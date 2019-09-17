@@ -177,14 +177,14 @@ The Quick Access Sidebar displays the last people, groups, and channels the user
 
 It is available for both "Basic" users and "Advanced" users and provides additional features for the latter.
 
-image:images/connect_quick_chat_1.png[connect_quick_chat_1.png,title="connect_quick_chat_1.png", 200]
-image:images/connect_quickaccess_sidebar_1.png[connect_quickaccess_sidebar_1.png,title="connect_quickaccess_sidebar_1.png", 400]
+image:connect_quick_chat_1.png[connect_quick_chat_1.png,title="connect_quick_chat_1.png", 200]
+image:connect_quickaccess_sidebar_1.png[connect_quickaccess_sidebar_1.png,title="connect_quickaccess_sidebar_1.png", 400]
 
 === Connect Tab
 
 The Connect Tab is a fully-fledged Zimbra feature tab that behaves similarly to all other feature tabs (e.g., Mail or Calendar).
 
-image:images/connect_home_1.jpg[connect_home_1.jpg,title="connect_home_1.jpg"]
+image:connect_home_1.jpg[connect_home_1.jpg,title="connect_home_1.jpg"]
 
 == Instant Messaging and Corporate Communication
 
@@ -194,11 +194,11 @@ One-to-one Chats can start from either the Quick Access Sidebar or the Connect T
 
 * on the former, select one of the available entries (based on your chat history) and start chatting with that person right away
 
-image:images/connect_new_chat_2.png[connect_new_chat_2.png,title="connect_new_chat_2.png"]
+image:connect_new_chat_2.png[connect_new_chat_2.png,title="connect_new_chat_2.png"]
 
 * on the latter click on "New," then "New Chat" and select the person you want to chat with from the GAL
 
-image:images/connect_new_chat_1.png[connect_new_chat_1.png,title="connect_new_chat_1.png"]
+image:connect_new_chat_1.png[connect_new_chat_1.png,title="connect_new_chat_1.png"]
 
 Recent 1-to-1 chats appear in the "Conversations" section of the Connect Tab and the Quick Access Sidebar (round icon).
 
@@ -227,23 +227,23 @@ Recent Group chats appear in the "Conversations" section of the Connect Tab and 
 +
 To create a new Group, click on the "New" button in the Connect Tab, and select "New Group."
 +
-image:images/connect_create_new_group_1.jpg[connect_create_new_group_1.jpg,title="connect_create_new_group_1.jpg"]
+image:connect_create_new_group_1.jpg[connect_create_new_group_1.jpg,title="connect_create_new_group_1.jpg"]
 +
 then, add the Group's title, select the buddies you wish to invite and click on "Create."
 +
-image:images/connect_create_new_group_2.jpg[connect_create_new_group_2.jpg,title="connect_create_new_group_2.jpg"]
+image:connect_create_new_group_2.jpg[connect_create_new_group_2.jpg,title="connect_create_new_group_2.jpg"]
 
 * Inviting a participant to a Group
 +
 To invite one or more buddies to a Group expand the Group's Info, select the users to be added and click on "Save."
 +
-image:images/connect_add_user_to_group_1.jpg[connect_add_user_to_group_1.jpg,title="connect_add_user_to_group_1.jpg"]
+image:connect_add_user_to_group_1.jpg[connect_add_user_to_group_1.jpg,title="connect_add_user_to_group_1.jpg"]
 
 * Starting a Group Video Chat
 +
 To start a Group video chat, click on the "Camera" icon on the top of the Group's chat window.
 +
-image:images/connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
+image:connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
 +
 Any member of the Group can join the call at any time by clicking on the same button.
 
@@ -251,11 +251,11 @@ Any member of the Group can join the call at any time by clicking on the same bu
 +
 To leave a Group, first, click on "Leave Group" in the Group's Info
 +
-image:images/connect_leave_group_1.png[connect_leave_group_1.png,title="connect_leave_group_1.png"]
+image:connect_leave_group_1.png[connect_leave_group_1.png,title="connect_leave_group_1.png"]
 +
 then, click on "Yes" under the warning message.
 +
-image:images/connect_leave_group_2.png[connect_leave_group_2.png,title="connect_leave_group_2.png"]
+image:connect_leave_group_2.png[connect_leave_group_2.png,title="connect_leave_group_2.png"]
 
 === Spaces
 
@@ -277,11 +277,11 @@ Spaces appear in a dedicated section of the Connect Tab, which gives access to a
 +
 To create a new Space, click on the "New" button in the Connect Tab, and select "New Space."
 +
-image:images/connect_new_space_1.jpg[connect_new_space_1.jpg,title="connect_new_space_1.jpg"]
+image:connect_new_space_1.jpg[connect_new_space_1.jpg,title="connect_new_space_1.jpg"]
 +
 then, enter the Space's name and topic, select any users to invite and finally, click on "Save."
 +
-image:images/connect_new_space_2.jpg[connect_new_space_2.jpg,title="connect_new_space_2.jpg"]
+image:connect_new_space_2.jpg[connect_new_space_2.jpg,title="connect_new_space_2.jpg"]
 
 * Leaving a Space
 +
@@ -296,7 +296,7 @@ The General Channel Info in each Space defines its settings (see below).
 
 The Space's creator is also the first Space Administrator and can grant the same rights to any other user by clicking on the crown icon in the appropriate entry of the participant list.
 
-image:images/connect_space_acls_1.png[connect_space_acls_1.png,title="connect_space_acls_1.png"]
+image:connect_space_acls_1.png[connect_space_acls_1.png,title="connect_space_acls_1.png"]
 
 Only Space Administrators can invite new participants, create new channels, kick people, and delete channels within the space.
 
@@ -322,7 +322,7 @@ Channels appear in Spaces within the Connect Tab, and all of the Channel-related
 +
 To create a new Channel, click on the "New" button, and select "New Channel."
 +
-image:images/connect_new_channel_1.png[connect_new_channel_1.png,title="connect_new_channel_1.png"]
+image:connect_new_channel_1.png[connect_new_channel_1.png,title="connect_new_channel_1.png"]
 +
 then select:
 
@@ -340,7 +340,7 @@ To join a Channel, click on the Channel label and then on "Join Channel."
 +
 To start a Channel video chat, click on the "Camera" icon on the Channel's chat window.
 +
-image:images/connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
+image:connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
 +
 Any member of the Channel can join the call at any time by clicking on the same button.
 
@@ -348,7 +348,7 @@ Any member of the Channel can join the call at any time by clicking on the same 
 +
 To leave a Channel, first, click on the red "Leave Channel" entry in the Channel's Info
 +
-image:images/connect_leave_channel_1.png[connect_leave_channel_1.png,title="connect_leave_channel_1.png"]
+image:connect_leave_channel_1.png[connect_leave_channel_1.png,title="connect_leave_channel_1.png"]
 
 Both normal users and Space Admins can leave a channel at any time and join it afterward.
 
@@ -363,7 +363,7 @@ When starting their first video chat, users need to grant their browser access p
 
 === Video Chat UI
 
-image:images/connect_group_videochat.png[connect_group_videochat.png,title="connect_group_videochat.png"]
+image:connect_group_videochat.png[connect_group_videochat.png,title="connect_group_videochat.png"]
 
 The video chat UI has three main areas:
 
@@ -384,7 +384,7 @@ Every participant can mute their audio stream or stop their video stream.
 
 ==== Screen Sharing
 
-image:images/connect_videochat_screensharing_1.png[connect_videochat_screensharing_1.png,title="connect_videochat_screensharing_1.png"]
+image:connect_videochat_screensharing_1.png[connect_videochat_screensharing_1.png,title="connect_videochat_screensharing_1.png"]
 
 When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window. 
 After choosing, the screen sharing feed replaces the user's webcam feed for all participants.
@@ -411,7 +411,7 @@ Should either of the two not be set up, the system falls back to the `zimbraServ
 Presence is managed automatically in {zconnect-name}: whenever a user logs in, regardless of whether the Connect Tab has the focus, they appear as *online*.
 
 As part of the user presence system, all messages get displayed with a variable number of check symbols:
-image:images/connect_message_delivered_1.png[connect_message_delivered_1.png,title="connect_message_delivered_1.png"]
+image:connect_message_delivered_1.png[connect_message_delivered_1.png,title="connect_message_delivered_1.png"]
 
 * 0 checks, message not delivered to the server
 * 1 check, message delivered to the server
@@ -421,7 +421,7 @@ image:images/connect_message_delivered_1.png[connect_message_delivered_1.png,tit
 
 The number of unread messages in any conversation, Group or Channel appears on the right side of the conversation, Group, or Channel.
 
-image:images/connect_unread_messages_1.png[connect_unread_messages_1.png,title="connect_unread_messages_1.png"]
+image:connect_unread_messages_1.png[connect_unread_messages_1.png,title="connect_unread_messages_1.png"]
 
 == Chat History
 
