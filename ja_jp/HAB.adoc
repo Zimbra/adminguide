@@ -3,6 +3,13 @@
 
 == HAB について
 
+******************************************************************************
+
+ご注意ください：
+ZCS 8.8.15 の初期リリースでは階層制度アドレス帳 (Hierarchical Address Book、HAB)は英語でのみサポートしています。今後のパッチリリースに他の言語のサポートを提供する予定となっております。
+
+******************************************************************************
+
 階層制度のアドレス帳 (HAB) ではユーザー様がアドレス帳に部署の単位で宛先を検索することが可能となります。ほとんどの場合、ユーザー様はデフォルトのグローバルアドレス帳（GAL)のデフォルト単位のみをアクセスできますので、部署の詳細、同じ名前の人の区別、などを簡単に特定できない状況です。HABを実際のビジネス単位へカスタマイズすることで、ユーザー様に内部の宛先をより効率的に検索することが可能となります。
 
 == 階層制度アドレス帳の運用について
@@ -35,11 +42,10 @@ image::HABHierarchy.png[]
 ==== 操作コマンド
  zmprov createHABOrgUnit <OUのドメイン名> <OU名>
 
-==== 実例
- zmprov createHABOrgUnit example.com ZimbraOU
+==== 使用例
+organizational unitとして_{product-family}OU_を作成します。
 
-==== 詳細
-_{product-family}OU_ as an organizational unit created.
+ zmprov createHABOrgUnit example.com ZimbraOU
 
 [#createHABGroup]
 === この OU にグループを作成する
@@ -49,7 +55,7 @@ _{product-family}OU_ as an organizational unit created.
 
  zmprov createHABGroup <グループ名> <OU名> <グループのメールアドレス>
 
-==== 実例
+==== 使用例
 
 以下のコマンドでは、<<ExampleHierarchy>> を参考し、*8* の HAB グループを作成します。
 
@@ -79,7 +85,7 @@ _{product-family}OU_ as an organizational unit created.
 
  zmprov addHABGroupMember ParentGroupEmailAddress ChildGroupEmailAddress
 
-==== 実例
+==== 使用例
 
 以下のコマンドでは、<<ExampleHierarchy>> の階層制度を参考し、Zimbra のグループがルートのグループであるため、*7* の HAB グループに親グループを指定します。
 
@@ -110,17 +116,17 @@ _{product-family}OU_ as an organizational unit created.
 
  zmprov gdl <グループのメールアドレス> zimbraId
 
-==== 実例
+==== 使用例
 
  zmprov gdl zimbra@example.com zimbraId
 
-==== 実例の出力
+==== 使用例のサンプル出力
 
  # distributionList zimbra@example.com memberCount=4
  zimbraId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 ==== 詳細
-ルートのグループとして指定するグループのメールアドレスは_zimbra@example.com_ です。
+ルートのグループとして指定するグループのメールアドレスは _zimbra@example.com_ です。
 
 [#AddUsers]
 === グループへユーザーを追加する
@@ -131,7 +137,7 @@ _{product-family}OU_ as an organizational unit created.
 
  zmprov addHABGroupMember <グループのメールアドレス> <ユーザーのメールアドレス>
 
-==== 実例
+==== 使用例
 
  zmprov addHABGroupMember hr@example.com jane.doe@example.com
 
@@ -145,7 +151,7 @@ HAB でグループが表示する順番を指定します。年功序列が高�
 
  zmprov modifyHABGroupSeniority <zimbra ID> <年功序列>
 
-==== 実例
+==== 使用例
 
 グループ名とアルファベット順を問わず、_Engineering_ のグループを _CorporateOffice_ の上に表示させるため、 <<#GetZimbraId, Zimbra ID>> を取得し、`SeniorityIndexNumber` に指定する年功序列の重要性を特定し、以下のコマンドを実行します。
 
@@ -168,11 +174,11 @@ _Engineering_ に年功序列を 100 に指定する
 
  zmprov md <ドメイン名> zimbraHierarchicalAddressBookRoot <ルートとして指定するグループの ZimbraID>
 
-==== 実例
+==== 使用例
 
  zmprov md 'example.com' zimbraHierarchicalAddressBookRoot xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
-==== 実例の出力
+==== 使用例のサンプル出力
 
  # distributionList zimbra@example.com memberCount=4
  zimbraId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
@@ -189,3 +195,40 @@ _Engineering_ に年功序列を 100 に指定する
 image::HABStructure-zimbra.png[]
 +
 . グループをクリックしますと、そのグループにあるユーザーを閲覧し、メールの宛先として選択することが可能です。
+
+== 部門名 (Organizational Unit, OU) の管理
+[#list-OU]
+=== 部門名 (OU）をリストする
+ドメインに複数の部門名を含まれる場合があります。このコマンドで指定したドメインにあるすべての部門名をリストします。
+
+==== 構文
+ zmprov listHABOrgUnit <OUのドメイン名>
+
+==== 使用例
+_example.com_ のドメインにあるすべての OU リストを表示します。
+
+ zmprov listHABOrgUnit example.com ZimbraOU
+
+[#rename-OU]
+=== 部門名 (OU) の名前を更新する
+このコマンドで指定したドメインにある特定の OU の名前を更新します。
+
+==== 構文
+ zmprov renameHABOrgUnit <OUのドメイン名> <OU名> <新しいOU名>
+
+==== 使用例
+_{product-family}OU_ の名前を _ZMXOU_ へ更新します。
+
+ zmprov renameHABOrgUnit example.com ZimbraOU ZMXOU
+
+[#delete-OU]
+=== 部門名 (OU) を削除する
+このコマンドで指定したドメインにある特定の OU を削除します。
+
+==== 構文
+ zmprov renameHABOrgUnit <OUのドメイン名> <OU名>
+
+==== 使用例
+_{product-family}OU_ を削除します。
+
+ zmprov renameHABOrgUnit example.com ZimbraOU

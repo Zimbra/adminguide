@@ -594,21 +594,27 @@ Microsoft ExchangeもしくはPSTファイルから{product-name}
 --
 [WARNING]
 このパッケージはPSTファイルのインポートのみサポートしており、テクニカルガイダンスのサポートのみが2020年12月31日まで提供しています。
-なお、すべてのアカウント移行の代替案として、https://zimbra.audriga.com/[audriga社の移行ソリューション] の利用を推奨しております。
+なお、すべてのアカウント移行の代替案として、
+https://zimbra.audriga.com/[audriga社の移行ソリューション]
+の利用を推奨しております。
 --
 
 |*Domino用{product-abbrev} 移行ウィザード* |
 --
 [WARNING]
 このパッケージのサポートが終了しております。
-なお、すべてのアカウント移行の代替案として、https://zimbra.audriga.com/[audriga社の移行ソリューション] の利用を推奨しております。
+なお、すべてのアカウント移行の代替案として、
+https://zimbra.audriga.com/[audriga社の移行ソリューション]
+の利用を推奨しております。
 --
 
 |*レガシーExchange用 {product-abbrev} 移行ウィザード* |
 --
 [WARNING]
 このパッケージのサポートが終了しております。
-なお、すべてのアカウント移行の代替案として、https://zimbra.audriga.com/[audriga社の移行ソリューション] の利用を推奨しております。
+なお、すべてのアカウント移行の代替案として、
+https://zimbra.audriga.com/[audriga社の移行ソリューション]
+の利用を推奨しております。
 --
 
 |*Outlook MSI Customizer* 用Zimbraコネクタ |
@@ -637,7 +643,9 @@ PST インポートする場合、一般的な移行ウイザードを使用し�
 --
 [WARNING]
 このパッケージのサポートが終了しております。
-なお、すべてのアカウント移行の代替案として、https://zimbra.audriga.com/[audriga社の移行ソリューション] の利用を推奨しております。
+なお、すべてのアカウント移行の代替案として、
+https://zimbra.audriga.com/[audriga社の移行ソリューション]
+の利用を推奨しております。
 --
 
 |*一般的な移行ウイザード* |
@@ -645,7 +653,9 @@ PST インポートする場合、一般的な移行ウイザードを使用し�
 --
 [WARNING]
 このパッケージはPSTファイルのインポートのみサポートしております。
-なお、すべてのアカウント移行の代替案として、https://zimbra.audriga.com/[audriga社の移行ソリューション] の利用を推奨しております。
+なお、すべてのアカウント移行の代替案として、
+https://zimbra.audriga.com/[audriga社の移行ソリューション]
+の利用を推奨しております。
 --
 |=================================================
 

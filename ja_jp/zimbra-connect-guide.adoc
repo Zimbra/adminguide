@@ -1,0 +1,454 @@
+:zconnect-name: Zimbra Connect
+= {zconnect-name}
+:toc:
+
+== {zconnect-name} について
+
+******************************************************************************
+
+ご注意ください：
+ZCS 8.8.15 の初期リリースでは Zimbra Connect の UI は英語、フランス語、およびロシア語でのみ提供しておりますが、今後のパッチリリースに他の言語のサポートを提供する予定となっております。
+
+******************************************************************************
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::["{product-version}" == "8.8.15"]
+{product-name} {product-version} に追加されました
+endif::[]
+//
+{zconnect-name} では、グループと法人のメッセージ機能、ファイル共有、スクリーン共有、およびカジュアルのビデオチャット機能が含まれているビジネス用のインスタントメッセージプラットフォームを Zimbra ウェブクライアントへ追加することが可能です。
+
+=== Zimbra Talk V2との違いについて
+
+{zconnect-name} と Zimbra Talk V2 について、主に以下の違いがございます。
+
+.バックエンド
+[cols=",",options="header",]
+|===
+|Zimbra Talk V2 |Zimbra Connect
+|XMPPをサポートする |XMPP をサポートしない
+|専用の API セットがない    |専用の API セットとクライアントプロトコールを提供する
+|クライアント/サーバのコミュニケーションが SOAP でベースしている    |クライアント/サーバのコミュニケーションは WebSockets でベースしている
+|===
+
+.フロントエンド
+[cols=",",options="header",]
+|===
+|Zimbra Talk V2 |Zimbra Connect
+|友達のリストへ登録したユーザーと交流する    |GAL によりユーザーと交流する
+|友達リストにベースした単純UI    |履歴にベースした単純UI
+|重い、使いにくいUI    |低い、使いやすいUI
+|スペースの設定がスペース自体で指定する    |スペースの設定がスペースの"general"チャネルで指定する
+|ユーザー単位でベースしたビデオとオーディオフィードの管理：ユーザー毎で他のユーザーのビデオやオーディオフィードを自由に停止し、自分自身で受信する内容をカスタマイズできる    |ホストにベースしたビデオとオーディオフィードの管理：ホストが特定の参加者のビデオやオーディオを停止し、全参加者へ影響します。ユーザー毎にフィードを独自に停止することが継続に可能です。
+|===
+
+.機能
+[cols=",",options="header",]
+|===
+|Zimbra Talk V2 |Zimbra Connect
+|ファイル共有はチャット、グループ、よおびチャネルで可能    |Zimbra 8.8.15p2 によりファイル共有はチャット、グループ、およびチャネルで可能となる予定です
+|インスタントミーティングは利用可能    |Zimbra 8.8.15p2 によりインスタントミーティングは利用可能の予定です
+|===
+
+=== フロントエンド側の機能について
+
+{zconnect-name} に以下のフロントエンド側の機能が含まれています。
+
+* メッセージ通信と既読状況の報告
+* 1対1のインスタントメッセージ
+* グループのメッセージ
+* 法人のメッセージ（スペースやチャネル）
+* グループのビデオコール
+* チャネルに無制限の参加者のビデオコール
+* ファイル共有
+* スクリーン共有
+* 顔文字
+
+=== バックエンド側の機能について
+
+{zconnect-name} は以下のバックエンド側の機能が含まれています。
+
+* COS とユーザーでの機能有効化
+* 内部の TURN サーバ互換性
+* コアのインストール必要がありません。パッケージマネージャでのZimletインストール
+* 設定が必要ない
+* サーバ負荷を回避するため、ピアツーピアの WebRTC プロトコール
+* 専用の audit ログファイル
+
+== ライセンスについて
+
+{zconnect-name} はユーザー毎にライセンスしています。ライセンスの詳細は他の Zimbra ネットワーク版の機能と同様に、ネットワーク版のラインセスファイルに記録しております。グローバルの管理者がラインセスのユーザー上限まで、詳細の機能を有効化することが可能であり、「advanced」のユーザー様のみがライセンスの上限にカウントされます。
+
+== Zimbra Chat と {zconnect-name}
+
+Zimbra Chat と {zconnect-name} の互換性はなく、同時に運用することができません。そのため、これらの製品が同じ Zimbra ネットワーク版の環境で同時にインストールすることができません。{zconnect-name} パッケージをインストールする際に Zimbra Chat Zimlet が自動的にアンインストールされます。ただし、{zconnect-name} の基準モードでは Zimbra Chat と同一の機能を提供しており、「advanced」の {zconnect-name} 機能を提供していないユーザー様は無制限で基準モードのチャット機能を利用いただけます。「advanced」のユーザー様はすべての機能を他の「advanced」ユーザ様と利用いただき、基準モードの _basic_ ユーザー様と1対1のインスタントメッセージを利用できます。基準モードの _basic_ ユーザー様は全ユーザーへの1対1のインスタントメッセージのみを利用いただけます。
+
+デフォルトでは、すべてのユーザー様は基準の _Basic_ ユーザーとして登録し、Zimbra の管理者がユーザーに _Advanced_ 機能を任意で有効化することが可能です。
+
+== {zconnect-name} Zimlet のインストール方法
+
+{zconnect-name} Zimlet は Zimbra のリポジトリに提供しており、OSのパッケージマネジャーで簡単にインストールとアップグレードすることが可能です。
+
+=== Red Hat と CentOS で {zconnect-name} Zimlet のインストール手順
+
+Red Hat と CentOS では、以下のコマンドで Zimlet をインストールします。
+
+....
+yum install zimbra-connect
+....
+
+=== Ubuntu で {zconnect-name} Zimlet のインストール手順
+
+Ubuntu では、以下のコマンドで Zimlet をインストールします。
+
+....
+apt-get install zimbra-connect
+....
+
+Zimlet をインストールしますと、サーバから Zimbra Chat のコンポーネントが自動的に削除します。
+
+=== Zimbra Talk から Zimbra Connect へ移管する方法
+理論的に、Zimbra Talk と Zimbra Connect のコアコンポーネントとZimletが異なるため、同じサーバで同時に運用することは可能ですが、データベースが共通するため、同時に利用することを推奨しておりません。また、Zimbra Connect を正常に運用するため、データベースのデータをTalk形式からConnect形式へ移管する必要もあります。
+
+Talk データを Connect へ移管するため、`doImportChannels`コマンドを活用します。
+
+....
+[zimbra@mailserver ~]$ zxsuite connect doImportChannels
+
+構文:
+   zxsuite connect doImportChannels [attr1 value1 [attr2 value2...]]
+
+
+パラメータリスト
+
+パラメータ名                           種類       期待した値
+delete_destination_before_import(O)    Boolean    true|false
+
+(M) == 必要のパラメータ, (O) == 任意のパラメータ
+....
+
+このオペレーションは複数回に実施することが可能ですが、操作自体が一方通行であり、巻き戻すことができませんので、ユーザーがConnectへ切り替えましたら（Talk Zimletを無効化し、Connect Zimletを有効化した後）、ConnectのデータをTalkへ戻せることができません。
+
+== {zconnect-name} の管理について
+
+Zimbra Connect の機能は `zxsuite config` のコマンドラインツールで有効化と無効化することが可能です。
+
+* {zconnect-name} の ≪Advanced≫ 機能を有効化する場合
+** 属性値: `teamChatEnabled`
+** 設定可能のレベル: COS, account
+* チャットの履歴を有効化、または無効化する場合
+** 属性値: `historyEnabled`
+** 設定可能のレベル:  global, server, COS, account
+* ビデオチャットを有効化、または無効化する場合
+** 属性値: `videoChatEnabled`
+** 設定可能のレベル: global, server, COS, account
+
+== ブラウザーの互換性について
+
+{zconnect-name} の機能は Zimbra ウェブクライアントをサポートしているブラウザですべて提供していますが、多少のクライアント側の制限がございます。
+
+[cols=",,,,",options="header",]
+|======================================================
+|ブラウザ |クイックアクセスサイドバー |Connectのタブ |ビデオチャット |スクリーン共有
+|Internet Explorer 11+ |◎ |◎ |× |×
+|Microsoft Edge |◎ |◎ |× |×
+|Mozilla Firefox |◎ |◎ |◎ |◎
+|Google Chrome |◎ |◎ |◎ |〇 (拡張のインストールが必要)
+|Safari |◎ |◎ |◎ |×
+|======================================================
+
+Google Chrome をご利用の場合、スクリーン共有の機能を利用いただくため、"Zextras Companion" の拡張をインストールする必要があります。なお、本拡張はChrome ウェブストアで提供しています。
+
+Firefox をご利用の場合、スクリーン共有の機能を利用いただくために最低にバージョン 66 をインストールする必要があります。
+
+== UI について
+
+{zconnect-name} の UI が PREACT で開発し、Zimbra ウェブクライアントと完全に関連されています。2つのクライアント側コンポーネントが含まれています、クイックアクセスサイドバーと完全な機能を提供しているConnectのタブです。
+
+クイックアクセスサイドバーは Zimbra Chat と同様の機能を運用しており、簡単に1対1のインスタントメッセージ、またはグループの会話が可能です。ファイル共有やビデオチャット、などの Advanced {zconnect-name} 機能について、{zconnect-name} の Advanced 機能が有効化したユーザーアカウントにのみ クイックアクセスサイドバーで利用いただけます。
+
+Connect タブは完全なる {zconnect-name} UI であり、すべての法人インスタントメッセージの機能、例えばスペースとチャネルを提供しています。
+タブ自体はBasicとAdvancedのユーザーに提供していますが、Advancedユーザーにのみ法人機能が提供します。
+
+=== クイックアクセスサイドバーについて
+
+クイックアクセスサイドバーではユーザーが最近に交流した人物、グループ、およびチャネルを表示し、簡単のチャット画面をすぐに開けることが可能です。
+
+この機能は "Basic" と "Advanced" ユーザーへ提供しており、"Advanced" ユーザーにのみ高度が機能も提供しています。
+
+image:connect_quick_chat_1.png[connect_quick_chat_1.png,title="connect_quick_chat_1.png", 200]
+image:connect_quickaccess_sidebar_1.png[connect_quickaccess_sidebar_1.png,title="connect_quickaccess_sidebar_1.png", 400]
+
+=== Connectのタブ
+
+Connectのタブは他の機能タブ（例えばメールやカレンダーのタブ）と同様に完全なる機能の利用が可能です。
+
+image:connect_home_1.jpg[connect_home_1.jpg,title="connect_home_1.jpg"]
+
+=== インスタントメッセージと法人コミュニケーションについて
+
+=== 1対1チャット
+
+1対1チャットはクイックアクセスサイドバー、またはConnectのタブから開始することが可能です：
+
+* クイックアクセスサイドバーの場合、（チャット履歴により）チャット可能の相手を選択し、新しいチャットをすぐに開始します。
+
+image:connect_new_chat_2.png[connect_new_chat_2.png,title="connect_new_chat_2.png"]
+
+* Connectタブの場合、"New" をクリックし、"New Chat" でGALからチャット希望の人物を選択します。
+
+image:connect_new_chat_1.png[connect_new_chat_1.png,title="connect_new_chat_1.png"]
+
+最近の1対1チャットは Connect タブの "Conversations"、およびクイックアクセスサイドバー (丸いアイコン) に表示されます。
+
+=== グループについて
+
+グループでは、複数の人（5人まで）を同時にコミュニケーションを取れることが可能です。グループは特定のスペースへ関連していない、継続に残るものです。ユーザーは友達リストから他のユーザーへグループの招待を送信し、グループを作成することが可能です。また、グループのメンバーは同じ方法でグループへ他のユーザーへ参加を招待することができます。全ユーザーがグループを脱落した場合、グループが消えます。
+
+==== グループの機能について
+
+* グループに参加しているユーザーが許可しているユーザー上限まで他のユーザーへグループの招待を送信できます。
+* グループに参加しているユーザーが他のユーザーとチャットすることがでいます。グループに参加している全員がそのグループへ送信したメッセージを閲覧できます。
+* グループに参加しているユーザーが他のグループのユーザーへファイル送信が可能です。グループで送信したファイルがそのグループに参加している全員にアクセスが可能です。
+* グループに参加しているユーザーが他のユーザーとのビデオチャットを開始することが可能です。また、他のグループのユーザーもグループのビデオチャットへ参加することが可能です。
+
+グローバル管理者は管理コンソールのグローバル設定にて、Zimbra Connect の設定で最大のグループメンバー数を指定することが可能です。
+
+==== グループのUIについてGroups UI
+
+最近のグループチャットは Connect タブの "Conversations"、およびクイックアクセスサイドバー (丸い四角アイコン) に表示されます。
+
+* 新しいグループを作成する方法
++
+新しいグループを作成する場合、Connect タブの "New" ボタンをクリックし、"New Group" を選択します。
++
+image:connect_create_new_group_1.jpg[connect_create_new_group_1.jpg,title="connect_create_new_group_1.jpg"]
++
+その後、グループの件名を記入し、グループへ招待する人物を選択し、"Create" をクリックします。
++
+image:connect_create_new_group_2.jpg[connect_create_new_group_2.jpg,title="connect_create_new_group_2.jpg"]
+
+* グループへ参加者を招待する
++
+グループへ人物を招待する場合、グループの詳細情報を開き、追加するユーザーを選択し、"Save" をクリックします。
++
+image:connect_add_user_to_group_1.jpg[connect_add_user_to_group_1.jpg,title="connect_add_user_to_group_1.jpg"]
+
+* グループのビデオチャットを開始する方法
++
+グループチャットを開始する場合、グループチャット画面のカメラアイコンをクリックします。
++
+image:connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
++
+グループにあるメンバーはこのカメラアイコンをクリックすることで、実施中のビデオチャットへ参加することが可能です。
+
+* グループを脱落する方法
++
+グループから脱落する場合、グループの詳細情報に "Leave Group" をクリックします。
++
+image:connect_leave_group_1.png[connect_leave_group_1.png,title="connect_leave_group_1.png"]
++
+その後、警告メッセージの下に "Yes" をクリックします。
++
+image:connect_leave_group_2.png[connect_leave_group_2.png,title="connect_leave_group_2.png"]
+
+=== スペースについて
+
+スペースは無制限のチャネルを持つことができるテーマのコンテナです。
+基本的に、スペースはコミュニティセンターや道の駅みたいが場所で、ユーザーが特定の場所（チャネル）で異なるトピックをチャットできます。
+
+==== スペースの機能
+
+* 各スペースは特定の名前とトピックがあります。
+スペースの設定にて、スペース名、およびトピックを自由に変更することが可能です。
+* メンバーはスペースをいつでも脱落できます。
+* スペースの管理者が新しいチャネルの作成、およびスペースへメンバーを招待することが可能です。
+
+==== スペースのUIについて
+
+スペースは Connect タブの専用セクションに含まれており、以下のスペース関連の機能へアクセスできます。
+
+* スペースの作成
++
+スペースを作成する場合、Connect タブの "New" ボタンをクリックし、 "New Space" をクリックします。
++
+image:connect_new_space_1.jpg[connect_new_space_1.jpg,title="connect_new_space_1.jpg"]
++
+その後、スペースの名前とトピックを記入し、招待するユーザーを選択し、"Save" をクリックします。
++
+image:connect_new_space_2.jpg[connect_new_space_2.jpg,title="connect_new_space_2.jpg"]
+
+* スペースから脱落する方法
++
+スペースから脱落する場合、スペースのGeneralチャネル情報にて、"Leave Space" をクリックします。
+
+参加者はスペースからいつでも脱落することができますが、他のスペースの管理者が存在する場合のみ、スペースの管理者がスペースから脱落することが可能です。
+
+スペースを脱落した場合、再度にスペースへ参加するために改めて招待する必要があります。以前はスペース管理者のユーザーは通常の参加者として追加しますので、管理者の権限を改めて設定する必要もあります。
+
+==== スペースの設定について
+スペースの設定が General チャネルの情報で指定しています。
+
+スペースの作成者が最初のスペースの管理者となり、参加者にクラウンのアイコンをクリックすることで、他のユーザーへ管理者の権限を与えることが可能です。
+
+image:connect_space_acls_1.png[connect_space_acls_1.png,title="connect_space_acls_1.png"]
+
+スペースの管理者はスペース内に新しいメンバーへの招待、新しいチャネルの作成、メンバーの削除、およびチャネルの削除が可能です。通常の参加者はメンバーの招待やチャネルの作成、などはできません。
+
+=== チャネルについて
+
+チャネルはスペース内にあるトピックを指定した場所です。チャネルにはユーザー数の上限がなく、ユーザーが参加しているスペースにあるチャネルを自由に参加できるので、グループと違って、参加するために招待される必要がありません。
+
+新しいスペースが作成する度、"General" のチャネルが自動的に作成され、ユーザーがスペースを参加した際に自動的に "General" へも参加します。
+
+==== チャネルの機能
+
+* チャネルのユーザーは他のチャネルのユーザーとチャットできます。チャネルへ送信したメッセージはそのチャネルの全メンバーが閲覧します。
+* チャネルのユーザーが他のチャネルのユーザーとビデオチャットを開始することが可能です。他のチャネルのメンバーはチャネルに実施中のビデオチャットへ参加することが可能です。
+
+==== チャネルのUI
+
+チャネルはConnectタブにあるスペースに囲まれており、以下のチャネル関連の機能を管理できます。
+
+* チャネルの作成
++
+新しいチャネルを作成する場合、"New"ボタンをクリックし、"New Channel"をクリックします。
++
+image:connect_new_channel_1.png[connect_new_channel_1.png,title="connect_new_channel_1.png"]
++
+その後、以下を指定します：
+
+a. チャネルを追加するスペース名 (_必須_)
+b. チャネル名 (_必須_)
+c. チャネルのトピック (_任意_)
++
+最後に、"Save" をクリックし、チャネルを作成します。
+
+* チャネルへ参加する方法
++
+チャネルへ参加する場合、チャネルのレベルをクリックし、"Join Channel" をクリックします。
+
+* チャネルのビデオチャットを開始する方法
++
+チャネルのビデオチャットを開始する場合、チャネルのチャット画面にカメラのアイコンをクリックします。
++
+image:connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
++
+チャネルのメンバーは同一のボタンをクリックすることで、実施中のビデオチャットへ参加することが可能です。
+
+* チャネルから脱落する方法
++
+チャネルか脱落する場合、チャネルの詳細情報に赤いの "Leave Channel" をクリックします。
++
+image:connect_leave_channel_1.png[connect_leave_channel_1.png,title="connect_leave_channel_1.png"]
+
+通常のユーザーとスペースの管理者がチャネルの脱落や参加を自由に実施することが可能です。
+
+== ビデオチャットについて
+
+ビデオチャットの機能はマンツーマンのチャット、グループ、およびチャネルに提供しておりますので、ウェブカメラとヘッドセットで複数人がリアルタイムでコミュニケーション、またはコンピュータの画面を他の参加者へ共有することが可能です。
+
+この機能は WebRTC プロトコールにペースしております。このプロトコールではピアツーピアの通信を自動的に調整する技術を活用し、サーバに高負荷を起こせずに、クライアントが直接に他の参加者とコミュニケーションを成立し、利用可能のネットワーク速度によりコールの品質が自動的に調整されます。最大の品質はビデオとオーディオのFull HDまで可能です。なお、ビデオチャットを初めて開始した場合、ユーザはブラウザにカメラとマイクロフォンへのアクセスを許可する必要があります。
+
+=== ビデオチャットのUIについて
+
+image:connect_group_videochat.png[connect_group_videochat.png,title="connect_group_videochat.png"]
+
+ビデオチャットのUIは主に3つの部分に別れています。
+
+* 中央がメインのビデオストリームを上に表示し、セカンダリのビデオストリームを下に表示します。
+表示するビデオストリームの数は画面の解像度、およびウインドウサイズにより異なります。
+* 左側にグループ、またはチャネルのインスタントメッセージチャットが表示します。
+このチャットは常に表示し、通常に利用できます。チャットの履歴もグループやチャネルのチャット履歴へ保管します。
+* 左下にユーザーのビデオフィードと管理オプション（ビデオの無効化、マイクロフォンのミュート、および画面の共有）
+
+ビデオストリームの左下にある "Hang up" ボタンをクリックすることで、ユーザーは実施中のビデオチャットから切断することが可能です。
+ビデオチャットが実施中である場合、グループやチャネルのユーザーはグループ名やチャネル名の下に "Call in progress" のメッセージが表示し、チャットのカメラのアイコンをクリックすることで参加することが可能です。
+
+==== ビデオストリームの管理
+
+ビデオストリームはピア間の接続順番により、「最初に接続した順位」のベースとして表示します。
+
+各参加者は自信のオーディオやビデオのストリームを自由に停止することが可能です。
+
+==== 画面の共有
+
+image:connect_videochat_screensharing_1.png[connect_videochat_screensharing_1.png,title="connect_videochat_screensharing_1.png"]
+
+画面の共有ボタンをクリックしますと、完全の画面、または特定のウインドウのみを共有するオプションがユーザーに要求します。
+選択した後、ユーザーのウェブカメラのビデオストリームが画面の共有ストリームへ入り変えます。
+
+== プレゼンス
+
+プレゼンスが {zconnect-name} で自動的に管理します。ユーザーがログインした際、Connect タブを選択している状態と問わず、そのユーザーが *オンライン* として表示します。
+
+ユーザーのプレゼンス機能として、すべてのメッセージが複数の確認チェックマークとして表示されます：
+image:connect_message_delivered_1.png[connect_message_delivered_1.png,title="connect_message_delivered_1.png"]
+
+* 0 チェックマークの場合、メッセージがまだサーバへ送信したいない状態を示します
+* 1 チェックマークの場合、メッセージがサーバへ送信している状態を示します
+* 2 チェックマークの場合、メッセージが全ユーザーに確認されたことを示します
+
+== 既読していないメッセージ
+
+1対1のチャット、およびグループやチャネルのチャットに既読していないメッセージ数が右側で表示されます。
+
+image:connect_unread_messages_1.png[connect_unread_messages_1.png,title="connect_unread_messages_1.png"]
+
+== チャットの履歴
+
+各1対1のチャット、およびグループとチャネルのチャット履歴は同じウインドウで閲覧できます（つまり、チャネルの履歴を確認する場合、そのチャネルを開きます）。また、オフラインのユーザーへ送信したメッセージは該当の1対1チャット、グループ、またはチャネルに表示されます。
+
+== STUN/TURN サーバについて
+
+WebRTC はピアツーピアのプロトコールであるため、コネクションを成立するために、ビデオチャットにある全ユーザーはお互いのクライアントへ接続する必要があります。
+
+ネットワークのNATルールやサービスプロバイダーのポリシーにより、お互いのクライアントへ接続することは不可能である場合、TURNサーバを運用することで各ピアに適切なコミュニケーションを成立することが可能となります。
+{zconnect-name} では、TURNサーバのURL、およびログイン情報を Zimlet 設定に登録することで、STUN/TURNのサーバを利用することが可能です。
+
+=== {zconnect-name} に TURN サーバを利用するように設定する方法
+
+CLI の `zxsuite connect iceServer` コマンドで専用の TURN 設定ツールを提供しています。
+
+....
+zimbra@mailserver:~$ zxsuite connect iceServer
+
+ビデオコールでコネクションを成立するための ice サーバのリストを編集する。
+グローバル（デフォルト）、提供サービス、またはアカウント単位で設定することが可能です。
+
+  add                      - グローバル（デフォルト）、提供サービス、またはアカウント単位で新しい ice サーバを追加する
+                             zxsuite connect iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+  remove                   - グローバル（デフォルト）、提供サービス、またはアカウント単位で特定の ice サーバを削除する
+                             zxsuite connect iceServer remove {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+  get                      - グローバル（デフォルト）、提供サービス、またはアカウント単位で設定している ice サーバを返答する
+                             zxsuite connect iceServer get [attr1 value1 [attr2 value2...]]
+....
+
+"add" のサブコマンドで新しい TURN サーバを追加します。
+
+....
+構文:
+   zxsuite connect iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
+
+パラメータのリスト
+
+名前             種類          期待する値
+url(M)           String    turn:turn.example.com:3478?transport=udp
+username(O)      String    myuser
+credential(O)    String    mysecretkey
+account(O)       String    user@example.com
+cos(O)           String    default
+
+(M) == 必要のパラメータ, (O) == 任意のパラメータ
+
+実例：
+
+zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser
+zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser account testaccount@example.com
+....
+
+特定のユーザー、または提供サービスのみを専用に処理するため、複数の TURN サーバを追加することが可能です。（上記のコマンドに `user`や`cos`の任意パラメータで指定します）
+
+TURN サーバ側では、ZimbraユーザーとTURNユーザーの一対一マッピングが必要ないため、設定を分かりやすくするため、専用のユーザーアカウントと秘密鍵のみを用意することを推奨しています。

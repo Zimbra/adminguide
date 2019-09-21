@@ -12,7 +12,7 @@
 
 法律傍受を設定するにはターゲットアカウント、または提供サービスの -- `zimbraInterceptAddress` -- 機能を有効化することのみです。
 
-また、メッセージの本文をコピーせず、ヘッダー情報のみを送信する場合、zimbraInterceptSendHeadersOnly属性を有効化します。
+また、メッセージの本文をコピーせず、ヘッダー情報のみを送信する場合、`zimbraInterceptSendHeadersOnly` 属性を有効化します。
 
 === 法律傍受を設定する
 
@@ -32,7 +32,7 @@ zmprov mc <cosname> zimbraInterceptAddress <account@intercept.example.com>
 zmprov ma <アカウント名@ドメイン> zimbraInterceptAddress <account@intercept.example.com>
 ----
 
-デフォルトの傍受メッセージのテンプレートや送信先アドレス(postmaster@<domain>)を使用する予定であれば、法律傍受のセットアップは完了です。
+デフォルトの傍受メッセージのテンプレートや送信先アドレス(`postmaster@<domain>`)を使用する予定であれば、法律傍受のセットアップは完了です。
 
 === メッセージのヘッダーを転送するように法律傍受を設定する
 
@@ -112,7 +112,7 @@ REST URLフォーマットを用いて、ユーザーのメールボックスに
 +
 image::mailbox_snapshot_zip_file.png[Address Bar]
 +
-上記の例では、検索クエリでuser1のアカウントに対して2008年6月13日以降のすべてのメッセージと添付ファイルを依頼しています。
+上記の例では、検索クエリで `user1` のアカウントに対して2008年6月13日以降のすべてのメッセージの添付ファイルを依頼しています。
 +
 {product-abbrev}内の検索に使われる検索の操作はどれも使用できます。例えば、フォルダ名(in:フォルダ名)や送信者名(from:<送信者>)などで検索可能です。また、複数の検索クエリを繋げることもできます。キーワードの実例についてはWikiページにある検索のヒントを参照してください。
 https://wiki.zimbra.com/wiki/Search_Tips
