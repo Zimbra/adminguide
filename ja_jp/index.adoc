@@ -4,6 +4,7 @@ include::../settings.adoc[]
 = {product-name} {document-title}
 v{product-version}, {product-release-date}
 :leveloffset: +1
+:title-page:
 
 include::mobilesync_warning.adoc[]
 
