@@ -11,7 +11,8 @@
 
 :imagesdir: images/
 :icons: font
-:title-logo-image: images/zimbra-logo.jpg
+:title-page:
+:title-logo-image: image:zimbra-logo.jpg[]
 :favicon: images/favicon.ico
 :showlinks:
 :source-highlighter: coderay
