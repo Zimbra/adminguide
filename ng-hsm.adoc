@@ -1590,20 +1590,20 @@ Syntax:
 PARAMETER LIST
 
 NAME                       TYPE             EXPECTED VALUES                                      DEFAULT
-destinationHost(M)         String                                                                
-accounts(O)                String[,..]      john@example.com,smith@example.com[,...]             
-domains(O)                 String[,..]      example.com,test.com[,...]                           
-input_file(O)              String                                                                
+destinationHost(M)         String
+accounts(O)                String[,..]      john@example.com,smith@example.com[,...]
+domains(O)                 String[,..]      example.com,test.com[,...]
+input_file(O)              String
 stages(O)                  String[,..]      blobs|backup|data|account data=blobs+backup[,...]    blobs,backup,account
 compress(O)                Boolean          true|false                                           true
 checkDigest(O)             Boolean          if false skip digest calculation and check           true
 overwrite(O)               Boolean          true|false                                           false
 threads(O)                 Integer                                                               1
 hsm(O)                     Boolean          true|false                                           true
-notifications(O)           Email Address                                                         
+notifications(O)           Email Address
 ignore_partial(O)          Boolean          true|false                                           false
 drop_network_backup(O)     Boolean          true|false                                           false
-read_error_threshold(O)    Integer                                                               
+read_error_threshold(O)    Integer
 
 (M) == mandatory parameter, (O) == optional parameter
 
@@ -1618,27 +1618,23 @@ Move mailbox for account john@example.com to mail2.example.com host
 * When moving a domain, each account from the current server is enumerated and moved
 sequentially.
 
-* The mailbox is set to maintenance mode when it's moved and will be placed into its original state after all emails are moved (after the LDAP stage).
+* The mailbox is set to maintenance mode only during the 'account' stage.
 
-* Operation is stopped if 5% or more write errors are encountered on items being
-moved. Beware that the current mailbox may remain in maintenance mode.
+* The move will be stopped if 5% or more write errors are encountered on items being moved.
+** When multiple mailboxes are moved within the same operation, the error count is global and not per-mailbox.
 
-* Single-mailbox moves will not start if the destination server does not have
-enough space available or the user just belongs to the destination host.
+* Moves will not start if the destination server does not have
+enough space available to host the mailbox.
+** When a single operation is used to move multiple mailboxes, the space check will be performed before moving each mailbox.
 
-* All data is moved at a low-level and will not be changed except for some small things
-like mailbox id.
+* All data is moved at a low-level and will not be changed except for the mailbox id.
 
 * The operation is made up of 3 stages: blobs|backup|account. For each mailbox:
     ** blobs: All blobs are copied from the source server to the destination server.
     ** backup: All backup entries are copied from the source server to the destination server.
-    ** account: All database and LDAP entries are updated, effectively moving the mailbox. 
+    ** account: All database entries are moved as-is and LDAP entries are updated, effectively moving the mailbox.
 
-* All of the stages are executed sequentially. If a single stage is specified,
-the mailbox is parked in maintenance mode throughout the entire operation. On
-success, the mailbox will be placed into its original state.
-
-* Initially, all blob items will be stored in the destination server primary volume.
+* All of the stages are executed sequentially.
 
 * On the reindex stage's completion, a new HSM operation is submitted to the
 destination server, if not specified otherwise.
@@ -1648,8 +1644,17 @@ destination server, if not specified otherwise.
 * The MailboxMove operation can be executed if and only if no others operations
 are running on the source server.
 
-* The HSM option applies current HSM policies. It runs after each mailbox is
-successfully moved. On any run new, items will be moved.
+* A move will not start if the destination server does not have enough space available or the user just belongs to the destination host.
+
+* By default, items are placed in the Current Primary volume of the destination server.
+** The `hsm true` option can be used to apply the HSM policies of the destination server after a mailbox is
+successfully moved.
+
+* If, for any reason, the move stops before it is completed the original account will still be active and the appropriate notificaton will be issued.
+
+* Should the mailboxd crash during move, the "Operation Interrupted" notification is issued as for all operations, warning the users about the interrupted operation.
+
+* Index information are moved during the 'account' stage, so no manual reindexing is needed nor one will be triggered automatically.
 
 [[hsm-ng-attachment-indexing]]
 HSM NG Attachment Indexing
