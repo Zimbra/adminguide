@@ -151,9 +151,9 @@ Should either of the two not be set up, the system falls back to the `zimbraServ
 
 For Video Chats and Instant Meetings, the following rules apply:
 
-* Team will work through firewalls and NATs as long as the peers can communicate each with the other - either directly or through a TURN server (which together with proper network rules is usually the solution to any WebRTC connection problem).
+* {zconnect-name} will work through firewalls and NATs as long as the peers can communicate each with the other - either directly or through a TURN server (which together with proper network rules is usually the solution to any WebRTC connection problem).
 * When no TURN server is set up is not being used, a default STUN server is used so clients should be able to send outbound traffic to ports 19305/19307. The actual P2P connection is established between the clients on a random port between 0 and 65535 based on the client configuration and network.
-* The default handshake/negotiation port used by most TURN servers is 3478 (incoming, UDP), but a different port can be used as long as it is properly set up - on the Team side the port is specified when adding the TURN server and the clients clients will be instructed to connect through it. The default P2P connection range when using a TURN server is 49152-65535 (usually configurable on the TURN side) so clients should be able to send data to that port range to the TURN server.
+* The default handshake/negotiation port used by most TURN servers is 3478 (incoming, UDP), but a different port can be used as long as it is properly set up - on the {zconnect-name} side the port is specified when adding the TURN server and the clients clients will be instructed to connect through it. The default P2P connection range when using a TURN server is 49152-65535 (usually configurable on the TURN side) so clients should be able to send data to that port range to the TURN server.
 ** Most TURN servers can also be configured to use TCP insted of UDP.
 
 == {zconnect-name} administration
