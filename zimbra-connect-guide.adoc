@@ -75,7 +75,7 @@ Global Admins can enable its Advanced features for any number of users up to the
 
 == Zimbra Chat and {zconnect-name}
 
-Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist in any Zimbra NE infrastructure. 
+Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist in any Zimbra NE infrastructure.
 The Zimbra Chat zimlet gets uninstalled during the installation process of the {zconnect-name} Zimlet package.
 However, {zconnect-name} includes all _basic_ IM features provided by Zimbra Chat, which automatically gets enabled for all users who don’t have access to the _advanced_ {zconnect-name} features.
 _Advanced_ users can use all of the product’s features with other _advanced_ users and can use 1-to-1 Instant Messaging with _basic_ users.
@@ -204,7 +204,7 @@ Recent 1-to-1 chats appear in the "Conversations" section of the Connect Tab and
 
 === Groups
 
-Groups are how users communicate with multiple people at the same time (by default up to 5 total). 
+Groups are how users communicate with multiple people at the same time (by default up to 5 total).
 Those are non-persistent entities not tied to any specific space. Any user can create a group inviting people, and any group member can invite more people in the same way.
 When all users leave a group, the group itself ceases to exist.
 
@@ -309,7 +309,7 @@ Each new Space has a "General" channel automatically created within it, which de
 
 ==== Channels Features
 
-* A user in a Channel can chat with all of the others. 
+* A user in a Channel can chat with all of the others.
 All members of that channel can view all messages sent on the Channel.
 * A user in a Channel can start a video chat with all of the others.
 Channel video chats can be joined at any time by all members of the Channel.
@@ -358,7 +358,7 @@ Video Chat features are available in 1-to-1 chats, Groups, and Channels, allowin
 
 The WebRTC protocol is the foundation for this feature.
 WebRTC is a peer-to-peer auto-adaptive technology that allows clients to communicate directly without overloading the server.
-Call quality is automatically tweaked based on the available bandwidth, with the maximum quality being _Full HD_ for both video and audio. 
+Call quality is automatically tweaked based on the available bandwidth, with the maximum quality being _Full HD_ for both video and audio.
 When starting their first video chat, users need to grant their browser access permissions to their camera and microphone.
 
 === Video Chat UI
@@ -373,7 +373,7 @@ The total number depends on the screen's resolution and window size.
 This chat is visible and entirely usable, and its history gets retained in the group's or channel's chat history.
 * On the bottom left appear the user's video feed and controls (disable video, mute microphone, and share screen).
 
-Users can disconnect from an ongoing video chat by pressing the "Hang up" button in their video stream's frame on the bottom left of the screen. 
+Users can disconnect from an ongoing video chat by pressing the "Hang up" button in their video stream's frame on the bottom left of the screen.
 Whenever a video chat is on, users belonging to the Group or Channel of the video chat see a "Call in progress" message below the name of the Group or Channel and may join by clicking on the "Camera" icon in the chat.
 
 ==== Video Stream Control
@@ -386,7 +386,7 @@ Every participant can mute their audio stream or stop their video stream.
 
 image:connect_videochat_screensharing_1.png[connect_videochat_screensharing_1.png,title="connect_videochat_screensharing_1.png"]
 
-When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window. 
+When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window.
 After choosing, the screen sharing feed replaces the user's webcam feed for all participants.
 
 == Instant Meetings
@@ -397,6 +397,11 @@ To create an Instant Meeting, click on the "New" button in the Connect Tab, and 
 
 Then, fill in the attendee list by entering any internal or external email address in the text box and pressing enter to add it to the list.
 Once all attendees are added, press "Save" to send an email notification to all participants and start the Instant Meeting.
+
+=== Instant Meeting URLs
+Both external and internal users can join an Instant Meetings through a dedicated URL that can be found both in the invitation email and in the information section of the Instant Meeting itself.
+
+Such URLs are uniquely generated for each Instant Meeting and expire 10 minutes after the host leaves the meeting.
 
 === Instant Meeting UI
 The Instant Meeting feature uses the very same UI as any internal Video Chat session.
