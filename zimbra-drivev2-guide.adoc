@@ -66,6 +66,17 @@ To create a folder in Drive v2, click on the "New" button above the file list an
 
 image::drive_newfolder.png[Create a new folder]
 
+=== File and Folder naming
+The following characters cannot be used in Drive folders and files:
+
+* Slash - `/`
+* Backslash - `\`
+* Semicolon - `:`
+* Question Mark - `?`
+* Plus sign - `+`
+* Asterisk - `*`
+* Percent sign - `%`
+
 === Sharing
 Being separated from the mailbox’s item hierarchy, Drive v2 files and folders can be shared independently.
 Sharing permissions can be chosen among 3 options: "View", "Edit" and "Edit and Share" – the latter two options include the "View" right by default.
