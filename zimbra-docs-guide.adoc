@@ -115,7 +115,7 @@ To generate the new font cache, run the following command based on the Docs Serv
 .CentOS 7
 `fc-cache /opt/zimbra/docs/zimbra-docs-core/share/fonts`
 
-The server will briefly be unavailable during the restart, and clients will need to close and open again any open document to see the new fonts in the list.
+WARNING: The server will briefly be unavailable during the restart, and clients will need to close and open again any open document to see the new fonts in the list.
 
 === Mailbox Nodes
 While the Zimbra Docs extension is already contained within the NG modules, the com_zextras_docs Zimlet needs to be deployed on the
