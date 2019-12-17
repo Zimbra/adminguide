@@ -387,9 +387,6 @@ Clicking on a file within a chat window will download it to the local client usi
 
 Files shared via Connect will be stored inside a protected folder the sender's Drive, thus counting towards the sender's mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.
 
-WARNING: Due to a known issue, the folder that contains all files shared via Connect is not accessible in version 8.8.15p3. +
-This will be fixed in 8.8.15p4.
-
 == Video Chat
 
 Video Chat features are available in 1-to-1 chats, Groups, and Channels, allowing multiple people to communicate in real-time using a webcam and a headset, as well as allowing them to share their screen with all other attendees.
