@@ -43,9 +43,9 @@ Via the Administration Zimlet
 * Under Real Time Scanner, press the `Enable` button.
 
 NOTE: When the Real Time Scanner is enabled for the first time or
-re-enabled after a stop, a Live Full Scan is required. A warning will be
+re-enabled after a stop, a SmartScan is required. A warning will be
 displayed after enabling the Real Time Scanner, and you will be prompted
-to start the Full Scan.
+to start the SmartScan either via the CLI or the Admin Console.
 
 [[via-the-cli]]
 Via the CLI
@@ -971,7 +971,7 @@ Knowing the itemID and the email address, the Administrator runs the following a
 
 [[raw-restore]]
 == Raw Restore
-The "Raw Restore" operation is a new DR-type restore operation that is compatible with both standard and blobless backup. 
+The "Raw Restore" operation is a new DR-type restore operation that is compatible with both standard and blobless backup.
 In contrast to similar restore modes such as the External Restore, the Raw Restore operates at a lower level restoring all item metadata maintaining the original IDs for all objects restored.
 
 The Raw Restore restores the source server's Centralized Storage configuration.
