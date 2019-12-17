@@ -104,6 +104,19 @@ read the LDAP in order to write the configuration in `/opt/zimbra/conf/docs/lool
 
 Once the setup is completed no other configuration is needed.
 
+==== Adding Custom Fonts to the Docs Server
+To add Custom Fonts to your Docs Server, simply copy the `.ttf` font files in the `/opt/zimbra/docs/zimbra-docs-core/share/fonts/custom/` directory, then generate the new font cache and restart the docs server running `zdocs restart` as `root`.
+
+To generate the new font cache, run the following command based on the Docs Server's Operating System:
+
+.Ubuntu 16 and Ubuntu 18
+`dpkg-reconfigure zimbra-docs-server`
+
+.CentOS 7
+`fc-cache /opt/zimbra/docs/zimbra-docs-core/share/fonts`
+
+WARNING: The server will briefly be unavailable during the restart, and clients will need to close and open again any open document to see the new fonts in the list.
+
 === Mailbox Nodes
 While the Zimbra Docs extension is already contained within the NG modules, the com_zextras_docs Zimlet needs to be deployed on the
 server and enabled on all users and COS that need to have access to the Zimbra Docs features.
