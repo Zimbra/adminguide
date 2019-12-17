@@ -436,6 +436,11 @@ To create an Instant Meeting, click on the "New" button in the Connect Tab, and 
 Then, fill in the attendee list by entering any internal or external email address in the text box and pressing enter to add it to the list.
 Once all attendees are added, press "Save" to send an email notification to all participants and start the Instant Meeting.
 
+=== Instant Meeting URLs
+Both external and internal users can join an Instant Meetings through a dedicated URL that can be found both in the invitation email and in the information section of the Instant Meeting itself.
+
+Such URLs are uniquely generated for each Instant Meeting and expire 10 minutes after the host leaves the meeting.
+
 === Instant Meeting UI
 The Instant Meeting feature uses the very same UI as any internal Video Chat session.
 
