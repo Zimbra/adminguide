@@ -39,7 +39,7 @@ The main differences between {zconnect-name} and Zimbra Talk V2 implementation a
 [cols=",",options="header",]
 |===
 |Zimbra Talk V2 |Zimbra Connect
-|File exchange is available in Chats, Groups, and Channels    |File exchange is available in Chats, Groups, and Channels starting with Zimbra 8.8.15p2
+|File exchange is available in Chats, Groups, and Channels    |File exchange is available in Chats and Groups starting with Zimbra 8.8.15p3
 |Instant Meeting is available    |Instant Meeting is available starting with Zimbra 8.8.15p1
 |===
 
@@ -73,9 +73,25 @@ The main differences between {zconnect-name} and Zimbra Talk V2 implementation a
 {zconnect-name} is licensed on a per-user basis. License information is included in the Network Edition license file just as for any other Zimbra NE feature.
 Global Admins can enable its Advanced features for any number of users up to the limit allowed by the license, and only "advanced" users count towards any licensing limit.
 
+The total number of users who have the Advanced features active can be seen in the output of the `zxsuite core getLicenseInfo` command under `teamChatActiveCount`:
+
+....
+zimbra@129efa51bd95:~$ zxsuite core getLicenseInfo
+
+        dateStart                                           2019-06-11 00:00:00 UTC
+        dateEnd                                             2019-12-31 17:00:00 UTC
+        expired                                             false
+        type                                                regular - Network Edition
+        [...]
+        teamchatActiveCount                                 999
+        [...]
+....
+
+This count is updated every 15 minutes.
+
 == Zimbra Chat and {zconnect-name}
 
-Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist in any Zimbra NE infrastructure. 
+Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist in any Zimbra NE infrastructure.
 The Zimbra Chat zimlet gets uninstalled during the installation process of the {zconnect-name} Zimlet package.
 However, {zconnect-name} includes all _basic_ IM features provided by Zimbra Chat, which automatically gets enabled for all users who don’t have access to the _advanced_ {zconnect-name} features.
 _Advanced_ users can use all of the product’s features with other _advanced_ users and can use 1-to-1 Instant Messaging with _basic_ users.
@@ -128,6 +144,18 @@ delete_destination_before_import(O)    Boolean    true|false
 This operation can execute multiple times, but it's a one-way process and cannot be reverted.
 Once users are switched to Connect (by disabling the Talk Zimlet and enabling the Connect Zimlet), it's not possible to move their Connect data back to Talk.
 
+== URLs and Ports
+To build URLs and links (e.g., for External Shares) {zconnect-name} uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.
+
+Should either of the two not be set up, the system falls back to the `zimbraServiceHostname` and `zimbraMailPort` or `zimbraMailSSLPort` server-level properties.
+
+For Video Chats and Instant Meetings, the following rules apply:
+
+* {zconnect-name} will work through firewalls and NATs as long as the peers can communicate each with the other - either directly or through a TURN server (which together with proper network rules is usually the solution to any WebRTC connection problem).
+* When no TURN server is set up is not being used, a default STUN server is used so clients should be able to send outbound traffic to ports 19305/19307. The actual P2P connection is established between the clients on a random port between 0 and 65535 based on the client configuration and network.
+* The default handshake/negotiation port used by most TURN servers is 3478 (incoming, UDP), but a different port can be used as long as it is properly set up - on the {zconnect-name} side the port is specified when adding the TURN server and the clients clients will be instructed to connect through it. The default P2P connection range when using a TURN server is 49152-65535 (usually configurable on the TURN side) so clients should be able to send data to that port range to the TURN server.
+** Most TURN servers can also be configured to use TCP insted of UDP.
+
 == {zconnect-name} administration
 
 Zimbra Connect features can be enabled and disabled via the `zxsuite config` command line utility:
@@ -149,7 +177,7 @@ Zimbra Connect features can be enabled and disabled via the `zxsuite config` com
 [cols=",,,,",options="header",]
 |======================================================
 |Browser |Quick Access Sidebar |Connect Tab |Videochat |Screen sharing
-|Internet Explorer 11+ |Yes |Yes |No |No
+|Internet Explorer 11+ |No |No |No |No
 |Microsoft Edge |Yes |Yes |No |No
 |Mozilla Firefox |Yes |Yes |Yes |Yes
 |Google Chrome |Yes |Yes |Yes |Yes (w/ extension)
@@ -204,7 +232,7 @@ Recent 1-to-1 chats appear in the "Conversations" section of the Connect Tab and
 
 === Groups
 
-Groups are how users communicate with multiple people at the same time (by default up to 5 total). 
+Groups are how users communicate with multiple people at the same time (by default up to 5 total).
 Those are non-persistent entities not tied to any specific space. Any user can create a group inviting people, and any group member can invite more people in the same way.
 When all users leave a group, the group itself ceases to exist.
 
@@ -309,7 +337,7 @@ Each new Space has a "General" channel automatically created within it, which de
 
 ==== Channels Features
 
-* A user in a Channel can chat with all of the others. 
+* A user in a Channel can chat with all of the others.
 All members of that channel can view all messages sent on the Channel.
 * A user in a Channel can start a video chat with all of the others.
 Channel video chats can be joined at any time by all members of the Channel.
@@ -352,13 +380,23 @@ image:connect_leave_channel_1.png[connect_leave_channel_1.png,title="connect_lea
 
 Both normal users and Space Admins can leave a channel at any time and join it afterward.
 
+== File sharing
+Users can easily share files via Connect to Chats and Groups by dragging and dropping the files directly into the chat interface (both in the minichat and in the Connect tab) or by clicking the "paperclip" icon on the right of the message input field. Multiple files can be uploaded at once, and image files will show a preview of the file while other common filetypes will display a custom icon.
+
+Clicking on a file within a chat window will download it to the local client using the browser's own download interface.
+
+Files shared via Connect will be stored inside a protected folder the sender's Drive, thus counting towards the sender's mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.
+
+WARNING: Due to a known issue, the folder that contains all files shared via Connect is not accessible in version 8.8.15p3. +
+This will be fixed in 8.8.15p4.
+
 == Video Chat
 
 Video Chat features are available in 1-to-1 chats, Groups, and Channels, allowing multiple people to communicate in real-time using a webcam and a headset, as well as allowing them to share their screen with all other attendees.
 
 The WebRTC protocol is the foundation for this feature.
 WebRTC is a peer-to-peer auto-adaptive technology that allows clients to communicate directly without overloading the server.
-Call quality is automatically tweaked based on the available bandwidth, with the maximum quality being _Full HD_ for both video and audio. 
+Call quality is automatically tweaked based on the available bandwidth, with the maximum quality being _Full HD_ for both video and audio.
 When starting their first video chat, users need to grant their browser access permissions to their camera and microphone.
 
 === Video Chat UI
@@ -373,7 +411,7 @@ The total number depends on the screen's resolution and window size.
 This chat is visible and entirely usable, and its history gets retained in the group's or channel's chat history.
 * On the bottom left appear the user's video feed and controls (disable video, mute microphone, and share screen).
 
-Users can disconnect from an ongoing video chat by pressing the "Hang up" button in their video stream's frame on the bottom left of the screen. 
+Users can disconnect from an ongoing video chat by pressing the "Hang up" button in their video stream's frame on the bottom left of the screen.
 Whenever a video chat is on, users belonging to the Group or Channel of the video chat see a "Call in progress" message below the name of the Group or Channel and may join by clicking on the "Camera" icon in the chat.
 
 ==== Video Stream Control
@@ -386,7 +424,7 @@ Every participant can mute their audio stream or stop their video stream.
 
 image:connect_videochat_screensharing_1.png[connect_videochat_screensharing_1.png,title="connect_videochat_screensharing_1.png"]
 
-When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window. 
+When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window.
 After choosing, the screen sharing feed replaces the user's webcam feed for all participants.
 
 == Instant Meetings
@@ -400,11 +438,6 @@ Once all attendees are added, press "Save" to send an email notification to all 
 
 === Instant Meeting UI
 The Instant Meeting feature uses the very same UI as any internal Video Chat session.
-
-=== URLs and Ports
-To build URLs and links (e.g., for External Shares) Zimbra Connect uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.
-
-Should either of the two not be set up, the system falls back to the `zimbraServiceHostname` and `zimbraMailPort` or `zimbraMailSSLPort` server-level properties.
 
 == Presence
 
