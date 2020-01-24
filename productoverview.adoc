@@ -408,7 +408,7 @@ Outlook on a Mac device. To enable EWS client access, see the Class of
 Service section. EWS is a separately licensed add-on feature.
 
 * *Messaging Application Programming Interface (MAPI)* synchronizes
-to Microsoft Outlook 2016/2013/2010/2007/2003 with full delegate, offline
+to Microsoft Outlook 2016/2013/2010 with full delegate, offline
 access and support for S/MIME. Use the Zimbra Connector for Outlook to
 connect to {product-name} when using Microsoft Outlook on a Windows
 device. To enable MAPI (Microsoft Outlook) Connector, see the Class of
