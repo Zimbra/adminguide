@@ -29,7 +29,7 @@ From the Administration Zimlet
 In the `Delegated Admins` section of the Admin NG tab in the
 Administration Zimlet, click the `Add` button.
 
-You will be be prompted for the following information:
+You will be prompted for the following information:
 
 * Account: The email address to which you want to grant Delegated Admin rights.
 * Domain: The domain on which the Delegated Admin will have control.
@@ -72,7 +72,7 @@ Usage example:
 
 zxsuite admin doAddDelegationSettings john@example.com example.com viewMail true adminQuota -1
 Adds John as delegated administrator of domain example.com, with the right to view user mail on such domain and
-no right to grand quotas to users.
+no right to grant quotas to users.
 
 zxsuite admin doAddDelegationSettings john@example.com example.com adminQuota 0
 Adds John as delegated administrator of domain example.com, with the right to assign unlimited quotas to users.
@@ -229,8 +229,7 @@ Quota
 Let's examine these scenario one by one.
 
 [[a-global-admin-grants-a-user-a-higher-quota-than-the-allowed-domain-quota]]
-A Global Admin grants a user a higher quota than the allowed Domain
-Quota
+A Global Admin grants a user a higher quota than the allowed Domain Quota
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Since the Domain Quota applies to a given domain, not to a given Admin,
@@ -238,8 +237,7 @@ the effective quota for the user will be the maximum quota allowed by
 the `Domain Quota` setting.
 
 [[a-delegated-admin-grants-a-user-a-higher-quota-than-the-allowed-domain-quota]]
-A Delegated Admin grants a user a higher quota than the allowed Domain
-Quota
+A Delegated Admin grants a user a higher quota than the allowed Domain Quota
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this case, the effective quota for the user will be the maximum quota

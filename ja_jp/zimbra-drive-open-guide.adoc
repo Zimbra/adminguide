@@ -1,0 +1,517 @@
+Zimbra Open Drive
+-----------------
+
+Zimbra Open Drive は Zimbra を第三者の製品とサービスへ関連させるクライアントです。
+
+注意：8.8.11 以前のバージョンでは、Zimbra Open Drive は Zimbra Drive として提供しました。
+
+現在、Zimbra Open Drive で動作するものは下記のとおりです。
+
+* Nextcloud
+* ownCloud
+
+
+WARNING: Zimbra Open Drive上のデータがZimbraサーバーおよびその他Zimbra製品に置かれることはありません。同様にこのデータがZimbraおよび他の組み込まれたサービスで管理されることはありません。このため、Zimbraサポートは、NextcloudおよびownCloudサーバーに関する問題はサポートしません。
+
+=== 本書について
+
+本書は、システム管理者を対象に記載しています。本書の目的は、プロダクトアーキテクチャについての深い見解と、安定したカスタマイズに必要な知識を提供することです。
+
+Zimbra Open Driveは、バージョン8.7.6以降のZimbraにベータ版ソフトウェアとして含まれています。そしてバージョン8.8.0では安定版となっています。Zimbra Open DriveはZimbra Collaboration SuiteにZimbraパッケージとして搭載されています。このため、Zimbraのインストールプロセス中にZimbra Open Driveをインストールすることができます。
+
+サポート対象環境での製品の `インストール` および `設定` については、インストールの章と設定の章にそれぞれ記載します。 +
+アップグレードのプロセスと互換性についての情報は、`アップグレード` の章に記載します。 +
+Zimbra Open Driveの `アンインストール` 手順は、アンインストールの章で説明します。高度なトピックス、例えばソースからのソフトウェアのビルド方法などは、`高度なトピックス` の章に記載します。
+
+WARNING: バックアップ、アーカイビング、アクセスセキュリティ、ユーザー管理について、Zimbraでは管理しません。 +
+サードパーティ製品における、障害、データとアクセスのセキュリティ、ストレージ管理、データのアーカイブビングについて、ZimbraあるいはZimbraのソフトウェアでは管理しません｡また、このことは、Zimbraの "Maintenance & Support Terms and Conditions" にある2.4(a)項「保守とサポート条件」にて規定されているとおり、Zimbraサポート契約の範囲ではありません。
+
+=== 概要
+
+[[general_architecture]]
+==== 一般的なアーキテクチャ
+
+Zimbra Open Driveの目的は、Zimbraのエンドユーザーがクラウドサービスへ接続すること、そして、外部からZimbraへ接続することです。
+
+Zimbra Open Driveは3つのパートで構成されています。Zimbra拡張機能、Zimlet、そしてCloud Appです。この3つで、外部ストレージサービスと認証のメカニズムをZimbraウェブインターフェースに融合します。Zimbraの各アカウントは、外部ストレージサービスのアカウントとリンクすることになります。
+
+==== コンポーネント
+
+Zimbra Open Driveには、次のコンポーネントがあります。
+
+1.  Zimbra Open Drive拡張機能
+2.  Zimlet
+3.  Cloud App
+
+全てのコンポーネントは必須で、それぞれ慎重に設定する必要があります。ただし、インストールや設定でのエラーが原因でZimbraが利用できなくなることはありません。
+
+==== 拡張機能
+
+Zimbra Open Drive拡張機能は、mailboxdコンポーネント内にインストールされます。この拡張機能は、認証サービスやZimletへの必要動作を行ないながら、Zimbra Open Drive ZimletとCloud Appとの間で役割を果たします。
+
+==== Zimlet
+
+Zimbra Open Drive Zimletによって、ユーザー用Zimbraインターフェースに新しい _ドライブ_ タブが追加されます (プリファレンスタブの手前) 。Zimletを使って、ユーザーはリンクされたクラウド内での検索が行なえます。 +
+Zimletのコンポーネントは、 `com_zextras_drive_open.zip` というパッケージに格納されています。このZimlet名は `_com_zextras_drive_open_` です。
+
+[[supportedClouds]]
+==== Cloud App
+
+クラウドストレージの外部サービスがZimbra Open Drive拡張機能と連携するには、専用のAPIを使っている特定のアプリが必要です。Zimbra Open Driveでは、サポートしているサービスごとのアプリを提供します。
+
+[[nextcloudowncloud]]
+===== Nextcloud/ownCloud
+
+Nextcloud/ownCloudアプリは、NextcloudとownCloudのための特別なアプリケーションです。Zimbraの資格情報を使ってownCloudとNextcloud内の認証を行ないます。また、NextcloudとownCloudからZimbra拡張機能に合うバージョンを抽出する互換レイヤーを提供します。
+
+==== インストール
+
+本項には、管理者がマニュアル操作でZimbra Open Driveをインストールするための手順を記載します。
+
+[[requirements]]
+==== 要件
+
+* OSにアクセスするためのRootレベル
+* 外部クラウドのサポート対象サービスへの管理者権限でのアクセス (参照 <<supportedClouds>> )  +
+以下がサポート対象のバージョンです。
+** Nextcloud 9, 10, 11
+** ownCloud 9.0, 9.1, 10
+
+[[zimbra-packages-installation]]
+==== Zimbraパッケージでのインストール
+
+本項には、Zimbra Open Driveの拡張機能およびZimbra Open Drive Zimletのインストール方法を記載します。
+
+Zimbra Open Driveの拡張機能とZimbra Open Drive Zimletは共に公式のZimbraインストーラーを利用してインストールします。Zimbraインストーラーでは以下の確認用の質問が表示されます。
+
+....
+Use Zimbra's package repository [Y] Yes
+...
+Install zimbra-drive [Y] Yes
+....
+
+[[zimbra-already-installed]]
+===== インストール済のZimbraの場合
+
+Zimbraインストール中、Zimbraのレポジトリは該当のソースリストに追加されます。このため下記コマンドを使ってZimbra Open Driveをインストールすることができます。
+
+....
+# rootユーザーにて。apt-getが利用可能な場合。
+apt-get update
+apt-get install zimbra-drive
+# rootユーザーにて。yumが利用可能な場合。
+yum update
+yum install zimbra-drive
+....
+
+上記終了後、Zimletの配備用コマンドとmailboxの再開を下記のとおり実行することで、Zimbra Open Drive拡張機能が有効になります。
+
+....
+# zimbraユーザーにて
+zmzimletctl deploy /opt/zimbra/zimlets/com_zextras_drive_open.zip
+zmmailboxd  restart
+....
+
+[[cloud-app-installation]]
+==== Cloud Appのインストール
+
+特定のサポート対象であるZimbra Open Drive Cloud Appをインストールする手順を説明します。
+
+アーカイブ `zimbradrive.tar.gz` で現在サポート対象としているクラウドサービスは、Nextcloud とownCloudです。
+
+[[subsec:NextcloudownCloudInstallation]]
+===== Nextcloud/ownCloud
+
+
+以下、Nextcloud とownCloudに必要な共通のインストール手順です。 +
+プレースホルダ `PATHTOCLOUD`  はサーバー上のNextcloud/ownCloudサービスのパスです。
+
+1.  `zimbradrive.tar.gz` を Nextcloud/ownCloud ドライブにコピーします。 +
+`scp zimbradrive.tar.gz root@cloud:/tmp`
+2.  Nextcloud/ownCloud サーバーにて、 `zimbradrive.tar.gz` を
+`PATHTOCLOUD/apps` に展開します。 +
+`tar -xvzf zimbradrive.tar.gz -C PATHTOCLOUD/apps`
+3.  展開したフォルダ
+`PATHTOCLOUD/apps/zimbradrive` の権限を Nextcloud/ownCloudのユーザーオーナー(例: www-data)にて変更します。 +
+`chown -R www-data:www-data PATHTOCLOUD/apps/zimbradrive/`
+4.  Nextcloud/ownCloud の管理用インターフェースあるいはコマンドにてZimbra Open Drive Appを有効にします。 +
+`sudo -u www-data php PATHTOCLOUD/occ app:enable zimbradrive`
+
+この時点は、Nextcloud/ownCloud Zimbra Open Drive Appがインストール済みで、これから設定が必要な段階です。
+
+サーバーの設定が正しくないとApacheウェブサーバー上でZimbra Open Driveが機能しません。これについては、Nextcloud マニュアル内の _Apache Web Server Configuration_ に関する手引き https://docs.nextcloud.com/server/11/admin_manual/installation/source_installation.html#apache-web-server-configuration[Nextcloud
+installation] を参照してください。
+またはownCloud マニュアル内の手引き https://doc.owncloud.org/server/10.0/admin_manual/installation/manual_installation.html#configure-the-web-server[ownCloud
+installation]を参照してください。
+
+[[configuration]]
+=== 設定
+
+Zimbra Open Driveの設定は、Zimbra側とクラウド側に分かれます。Zimbra Open Drive Zimletは標準のZimlet設定以外の設定は不要です。このため、Zimbra側はZimbra Open Drive拡張機能の設定だけが必要となります。クラウド側の設定は、後述で各サポート対象クラウドサービスごとに説明します。クラウドサービスは独立しているため、使用したいクラウドサービスの設定を行うだけでよいです。
+
+[[zimbra-extension-configuration]]
+==== Zimbra拡張機能の設定
+
+Zimbra拡張機能のセットアップには、ペアになるクラウドサービスのURLが必要です。このURLをドメイン属性
+`zimbraDriveOwnCloudURL` 内に設定しなければなりません。また、同一ドメインに属するユーザーは全員、同じこのURLでなければなりません。別のドメインの場合には、別のクラウドサービスのURLでかまいません。 +
+クラウドサービスのURLを設定するコマンドは次のとおりです。
+
+....
+# zimbraユーザーにて
+zmprov md domainExample.com zimbraDriveOwnCloudURL CLOUD_URL
+
+....
+
+クラウドサービスのURL (`CLOUD_URL`) は次の形式でなければなりません。  `protocol://cloudHost/path`
+
+* `protocol`: `http` または  `https`
+* `cloudHost`: 対象のクラウドサービスのサーバーホスト名
+* `path`: 対象のクラウドサービスのサーバー内パス
+
+各クラウドサービスには個々のエントリポイントがあります。 +
+Nextcloud/ownCloudの場合、このURLは `index.php` `protocol://cloudHost/path/index.php` を対象としていなければなりません。
+
+[[cloud-app-configuration]]
+==== Cloud Appの設定
+
+===== Nextcloud/ownCloud
+
+全てが正常に設定されたら、Zimbraのエンドユーザーは、自身のZimbraのユーザーアカウントとペアになるプライベートなアカウントをクラウドサービス内に作成します。新たに作成したこのクラウドアカウントは、Zimbraのユーザー資格情報を継承し、また、Nextcloud/ownCloudのインターフェース内ユーザーリストに表示されることになります。ただし、Zimbra Open Drive Appが有効化されるまで、このアカウントはアクティブにはなりません。
+
+NextcloudとownCloudには共に、以下の設定項目があります。Nextcloud/ownCloud管理パネルの左サイドバー内に、新たな項目 `Zimbra Open Drive` が表示され、下記の項目のある設定ビューが開きます。
+
+* (チェックボックス) *Enable Zimbra authentication back end* +
+(チェック付き必須) チェックがオンのとき、Zimbra Open Drive App のクラスをNextcloud/ownCloudに使用させる役割を果たすconfig.php内に、設定が追加されます。チェックがオフの場合、この設定は削除されます。
+* (チェックボックス) *Allow Zimbra’s users to log in* +
+(チェック付き必須) ユーザーがNextcloud/ownCloudの利用に自身のZimbraの資格情報を使えるようにします。
+* (入力項目) *Zimbra Server* +
+(必須) ZimbraウェブメールのホストまたはIP。
+* (入力項目) *Zimbra Port* +
+(必須) Zimbraウェブメールのポート。
+* (チェックボックス) *Use SSL* +
+ZimbraウェブメールのポートがSSL認証を使用している場合、オンにします。
+* (チェックボックス) *Enable certification verification* +
+Zimbraが信頼できない証明を使用している場合に限り、無効にします。
+* (入力項目) *Domain Preauth Key* +
+Zimbraエンドユーザーは、Zimbra Open Driveへアクセスし、プライベートアカウントを作成すると、以降Zimbraの資格情報を使用してNextcloud/ownCloudへログインできるようになります。Nextcloud/ownCloudのウェブインターフェースのアプリメニュー内ZimbraアイコンからZimbraウェブメールタブを開くことができます。ログインは不要です。 +
+この機能はDomain Preauth Keyがコピーされている場合に限り、使用できます。Zimbra Domain Preauth Keyの表示にはZimbraで下記コマンドを実行します。 +
+`# zimbraユーザーにて` +
+`zmprov getDomain example.com zimbraPreAuthKey` +
+`# 応答が空であれば、以下のコマンドで作成できます。` +
+`zmprov generateDomainPreAuthKey domainExample.com` +
+
+=== アップグレード
+
+本項には、管理者がマニュアル操作でZimbra Open Driveをアップグレードするための手順を記載します。各コンポーネントのバージョンに注意を払うことが重要です。各コンポーネントが同じバージョンを持つ場合に限り、互換性が保証されるからです。 +
+Zimbra Open Drive Zimletと拡張機能は、Zimbraのアップグレードと一緒にアップグレードすることができます。しかし、Zimbra Open Drive Appはマニュアル操作での更新が必要です。
+
+[[zimbra-extension-and-zimlet-upgrade]]
+==== Zimbra拡張機能とZimletのアップグレード
+
+Zimbraをアップグレードするときに、Zimbra Open Driveも直接そのinstallationからインストールすることができます。下記のようにapt-getやyumを使って、Zimbraと同じメジャーバージョン、マイナーバージョンにZimbra Open Driveをアップグレードし続けることができます。
+
+....
+# rootユーザーにて。apt-getが利用できる場合。
+apt-get update; apt-get install zimbra-drive
+# rootユーザーにて。yumが利用できる場合。
+yum update; yum install zimbra-drive
+....
+
+[[cloud-app-upgrade]]
+==== Cloud Appのアップグレード
+
+Zimbra Open Drive Zimletや拡張機能とは異なり、Zimbra Open Drive Cloudアプリの場合はバージョンが変更される度にマニュアル操作でアップグレードを行う必要があります。
+
+Nextcloud/ownCloudにあるZimbra Open Drive Appをアップグレードするには、ファイルを入れ替える必要があります。この手順ですが、インストール([<<subsec:NextcloudownCloudInstallation>>])の際に次のとおり実施します。
+
+1.  `zimbradrive.tar.gz` を Nextcloud/ownCloud ドライブにコピーします。 +
+`scp zimbradrive.tar.gz root@cloud:/tmp`
+2.  Nextcloud/ownCloud サーバーにて、 `zimbradrive.tar.gz` を
+`PATHTOCLOUD/apps` に抽出します。 +
+`tar -xvzf zimbradrive.tar.gz -C PATHTOCLOUD/apps/apps`
+3.  抽出したフォルダ
+`PATHTOCLOUD/apps/zimbradrive` の権限を Nextcloud/ownCloudのユーザーオーナー(例: www-data)にて変更します。 +
+`chown -R www-data:www-data PATHTOCLOUD/apps/zimbradrive/`
+
+バージョン0.0.1からのアップグレード中である場合は、以降使用しないテーブルとなるoc_zimbradrive_usersを削除します。Mysqlで次のコマンドを実行します。 +
+`DROP TABLE oc_zimbradrive_users;`
+
+[[uninstallation]]
+=== アンインストール
+
+本項には、管理者がマニュアル操作にてZimbra Open Driveのアンインストールとシステムのクリーンアップを行なうための手順を記載します。
+
+[[disablePackages]]
+==== Zimbra Open Driveパッケージの無効化
+
+Zimbra Open Drive拡張機能とZimbra Open Drive Zimletは、Zimbraのパッケージとしてインストールされているためアンインストールが想定されていません。Zimbra Open Driveの無効化は、対象のユーザー、ドメイン、あるいは提供サービスのZimbra Open Drive Zimletを無効にすることで実施します。
+
+[[remove-cloud-app]]
+==== Cloud Appの削除
+
+[[NextcloudownCloudUninstallation]]
+===== Nextcloud/ownCloud
+
+Nextcloud/ownCloud Appの削除は２つの手順で行います。クリーンアップとアプリのアンインストールです。
+
+クリーンアップの手順では、Zimbraユーザーの全データをNextcloud/ownCloudから削除します。後戻りすることはできません。この手順の *必要条件* は、Zimbra Open Driveがインストールされていて、有効であることです。 +
+ただし、このクリーンアップ作業はスキップすることができます。Zimbra Open Drive Appのアンインストールは、Zimbraユーザーのデータ削除を行なわなくても実施できるからです。
+
+*クリーンアップ*
+
+クリーンアップを開始する前に、Zimbraユーザーによるアクセスを無効化しておくことを推奨します。これには、設定項目 *Allow Zimbra’s users to log in* のチェックをオフにします。
+
+下記コマンドにより、Zimbra Open Drive Appで作成したユーザーが削除され、Zimbraユーザーへの参照が格納されているテーブルがクリーンアップされます (`mysql_pwd` と `occ_db` の内容を正しく変更してから実行してください)。
+
+....
+cd /var/www/cloud           # OCCのパスへ遷移
+mysql_pwd='password'        # データベースのパスワード
+occ_db='cloud'              # Nextcloud / ownCloudのデータベース名
+
+# ownCloudの場合
+user_id_column='user_id'    # ownCloudのoc_accountsテーブルのカラム名
+# Nextcloudの場合
+user_id_column='uid'        #  oc_accounts of Nextcloudのoc_accountsテーブルのカラム名
+
+mysql -u root --password="${mysql_pwd}" "${occ_db}" -N -s \
+    -e 'SELECT uid FROM oc_group_user WHERE gid = "zimbra"' \
+    | while read uid; do \
+        sudo -u www-data php ./occ user:delete "${uid}"; \
+        mysql -u root --password="${mysql_pwd}" "${occ_db}" \
+            -e "DELETE FROM oc_accounts WHERE ${user_id_column} = '${uid}' LIMIT 1"; \
+      done
+....
+
+*アプリのアンインストール*
+
+Zimbra Open Drive Appは、Nextcloud / ownCloudの管理用インターフェースから削除することができます。*Enable Zimbra authentication back end* のチェックをオフにすると、設定が復元されるはずです。その後、`有効なアプリ` タブでZimbra Open Drive Appを無効にし、`無効なアプリ` タブからアンストールしなければなりません。
+
+上記手順によって、Zimbra Open Drive Appフォルダ
+(`PATHTOCLOUD/apps/zimbradrive`) は削除されます。ただ、全ユーザーのファイルはまだクラウドサービスのドライブに残っている状態です。事前にクリーンアップされなかった設定およびファイルは全て、Zimbra Open Drive Appの再インストールで検索対象となります。
+
+[[advanced]]
+=== 高度なトピックス
+
+[[build-from-sources]]
+==== ソースからのビルド
+
+本項ではZimbra Open Driveコンポーネントをビルドする手順を説明します。公式のZimbra Open Driveソースレポジトリは
+https://github.com/ZeXtras/zimbra-drive[GitHub.com/ZeXtras/zimbra-drive] にホストされています。
+
+構築システムは相対パスを使用します。次の例は作業用パスを仮に `/tmp/` としていますが、自由に変えてかまいません。
+
+....
+# ビルドに使用する予定のフォルダをクリーンアップ
+rm -rf /tmp/ZimbraDrive && cd /tmp/
+
+# ソースレポジトリのクローン作成
+git clone --recursive git@github.com:ZeXtras/ZimbraDrive.git
+
+# ソースフォルダへ移動
+cd ZimbraDrive
+
+# Zimbraリリースの該当ブランチをチェックアウト (仮にZimbra 8.8.0とした場合)
+git checkout release/8.8.0
+
+# パッケージ全体をビルド。対象のZimbraが設定されます。 (数分かかる場合があります) 。
+make clean && make ZAL_ZIMBRA_VERSION=8.8.0
+....
+
+最終成果物 `zimbra_drive.tgz` がフォルダ
+`/tmp/zimbradrive/dist` に格納されることになりす。
+
+`dist` フォルダ:
+
+アーカイブzimbra_drive.tgzにZimbra Open Driveの全コンポーネントが入っています。
+
+[[manual-installation]]
+==== マニュアル操作でのインストール
+
+マニュアル操作でのインストールはサポート対象外です。
+
+Zimbra Open Drive Zimletと拡張機能は、Zimbraのインストール中にインストールします。インストールされたZimbraパッケージに対する修正は、Zimbraアップグレード時の障害を誘発する可能性があります。
+
+[[extension-1]]
+===== 拡張機能
+
+`zimbradrive-extension.jar` ファイルと `zal.jar` ファイルは適切な場所にコピーしなければなりません。また、拡張機能をロードするにはmailboxを再開する必要があります。
+
+
+....
+# rootとして実行
+mkdir -p /opt/zimbra/lib/ext/zimbradrive
+cp zimbradrive-extension.jar /opt/zimbra/lib/ext/zimbradrive/
+cp zal.jar /opt/zimbra/lib/ext/zimbradrive/
+
+# zimbraとして実行
+mailboxdctl restart
+
+....
+
+拡張機能が正しく開始した場合に限り、全て正常に実行されています。最後にmailboxを再開したとき、次の文字列が `ZIMBRA_HOME/log/mailbox.log` に記録されているはずです。
+
+....
+Initialized extension Zimbra Abstraction Layer for: zimbradrive
+
+....
+
+[[zimlet-1]]
+===== Zimlet
+
+次のコマンドでZimbra Open Drive Zimletを配備します。
+
+....
+# zimbraとして実行
+zmzimletctl deploy com_zextras_drive_open.zip
+
+....
+
+Zimletは‘default‘ の提供サービスに対してはデフォルトで有効です。必要に応じてどの提供サービスに対しても管理コンソールからZimletを有効にできます。
+
+[[manual-upgrade]]
+=== マニュアル操作でのアップグレード
+
+マニュアル操作でのアップグレードはサポート対象外です。
+
+Zimbra Open Drive Zimletと拡張機能は、Zimbraのアップグレード中にアップグレードします。インストールされたZimbraパッケージに対する修正は、Zimbraアップグレード時の障害を誘発する可能性があります。
+
+[[extension-2]]
+==== 拡張機能
+
+`/opt/zimbra/lib/ext/zimbradrive/` にある
+`zimbra-extension.jar` と `zal.jar` ファイルを入れ替え、mailboxを再開することで、Zimbra Open Drive拡張機能のアップグレードが可能です。
+
+....
+# rootとして実行
+cp zimbradrive-extension.jar /opt/zimbra/lib/ext/zimbradrive/
+cp zal.jar /opt/zimbra/lib/ext/zimbradrive/
+
+# zimbraとして実行
+mailboxdctl restart
+....
+
+[[zimlet-2]]
+==== Zimlet
+
+Zimbra Open Drive Zimletは、最新バージョンを配備し、キャッシュをフラッシュすることで、アップグレードが可能です。
+
+....
+# zimbraとして実行
+zmzimletctl deploy com_zextras_drive_open.zip
+zmprov fc zimlet
+....
+
+[[manual-uninstall]]
+==== マニュアル操作でのアンインストール
+
+マニュアル操作でのアンインストールはサポート対象外です。
+
+アンインストールではなく、Zimbra Open Driveを無効することを検討してください (参照
+<<disablePackages>>)。インストールされたZimbraパッケージに対する修正は、Zimbraアップグレード時の障害を誘発する可能性があります。
+
+Zimbra Open Drive ZimletとZimbra Open Drive拡張機能のアンインストール処理をマニュアル操作で行なうには、Zimletを配備解除し、zimbraから拡張機能フォルダを消去する必要があります。
+
+Zimbra Open Drive Zimletを削除
+
+....
+# zimbraとして実行
+zmzimletctl undeploy com_zextras_drive_open
+....
+
+TZimbra Open Drive 拡張機能を削除
+
+....
+# rootとして実行
+rm -rf /opt/zimbra/lib/ext/zimbradrive/
+
+# zimbraとして実行
+zmmailboxdctl restart
+....
+
+最後に、必須ではありませんが、下記コマンドによりドメイン属性をクリーンアップします。 +
+`zmprov md domainExample.com zimbraDriveOwnCloudURL`
+
+[[how_to_report_an_issue]]
+==== 問題の報告方法
+
+問題発見時、Zimbraサポートは下記の情報が必要です。
+
+* 問題の詳細説明: 期待していることと実際に起きていること。
+* 問題を再現するのに必要な手順の詳細説明。
+* インストール内容と環境についての詳細説明。
+** クラウド情報
+** サーバー情報: CPU、RAM、サーバー数およびサーバーごとの下記情報
+*** Zimbraのバージョン
+*** Zimbra Open Driveのバージョン
+*** インストール済Zimletの一覧
+** クライアント情報
+*** ブラウザ名とバージョン
+*** サーバーとクライアント間で使用中の接続
+*** クライアントのスキン (テーマ)
+*** クライアントの言語
+*** 対象のユーザーが利用できるZimletの一覧
+* 問題に関するログ全て
+** `mailbox.log`
+
+ユーザーのプライバシーを保護するため、個人情報は削除してもかまいません。
+
+[[gatheringinfo]]
+==== システム情報の収集
+
+本項には、管理者が問題をエスカレーションする際に必要となる有用なシステム情報を収集できるようなヒントを記載します。
+
+[[gatheringinfo-zversion]]
+===== Zimbraのバージョン
+
+Zimbraのバージョンを確認するには下記コマンドを入力します。
+
+....
+# zimbraユーザーにて
+zmcontrol -v
+
+....
+
+[[gatheringinfo-listzimlets]]
+===== 配備したZimletの一覧
+
+配備したZimletの一覧を確認するには下記コマンドを入力します。
+
+....
+# zimbraユーザーにて
+zmzimletctl listZimlets
+
+....
+
+[[gatheringinfo-userzimlets]]
+===== ユーザーが使用できるZimletの一覧
+
+そのユーザーが使用できるZimletの一覧を確認するには下記コマンドを入力します。
+
+....
+# zimbraユーザーにて
+zmprov getAccount user@domain.tld zimbraZimletAvailableZimlets
+
+....
+
+[[gatheringinfo-userzimlets-pref]]
+===== Zimletのユーザープリファレンスの一覧
+
+ユーザーが利用できるZimletのプリファレンスの一覧を確認するには下記コマンドを入力します。
+
+....
+# zimbraユーザーにて
+zmprov getAccount user@domain.tld zimbraZimletUserProperties
+
+....
+
+[[gatheringinfo-extension]]
+===== 拡張機能とZimletのバージョン
+
+拡張機能とZimletのバージョンを確認するには下記コマンドを入力します。
+
+....
+# zimbraユーザーにて
+java -cp /opt/zimbra/lib/ext/zimbradrive/zimbradrive-extension.jar \
+    com.zextras.lib.ZimbraDrive
+
+....

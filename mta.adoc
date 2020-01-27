@@ -72,7 +72,7 @@ composed from the Zimbra Web Client are sent by the Zimbra server
 through Postfix, including messages sent to other users on the same
 server.
 
-image::images/mta_deployment.png[Zimbra MTA Deployment]
+image::mta_deployment.png[Zimbra MTA Deployment]
 
 [TIP]
 The Edge MTA can be any edge security solution for mail. You might
@@ -149,7 +149,7 @@ Admin Console: ::
 [IMPORTANT]
 To prevent mail loops, use caution when setting the relay host.
 
-image::images/sending_non_local_mail_to_different_server.png[MTA Settings]
+image::sending_non_local_mail_to_different_server.png[MTA Settings]
 
 == Anti-Virus and Anti-Spam Protection
 
@@ -171,7 +171,7 @@ You can change anti-virus settings at the Administration Console.
 Admin Console: ::
 *Home > Configure > Global Settings > AS/AV -> Anti-virus Settings*
 
-image::images/anti_virus_protection.png[Anti-Virus Protection]
+image::anti_virus_protection.png[Anti-Virus Protection]
 
 [NOTE]
 Updates are obtained via HTTP from the ClamAV website.
@@ -244,7 +244,7 @@ the Administration Console.
 Admin Console: ::
 *Home > Configure > Global Settings > AS/AV -> Spam checking Settings*
 
-image::images/spam_assassin.png[Spam Assassin Settings]
+image::spam_assassin.png[Spam Assassin Settings]
 
 By default, Zimbra uses the Berkeley DB database for spam training. You
 can also use a MariaDB database.
@@ -351,7 +351,7 @@ global setting:
 Admin Console: ::
 *Home > Configure > Global Settings > MTA -> Network*
 
-image::images/mta_network.png[MTA Trusted Networks]
+image::mta_network.png[MTA Trusted Networks]
 
 When using the Administration Console to set up MTA trusted networks on
 a per server basis, first ensure that MTA trusted networks have been set
@@ -360,7 +360,7 @@ up as global settings.
 Admin Console: ::
 *Home > Configure > Servers -> _server_ -> MTA -> Network*
 
-image::images/mta_network_2.png[MTA Trusted Networks]
+image::mta_network_2.png[MTA Trusted Networks]
 
 Enter the network addresses separated by _commas_ and/or a _space_. Continue
 long lines by starting the next line with space, similar to the
@@ -387,7 +387,7 @@ Administration Console:
 Admin Console: ::
 *Home > Configure > Global Settings > MTA -> Milter Server*
 
-image::images/mta_milter.png[MTA Milter Server]
+image::mta_milter.png[MTA Milter Server]
 
 Use the Administration Console to enable a specific milter server, and
 to set bind addressing for individual servers.
@@ -395,7 +395,7 @@ to set bind addressing for individual servers.
 Admin Console: ::
 *Home > Configure > Servers -> _server_ -> MTA -> Milter Server*
 
-image::images/mta_milter_2.png[MTA Milter Server]
+image::mta_milter_2.png[MTA Milter Server]
 
 [[postscreen_methods]]
 ==== Postscreen Methods for Avoiding Spam
@@ -432,7 +432,7 @@ loads. This concept is illustrated in the following diagram, in which
 undesirable entities are depicted in red; good email candidates are
 green.
 
-image::images/postscreen.png[Postscreen]
+image::postscreen.png[Postscreen]
 
 Postscreen performs basic checks and denies connection(s) that are clearly
 from a bot or zombie. If the connection is not in the temporary whitelist,
@@ -880,7 +880,7 @@ You must configure a relay host if you do not enable DNS.
 When the Zimbra MTA receives mail, it routes the mail through a series of
 queues to manage delivery; incoming, active, deferred, hold, and corrupt.
 
-image::images/message_queues.png[Message Queues]
+image::message_queues.png[Message Queues]
 
 The *incoming* message queue holds the new mail that has been received.
 Each message is identified with a unique file name. Messages are moved to

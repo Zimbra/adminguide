@@ -90,9 +90,8 @@ Open document
 == Networking and ports
 All mailbox servers will need to be able to directly communicate with the Docs Server over port 8443 (HTTPS Backend), which must be open on both ends.
 
-The Docs Server communicates with the Extension through port 9091, so incoming traffic from all mailbox and proxy servers to that port must
-be allowed. The Docs Server component must also be able to directly communicate with the master LDAP server as well as with all Proxy
-servers.
+The Docs Server communicates with the Extension through port 9980, so incoming traffic from all mailbox and proxy servers to that port must be allowed.
+The Docs Server component must also be able to directly communicate with the master LDAP server as well as with all Mailbox servers.
 
 == Installation and Configuration
 
@@ -104,6 +103,19 @@ be used to add a new server in the LDAP with just the 'docs' service installed/e
 read the LDAP in order to write the configuration in `/opt/zimbra/conf/docs/loolwsd.xml`.
 
 Once the setup is completed no other configuration is needed.
+
+==== Adding Custom Fonts to the Docs Server
+To add Custom Fonts to your Docs Server, simply copy the `.ttf` font files in the `/opt/zimbra/docs/zimbra-docs-core/share/fonts/custom/` directory, then generate the new font cache and restart the docs server running `zdocs restart` as `root`.
+
+To generate the new font cache, run the following command based on the Docs Server's Operating System:
+
+.Ubuntu 16 and Ubuntu 18
+`dpkg-reconfigure zimbra-docs-server`
+
+.CentOS 7
+`fc-cache /opt/zimbra/docs/zimbra-docs-core/share/fonts`
+
+WARNING: The server will briefly be unavailable during the restart, and clients will need to close and open again any open document to see the new fonts in the list.
 
 === Mailbox Nodes
 While the Zimbra Docs extension is already contained within the NG modules, the com_zextras_docs Zimlet needs to be deployed on the

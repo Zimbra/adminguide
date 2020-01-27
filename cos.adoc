@@ -374,7 +374,7 @@ accounts to provide another layer of authentication during attempts to
 access the system. This feature must be enabled or disabled in the
 Admin Console, to manage 2FA functions applicable to user mailboxes.
 
-image:images/2FADiagram.png[2 Factor Authentication]
+image:2FADiagram.png[2 Factor Authentication]
 
 For more information, see
 https://wiki.zimbra.com/wiki/Zimbra_Two-factor_authentication[2 Factor Authentication].

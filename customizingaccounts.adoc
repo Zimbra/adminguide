@@ -637,7 +637,7 @@ Admin Console: ::
 *Home -> 3 Add Accounts -> 1. Add Account* +
  -- _Next_ until *Advanced*, scroll down to *Two Factor Authentication*
 
-image::images/User_NewAcct_2FASettings.png[New Account Two Factor Authentication]
+image::User_NewAcct_2FASettings.png[New Account Two Factor Authentication]
 
 See <<two_factor_authentication_parameters,Two Factor Authentication Parameters>>
 for parameter descriptions.
@@ -660,7 +660,7 @@ configurations for an account:
 . Select *Advanced* from the left panel.
 . Scroll down to the *Two Factor Authentication* container in the main panel.
 
-image::images/User_EditAcct_2FASettings.png[Edit Account Two Factor Authentication]
+image::User_EditAcct_2FASettings.png[Edit Account Two Factor Authentication]
 
 See <<two_factor_authentication_parameters,Two Factor Authentication Parameters>>
 for parameter descriptions.
@@ -676,7 +676,7 @@ container to set parameters.
 Admin Console: ::
 *Home > Configure > Class of Service -> _COS_ -> Advanced -> Two Factor Authentication*
 
-image::images/COS_2FAContainer.png[Class of Service Two Factor Authentication]
+image::COS_2FAContainer.png[Class of Service Two Factor Authentication]
 
 See <<two_factor_authentication_parameters,Two Factor Authentication Parameters>>
 for parameter descriptions.

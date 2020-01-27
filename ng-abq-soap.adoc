@@ -6,7 +6,7 @@
 == Introduction
 
 // Conditionally include version introduction, to only appear in specified release
-ifeval::[{product-version} == 8.8.9]
+ifeval::["{product-version}" == "8.8.9"]
 New for {product-name} {product-version}:
 endif::[]
 //

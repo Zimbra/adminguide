@@ -12,7 +12,7 @@ client interfaces and server components that can run as a single node
 configuration or be deployed across multiple servers for high availability
 and increased scalability.
 
-image::images/arch_overview.svg[Architectural Overview,395]
+image::arch_overview.svg[Architectural Overview,395]
 
 The architecture includes the following core advantages:
 
@@ -208,7 +208,7 @@ characteristics for incoming traffic and user connectivity, as depicted in
 the following diagram. Alternate methods for configuring numerous points
 within the network are also possible.
 
-image::images/mailflow.png[Mail Flow - Multi-Server Configuration]
+image::mailflow.png[Mail Flow - Multi-Server Configuration]
 
 The numbered sequences are described below:
 
@@ -408,7 +408,7 @@ Outlook on a Mac device. To enable EWS client access, see the Class of
 Service section. EWS is a separately licensed add-on feature.
 
 * *Messaging Application Programming Interface (MAPI)* synchronizes
-to Microsoft Outlook 2016/2013/2010/2007/2003 with full delegate, offline
+to Microsoft Outlook 2016/2013/2010 with full delegate, offline
 access and support for S/MIME. Use the Zimbra Connector for Outlook to
 connect to {product-name} when using Microsoft Outlook on a Windows
 device. To enable MAPI (Microsoft Outlook) Connector, see the Class of

@@ -76,7 +76,7 @@ the `/opt/zimbra/bin` folder on the {product-name} server.
 [[cli_commands]]
 == Zimbra CLI Commands
 
-image:images/cli.png[CLI]
+image:cli.png[CLI]
 
 The table below lists the CLI commands in `/opt/zimbra/bin`.
 

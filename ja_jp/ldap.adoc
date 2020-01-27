@@ -1,0 +1,388 @@
+[[zimbra_ldap_service]]
+= Zimbra LDAP サービス
+:toc:
+
+LDAPディレクトリサービスは、Zimbraサービスの利用が許されているユーザー情報およびデバイスが集積したレポジトリを提供します。Zimbra LDAPデータに使用される集積レポジトリには、OpenLDAPのディレクトリサーバーを使用しています。
+
+[NOTE]
+{product-name} はMicrosoft Active Directoryサーバーとの統合もサポートしています。特殊なディレクトリを実装する場合の詳細は、サポートまで連絡してください。
+
+LDAPサーバーは、{product-abbrev} のインストール時にインストールされます。個々のサーバーが、処理パラメーターを特定する属性の入ったLDAPエントリを保持しています。また、各属性が特定されていないサーバーには、グローバル設定オブジェクトによりデフォルトが設定されます。
+
+LDAP属性のサブセットはZimbraの管理コンソールやzmprovのコマンドラインで設定可能です。
+
+== LDAPのトラフィックの流れ
+
+LDAPディレクトリのトラフィック図は、Zimbra LDAPのディレクトリサーバーと他の{product-name}サーバー間のネットワークトラフィックを示しています。 ZimbraのMTAと{product-name}のメールボックスサーバーは、ディレクトリサーバーにあるLDAPデータベースに対して読み込みと書き込みを行います。
+
+Zimbraのクライアントは、LDAPへ接続するZimbraサーバー経由で接続します。
+
+image::ldap_traffic_flow.png[LDAP Traffic Flow]
+
+== LDAP のディレクトリ階層
+
+LDAPのディレクトリ階層はツリー状で、メールブランチと設定ブランチの２種類に分かれています。メールブランチはドメインで構成されています。ドメインに属するエントリ、例えばアカウント、グループ、エイリアスなどは、ディレクトリ内ではドメインDN配下に登録されます。設定ブランチにはドメインの一部ではない管理システムエントリが含まれています。設定ブランチのエントリには、システム管理のアカウント、グローバル設定、グローバル権限、COS、サーバー、MIMEタイプ、Zimletなどがあります。
+
+Zimbra LDAP階層図です。各エントリ(オブジェクト)タイプには特定の関連オブジェクトクラスがあります。
+
+image::ldap_directory_hierarchy.png[LDAP Directory Hierarchy]
+
+LDAPディレクトリのエントリは、属性の集合でできており、グローバルで一意の名前(`dn`)を持っています。エントリに使用する属性は、そのエントリに関わるオブジェクトクラスによって決まります。オブジェクトクラス属性の値によって、そのエントリが従うべきスキーマルールが決まります。
+
+エントリの種類を決めるオブジェクトクラスを構造のオブジェクトクラスと言い、変更ができません。それ以外のオブジェクトクラスを予備のオブジェクトクラスと言い、エントリの追加や削除が可能です。
+
+LDAPで使用する予備のオブジェクトクラスは、既存のオブジェクトクラスを組み合わせることができます。例えば、 構造のオブジェクトクラス *inetOrgPerson* と予備のオブジェクトクラス *zimbraAccount* を持つエントリは、アカウントになります。 構造のオブジェクトクラス *zimbraServer* を持つエントリは、Zimbraシステム内の１つまたは複数のZimbraパッケージがインストールされているサーバーになります。
+
+== {product-name} LDAPのスキーマ
+
+各LDAP実装の中心には、スキーマを使用して構成したデータベースがあります。
+
+ZimbraのLDAPスキーマは、OpenLDAPソフトウェアに含まれている一般的なスキーマを継承しています。既存のディレクトリ環境と共存するように設計されています。
+
+{product-name}
+専用に作成した属性とオブジェクトクラスはすべて “zimbra”で始まります。例えばオブジェクトクラス `zimbraAccount` や
+属性　`zimbraAttachmentsBlocked` などです。 +
+OpenLDAP実装には、以下のスキーマファイルが含まれています。
+
+* core.schema
+* cosine.schema
+* inetorgperson.schema
+* zimbra.schema
+* amavisd.schema
+* dyngroup.schema
+* nis.schema
+
+[NOTE]
+Zimbraのスキーマを変更することはできません。
+
+
+=== {product-name} のオブジェクト
+
+[cols="1,2a,1s",options="header",]
+|=======================================================================
+|オブジェクト |詳細 |オブジェクトのクラス
+
+|アカウント |
+Zimbraのメールボックスサーバーにある、ログイン可能なアカウントのことです。アカウントエントリはユーザーアカウントもしくは管理者アカウントです。オブジェクトクラス名は *zimbraAccount* です。このオブジェクトクラスは *zimbraMailRecipient* のオブジェクトクラスを継承します。
+全てのアカウントには次のプロパティがあります。 +
+　- user@example.domain形式の名前 +
+　- 変更されず、再利用されない一意のID +
+　- 属性 +
+属性にはユーザーが(プリファレンスから)変更できるものと管理者のみ変更できるものがあります。
+すべてのユーザーアカウントはドメインに紐づくため、アカウントの作成以前にドメインを作成する必要があります。  |zimbraAccount
+
+|提供サービス (COS) |
+アカウントが持つデフォルト属性。使用できる機能、使用できない機能が定義されています。COSにより、機能やデフォルトのプリファレンス設定、メールボックス割り当て容量、メッセージの保持期限、パスワード制限、添付ファイルブロック設定、新規アカウントの作成用のサーバープールを制御します。  |zimbraCOS
+
+|ドメイン |
+*example.com* や *example.org* のような、電子メールを使用可能にさせるドメインのことです。ドメインに属するユーザーへメッセージが配信されるよりも前に、ドメインが存在している必要があります。  |zimbraDomain
+
+|配布リスト|
+メーリングリストとも言います。リストのアドレスへ１通、メールを送信すると、リストのメンバー全員へメッセージが届きます。 |zimbraDistributionList
+
+|ダイナミックグループ|
+配布リストと類似しています。差異は、ダイナミックグループのメンバーはLDAP検索によって動的に計算されるという点です。LDAP検索フィルターはダイナミックグループエントリの属性内に定義されています。
+
+[NOTE]
+配布リストもダイナミックグループもどちらも、委任された管理者のフレームワーク内で、被譲与者またはターゲットとして使用することができます。
+
+|zimbraGroup
+
+|サーバー |
+Zimbraシステム内の１つまたは複数のZimbraパッケージがインストールされているサーバーのことです。属性は、サーバーの設定情報で、サーバーで実行中のサービスを示したりします。  |zimbraServer
+
+|グローバル設定 |
+サーバーやドメインというオブジェクト用のデフォルト値を指定します。他のオブジェクト用の属性が設定されていない場合、その属性の値はグローバル設定から継承されます。グローバル設定値は必要なものなので、Zimbraコアパッケージの一環として、インストール中に設定されます。これがシステムのデフォルト設定の値になります。  |zimbraGlobalConfig
+
+|エイリアス |
+アカウント、配布リスト、またはダイナミックグループのエイリアスのことです。 *zimbraAliasTarget* 属性はこのエイリアスエントリのターゲットエントリを指します。  |zimbraAlias
+
+|Zimlet |
+Zimbra内にインストール・設定されているZimletを定義します。
+|zimbraZimletEntry
+
+|カレンダーのリソース |
+会議で指定することのできる機器や会議室のようなカレンダーリソースを定義します。カレンダーリソースとは、 *zimbraCalendarResource* オブジェクトクラスにさらに追加の属性を持つアカウントです。
+|zimbraCalendarResource
+
+|Identity |
+ユーザーのペルソナのことです。ペルソナには、ユーザーの識別情報、例えば、表示名、送信メールに使用する署名エントリのリンクが入っています。ユーザーは複数のペルソナを作成できます。IdentityエントリはDITにあるユーザーのLDAPエントリの直下に作成されます。   |zimbraIdentity
+
+|データソース|
+ユーザーの外部メールソースを指します。データソースの例としては、POP3やIMAPがあります。データソースにはPOP3/IMAPのサーバー名、ポート、ユーザーの外部メールアカウントのパスワードが保存してあります。データソースには、表示名や外部アカウントの代わりに送信されるアウトバウンドメールに使用する署名へのリンクなどを含むペルソナ情報も格納されます。データソースのエントリはDIT内のユーザーのLDAPエントリの下に作成されます。  |zimbraDataSource
+
+|署名 |
+ユーザーの署名を指します。ユーザーは複数の署名を作成することができます。署名のエントリはDIT内のユーザーのLDAPエントリの下に作成されます。
+|zimbraSignature
+
+|=======================================================================
+
+== アカウントの認証について
+
+内外のLDAPおよび外部Active Directoryが、サポート対象の認証のメカニズムです。認証方式はドメインごとに設定します。 `zimbraAuthMech` 属性が設定されていない場合、デフォルトでは内部認証を使用します。
+
+内部認証方式はOpenLDAPサーバーで動いているZimbraスキーマを使用します。
+
+`zimbraAuthFallbackToLocal` 属性を有効にしていると、外部認証が失敗した場合にローカル認証へフォールバックできます。デフォルトはFALSEです。
+
+=== 内部認証のメカニズム
+
+内部認証方式はOpenLDAPサーバーで動いているZimbraスキーマを使用します。OpenLDAPに格納されているアカウントの場合、ユーザーパスワードのsalted-SHA1 (SSHA)ダイジェストが属性　`userPassword` に格納されます。ログイン時に入力したパスワードはSSHAダイジェストに演算された後、格納されている値と比較されます。
+
+=== 外部LDAPと外部Active Directoryの認証メカニズム
+
+メール環境が、Zimbra以外のLDAPサーバーやMicrosoft Active Directoryを認証用に使用していて、Zimbra LDAPサーバーを{product-name} 関連のトランザクション用に使用している場合は、外部LDAPと外部Active Directoryの認証を利用することができます。ただし、OpenLDAPと外部LDAPサーバーの両方にユーザーが存在していなければなりません。
+
+外部認証方法では、入力されたユーザー名とパスワードを使用して、指定のLDAP認証サーバーへのバインドを試行します。バインドが成功した場合は、接続は終了し、パスワードが認証されたことになります。
+
+属性 `zimbraAuthLdapURL` と `zimbraAuthLdapBindDn` が外部認証には必要です。
+
+* `zimbraAuthLdapURL` 属性の `ldap://ldapserver:port/` は、外部ディレクトリサーバのIPアドレスまたはホスト名と、portでポート番号を表します。ポート番号の代わりに正式なホスト名を使用することもできます。
++
+例
++
+    ldap://server1:3268
+    ldap://exch1.acme.com
++
+SSL接続の場合、 `ldap:` の代わりに `ldaps:` を使用します。サーバーが使用するSSL証明書は信頼済みの証明書として設定する必要があります。
+
+* 属性 `zimbraAuthLdapBindDn` には外部ディレクトリサーバーへバインドする際に使用するDNを指定します。
++
+認証のプロセスの始まりでは、ユーザー名は *user@example.com* の形式です。
++
+外部ディレクトリ内では、ユーザー名を有効なLDAPバインド `DN` (Distinguished Name：識別名)へ変換する必要がある場合があります。Active Directoryの場合、バインドの `DN` は別のドメインの可能性もあります。
+
+=== カスタム認証
+
+所有しているユーザーデータベースに外部認証を統合させるカスタム認証を実装できます。認証リクエストがくると、Zimbraはドメインに指定された認証メカニズムをチェックします。この認証メカニズムがカスタムに設定されている場合、Zimbraは登録されているカスタム認証ハンドラを実行して、そのユーザーを認証します。
+
+カスタム認証のセットアップには、ドメインをカスタム認証に設定し、カスタム認証ハンドラを登録してください。
+
+==== ドメインをカスタム認証に設定
+
+ドメインをカスタム認証にするには、ドメインの属性
+*zimbraAuthMech に custom:\{登録したカスタム認証ハンドラ名}* を設定します。
+
+下の例では、sampleの名の下に、カスタム認証が登録されています。
+
+.ドメインをカスタム認証に設定する
+====
+[source, bash]
+----
+zmprov modifydomain {domain|id} zimbraAuthMech custom:sample
+----
+====
+
+==== カスタム認証ハンドラを登録する
+
+カスタム認証ハンドラを登録するには下記を実行し、
+
+[source, java]
+----
+ZimbraCustomAuth.register( handlerName, handler )
+----
+
+拡張のinitメソッドに追加します。
+
+* クラス: *com.zimbra.cs.account.ldap.ZimbraCustomAuth*
+* メソッド: `public synchronized static void register (String handlerName, ZimbraCustomAuth handler)`
++
+属性の説明:
++
+** *handlerName* の名の下に、このカスタム認証ハンドラがZimbraの認証インフラへ登録されます。この名前はドメインのzimbraAuthMech属性にも設定します。
+** *handler* というオブジェクト上で、認証方法は、このカスタム認証ハンドラの場合に実行されます。オブジェクトは `ZimbraCustomAuth` (またはサブクラス)のインスタンスである必要があります。
+
+.カスタム認証ハンドラを登録する
+====
+[source, java]
+----
+public class SampleExtensionCustomAuth implements ZimbraExtension {
+
+  public void init() throws ServiceException {
+  /*
+   * Zimbra の認証インフラへ登録。
+   * custom:sample はドメインの属性zimbraAuthMech に設定してください。
+   *    */
+   ZimbraCustomAuth.register("sample", new SampleCustomAuth());
+  }
+...
+}
+----
+====
+
+==== カスタムの認証方法について
+
+認証リクエストがくると、指定されたドメインがカスタム認証に設定されている場合、認証用フレームワークは
+`ZimbraCustomAuth.register()` のhandlerパラメーターとして渡されたインスタンス `ZimbraCustomAuth` 上で認証方法を実行します。
+
+認証すべき最初のもの(プリンシパル)用のアカウントオブジェクトとユーザーが入力したクリアテキストのパスワードは
+`ZimbraCustomAuth.authenticate()` へ渡されます。
+
+アカウントのオブジェクトからすべてのアカウント属性を取得できます。
+
+=== Kerberos5 の認証方法
+
+Kerberos5 の認証メカニズムでは、外部のKerberosサーバーに対して、ユーザー認証します。
+
+1.  `kerberos5` を、このドメインの属性 `zimbraAuthMech` として設定します。
+2.  Kerberosデータベース内でこのドメインのユーザーが作成されている `Kerberos5 Realm` を、このドメインの属性 `zimbraAuthKerberos5Realm` として設定します。
+    ユーザーがパスワードを使用してログインしたときに、そのドメインの属性 `zimbraAuthMech` が `kerberos5` に設定されていたら、サーバーは `{メールアドレスのローカル部分}@{zimbraAuthKerberos5Realmの値}` でKerberos5プリンシパルを構成させたものをkerberos5サーバーへの認証に使います。
+
+個人のアカウント向けにKerberos5を指定するには、アカウントの `zimbraForeignPrincipal` を `kerberos5:{kerberos5-principal}` として設定します。 +
+例: kerberos5:user1@MYREALM.COM.
+
+== グローバルアドレスリスト(GAL)について
+
+グローバルアドレスリスト(GAL)はユーザーの社内ディレクトリで、通常、組織内で有効で、メールシステム内の全ユーザーが利用することができます。{product-name}では社内のユーザーアドレスを検索する際に、この社内ディレクトリを使用します。
+
+{product-name}のドメインごとに、GALを下記の利用に設定できます。
+
+* 外部のLDAPサーバー
+* {product-name}の内部LDAPサーバー
+* GAL検索の外部LDAPサーバーおよび{product-name} LDAP
+
+{product-name}のウェブクライアントはGALを検索できます。ユーザーが名前を検索すると、名前がLDAPの検索フィルターへと変換されます。下記例の `%s` はユーザーが検索中の名前です。
+
+.GALを検索する
+====
+[source]
+----
+(|(cn = %s*)(sn=%s*)(gn=%s*)(mail=%s*))
+  (zimbraMailDeliveryAddress = %s*)
+  (zimbraMailAlias=%s*)
+  (zimbraMailAddress = %s*)
+----
+====
+
+=== {product-name}上でのGAL 属性
+
+以下の
+<<attributes_mapped_to_zimbra_collaboration_contact,ZCSの連絡先属性へマップされたLDAP属性>>
+の表は、一般的なGALの検索属性と{product-name}の連絡先情報をマッピングしています。
+
+LDAP属性はGALエントリ項目にマッピングされます。例えば、LDAP属性 `displayName` と `cn` は、GALのエントリ項目 `fullName` へマップできます。このマッピングは `zimbraGaILdapAttrMap` 属性に設定されています。
+[[attributes_mapped_to_zimbra_collaboration_contact]]
+.ZCSの連絡先属性へマップされた属性
+[cols="1,1,1",options="header"]
+|===============================================================
+|デフォルトのLDAP属性 |{product-name} の連絡先属性 |説明
+
+|co |workCountry |会社の国
+|company |Company |会社名
+|givenName/gn |firstName |姓
+|sn |lastName |名
+|cn |fullName |フルネーム
+|initials |initials |名前のイニシャル
+|l |workCity |会社の市
+|street, streetaddress|workStreet  |会社の住所
+|postalCode |workPostalCode |会社の郵便番号
+|telephoneNumber |workPhone |会社の電話番号
+|mobile |mobile |携帯番号
+|pager |pager |ポケベルの番号
+|facisimileTelephoneNumber |faxNumber |ファックスの番号
+|st |workState |会社の州
+|title |jobTitle |職種
+|mail |email |メールアドレス
+|thumbnailPhoto |サムネイルの画像
+|objectClass |Not currently mapped  | マップされていない
+|===============================================================
+
+=== {product-name} GAL の検索条件
+
+GALは各ドメイン単位で設定します。属性を設定する場合、管理コンソールのGAL設定ウィザードを使用できます。
+
+=== 属性を変更する方法
+
+GAL属性への追加、変更、削除はZimbraの管理コンソールから、または `zmprov` コマンドで実施します。
+
+ユーザーがZimbraのウェブクライアントのオプションやプリフレンスを変更すると、アカウント関連属性も変更されます。
+
+== LDAPのキャッシュをフラッシュする
+
+ZimbraLDAPサーバーで以下のタイプのエンティティを変更した場合、変更の反映にLDAPキャッシュのフラッシュが必要となる場合があります。
+
+* テーマ
+* 地域
+* アカウント
+* グループ
+* COS
+* ドメイン
+* グローバル設定
+* サーバー
+* Zimletの設定
+
+=== テーマや地域のキャッシュをフラッシュする
+
+{product-abbrev} のテーマ(スキン)のプロパティファイルや地域のリソースファイルを追加したり変更したりする場合、新しい内容の反映のために、キャッシュをフラッシュする必要があります。
+
+.スキンをフラッシュ
+[source, bash]
+----
+zmprov flushCache skin
+----
+
+.地域をフラッシュ
+[source, bash]
+----
+zmprov flushCache locale
+----
+
+=== アカウント、グループ、COS、ドメインおよびサーバーをフラッシュする
+
+アカウントやCOS、グループ、ドメイン、サーバーの属性を変更した場合、変更を行ったサーバーには直ちに変更が反映されます。他のサーバーの場合、属性がキャッシュされていると、一定期間経過した後に自動でLDAP情報が更新されます。
+
+{product-abbrev} でのデフォルト設定ではサーバーの定期アップデートは15分ごとです。キャッシュする期間はローカル設定キーで設定します。
+
+.アップデート時間の設定変更
+[source, bash]
+----
+zmlocalconfig ldap_cache_<object>_maxage
+----
+
+.即座に変更を反映
+[source, bash]
+----
+zmprov flushCache {account|cos|domain|group|server|...} [name|id]...
+----
+
+タイプに沿ったIDや名称を指定しない場合、キャッシュにある、そのタイプの全エントリがフラッシュされ、キャッシュは更新されます。
+
+[NOTE]
+サーバー属性によっては、キャッシュをフラッシュしたあとでも、再起動が必要なものもあります。例えば、バインドポートやプロセススレッド数などです。
+
+=== グローバル設定をフラッシュする
+
+グローバル設定属性を変更した場合、変更を行ったサーバーには直ちに変更が反映されます。他のメールボックスサーバーの場合、キャッシュをフラッシュするかサーバーを再起動しなければ変更は反映されません。グローバル設定属性のLDAPエントリに有効期間はありません。
+
+グローバル設定属性のなかには、サーバーが再起動したときにだけ読み込まれるものもあります。こうした属性への変更は、キャッシュをフラッシュしたとしてもサーバーが再起動されるまでは有効になりません。グローバル設定や、グローバル設定を継承したサーバー設定のなかにも、サーバー起動時のみに読み込まれるものがあります。例えば、ポートやプロセススレッド数です。こうした属性の変更により、サーバー再起動が必要となります。
+
+全てのサーバーにおいて、グローバル設定の変更をフラッシュする場合
+
+1.  ローカルサーバーの設定を変更します。
++
+[source, bash]
+----
+zmprov mcf zimbraImapClearTextLoginEnabled TRUE
+----
++
+ローカル設定キーである `zimbra_zmprov_default_soap_server` と `zimbra_admin_service_port` により判別されるサーバー経由でこの変更を実行します。
+
+2.  その他全サーバーのグローバル設定のキャッシュをフラッシュするには、各サーバーで `zmprov flushCache`
+を実行する必要があります(または  `zmprov flushCache -a` を使用します)。
++
+例:
++
+[source, bash]
+----
+zmprov -s server2 flushCache config
+zmprov -s server3 flushCache config
+----
+
+3.  サーバー再起動が必要かどうかを確認します。
++
+[source, bash]
+----
+zmprov desc -a <attributename>
+----
++
+再起動が必要な場合、`requiresRestart` が返されます。

@@ -29,9 +29,9 @@ The main differences between {zconnect-name} and Zimbra Talk V2 implementation a
 |===
 |Zimbra Talk V2 |Zimbra Connect
 |User interaction is based on a buddy list    |User interaction is based on the GAL
-|Buddy list-based minimal UI    |History-based minimal UI
+|Buddy-list-based minimal UI    |History-based minimal UI
 |Bulkier, more crowded UI    |Lighter, less cluttered UI
-|Space settings are defined in the space itself    |Space settings are defined by the space's "General" channel
+|Space settings are defined in the Space itself    |Space settings are defined by the Space's "General" channel
 |User-based video and audio feed control - users can autonomously mute/stop other user's audio and video feed only affecting themselves.    |Host-based video and audio feed control - host can mute a participant or stop a video feed affecting all participants. Users can still mute/stop their feeds.
 |===
 
@@ -39,8 +39,8 @@ The main differences between {zconnect-name} and Zimbra Talk V2 implementation a
 [cols=",",options="header",]
 |===
 |Zimbra Talk V2 |Zimbra Connect
-|File exchange is available in Chats, Groups, and Channels    |File exchange will be available in Chats, Groups, and Channels starting with Zimbra 8.8.15p2
-|Instant Meeting is available    |Instant Meeting will be available starting with Zimbra 8.8.15p1
+|File exchange is available in Chats, Groups, and Channels    |File exchange is available in Chats and Groups starting with Zimbra 8.8.15p3
+|Instant Meeting is available    |Instant Meeting is available starting with Zimbra 8.8.15p1
 |===
 
 === Frontend Features
@@ -64,7 +64,7 @@ The main differences between {zconnect-name} and Zimbra Talk V2 implementation a
 * COS and User availability
 * Built-in TURN server compatibility
 * No core installation needed. Zimlet installation through a package manager.
-* No configuration needed
+* No configuration required
 * Peer-to-Peer WebRTC protocol to avoid server load
 * Dedicated audit log
 
@@ -73,14 +73,32 @@ The main differences between {zconnect-name} and Zimbra Talk V2 implementation a
 {zconnect-name} is licensed on a per-user basis. License information is included in the Network Edition license file just as for any other Zimbra NE feature.
 Global Admins can enable its Advanced features for any number of users up to the limit allowed by the license, and only "advanced" users count towards any licensing limit.
 
+The total number of users who have the Advanced features active can be seen in the output of the `zxsuite core getLicenseInfo` command under `teamChatActiveCount`:
+
+....
+zimbra@129efa51bd95:~$ zxsuite core getLicenseInfo
+
+        dateStart                                           2019-06-11 00:00:00 UTC
+        dateEnd                                             2019-12-31 17:00:00 UTC
+        expired                                             false
+        type                                                regular - Network Edition
+        [...]
+        teamchatActiveCount                                 999
+        [...]
+....
+
+This count is updated every 15 minutes.
+
 == Zimbra Chat and {zconnect-name}
 
-Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist on any Zimbra NE infrastructure. 
+Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist in any Zimbra NE infrastructure.
 The Zimbra Chat zimlet gets uninstalled during the installation process of the {zconnect-name} Zimlet package.
 However, {zconnect-name} includes all _basic_ IM features provided by Zimbra Chat, which automatically gets enabled for all users who don’t have access to the _advanced_ {zconnect-name} features.
-_Advanced_ users can use all of the product’s features with other _advanced_ users and can use 1-to-1 Instant Messaging with _basic_ users, while _Basic_ users can use the basic 1-to-1 features with all other users.
+_Advanced_ users can use all of the product’s features with other _advanced_ users and can use 1-to-1 Instant Messaging with _basic_ users.
+_Basic_ users can use 1-to-1 features with all other users.
 
-All users start as «Basic» users, and the «Advanced» features can be enabled by Global and Delegated admins.
+All users start as _Basic_ users.
+Global and Delegated admins can enable _Advanced_ features.
 
 == {zconnect-name} Zimlet installation
 
@@ -123,7 +141,20 @@ delete_destination_before_import(O)    Boolean    true|false
 (M) == mandatory parameter, (O) == optional parameter
 ....
 
-This operation can execute multiple times, but it's a one-way process and cannot be reverted: once users are switched to Connect (by disabling the Talk Zimlet and enabling the Connect Zimlet), it's not possible to move their Connect data back to Talk.
+This operation can execute multiple times, but it's a one-way process and cannot be reverted.
+Once users are switched to Connect (by disabling the Talk Zimlet and enabling the Connect Zimlet), it's not possible to move their Connect data back to Talk.
+
+== URLs and Ports
+To build URLs and links (e.g., for External Shares) {zconnect-name} uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.
+
+Should either of the two not be set up, the system falls back to the `zimbraServiceHostname` and `zimbraMailPort` or `zimbraMailSSLPort` server-level properties.
+
+For Video Chats and Instant Meetings, the following rules apply:
+
+* {zconnect-name} will work through firewalls and NATs as long as the peers can communicate each with the other - either directly or through a TURN server (which together with proper network rules is usually the solution to any WebRTC connection problem).
+* When no TURN server is set up is not being used, a default STUN server is used so clients should be able to send outbound traffic to ports 19305/19307. The actual P2P connection is established between the clients on a random port between 0 and 65535 based on the client configuration and network.
+* The default handshake/negotiation port used by most TURN servers is 3478 (incoming, UDP), but a different port can be used as long as it is properly set up - on the {zconnect-name} side the port is specified when adding the TURN server and the clients clients will be instructed to connect through it. The default P2P connection range when using a TURN server is 49152-65535 (usually configurable on the TURN side) so clients should be able to send data to that port range to the TURN server.
+** Most TURN servers can also be configured to use TCP insted of UDP.
 
 == {zconnect-name} administration
 
@@ -146,24 +177,24 @@ Zimbra Connect features can be enabled and disabled via the `zxsuite config` com
 [cols=",,,,",options="header",]
 |======================================================
 |Browser |Quick Access Sidebar |Connect Tab |Videochat |Screen sharing
-|Internet Explorer 11+ |Yes |Yes |No |No
+|Internet Explorer 11+ |No |No |No |No
 |Microsoft Edge |Yes |Yes |No |No
 |Mozilla Firefox |Yes |Yes |Yes |Yes
 |Google Chrome |Yes |Yes |Yes |Yes (w/ extension)
 |Safari |Yes |Yes |Yes |No
 |======================================================
 
-Google Chrome users must install the "Zextras Companion" extension in order to use the Screen Sharing feature, publicly available in the Chrome Web Store.
+Google Chrome users must install the "Zextras Companion" extension to use the Screen Sharing feature, publicly available in the Chrome Web Store.
 
 Firefox users must be sure to be running at least version 66 of the browser to be able to use the Screen Sharing feature.
 
 == UI
 
 The {zconnect-name} UI is developed in PREACT and seamlessly integrated with the Zimbra Web Client.
-It is composed of two client-side components: the Quick Access Sidebar and the fully featured Connect Tab.
+It is composed of two client-side components: the Quick Access Sidebar and the fully-featured Connect Tab.
 
 The Quick Access Sidebar allows for quick Instant Messaging, both for 1-to-1 and group conversations.
-Advanced {zconnect-name} features such as File Sharing and Video Chat are available in the IM Pane only for users who have the {zconnect-name} feature set enabled either at account or COS level.
+Advanced {zconnect-name} features such as File Sharing and Video Chat are available in the IM Pane only for users who have the {zconnect-name} feature set enabled either at an account or COS level.
 
 The Connect Tab is the full-sized {zconnect-name} UI, which contains all corporate instant messaging features such as Spaces and Channels.
 The tab itself is available for both Basic and Advanced users, but corporate features are only available to Advanced users.
@@ -174,14 +205,14 @@ The Quick Access Sidebar displays the last people, groups, and channels the user
 
 It is available for both "Basic" users and "Advanced" users and provides additional features for the latter.
 
-image:images/connect_quick_chat_1.png[connect_quick_chat_1.png,title="connect_quick_chat_1.png", 200]
-image:images/connect_quickaccess_sidebar_1.png[connect_quickaccess_sidebar_1.png,title="connect_quickaccess_sidebar_1.png", 400]
+image:connect_quick_chat_1.png[connect_quick_chat_1.png,title="connect_quick_chat_1.png", 200]
+image:connect_quickaccess_sidebar_1.png[connect_quickaccess_sidebar_1.png,title="connect_quickaccess_sidebar_1.png", 400]
 
 === Connect Tab
 
-The Connect Tab is a fully fledged Zimbra feature tab that can be interacted with in the same way as all other feature tabs (e.g., Mail or Calendar).
+The Connect Tab is a fully-fledged Zimbra feature tab that behaves similarly to all other feature tabs (e.g., Mail or Calendar).
 
-image:images/connect_home_1.jpg[connect_home_1.jpg,title="connect_home_1.jpg"]
+image:connect_home_1.jpg[connect_home_1.jpg,title="connect_home_1.jpg"]
 
 == Instant Messaging and Corporate Communication
 
@@ -191,17 +222,17 @@ One-to-one Chats can start from either the Quick Access Sidebar or the Connect T
 
 * on the former, select one of the available entries (based on your chat history) and start chatting with that person right away
 
-image:images/connect_new_chat_2.png[connect_new_chat_2.png,title="connect_new_chat_2.png"]
+image:connect_new_chat_2.png[connect_new_chat_2.png,title="connect_new_chat_2.png"]
 
 * on the latter click on "New," then "New Chat" and select the person you want to chat with from the GAL
 
-image:images/connect_new_chat_1.png[connect_new_chat_1.png,title="connect_new_chat_1.png"]
+image:connect_new_chat_1.png[connect_new_chat_1.png,title="connect_new_chat_1.png"]
 
 Recent 1-to-1 chats appear in the "Conversations" section of the Connect Tab and the Quick Access Sidebar (round icon).
 
 === Groups
 
-Groups are how users communicate with multiple people at the same time (by default up to 5 total). 
+Groups are how users communicate with multiple people at the same time (by default up to 5 total).
 Those are non-persistent entities not tied to any specific space. Any user can create a group inviting people, and any group member can invite more people in the same way.
 When all users leave a group, the group itself ceases to exist.
 
@@ -215,7 +246,7 @@ Files sent in a Group are available to all members of that Group.
 * An user in a Group can start a video chat with all of the others.
 Group video chats can be joined at any time by all members of the Group.
 
-Global Administrators can change the allowed maximum number of group members in the Zimbra Connect section of the Global settings in the Admin Console.
+Global Administrators can change the allowed maximum number of group members in the Zimbra Connect section of the Global Settings in the Admin Console.
 
 ==== Groups UI
 Recent Group chats appear in the "Conversations" section of the Connect Tab and the Quick Access Sidebar (rounded square icon).
@@ -224,23 +255,23 @@ Recent Group chats appear in the "Conversations" section of the Connect Tab and 
 +
 To create a new Group, click on the "New" button in the Connect Tab, and select "New Group."
 +
-image:images/connect_create_new_group_1.jpg[connect_create_new_group_1.jpg,title="connect_create_new_group_1.jpg"]
+image:connect_create_new_group_1.jpg[connect_create_new_group_1.jpg,title="connect_create_new_group_1.jpg"]
 +
 then, add the Group's title, select the buddies you wish to invite and click on "Create."
 +
-image:images/connect_create_new_group_2.jpg[connect_create_new_group_2.jpg,title="connect_create_new_group_2.jpg"]
+image:connect_create_new_group_2.jpg[connect_create_new_group_2.jpg,title="connect_create_new_group_2.jpg"]
 
 * Inviting a participant to a Group
 +
 To invite one or more buddies to a Group expand the Group's Info, select the users to be added and click on "Save."
 +
-image:images/connect_add_user_to_group_1.jpg[connect_add_user_to_group_1.jpg,title="connect_add_user_to_group_1.jpg"]
+image:connect_add_user_to_group_1.jpg[connect_add_user_to_group_1.jpg,title="connect_add_user_to_group_1.jpg"]
 
 * Starting a Group Video Chat
 +
 To start a Group video chat, click on the "Camera" icon on the top of the Group's chat window.
 +
-image:images/connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
+image:connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
 +
 Any member of the Group can join the call at any time by clicking on the same button.
 
@@ -248,11 +279,11 @@ Any member of the Group can join the call at any time by clicking on the same bu
 +
 To leave a Group, first, click on "Leave Group" in the Group's Info
 +
-image:images/connect_leave_group_1.png[connect_leave_group_1.png,title="connect_leave_group_1.png"]
+image:connect_leave_group_1.png[connect_leave_group_1.png,title="connect_leave_group_1.png"]
 +
 then, click on "Yes" under the warning message.
 +
-image:images/connect_leave_group_2.png[connect_leave_group_2.png,title="connect_leave_group_2.png"]
+image:connect_leave_group_2.png[connect_leave_group_2.png,title="connect_leave_group_2.png"]
 
 === Spaces
 
@@ -274,11 +305,11 @@ Spaces appear in a dedicated section of the Connect Tab, which gives access to a
 +
 To create a new Space, click on the "New" button in the Connect Tab, and select "New Space."
 +
-image:images/connect_new_space_1.jpg[connect_new_space_1.jpg,title="connect_new_space_1.jpg"]
+image:connect_new_space_1.jpg[connect_new_space_1.jpg,title="connect_new_space_1.jpg"]
 +
 then, enter the Space's name and topic, select any users to invite and finally, click on "Save."
 +
-image:images/connect_new_space_2.jpg[connect_new_space_2.jpg,title="connect_new_space_2.jpg"]
+image:connect_new_space_2.jpg[connect_new_space_2.jpg,title="connect_new_space_2.jpg"]
 
 * Leaving a Space
 +
@@ -289,11 +320,11 @@ Participants can leave a space at any time, while a Space Administrator can only
 Both need to be invited to join the space again, and former Space Administrators get invited as regular participants but can be granted Administrator rights again.
 
 ==== Space Settings
-Its General Channel Info defines a Space's settings (see below).
+The General Channel Info in each Space defines its settings (see below).
 
 The Space's creator is also the first Space Administrator and can grant the same rights to any other user by clicking on the crown icon in the appropriate entry of the participant list.
 
-image:images/connect_space_acls_1.png[connect_space_acls_1.png,title="connect_space_acls_1.png"]
+image:connect_space_acls_1.png[connect_space_acls_1.png,title="connect_space_acls_1.png"]
 
 Only Space Administrators can invite new participants, create new channels, kick people, and delete channels within the space.
 
@@ -306,20 +337,20 @@ Each new Space has a "General" channel automatically created within it, which de
 
 ==== Channels Features
 
-* A user in a Channel can chat with all of the others. 
+* A user in a Channel can chat with all of the others.
 All members of that channel can view all messages sent on the Channel.
 * A user in a Channel can start a video chat with all of the others.
 Channel video chats can be joined at any time by all members of the Channel.
 
 ==== Channnels UI
 
-Channels appear in Spaces within the Connect Tab and all of the Channel-related features are managed there, by:
+Channels appear in Spaces within the Connect Tab, and all of the Channel-related features are managed there, by:
 
 * Creating a Channel
 +
 To create a new Channel, click on the "New" button, and select "New Channel."
 +
-image:images/connect_new_channel_1.png[connect_new_channel_1.png,title="connect_new_channel_1.png"]
+image:connect_new_channel_1.png[connect_new_channel_1.png,title="connect_new_channel_1.png"]
 +
 then select:
 
@@ -337,7 +368,7 @@ To join a Channel, click on the Channel label and then on "Join Channel."
 +
 To start a Channel video chat, click on the "Camera" icon on the Channel's chat window.
 +
-image:images/connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
+image:connect_group_start_videochat_1.jpg[connect_group_start_videochat_1.jpg,title="connect_group_start_videochat_1.jpg"]
 +
 Any member of the Channel can join the call at any time by clicking on the same button.
 
@@ -345,9 +376,16 @@ Any member of the Channel can join the call at any time by clicking on the same 
 +
 To leave a Channel, first, click on the red "Leave Channel" entry in the Channel's Info
 +
-image:images/connect_leave_channel_1.png[connect_leave_channel_1.png,title="connect_leave_channel_1.png"]
+image:connect_leave_channel_1.png[connect_leave_channel_1.png,title="connect_leave_channel_1.png"]
 
 Both normal users and Space Admins can leave a channel at any time and join it afterward.
+
+== File sharing
+Users can easily share files via Connect to Chats and Groups by dragging and dropping the files directly into the chat interface (both in the minichat and in the Connect tab) or by clicking the "paperclip" icon on the right of the message input field. Multiple files can be uploaded at once, and image files will show a preview of the file while other common filetypes will display a custom icon.
+
+Clicking on a file within a chat window will download it to the local client using the browser's own download interface.
+
+Files shared via Connect will be stored inside a protected folder the sender's Drive, thus counting towards the sender's mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.
 
 == Video Chat
 
@@ -355,12 +393,12 @@ Video Chat features are available in 1-to-1 chats, Groups, and Channels, allowin
 
 The WebRTC protocol is the foundation for this feature.
 WebRTC is a peer-to-peer auto-adaptive technology that allows clients to communicate directly without overloading the server.
-Call quality is automatically tweaked based on the available bandwidth, with the maximum quality being _Full HD_ for both video and audio. 
+Call quality is automatically tweaked based on the available bandwidth, with the maximum quality being _Full HD_ for both video and audio.
 When starting their first video chat, users need to grant their browser access permissions to their camera and microphone.
 
 === Video Chat UI
 
-image:images/connect_group_videochat.png[connect_group_videochat.png,title="connect_group_videochat.png"]
+image:connect_group_videochat.png[connect_group_videochat.png,title="connect_group_videochat.png"]
 
 The video chat UI has three main areas:
 
@@ -370,7 +408,7 @@ The total number depends on the screen's resolution and window size.
 This chat is visible and entirely usable, and its history gets retained in the group's or channel's chat history.
 * On the bottom left appear the user's video feed and controls (disable video, mute microphone, and share screen).
 
-Users can disconnect from an ongoing video chat by pressing the "Hang up" button in their video stream's frame on the bottom left of the screen. 
+Users can disconnect from an ongoing video chat by pressing the "Hang up" button in their video stream's frame on the bottom left of the screen.
 Whenever a video chat is on, users belonging to the Group or Channel of the video chat see a "Call in progress" message below the name of the Group or Channel and may join by clicking on the "Camera" icon in the chat.
 
 ==== Video Stream Control
@@ -381,17 +419,34 @@ Every participant can mute their audio stream or stop their video stream.
 
 ==== Screen Sharing
 
-image:images/connect_videochat_screensharing_1.png[connect_videochat_screensharing_1.png,title="connect_videochat_screensharing_1.png"]
+image:connect_videochat_screensharing_1.png[connect_videochat_screensharing_1.png,title="connect_videochat_screensharing_1.png"]
 
-When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window. 
+When clicking on the Screen Share button, a pop-up window appears asking the user whether to share their entire screen or just a specific window.
 After choosing, the screen sharing feed replaces the user's webcam feed for all participants.
+
+== Instant Meetings
+Instant Meetings are one-shot Video Chats that can be attended by external users as well as internal users.
+Only users with the Advanced Connect features enabled can start Instant Meetings, but any internal or external user can attend.
+
+To create an Instant Meeting, click on the "New" button in the Connect Tab, and select Instant Meeting.
+
+Then, fill in the attendee list by entering any internal or external email address in the text box and pressing enter to add it to the list.
+Once all attendees are added, press "Save" to send an email notification to all participants and start the Instant Meeting.
+
+=== Instant Meeting URLs
+Both external and internal users can join an Instant Meetings through a dedicated URL that can be found both in the invitation email and in the information section of the Instant Meeting itself.
+
+Such URLs are uniquely generated for each Instant Meeting and expire 10 minutes after the host leaves the meeting.
+
+=== Instant Meeting UI
+The Instant Meeting feature uses the very same UI as any internal Video Chat session.
 
 == Presence
 
 Presence is managed automatically in {zconnect-name}: whenever a user logs in, regardless of whether the Connect Tab has the focus, they appear as *online*.
 
 As part of the user presence system, all messages get displayed with a variable number of check symbols:
-image:images/connect_message_delivered_1.png[connect_message_delivered_1.png,title="connect_message_delivered_1.png"]
+image:connect_message_delivered_1.png[connect_message_delivered_1.png,title="connect_message_delivered_1.png"]
 
 * 0 checks, message not delivered to the server
 * 1 check, message delivered to the server
@@ -401,7 +456,7 @@ image:images/connect_message_delivered_1.png[connect_message_delivered_1.png,tit
 
 The number of unread messages in any conversation, Group or Channel appears on the right side of the conversation, Group, or Channel.
 
-image:images/connect_unread_messages_1.png[connect_unread_messages_1.png,title="connect_unread_messages_1.png"]
+image:connect_unread_messages_1.png[connect_unread_messages_1.png,title="connect_unread_messages_1.png"]
 
 == Chat History
 
@@ -421,8 +476,8 @@ A dedicated set of TURN configuration tools is available via CLI through the `zx
 ....
 zimbra@mailserver:~$ zxsuite connect iceServer
 
-Edit the list of ice servers which will be used to establish connections for video calls.
-Configuration available for global(default), cos or account.
+Edit the list of ICE servers used to establish connections for video calls.
+Configuration scope can be global(default), cos, or account.
 
   add                      - add ice server candidates using global (default), cos or account
                              zxsuite connect iceServer add {turn:turn.example.com:3478?transport=udp} [attr1 value1 [attr2 value2...]]
@@ -453,10 +508,10 @@ cos(O)           String    default
 
 Usage example:
 
-zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser
-zxsuite connect iceserver add turn:turn.example.com credential mysecret username myuser account testaccount@example.com
+zxsuite connect iceServer add turn:turn.example.com credential mysecret username myuser
+zxsuite connect iceServer add turn:turn.example.com credential mysecret username myuser account testaccount@example.com
 ....
 
 Multiple TURN servers can be added to handle different users or Classes of Service (defined through the `user` and `cos` optional parameters of the command above).
 
-On the TURN server side, it is strongly recommended to have a single user,  authenticated with a username and secret key, for ease-of-use reasons as a 1:1 correspondence between Zimbra users and TURN users is not necessary.
+On the TURN-server side, it is strongly recommended to have a single user,  authenticated with a username and secret key, for ease-of-use reasons as a 1:1 correspondence between Zimbra users and TURN users is not necessary.

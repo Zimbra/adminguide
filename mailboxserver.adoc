@@ -76,7 +76,7 @@ located in `/opt/zimbra/index`.
 The tokenizing and indexing process is not configurable by
 administrators or users.
 
-image::images/Tokenization.jpg[Index Store]
+image::Tokenization.jpg[Index Store]
 
 The process is as follows:
 

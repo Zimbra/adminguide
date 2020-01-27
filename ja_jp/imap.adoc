@@ -1,0 +1,24 @@
+= IMAP
+:toc:
+
+{product-name} はデフォルトでインストールされる内部の IMAP サーバが含まれており、zimbra-mailboxd のプロセスの一部となっております。(<<mailboxserver.adoc#zimbra_mailbox_server, Zimbra Mailbox Server>>)
+
+== 一般的な IMAP 設定オプション
+
+以下のグローバルとサーバ側の設定では IMAP サービスの管理やチューニングが可能となっております。
+
+* *zimbraImapServerEnabled*. TRUE に設定した場合、内部の IMAP サーバが有効化されます。FALSE に設定した場合、内部の IMAP サーバが無効化されます。デフォルトの設定は TRUE です。
+* *zimbraImapSSLServerEnabled*. TRUE に設定した場合、内部の IMAP SSL サーバが有効化されます。FALSE に設定した場合、内部の IMAP SSL サーバが無効化されます。デフォルトの設定は TRUE です。
+* *zimbraImapBindAddress* (サーバ側での設定のみ). 内部の IMAP サーバプロセスがリッスンするインターフェースのアドレスを指定します。値が空の場合、すべてのインターフェースへバインドします。
+* *zimbraImapBindPort*. 内部の IMAP サーバプロセスがリッスンするポート番号を指定します。デフォルトの値は 7143 です。
+* *zimbraImapSSLBindAddress* (サーバ側での設定のみ). 内部の IMAP SSL サーバプロセスがリッスンするインターフェースのアドレスを指定します。値が空の場合、すべてのインターフェースへバインドします。 
+* *zimbraImapSSLBindPort*. 内部の IMAP SSL サーバプロセスがリッスンするポート番号を指定します。デフォルトの値は 7993 です。
+* *zimbraImapNumThreads*. IMAP ハンドラのスレッドプールに使用可能なスレッド数を指定します。デフォルトでは {product-name} が IMAP NIO を使用しておりますので、各 IMAP ハンドラスレッドが複数のコネクションを処理できます。デフォルト値の 200 では最大 10,000 アクティブ IMAP クライアントを同時に処理できます。
+* *zimbraImapCleartextLoginEnabled*. 非 SSL/TLS コネクションで cleartext のログインを許可するかどうかを指定します。デフォルトの設定は FALSE です。
+* *zimbraImapProxyBindPort*. IMAP プロキシサーバがリッスンするポート番号を指定します。デフォルト設定は 143 です。詳細については  <<proxy.adoc#zimbra_proxy_components, Zimbra Proxy Components>> をご参照ください。
+* *zimbraImapSSLProxyBindPort*. IMAP SSL プロキシサーバがリッスンするポート番号を指定します。デフォルト設定は 993 です。詳細については <<proxy.adoc#zimbra_proxy_components, Zimbra Proxy Components>> をご参照ください。
+ * *zimbraImapMaxRequestSize*. 実際のデータを除いた IMAP リクエストの最大サイズをバイト数で指定します。*注意:* この設定は IMAP LOGIN リクエストには適用されません。IMAP LOGIN のリクエストは IMAP プロキシ (<<proxy.adoc#zimbra_proxy_components, Zimbra Proxy Components>>) で処理しており、最大 256 文字に制限しております。
+ * *zimbraImapInactiveSessionCacheMaxDiskSize*. 削除する非アクティブの IMAP キャッシュの最大ディスクサイズをバイト数で指定します。デフォルトの設定は 10GB です。Ehcache の内部仕様により、実際に使用するディスクサイズが上限を大きく超えてしまいますので、この上限は完全な上限ではありません。
+ * *zimbraImapInactiveSessionEhcacheSize*. 削除する非アクティブの IMAP キャッシュの最大ヒープサイズをバイト数で指定します。デフォルトの設定は 1MB です。Ehcache の内部仕様により、実際に使用するディスクサイズが上限を大きく超えてしまいますので、この上限は完全な上限ではありません。
+ * *zimbraImapActiveSessionEhcacheMaxDiskSize*. アクティブな IMAP キャッシュに使用できる最大ディスクサイズをバイト数で指定します。デフォルトの設定は 100GB です。Ehcache の内部仕様により、実際に使用するディスクサイズが上限を大きく超えてしまいますので、この上限は完全な上限ではありません。
+

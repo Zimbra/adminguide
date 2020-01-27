@@ -167,9 +167,6 @@ a.m. and at 8:15 p.m.
 # Backups
 #
 # BACKUP BEGIN
-0 1 * * 6 /opt/zimbra/bin/zmbackup -f -a all
-0 1 * * 0-5 /opt/zimbra/bin/zmbackup -i
-0 0 * * * /opt/zimbra/bin/zmbackup -del 1m
 # BACKUP END
 #
 # crontab.ldap

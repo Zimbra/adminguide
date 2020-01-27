@@ -806,7 +806,7 @@ Threads with prefix `qtp` are created by Jetty `QueuedThreadPool` and have the f
 
 Log records reported by threads that serve SOAP requests will usually contain URL of the request being served in *{url}* part of thread name, as in the following example:
 
-image:images/zwclogmessage.png[Mailbox Log Entry for SOAP]
+image:zwclogmessage.png[Mailbox Log Entry for SOAP]
 
 
 Due to a known bug in {product-name} *{url}* part of the thread name may contain duplicate protocol identifier, as in the following example:
@@ -817,7 +817,7 @@ Due to a known bug in {product-name} *{url}* part of the thread name may contain
 
 `[%z]` section in the log pattern describes {product-name} context and consists of key-value pairs in the format `key=value`, separated by semi-colons (;). In cases where a value contains a semi-colon, the semi-colon is replaced with a double semi-colon (;;). E.g., browser UserAgent strings often include semi-colons, such as this one "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36". In mailbox.log, this UserAgent string will appear as following:
 
-image:images/doublesemicolon.png[ua value with double semi-colon]
+image:doublesemicolon.png[ua value with double semi-colon]
 
 The following key value pairs are currently supported and may be recorded in log entries in any order and any combination:
 
@@ -841,19 +841,19 @@ The following key value pairs are currently supported and may be recorded in log
 The example below is a record showing that
 on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP `10.1.1.136`.
 
-image:images/poplogmessage.png[Mailbox Log Entry for POP]
+image:poplogmessage.png[Mailbox Log Entry for POP]
 
 The following example shows a record of a failed `IMAP STATUS` request sent by `user1@mydomain.com` using AquaMail mobile app. The user's device has IP address `72.83.144.255` (as reported in `oip` field). The request came to IMAP server via {product-name} nginx proxy, which has IP address `10.4.4.138` (as reported in `ip` and `via` fields).
 
-image:images/imaplogmessage.png[Mailbox Log Entry for IMAP]
+image:imaplogmessage.png[Mailbox Log Entry for IMAP]
 
 The following example shows a record of LMTP server delivering a message. The IP address in this log message most likely belongs to {product-name} MTA running on local network.
 
-image:images/lmtplogmessage.png[Mailbox Log Entry for LMTP]
+image:lmtplogmessage.png[Mailbox Log Entry for LMTP]
 
 The next example shows a record of `MailboxPurge` thread purging message with ID 462 from the mailbox of `test@mydomain.net`. This log message does not have `ip`, `oip`, `port` or `via` fields, because it originates from an internal process rather than from an external request.
 
-image:images/shortlogmessage.png[Mailbox Log Entry for Purge]
+image:shortlogmessage.png[Mailbox Log Entry for Purge]
 
 ==== Handler Exceptions and Stack Traces
 

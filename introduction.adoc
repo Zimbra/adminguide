@@ -32,7 +32,7 @@ We appreciate your feedback and suggestions.
 For additional product information, the following resources are available:
 
 * https://wiki.zimbra.com[Zimbra Wiki]
-* https://wiki.zimbra.com/wiki/SecurityCenter[Security Center]
+* https://wiki.zimbra.com/wiki/Security_Center[Security Center]
 
 Let us know what you like about the product and what you would like to see in the product.
 Post your ideas to the Zimbra Forum.

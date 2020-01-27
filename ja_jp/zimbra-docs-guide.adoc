@@ -1,0 +1,230 @@
+= Zimbra Docs
+:toc:
+
+== 紹介
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::["{product-version}" == "8.8.9"]
+{product-name} {product-version} で追加された,
+endif::[]
+//
+Zimbra Docs は大きくカスタマイズした LibreOffice のオンラインパッケージにベースした機能であり、Zimbra ウェブクライアント上でドキュメント、スプレッドシート、およびプレゼンテーションの共通編集を提供しています。
+
+== コンポーネント
+
+=== Zimbra Docs サーバについて
+
+Zimbra Docs サーバがサービスの中心となります。ドキュメントを開く際に、本サービスが LibreOffice のエンジンで該当のドキュメントをホストし、クライアントへすべての変更がリアルタイムで、ドキュメントのイメージよりレスポンスが送信されます。
+
+要注意：このコンポネントは Ubuntu 16.04 LTS, Ubuntu 18.04 LTS, または Red Hat/CentOS 7 の専用ノード（または複数の専用ノード）へインストールする必要があります。
+
+=== Zimbra Docs 拡張について
+
+Zimbra Docs 拡張にすべてのサービスを運用されます。主のタスクは以下となります。
+
+* ドキュメントが開く Docs サーバを特定する
+* ドキュメントを開く際にクライアントを適切に誘導する
+* Docs サーバの代わりに、システムストレージにドキュメントの読み込みと書き込みを行う
+* 管理用のウェブソケット経由で各 Docs サーバへ接続し、各サーバの有効性と使用中のリソースを監視する
+* ユーザー様の同時接続を同じドキュメントがホストしているサーバへ誘導する（ドキュメント共通）
+
+Zimbra Docs 拡張は NG Core と共に、NG モジュールのパッケージに含まれています。
+
+=== Zimbra Docs Zimletについて
+
+Zimbra Docs Zimlet はブリーフケースと添付ファイルの関連を管理します。具体的に、デスクトップクライアントと同様なパフォーマンス、および最低限のバンド幅使用を使用するため、シンのウェブクライアントがウェブクライアントでサーバへ接続し、ドキュメントのレンダーし、クライアントへの変更のみを送信します。
+
+プレビューしているドキュメント、および添付ファイルが読み取り専用の状態で、より簡単なインターフェースとして表示されますが、編集する際に完全なインターフェースへ切り替えます。
+
+Zimbra Docs Zimlet の主のタスクは以下となります。
+
+* ZWC の「作成」ボタンに適切な Docs 機能へ変換する
+* プレビュー機能に Docs を利用するように変換する
+* ドキュメントのプレビューを許可する
+
+== ドキュメントの管理流れについて
+
+ユーザ様が新しいドキュメントを作成した際、以下のような流れが行います。
+
+. Zimlet が拡張に新しい空ドキュメントを作成するように依頼します。
+. 拡張がドキュメントを作成し、クライアントへドキュメントのIDを返信します。
+. Zimlet が新しい Zimbra タブを開き、'/service/extension/wopi-proxy' へ転送する iframe が開きます。
+. 拡張にクライアントのリクエストを受信し、要求したドキュメントに新しトークンを作成し、新しい URL を返信します。
+. 新しい URL が `/docs/[docs-node-id]/[token]` へ転送し、nginx により指定した Docs サーバのノードへプロキシされます。
+. Docs サーバが Javascript でウェブアプリケーションを返答します。
+. ウェブアプリケーションがウェブソケットの接続を開き、nginx をけいゆうします。
+. Docs サーバがウェブソケットの接続とトークンを受信し、指定したメールボックスの URL （メールノックスの URL が許可しているノードであることを認証されます）へ `read wopi` のコマンドを送信します。
+. 拡張がトークンを認証し、適切の情報やコンテンツを返信します。
+. Docs サーバのノードがドキュメントをパースし、レンダーしたものをクライアントへ返信します。
+. ドキュメントが開き、編集が可能の状態です。
+
+....
+ドキュメントを開く
+                                  Docs へ誘導
+    +------------------------+             +----------------------+
+    |     Zimbra Proxy       |             |    メールボックス      |
+    |                        +------------->                      |
+    |      Nginx             |             |   Zimbra Docs 拡張    |
+    +------------------------+             +----------------------+
+                      |                        |              ^
+                      |                        |              |
+                      |                        |             WOPI:
+                      |                   管理のウェブ    ドキュメントの
+                      |                   ソケット      読み込み/書き込み
+                      |                        |              |
+                      |                        |              |
+                      |                        |              |
+                      |                    +---v----------------+
+                      |                    |                    |
+                      +-------------------->   Docs サーバ       |
+            クライアントをロードし             |                    |
+       クライアントのウェブソケットを開く        +--------------------+
+....
+
+
+== ネットワークのポートについて
+すべてのメールボックスサーバはポート 8443 (HTTPS バックエンド) で直接にコミュニケーションを行う必要がありますので、どちらのサーバ側でこのポートを開く必要があります。
+
+また、Docs サーバは拡張をポート9091でコミュニケーションを行いますので、すべてのメールボックスとプロキシサーバからポート9091へのインバウンドトラフィックを許可する必要があります。Docs サーバもマスター LDAP サーバとプロキシサーバへ直接にコミュニケーションする必要もあります。
+
+== インストールと設定について
+
+=== Docs のノードについて
+`zimbra-docs tgz` のスタンドアロンインストーラをダウンロードし、_root_ ユーザーでパッケージを展開した後、`install.sh` のスクリプトを実施します。
+
+スクリプトは Zimbra Docs のパッケージをインストールした後、マスター LDAP、URL、ユーザー名とパスワードを要求します。これらの情報を元に、LDAPへ'docs' のサービスのみがインストールと有効化している新しいサーバを追加します。各 Docs サーバは各ノードで閲覧することが可能であり、`/opt/zimbra/conf/docs/loolwsd.xml` の設定を書き込むため LDAP を読み込みます。
+
+設定が完了しましたら、他の設定を実施する必要はありません。
+
+=== メールボックスのノードについて
+Zimbra Docs 拡張は既に NG モジュールに含まれていますが、com_zextras_docs の Zimlet をサーバへデプロイし、Zimbra Docs の機能を提供するユーザやCOSへ有効化する必要があります。
+
+`com_zextras_docs` Zimlet は Zimbra のリポジトリで提供しておりますので、`apt-get install zimbra-docs` で簡単にダウンロードとデプロイすることが可能です。
+
+なお、Zimlet がデプロイし、有効化した後、Mailboxd側でさらなる設定の適用はありません。
+
+=== プロキシノードについて
+Zimbra Docs サーバを追加する度に、プロキシの設定を再発行する必要があります。設定を再発行する場合、_zimbra_ ユーザーとして、`/opt/zimbra/libexec/zmproxyconfgen` のコマンドを実施した後、`zmproxyctl restart` のコマンドでプロキシサービスを再起動します、
+
+上記を実施後、新しい Docs ノードが LDAP から読み取りますので、手動での設定は不要です。
+
+== ライセンスについて
+.Zimbra Docs はネットワーク版のライセンスにあるユーザー数の上限と同様に利用いただけます。
+なお、スタンドアロンのインストーラは MPLv2 ライセンスで提供しておりますが、拡張と Zimlet は著作権のある別のライセンスで提供しています。
+
+== 削除方法
+
+ソフトウェアをアンインストールする前に、LDAP からノードを削除する必要があります。Docs ノード上で以下のコマンドで削除できます。
+
+`zdocs remove-local-server`
+
+また、全 zimbra ノードで以下の zmrov コマンドでも削除することが可能です。
+
+`zmprov deleteServer {servername}`
+
+== コマンドの詳細について
+
+=== Zimbra Docs サーバ CLI - zdocs
+Docs サーバでの zdocs コマンド (root ユーザーの /usr/local/bin/zdocs) が lool 設定の発行（既に cron にある）、LDAP から Docs サーバの追加/削除、設定の確認、およびサービスの管理が可能です。
+
+.`zdocs` コマンド
+[source,bash]
+----
+usage: zdocs [-h] [--auto-restart] [--ldap-dn LDAP_DN] [--ldap-pass LDAP_PASS]
+             [--ldap-url LDAP_URL] [--hostname HOSTNAME] [--debug][--cron]
+
+{genkey,write-local-server,remove-local-server,generate-config,ldap-write-config,ldap-test,start,stop,restart,status,setup}
+
+Manage Zimbra Docs service.
+
+Available commands:
+  genkey                Generate a private key needed for authentication between docs and mailbox servers.
+  write-local-server    Add or update in LDAP the necessary server entry for this server in order to be reachable from other servers.
+  remove-local-server   Remove local server entry in LDAP.
+  generate-config       Populate the config template with ldap values and write a new configuration file.
+  ldap-write-config     Write new configuration about the ldap access needed to generate the docs configuration file.
+  ldap-test             Check the ldap connection.
+  start                 Start the service.
+  stop                  Stop the service.
+  restart               Restart the service.
+  status                Print service status.
+  setup                 Start the initial setup.
+
+positional arguments:
+{genkey,write-local-server,remove-local-server,generate-config,ldap-write-config,ldap-test,start,stop,restart,status,setup}                                   Command to execute
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --auto-restart        Automatically restart the service if configuration is changed (to be used with generate-config)
+  --ldap-dn LDAP_DN     Ldap dn (distinguish name) to bind to (to be used with ldap-test and ldap-settings)
+  --ldap-pass LDAP_PASS Ldap password used of the DN (to be used with ldap-test and ldap-settings)
+  --ldap-url LDAP_URL   Ldap url completed with schema (ex.: ldaps://ldap.example.com, to be used with ldap-test and ldap-settings)
+  --hostname HOSTNAME   Hostname of this server (to be used with add-local-server)
+  --debug               Show complete errors when things go bad.
+  --cron                Start in cron mode, avoid any output unless there is an error (to be used with generate-config).
+
+examples:
+#regenerate the config and restart the server if config changed
+  zdocs --auto-restart generate-config
+#restart the service
+  zdocs restart
+#check ldap connection availability using current settings
+  zdocs ldap-test
+#check ldap connection using custom settings
+  zdocs --ldap-url ldaps://ldap.example.com/ --ldap-dn 'uid=zimbra,cn=admins,cn=zimbra' --ldap-pass password ldap-test
+#change the ldap connection settings
+  zdocs --ldap-url ldap://ldap2.example.com/ --ldap-dn 'uid=zimbra,cn=admins,cn=zimbra' --ldap-pass password
+ldap-write-config
+#add the local server
+  zdocs write-local-server
+#add the local server with a custom hostname in LDAP, this command should be already invoked during setup.
+  zdocs --hostname myhostname write-local-server
+#remove the local server from LDAP, useful when destroying the server, you can also use 'zmprov deleteServer' from a mailbox server.
+  zdocs remove-local-server
+----
+
+=== Zimbra Docs 拡張 CLI - zxsuite docs
+メールボックスサーバ上では、`zxsuite docs` のコマンドを利用いただけます。このコマンドではDocs サービスのステータス確認と管理、設定を強制的に再読み込み、およびDocsサーバのステータスを確認することが可能です。
+
+.zxsuite docs
+[source,bash]
+----
+zxsuite docs
+
+Commands regarding docs module
+
+  doReloadConfig           - reload docs configuration from ldap, which
+would happen once a minute.
+                             zxsuite docs doReloadConfig
+
+  doRestartService         - restart a given service
+                             zxsuite docs doRestartService
+{service_name}
+
+  doStartService           - start a given service
+                             zxsuite docs doStartService {service_name}
+
+  doStopService            - stop a given service
+                             zxsuite docs doStopService {service_name}
+
+  getServices              - show current status of all services for
+this module
+                             zxsuite docs getServices
+
+  status                   - show zimbra docs servers status with their
+resource usage (if connected).
+                             zxsuite docs status
+----
+
+== トラブルシューティング
+
+.[underline]#ドキュメントを開く際に何も起こらない / 拡張が 503 で返答してしまう#
+本現象について、メールボックスサーバとDocsサーバの接続問題が発生している可能性が高いです。`mailbox.log` を確認し、接続失敗の原因が記録されているか、調査してください。接続エラーがない場合、Docsノードに`zdocs status`のコマンドでDocsサーバの状況を確認ください。
+
+メールボックスは各Docsサーバにすべての接続と切断をログに記録します。
+
+.[underline]#Docsの代わりに404のエラーコードが表示する#
+プロキシの設定を再発行し、プロキシサービスを再起動する必要があります。
+
+.[.underline]#Docsが開きますが、期待してドキュメントではなく、“this is embarrassing...”のメッセージが表示する#
+ドキュメントの読み込みと書き込みを実施するために、Docsサーバがメールボックスサーバへ正常に接続できない場合に発生します。サーバ名の名前解決を確認し、DocsサーバがZimbraの証明書管理の機能が含まれていませんので、mailboxdのSSL証明書が正常であることも確認してください。

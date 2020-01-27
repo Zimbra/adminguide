@@ -1,0 +1,73 @@
+[float]
+= image:https://www.zimbra.com/wp-content/uploads/2016/06/zimbra-logo-color-282-1.png[Zimbra,link=https://www.zimbra.com] Zimbra Administration Guide in Japanese
+
+:product-family: Zimbra
+:doc-name: {product-family} Administration Guide
+:doc-filename: adminguide
+:product-version: 8.8.15
+:copyright-year: 2019
+
+This repository contains the code necessary to build the Zimbra
+Administration Guide in Japanese.
+
+This guide is intended for system administrators responsible for
+installing, maintaining, and supporting the server deployment of
+Zimbra.
+
+== Building the Documentation
+
+Please refer to the link:../README.adoc[Master README] about the preparation
+of Asciidoctor.
+
+Once you have Asciidoctor installed and working, you can build the
+documentation into HTML files like so:
+
+[source,bash,subs=attributes+]
+----
+asciidoctor -b html5 -D ~/temp/{product-version} -o {doc-filename}-{product-version}.html ja_jp/index.adoc
+----
+
+This assumes you have a "temp" directory to receive the asciidoctor output,
+and are generating output for version {product-version}... adjust according to your
+situation.
+Each section of the document is contained in its own file. You may use the
+`index.adoc` file to generate the entire document.
+
+To accompany the HTML output, the `images/` folder must also be copied to the output destination:
+
+[source,bash,subs=attributes+]
+-----
+cp -r ./images/ja_jp ~/temp/{product-version}/images/
+-----
+
+When publishing the output (gh-pages branch) the index.html needs to be updated to
+point at the generated Japanese version.
+
+== Additional Information
+
+Visit https://www.zimbra.com[*www.zimbra.com*] to join the community and to
+be a part of building the best open source messaging solution. We
+appreciate your feedback and suggestions.
+
+Join the https://forums.zimbra.org/[Zimbra Forums], to participate and
+learn more about Zimbra.
+
+For additional product information check the https://wiki.zimbra.com[Zimbra Wiki].
+
+== License
+
+image:https://i.creativecommons.org/l/by-sa/4.0/88x31.png[CC BY-SA] Synacor, Inc., {copyright-year}
+
+(C) 2016-{copyright-year} by Synacor, Inc.
+
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
+International License unless another license agreement between you and
+Synacor, Inc. provides otherwise. To view a copy of this license, visit
+https://creativecommons.org/licenses/by-sa/4.0 or send a letter to Creative
+Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+Synacor, Inc., +
+40 La Riviere Drive, Suite 300 +
+Buffalo, New York 14202
+
+https://www.synacor.com

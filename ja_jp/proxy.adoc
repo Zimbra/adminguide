@@ -1,0 +1,495 @@
+[[zimbra_proxy_server]]
+= Zimbra プロキシサーバー
+:toc:
+
+Zimbraプロキシは、IMAP/POP3やHTTP クライアントリクエストのバックエンドサーバーへのリバースプロキシに使用されるPOP3/IMAP/HTTP プロキシとして設定することのできる、高性能なプロキシサーバーです。
+
+{product-name}のインストール中にZimbraのプロキシパッケージのインストール・設定をします。このパッケージはメールボックスサーバー、MTAサーバー、または独立したサーバーにインストールできます。Zimbraプロキシのパッケージがインストールされると、プロキシ機能が有効になります。通常、特に編集は必要ありません。
+
+== Zimbraプロキシを使用する利点
+
+以下の項目はZimbraプロキシを使用するメリットです。
+
+* Zimbraプロキシによるメールボックスサーバーへのアクセスの中央化
+* ロードバランス
+* セキュリティ
+* 認証
+* SSLの停止化
+* キャッシュ
+* ロギングと監視の中央化
+* URLの再発行
+* サーバー名による制御の徹底 (任意)
+
+詳細について、Wikiページ https://wiki.zimbra.com/wiki/Zimbra_Proxy_Guide[Zimbra_Proxy_Guide] を参照してください。
+
+[[zimbra_proxy_components]]
+== プロキシのコンポーネント
+
+Zimbraプロキシの仕組みで素早く安定したスケーラブルなHTTP/POP/IMAPプロキシを提供します。Zimbraプロキシのコンポーネントは以下となります。
+
+[cols="1,2",options="header",]
+|=======================================================================
+|コンポーネント |説明
+
+|Nginx |
+すべてのHTTP/POP/IMAPリクエストを処理する、高パフォーマンスのHTTP/IMAP/POP3プロキシサーバーです。
+
+|Memcached |
+配布されるメモリオブジェクトを高パフォーマンスでキャッシュするシステムです。パフォーマンスを向上させるため、この中にルート情報をキャッシュします。
+
+|Zimbra Proxyルート検索ハンドラ |
+{product-abbrev} メールボックスサーバーにあるサーブレットです。ユーザーアカウントのルート情報のクエリを処理します。ルート情報には、ユーザーアカウントが入っているサーバーとポート番号があります。
+
+|=======================================================================
+
+== プロキシ構成と運用の流れ
+
+ここでは、Zimbraプロキシの構成とフローを説明します。
+
+. エンドクライアントがHTTP/HTTPS/POP/IMAPのポートを使用してZimbraプロキシへ接続します。
+
+. {product-name} プロキシが外からの接続を受信すると、Nginxコンポーネントがルート検索ハンドラコンポーネントへHTTPリクエストを送信します。
++
+image:proxy_architecture_and_flow.png[Proxy Architecture]
+
+.  {product-name} プロキシのルート検索ハンドラがアクセスされているアカウントのルート情報を確認し、Nginxへ返します。
+
+.  Memcachedコンポーネントは、設定された期間内にこのルート情報を保存します (デフォルトは1時間) 。Nginxは、このデフォルトの保存期間中はルート検索ハンドラへ問い合わせせずに、このルート情報を利用します。
+
+.  Nginxはルート情報を使用して、{product-name}のメールボックスに接続します。
+
+.  {product-name}プロキシは{product-name}メールボックスに接続してウェブ/メールのプロキシセッションを開始します。エンドクライアントは{product-name}メールボックスへ直接接続しているかのように動作します。
+
+== Zimbraプロキシ設定の変更
+
+Zimbraプロキシが設定されていると、Zimbraプロキシの設定は必要に応じて{product-name}のLDAP設定やLocalconfigから代理のキーワードを使用します。
+
+Zimbraプロキシの設定完了後に変更が必要となった場合、ZimbraのLDAP属性やLocalconfig属性を編集します。その後、変更を反映したZimbraのプロキシ設定を生成するためにzmconfigdを実行します。Zimbraプロキシの設定ファイルは `/opt/zimbra/conf/nginx.conf` にあります。このNginx.confファイルには基本設定ファイル、memcache設定ファイル、メール設定ファイル、ウェブ設定ファイルが含まれています。
+
+Zimbraプロキシに対するよくある変更は、IMAP/POP設定の当初デフォルト設定からの変更です。
+
+* 当初デフォルト設定からのHTTP リバースプロキシ設定変更。
+
+* KerberosのGSSAPI認証。この場合、Zimbraプロキシのパスワードを含む、KerberosのKeytabファイルのありかをマニュアル操作で指定します。
+
+== Zimbra プロキシ
+
+Zimbraのプロキシにより、エンドユーザーはMicrosoft Outlook、Mozilla Thunderbirdなどのクライアントや他のPOP/IMAPエンドクライアント製品を使用して、{product-name}アカウントにアクセスすることができます。エンドユーザーはPOP3、IMAP、POP3S (セキュアPOP3) 、IMAPS (セキュアIMAP) を使用して接続します。
+
+プロキシによって例えば、ユーザーはimap.example.comをユーザーのIMAPサーバーとして入力できます。imap.example.comで起動するこのプロキシがユーザーのIMAPトラフィックを分析し、ユーザーのメールボックスのあるバックエンドのメールボックスサーバーを探し当ててユーザーのIMAPクライアントからの接続を正しいメールボックスサーバーへと導きます。
+
+=== POPとIMAPのZimbra プロキシポート
+
+以下のポートはZimbraプロキシまたはZimbraメールボックス（プロキシが設定されていない場合）のいずれかで使用されています。これらのポートで起動中の他のサービスがある場合はそのサービスを停止します。
+
+エンドクライアントはZimbraプロキシのポートを使用して、直接Zimbraプロキシに接続します。ZimbraプロキシはZimbraメールボックスのポートを使用して、Zimbraメールボックスまたはルート検索ハンドラに接続します。
+
+.プロキシポート
+[cols=","]
+|====================================================
+|*Zimbraプロキシポート ({product-abbrev}外部)* |*ポート*
+
+|HTTP |80
+
+|HTTPS |443
+
+|POP3 |110
+
+|POP3S (セキュアPOP3) |995
+
+|IMAP |143
+
+|IMAPS (セキュアIMAP) |993
+
+|*Zimbraメールボックスポート( {product-abbrev}内部)* |*ポート*
+
+|ルート検索ハンドラ |7072
+
+|HTTP バックエンド (プロキシが設定されている場合) |8080
+
+|HTTPSバックエンド (プロキシが設定されている場合) |8443
+
+|POP3バックエンド (プロキシが設定されている場合) |7110
+
+|POP3Sバックエンド (プロキシが設定されている場合) |7995
+
+|IMAPバックエンド (プロキシが設定されている場合) |7143
+
+|IMAPSバックエンド (プロキシが設定されている場合) |7993
+
+|====================================================
+
+=== サーバー名による制御の徹底
+
+Zimbraのプロキシには、クライアントが渡す `Host` のヘッダーに入れられる値を厳しく制限できる機能があります。
+
+この機能は、 *新規インストール* の場合には _デフォルトで有効_ ですが、これまでのバージョンからの *アップグレード*　の場合はインストール中に切り替えない限り　_無効_ です。
+
+`zimbraReverseProxyStrictServerNameEnabled` の真偽値を設定してプロキシサーバーを再起動することでも、同機能を実現することができます。
+
+* TRUE - サーバー名による制御は有効
+* FALSE - サーバー名による制御は無効
+
+[source,bash]
+----
+zmprov mcf zimbraReverseProxyStrictServerNameEnabled TRUE
+----
+
+サーバー名による制御機能が有効な場合、ドメインレベルで設定アイテム `zimbraVirtualHostName` と `zimbraVirtualIPAddress` を使用することで、許容されるサーバー名を追加で指定することができます。
+
+[source,bash]
+----
+zmprov md example.com zimbraVirtualHostName mail.example.com zimbraVirtualIPAddress 1.2.3.4
+----
+
+[NOTE]
+ドメインごとに必要なバーチャルIPアドレスは１つだけですが１つ以上でも問題ありません。
+
+=== HTTPプロキシのインストール後にIMAPとPOPプロキシを設定する方法
+
+IMAPプロキシは{product-name}でインストールされ、インストール中の設定メニューからセットアップされます。HTTPプロキシを設定するには、プロキシを指定したプロキシノードにインストールする必要があります。この他の設定は基本的に必要ありません。
+
+HTTPプロキシのインストールが完了しており、メールボックスサーバーとプロキシノードをセットアップした後に、IMAP/POPプロキシをセットアップする必要がある場合。
+
+[NOTE]
+リモートホストに対し実行するには、`zmproxyconfig -r` コマンドを実行します。
+これにはそのサーバーがLDAPマスター内で適切に設定されている必要があります。
+
+==== 独立プロキシノードのIMAP/POPプロキシを設定する
+
+独立したプロキシサーバーを使用している環境の場合、本項の記述を参照してください。
+
+. プロキシを使用する各ZimbraメールボックスサーバーでIMAP/POPプロキシを有効化します。
++
+[source,bash]
+----
+/opt/zimbra/libexec/zmproxyconfig -e -m -H mailbox.node.service.hostname
+----
++
+これにより以下が設定されます。
++
+--
+[cols="m,",options="header",]
+|=======================================================================
+|ポート属性 |設定
+
+|zimbraImapBindPort |7143
+|zimbraImapProxyBindPort |143
+|zimbraImapSSLBindPort |7993
+|zimbraImapSSLProxyBindPort |993
+|zimbraPop3BindPort |7110
+|zimbraPop3ProxyBindPort |110
+|zimbraPop3SSLBindPort |7995
+|zimbraPop3SSLProxyBindPort |995
+|zimbralmapCleartextLoginEnabled |TRUE
+|zimbraReverseProxyLookupTarget |TRUE
+|zimbraPop3CleartextLoginEnabled |TRUE
+
+|=======================================================================
+--
+
+. プロキシとメールボックスのサーバーでサービスを再起動します。
++
+[source,bash]
+----
+zmcontrol restart
+----
+
+*プロキシノードを設定する*
+
+プロキシサービスがインストールされている各プロキシノードで、ウェブ用にプロキシを有効化します。
+[source,bash]
+----
+/opt/zimbra/libexec/zmproxyconfig -e -m -H proxy.node.service.hostname
+----
+
+これにより以下が設定されます。
+
+[cols="m,",options="header",]
+|====================================================
+|*ポート属性* |*設定*
+
+|zimbraImapBindPort |7143
+|zimbraImapProxyBindPort |143
+|zimbraImapSSLBindPort |7993
+|zimbraImapSSLProxyBindPort |993
+|zimbraPop3BindPort |7110
+|zimbraPop3ProxyBindPort |110
+|zimbraPop3SSLBindPort |7995
+|zimbraPop3SSLProxyBindPort |995
+|zimbraReverseProxyMailEnabled |TRUE
+|====================================================
+
+
+==== シングルノードを設定する
+
+Zimbraプロキシが{product-name}と同一サーバーにインストールされている環境の場合、本項の記述を参照してください。
+
+. ウェブ用にプロキシを有効化します。
++
+[source,bash]
+----
+/opt/zimbra/libexec/zmproxyconfig -e -m -H mailbox.node.service.hostname
+----
++
+これにより以下が設定されます。
++
+--
+[cols="m,",options="header",]
+|====================================================
+|ポート属性 |設定
+
+|zimbraImapBindPort |7143
+|zimbraImapProxyBindPort |143
+|zimbraImapSSLBindPort |7993
+|zimbraImapSSLProxyBindPort |993
+|zimbraPop3BindPort |7110
+|zimbraPop3ProxyBindPort |110
+|zimbraPop3SSLBindPort |7995
+|zimbraPop3SSLProxyBindPort |995
+|zimbraImapCleartextLoginEnabled |TRUE
+|zimbraReverseProxyLookupTarget |TRUE
+|zimbraPop3CleartextLoginEnabled |TRUE
+|zimbraReverseProxyMailEnabled |TRUE
+|====================================================
+--
+
+. プロキシとメールボックスのサーバーでサービスを再起動します。
++
+[source,bash]
+----
+zmcontrol restart
+----
+
+== Zimbra HTTPプロキシを設定する
+
+Zimbraプロキシは、HTTPリクエストのバックエンドサーバーへのリバースプロキシを行なうことが可能です。
+
+例えば、ユーザーはウェブブラウザから https://mail.example.com のプロキシサーバーへ接続します。mbs1.example.comにメールボックスがあるユーザーからの接続は、mail.example.com上で起動しているプロキシによってmbs1.example.comに渡されます。プロキシはRESTやCalDAVのクライアント、OutlookのZimbraコネクター、およびZimbraの NG モバイル同期のデバイスをサポートしています。
+
+HTTPリバースプロキシは下記のとおり、リクエストをルートします。
+
+* リクエスト中のURLからユーザー名を判別できる場合、そのリクエストは、URLから判明したユーザーのバックエンドメールボックスサーバーへルートされます。このメカニズムにより、REST、CalDAV、Zimbraモバイルシンクがサポートされています。
+
+* リクエストに認証トークンのCookie(*ZM_AUTH_TOKEN*)が含まれている場合、そのリクエストは、認証されたユーザーのバックエンドメールボックスサーバーへルートされます。
+
+* 上記の方法が失敗した場合、IPハッシュの方法が使用されます。これにより、リクエストを処理、あるいは必要な内部のプロキシにてリクエストを処理できるため、バックエンドメールボックスサーバー中でそのリクエストはロードバランスされます。
+
+=== HTTPプロキシを設定する方法
+
+HTTPプロキシを設定するには、Zimbraプロキシを指定したプロキシノードにインストールする必要があります。
+
+[NOTE]
+
+リモートホストに対し実行するには、`/opt/zimbra/libexec/zmproxyconfig -r` コマンドを実行します。 ただし、これにはそのサーバーがLDAPマスター内で適切に設定されている必要があります。
+
+==== HTTPプロキシを独立したプロキシノードとして設定する
+
+独立したプロキシサーバーを使用している環境の場合、本項の記述を参照してください。
+
+. プロキシを使用する各ZimbraメールボックスサーバーでIMAP/POPプロキシを有効化します。
++
+[source,bash]
+----
+/opt/zimbra/libexec/zmproxyconfig -e -w -H mailbox.node.service.hostname
+----
++
+これにより以下が設定されます。
++
+--
+[cols="m,",options="header",]
+|====================================================
+|属性 |設定
+
+|zimbraMailReferMode |reverse-proxied
+|zimbraMailPort |8080 (ポートの衝突回避のため)
+|zimbraMailSSLPort |8443 (ポートの衝突回避のため)
+|zimbraReverseProxyLookupTarget |TRUE
+|zimbraMailMode |HTTP
+|====================================================
+--
+
+. プロキシとメールボックスのサーバーでサービスを再起動します。
++
+[source,bash]
+----
+zmcontrol restart
+----
+
+. 各ドメインについて、REST URL、メール、ブリーフケースのフォルダに使用する公開サービスホスト名を設定します。
++
+[source,bash]
+----
+zmprov modifyDomain <domain.com> zimbraPublicServiceHostname <hostname.domain.com>
+----
+
+*プロキシノードを設定する*
+
+プロキシサービスがインストールされている各プロキシノードで、ウェブ用にプロキシを有効化します。
+
+[source,bash]
+----
+/opt/zimbra/libexec/zmproxyconfig -e -w -H proxy.node.service.hostname
+----
+
+これにより以下が設定されます。
+
+[cols="m,",options="header",]
+|=================================================================
+|属性 |設定
+
+|zimbraMailReferMode |
+reverse-proxied  プロキシサーバーのメールモードを設定する場合、コマンドに-xのオプションを追加し、次の中から希望のモードを指定します: http, https, both, redirect, mixed
+|zimbraMailProxyPort |80 (ポートの衝突回避のため)
+|zimbraMailSSLProxyPort |443 (ポートの衝突回避のため)
+|zimbraReverseProxyHttpEnabled |TRUE (ウェブプロキシが有効であることを示す)
+|zimbraReverseProxyMailMode |HTTP (デフォルト)
+
+|=================================================================
+
+プロキシサーバーのメールモードを設定する場合、コマンドに `-x` のオプションを追加し、次の中から希望のモードを指定します: *http*, *https*, *both*, *redirect*, *mixed*
+
+==== HTTPプロキシのシングルノードを設定する
+
+Zimbraプロキシが{product-abbrev} と同一サーバーにインストールされている環境の場合、本項の記述を参照してください。
+
+. プロキシする各Zimbraメールボックスサーバーにウェブのプロキシを有効化します。
++
+[source,bash]
+----
+/opt/zimbra/libexec/zmproxyconfig -e -w -H mailbox.node.service.hostname
+----
++
+これにより以下が設定されます。
++
+--
+[cols="m,",options="header",]
+|===============================================================
+|*属性* |*設定*
+
+|zimbraMailReferMode |reverse-proxied
+|zimbraMailPort |8080 (ポートの衝突回避のため)
+|zimbraMailSSLPort |8443 (ポートの衝突回避のため)
+|zimbraReverseProxyLookupTarget |TRUE
+|zimbraMailMode |HTTP (唯一サポートされているモード)
+|zimbraMailProxyPort |80 (ポートの衝突回避のため)
+|zimbraMailSSLProxyPort |443 (ポートの衝突回避のため)
+|zimbraReverseProxyHttpEnabled |TRUE (ウェブプロキシが有効であることを示す)
+|zimbraReverseProxyMailMode |HTTP (default)
+
+|===============================================================
+--
++
+プロキシサーバーのメールモードを設定する場合、コマンドに `-x` のオプションを追加し、次の中から希望のモードを指定します: *http*, *https*, *both*, *redirect*, *mixed*
+
+.  プロキシとメールボックスのサーバーでサービスを再起動します。
++
+[source,bash]
+----
+zmcontrol restart
+----
++
+各ドメインについて、REST URL、メール、ブリーフケースのフォルダに使用する公開サービスホスト名を設定します。
++
+[source,bash]
+----
+zmprov modifyDomain <domain.com> zimbraPublicServiceHostname <hostname.domain.com>
+----
+
+*プロキシがアップストリーム接続にクリアテキストを使用する設定*
+
+プロキシがアップストリーム接続にクリアテキストを使用するように設定する場合、
+`zimbraReverseProxySSLToUpstreamEnabled` にFALSEを設定します。
+
+この属性のデフォルトはTRUEです。初期インストールの状態、アップストリームのコミュニケーションはSSL配信がデフォルトです。
+
+*REST URL の生成*
+
+REST URL用に以下の属性のホスト名、サービスプロトコル、サービスポートをグローバルレベルあるいはドメインレベルで設定します。
+
+* `zimbraPublicServiceHostname`
+* `zimbraPublicServiceProtocol`
+* `zimbraPublicServicePort`
+
+REST URLを生成する場合
+
+* `domain.zimbraPublicServiceHostname` が設定されている場合、
+`zimbraPublicServiceProtocol` + `zimbraPublicServiceHostname` + `zimbraPublicServicePort` を使用します。
+
+* 上記以外の場合はサーバー (アカウントのホームサーバー) の属性にフォールバックします。
+** プロトコルは `server.zimbraMailMode` より計算されます。
+** ホスト名は `server.zimbraServiceHostname` です。
+
+* ポートはプロトコルより計算されます。
+
+[NOTE]
+`zimbraMailReferMode` について - 以前のバージョンでは、ユーザーがログインしたサーバー上にユーザーのメールボックスが存在していなかった場合、 `zimbra_auth_always_send_refer` というlocalconfig変数がバックエンドサーバーのアクションを指定しました。ユーザーが間違ったバックエンドホストへログインしている場合はデフォルト値であるFALSEでによりユーザーをリダイレクトしました。
+
+マルチサーバーの {product-abbrev}環境で、分かりやすいランディングページの作成のためにロードバランスされた名称が必要だったときは、ユーザーを常にリダイレクトする必要があったはずです。この場合は、 `zimbra_auth_always_send_refer` をTRUEに設定していました。
+
+現在は、完全なリバースプロキシを使用しているため、ユーザーをリダイレクトする必要がありません。Nginxのリバースプロキシにて、localconfig変数 `zimbraMailReferMode` を使用しています。
+
+=== プロキシの信頼済みIPアドレスを設定する
+
+プロキシがZCSで設定されている場合、各プロキシサーバーのIPアドレスをLDAP属性 `zimbraMailTrustedIP` 属性内に設定することでそれらプロキシのIPアドレスを信頼できるものとし、ユーザーがプロキシ経由でログインできるようにしておかなければなりません。
+プロキシIPアドレスはメッセージヘッダー情報 `X-Forwarded-For` に記載されます。 `X-Forwarded-For` ヘッダーは、自動でLocalconfigヘッダー属性 `zimbra_http_originating_ip_header` に追加されます。ユーザーログイン時、このIPアドレスとユーザーのアドレスは、Zimbraのメールボックスログに記録されます。
+
+この属性内に各々のプロキシIPアドレスを記載してください。例：プロキシサーバーが2つの場合
+
+[source,bash]
+----
+zmprov mcf +zimbraMailTrustedIP {nginx-1のIP } +zimbraMailTrustedIP {nginx-2のIP }
+----
+
+[TIP]
+--
+localconfigにX-Forwarded-Forが正しく追加されたことを確認するには、以下のコマンドを実行します。
+[source,bash]
+----
+zmlocalconfig | grep -i http
+----
+
+正常に追加されている場合、次のように表示されます。
+
+[source,bash]
+----
+zimbra_http originating_ip_header = X-Forwarded-For
+----
+--
+
+== Kerberos認証用にZimbraプロキシを設定する
+
+Kerberos5認証機能を利用中の環境で、IMAPとPOPプロキシ向けに設定したい場合、本項の記述を参照してください。
+
+[NOTE]
+Kerberos5認証機能が正しく設定されていることを確認してください。詳細は<<zimbra_ldap_service,Zimbra LDAP サービス>>を参照してください。
+
+. 各プロキシノードで、サーバー属性zimbraReverseProxyDefaultRealにその該当プロキシサーバーのrealm名を設定します。例:
++
+[source,bash]
+----
+zmprov ms [DNS name.isp.net] zimbraReverseProxyDefaultRealm [ISP.NET]
+----
+
+. メールクライアントが接続するプロキシIPアドレスごとに、メールサーバーのGSSAPI認証用設定が必要です。各プロキシIPアドレスの各プロキシノードで以下を実行します。
++
+[source,bash]
+----
+zmprov mcf +zimbraReverseProxyAdminIPAddress [IP address]
+----
+
+. 各プロキシサーバーで以下を実行します。
++
+[source,bash]
+----
+zmprov ms [proxyexample.net] zimbraReverseProxyImapSaslGssapiEnabled TRUE
+
+zmprov ms proxyl.isp.net zimbraReverseProxyPop3SaslGssapiEnabled TRUE
+----
+
+. プロキシサーバーを再起動します。
++
+[source,bash]
+----
+zmproxyctl restart
+----

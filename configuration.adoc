@@ -58,7 +58,7 @@ for servers that have been installed and enabled.
 Settings defined at the server(s) override those configured in the General
 Information screen.
 
-image:images/administration_console_general_information_configuration.png[General Information]
+image:administration_console_general_information_configuration.png[General Information]
 
 . Modify parameters, as appropriate for your requirements.
 . From the *Gear* icon, select *Save* to use your settings.
@@ -119,7 +119,7 @@ Admin Console: ::
 *Home > Configure > Global Settings > Attachments*
 
 [cols=","]
-image:images/administration_console_email_attachment_rules.png[Attachment Rules] +
+image:administration_console_email_attachment_rules.png[Attachment Rules] +
 See
 <<_blocking_email_attachments_by_file_type,Blocking Email Attachments by File type>>
 for information about this section of the screen.
@@ -171,7 +171,7 @@ protocol checks, and DNS checks.
 Admin Console: ::
 *Home > Configure > Global Settings > MTA*
 
-image:images/administation_console_mta_configuration.png[MTA Configuration]
+image:administation_console_mta_configuration.png[MTA Configuration]
 
 .MTA Page Options
 [cols=",a"]
@@ -309,7 +309,7 @@ Use the *New Domain* Wizard to set options described in this section.
 Admin Console: ::
 *Home > 2 Set up Domain > 1. Create Domain...*
 
-image:images/administration_console_create_domain.png[Create Domain]
+image:administration_console_create_domain.png[Create Domain]
 
 .New Domain -- General Information
 [cols=",a",options="header"]
@@ -417,7 +417,7 @@ the Global Address List.
 Admin Console: ::
 *Home > 2 Set up Domain > 1 Create Domain... -> GAL Mode Settings*
 
-image:images/administration_console_gal.png[GAL Mode Settings]
+image:administration_console_gal.png[GAL Mode Settings]
 
 .New Domain -- GAL Mode Settings
 [cols=",a",options="header"]
@@ -1098,7 +1098,7 @@ Admin Console: ::
 Copy the domain's issued signed commercial certificate's and private key
 files to the *Domain Certificate* section for the selected domain.
 
-image:images/certificate_domain_load.jpg[Certificate Domain Load]
+image:certificate_domain_load.jpg[Certificate Domain Load]
 
 . Copy the root certificate and the intermediate certificates in descending
 order, starting with your domain certificate. This allows the full
@@ -1283,7 +1283,7 @@ You can change the anti-spam settings.
 Admin Console: ::
 *Home > Configure > Global Settings > AS/AV*
 
-image:images/as_av.jpg[Anti-Spam Settings]
+image:as_av.jpg[Anti-Spam Settings]
 
 . At the Anti-Spam fields, enter parameters, as appropriate for your
 requirements.
@@ -1475,7 +1475,7 @@ Admin Console: ::
 
 Use the DNS tools in MTA configuration to define the restriction lists.
 
-image:images/dns_checks.jpg[DNS Checks]
+image:dns_checks.jpg[DNS Checks]
 
 For a list of current RBL's, see the
 https://en.wikipedia.org/wiki/Comparison_of_DNS_blacklists[Comparison of DNS
@@ -1555,7 +1555,7 @@ filtered in your {product-name}.
 Admin Console: ::
 *Home > Configure > Global Settings > AS/AV*
 
-image:images/as_av.jpg[AS/AV]
+image:as_av.jpg[AS/AV]
 
 . At the Anti-Virus fields, enter parameters, as appropriate for your
 requirements.
@@ -2038,7 +2038,7 @@ mailbox purges.
 Admin Console: ::
 *Home > Configure > Global Settings > General Information*
 
-image:images/GeneralInformation.jpg[Purge Interval]
+image:GeneralInformation.jpg[Purge Interval]
 
 For example, the purge interval is set to 1 minute, after mailbox1 is
 purged of messages that meet the message lifetime setting, the server waits
@@ -2071,7 +2071,7 @@ policies.
 Admin Console: ::
 *Home > Configure > Global Settings > Retention Policy*
 
-image:images/GlobalRetentionPolicy.jpg[Global Retention Policy]
+image:GlobalRetentionPolicy.jpg[Global Retention Policy]
 
 === COS Retention Policy
 
@@ -2081,7 +2081,7 @@ selected COS.
 Admin Console: ::
 *Home > Configure > Class of Service -> _COS_ -> Retention Policy*
 
-image:images/COSRetentionPolicy.jpg[COS Retention Policy]
+image:COSRetentionPolicy.jpg[COS Retention Policy]
 
 Ensure that the *Enable COS-level policies instead of inheriting from the
 policy defined in Global Settings* is enabled.

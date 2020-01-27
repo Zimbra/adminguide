@@ -1,0 +1,1653 @@
+[[hsm-ng-guide]]
+= HSM NG
+
+[[hierarchical-storage-management]]
+== 階層型データストレージ管理
+
+
+[[the-hierarchical-storage-management-technique]]
+=== 階層型データストレージ管理の技術
+
+HSMとは、定義されたポリシーに従って複数ストア間でデータを移動させるという、データストレージの技術です。
+
+このHSM技術の主な利用方法は、 `比較的古い` データを高速で高価なストレージデバイスから低速で安価なストレージデバイスに移動することであり、下記が前提となっています。
+
+* 高速ストレージはコストがかかる。
+* 低速ストレージのほうがコストが低い。
+* `古い` データへのアクセスはあるが、`新しい` データに比べると頻度が少ない。
+
+HSM技術の利点は明確で、全体のストレージコストを下げることです。高価なストレージに置く必要があるのはごく一部のデータだけであるため、ユーザーエクスペリエンスの包括的な向上を図るためです。
+
+[[stores-volumes-and-policies]]
+==== ストア、ボリューム、ポリシーについて
+
+HSMの利用には、関連用語の正確な理解が必要です。
+
+* プライマリストア: `高速かつ高価な` ストア。全データの最初の保存先。
+* セカンダリストア: `低速かつ安価な` ストア。 `比較的古い` データの移動先。
+
+[[zimbra-stores]]
+== Zimbraのストア
+
+[[the-basics-types-of-stores-and-their-uses]]
+=== 基本: ストアのタイプとその利用方法
+
+Zimbraには下記 *２* タイプのストアがあります。
+
+* *インデックスストア*: インデックス化や検索機能のためにApache Luceneで使用する、データ関連情報を格納するストア。
+* *データストア*: MySqlデータベースで構築されているZimbraの全てのデータを格納するストア。
+
+データストアは、複数のストアを保持できます。ただし、`現在(の)`(Zimbraで現在使用中という意味)として設定できるのは、プライマリデータストア、セカンダリデータストアで１つずつのみです。
+
+[[primary-and-secondary-data-stores]]
+==== プライマリストアとセカンダリストア
+
+Zimbraのデータストアはプライマリデータストアまたはセカンダリデータストアのいずれかになります。
+
+データは定義されたポリシーに従って `現在の` プライマリデータストアと `現在の` セカンダリデータストアの間を移動します。
+
+[[hsm-ngmoving-items-between-stores]]
+=== HSM NG: ストア間のアイテム移動
+
+HSM NGモジュールの主な機能は、定義されたHSMポリシーを適用することです。
+
+下記３つの方法で、移動をトリガーできます。
+
+* 管理拡張機能にある `HSMポリシーを適用する` ボタンをクリック。
+* CLIから `doMoveBlobs` 処理を開始。
+* 管理拡張機能からポリシーをスケジューリングし、その自動開始を待機。
+
+移動が始まると、下記の処理が実行されます。
+
+* HSM NGはプライマリストアをスキャンし、定義済のポリシーに合うアイテムを検索します。
+* 手順１の検索結果アイテムのBlobを全て、セカンダリストアにコピーします。
+* この移動の反映のため、コピー済アイテムに関するデータベースのエントリを更新します。
+* 手順２と手順３が正常終了した場合(この場合のみ)、プライマリストアから古いBlobを削除します。
+
+この移動処理は `ステートフルな`(前の状態に依存する)性質です。つまり、各手順は前処理が正常終了した場合にのみ実行されます。このため、移動処理中にデータを失う恐れはありません。
+
+
+[[domoveblobs]]
+== doMoveBlobs
+
+[[the-domoveblobs-operation-of-hsm-ng]]
+=== HSM NGのdoMoveBlobs処理
+
+doMoveBlobsはHSM NGモジュールの要です。
+
+該当のHSMポリシーに従って現在のプライマリストアと現在のセカンダリストアの間でアイテムを移動させます。
+
+トランザクションを使用したアルゴリズムでこの移動を実行します。処理中にエラーが発生するとロールバックが実施され、データ移動が帳消しになります。
+
+HSM NGが移動対象のアイテムを検知したら、下記を順に実行します。
+
+* Blobのコピーを現在のセカンダリストアに作成します。
+* アイテムの新しい位置をZimbraに通知するためにZimbraデータベースを更新します。
+* 現在のプライマリストアから元のBlobを削除します。
+
+[[what-will-be-moved]]
+==== 移動対象
+
+設定されたHSMポリシーに適合する全アイテムを移動します。
+
+例:
+
+以下のポリシーの場合
+
+....
+message,document:before:-20day
+message:before:-10day has:attachment
+....
+
+20日以上経過した全メールと全ドキュメントに加え、10日以上経過した添付ファイルのあるメールを全て移動します。
+
+[[policy-order]]
+==== ポリシーの順番
+
+あるポリシーが複数の条件で構成される場合、その条件は指定された順に実行されます。HSM NGは、現在のプライマリストア内の全アイテムに対し、最初の条件に適合するかどうかを判断し、それが終わってから次の条件に移り全アイテムに対する判断を繰り返します。
+
+つまり例えば、以下のポリシーの場合
+
+....
+message,document:before:-20day (20日以上経過した全メールと全ドキュメント)
+message:before:-10day has:attachment (10日以上経過した添付付きメール)
+....
+
+....
+message:before:-10day has:attachment (10日以上経過した添付付きメール)
+message,document:before:-20day (20日以上経過した全メールと全ドキュメント)
+....
+
+１日あたり合計1,000件のメール送受信があり、そのうち100件に1つ以上の添付ファイルがあるサンプルサーバーに対して上記ポリシーを適用すると、両結果は最終的に同じになります。しかしおそらく、２つ目のポリシーの実行時間のほうがやや(あるいはかなり)長くなります(サーバー内のメール数およびサイズにより、長さは異なります)。
+
+この理由として、１つ目のポリシーの１つ目の条件(message,document:before:-20day
+)で全アイテムを判断した結果、大多数が現在のセカンダリストアに移動されるため、２つ目の条件でループ対象となるアイテムが少ししか残らないからです。
+
+同じように `message:before:-10day has:attachment` を１つ目の条件とした場合には、２つ目の条件でループ対象となるアイテムが先ほどよりも多く残ります。
+
+これは例でしかなく、全てのケースに当てはまるわけではありません。しかしこの考え方はHSMポリシーを慎重に計画する際の参考になります。
+
+[[executing-the-domoveblobs-operation-a.k.a.-applying-the-hsm-policy]]
+=== doMoveBlobs処理を実行する(HSMポリシーを適用する)
+
+`HSMポリシーを適用する` と、定義済みHSMポリシーに従って現在のプライマリストアと現在のセカンダリストア間でアイテムを移動する `doMoveBlobs` 処理が実行されます。
+
+HSM NGでは下記３つの方法で実行できます。
+
+* 管理拡張機能から実行。
+* CLIから実行。
+* スケジューリングにより実行。
+
+[[apply-the-hsm-policy-via-the-administration-zimlet]]
+==== 管理コンソールからHSMポリシーを適用する
+
+管理拡張機能からHSMポリシーを適用する方法
+
+* Zimbra管理コンソールにログインします。
+* 管理拡張機能にある `HSM NG` をクリックします。
+* `HSMポリシー` を適用するボタンをクリックします。
+
+[[apply-the-hsm-policy-via-the-cli]]
+==== CLIからHSMポリシーを適用する
+
+CLIからHSMポリシーを適用するには'zimbra'ユーザーにて以下のコマンドを実施します。
+
+`?zxsuite?hsm?doMoveBlobs`
+
+[[apply-the-hsm-policy-through-scheduling]]
+==== スケジューリングにてHSMポリシーを適用する
+
+`doMoveBlobs` 処理をスケジューリングにより実行する方法
+
+* Zimbra管理コンソールにログインします。
+* 管理拡張機能にある `HSM NG` をクリックします。
+* `Enable HSM Session scheduling` (HSMセッションを定期実行させる)チェックボックスをオンにします。
+* `HSM Session scheduled for` (定期実行HSMセッション)から処理実行時間を選択します。
+
+[[domoveblobs-stats-and-info]]
+=== doMoveBlobsの統計情報
+
+ディスク容量の節約に関する情報や処理パフォーマンスなど様々な情報が、管理拡張機能のHSM NGタブ内セカンダリボリュームリストの下にあるStatsボタンから確認できます。
+
+[[volume-management]]
+== ボリューム管理
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::["{product-version}" == "8.8.9"]
+New for {product-name} {product-version}:
+endif::[]
+//
+プライマリとセカンダリのボリュームをローカルストレージ、またはサポート対象の第三者ストレージソリューションに作成することが可能です。
+
+[[zimbra-volumes]]
+=== Zimbraのボリューム
+
+ボリュームとは、ファイルシステム内で物理的に分けられたエンティティ (パス) です。Zimbra Blobを格納します。この分割には関連するプロパティが全て使われます。
+
+[[volume-properties]]
+==== ボリュームのプロパティ
+
+Zimbraのボリュームは全て、下記プロパティにより定義されます。
+
+* 名称: ボリュームの一意の識別子。
+* パス: データの保存先となるパス。zimbraユーザーはこのパスに対する読み書き権限が必要です。
+* 圧縮: ボリュームのファイル圧縮を有効または無効にする。
+* 圧縮のしきい値: 圧縮のトリガーとなるファイルサイズ最小値。`圧縮が有効であっても、このしきい値を下回るファイルは圧縮されません。`
+* 現在: `現在の` ボリュームは、データ到着時 (現在のプライマリボリューム) またはHSMポリシー適用時 (現在のセカンダリボリューム) の書き込み先となるボリューム。
+
+[[volume-management-with-hsm-ng]]
+=== HSM NGを使用したボリューム管理
+
+[[creating-a-new-volume]]
+==== 新規ボリュームの作成
+
+[[volume-from-the-administration-zimlet]]
+==== 管理拡張機能から
+
+管理拡張機能のHSM NGタブから新しいボリュームを作成する方法
+
+* 作成したいボリュームのタイプに応じ、`ボリューム管理` セクションにある該当の `追加` ボタンをクリックします。
+
+* ボリュームタイプにローカル、あるいはS3 Bucketを選択します。
+
+* 新しいボリューム名を入力します。
+* 新しいボリュームのパスを入力します。
+* 新しいボリュームでデータを圧縮したい場合、 `圧縮するチェックボック` をオンにします。
+* 圧縮のしきい値を入力します。
+
+* S3 Bucketを使用中の場合は複数のバケット情報を保存することができます。
+
+
+* `OK` ボタンを押下すると新しいボリュームが作成されます。処理が正常に行なわれなかった場合はエラー情報を通知します。
+
+===== 管理Zimletでボリュームを編集する場合
+
+管理Zimletからボリュームを編集する場合、既存のボリュームを選択し、適切の「編集」ボタンをクリックします。
+
+[[deleting-a-volume]]
+===== 管理Zimletでボリュームを削除する場合
+
+管理Zimletでボリュームを削除する場合、既存のボリュームを選択し、適切の「削除」ボタンをクリックします。
+なお、【空】のボリュームのみを削除することが可能です。
+
+==== CLI での HSM NG ボリューム管理
+
+ご注意：8.8.9 のリリースにより、すべてのボリューム作成とアップデートコマンドが更新されており、`storeType`のオプションが必要となっています。
+
+`storeType` のオプションが必要となっており、最初に設定し、以前にリストした <<secondary-volumes-on-amazon-s3, AmazonS3互換サービス上のボリューム>> 値から1つの値のみを利用します。
+なお、選択した `storeType` により、コマンドで利用できるオプションが異なります。
+
+===== FileBlob (ローカル)
+`zxsuite` のコマンドを更新し、新しい FileBlob zimbra ボリュームを作られます：
+....
+# ボリュームを追加する場合、以下のコマンドを zimbra ユーザーとして実行します。
+zxsuite hsm doCreateVolume FileBlob name secondary /path/to/store
+# ボリュームを削除する場合は以下のコマンドを活用します。
+zxsuite hsm doDeleteVolume name
+# 「現在」のボリュームとして指定する場合は以下のコマンドを活用します。
+zxsuite hsm doUpdateVolume FileBlob name current_volume true
+....
+
+zxsuite hsm doCreateVolume FileBlob
+
+....
+構文:
+   zxsuite hsm doCreateVolume FileBlob {volume_name} {primary|secondary|index} {volume_path} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+volume_name(M)                    String
+volume_type(M)                    複数選択肢    primary|secondary|index
+volume_path(M)                    Path
+volume_compressed(O)              Boolean            true|false                 false
+compression_threshold_bytes(O)    Long                                          4096
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doCreateVolume FileBlob volumeName secondary /path/to/store volume_compressed true compression_threshold_bytes 4096
+....
+
+zxsuite hsm doUpdateVolume FileBlob
+....
+構文:
+    zxsuite hsm doUpdateVolume FileBlob {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+current_volume_name(M)          String
+volume_type(O)                  String              primary|secondary|index
+volume_name(O)                  String
+volume_path(O)                  Path
+current_volume(O)               Boolean             true|false                  false
+volume_compressed(O)            String
+compression_threshold(O)        String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+===== S3 (Amazon および明確にサポートしていないS3と互換性があるソリューション)
+....
+# 以下のコマンドでボリュームを追加します。以下のコマンドはzimbraユーザーとして実行します。
+zxsuite hsm doCreateVolume S3 name secondary bucket_name bucket access_key accessKey secret secretString region EU_WEST_1
+# 以下のコマンドでボリュームを削除します。
+zxsuite hsm doDeleteVolume name
+# 以下のコマンドでボリュームを「現在」のボリュームとして指定します。
+zxsuite hsm doUpdateVolume S3 name current_volume true
+....
+zxsuite hsm doCreateVolume S3
+....
+構文:
+    zxsuite hsm doCreateVolume S3 {Name of the zimbra store} {primary|secondary} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値 
+volume_name(M)                  String              Zimbra ストア名
+volume_type(M)                  複数選択肢          primary|secondary
+bucket_name(O)                  String              Amazon AWS バケット
+access_key(O)                   String              サービスのユーザー名
+secret(O)                       String              サービスのパスワード
+server_prefix(O)                String              すべてのオブジェクトキーに使用するサーバIDのプレフィックス
+bucket_configuration_id(O)      String              既存しているS3サービスの認証情報のUUID
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+region(O)                       String              Amazon AWS 地域
+url(O)                          String              S3 API と互換性があるサービスURL (例えば: s3api.service.com)
+prefix(O)                       String              blobs キーへ追加するプレフィックス
+use_infrequent_access(O)        Boolean             true|false
+infrequent_access_threshold(O)  String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+S3 AWS Bucketの場合:
+    zxsuite hsm doCreateVolume S3 volumeName primary bucket_name bucket access_key accessKey secret secretKey prefix objectKeysPrefix region EU_WEST_1 user_infrequent_access TRUE infrequent_access_threshold 4096
+
+S3 と互換性があるオブジェクトストレージの場合:
+    zxsuite hsm doCreateVolume S3 volumeName primary bucket_name bucket access_key accessKey secret secretKey url http://host/service
+
+既存のBucket設定を使用する場合：
+    zxsuite hsm doCreateVolume S3 volumeName primary bucket_configuration_id 316813fb-d3ef-4775-b5c8-f7d236fc629c
+....
+
+zxsuite hsm doUpdateVolume S3
+....
+構文:
+    zxsuite hsm doUpdateVolume S3 {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+server_prefix(O)                String              すべてのオブジェクトキーに使用するサーバIDのプレフィックス
+bucket_configuration_id(O)      String              既存しているS3サービスの認証情報のUUID
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+use_infrequent_access(O)        Boolean             true|false
+infrequent_access_threshold(O)  String
+current_volume(O)               Boolean             true|false                  false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+===== Scality (S3 と互換性があるオブジェクトストレージ)
+....
+# 以下のコマンドでボリュームを追加します。以下のコマンドはzimbraユーザーとして実行します。
+zxsuite hsm doCreateVolume ScalityS3 name secondary bucket_name mybucket access_key accessKey1 secret verySecretKey1 url http://{IP_ADDRESS}:{PORT}
+# 以下のコマンドでボリュームを削除します。
+zxsuite hsm doDeleteVolume name
+# 以下のコマンドでボリュームを「現在」のボリュームとして指定します。
+zxsuite hsm doUpdateVolume ScalityS3 name current_volume true
+....
+
+zxsuite hsm doCreateVolume ScalityS3
+....
+構文:
+    zxsuite hsm doCreateVolume ScalityS3 {volume_name} {primary|secondary} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値
+volume_name(M)                  String
+volume_type(M)                  複数選択肢          primary|secondary
+bucket_name(O)                  String              Bucket名
+url(O)                          String              S3 API と互換性があるサービスURL (例えば: s3api.service.com)
+access_key(O)                   String              サービスのユーザー名
+secret(O)                       String              サービスのパスワード
+server_prefix(O)                String              すべてのオブジェクトキーに使用するサーバIDのプレフィックス
+bucket_configuration_id(O)      String              既存しているS3サービスの認証情報のUUID
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+prefix(O)                       String              blobs キーへ追加するプレフィックス
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doCreateVolume ScalityS3 volumeName primary bucket_name bucket url http://host/service access_key accessKey secret secretKet
+zxsuite hsm doCreateVolume ScalityS3 volumeName primary bucket_configuration_id uuid
+....
+
+zxsuite hsm doUpdateVolume ScalityS3
+....
+構文:
+    zxsuite hsm doUpdateVolume ScalityS3 {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+server_prefix(O)                String              すべてのオブジェクトキーに使用するサーバIDのプレフィックス
+bucket_configuration_id(O)      String              既存しているS3サービスの認証情報のUUID
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+current_volume(O)               Boolean             true|false                  false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+===== EMC (S3 と互換性があるオブジェクトストレージ)
+....
+# 以下のコマンドでボリュームを追加します。以下のコマンドはzimbraユーザーとして実行します。
+zxsuite hsm docreatevolume EMC name secondary bucket_name bucket access_key ACCESSKEY secret SECRET url https://url.of.storage
+# 以下のコマンドでボリュームを削除します。
+zxsuite hsm doDeleteVolume name
+# 以下のコマンドでボリュームを「現在」のボリュームとして指定します。
+zxsuite hsm doUpdateVolume EMC name current_volume true
+....
+
+zxsuite hsm doCreateVolume EMC
+....
+構文:
+    zxsuite hsm doCreateVolume EMC {volume_name} {primary|secondary} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値
+volume_name(M)                  String
+volume_type(M)                  複数選択肢          primary|secondary
+bucket_name(O)                  String              Bucket名
+url(O)                          String              S3 API と互換性があるサービスURL (例えば: s3api.service.com)
+access_key(O)                   String              サービスのユーザー名
+secret(O)                       String              サービスのパスワード
+server_prefix(O)                String              すべてのオブジェクトキーに使用するサーバIDのプレフィックス
+bucket_configuration_id(O)      String              既存しているS3サービスの認証情報のUUID
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+prefix(O)                       String              blobs キーへ追加するプレフィックス
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doCreateVolume EMC volumeName primary bucket_name bucket url http://host/service access_key accessKey secret secretKet
+zxsuite hsm doCreateVolume EMC volumeName primary bucket_configuration_id uuid
+....
+
+zxsuite hsm doUpdateVolume EMC
+....
+構文:
+    zxsuite hsm doUpdateVolume EMC {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+server_prefix(O)                String              すべてのオブジェクトキーに使用するサーバIDのプレフィックス
+bucket_configuration_id(O)      String              既存しているS3サービスの認証情報のUUID
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+current_volume(O)               Boolean             true|false                  false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+===== OpenIO
+....
+# 以下のコマンドでボリュームを追加します。以下のコマンドはzimbraユーザーとして実行します。
+zxsuite hsm doCreateVolume OpenIO name secondary http://{IP_ADDRESS} ZeXtras OPENIO
+# 以下のコマンドでボリュームを削除します。
+zxsuite hsm doDeleteVolume name
+# 以下のコマンドでボリュームを「現在」のボリュームとして指定します。
+zxsuite hsm doUpdateVolume OpenIO name current_volume true
+....
+zxsuite hsm doCreateVolume OpenIO
+....
+構文:
+    zxsuite hsm doCreateVolume OpenIO {volume_name} {primary|secondary} {url} {account} {namespace} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値
+volume_name(M)                  String
+volume_type(M)                  複数選択肢            primary|secondary
+url(M)                          String
+account(M)                      String
+namespace(M)                    String
+proxy_port(O)                   Integer
+account_port(O)                 Integer
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doCreateVolume OpenIO volumeName primary http://host/service
+....
+
+accountName namespaceString proxy_port 6006 account_port 6009
+....
+構文:
+zxsuite hsm doUpdateVolume OpenIO {current_volume_name} [attr1 value1
+[attr2 value2...]]
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+url(O)                          String
+account(O)                      String
+namespace(O)                    String
+proxy_port(O)                   Integer
+account_port(O)                 Integer
+current_volume(O)               Boolean             true|false                  false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+===== Swift
+....
+# 以下のコマンドでボリュームを追加します。以下のコマンドはzimbraユーザーとして実行します。
+zxsuite hsm doCreateVolume Swift name secondary http://{IP_ADDRESS}:8080/auth/v1.0/ user:username password maxDeleteObjectsCount 100
+# 以下のコマンドでボリュームを削除します。
+zxsuite hsm doDeleteVolume name
+# 以下のコマンドでボリュームを「現在」のボリュームとして指定します。
+zxsuite hsm doUpdateVolume Swift name current_volume true
+....
+
+zxsuite hsm doCreateVolume Swift
+....
+構文:
+    zxsuite hsm doCreateVolume Swift {volume_name} {primary|secondary} {url} {username} {password} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+volume_name(O)              String
+volume_type(O)              String      primary|secondary
+url(O)                      String
+username(O)                 String
+password(O)                 String
+maxDeleteObjectsCount(O)    Integer     特定のバルク削除リクエストのオブジェクト数
+                                                                    500
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doCreateVolume Swift volumeName primary http://host/service accountName password max_delete_objects_count 100
+....
+
+zxsuite hsm doUpdateVolume Swift
+....
+構文:
+    zxsuite hsm doUpdateVolume Swift {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+current_volume_name(M)      String
+volume_name(O)              String
+volume_type(O)              String      primary|secondary
+url(O)                      String
+username(O)                 String
+password(O)                 String
+maxDeleteObjectsCount(O)    Integer     特定のバルク削除リクエストのオブジェクト数
+                                                                    500
+current_volume(O)           Boolean     true|false                  false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+===== Cloudian (S3互換オブジェクトストア)
+....
+# 以下のコマンドでボリュームを追加します。以下のコマンドはzimbraユーザーとして実行します。
+zxsuite hsm doCreateVolume Cloudian name secondary bucket_name bucket access_key ACCESSKEY secret SECRET url https://url.of.storage
+# 以下のコマンドでボリュームを削除します。
+zxsuite hsm doDeleteVolume name
+# 以下のコマンドでボリュームを「現在」のボリュームとして指定します。
+zxsuite hsm doUpdateVolume Cloudian name current_volume true
+....
+
+zxsuite hsm doCreateVolume Cloudian
+....
+構文:
+    zxsuite hsm doCreateVolume Cloudian {volume_name} {primary|secondary} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値
+volume_name(M)                  String
+volume_type(M)                  複数選択肢          primary|secondary
+bucket_name(O)                  String              Bucket名
+url(O)                          String              S3 API と互換性があるサービスURL (例えば: s3api.service.com)
+access_key(O)                   String              サービスのユーザー名
+secret(O)                       String              サービスのパスワード
+server_prefix(O)                String              すべてのオブジェクトキーに使用するサーバIDのプレフィックス
+bucket_configuration_id(O)      String              既存しているS3サービスの認証情報のUUID
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+prefix(O)                       String              blobs キーへ追加するプレフィックス
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doCreateVolume Cloudian volumeName primary bucket_name bucket url http://host/service access_key accessKey secret secretKet
+zxsuite hsm doCreateVolume Cloudian volumeName primary bucket_configuration_id uuid
+....
+
+zxsuite hsm doUpdateVolume Cloudian
+....
+構文:
+    zxsuite hsm doUpdateVolume Cloudian {current_volume_name} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                              データ型               期待値                    初期値
+current_volume_name(M)          String
+volume_name(O)                  String
+volume_type(O)                  String              primary|secondary
+server_prefix(O)                String              すべてのオブジェクトキーに使用するサーバIDのプレフィックス
+bucket_configuration_id(O)      String              既存しているS3サービスの認証情報のUUID
+                                                    (zxsuite config global get attribute s3BucketConfigurations)
+current_volume(O)               Boolean             true|false                  false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+....
+
+==== Volume Deletion
+zxsuite hsm doDeleteVolume
+....
+構文:
+    zxsuite hsm doDeleteVolume {volume_name}
+
+パラメーターリスト
+
+名前                              データ型
+volume_name(M)                  String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm dodeletevolume hsm
+Deletes volume with name hsm
+....
+
+==== すべてのデータを特定のボリュームから別のボリュームへ移動する場合
+....
+構文:
+    zxsuite hsm doVolumeToVolumeMove {source_volume_name} {destination_volume_name}
+
+パラメーターリスト
+
+名前                              データ型
+source_volume_name(M)           String
+destination_volume_name(M)      String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doVolumeToVolumeMove sourceVolume destVolume
+
+上記のコマンドでsourceVolumeの内容をすべてdestVolumeへ移動します。
+....
+
+[[centralized-storage]]
+== 集中型ストレージについて
+集中型ストレージの機能では、S3 バケットを運用し、複数のサーバから同時に受信するデータを同一のディレクトリ構成を共有し、ホストすることが可能です。これはディレクトリ構成がサーバとボリュームに関連してる一般的な「独立」ボリュームと異なるデータ提供方法となります。
+
+この機能により、大きいマルチストア環境でのデータ管理が向上し、メールボックスの移動速度も速くなります。
+
+[[enabling-centralized-storage]]
+=== 集中型ストレージを有効化する方法
+1. `zxsuite hsm doCreateVolume` コマンドで集中型ストレージのボリュームを作成します。
+ ... FileBlob以外、すべてのボリューム種類に互換性があります。
+ ... 集中型ストレージとして利用するため、centralized TRUE のフラグを指定する必要があります。
+ ... ストレージ種類により、コマンドに使用する適切な構文が異なります。
+2. 集中型ストレージのボリュームを作成後、`zxsuite doCreateVolume Centralized` のコマンドを他のメールボックスサーバに実施し、集中型ストレージのボリューム設定を最初のサーバからコピーし、ボリュームのリストへ追加します。
+ ... コマンドの完全なる構文は zxsuite hsm doCreateVolume Centralized {サーバ名} {ボリューム名}
+
+[[centralized-storage-structure]]
+=== 集中型ストレージの構成について
+ストレージ構成について
+集中型ストレージのボリュームにデータがプレインの状態で保存します。ボリュームのメインディレクトリにはボリュームへ接続している各サーバに空のディレクトリがありますと、各メールボックスのディレクトリも同じレベルで含まれています。
+
+以下の実例では、2つのサーバ、3aa2d376-1c59-4b5a-94f6-101602fa69c6 と 595a4409-6aa1-413f-9f45-3ef0f1e560f5 が集中型ストレージへ接続しており、合計3つのメールボックスが保管しています。実際にメールボックスがホストしているサーバはデータを保管しているストレージと関連していないことをご確認ください。
+
+....
+_
+|- 3aa2d376-1c59-4b5a-94f6-101602fa69c6/
+|- 595a4409-6aa1-413f-9f45-3ef0f1e560f5/
+|- ff46e039-28e3-4343-9d66-92adc60e60c9/
+\
+ |-- 357-104.msg
+ |-- 368-115.msg
+ |-- 369-116.msg
+ |-- 373-120.msg
+ |-- 374-121.msg
+ |-- 375-122.msg
+ |-- 376-123.msg
+ |-- 383-130.msg
+|- 4c022592-f67d-439c-9ff9-e3d48a8c801b/
+\
+ |-- 315-63.msg
+ |-- 339-87.msg
+ |-- 857-607.msg
+ |-- 858-608.msg
+ |-- 859-609.msg
+ |-- 861-611.msg
+ |-- 862-612.msg
+ |-- 863-613.msg
+ |-- 864-614.msg
+ |-- 865-615.msg
+ |-- 866-616.msg
+ |-- 867-617.msg
+ |-- 868-618.msg
+|- dafd5569-4114-4268-9201-14f4a895a3d5/
+\
+ |-- 357-104.msg
+ |-- 368-115.msg
+ |-- 369-116.msg
+ |-- 373-120.msg
+ |-- 374-121.msg
+ |-- 375-122.msg
+ |-- 376-123.msg
+ |-- 383-130.msg
+ |-- 384-131.msg
+....
+
+[[policy-management]]
+== ポリシー管理
+
+[[what-is-a-policy]]
+=== ポリシーとは
+
+HSMポリシーとは、マニュアル操作またはスケジューリングでHSM NGの `doMoveBlobs` 処理をトリガーする際、どのアイテムをプライマリストアからセカンダリストアに移動させるかを定義したルールです。
+
+ポリシーには、全タイプのアイテムに適用するシングルルール
+(`シンプル` ポリシー) もあれば1つまたはそれ以上のタイプのアイテムに適用する複数ルール
+(`互換` ポリシー) もあります。また、 Zimbraの http://wiki.zimbra.com/wiki/Zimbra_Web_Client_Search_Tips[search
+syntax]を利用して、サブルールを追加で定義することも可能です。
+
+
+[[policy-examples]]
+==== ポリシーの例
+
+ポリシーの例をいくつか紹介します。HSM NGモジュールでのポリシー作成方法については後述を参照してください。
+
+* `30日以上経過した全アイテムを移動。`
+* `15日以上経過したメールおよび30日以上経過した、その他の全てのタイプのアイテムを移動。`
+* `15日以上経過したカレンダーアイテム、20日以降経過したブリーフケースアイテム、“アーカイブ”フォルダにあるメールをすべて移動。`
+
+[[defining-a-policy]]
+=== ポリシーを定義する
+
+管理拡張機能にあるHSM NGタブやCLIからポリシーを定義できます。ともにキーワード検索で使うキーワードを指定できます。
+
+[[policy-from-the-administration-zimlet]]
+==== 管理拡張機能から
+
+管理拡張機能からポリシーを定義する方法
+
+* Zimbra管理コンソールにログインします。
+* 管理拡張機能にある `HSM NG` をクリックします。
+
+* ストレージ管理ポリシーセクションにある `追加` ボタンをクリックします。
+
+* `移動するアイテム` の一覧からアイテムのタイプを選択します。
+* `古いアイテムを移動` 項目には、経過日数を入力します。
+* *任意*: `追加オプション` 項目には、キーワード検索用のキーワードを追加します。
+
+* `行` を複数追加して、ポリシーの粒度を高めることができます。最初の `行` のポリシーの適用が完了したあと、順に次の `行` のポリシーが判断・実行されることになります。
+
+[[policy-from-the-cli]]
+==== CLIから
+
+CLIで使用できるポリシー管理用のコマンドは２つあります。
+
+* setHsmPolicy
+* +setHsmPolicy
+
+[[zxsuite-hsm-ng-sethsmpolicy-policy]]
+zxsuite hsm setHsmPolicy \{policy}
+
+このコマンドは現在のポリシーをリセットし、_ポリシー_ パラメーターで指定したポリシーを新たに作成します。
+
+_ポリシー_ パラメーターは次の構文で指定する必要があります。
+
+`itemType1[,itemType2,itemtype3,etc]:query`
+
+[[zxsuite-hsm-ng-sethsmpolicy-policy-1]]
+zxsuite hsm +setHsmPolicy \{policy}
+
+このコマンドは _ポリシー_ パラメーターで指定したクエリを現在のHSMポリシーに追加します。
+
+_ポリシー_ パラメーターは次の構文で指定する必要があります。
+
+`itemType1[,itemType2,itemtype3,etc]:query`
+
+[[secondary-volumes-on-amazon-s3]]
+== AmazonS3互換サービス上のセカンダリボリューム
+
+[[hsm-ng-and-s3-buckets]]
+=== HSM NGとS3バケット
+
+今ではHSM NGで作成するセカンダリボリュームをS3バケットにホストさせることが可能になったため、データの大部分を安全かつ堅固なクラウドストレージへ効率的に移動させることができます。
+
+[[s3-compatible-services]]
+==== S3互換サービス
+
+Amazon S3 APIを利用するHSM NGのストレージサービスは全て、設定後すぐに機能するようでなければなりません。このため、以下のプラットフォームのみが公式なサポート対象のプラットホームとしています。
+
+* FileBlob (スタンダードのローカルボリューム)
+* Amazon S3
+* EMC
+
+// Conditionally include version introduction, to only appear in specified release
+ifeval::["{product-version}" == "8.8.9"]
+...and new for {product-name} {product-version}:
+endif::[]
+
+* OpenIO
+* Swift
+* Scality S3
+* Cloudian
+* Custom S3 (サポート対象外のS3等のソリューション)
+
+==== プライマリボリュームと「Incoming」のディレクトリについて
+メールボックスサーバにリモートの _プライマリストア_ を作成するため、そのサーバにローカルの「Incoming」ディレクトリを用意する必要があります。なお、デフォルトのディレクトリは `/opt/zimbra/incoming` となりますが、以下のコマンドで現在の設定の確認、および更新することが可能です。
+
+[source,bash]
+----
+zxsuite config server get $(zmhostname) attribute incomingPath
+zxsuite config server set $(zmhostname) attribute incomingPath value /path/to/dir
+----
+
+[[local-cache]]
+==== ローカルキャッシュ
+
+この機能にはアイテムのキャッシュ用のローカルディレクトリが必要です。このディレクトリは `zimbra` ユーザーで読み書き可能でなければなりません。
+
+マニュアル操作でローカルディレクトリを作成し、そのパスをZimbra管理コンソール管理拡張機能の `HSM NG` セクションで入力する必要があります。
+
+このローカルキャッシュディレクトリを作成しなければ、S3互換デバイス・サービス上にセカンダリボリュームを作成することはできません。
+
+WARNING: キャッシュディレクトリが正常に設定されない場合、アイテム検索が失敗します。つまり、S3ボリューム上に保存されているアイテムにユーザーがアクセスしようとしても、`そのようなBLOBは存在しません` というエラーが返されることになります。
+
+=== ローカルボリューム
+ローカルボリューム（つまり FileBlob type）がマウントポイントの行き先を問わず、システム上でホストするマウントポイントを自由に利用できます。詳細が設定は以下のプロパティで管理しています。
+
+* *Name:* ボリュームを特定できる名前
+* *Path:* データが保存するパス。_zimbra_ ユーザーはこのパスへの書き込みと読み込みパミッションを与える必要があります。
+* *Compression:* ボリュームにファイルの圧縮を有効化、または無効化します。
+* *Compression Threshold:* ファイル圧縮が行える最低のファイルサイズを指定します。
++
+ご注意：ファイル圧縮を有効化しても、受信したファイルがこの値に指定した最低サイズより小さい場合、ファイル圧縮がそのファイルへ適用されません。
+
+=== 現在のボリューム
+データの受信時（現在のプライマリ、またはHSMポリシーの適用が行う（現在のセカンダリ）際に、_現在のボリューム_ へデータが書き込みます）。
+「現在」として指定したいないボリュームは特定の手動オペレーション（例えば、ボリュームから別のボリュームへの移動）以外に書き込みが発生しません。
+
+[[bucket-setup]]
+=== バケットのセットアップ
+
+HSM NGのためにS3側で何か特別な設定をする必要はないため、ボリューム用のバケットのセットアップは簡単です。専用ユーザー、バケット、アクセスポリシーの作成は必須ではありませんが、円滑な管理のため作成されることを強く推奨します。
+
+以下は、S3上でのセカンダリボリューム設置を開始する際に必要なものです。
+
+* S3 Bucket。使用するバケットの名前とリージョンを確認しておく必要があります。
+* ユーザーのアクセスキーとシークレットアクセスキー。
+* バケットに対するフル権限をユーザーに与える際のポリシー。
+
+==== Bucket の管理
+Zimbra 管理コンソールにBucketの管理UIが提供しています。これを活用することで、S3等のストレージに新しいボリュームを作成する際に詳細を毎回手動に入力せずに、よく使うBucketの情報を保存し、自動的に追加させることが可能です。
+
+Bucket管理のUIは以下の方法でアクセスできます。
+
+* Zimbra 管理コンソールをアクセスします。
+* メニューから「設定」をクリックします。
+* 「グローバル設定」をクリックします。
+* S3 Buckets のメニューを選択します。
+
+システムへ追加したBucketは以下の種類の新規ボリュームを作成する際に利用することが可能です：
+Amazon S3, Cloudian, EMC, Scality S3, Custom S3
+
+==== Bucket パスと名前について
+Bucketに保存したファイルは指定したパスへ保存し、自由にカスタマイズできますので、マルチサーバ環境で複数のセカンダリボリュームでもBucketの内容を簡単に確認できることが可能です。
+
+`/Bucket Name/Destination Path/[Volume Prefix-]serverID/`
+
+* *Bucket Name* と *Destination Path* はボリュームに関連していなく、保存先のパスにボリューム上限がありません。
+* しかしながら、*Volume Prefix* は各ボリュームに関連し、Bucket上で異なるボリュームを特定できる指定となります。
+
+=== HSM NG でボリュームを作成する
+Zimbra 管理コンソール上で HSM NG の新しいボリュームを作成する場合、以下の手順をご参照ください。
+
+* Zimbra 管理コンソールでNG管理画面のHSMメニューをアクセスします。
+* プライマリボリューム、またはセカンダリボリュームに「追加」のボタンをクリックします。
+* 利用可能のストレージ類より使用するボリュームの種類を選択します。
+* 必要な情報を入力し、ボリュームを作成します。
++
+ご注意ください：各ボリュームの種類には異なる情報を入力する必要がありますので、ストレージプロバイダー様まで必要な詳細情報をご確認ください。
+
+=== HSM NG でボリュームを編集する
+Zimbra 管理コンソールで HSM NG のボリュームを編集する場合、以下の手順をご参照ください。
+
+* Zimbra 管理コンソールでNG管理画面のHSMメニューをアクセスします。
+* ボリューム名をクリックします。
+* 「編集」のボタンをクリックします。
+* 編集が完了しましたら、「保存」のボタンをクリックします。
+
+=== HSM NG でボリュームを削除する
+Zimbra 管理コンソールで HSM NG のボリュームを削除する場合、以下の手順をご参照ください。
+
+* Zimbra 管理コンソールでNG管理画面のHSMメニューをアクセスします。
+* ボリューム名をクリックします。
+* 「削除」のボタンをクリックします。
+
+注意: 空のボリュームのみを削除することが可能です。
+
+[[amazon-s3-tips]]
+=== Amazon S3に関するヒント
+
+[[bucket]]
+==== バケット
+
+Amazon S3にセカンダリのZimbraボリュームを格納するにあたってのバケット要件は特にありません。しかし、円滑な管理のため、専用バケットの作成および静的ウェブサイトホスティングの無効化を推奨します。
+
+[[user]]
+==== ユーザー
+
+アクセスキーとシークレットアクセスキーを取得するには、`Programmatic Access` ユーザーが必要です。円滑な管理のため、AmazonのIAM (AWS Identity and Access Management) サービスで専用ユーザーの作成を推奨します。
+
+[[rights-management]]
+==== 権限の管理
+
+AmazonのIAMサービスから、ユーザーに対するアクセスポリシーを設定することができます。アクセスキーとシークレットアクセスキーのユーザーには、バケットとその内容に対する適当な権限がなければなりません。円滑な管理のため、下記例のようにフル権限を付与することを推奨します。
+
+....
+{
+    `Version`: `[LATEST API VERSION]`,
+    `Statement`: [
+        {
+            `Sid`: `[AUTOMATICALLY GENERATED]`,
+            `Effect`: `Allow`,
+            `Action`: [
+                `s3:*`
+            ],
+            `Resource`: [
+                `[BUCKET ARN]/*`,
+                `[BUCKET ARN]`
+            ]
+        }
+    ]
+}
+....
+
+_警告 - 上記は有効な設定ポリシーではありません。検証対象外であるため、上記をユーザー設定にコピー＆ペーストしないでください。_
+
+最小限の権限のみを付与したい場合、`Action` セクションを下記のとおり変更してください。
+
+....
+"Action": [
+                `s3:PutObject`,
+                `s3:GetObject`,
+                `s3:DeleteObject`,
+                `s3:AbortMultipartUpload`
+              ],
+....
+
+バケットのARNは、Amazonの標準命名規約に則り、 *arn:partition:service:region:account-id:resource* のように表現されます。このトピックについての詳細は、Amazonの公式ドキュメントを確認してください。
+
+[[bucket-paths-and-naming]]
+==== バケットのパスと命名
+
+ファイルは、緻密に定義されたパスに従ってバケットに格納されます。バケット内容を分かりやすくするために、パスを自由にカスタマイズできます (セカンダリボリュームが複数あるマルチサーバー環境の場合も同様) 。
+
+/*Bucket Name*/*Destination Path*/[*Volume Prefix*-]*serverID*/
+
+*バケットの名前* と *Destination Path* はボリュームに紐づいていません。同じDestination path 配下にボリュームを好きなだけ配置することができます。
+
+一方、*Volume Prefix* は、各ボリュームに特化しているため、バケット内に複数あるボリュームを瞬時に区別したり、識別するのに役立ちます。
+
+[[infrequent-access-storage-class]]
+==== 低頻度アクセスのストレージクラス
+
+HSM NGは、 `Amazon S3 標準―低頻度アクセス`
+のストレージクラスと互換性があります。 `低頻度アクセス
+のしきい値` を超える全てのファイルをこのストレージクラスに格納することになります。
+
+低頻度アクセスについての詳細情報は、公式の
+https://aws.amazon.com/s3/storage-classes[official Amazon S3 ドキュメント] を確認してください。
+
+[[intelligent-tiering-storage-class]]
+Intelligent Tiering のストレージクラスについて
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+HSM NG は `Amazon S3 - Intelligent Tiering` のストレージクラスとの互換性があります。
+ボリュームにオプションが有効化している限り、適切な Intelligent Tiering フラグがすべてのファイルへ追加されます。
+
+なお、Intelligent Tiering の機能の詳細に関しまして、https://aws.amazon.com/about-aws/whats-new/2018/11/s3-intelligent-tiering/[Amazon S3 のドキュメンテーション] をご参照ください。
+
+[[item-deduplication]]
+== アイテムの重複排除
+
+[[what-is-item-deduplication]]
+=== アイテムの重複排除とは
+
+アイテムの重複排除とは、一度しか参照しない同じアイテムのコピーをいくつも保存する代わりに、１つだけ保存したコピーを何度も参照することでディスク容量を節約する技術です。
+
+マイナーな改善のようですが、実際に使用すると、とてつもない違いを生みます。
+
+[[item-deduplication-in-zimbra]]
+==== Zimbraのアイテム重複排除
+
+Zimbraで実施しているアイテム重複排除は、現在のプライマリボリュームに新たなアイテムを格納するときに実行されます。
+
+作成中アイテムの `Message ID` をキャッシュ済みアイテムの一覧と比較します。一致した場合、そのメッセージの新規BLOBを作成する代わりに、該当のキャッシュ済みメッセージのBLOBへのリンクを作成します。
+
+この重複排除キャッシュは下記の属性を利用して、Zimbra内で管理されます。
+
+*zimbraPrefDedupeMessagesSentToSelf*
+
+セルフtoセルフメッセージの場合の重複排除動作の設定に使用します。
+
+....
+<attr id="144" name="zimbraPrefDedupeMessagesSentToSelf" type="enum" value="dedupeNone,secondCopyifOnToOrCC,dedupeAll" cardinality="single"
+optionalIn="account,cos" flags="accountInherited,domainAdminModifiable">
+  <defaultCOSValue>dedupeNone</defaultCOSValue>
+  <desc>dedupeNone|secondCopyIfOnToOrCC|moveSentMessageToInbox|dedupeAll</desc>
+</attr>
+....
+
+*zimbraMessageIdDedupeCacheSize*
+
+キャッシュ済みMessage IDの数。
+
+....
+<attr id="334" name="zimbraMessageIdDedupeCacheSize" type="integer" cardinality="single" optionalIn="globalConfig" min="0">
+  <globalConfigValue>3000</globalConfigValue>
+  <desc>
+    Number of Message-Id header values to keep in the LMTP dedupe cache.
+    Subsequent attempts to deliver a message with a matching Message-Id
+    to the same mailbox will be ignored.  A value of 0 disables deduping.
+  </desc>
+</attr>
+....
+
+*zimbraPrefMessageIdDedupingEnabled*
+
+アカウントレベルあるいは提供サービスレベルでの重複排除管理。
+
+....
+<attr id="1198" name="zimbraPrefMessageIdDedupingEnabled" type="boolean" cardinality="single" optionalIn="account,cos" flags="accountInherited"
+ since="8.0.0">
+  <defaultCOSValue>TRUE</defaultCOSValue>
+  <desc>
+    Account-level switch that enables message deduping.  See zimbraMessageIdDedupeCacheSize for more details.
+  </desc>
+</attr>
+....
+
+*zimbraMessageIdDedupeCacheTimeout*
+
+重複排除キャッシュにある各エントリのタイムアウト。
+
+....
+<attr id="1340" name="zimbraMessageIdDedupeCacheTimeout" type="duration" cardinality="single" optionalIn="globalConfig" since="7.1.4">
+  <globalConfigValue>0</globalConfigValue>
+  <desc>
+    Timeout for a Message-Id entry in the LMTP dedupe cache. A value of 0 indicates no timeout.
+    zimbraMessageIdDedupeCacheSize limit is ignored when this is set to a non-zero value.
+  </desc>
+</attr>
+....
+
+(バージョンの古いZimbraでは別の属性を使用しているか、上記の属性が含まれていない可能性があります)
+
+[[item-deduplication-and-hsm-ng]]
+=== アイテムの重複排除とHSM NG
+
+HSM NGには、重複アイテム検索・重複排除するためにボリューム解析を行なう `doDeduplicate` 処理という機能が備わっています。
+
+これにより、ディスク容量の更なる節約になります。Zimbraの自動重複排除で対象となるキャッシュは限定されていますが、HSM NGの重複排除は、キャッシュやタイミングに関係なく、同じメールに対して複数存在するコピーの検索・対処も行なうからです。
+
+移行後あるいは大きなデータのインポート後はストレージ利用の最適化のため、`doDeduplicate` 処理を実行されることを強く推奨します。
+
+[[running-a-volume-deduplication]]
+==== ボリューム重複排除の実行
+
+[[dedupe-via-the-administration-zimlet]]
+==== 管理拡張機能から
+
+管理拡張機能からボリュームの重複排除を実行するには、`HSM NG` タブをクリックし、重複排除を行ないたいボリュームを選択後、ボリュームの `重複排除` ボタンを押下します。
+
+[[dedupe-via-the-cli]]
+==== CLIから
+
+CLIからボリュームの重複排除を実行するには、`doDeduplicate` コマンドを利用します。
+
+....
+zimbra@mailserver:~$ zxsuite hsm doDeduplicate
+
+command doDeduplicate requires more parameters
+
+構文:
+   zxsuite hsm doDeduplicate {volume_name} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前              データ型           期待値           初期値
+volume_name(M)    String[,..]
+dry_run(O)        Boolean        true|false         false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm dodeduplicate secondvolume
+Starts a deduplication on volume secondvolume
+....
+
+使用可能なボリューム全てを一覧表示するには、コマンド _`zxsuite hsm
+getAllVolumes`_ を使用します。
+
+[[dodeduplicate-stats]]
+==== `doDeduplicate` Stats
+
+`doDeduplicate` 処理は、 `monitor`
+コマンドの対象です。 `zxsuite hsm monitor [operationID]` コマンドを実行して、このコマンドの統計情報を確認できます。
+
+_出力例_
+
+....
+Current Pass (Digest Prefix):  63/64
+ Checked Mailboxes:             148/148
+ Deduplicated/duplicated Blobs: 64868/137089
+ Already Deduplicated Blobs:    71178
+ Skipped Blobs:                 0
+ Invalid Digests:               0
+ Total Space Saved:             21.88 GB
+....
+
+* `Current Pass (Digest Prefix)` 現在のパス (ダイジェストのプレフィックス)  : `doDeduplicate` コマンドは、BLOBSダイジェスト (名称) の先頭文字を使ってダイジェストをグループ単位で解析します。
+* `Checked Mailboxes` チェック済メールボックス: 解析された現行パス内メールボックス数。
+* `Deduplicated/duplicated Blobs` 重複排除/重複Blobs : 現行処理で重複排除されたBLOB数/ボリュームにある合計重複アイテム数。
+* `Already Deduplicated Blobs` 重複排除済のBlobs : ボリュームにある重複排除済blob数 (以前の実行時に重複排除された重複排除済blobs) 。
+* `Skipped Blobs` スキップされたBlobs : 解析されなかったBLOB。主な原因は読み込みエラーもしくはファイルが見付からない。
+* `Invalid Digests` : 不正なダイジェストを持つBLOB (そのファイルの実際のダイジェストとは異なる名前) 。
+* `Total Space Saved` 総節約量 : doDeduplicate処理により空いたディスク容量。
+
+出力例から次のことが分かります。
+
+* 最後のメールボックス内最後から２番目のパスに対する実行です。
+* 137089件の重複BLOBが検索され、そのうち71178が以前の実行で重複排除済です。
+* 現行処理で64868件のBLOBが重複排除され、総節約量は21.88GBでした。
+
+[[advanced-volume-operations]]
+== 高度なボリューム処理
+
+[[hsm-ng-more-than-meets-the-eye]]
+=== HSM NG: 見えない利点
+
+HSM NGは一見、HSMに特化したものに見えますが、HSMに直接関連しないボリューム関連ツールとしての機能があります。
+
+ボリューム管理における暗黙のリスクのため、ツール機能はCLIからのみ実施可能です。
+
+[[volume-operations-at-a-glance]]
+=== 表面上のボリューム処理
+
+下記のボリューム処理を使用できます。
+
+*doCheckBlobs*: １つまたは複数のボリュームに対してBLOBの一貫性チェックを実行します。
+
+*doDeduplicate*: ボリュームに対してアイテムの重複排除を開始します。
+
+*doVolumeToVolumeMove*: あるボリュームから別のボリュームに全アイテムを移動します。
+
+*getVolumeStats*: ボリュームサイズやそこに格納されているアイテム/blobの個数についての情報を表示します。
+
+[[volume-operation-analysis]]
+=== ボリューム処理分析
+
+[[docheckblobs]]
+==== doCheckBlobs
+
+[[usage]]
+使用方法
+
+....
+zimbra@mail:~$ zxsuite hsm doCheckBlobs
+
+コマンドdoCheckBlobsにはパラメーターが必要です。
+
+構文:
+   zxsuite hsm doCheckBlobs {start} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前                           データ型            期待値            初期値
+action(M)                      String          start
+volume_ids(O)                  Integer[,..]    1,3
+mailbox_ids(O)                 Integer[,..]    2,9,27
+missing_blobs_crosscheck(O)    Boolean         true|false         true
+traced(O)                      Boolean         true|false         false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doCheckBlobs start: 全メッセージボリュームに対してBLOBの一貫性チェックを実行します。
+
+zxsuite hsm doCheckBlobs start volume_ids 1,3: ボリューム1と3に対してBLOBの一貫性チェックを実行します。
+
+zxsuite hsm doCheckBlobs start mailbox_ids 2,9,27: メールボックス2、9、27に対してBLOBの一貫性チェックを実行します。
+
+zxsuite hsm doCheckBlobs start missing_blobs_crosscheck false: BLOBの一貫性チェックを実行します。他のボリュームはチェック対象外。
+
+zxsuite hsm doCheckBlobs start traced true: BLOBの一貫性チェックを実行します。正常だったアイテムも含めて、ログを取得します。
+....
+
+[[description-and-tips]]
+説明とヒント
+
+doCheckBlobs処理を使って、ボリュームとメールボックスに対するBLOBの一貫性チェックを実行できます。アイテムのBLOBファイルが検索・アクセスできないため、あるいはBLOBの内容自体に問題があるために起こる、表示エラーや破損エラーの際に有用です。
+
+特に、下記チェックが実施されます。
+
+* DB-to-BLOB の一貫性: Zimbra DBにある全てのアイテムのエントリに対し、適切なBLOBファイルが存在しているかをチェックします。
+* BLOB-to-DB の一貫性: ボリューム/メールボックスにある全てのBLOBファイルに対し、適切なDBデータが存在しているかをチェックします。
+* ファイル名の一貫性: 各BLOBのファイル名がその内容と一貫性のある名前かどうかをチェックします (BLOBはそのファイルのSHAハッシュにちなんで名づけられるため) 。
+* サイズの一貫性: ボリューム/メールボックスにある全てのBLOBファイルに対し、そのBLOBファイルのサイズが (DBに格納されている) 想定サイズと比べて妥当かどうかをチェックします。
+
+IMPORTANT: HSM NGを使用するすべてのインフラで、旧 `zmblobchk` コマンドの代わりに `zxsuite hsm doCheckBlobs` が使用されるようになりました。
+
+[[dodeduplicate]]
+==== doDeduplicate
+
+[[usage-1]]
+使用方法
+
+....
+zimbra@mail:~$ zxsuite hsm doDeduplicate
+
+コマンドdoDeduplicateにはパラメーターが必要です。
+
+構文:
+   zxsuite hsm doDeduplicate {volume_name} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前              データ型           期待値            初期値
+volume_name(M)    String[,..]
+dry_run(O)        Boolean        true|false         false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm dodeduplicate secondvolume
+ボリュームsecondvolumeに対する重複排除を開始します。
+....
+
+
+[[dovolumetovolumemove]]
+==== doVolumeToVolumeMove
+
+*使用方法*
+
+....
+zimbra@mail:~$ zxsuite hsm doVolumeToVolumeMove
+
+コマンドdoVolumeToVolumeMoveにはパラメーターが必要です。
+
+構文:
+   zxsuite hsm doVolumeToVolumeMove {source_volume_name} {destination_volume_name}
+
+パラメーターリスト
+
+名前                          データ型
+source_volume_name(M)         String
+destination_volume_name(M)    String
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite hsm doVolumeToVolumeMove sourceVolume destVolume
+sourceVolume全体をdestVolumeに移動します。
+....
+
+*説明とヒント*
+
+このコマンドは、ボリュームの使用を止めなくてはならない全ての場面、例えば下記のような場面で、非常に有用です。
+
+* 古いハードウェアの廃棄： 物理サーバーにある古いディスクを取り除きたい場合、別の/新しいディスクに新規ボリュームを作成して、そこにデータを移動します。
+* `些細な誤り` の修正: 間違えて誤った場所に新規ボリュームを作成した場合、他のボリュームにそのデータを移動します。
+* ボリュームの集中化: ボリュームを好きなように集中化・移動させます。例えば、ストレージインフラを再設計した場合やZimbraボリュームを整理している場合です。
+
+[[getvolumestats]]
+==== getVolumeStats
+*使用方法*
+
+....
+zimbra@mail:~$ zxsuite hsm getVolumeStats
+
+コマンドgetVolumeStatsにはパラメーターが必要です。
+
+構文:
+   zxsuite hsm getVolumeStats {volume_id} [attr1 value1 [attr2 value2...
+
+パラメーターリスト
+
+名前                   データ型       期待値            初期値
+volume_id(M)           Integer
+show_volume_size(O)    Boolean    true|false         false
+show_blob_num(O)       Boolean    true|false         false
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+**注意** オプションshow_volume_sizeとshow_blob_numはIOインテンシブであるため、初期値では無効です。
+
+zxsuite hsm getVolumeStats 2
+ID=2であるボリュームの統計情報を表示します。
+....
+
+*説明とヒント*
+
+このコマンドはボリュームについて下記情報を表示します。
+
+[cols=",",options="header",]
+|=======================================================================
+|名称 |説明
+|id |ボリュームのID
+
+|name |ボリュームの名称
+
+|path |ボリュームのパス
+
+|compressed |圧縮の有効・無効
+
+|threshold |圧縮のしきい値 (バイト単位)
+
+|lastMoveOutcome |直近のdoMoveBlobs処理の終了ステータス
+
+|lastMoveTimestamp |直近のdoMoveBlobs処理の終了時間
+
+|lastMoveDuration |直近のdoMoveBlobs処理の実行時間
+
+|lastItemMovedCount |直近のdoMoveBlobs処理中に現在のセカンダリボリュームに移動したアイテム数
+
+|bytesSaved |直近のdoMoveBlobs処理中に重複排除と圧縮のおかげで空いたディスク容量
+
+|bytesSavedLast |重複排除と圧縮のおかげで空いたディスク総容量
+|=======================================================================
+
+オプション `show_volume_size` と `show_blob_num` により、次のデータが追加出力されます。
+
+[cols=",,",options="header",]
+|=================================================================
+|オプション |名称 |説明
+|show_volume_size |totSize |そのボリュームで使われたディスク総容量
+|show_blob_num |blobNumber |そのボリューム内BLOBファイル数
+|=================================================================
+
+[moving-mailboxes-between-mailstores]
+== メールストア間でのメールボックス移動
+`doMailboxMove` コマンドを使用して、あるドメインまたはメールボックスサーバーにあるシングルメールボックスあるいは全アカウントを同じZimbraインフラ内の別の場所へ移動することができます。
+
+WARNING: HSM NGモジュールがインストールされていて有効な場合、このコマンドは旧 `zmmboxmove` コマンドと `zmmailboxmove` コマンドに代わり使用されます。従来のコマンドを使用してもエラーが返され、データ移動は行なわれません。
+
+*使用方法*
+....
+構文:
+   zxsuite hsm doMailboxMove {an account name: john@example.com or a domain name: example.com} {destinationHost} [attr1 value1 [attr2 value2...]]
+
+パラメーターリスト
+
+名前                  データ型               期待値                                                          初期値
+name(M)               String             アカウント名なら: john@example.com ドメインなら: example.com
+destinationHost(M)    String
+sourceHost(O)         String             nameパラメーターにドメインを指定した場合に使用
+stage(O)              複数選択肢           blobs|db|chat_db|ldap|backup|reindex|delete|all                          all
+compress(O)           Boolean            true|false                                                               true
+checkDigest(O)        Boolean            falseの場合、ダイジェスト計算とチェックは実施されない                               true
+overwrite(O)          Boolean            true|false                                                               false
+threads(O)            Integer                                                                                     10
+hsm(O)                Boolean            true|false                                                               true
+notifications(O)      Email Address
+
+(M) == 必須パラメーター, (O) == 任意のパラメーター
+
+使用例:
+
+zxsuite HSM NG domailboxmove john@example.com mail2.example.com
+アカウントjohn@example.comのメールボックスをmail2.example.comのホストに移動します。
+....
+*パラメーター*
+
+* _sourceHost_: nameパラメーターにドメインを指定した場合にのみ使用。このホストからコマンドを実行したかのように動作します。
+* _stage_: 一度にシングルステージのみ実施可能です。テスト目的のためや、完了済みのステージを再実行しないためです。
+* _compress_: trueの場合、ネットワーク経由で送信する直前のblobsを圧縮します。
+* _checkDigest_: trueの場合、blobごとにダイジェストチェックを行います (ダイジェストはアイテムのDBエントリから取得します) 。
+* _overwrite_: falseの場合かつダイジェストチェック結果が正常な場合にblobファイルが上書きされることはありません。
+* _threads_: 重いステージで使用されるスレッド数。
+* _hsm_: trueの場合、メールボックスが正常に移動された後にHSM 処理が実行されます。
+
+*doMailboxMoveの詳細説明*
+
+* ドメイン移動の場合、現サーバーからアカウントごとに順次移動します。
+
+* メールボックスは、移動されるときにメンテナンスモードへと設定されます。そして、全メールが移動されたあと (ldapステージのあと) 、元のステータスへと更新されます。
+
+* 移動中のアイテムに関する書き込みエラーが5%以上であるとカウントされると、処理は停止されます。
+留意すべきこととして、現メールボックスはメンテナンスモード状態に留まる可能性があります。
+
+* 移動先サーバーで使用できる容量が不足していたり、ユーザーが移動先ホストに属しているだけの場合、シングルメールボックス移動は開始されません。
+
+* 全てのデータは下流レベルで移動され、メールボックスIDなど些細なことを除き、データが変更されることはありません。
+
+* 処理は blobs|db|chat_db|ldap|backup|reindex|delete の７つのステージで構成されています。
+メールボックス単位です。
+    ** blobs: 全てのblobが移動元サーバーから移動先サーバーにコピーされます。
+    ** db: 全てのチャットDB情報が移動元サーバーから移動先サーバーにコピーされます。
+    ** chat_db: 全てのチャットDB情報が移動元サーバーから移動先サーバーにコピーされます。
+    ** ldap: zimbraMailHostのldap属性が更新され、全アカウントのキャッシュがフラッシュされます。
+    ** backup: 全てのバックアップエントリが移動元サーバーから移動先サーバーにコピーされます。
+    ** reindex: メールボックスの再インデックスが開始されます。
+    ** delete: 全てのblobとDBエントリが移動元サーバーから削除され、バックアップアイテムも削除済としてマークされます。
+* 全てのステージは順に実行されます。単一ステージが指定された場合、メールボックスは、処理中ずっとメンテナンスモードのままです。正常終了時に、元ステータスへと更新されます。
+
+* 最初、全てのblobアイテムが移動先サーバーのプライマリボリュームに格納されます。
+
+* 再インデックスのステージが完了すると、移動先サーバーでHSM処理が新たに実行されます。ただし、指定がない場合に限ります。
+
+* 全てのボリュームの圧縮オプションが実行されます。
+
+* MailboxMove処理は、移動元サーバーで他の処理が実行中でない場合にのみ実行可能です。
+
+* HSMオプションでは現在のHSMポリシーを適用します。各メールボックスが正常に移動された後、実行されます。実行により、アイテムが移動されることになります。
+
+[[hsm-ng-attachment-indexing]]
+== HSM NG による添付のインデックス化
+
+[[how-indexing-works]]
+=== インデックスの機能
+
+添付されたコンテンツをインデックス化するため、インデックス化エンジンがHSM NGに新規追加されました。
+
+インデックス化エンジンは、元々Zimbraに備わっているエンジンと連動して機能します。メインであるZimbraのインデックス化処理がアイテムの内容を解析。オブジェクトのMIME部分に基づきアイテムを複数パートに分割します。その後、Zimbraは `旧知の` 内容、つまり平文のインデックス化処理を行い、その他残り全ての内容を処理するHSM NGハンドラにデータストリームを引渡します。
+
+解析済み内容のインデックス化処理を高速化するインデックス化キャッシュ機能がインデックス化エンジンに搭載されています。10KBを超すデータストリームは、デフォルトでキャッシュされ、キャッシュにはエントリ10,000件が保持されます。一方、小さいデータストリームはキャッシュされません。大きなデータストリームの場合にしかキャッシュの利点がないからです。
+
+[[indexed-formats]]
+=== インデックスの形式
+
+[[web]]
+==== Web
+
+[cols=",,",options="header",]
+|=============================================================
+|拡張子 |パーサ (解析担当)   |内容のタイプ
+|`asp` |`HtmlParser` |application/x-asp
+|`htm` |`HtmlParser` |application/xhtml+xml
+|`html` |`HtmlParser` |application/xhtml+xml, text/html
+|`shtml` |`HtmlParser` |application/xhtml+xml
+|`xhtml` |`HtmlParser` |application/xhtml+xml
+|=============================================================
+
+[[documents]]
+==== ドキュメント
+
+[cols=",,",options="header",]
+|=======================================================================
+|拡張子 |パーサ (解析担当)   |内容のタイプ
+|`rtf` |`RTFParser` |application/rtf
+
+|`pdf` |`PDFParser` |application/pdf
+
+|`pub` |`OfficeParser` |application/x-mspublisher
+
+|`xls` |`OfficeParser` |application/vnd.ms-excel
+
+|`xlt` |`OfficeParser` |application/vnd.ms-excel
+
+|`xlw` |`OfficeParser` |application/vnd.ms-excel
+
+|`ppt` |`OfficeParser` |application/vnd.ms-powerpoint
+
+|`pps` |`OfficeParser` |application/vnd.ms-powerpoint
+
+|`mpp` |`OfficeParser` |application/vnd.ms-project
+
+|`doc` |`OfficeParser` |application/msword
+
+|`dot` |`OfficeParser` |application/msword
+
+|`msg` |`OfficeParser` |application/vnd.ms-outlook
+
+|`vsd` |`OfficeParser` |application/vnd.visio
+
+|`vst` |`OfficeParser` |application/vnd.visio
+
+|`vss` |`OfficeParser` |application/vnd.visio
+
+|`vsw` |`OfficeParser` |application/vnd.visio
+
+|`xlsm` |`OOXMLParser`
+|application/vnd.ms-excel.sheet.macroenabled.12
+
+|`pptm` |`OOXMLParser`
+|application/vnd.ms-powerpoint.presentation.macroenabled.12
+
+|`xltx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.spreadsheetml.template
+
+|`docx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+|`potx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.presentationml.template
+
+|`xlsx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+|`pptx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.presentationml.presentation
+
+|`xlam` |`OOXMLParser`
+|application/vnd.ms-excel.addin.macroenabled.12
+
+|`docm` |`OOXMLParser`
+|application/vnd.ms-word.document.macroenabled.12
+
+|`xltm` |`OOXMLParser`
+|application/vnd.ms-excel.template.macroenabled.12
+
+|`dotx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.wordprocessingml.template
+
+|`ppsm` |`OOXMLParser`
+|application/vnd.ms-powerpoint.slideshow.macroenabled.12
+
+|`ppam` |`OOXMLParser`
+|application/vnd.ms-powerpoint.addin.macroenabled.12
+
+|`dotm` |`OOXMLParser`
+|application/vnd.ms-word.template.macroenabled.12
+
+|`ppsx` |`OOXMLParser`
+|application/vnd.openxmlformats-officedocument.presentationml.slideshow
+
+|`odt` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.text
+
+|`ods` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.spreadsheet
+
+|`odp` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.presentation
+
+|`odg` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.graphics
+
+|`odc` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.chart
+
+|`odf` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.formula
+
+|`odi` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.image
+
+|`odm` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.text-master
+
+|`ott` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.text-template
+
+|`ots` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.spreadsheet-template
+
+|`otp` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.presentation-template
+
+|`otg` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.graphics-template
+
+|`otc` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.chart-template
+
+|`otf` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.formula-template
+
+|`oti` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.image-template
+
+|`oth` |`OpenDocumentParser`
+|application/vnd.oasis.opendocument.text-web
+
+|`sxw` |`OpenDocumentParser` |application/vnd.sun.xml.writer
+|=======================================================================
+
+[[packages-and-archives]]
+==== パッケージとアーカイブ
+
+[cols=",,",options="header",]
+|======================================================
+|拡張子 |パーサ (解析担当)   |内容のタイプ
+|`z` |`CompressorParser` |application/x-compress
+|`bz` |`CompressorParser` |application/x-bzip
+|`boz` |`CompressorParser` |application/x-bzip2
+|`bz2` |`CompressorParser` |application/x-bzip2
+|`gz` |`CompressorParser` |application/gzip
+|`gz` |`CompressorParser` |application/x-gzip
+|`gzip` |`CompressorParser` |application/x-gzip
+|`xz` |`CompressorParser` |application/x-xz
+|`tar` |`PackageParser` |application/x-tar
+|`jar` |`PackageParser` |application/java-archive
+|`7z` |`PackageParser` |application/x-7z-compressed
+|`cpio` |`PackageParser` |application/x-cpio
+|`zip` |`PackageParser` |application/zip
+|`rar` |`RarParser` |application/x-rar-compressed
+|`txt` |`TXTParser` |text/plain
+|======================================================
+
+[[parser-controls]]
+=== パーサ (解析担当) の制御
+
+CLIコマンド `zxsuite config` を使って、関連する値の `true` ・ `false` を変更することで、パーサのオン・オフを切り替えることができます。
+
+[cols=",",options="header",]
+|==================================================================
+|属性 |パーサ (解析担当)
+|pdfParsingEnabled |PDFParser
+|odfParsingEnabled |OpenDocumentParser
+|archivesParsingEnabled |CompressorParser, PackageParser, RarParser
+|microsoftParsingEnabled |OfficeParser, OOXMLParser, OldExcelParser
+|rtfParsingEnabled |RTFParser
+|==================================================================
+
+例： PDFの解析実行を無効にするには次を実行します。
+`zxsuite config server set server.domain.com attribute pdfParsingEnabled value false`
+
+デフォルトでは全てのパーサがアクティブです。
