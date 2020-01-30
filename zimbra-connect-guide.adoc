@@ -385,7 +385,7 @@ Users can easily share files via Connect to Chats and Groups by dragging and dro
 
 Clicking on a file within a chat window will download it to the local client using the browser's own download interface.
 
-Files shared via Connect will be stored inside a protected folder the sender's Drive, thus counting towards the sender's mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.
+Files shared via Connect will be stored inside a protected root folder on the sender's Drive called `Connect sent files`, thus counting towards the sender's mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.
 
 == Video Chat
 
@@ -440,6 +440,23 @@ Such URLs are uniquely generated for each Instant Meeting and expire 10 minutes 
 
 === Instant Meeting UI
 The Instant Meeting feature uses the very same UI as any internal Video Chat session.
+
+== Autocomplete
+Autocomplete in {zconnect-name} is split in two different categories: *Internal* Autocomplete and *External* autocomplete.
+
+Internal autocomplete kicks in when selecting a target for 1-1 Chats, Group Chats, Spaces and Channels, while External autocomplete is only used for Instant Meeting attendees.
+
+This can be changed by setting the `teamCrossDomainSearchMode` COS property to either `local`, `extended` or `global` using the `zxsuite config [get/set/empty]` CLI toolset.
+
+* _local_ mode, in which Internal Autocomplete will draw its information from the GAL, while External autocomplete will draw its information from the user's Contacts and GAL.
+* _extended_ mode is a superset of _local_ that also matches full email addresses of any user in the same infrastructure as internal users.
+** This allows to initiate a 1-1 Chat with or to add to a Group/Space/Channel any user that is on the same infrastructure but out of the GAL as long as the exact email address is entered.
+* _global_ mode is a superset of _extended_ that does not require an exact match on the email address to autocomplete users in the same infrastructure.
+** This allows to autocomplete any user in the infrastructure as opposed to the strict email addres match required in _extended_ mode.
+
+image:connect_autocomplete_management.jpeg[connect_autocomplete_management.jpeg,title="connect_autocomplete_management.jpeg"]
+
+The default setting inherited by all COS is _local_.
 
 == Presence
 
