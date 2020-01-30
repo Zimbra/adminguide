@@ -385,7 +385,7 @@ Users can easily share files via Connect to Chats and Groups by dragging and dro
 
 Clicking on a file within a chat window will download it to the local client using the browser's own download interface.
 
-Files shared via Connect will be stored inside a protected root folder the sender's Drive called `Connect sent files`, thus counting towards the sender's mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.
+Files shared via Connect will be stored inside a protected root folder on the sender's Drive called `Connect sent files`, thus counting towards the sender's mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.
 
 == Video Chat
 
