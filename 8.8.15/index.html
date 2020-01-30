@@ -444,7 +444,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>Zimbra Collaboration Administrator Guide</h1>
 <div class="details">
 <span id="author" class="author">v8.8.15, June 2019</span><br>
-<span id="revdate">revised 2020-01-24</span>
+<span id="revdate">revised 2020-01-30</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -723,7 +723,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_enabling_the_voicechat_zimlets">Enabling the Voice/Chat Zimlets</a></li>
 </ul>
 </li>
-<li><a href="#backup-ng-guide">Backup Next Generation NG</a>
+<li><a href="#backup-ng-guide">Backup NG</a>
 <ul class="sectlevel2">
 <li><a href="#real-time-scan">Real-Time Scan</a></li>
 <li><a href="#blobless-backup-mode">Blobless Backup Mode</a></li>
@@ -845,6 +845,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_file_sharing">File sharing</a></li>
 <li><a href="#_video_chat">Video Chat</a></li>
 <li><a href="#_instant_meetings">Instant Meetings</a></li>
+<li><a href="#_autocomplete">Autocomplete</a></li>
 <li><a href="#_presence">Presence</a></li>
 <li><a href="#_unread_messages">Unread Messages</a></li>
 <li><a href="#_chat_history">Chat History</a></li>
@@ -26587,7 +26588,7 @@ the Zimbra Wiki at <a href="https://wiki.zimbra.com" class="bare">https://wiki.z
 </div>
 </div>
 <div class="sect1">
-<h2 id="backup-ng-guide">Backup Next Generation NG</h2>
+<h2 id="backup-ng-guide">Backup NG</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="real-time-scan">Real-Time Scan</h3>
@@ -38279,7 +38280,7 @@ Channel video chats can be joined at any time by all members of the Channel.</p>
 <p>Clicking on a file within a chat window will download it to the local client using the browser&#8217;s own download interface.</p>
 </div>
 <div class="paragraph">
-<p>Files shared via Connect will be stored inside a protected folder the sender&#8217;s Drive, thus counting towards the sender&#8217;s mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.</p>
+<p>Files shared via Connect will be stored inside a protected root folder on the sender&#8217;s Drive called <code>Connect sent files</code>, thus counting towards the sender&#8217;s mailbox quota, and will remain available for download in the chat window for all participants until deleted from Drive by the sender.</p>
 </div>
 </div>
 <div class="sect2">
@@ -38368,6 +38369,51 @@ Once all attendees are added, press "Save" to send an email notification to all 
 <div class="paragraph">
 <p>The Instant Meeting feature uses the very same UI as any internal Video Chat session.</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_autocomplete">Autocomplete</h3>
+<div class="paragraph">
+<p>Autocomplete in Zimbra Connect is split in two different categories: <strong>Internal</strong> Autocomplete and <strong>External</strong> autocomplete.</p>
+</div>
+<div class="paragraph">
+<p>Internal autocomplete kicks in when selecting a target for 1-1 Chats, Group Chats, Spaces and Channels, while External autocomplete is only used for Instant Meeting attendees.</p>
+</div>
+<div class="paragraph">
+<p>This can be changed by setting the <code>teamCrossDomainSearchMode</code> COS property to either <code>local</code>, <code>extended</code> or <code>global</code> using the <code>zxsuite config [get/set/empty]</code> CLI toolset.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>local</em> mode, in which Internal Autocomplete will draw its information from the GAL, while External autocomplete will draw its information from the user&#8217;s Contacts and GAL.</p>
+</li>
+<li>
+<p><em>extended</em> mode is a superset of <em>local</em> that also matches full email addresses of any user in the same infrastructure as internal users.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>This allows to initiate a 1-1 Chat with or to add to a Group/Space/Channel any user that is on the same infrastructure but out of the GAL as long as the exact email address is entered.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>global</em> mode is a superset of <em>extended</em> that does not require an exact match on the email address to autocomplete users in the same infrastructure.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>This allows to autocomplete any user in the infrastructure as opposed to the strict email addres match required in <em>extended</em> mode.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/connect_autocomplete_management.jpeg" alt="connect_autocomplete_management.jpeg" title="connect_autocomplete_management.jpeg"></span></p>
+</div>
+<div class="paragraph">
+<p>The default setting inherited by all COS is <em>local</em>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -48476,7 +48522,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-01-24 17:06:52 +0530
+Last updated 2020-01-29 13:58:10 +0530
 </div>
 </div>
 <style>
