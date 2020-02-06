@@ -491,7 +491,14 @@ Enable Mobile Synchronization for a Folder
 
 To enable mobile synchronization for a shared folder:
 
+ifndef::z9[]
 * Log in to the Zimbra Web Client.
+endif::z9[]
+
+ifdef::z9[]
+* Log in to the Zimbra {web-client}.
+endif::z9[]
+
 * Right-click the shared folder you want to sync.
 * Select `Folder Sync Settings` in the drop-down menu.
 

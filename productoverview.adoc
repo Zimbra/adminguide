@@ -120,6 +120,11 @@ The libraries, utilities, monitoring tools, and basic configuration
 files. `zmconfigd` is contained in the zimbra-core and is automatically
 enabled to run on all systems.
 
+ifdef::z9[]
+|Zimbra Modern Web Client|
+The assets required for {product-short} {modern}. This package is automatically installed on each server.
+endif::z9[]
+
 |Zimbra Store |
 The components for the mailbox server (including Jetty). The Zimbra mailbox
 server includes the following components:
@@ -373,6 +378,7 @@ book, and task functions.
 |=======================================================================
 |Client Type |Description
 
+ifndef::z9[]
 |Advanced Web Client |
 Includes Ajax capability and offers a full set of web collaboration
 features. This web client works best with newer browsers and fast Internet
@@ -385,7 +391,6 @@ messaging for navigating within their mailbox
 |Mobile HTML Client |
 Provides mobile access to Zimbra when using the Standard Web Client
 version.
-
 |=======================================================================
 
 When users sign in, they view the advanced Zimbra Web Client, unless they
@@ -394,6 +399,26 @@ detects the screen resolution to be 800x600, users are automatically
 redirected to the standard Zimbra Web Client. Users can still choose the
 advanced ZWC but see a warning message suggesting the use of the standard
 ZWC for better screen view.
+endif::z9[]
+
+ifdef::z9[]
+|Modern Web Client |
+Uses modern technologies, UI design, and offers same user experience across devices like Desktop, Mobile and Tablet. 
+
+|Classic Web Client |
+Includes Ajax capability and offers a full set of web collaboration
+features.
+|=======================================================================
+
+Users may select the Web Client before they sign in, from the 'Version' drop-down on the login page. The admin can set the Default Web Client to either {web-client} or {modern}, for a COS. Users can override this Default:
+
+* In {modern}, users can go to *Settings->General* to change the value of default Web Client they login to
+* In {web-client}, users can go to *Preferences->General->Sign in* to change the value of default Web Client they login to
+
+It is recommended that admins set the Default to {modern}.
+endif::z9[]
+
+
 
 == Web Services and Desktop Clients
 
@@ -521,6 +546,11 @@ functionality and third-party plugins: Amavisd-new, ClamAV, and Spam
 Assassin.
 
 |=======================================================================
+
+ifdef::z9[]
+[IMPORTANT]
+Currently, {modern} does not support the S/MIME feature.
+endif::z9[]
 
 === System Logs
 

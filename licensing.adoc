@@ -236,6 +236,9 @@ functions that are no longer available upon license expiration:
 * High-Fidelity Document Preview
 * Zimbra Connector for Outlook
 * S/MIME
+ifdef::z9[]
+* {modern}
+endif::z9[]
 
 If you maximize your licensed user limit, you are no longer able to
 create or delete accounts.

@@ -126,6 +126,11 @@ serving the static UI content like html/css pages, and mail server
 running 'service' webapp serving all the SOAP requests. These servers
 are running in split mode.
 
+ifdef::z9[]
+[IMPORTANT]
+{modern} UI does not currently support {product-short} Web Application Server Split configuration.
+endif::z9[]
+
 The Web Application Server Split benefits include:
 
 * Splitting the web client server from the mail server makes the

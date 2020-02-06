@@ -18,3 +18,17 @@
 :source-highlighter: coderay
 :toc: left
 :toclevels: 2
+
+ifndef::z9[]
+:web-client: Web Client
+endif::z9[]
+
+//Zimbra 9 Documentation (Pass z9 in build argument e.g. asciidoctor -a z9 zimbra-9-install.adoc)
+ifdef::z9[]
+:web-client: Classic Web Client
+:modern: Modern Web Client
+:product-version: 9.0.0
+:product-release-date: March, 2020
+:copyright-year: 2020
+endif::z9[]
+
