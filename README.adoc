@@ -64,7 +64,16 @@ When publishing the output (`gh-pages` branch) the "latest" link needs to be upd
 ln -nsf {product-version} latest
 -----
 
-Finally, the `index.html' file in the root folder needs to be updated to include appropriate links for the new version's documents.
+IMPORTANT: Windows users need to launch Command Prompt with administrator privileges and use the command https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc753194(v%3dws.11)[mklink].
+
+[source,bash,subs=attributes+]
+-----
+mklink /D latest {product-version}
+-----
+
+TIP: The above command does not overwrite the existing symlink, hence first rename it.
+
+Finally, the `index.html` file in the root folder needs to be updated to include appropriate links for the new version's documents.
 Use your favorite text editor to complete this task before committing and pushing the updated `gh-pages` branch to the repo.
 
 == Localization and translations
