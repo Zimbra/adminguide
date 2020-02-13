@@ -160,9 +160,11 @@ include::zimbra-connect-guide.adoc[]
 
 <<<
 
+ifndef::z9[]
 :leveloffset: -1
 include::zimbra-drive-open-guide.adoc[]
 :leveloffset: +1
+endif::z9[]
 
 <<<
 

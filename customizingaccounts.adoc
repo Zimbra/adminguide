@@ -768,6 +768,11 @@ You can set attachment viewing rules as a global setting, by COS, or for a
 specific account.  The global setting takes precedence over COS and account
 Settings.  You can select from four options.
 
+ifdef::z9[]
+[IMPORTANT]
+Currently, these settings have no impact on the {modern}.
+endif::z9[]
+
 .Attachment Viewing Features
 [cols="1,2a,1",options="header",]
 |=======================================================================
