@@ -218,13 +218,11 @@ administrators can check the MX records for their domain.
 are set up for who can send email to a distribution list.
 
 |Archiving |
-* If you installed the Archiving feature, you can enable it Configuration
-here.
+* If you installed the Archiving feature, you can configure it here.
 
 |Messages |
 
-* Set the *Maximum messages size* for a message and it's attachments that
-can be sent.
+* Set the *Maximum messages size* for a message and its attachments that can be sent.
 +
 [TIP]
 To set the maximum size of an uploaded file to Briefcase, go to the General
@@ -342,7 +340,7 @@ is delivered. Changing the status can affect the status for accounts on the
 domain also. The domain status is displayed on the *Domain > General*
 page. Domain status can be set as follows:
 
-* *Active*. Active is the normal status for domains. Accounts can be created
+Active:: Active is the normal status for domains. Accounts can be created
 and mail can be delivered.
 +
 --
@@ -351,21 +349,21 @@ If an account has a different status setting than the domain setting, the
 account status overrides the domain status.
 --
 
-* *Closed*. When a domain status is marked as closed,Login for accounts on
+Closed:: When a domain status is marked as *Closed*, login for accounts on
 the domain is disabled and messages are bounced. The closed status
 overrides an individual account's status setting.
 
-* *Locked*. When a domain status is marked as locked,users cannot log in to
+Locked:: When a domain status is marked as *Locked*, users cannot log in to
 check their email, but email is still delivered to the accounts.  If an
 account's status setting is marked as maintenance or closed, the account's
 status overrides the domain status setting.
 
-* *Maintenance*. When the domain status is marked as maintenance, users
+Maintenance:: When the domain status is marked for maintenance, users
 cannot log in and their email is queued at the MTA. If an account's status
 setting is marked as closed, the account's status overrides the domain
 status setting.
 
-* *Suspended*. When the domain status is marked as suspended, users cannot
+Suspended:: When the domain status is marked as *Suspended*, users cannot
 log in, their email is queued at the MTA, and accounts and distribution
 lists cannot be created, deleted, or modified. If an account's status
 setting is marked as closed, the account's status overrides the domain
@@ -520,7 +518,7 @@ not use the default name.
 
 . Select the mailbox server that this account will apply to.
 
-. Enter the *GAL datasource name*, If the GAL mode is BOTH, enter the data
+. Enter the *GAL datasource name*. If the GAL mode is BOTH, enter the data
 source name for both the internal GAL and the external GAL.
 
 . Set the *GAL polling interval* to how often the GAL sync account should
@@ -534,7 +532,7 @@ The default name for the GAL sync account is *galsync*. When you configure
 the GAL mode, you can specify another name. After the GAL sync account is
 created, you cannot rename the account because syncing the data fails.
 
-To change the account name delete the existing GAL sync account and
+To change the account name, delete the existing GAL sync account and
 configure a new GAL for the domain.
 
 Admin Console: ::
@@ -877,7 +875,7 @@ information:
 threads that can simultaneously process data source imports. +
 Default = 20 threads.
 
-* Purge setting. The server manages the message purge schedule. You
+* *Purge setting*: The server manages the message purge schedule. You
 configure the duration of time that the server should "rest" between
 purg-ing mailboxes from the Administration Console, Global settings or
 Server settings, or General Information page. +
@@ -1013,7 +1011,7 @@ certificate, check this box. An asterisk (*) is added to the Common Name
 field.
 
 |Country Name \(C) |
-County name you want the certificate to display as our company location
+Country name you want the certificate to display as our company location
 
 |State/Province (ST) |
 State/province you want the certificate to display as your company
@@ -1042,10 +1040,7 @@ Download the CSR from the Zimbra server and submit it to a Certificate
 Authority, such as VeriSign or GoDaddy. They issue a digitally signed
 certificate.
 
-When you receive the certificate, use the Certificates Wizard a second time
-to install the certificate on the {product-name}. When the
-certificate is installed, you must restart the server to apply the
-certificate.
+When you receive the certificate, use the Certificates Wizard a second time to install the certificate on {product-name}. When the certificate is installed, you must restart the server to apply the certificate.
 
 === Viewing Installed Certificates
 
@@ -1093,8 +1088,7 @@ Edit the certificate for the domain:
 Admin Console: ::
 *Home > 1 Get Started > 2. Install Certificates*
 
-Copy the domain's issued signed commercial certificate's and private key
-files to the *Domain Certificate* section for the selected domain.
+Copy the domain's issued signed commercial certificates and private key files to the *Domain Certificate* section for the selected domain.
 
 image:certificate_domain_load.jpg[Certificate Domain Load]
 
@@ -1190,9 +1184,7 @@ the DKIM DNS text record.
 . Reload the DNS and verify that the DNS server is returning the DNS
 record.
 
-. Verify that the public key matches the private key, See the
-<<dkim_identifiers,Identifiers>> table for `-d`, `-s`, and `-x`
-descriptions.
+. Verify that the public key matches the private key. See the <<dkim_identifiers,Identifiers>> table for `-d`, `-s`, and `-x` descriptions.
 +
 --
 [source,bash]
@@ -1247,11 +1239,7 @@ table for `-d`, `-s`, and `-x` descriptions.
 
 === Remove DKIM Signing from {product-abbrev}
 
-Removing DKIM signing deletes the DKIM data from LDAP. New email message no
-longer are signed for the domain. When you remove DKIM from the domain,
-good practice is to leave the previous TXT record in DNS for a period of
-time so that email messages that were signed with the previous key can
-still be verified.
+Removing DKIM signing deletes the DKIM data from LDAP, and new email messages are no longer signed for the domain. When you remove DKIM from the domain, it is a good practice to leave the previous TXT record in DNS for some time so that email messages that were signed with the previous key can still be verified.
 
 Use the following command syntax to remove the file:
 [source,bash]
@@ -1271,14 +1259,11 @@ the domain, selector, private key, public signature and identity:
 == Anti-spam Settings
 
 {product-abbrev} uses SpamAssassin to control spam. SpamAssassin uses predefined rules
-as well as a Bayes database to score messages. Zimbra evaluates spaminess
-based on percentage. Messages tagged between 33%-75% are considered spam
-and delivered to the user's junk folder. Messages tagged above 75% are not
-sent to the user and are discarded.
+as well as a Bayes database to score messages. Zimbra evaluates spam as a percentage value. Messages tagged between 33%-75% spam are delivered to the user's junk folder. Messages tagged above 75% are not sent to the user and are discarded.
 
 You can change the anti-spam settings.
 
-Admin Console: ::
+Admin Console::
 *Home > Configure > Global Settings > AS/AV*
 
 image:as_av.jpg[Anti-Spam Settings]
@@ -1305,7 +1290,7 @@ delivered to the Junk folder. +
 Default = 33%
 
 |Subject prefix |
-Text string to be added to the subject line, for messages tagged as spam.
+Text string to be added to the subject line for messages tagged as spam.
 
 |=======================================================================
 --
@@ -1829,30 +1814,30 @@ Same as for the client based S/MIME solution
 
 ==== Importing S/MIME Certificates
 
-Same as for the client based S/MIME solution except that the recipients' public-key certificate no longer need to be stored into Local OS or browser keystore.
+Same as for the client based S/MIME solution except that the recipients' public-key certificate no longer needs to be stored in the Local OS or browser keystore.
 The certificate can be published to all other places mentioned in previous S/MIME version.
 
 ==== List of LDAP attributes introduced to support the server based S/MIME solution
 
-. zimbraSmimeOCSPEnabled
+. `zimbraSmimeOCSPEnabled`
 
 * Used by server at the time of validating the user as well as public certificates
-* If TRUE, the revocation check will be performed during certificate validation
-* If FALSE, the revocation check will not be performed during certificate validation
+* If `TRUE`, the revocation check will be performed during certificate validation
+* If `FALSE`, the revocation check will not be performed during certificate validation
 
-. zimbraSmimePublicCertificateExtensions
+. `zimbraSmimePublicCertificateExtensions`
 
 * The supported public certificate file extensions separated by commas
-* Contains the list of supported formats for the userCertificate LDAP attribute
-* Default values: cer,crt,der,spc,p7b,p7r,sst,sto,pem
-* Zimbra web client retrieves the supported file formats/extensions for public certificate upload from the server
+* Contains the list of supported formats for the `userCertificate` LDAP attribute
+* Default values: `cer`, `crt`, `der`, `spc`, `p7b`, `p7r`, `sst`, `sto`, `pem`
+* Zimbra web client retrieves the supported file formats or extensions for uploading public certificate from the server
 
-. zimbraSmimeUserCertificateExtensions
+. `zimbraSmimeUserCertificateExtensions`
 
 * The supported public certificate file extensions separated by commas
 * Contains the list of supported formats for the userSmimeCertificate LDAP attribute
-* Default values: p12,pfx
-* Zimbra web client retrieves the supported file formats/extensions for user certificate upload from the server
+* Default values: `p12`, `pfx`
+* Zimbra web client retrieves the supported file formats or extensions for uploading public certificate from the server
 
 ==== Process for Adding the CA certificate to the mailbox truststore for S/MIME
 
@@ -1891,7 +1876,7 @@ memory requirements for the server increases.
 
 Each Zimbra mailbox server is configured with one current index volume.
 Each mailbox is assigned to a permanent directory on the current index
-volume. You cannot change which volume the account is assigned.
+volume. You cannot change the volume to which an account is assigned.
 
 As volumes become full, you can create a new current index volume for new
 accounts. You can add new volumes, set the volume type, and set the
@@ -1992,18 +1977,12 @@ You can set up specific retention policies that users can enable for the
 Inbox and other email folders in their account. Users can also create their
 own retention policies.
 
-You can enable the dumpster feature to save messages that are deleted from
-Trash. When an message lifetime has been reached based on email lifetime
-rules or deletion policies, the message is moved to the dumpster if it is
-enabled. Users can recover deleted items from the dumpster until the
-threshold set in the *Visibility lifetime in dumpster for end user*
-setting.
+You can enable the dumpster feature to save messages that are deleted from Trash. When a message reaches the end of its retention lifetime, based on email lifetime rules or deletion policies, the message is moved to the dumpster if enabled. Users can recover deleted items from the dumpster until the
+threshold set in the *Visibility lifetime in dumpster for end user* setting.
 
-If dumpster is not enabled, messages are purged from the server when the
-email retention lifetime is reached.
+If dumpster is not enabled, messages are purged from the server when the email retention lifetime is reached.
 
-You can also set up a legal hold on an account to prevent message from
-being deleted.
+You can also set up a legal hold on an account to prevent messages from being deleted.
 
 === Configuring Email Lifetime Rules
 
@@ -2045,9 +2024,7 @@ Admin Console: ::
 
 image:GeneralInformation.jpg[Purge Interval]
 
-For example, the purge interval is set to 1 minute, after mailbox1 is
-purged of messages that meet the message lifetime setting, the server waits
-1 minute before beginning to purge mailbox2.
+For example, if the purge interval is set to 1 minute, the server purges `mailbox1`, waits for 1 minute, and then begins to purge mailbox2.
 
 If the message purge schedule is set to 0, messages are not purged even if
 the mail, trash and spam message lifetime is set.
@@ -2121,11 +2098,9 @@ Folder C are disposed of in 120 days.
 
 === Managing the Dumpster
 
-When a message, trash or spam lifetime has been reached, the message is
-moved to the dumpster if the feature is enabled. When users right-click on
-Trash, they can click *Recover deleted items* to retrieve items from their
-trash that has been deleted in the last x days. This threshold is based on
-the *Visibility lifetime in dumpster for end user* setting.
+When a message, trash or spam lifetime has been reached, the message is moved to the dumpster if the feature is enabled.
+When users right-click on Trash, they can click *Recover deleted items* to retrieve items from their trash that have been deleted in the last x days.
+This threshold is based on the *Visibility lifetime in dumpster for end user* setting.
 
 The *Retention lifetime in dumpster before purging setting* sets retention
 lifetime for items in dumpster. Items in dumpster older than the threshold
@@ -2160,8 +2135,7 @@ Admin Console: ::
 *Home > Configure > Class of Service -> _COS_ -> Features -> General Features*
 
 . Enable (check) the *Dumpster folder* checkbox.
-. To set *Visibility lifetime in dumpster for end user*, go to the COS's,
-*Advanced* page, *Timeout Policy* section.
+. To set *Visibility lifetime in dumpster for end user*, go to the *Timeout Policy* section on COS' *Advanced* page
 . To set *Retention lifetime in dumpster before purging*, go to the COS's
 *Advanced* page, *Email Retention Policy* section.
 

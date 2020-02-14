@@ -414,7 +414,7 @@ can run the GAL Configuration Wizard from the Administration Console.
 Additions, changes and deletions to the GAL attributes are made through the
 Zimbra Administration Console or from the `zmprov` commands.
 
-Users can modify attributes for their account in the directory when users
+Users can modify attributes for their account in the directory. When users
 change their options from the Zimbra Web Client, they also modify the
 attributes when they change their preferences.
 

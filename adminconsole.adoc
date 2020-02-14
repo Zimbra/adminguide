@@ -584,8 +584,7 @@ Administration Console.
 --
 * Set global ceiling for the number of results from a GAL search.
 * Define default domain.
-* Configure the number of threads that can be used toget the content from
-the remote data sources.
+* Configure the number of threads that can be used to get the content from the remote data sources.
 
 For more information,
 see <<general_information_configuration,General Information Configuration>>
@@ -731,15 +730,8 @@ to your system. After selecting the image, you can use the *Upload* button
 on this page to complete the software upload.
 
 |Backups |
-Access a summary view of current free and total space
-(MB) based on the most recent system backup. You can
-also select a specific administrator from this navigation
-pane to view backup history as associated with the
-selected administrator. The history lists labels, start and end times.
-and success or failure for each backup occurrence; each of these is
-associated with the identical, displayed directory path to the backup
-target. Additional information is provided in
-<<backup_and_restore,Backup and Restore>>.
+Access a summary view of current free and total space (MB) based on the most recent system backup.
+You can also choose an administrator from this navigation pane to view their backup history. The history lists labels, start and end times, and success or failure for each backup occurrence. Each of these listings is associated with an identical displayed directory path to the backup target. The section <<backup_and_restore, Backup and Restore>> provides additional information.
 
 |=======================================================================
 
@@ -754,9 +746,7 @@ described in this section. Check <<#zimbra-pst-migration, Zimbra PST Migration>>
 |=================================================
 |*{product-abbrev} Migration Wizard for Exchange/PST (32 bit)* +
 *{product-abbrev} Migration Wizard for Exchange/PST (64 bit)* |
-Get `zip` files to perform a server-to-server migration of mail calendar, and
-contacts, from Microsoft Exchange or PST file to the {product-name}
-Server.
+Get `zip` files to perform a server-to-server migration of mail, calendar, and contacts from Microsoft Exchange or PST file to the {product-name} Server.
 --
 [WARNING]
 This package is supported only for PST file import, with End of Technical Guidance set for 31 December 2020.

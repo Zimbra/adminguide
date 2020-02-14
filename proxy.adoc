@@ -192,12 +192,11 @@ Only one virtual ip address is needed per domain although more than one is accep
 === Setting Up IMAP and POP Proxy After HTTP Proxy Installation
 
 IMAP proxy is installed with {product-name} and set up during
-installation from the configuration menus. To set up the HTTP proxy, .
+installation from the configuration menus. To set up the HTTP proxy, the
 proxy must be installed on the identified proxy nodes in order to set up
 HTTP proxy. No other configuration is usually required.
 
-If you need to set up IMAP/POP proxy after you have already installed .
-HTTP proxy, and set up the . mailbox server and the proxy node.
+If you need to, set up IMAP/POP proxy after you have already installed HTTP proxy, and set up the mailbox server and the proxy node.
 
 [NOTE]
 You can run the command as `zmproxyconfig -r`, to run against a remote
@@ -319,12 +318,7 @@ zmcontrol restart
 Zimbra Proxy can also reverse proxy HTTP requests to the right back-end
 server.
 
-For example, users can use a web browser to connect to the proxy server at
-https://mail.example.com. The connection from users whose mailboxes live on
-mbs1.example.com is proxied to mbs1.example.com by the proxy running on
-the mail.example.com server, REST and CalDAV clients, Zimbra Connector for
-Outlook, and Zimbra Mobile Sync NG devices are also
-supported by the proxy.
+For example, users can use a web browser to connect to the proxy server at https://mail.example.com. The connection from users whose mailboxes live on mbs1.example.com is proxied to mbs1.example.com by the proxy running on the mail.example.com server. The proxy also supports REST and CalDAV clients, Zimbra Connector for Outlook, and Zimbra Mobile Sync NG devices.
 
 HTTP reverse proxy routes requests as follows:
 
