@@ -2,7 +2,8 @@ include::settings.adoc[]
 
 :document-title: Administrator Guide
 = {product-name} {document-title}
-v{product-version}, {product-release-date}
+{product-release-date}
+{product-short} {product-edition-commercial} V {product-version}, 
 revised {localdate}
 :leveloffset: +1
 

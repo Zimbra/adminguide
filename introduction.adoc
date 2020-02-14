@@ -27,7 +27,7 @@ We appreciate your feedback and suggestions.
 * Contact sales@zimbra.com to purchase {product-name}
 * Network Edition customers can contact support at support@zimbra.com
 * Explore the https://forums.zimbra.org/[Zimbra Forums] for answers to installation or configurations problems
-* Join the https://forums.zimbra.org/[Zimbra Forums], to participate and learn more about the {product-name}
+* Join the https://forums.zimbra.org/[Zimbra Forums] to participate and learn more about the {product-name}
 
 For additional product information, the following resources are available:
 

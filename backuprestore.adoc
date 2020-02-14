@@ -1174,7 +1174,7 @@ server searches the redo log for uncommitted transactions and replays
 any that it finds. Replaying the redo logs brings the system to a
 consistent state.
 
-=== Restore the {product-name} Server
+=== Restore {product-name}
 
 If a complete machine failure occurs, use the following steps to restore
 to a new server.

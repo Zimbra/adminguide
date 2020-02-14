@@ -972,10 +972,8 @@ Default = 1825 days (5 years)
 attests that the public key contained in the certificate belongs to the
 organization (servers) noted in the certificate.
 
-When {product-name} Server is installed, the self-signed certificate is
-automatically installed and can be used for testing {product-name}
-Server. You should install the commercial certificate when {product-name}
-Server is used in your production environment.
+When {product-name} is installed, the self-signed certificate is automatically installed and can be used for testing {product-name}.
+You should install the commercial certificate when {product-name} is used in your production environment.
 
 [IMPORTANT]
 ZCO users in a self-signed environment will encounter warnings about
