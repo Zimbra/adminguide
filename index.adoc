@@ -98,7 +98,10 @@ include::monitoring.adoc[]
 
 <<<
 
+ifndef::z9[]
+
 include::backuprestore.adoc[]
+endif::z9[]
 
 <<<
 

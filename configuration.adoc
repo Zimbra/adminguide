@@ -1915,6 +1915,7 @@ the previous volume.
 A current volume cannot be deleted, and message volumes that have messages
 referencing the volume cannot be deleted.
 
+ifndef::z9[]
 === Implementing Hierarchical Storage Management (*)
 
 [NOTE]
@@ -1981,6 +1982,7 @@ Modifying batch size on a server:
 ----
 zmprov ms `zmhostname` zimbraHsmBatchSize <num>
 ----
+endif::z9[]
 
 == Email Retention Management
 
