@@ -5,6 +5,7 @@ include::settings.adoc[]
 {product-release-date}
 {product-short} {product-edition-commercial} V {product-version}, 
 revised {localdate}
+
 :leveloffset: +1
 
 include::mobilesync_warning.adoc[]
