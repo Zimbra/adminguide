@@ -98,6 +98,21 @@ The Docs Server component must also be able to directly communicate with the mas
 === Docs Nodes
 Download the `zimbra-docs tgz` standalone installer, extract it and as the _root_ user execute the `install.sh` script contained in the package.
 
+To obtain the information required for the initial Docs Server setup, run the following command on any mailbox server:
+
+```
+zimbra@mbx1:~$ zmlocalconfig -s ldap_master_url zimbra_ldap_user zimbra_ldap_userdn zimbra_ldap_password
+```
+
+This will return the info you need in the following format:
+
+```
+ldap_master_url = ldap://ldap01.cfd6a9e5.test.domain.com:389
+zimbra_ldap_user = zimbra
+zimbra_ldap_userdn = uid=zimbra,cn=admins,cn=zimbra
+zimbra_ldap_password = Deyked4ofMarj
+```
+
 The script will install the Zimbra Docs package and then ask the information about the master ldap, url, username and password, which will
 be used to add a new server in the LDAP with just the 'docs' service installed/enabled. Every Docs Server will be visible by every node, and will
 read the LDAP in order to write the configuration in `/opt/zimbra/conf/docs/loolwsd.xml`.
