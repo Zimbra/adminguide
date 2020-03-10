@@ -12,7 +12,7 @@ clients are used, users might not have these features available.
 
 ifdef::z9[]
 [IMPORTANT]
-Some features mentioned in the following sections may not be currently available for the {modern}. 
+Some features mentioned in the following sections may not be currently available for the {modern-client}. 
 endif::z9[]
 
 == Messaging and Collaboration Applications
@@ -226,7 +226,7 @@ When enabled, users can use the offline mode to access their data without
 network connectivity when using the Zimbra Web Client.
 See also <<offline_mode,Offline Mode>>.
 [NOTE]
-Currently, this setting has no impact on {modern}.
+Currently, this setting has no impact on the {modern-client}.
 endif::z9[]
 
 See *_COS_ > Features -> General Features* container in the Admin Console.
@@ -624,7 +624,7 @@ that users can select to customize their user experience.  To develop
 themes, see <<Color and Logo Management>>.
 
 ifdef::z9[]
-Themes are currently not supported for {modern}.
+Themes are currently not supported for the {modern-client}.
 endif::z9[]
 
 The following theme usage options can be configured either from COS or
@@ -770,7 +770,7 @@ Settings.  You can select from four options.
 
 ifdef::z9[]
 [IMPORTANT]
-Currently, these settings have no impact on the {modern}.
+Currently, these settings have no impact on the {modern-client}.
 endif::z9[]
 
 .Attachment Viewing Features
@@ -819,7 +819,7 @@ folder, delete, and tag for all those selected items.
 
 ifdef::z9[]
 [NOTE]
-Checkboxes are enabled by default on {modern}.
+Checkboxes are enabled by default on the {modern-client}.
 endif::z9[]
 
 === Preferences Import/Export

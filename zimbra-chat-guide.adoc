@@ -53,8 +53,7 @@ work properly. The Chat Zimlet is designed and built to work only
 with the Zimbra Chat Extension.
 
 [[zimlet]]
-Zimlet
-++++++
+===== Zimlet
 
 The Chat Zimlet is the client component of Chat. It runs on
 the Zimbra Web Client and is managed like any other Zimlet. It is fully
@@ -82,8 +81,7 @@ options, see <<sect:confkeys>>).
 * Get desktop notifications for any incoming message.
 
 [[extension]]
-Extension
-+++++++++
+===== Extension
 
 The Zimbra Chat Extension is the core of Zimbra Chat. It is a complete
 chat server that manages the events between connected clients.
@@ -521,8 +519,7 @@ Logs
 ^^^^
 
 [[sect:mailboxlog]]
-mailbox.log
-+++++++++++
+===== mailbox.log
 
 Mailbox log is a standard Log4j log. Here are some sample rows of
 a `mailbox.log`:
@@ -551,8 +548,7 @@ ModifyPropertiesRequest elapsed=4::
   The content of the log row.
 
 [[sect:zmmailboxdout]]
-zmmailboxd.out
-++++++++++++++
+===== zmmailboxd.out
 
 Mailbox log is a standard Log4j log. Here are some sample rows of
 a `zmmailboxd.out`:

@@ -10,7 +10,7 @@ Zimbra uses real-time communications services such as voice, telephony and prese
 
 ifdef::z9[]
 [IMPORTANT]
-Voice Service is not available for the {modern}.
+Voice Service is not available for the {modern-client}.
 endif::z9[]
 
 You enable the voice service from the administration console. Users use the voice service feature from the Voice tab in the ZWC.

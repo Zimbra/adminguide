@@ -1691,7 +1691,7 @@ Currently, there are two different methods for providing the S/MIME feature
 
 ifdef::z9[]
 [IMPORTANT]
-Currently, {modern} does not support the S/MIME feature.
+Currently,the {modern-client} does not support the S/MIME feature.
 endif::z9[]
 
 === Setting up for using the S/MIME feature using the client based solution

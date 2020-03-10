@@ -237,7 +237,7 @@ functions that are no longer available upon license expiration:
 * Zimbra Connector for Outlook
 * S/MIME
 ifdef::z9[]
-* {modern}
+* {modern-client}
 endif::z9[]
 
 If you maximize your licensed user limit, you are no longer able to
