@@ -114,7 +114,7 @@ zimbra_ldap_password = Deyked4ofMarj
 ```
 
 The script will install the Zimbra Docs package and then ask for information about the master LDAP, URL, username, and password, all needed to add a new server in the LDAP with just the 'docs' service installed/enabled.
-Every Docs Server will be visible to every node, and will read the LDAP to write the configuration in `/opt/zimbra/conf/docs/loolwsd.xml`.
+Every Docs Server will be visible by every node, and will read the LDAP to write the configuration in `/opt/zimbra/conf/docs/loolwsd.xml`.
 
 After completing the setup, you need no other configuration.
 
@@ -152,7 +152,7 @@ Before uninstalling the software, the node must be removed from LDAP either from
 
 `zdocs remove-local-server`
 
-or via the zmprov command from any Zimbra node
+or via the `zmprov` command from any Zimbra node
 
 `zmprov deleteServer {servername}`
 
