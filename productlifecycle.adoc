@@ -4,6 +4,8 @@
 
 This chapter provides information about the Product Life Cycle stages of Zimbra components.
 
+ifndef::z9[]
+
 == Component Deprecation Statements
 
 
@@ -41,3 +43,45 @@ Installations that have not yet migrated to new Network Edition NG Modules or ZS
 |No longer supported, with End of Technical Guidance set for 1 July 2022.
 
 |=======================================================================
+
+endif::z9[]
+
+ifdef::z9[]
+== Component Deprecation Statements
+
+
+[cols="40,60",options="header",grid="rows"]
+|=======================================================================
+|Component |Deprecation Statement
+
+|IMAPD
+|Removed
+
+|ZCS Migration Wizard for Exchange
+|This tool is supported only for PST file import, with End of Technical Guidance set for 31 December 2020.
+We recommend https://zimbra.audriga.com[Audriga's self-service migration solution] as a preferred alternative for all account migrations.
+
+|ZCS Migration Wizard for Domino
+|Removed
+
+|ZCS Account Migration
+|Removed
+
+|Enterprise modules
+|Zimbra Classic HSM, Classic Backup, and Classic Mobile have been removed.
+
+|Zimbra Desktop
+|Removed
+
+|Zimbra Touch Client
+|Removed
+
+|Zimbra Mobile Client
+|Removed
+
+|HTML Client
+|Removed
+
+|=======================================================================
+
+endif::z9[]

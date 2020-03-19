@@ -8,7 +8,7 @@ ifeval::["{product-version}" == "8.8.9"]
 New for {product-name} {product-version},
 endif::[]
 //
-Zimbra Docs is based on a heavily customized LibreOffice online (LOOL) package that allows collaborative editing of documents, spreadsheets and presentations straight from the Zimbra WebClient.
+Zimbra Docs is based on a customized LibreOffice online (LOOL) package that allows collaborative editing of documents, spreadsheets and presentations from within the Zimbra WebClient.
 
 == Components
 
@@ -148,7 +148,7 @@ The standalone installer is released under the MPLv2 license while the extension
 
 == Removal
 
-Before uninstalling the software, the node must be removed from LDAP either from the docs node via command
+Before uninstalling the software, the node must be removed from LDAP either from the docs node via the command:
 
 `zdocs remove-local-server`
 
@@ -158,8 +158,8 @@ or via the `zmprov` command from any Zimbra node
 
 == Commands
 
-=== Zimbra Docs Server CLI - zdocs
-On a Docs server, the `zdocs` (`/usr/local/bin/zdocs` as root) command can generate the config for LOOL (it’s already on cron), add/remove the docs server from LDAP, test configuration and manage the service.
+=== Zimbra Docs Server CLI - `zdocs`
+On a Docs server, the `zdocs` (`/usr/local/bin/zdocs` as `root`) command can generate the config for LOOL (it’s already on cron), add/remove the docs server from LDAP, test configuration and manage the service.
 
 .`zdocs` command
 [source,bash]
@@ -173,9 +173,9 @@ Manage Zimbra Docs service.
 
 Available commands:
   genkey                Generate a private key needed for authentication between docs and mailbox servers.
-  write-local-server    Add or update in LDAP the necessary server entry for this server in order to be reachable from other servers.
+  write-local-server    Add or update in ldap the necessary server entry for this server in order to be reachable from other servers.
   remove-local-server   Remove local server entry in LDAP.
-  generate-config       Populate the config template with ldap values and write a new configuration file.
+  generate-config       Populate the config template with LDAP values and write a new configuration file.
   ldap-write-config     Write new configuration about the ldap access needed to generate the docs configuration file.
   ldap-test             Check the ldap connection.
   start                 Start the service.

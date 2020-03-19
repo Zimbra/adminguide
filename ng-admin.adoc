@@ -2,8 +2,7 @@
 = Admin NG
 
 [[delegated-admin-provisioning]]
-Delegated Admin Provisioning
-----------------------------
+== Delegated Admin Provisioning
 
 [[what-is-delegated-admin-provisioning]]
 What is Delegated Admin Provisioning?
@@ -168,8 +167,7 @@ John no longer administers domain example.com
 ....
 
 [[quota-management]]
-Quota Management
-----------------
+== Quota Management
 
 [[what-is-quota-management]]
 What is Quota Management?
@@ -255,8 +253,7 @@ restriction, will be allowed to assign any mailbox quota to the user up
 to the limit allowed by the Domain Quota.
 
 [[domain-limits]]
-Domain Limits
--------------
+== Domain Limits
 
 [[what-is-domain-limit-management-a.k.a.-domain-settings]]
 What is Domain Limit Management (a.k.a. `Domain Settings`)?
@@ -361,8 +358,7 @@ domain(M)    String
 ....
 
 [[zimbra-administration-as-a-delegated-admin]]
-Zimbra Administration as a Delegated Admin
-------------------------------------------
+== Zimbra Administration as a Delegated Admin
 
 [[accessing-the-zimbra-administration-console-as-a-delegated-admin]]
 Accessing the Zimbra Administration Console as a Delegated Admin
@@ -442,8 +438,7 @@ informations.
 * `[username]`: Log Out from the Zimbra Administration Console.
 
 [[delegated-admin-log-browsing]]
-Delegated Admin Log Browsing
-----------------------------
+== Delegated Admin Log Browsing
 
 [[what-is-delegated-admin-log-browsing]]
 What is Delegated Admin Log Browsing?
@@ -502,8 +497,7 @@ command.
 * `DeleteDistributionList`: All distribution lists deletions.
 
 [[reports-and-informations]]
-Reports and Information
------------------------
+== Reports and Information
 
 [[admin-ng-monthly-reports]]
 Admin NG Monthly Reports
@@ -745,8 +739,7 @@ mark it as a partial. Any previous `.X` files will have their extension
 number increased by 1.
 
 [[configuration-reset]]
-Configuration Reset
--------------------
+== Configuration Reset
 
 [[what-is-the-admin-ng-configuration-reset]]
 What is the Admin NG Configuration Reset?

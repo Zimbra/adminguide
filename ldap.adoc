@@ -98,14 +98,14 @@ You cannot modify the Zimbra schema.
 
 |Accounts |
 Represents an account on the Zimbra mailbox server that can be logged into.
-Account entries are either administrators or user accounts.  The object
-class name is *zimbraAccount*.  This object class extends the
-*zimbraMailRecipient* object class.  All accounts have the following
-properties: A name in the format of user@example.domain A unique ID that
-never changes and is never reused A set of attributes, some of which are
-user-modifiable (preferences) and others that are only configurable by
-administrators All user accounts are associated with a domain, so a domain
-must be created before creating any accounts.  |zimbraAccount
+Account entries are either administrators or user accounts.
+The object class name is *zimbraAccount*.
+This object class extends the *zimbraMailRecipient* object class. +
+All accounts have the following properties:
+
+* A name in the format of user@example.domain A unique ID that never changes and is never reused.
+* A set of attributes, some of which are user-modifiable (preferences) and others that are only configurable by administrators.
+* All user accounts are associated with a domain, so a domain must be created before creating any accounts. |zimbraAccount
 
 |Class of Service (COS) |
 Defines the default attributes an account has and what features are allowed
@@ -314,14 +314,9 @@ public class SampleExtensionCustomAuth implements ZimbraExtension {
 
 ==== How Custom Authentication Works
 
-When an authentication request comes in, if the domain is specified to use
-custom auth, the authenticating framework invokes the authenticate method
-on the `ZimbraCustomAuth` instance passed as the handler parameter to
-`ZimbraCustomAuth.register()`.
+When an authentication request comes in and the domain is specified to use custom authentication, the authenticating framework invokes the authenticate method on the `ZimbraCustomAuth` instance passed as the handler parameter to `ZimbraCustomAuth.register()`.
 
-The account object for the principal to be authenticated and the clear-text
-password entered by the user are passed to
-`ZimbraCustomAuth.authenticate()`.
+The account object for the principal to be authenticated and the clear-text password entered by the user are passed to `ZimbraCustomAuth.authenticate()`.
 
 All attributes of the account can be retrieved from the account object.
 
@@ -419,7 +414,7 @@ can run the GAL Configuration Wizard from the Administration Console.
 Additions, changes and deletions to the GAL attributes are made through the
 Zimbra Administration Console or from the `zmprov` commands.
 
-Users can modify attributes for their account in the directory when users
+Users can modify attributes for their account in the directory. When users
 change their options from the Zimbra Web Client, they also modify the
 attributes when they change their preferences.
 

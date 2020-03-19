@@ -96,8 +96,7 @@ API to communicate with the Zimbra Open Drive Extension. Zimbra Open Drive provi
 app for each of the services supported.
 
 [[nextcloudowncloud]]
-Nextcloud/ownCloud
-++++++++++++++++++
+===== Nextcloud/ownCloud
 
 The Nextcloud/ownCloud app is a specific application for Nextcloud and
 ownCloud. It provides transparent authentication in ownCloud and
@@ -137,8 +136,7 @@ Install zimbra-drive [Y] Yes
 ....
 
 [[zimbra-already-installed]]
-Zimbra Already Installed
-++++++++++++++++++++++++
+===== Zimbra Already Installed
 
 The Zimbra installation adds the Zimbra repositories to apt sources
 list, so Zimbra Open Drive can be installed through the following command:
@@ -172,8 +170,7 @@ The cloud services currently supported are Nextcloud and ownCloud with
 the archive `zimbradrive.tar.gz`.
 
 [[subsec:NextcloudownCloudInstallation]]
-Nextcloud/ownCloud
-++++++++++++++++++
+===== Nextcloud/ownCloud
 
 
 Nextcloud and ownCloud require the same following installation steps. +
@@ -247,8 +244,7 @@ Cloud App Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 [[NextcloudownCloudInstallation]]
-Nextcloud/ownCloud
-++++++++++++++++++
+===== Nextcloud/ownCloud
 
 
 When everything is correctly configured, the Zimbra end user creates a
@@ -361,8 +357,7 @@ Remove Cloud App
 ^^^^^^^^^^^^^^^^
 
 [[NextcloudownCloudUninstallation]]
-Nextcloud/ownCloud
-++++++++++++++++++
+===== Nextcloud/ownCloud
 
 The removal of the Nextcloud/ownCloud App has two steps:
 clean up and app uninstall.
@@ -466,8 +461,7 @@ installation. Any modification to the installed Zimbra packages may lead
 to a fail during the Zimbra upgrade.
 
 [[extension-1]]
-Extension
-+++++++++
+===== Extension
 
 The files `zimbradrive-extension.jar` and `zal.jar` must be copied in the
 right place; then a mailbox restart is required to load the extension.
@@ -493,8 +487,7 @@ Initialized extension Zimbra Abstraction Layer for: zimbradrive
 ....
 
 [[zimlet-1]]
-Zimlet
-++++++
+===== Zimlet
 
 Deploy the Zimbra Open Drive Zimlet with the following command:
 
@@ -620,8 +613,7 @@ This section helps the administrator to collect useful system
 information that is required to escalate an issue to Zimbra Support.
 
 [[gatheringinfo-zversion]]
-Zimbra Version
-++++++++++++++
+===== Zimbra Version
 
 To see the version of Zimbra, type this command:
 
@@ -632,8 +624,7 @@ zmcontrol -v
 ....
 
 [[gatheringinfo-listzimlets]]
-List of Deployed Zimlets
-++++++++++++++++++++++++
+===== List of Deployed Zimlets
 
 To see the list of deployed Zimlets, type this command:
 
@@ -644,8 +635,7 @@ zmzimletctl listZimlets
 ....
 
 [[gatheringinfo-userzimlets]]
-List of Zimlets Enabled for the User
-++++++++++++++++++++++++++++++++++++
+===== List of Zimlets Enabled for the User
 
 To see the list of Zimlets enabled for a user, type this command:
 
@@ -656,8 +646,7 @@ zmprov getAccount user@domain.tld zimbraZimletAvailableZimlets
 ....
 
 [[gatheringinfo-userzimlets-pref]]
-List of Zimlet User Preferences
-+++++++++++++++++++++++++++++++
+===== List of Zimlet User Preferences
 
 To see the list of preferences for the Zimlets enabled for a user,
 type this command:
@@ -669,8 +658,7 @@ zmprov getAccount user@domain.tld zimbraZimletUserProperties
 ....
 
 [[gatheringinfo-extension]]
-Extension and Zimlet Versions
-+++++++++++++++++++++++++++++
+===== Extension and Zimlet Versions
 
 To see the version of the extension and the Zimlet, type this command:
 

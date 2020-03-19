@@ -8,6 +8,11 @@ Zimbra uses real-time communications services such as voice, telephony and prese
 
 *Note:* UC system administrators are responsible for configuring the UC server based on that UC server’s documentation.
 
+ifdef::z9[]
+[IMPORTANT]
+Voice Service is not available for the {modern-client}.
+endif::z9[]
+
 You enable the voice service from the administration console. Users use the voice service feature from the Voice tab in the ZWC.
 
 When users sign into the voice service from their ZWC account, they are actually logging into a UC server. After the initial user set-up, the voice service is seamless and requires no additional account configuration.

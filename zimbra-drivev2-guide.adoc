@@ -1,8 +1,8 @@
-= Zimbra Drive
-
+:zdrivev2-name: Zimbra Drive
+= {zdrivev2-name}
 
 == Introduction
-Zimbra Drive v2 is a new Zimbra component that provides both a fully fledged file storage system integrated with the Zimbra WebClient and a replacement to the old "Briefcase" component.
+{zdrivev2-name} is an optional Zimbra component that provides both a fully-fledged file storage system integrated with the Zimbra WebClient, and a replacement for the old "Briefcase" component.
 
 == Features
 === Frontend
@@ -22,12 +22,13 @@ Zimbra Drive v2 is a new Zimbra component that provides both a fully fledged fil
 * Option to store files on dedicated Zimbra volumes
 * `zxsuite drive` CLI
 
-== Differences between Briefcase and Drive
-Zimbra Drive v2 does not follow the usual mailbox-driven behaviors when it comes to file storage, navigation, sharing, and item deletion. See each feature’s dedicated paragraph for a complete explanation of the differences and of the features themselves.
+== Differences between Briefcase and {zdrivev2-name}
+{zdrivev2-name} does not follow the usual mailbox-driven behaviors when it comes to file storage, navigation, sharing, and item deletion.
+See each feature’s dedicated paragraph for a complete explanation of the differences and of the features themselves.
 
-== Drive V2 UI
+== {zdrivev2-name} UI
 
-image::drive_ui.png[Zimbra Drive V2 UI]
+image::drive_ui.png[{zdrivev2-name} UI]
 
 . Quick Access navigation panel;
 . Folder navigation panel;
@@ -39,18 +40,19 @@ image::drive_ui.png[Zimbra Drive V2 UI]
 == Feature Description
 
 === Upload and Download
-To upload a file to Drive v2, either click on the "Upload" button above the file list or drag and drop any number of files from your computer to the main Drive window.
+To upload a file to {zdrivev2-name}, either click on the "Upload" button above the file list or drag and drop any number of files from your computer to the main {zdrivev2-name} window.
 
 image::drive_upload.png[Upload a file]
 
-To download a file from Drive v2, right-click on it and select "Download":
+To download a file from {zdrivev2-name}, right-click on it and select "Download":
 
 image::drive_download.png[Download a file]
 
-Any file and folder in Drive v2 can be renamed by right-clicking on it and selecting the "Rename" option in the context menu.
+Any file and folder in {zdrivev2-name} can be renamed by right-clicking on it and selecting the "Rename" option in the context menu.
 
 === Navigation
-Briefcase items are part of the mailbox’s folder and item hierarchy, while Drive v2 has its own internal folder structure and navigation. Navigating through Drive v2 folders is done through the Navigation Bar on top of the UI instead of through a tree view and folders are visible in the main section of the UI above files.
+Briefcase items are part of the mailbox’s folder and item hierarchy, while {zdrivev2-name} has its own internal folder structure and navigation.
+Navigating through {zdrivev2-name} folders is done through the Navigation Bar on top of the UI instead of through a tree view and folders are visible in the main section of the UI above files.
 
 image::drive_navigation.png[Navigate through folders and files]
 
@@ -62,12 +64,12 @@ On top of the standard folder-based navigation, a "Quick Access" menu is availab
 • "Marked for deletion" – items marked for deletion
 
 === Folder Creation
-To create a folder in Drive v2, click on the "New" button above the file list and select "Folder":
+To create a folder in {zdrivev2-name}, click on the "New" button above the file list and select "Folder":
 
 image::drive_newfolder.png[Create a new folder]
 
 === File and Folder naming
-The following characters cannot be used in Drive folders and files:
+The following characters cannot be used in {zdrivev2-name} folders and files:
 
 * Slash - `/`
 * Backslash - `\`
@@ -78,7 +80,7 @@ The following characters cannot be used in Drive folders and files:
 * Percent sign - `%`
 
 === Sharing
-Being separated from the mailbox’s item hierarchy, Drive v2 files and folders can be shared independently.
+Being separated from the mailbox’s item hierarchy, {zdrivev2-name} files and folders can be shared independently.
 Sharing permissions can be chosen among 3 options: "View", "Edit" and "Edit and Share" – the latter two options include the "View" right by default.
 
 To share a file or a folder, right-click on it and select "Edit Shares". After entering the email address of the destination user and selecting the sharing permissions, click the (+) button to add the share to the list:
@@ -89,10 +91,10 @@ To edit or delete a share, simply click on the dropdown permission selector to c
 
 image::drive_editshare.png[Edit an existing share]
 
-In Drive v2 sharing rights are only "positive", so it’s not possible to share an item with a lower permission than its parent, e.g. if a folder is shared with "Edit" permissions it’s not possible to share one of its items with "View" rights with the same person.
+In {zdrivev2-name}, sharing rights are only "additive", so it’s not possible to share an item with a lower permission than its parent, e.g. if a folder is shared with "Edit" permissions it’s not possible to share one of its items with "View" rights with the same person.
 
 === Item Deletion
-When deleted, Drive v2 items are not put into the Trash like every other item type in Zimbra, as such items are marked for deletion instead.
+When deleted, {zdrivev2-name} items are not put into the Trash like every other item type in Zimbra, as such items are marked for deletion instead.
 To mark a file or a folder for deletion, right-click on it and select "Mark for Deletion":
 
 image::drive_deletefile.png[Mark an item for deletion]
@@ -108,7 +110,7 @@ Items marked for deletion cannot be accessed, so should a user try to do so a po
 === InfoBox
 The InfoBox is a collapsible element that contains all information and controls for the selected file or folder, as well as a preview of the file itself if in a compatible format (pictures, PDFs and more).
 
-To display the Infobox, click on the "(i)" button on the top-right of the Drive v2 UI:
+To display the Infobox, click on the "(i)" button on the top-right of the {zdrivev2-name} UI:
 
 image::drive_infobutton.png[Open the InfoBox]
 
@@ -127,14 +129,16 @@ Top-to-bottom, the InfoBox contains:
 
 == Technical information
 === File Storage
-While Briefcase files are stored as mail-like items within the mailbox’s folder tree, Drive v2 features a detached folder hierarchy based on nodes: thus, Drive v2 folders do not appear as mailbox folders (e.g. in the output of `zmmailbox getAllFolders`). Drive v2 metadata are stored in a dedicated HSQL Database while all files (including previous file versions and file previews) are stored in a dedicated folder within a volume’s root. File naming is now hash-based instead of id-based to achieve native deduplication, compression rules follow the volume’s settings
+While Briefcase files are stored as mail-like items within the mailbox’s folder tree, {zdrivev2-name} features a detached folder hierarchy based on nodes: thus, {zdrivev2-name} folders do not appear as mailbox folders (e.g. in the output of `zmmailbox getAllFolders`).
+{zdrivev2-name} metadata are stored in a dedicated HSQL Database while all files (including previous file versions and file previews) are stored in a dedicated folder within a volume’s root.
+File naming is now hash-based instead of id-based to achieve native deduplication, compression rules follow the volume’s settings
 
 e.g.
 Filesystem path for a briefcase file: /opt/zimbra/store/0/[mID]/msg/0/[itemid]-[revision].msg
-Filesystem path for a Drive v2 file: /opt/zimbra/store/drive/[hash]-[revision].[extension]
+Filesystem path for a {zdrivev2-name} file: /opt/zimbra/store/drive/[hash]-[revision].[extension]
 
 === Volumes
-As of this release, Drive v2 files are stored in the Current Primary volume as any other item.
+As of this release, {zdrivev2-name} files are stored in the Current Primary volume as any other item.
 
 Integration with Zimbra Docs
 If the Zimbra Docs zimlet is correctly installed, dedicated document options will appear in the "New" button above the file list:
@@ -143,30 +147,30 @@ image::drive_docsintegration.png[Create documents with Zimbra Docs]
 
 When right-clicking on a compatible file, an "Open with Docs" option will also appear:
 
-image::drive_openwithdocs.png[Open files stored in Drive with Docs]
+image::drive_openwithdocs.png[Open files stored in {zdrivev2-name} with Zimbra Docs]
 
 Furthermore, Zimbra Docs will also allow for previews of compatible document formats to be displayed in the InfoBox.
 
 === URLs and Ports
-To build URLs and links (e.g. for External Shares) Zimbra Drive uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.
+To build URLs and links (e.g. for External Shares) {zdrivev2-name} uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.
 
 Should any of the two not be set up, the system will always fall back to the `zimbraServiceHostname` and `zimbraMailPort` or `zimbraMailSSLPort` server-level properties.
 
-== Zimbra Drive Backup and HSM
+== {zdrivev2-name} Backup and HSM
 === Backup NG
-Drive V2 files are included in Backup NG, and both the RealTime Scanner and the SmartScan are aware of those and no additional actions must be taken in order to ensure the files' safety.
+{zdrivev2-name} files are included in Backup NG, and both the RealTime Scanner and the SmartScan are aware of those and no additional actions must be taken in order to ensure the files' safety.
 
-The Restore on New Account and External Restore modes will also restore Drive V2 files, while other restore modes such as the Undelete Restore do not operate on such files.
+The Restore on New Account and External Restore modes will also restore {zdrivev2-name} files, while other restore modes such as the Undelete Restore do not operate on such files.
 
 === HSM NG
-Drive V2 can store its data on a different volume than the default Current Primary one, and HSM policies can move Drive V2 files onto a different volume than the Current Secondary one, thus effectively allowing independent storage management for Drive V2 files.
+{zdrivev2-name} can store its data on a different volume than the default Current Primary one, and HSM policies can move {zdrivev2-name} files onto a different volume than the Current Secondary one, thus effectively allowing independent storage management for {zdrivev2-name} files.
 
-When an HSM policy is applied, Drive V2 files will be handled under the "document" item type.
+When an HSM policy is applied, {zdrivev2-name} files will be handled under the "document" item type.
 
 This setting is applied at the server level so that different mailbox servers can use different volumes.
 
-=== Setting the Drive Primary volume
-To set the Drive Primary volume, first find out the volumeID of the target volume by running `zxsuite hsm getAllVolumes`.
+=== Setting the {zdrivev2-name} Primary volume
+To set the {zdrivev2-name} Primary volume, first find out the volumeID of the target volume by running `zxsuite hsm getAllVolumes`.
 
 Once the volumeID has been identified, simply run
 
@@ -176,15 +180,33 @@ zxsuite config server set `zmhostname` attribute driveStore value [volumeID]
 
 (where [volumeID] is the ID found with the previous command)
 
-=== Setting the Drive Secondary volume
-To set the Drive Secondary volume, find out the volumeID of the target volume as described in the previous paragraph and then run the following command
+=== Setting the {zdrivev2-name} Secondary volume
+To set the {zdrivev2-name} Secondary volume, find out the volumeID of the target volume as described in the previous paragraph and then run the following command
 
 ```
 zxsuite config server set `zmhostname` attribute driveSecondaryStore value [volumeID]
 ```
 
-== Briefcase Migration
-Briefcase data can be migrated to Drive v2 using the dedicated `doImport` CLI command:
+== {zdrivev2-name} Installation and Migration
+
+=== Manually Install or Upgrade `zimbra-drive-ng`
+
+. As the `root` user, instruct `yum` to install the package.
+
+ yum install zimbra-drive-ng
+
+. Switch to user `zimbra`.
+
+ su - zimbra
+
+. Restart the Zimbra mailbox service for changes to take effect.
+
+ zmmailboxdctl restart
+ zxsuite config server set `zmhostname` attribute driveAllowOnUnsupportedZimbraVersion value true
+ zxsuite drive doStartService module
+
+=== Briefcase Migration
+Briefcase data can be migrated to {zdrivev2-name} using the dedicated `doImport` CLI command:
 
 ```
 zimbra@test:~$ zxsuite drive doImport

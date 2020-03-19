@@ -2,8 +2,9 @@ include::settings.adoc[]
 
 :document-title: Administrator Guide
 = {product-name} {document-title}
-v{product-version}, {product-release-date}
-revised {localdate}
+{product-release-date}
+{product-short} {product-edition-commercial} V {product-version}, revised {localdate}
+
 :leveloffset: +1
 
 include::mobilesync_warning.adoc[]
@@ -98,7 +99,10 @@ include::monitoring.adoc[]
 
 <<<
 
+ifndef::z9[]
+
 include::backuprestore.adoc[]
+endif::z9[]
 
 <<<
 
@@ -160,9 +164,11 @@ include::zimbra-connect-guide.adoc[]
 
 <<<
 
+ifndef::z9[]
 :leveloffset: -1
 include::zimbra-drive-open-guide.adoc[]
 :leveloffset: +1
+endif::z9[]
 
 <<<
 
