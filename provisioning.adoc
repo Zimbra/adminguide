@@ -522,7 +522,7 @@ Guidelines are provided in
 <<eager_mode_configuration,Eager Mode Configuration>>.
 
 | Lazy |
-If a user logs into ZWC the first time through one of the authentication
+If a user logs into the {web-client} the first time through one of the authentication
 mechanisms supported for auto provisioning, and if the user does not exist
 in the {product-abbrev} directory, a new account is automatically created in {product-abbrev} for
 this user.
