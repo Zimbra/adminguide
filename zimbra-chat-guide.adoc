@@ -19,7 +19,7 @@ composed of a Zimlet and a Zimbra extension.
 
 The Zimbra extension exposes an XMPP client so users can chat from
 a standard XMPP client instead of using the Zimlet
-through the Zimbra Web Client. Users can use both methods simultaneously.
+through the {product-short} {web-client}. Users can use both methods simultaneously.
 
 [[general-architecture]]
 General Architecture
@@ -36,7 +36,7 @@ that each session has exactly all of the events as any other
 session of the user.
 
 Sessions are not limited by type (XMPP or Chat Zimlet). A user can
-use both the Zimbra Web Client and an XMPP client at the same time,
+use both the {product-short} {web-client} and an XMPP client at the same time,
 without worrying about interferences between the sessions.
 
 [[components]]
@@ -56,16 +56,16 @@ with the Zimbra Chat Extension.
 ===== Zimlet
 
 The Chat Zimlet is the client component of Chat. It runs on
-the Zimbra Web Client and is managed like any other Zimlet. It is fully
-integrated in the Zimbra Web Client and uses the same graphics
+the {product-short} {web-client} and is managed like any other Zimlet. It is fully
+integrated in the {product-short} {web-client} and uses the same graphics
 libraries. The Zimlet can work only with the Chat Extension because the Zimlet
 and Extension use a specific protocol to send and receive events. The
 Chat Zimlet is supported on all browsers and versions
-supported for the Zimbra Web Client.
+supported for the {product-short} {web-client}.
 
 Features:
 
-* Zimbra Web Client integration.
+* {product-short} {web-client} integration.
 * Manage the buddy list. Users can add, edit and remove buddies from the
 buddy list.
 * Open each `chat room' in a separate panel.
@@ -143,13 +143,13 @@ Chat Zimlet Error
 ^^^^^^^^^^^^^^^^^
 
 To locate errors in the source code of the Chat Zimlet, enable developer
-mode on the Zimbra Web Client by modifying the URL of the
+mode on the {product-short} {web-client} by modifying the URL of the
 Zimbra installation, appending `?dev=1` into the browser URL. Adding the
 `dev=1` parameter to the URL forces Zimbra to load the entire Web
 Client with all not minified sources, included the Zimlets. A longer
 load time should be expected.
 
-During the loading of the Zimbra Web Client, open the browser developer
+During the loading of the {product-short} {web-client}, open the browser developer
 tools.
 
 In the browser developer tools console you will see logs from the
@@ -186,7 +186,7 @@ Google Chrome Developer Tools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If the user is experiencing unexpected Zimlet behavior in
-the Zimbra Web Client, use Google Chrome Developer Tools
+the {product-short} {web-client}, use Google Chrome Developer Tools
 to figure out the source of the issue.
 
 To open the Google Chrome Developer Tools:
@@ -359,7 +359,7 @@ zmprov modifyAccount user@example.com \
 
 ----------------------------------------------------------------------------------
 
-Then reload the Zimbra Web Client to apply the modifications.
+Then reload the {product-short} {web-client} to apply the modifications.
 
 If the problem persists, report the issue.
 

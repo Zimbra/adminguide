@@ -591,9 +591,7 @@ identify the Active Directory domain name and URL.
 Virtual hosting allows you to host more than one domain name on a
 server. The general domain configuration does not change.
 
-When you create a virtual host, this becomes the default domain for a
-user login. Zimbra Web Client users can log in without having to specify
-the domain name as part of their user name.
+When you create a virtual host, this becomes the default domain for user login; users can log in without having to specify the domain name as part of their user name.
 
 Admin Console: ::
 *Home > 2 Set up Domain > 1 Create Domain... -> Virtual Hosts*
@@ -611,7 +609,7 @@ displayed in this wizard screen.
 
 |=======================================================================
 
-To open the Zimbra Web Client log in page, users enter the virtual host
+To open the {product-short} {web-client} log in page, users enter the virtual host
 name as the URL address. For example, *https://mail.company.com*.
 
 When the Zimbra login screen displays, users enter only their user name
@@ -1689,10 +1687,7 @@ Currently, there are two different methods for providing the S/MIME feature
 . The old client based solution which requires Java 1.6 SE deployed on the client machine
 . The new server based solution which does not require Java on the client machine. The server performs all the cryptographic operations. (Recommended)
 
-ifdef::z9[]
-[IMPORTANT]
-Currently,the {modern-client} does not support the S/MIME feature.
-endif::z9[]
+ifdef::z9[NOTE: {only-in-classic}]
 
 === Setting up for using the S/MIME feature using the client based solution
 
@@ -1830,14 +1825,14 @@ The certificate can be published to all other places mentioned in previous S/MIM
 * The supported public certificate file extensions separated by commas
 * Contains the list of supported formats for the `userCertificate` LDAP attribute
 * Default values: `cer`, `crt`, `der`, `spc`, `p7b`, `p7r`, `sst`, `sto`, `pem`
-* Zimbra web client retrieves the supported file formats or extensions for uploading public certificate from the server
+* {product-short} {web-client} retrieves the supported file formats or extensions for uploading public certificate from the server
 
 . `zimbraSmimeUserCertificateExtensions`
 
 * The supported public certificate file extensions separated by commas
 * Contains the list of supported formats for the userSmimeCertificate LDAP attribute
 * Default values: `p12`, `pfx`
-* Zimbra web client retrieves the supported file formats or extensions for uploading public certificate from the server
+* {product-short} {web-client} retrieves the supported file formats or extensions for uploading public certificate from the server
 
 ==== Process for Adding the CA certificate to the mailbox truststore for S/MIME
 

@@ -68,7 +68,7 @@ performs anti-virus and anti-spam filtering and hands off the mail
 messages to the {product-name} server via LMTP.
 
 Postfix also plays a role in transferring outbound messages. Messages
-composed from the Zimbra Web Client are sent by the Zimbra server
+composed from the {product-short} {web-client} are sent by the Zimbra server
 through Postfix, including messages sent to other users on the same
 server.
 
@@ -179,7 +179,7 @@ Updates are obtained via HTTP from the ClamAV website.
 ==== Scanning Attachments in Outgoing Mail
 
 You can enable real-time scanning of attachments in outgoing emails sent
-using the Zimbra Web Client. If enabled, when an attachment is added to
+using the {product-short} {web-client}. If enabled, when an attachment is added to
 an email, it is scanned using ClamAV prior to sending the message. If
 ClamAV detects a virus, it will block attaching the file to the message.
 By default, scanning is configured for a single node installation.

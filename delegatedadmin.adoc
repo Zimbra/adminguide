@@ -412,11 +412,11 @@ When domain administrators log onto the Administration Console, only the
 functions they are authorized to manage are displayed on the console's
 Navigation pane.
 
-==== Create Link from Zimbra Web Client Account to Admin Console
+==== Create Link from {product-short} {web-client} Account to Admin Console
 
 For domain administrators, all tasks are performed from the Administration
 Console. To facilitate easy log in, when a delegated administrator account
-is created, their ZWC account can have a link to the Administration
+is created, their {web-app} account can have a link to the Administration
 Console.
 
 The link is created from the `zmprov` CLI

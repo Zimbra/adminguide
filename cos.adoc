@@ -31,7 +31,7 @@ ifndef::z9[]
 endif::z9[]
 
 ifdef::z9[]
-* Web Client Versions (Modern and Classic).
+* Web App Versions ({modern-client} and {web-client}).
 endif::z9[]
 
 * Web Services and Desktop Clients (EWS, MAPI and more).
@@ -54,7 +54,7 @@ If a domain does not have a COS defined, and you do not specify a COS, the origi
 Some COS settings can be overridden either by global settings or by user settings.
 For example:
 
-* Whether outgoing messages are saved to *Sent* can be changed from the Zimbra Web Client in the user's preferences.
+* Whether outgoing messages are saved to *Sent* can be changed from the {product-short} {web-client} in the user's preferences.
 
 * Attachment blocking set as a global setting can override the COS setting.
 
@@ -70,7 +70,7 @@ From there, you can select or deselect the features you do not want included in 
 Changes made at the account level override the rules in the COS assigned to the account.
 
 You can define the initial preferences for saving and viewing messages, in the *Preferences* page.
-You can also select a specific locale for the ZWC view.
+You can also select a specific locale for the {web-app} view.
 If a locale is not specified, the browser locale is the default.
 
 For a description of the features and preferences, see <<Customizing Accounts>>.
@@ -212,7 +212,7 @@ You can configure settings to require users to create strong passwords and chang
 
 === Directing Users to Your Change Password Page
 
-If your ZWC authentication is configured as external auth, you can configure {product-name} to direct users to *your password change page* when users change their passwords.
+If authentication is configured as external auth, you can configure {product-name} to direct users to *your password change page* when users change their passwords.
 You can either set this URL as a global setting or a per domain setting.
 
 Set the `zimbraChangePasswordURL` attribute to the URL of your password change page.
@@ -358,8 +358,8 @@ Administrators can open the Administration Console without having to log on agai
 The default is 12 hours.
 
 |Auth token lifetime |
-Sets a browser cookie that contains the ZWC auth token.
-User can open ZWC without having to log on again until the auth token expires.
+Sets a browser cookie that contains the {web-app} auth token.
+User can open the {web-app} without having to log on again until the auth token expires.
 The default is 2 days.
 When it expires, the login page is displayed and the user must log on to continue.
 
@@ -378,7 +378,7 @@ This forces the current session of the account to expire immediately.
 The defaultExternal COS is assigned to external virtual accounts that are created when external users accepts a {product-abbrev} provisioned users'
 invitation to share their calendar or briefcase items.
 
-This account is not provisioned on the server, but the external user can sign in to ZWC, create a display name and set a password to view the shared items.
+This account is not provisioned on the server, but the external user can sign in to the {web-app}, create a display name and set a password to view the shared items.
 The only folders available are for the content they have access to.
 
 The defaultExternal COS is configured with the following general features:

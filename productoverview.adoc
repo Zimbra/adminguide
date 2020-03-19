@@ -179,7 +179,7 @@ syslog aggregation and reporting. If you do not install Logger, the *server
 statistics* section of the Administration Console will not display.
 
 |Zimbra Spell (Optional) |
-Aspell is the open source spell checker used on the Zimbra Web Client. When
+Aspell is the open source spell checker used on the {product-short} {web-client}. When
 Zimbra-Spell is installed, the Zimbra-Apache package is also installed.
 
 |Zimbra Apache |
@@ -356,7 +356,7 @@ Contains control scripts and Perl modules
 Contains Zimlet `zip` files that are installed with Zimbra
 
 |zimlets-deployed/ |
-Contains Zimlets that are available with the Zimbra Web Client
+Contains Zimlets that are available with the {product-short} {web-client}
 
 |zimlets-network/ |
 Contains Zimlet `zip` files for features that are installed with the network
@@ -367,13 +367,13 @@ mailboxd statistics, saved as `.csv` files
 
 |=======================================================================
 
-== Zimbra Web Clients
+== {product-short} {web-client}s
 
 Zimbra offers various web client types that users can log into for use
 of Zimbra features. The web clients provide mail, calendar, address
 book, and task functions.
 
-.Zimbra Web Clients
+.{product-short} {web-client}s
 [cols="25,75",options="header",grid="rows"]
 |=======================================================================
 |Client Type |Description
@@ -393,12 +393,9 @@ Provides mobile access to Zimbra when using the Standard Web Client
 version.
 |=======================================================================
 
-When users sign in, they view the advanced Zimbra Web Client, unless they
-use the menu on the login screen to change to the standard version.  If ZWC
-detects the screen resolution to be 800x600, users are automatically
-redirected to the standard Zimbra Web Client. Users can still choose the
-advanced ZWC but see a warning message suggesting the use of the standard
-ZWC for better screen view.
+When users sign in, they view the advanced {product-short} {web-client}, unless they use the menu on the login screen to change to the standard version.
+If the {web-client} detects the screen resolution to be 800x600, users are automatically redirected to the standard {product-short} {web-client}.
+Users can still choose the advanced {web-client} but see a warning message suggesting the use of the standard {web-client} for better screen view.
 endif::z9[]
 
 ifdef::z9[]
@@ -407,14 +404,15 @@ Uses modern technologies, UI design, and offers same user experience across devi
 
 |{web-client} |
 Includes Ajax capability and offers a full set of web collaboration features.
+Supports desktop web browsers only; does not provide a user experience adapted to smaller screens, touch capabilities, or gestures.
 |=======================================================================
 
-Users may select the Web Client before they sign in, from the 'Version' drop-down on the login page.
-The admin can set the Default Web Client to either {web-client} or the {modern-client}, for a COS.
+Users may select the Web App before they sign in, from the 'Version' drop-down on the login page.
+The admin can set the Default Web App to either {web-client} or the {modern-client}, for a COS.
 Users can override this Default:
 
-* In the {modern-client}, users can go to *Settings->General* to change the value of default Web Client they login to
-* In the {web-client}, users can go to *Preferences->General->Sign in* to change the value of default Web Client they login to
+* In the {modern-client}, users can go to *Settings->General* to change the value of default Web App they login to
+* In the {web-client}, users can go to *Preferences->General->Sign in* to change the value of default Web App they login to
 
 It is recommended that admins set the Default to the {modern-client}.
 endif::z9[]
@@ -446,11 +444,11 @@ Authoring and Versioning (CardDAV) clients.
 == Offline Mode
 
 Zimbra Offline Mode allows access to data -- without network connectivity --
-when using the Zimbra Web Client (ZWC).
+when using the {product-short} {web-client}.
 
 For example, if there is no server connectivity or if server connectivity
-is lost, ZWC automatically transitions to "`offline mode`".  When server
-connectivity is restored, ZWC automatically reverts to "`online mode`".
+is lost, the {web-app} automatically transitions to "`offline mode`".  When server
+connectivity is restored, the {web-app} automatically reverts to "`online mode`".
 
 The offline mode uses HTML5, which uses a caching capability that can be
 considered a super set of the normal browser caching.
@@ -546,10 +544,7 @@ Assassin.
 
 |=======================================================================
 
-ifdef::z9[]
-[IMPORTANT]
-Currently, the {modern-client} does not support the S/MIME feature.
-endif::z9[]
+ifdef::z9[NOTE: {only-in-classic}]
 
 === System Logs
 

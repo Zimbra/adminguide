@@ -8,7 +8,7 @@ product, that is noted as well.
 
 [glossary]
 A record::
-    A (Address) records map the hostname to the numeric IP address.  For
+    A (for "Address") records map the hostname to the numeric IP address.  For
     Zimbra, the A record is the IP address for the Zimbra server.
 
 ABQ::
@@ -73,7 +73,7 @@ Conversation::
     view all emails within it.
 
 DHTML::
-    Dynamic HTML.  A technology employed in the Zimbra Web Client.
+    Dynamic HTML.  A technology employed in the {product-short} {web-client}.
 
 DNS::
     Domain Name System is an Internet directory service.  DNS is how domain
@@ -138,17 +138,11 @@ Java::
 
 JavaScript::
     Scripting largely developed by Netscape that can interact with HTML
-    source code.  Technology used in the Zimbra Web Client.
+    source code.  Technology used in the {product-short} {web-client}.
 
 LDAP::
     Lightweight Directory Access Protocol, an industry standard protocol
     used for authentication.
-
-Zimbra administration console::
-    The {product-name} administrator interface.
-
-Zimbra Web Client::
-    The {product-name} end-user interface.
 
 LMTP::
     Local Mail Transfer Protocol, used for transferring messages from
@@ -219,6 +213,12 @@ RBH::
     be blocked, because the servers are either known to be spammers, or are
     unsecured and exploited by spammers.
 
+ifdef::z9[]
+Responsive (web app)::
+    This approach to design ensures that the application displays and functions well on a variety of devices and window or screen sizes.
+    The {modern-client} is a Responsive Web App, facilitating a consistent user experience on any screen.
+endif::z9[]
+
 Redo Logs::
     Detailed transaction log for the {product-name} server, used for replay and
     replication.
@@ -258,7 +258,7 @@ SSL::
     Secure Sockets Layer.
 
 Tags::
-    A Zimbra Web Client feature.  Users can define tags and apply them to
+    A {product-short} {web-client} feature.  Users can define tags and apply them to
     mail messages for searching.
 
 TCO::
@@ -282,3 +282,9 @@ Whitelist::
 
 XML::
     eXtended Markup Language.
+
+Zimbra administration console::
+    The {product-name} administrator interface.
+
+Zimbra Web Client::
+    Refers to any of the end-user interfaces provided over the Web as part of a Zimbra server.

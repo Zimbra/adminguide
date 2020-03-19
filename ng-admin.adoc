@@ -467,7 +467,7 @@ below for the available actions.
 ** `Client IP`: Filters the logs to only show operations performed from
 a determined IP address.
 ** `Show Logins`: Select this checkbox to also show when the Domain
-Admins log into the Zimbra Web Client.
+Admins log into the {product-short} {web-client}.
 ** `Outcome`: Filters the logs to either show all operations, successful
 operations or failed operations.
 ** `Start` and `End`: Limits the logs shown to a specific timespan
@@ -486,7 +486,7 @@ menu of the `Action` filter.
 All of these operations are important to keep track of your admin's
 actions and to troubleshoot issues.
 
-* `Auth`: All ZWC authentications.
+* `Auth`: All authentications.
 * `DelegateAuth`: All Delegated Authentications, either through the
 `View Mail` button or through the `-z` option of the _zmmailbox_
 command.
