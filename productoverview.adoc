@@ -367,13 +367,12 @@ mailboxd statistics, saved as `.csv` files
 
 |=======================================================================
 
-== {product-short} {web-client}s
+== {product-short} {web-app-term}s
 
-Zimbra offers various web client types that users can log into for use
-of Zimbra features. The web clients provide mail, calendar, address
-book, and task functions.
+Zimbra offers multiple {web-app-term} types for the use of Zimbra features.
+The {web-app-term}s provide mail, calendar, address book, and task functions.
 
-.{product-short} {web-client}s
+.{product-short} {web-app-term}s
 [cols="25,75",options="header",grid="rows"]
 |=======================================================================
 |Client Type |Description

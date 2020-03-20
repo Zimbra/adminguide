@@ -83,7 +83,7 @@ As the Administrator, you can disable Preferences.
 As a result, the Preferences page will not display in users mailboxes: they therefore cannot modify the default configuration for features that are set up for their accounts.
 
 ifdef::z9[]
-[IMPORTANT]
+[NOTE]
 A user can change their Preferences in the {modern-client} under Settings.
 Disabling Preferences does not have any impact on the {modern-client}.
 endif::z9[]

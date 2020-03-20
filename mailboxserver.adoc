@@ -111,7 +111,7 @@ Webapps for the mailstore include:
 User Interface services provide front-end user interface access to the
 mailbox account data and Administration Console, including:
 
-* {product-short} {web-client} = `/opt/zimbra/jetty/webapps/zimbra`
+* {web-app-term}s = `/opt/zimbra/jetty/webapps/zimbra`
 * Zimbra administrator console = `/opt/zimbra/jetty/webapps/zimbraAdmin`
 * Zimlets = `/opt/zimbra/jetty/webapps/zimlet`
 

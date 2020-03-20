@@ -23,6 +23,7 @@
 
 ifndef::z9[]
 :web-client: Web Client
+:web-app-term: Web Client
 :only-in-classic:
 endif::z9[]
 
@@ -30,6 +31,7 @@ endif::z9[]
 ifdef::z9[]
 :web-client: Classic Web App
 :modern-client: Modern Web App
+:web-app-term: Web App
 :product-version: 9.0.0
 :product-release-date: March, 2020
 :copyright-year: 2020
