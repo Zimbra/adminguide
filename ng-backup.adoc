@@ -459,7 +459,7 @@ It allows an administrator to restore all items deleted from a mailbox during a 
 
 During an Undelete Restore, the Backup NG engine searches the backup datastore for items flagged as `DELETED` and restores them in a dedicated folder in the selected mailbox.
 
-WARNING: The IMAP `deleted` flag is stripped from restored items so that they are visible for the user in the Zimbra Web Client.
+WARNING: The IMAP `deleted` flag is stripped from restored items so that they are visible for the user in the {product-short} {web-client}.
 
 [[running-an-undelete-restore]]
 === Running an Undelete Restore
@@ -1111,7 +1111,7 @@ There are different possible causes, the most common of which are:
 [[how-can-i-identify-unrestored-items]]
 === How Can I Identify Unrestored Items?
 
-There are two ways to do so: via the CLI to search for the item within the backup/import path or via the Zimbra Web Client to view the items in the source server.
+There are two ways to do so: via the CLI to search for the item within the backup/import path or via the {product-short} {web-client} to view the items in the source server.
 
 [[identifying-unrestorable-items-through-the-cli]]
 ==== Identifying Unrestorable Items through the CLI
@@ -1142,7 +1142,7 @@ To extract the raw data and metadata information of the item whose itemID is _49
 [[identifying-unrestorable-items-through-the-zimbra-webclient]]
 ==== Identifying Unrestorable Items through the Zimbra WebClient
 
-The comma-separated list of unrestored items displayed in the `Operation Complete` notification can serve as a search argument in the Zimbra Web Client to perform an item search.
+The comma-separated list of unrestored items displayed in the `Operation Complete` notification can serve as a search argument in the {product-short} {web-client} to perform an item search.
 
 To do so:
 

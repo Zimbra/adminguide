@@ -172,7 +172,7 @@ Zimbra Connect features can be enabled and disabled via the `zxsuite config` com
 
 == Browser compatibility
 
-{zconnect-name} features are available on all browsers officially supported by the Zimbra Web Client, with some client-side limitations:
+{zconnect-name} features are available on all browsers officially supported by the {product-short} {web-client}, with some client-side limitations:
 
 [cols=",,,,",options="header",]
 |======================================================
@@ -190,7 +190,7 @@ Firefox users must be sure to be running at least version 66 of the browser to b
 
 == UI
 
-The {zconnect-name} UI is developed in PREACT and seamlessly integrated with the Zimbra Web Client.
+The {zconnect-name} UI is developed in PREACT and seamlessly integrated with the {product-short} {web-client}.
 It is composed of two client-side components: the Quick Access Sidebar and the fully-featured Connect Tab.
 
 The Quick Access Sidebar allows for quick Instant Messaging, both for 1-to-1 and group conversations.

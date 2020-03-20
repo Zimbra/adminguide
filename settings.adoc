@@ -23,13 +23,18 @@
 
 ifndef::z9[]
 :web-client: Web Client
+:web-app-term: Web Client
+:only-in-classic:
 endif::z9[]
 
 //Zimbra 9 Documentation (Pass z9 in build argument e.g. asciidoctor -a z9 zimbra-9-install.adoc)
 ifdef::z9[]
-:web-client: Classic Web Client
-:modern-client: Modern Web Client
+:web-client: Classic Web App
+:modern-client: Modern Web App
+:web-app-term: Web App
 :product-version: 9.0.0
 :product-release-date: March, 2020
 :copyright-year: 2020
+// wrap {only-in-classic} in ifdef::z9[] one-liner to provide a standard NOTE, e.g.: ifdef::z9[NOTE: {only-in-classic}]
+:only-in-classic: This feature is supported only in the {web-client}.
 endif::z9[]

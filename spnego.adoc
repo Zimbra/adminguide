@@ -2,24 +2,19 @@
 = Configuring SPNEGO Single Sign-On
 
 The SPNEGO protocol mechanism can be configured on {product-abbrev} for single sign-on
-authentication to the Zimbra Web Client and to the Zimbra Connector for
+authentication to the {product-short} {web-client} and to the Zimbra Connector for
 Outlook (ZCO). For ZCO configuration see
 <<setting_up_single_sign_on_options_for_zco,Setting Up Single Sign-On
 Options for ZCO>>.
 
-From ZWC, when users log on to their Intranet through Active Directory,
-they can enter their ZWC mailbox without having to re-authenticate to
-Zimbra.
+From the {web-app}, when users log on to their Intranet through Active Directory, they can enter their {web-app} mailbox without having to re-authenticate to Zimbra.
 
-The {product-abbrev} server is configured to redirect users attempting to log on to ZWC
-to a URL under SPNEGO protection. The server asks for authentication with
-Kerberos through SPNEGO and users are redirected to their ZWC mailbox. When
-users log out, they are redirected to a logout URL that displays a Launch
-button. When users click *Launch*, they are directed to the ZWC entry page.
+The {product-abbrev} server is configured to redirect users attempting to log on to the {web-app} to a URL under SPNEGO protection.
+The server asks for authentication with Kerberos through SPNEGO and users are redirected to their {web-app} mailbox.
+When users log out, they are redirected to a logout URL that displays a btn:[Launch] button. When users click it, they are directed to the {web-app} login page.
 
 [NOTE]
-When users log on to their ZWC accounts from the Internet, the ZWC log in
-page displays and they must enter their ZWC password to log on.
+When users log on to their {web-app} accounts from the Internet, the {web-app} login page displays and they must enter their {web-app} password to log on.
 
 [IMPORTANT]
 If SPNEGO SSO is enabled on a domain, the browsers must be configured
@@ -255,7 +250,7 @@ global config attribute `zimbraSpnegoAuthRealm`.  Type `zmprov md {domain}
 zimbraAuthKerberos5Realm {kerberosrealm}`
 
 ..  Set up the virtual hosts for the domain. Virtual-hostname-* are
-the hostnames you can browse to for the Zimbra Web Client UI. Type:
+the hostnames you can browse to for the {product-short} {web-client} UI. Type:
 +
 [source,bash]
 ----
@@ -385,14 +380,13 @@ http:// and https://
 . On a Windows computer or an Apple Mac computer, log in to the
 computer as a domain user.
 +
-Your ticket as a domain user will be saved on the computer. The token will
-be picked up by the spnego-aware browser and sent in the Authorization
-header to the Zimbra server.
+Your token as a domain user will be saved on the computer.
+The token will be picked up by the SPNEGO-aware browser and sent to the Zimbra server in the Authorization header.
 
-. Browse to the Zimbra Web Client log on page.  You should be redirected to
-your ZWC inbox without being prompted for user name and password.
+. Browse to the {product-short} {web-client} login page.
+You should be redirected to your inbox without being prompted for your user name and password.
 +
-If spnego auth fails, the user is redirected to an error URL.
+If SPNEGO auth fails, the user is redirected to an error URL.
 
 == Troubleshooting setup
 

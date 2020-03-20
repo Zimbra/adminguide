@@ -982,7 +982,7 @@ at com.zimbra.cs.filter.zimbraMailAdapter.executeActions(zimbraMailAdapter.java:
 `mailbox.log` logs any successful or unsuccessful login attempts from IMAP,
 POP3 or ZWC.  When you are looking for a login error, start by looking for
 "Auth."  This example shows that someone from IP address 10.4.5.6 was
-trying to log in as admin on the Zimbra Web Client, using Firefox in a
+trying to log in as admin on the {product-short} {web-client}, using Firefox in a
 Windows OS.  Permission was denied because it was not an admin account.
 
 .Account Error - Login error
@@ -1015,7 +1015,7 @@ mailbox.log.2007-06-19:2007-06-19 15:33:56,832 FATAL [*ImapServer*-2444] [name=s
 Each email message includes a header that shows the path of an email from
 its origin to destination.  This information is used to trace a message's
 route when there is a problem with the message.  The Zimbra email message
-header can be viewed from the Zimbra Web Client Message view.  Right-click
+header can be viewed from the {product-short} {web-client} Message view.  Right-click
 on a message and select *Show Original*.
 
 

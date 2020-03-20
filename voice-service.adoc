@@ -4,7 +4,7 @@
 
 Unified Communications (UC) is the integration of multiple modes of communication services, allowing users to receive communication from one service, such as voice mail, and respond using another service, such as Click-to-Call.
 
-Zimbra uses real-time communications services such as voice, telephony and presence to inter-operate with non-real-time services such as email and voice mail. The Zimbra Collaboration Voice Service feature includes Visual Voice Mail, Click-to-Call, and Presence (Cisco only). Zimbra Collaboration uses Cisco or Mitel servers, as a third-party voice server, or UC server, to bridge calls between Zimbra Collaboration and the Zimbra Web Client (ZWC).
+Zimbra uses real-time communications services such as voice, telephony and presence to inter-operate with non-real-time services such as email and voice mail. The Zimbra Collaboration Voice Service feature includes Visual Voice Mail, Click-to-Call, and Presence (Cisco only). Zimbra Collaboration uses Cisco or Mitel servers, as a third-party voice server, or UC server, to bridge calls between Zimbra Collaboration and the {product-short} {web-client}.
 
 *Note:* UC system administrators are responsible for configuring the UC server based on that UC server’s documentation.
 
@@ -13,14 +13,14 @@ ifdef::z9[]
 Voice Service is not available for the {modern-client}.
 endif::z9[]
 
-You enable the voice service from the administration console. Users use the voice service feature from the Voice tab in the ZWC.
+You enable the voice service from the administration console. Users use the voice service feature from the Voice tab in the {web-app}.
 
-When users sign into the voice service from their ZWC account, they are actually logging into a UC server. After the initial user set-up, the voice service is seamless and requires no additional account configuration.
+When users sign into the voice service from their {web-app} account, they are actually logging into a UC server. After the initial user set-up, the voice service is seamless and requires no additional account configuration.
 
 Voice service features include:
 
 * *Visual Voice Mail:* From the Voice tab, users can easily view and listen to voice mails and view details such as caller name, time details, and length of message. Users can call back the person that left the message, forward or reply to the message by email, save or delete the message, and select how to be notified of a new voice message. Supported audio formats include WAV and MP3.
-* *Click-to-Call:* The ability to make a phone call from a ZWC account. Users can highlight and click phone number in their email to dial, or select a contact’s phone number from their contact lists. The call is bridged from the registered physical or soft phone the user selects to use to call the recipient. Click-to-Call eliminates the use for a dial pad on a phone.
+* *Click-to-Call:* The ability to make a phone call from a the {web-app} account. Users can highlight and click phone number in their email to dial, or select a contact’s phone number from their contact lists. The call is bridged from the registered physical or soft phone the user selects to use to call the recipient. Click-to-Call eliminates the use for a dial pad on a phone.
 * *Click-to-Chat:* (Cisco clients only) The ability to chat with a contact using the Cisco Jabber client and ZCS. Users must have the recipient’s IM address stored in their contact information. They can then access the recipient’s contact card and click the IM link to initiate a chat session.
 * *Presence:* (Cisco clients only) The ability to display in real time the availability information about users or contacts. When using Cisco Jabber, users can manually set their presence status or it is automatically set for them. For example, when users are on a phone call their presence status is automatically set to “on a call”. Presence status is displayed as available, away, on a call, or do not disturb.
 
@@ -29,7 +29,7 @@ To create voice service, follow the order of configuration as follows:
 
   . Access URLs, as described in Using a Third-Party Unified Communications Server.
   . Create the voice service, as described in Creating the Voice/Chat Service.
-  . Enable the voice service and the voice feature, as described in Enabling the Voice/Chat Service. Enabling the voice feature allows the Voice tab to display in the ZWC.
+  . Enable the voice service and the voice feature, as described in Enabling the Voice/Chat Service. Enabling the voice feature allows the Voice tab to display in the {web-app}.
   . Enable the appropriate Zimlets for the vendor server you are using, as described in Enabling the Voice/Chat Zimlets.
   
 == Voice Service Requirements
@@ -83,7 +83,7 @@ If configuring Presence, you must generate a Presence Session ID.
   . Click *OK*. A presence session ID is generated and displays as the *Presence Session ID*.
   
 == Enabling the Voice/Chat Service
-After you create the voice/chat service for a domain, COS, or user, you must enable the voice/chat service. For COS and User accounts, you also enable the voice feature which displays the Voice tab in the ZWC.  
+After you create the voice/chat service for a domain, COS, or user, you must enable the voice/chat service. For COS and User accounts, you also enable the voice feature which displays the Voice tab in the {web-app}.  
 
 == Enable Voice/Chat Service on a Domain
 For Voice/Chat service on a domain, enable the service on the Domains>General Information page.
@@ -102,7 +102,7 @@ For Voice/Chat service on a COS, you must first enable the voice/chat service an
   . Click the gear icon drop and select *Edit*.
   . On the General Information page, scroll down to *Voice and Chat* section and from the *Voice/Chat Service* drop-down menu select the voice service to enable.
   . In the Navigation pane, click *Features*.
-  . On the Features page, scroll down to *Voice and Chat Features* section and click *Enable Voice Feature*. This displays the Voice tab in the ZWC.
+  . On the Features page, scroll down to *Voice and Chat Features* section and click *Enable Voice Feature*. This displays the Voice tab in the {web-app}.
   . Click *Save*.
 
 == Enable Voice/Chat Service on a User Account
@@ -116,7 +116,7 @@ For Voice/Chat service on a User Account, you must first enable the voice/chat s
   . Enter a *Chat/Voice Username* for the user. This is the user account name in the third-party UC server. If you do not provide a name, the default name is used. For example for email account “user1@domain.com”, the default voice username is “user1”.
   . From the *Voice/Chat Service* menu select the voice service to enable.
   . In the Navigation pane, click *Features*.
-  . On the Features page, scroll down to *Voice and Chat Features* section and click *Enable Voice Feature*. This displays the Voice tab in the ZWC.
+  . On the Features page, scroll down to *Voice and Chat Features* section and click *Enable Voice Feature*. This displays the Voice tab in the {web-app}.
   . Click *Save*.
   
 == Enabling the Voice/Chat Zimlets

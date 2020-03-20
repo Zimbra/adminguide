@@ -47,7 +47,10 @@ PDF output can be generated as well:
 asciidoctor-pdf -a allow-uri-read -D ~/temp/{product-version} -o {doc-filename}-{product-version}.pdf index.adoc
 ----
 
-This assumes you have a "temp" directory to receive the asciidoctor output, and are generating output for version {product-version}... adjust according to your situation.
+*For Zimbra 9* you need to pass a variable to `asciidoctor` or `asciidoctor-pdf`, by including `-a z9`.
+This will control variable substitutions in `settings.adoc` and throughout much of the documentation.
+
+These commands assume you have a "temp" directory to receive the asciidoctor output, and are generating output for version {product-version}... adjust according to your situation.
 Each section of the document is contained in its own file. You may use the `index.adoc` file to generate the entire document.
 
 To accompany the HTML output, the `images/` folder must also be copied to the output destination:

@@ -2,11 +2,13 @@
 = Color and Logo Management
 :toc:
 
-You can change the logo and base colors of the Zimbra Web Client themes
+You can change the logo and base colors of the {product-short} {web-client} themes
 without having to customize individual {product-name} themes.  This
 can be done from the administration console or the CLI.
 
-== Changing Theme Color and Logos on the Zimbra Web Client
+ifdef::z9[NOTE: {only-in-classic}]
+
+== Changing Theme Color and Logos on the {product-short} {web-client}
 
 Base colors for themes, and custom logos can be configured as a global
 setting or as a domain setting.
@@ -34,7 +36,7 @@ preferences selection.
 
 === Customizing Base Theme Colors
 
-The following base colors in Zimbra Web Client themes can be changed:
+The following base colors in {product-short} {web-client} themes can be changed:
 
 * The primary background color displayed in the client.
 +
@@ -49,15 +51,15 @@ a message or an item in the Overview pane.
 * The foreground color is the text color displayed. The default text
 color is black. The text color usually does not need to be changed.
 
-=== Replacing the ZWC Logo
+=== Replacing the {web-app} Logo
 
-You can replace the log with your company’s logo globally or per domain.
+You can replace the logo with your company’s logo globally or per domain.
 
 [NOTE]
 *_License Policy for Logo Replacement_* +
 _The Zimbra Public License does not allow removing the Zimbra logo in
-the Zimbra Web Client. Only Network Edition customers can replace Zimbra
-logos that display in the Zimbra Web Client. Therefore, only customers
+the {product-short} {web-client}. Only Network Edition customers can replace Zimbra
+logos that display in the {product-short} {web-client}. Therefore, only customers
 of the Network Edition should use these instructions. Additional
 information about the license usage can be found at https://www.zimbra.com/license/._
 
@@ -68,10 +70,9 @@ size as specified here or the image might not display correctly.
 These graphic files can be saved on another server or in a directory
 that is not overwritten when {product-name} is upgraded.
 
-* Company logo that displays on the login and splash screens for Zimbra
-Web Client and the {product-name} administration console. The
+* Company logo that displays on the login and splash screens for {product-short} {web-client} and the {product-name} administration console. The
 dimension of the graphic must be exactly 300 x 30.
-* Small company logo in the upper-left of the Zimbra Web Client
+* Small company logo in the upper-left of the {product-short} {web-client}
 application and the administration console. The dimension of the graphic
 must be exactly 170 x 35.
 * Company Web address that links from the company logos.
@@ -87,7 +88,7 @@ changed at this time.
 On the administration console, the Global Settings and the Domains
 settings include a Themes page that can be configured to customize the
 color scheme and to add a company logo and logo URL. You upload your
-company logo to be used on the Zimbra Web Client and administration
+company logo to be used on the {product-short} {web-client} and administration
 console pages.
 
 ==== Changing Base Theme Colors
@@ -168,11 +169,11 @@ The company web address to be linked from the logo.
 
 | Application logo banner URL of the themes |
 The company logo that displays on the login and splash screens for the
-Zimbra Web Client and admin console. the dimension of the graphic must
+{product-short} {web-client} and admin console. the dimension of the graphic must
 be exactly 450x100.
 
 | Application logo banner preview (200x35) |
-The company logo in the upper-left of the Zimbra Web Client application
+The company logo in the upper-left of the {product-short} {web-client} application
 and the administration console. the dimension of the graphics must be
 exactly 120x35.
 
@@ -184,7 +185,7 @@ exactly 120x35.
 
 === Using the CLI to Change Theme Colors and Logo
 
-To change the Zimbra Web Client theme base colors and logos, use the
+To change the {product-short} {web-client} theme base colors and logos, use the
 zmprov command.  The following attributes are configured either as a
 global config setting or as a domain settings.  Color values are
 entered as a six-digit hexadecimal codes.
@@ -255,7 +256,7 @@ the mailbox server process:
 +
   zmmailboxdctl restart
 +
-Reload the web client and {product-name} themes for that domain should
+Reload the {web-client}, and {product-name} themes for that domain should
 now display these colors.
 
 *Adding Your Logos*
@@ -273,11 +274,10 @@ The company Web address that you want linked from the logo.
 
 |zimbraSkinLogoLoginBanner |
 The company logo file name that is displayed on the login and splash
-screens for the ZWC and the {product-name} administration console.
+screens for the {web-app} and the {product-name} administration console.
 
 |zimbraSkinLogoAppBanner |
-The logo graphic file name for the graphic in the upper-left of the
-ZWC application and the administration console.
+The logo graphic file name for the graphic in the upper-left of the {web-app} application and the administration console.
 
 |=======================================================================
 
@@ -302,7 +302,7 @@ To change the logo displayed in the login and splash screens:
 +
  zmprov modifyDomain zimbraSkinLogoLoginBanner /zimbra/loginlogo.png
 +
-To change the logo displayed on the Zimbra Web Client main page:
+To change the logo displayed on the {product-short} {web-client} main page:
 +
  zmprov modifyDomain zimbraSkinLogoAppBanner /zimbra/applogo.png
 +
@@ -311,4 +311,4 @@ To change the logo displayed on the Zimbra Web Client main page:
  zmcontrol restart
 
 [NOTE]
-_Not currently supported:_ Logo modification for the Zimbra Web Client.
+_Not currently supported:_ Logo modification for the {product-short} {web-client}.

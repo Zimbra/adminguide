@@ -3,10 +3,10 @@
 :toc:
 
 Zimlets are a mechanism to integrate {product-abbrev} with different third-party
-applications to enhance the user experience from the Zimbra Web Client.
+applications to enhance the user experience from the {product-short} {web-client}.
 With Zimlets, users can look at information and interact with the
 third-party application from within their email messages. Zimlets can be
-made available from the Zimbra Web Client Overview Pane to users by
+made available from the {product-short} {web-client} Overview Pane to users by
 modifying the Class of Service (COS).
 
 {product-abbrev} includes several predefined Zimlets. You can also create Zimlets or

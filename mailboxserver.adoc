@@ -111,7 +111,7 @@ Webapps for the mailstore include:
 User Interface services provide front-end user interface access to the
 mailbox account data and Administration Console, including:
 
-* Zimbra Web Client = `/opt/zimbra/jetty/webapps/zimbra`
+* {web-app-term}s = `/opt/zimbra/jetty/webapps/zimbra`
 * Zimbra administrator console = `/opt/zimbra/jetty/webapps/zimbraAdmin`
 * Zimlets = `/opt/zimbra/jetty/webapps/zimlet`
 
@@ -137,7 +137,7 @@ The Web Application Server Split benefits include:
 customization process more agile, allowing the roll out of new or
 updated web UI customization without having to restart the mail servers.
 This means zero down time.
-* If you want to customize the Zimbra web client or Zimbra
+* If you want to customize the {product-short} {web-client} or Zimbra
 Administration Console, you can take the web client server offline and
 run customization or maintenance, while not having to take down the mail
 server.
