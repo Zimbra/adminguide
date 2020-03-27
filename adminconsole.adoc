@@ -56,6 +56,12 @@ zmprov sp adminname@domain.com password
 
 === Customizing the Login and Logout Pages
 
+ifdef::z9[]
+====
+This section is applicable only for the {web-client}.
+====
+endif::z9[]
+
 A different login and logout page can be configured either as a global setting or as a domain setting.
 
 To specify a URL to redirect administrators to if their login fails authentication, or if their authentication has expired:

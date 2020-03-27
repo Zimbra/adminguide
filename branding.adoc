@@ -38,11 +38,11 @@ You should also have the following knowledge and skillsets:
 * Familiarity with logos, images, color codes, and other styling elements
 * Familiarity with your organization's branding guidelines
 
-== Creating an Empty Bundle
+=== Creating an Empty Bundle
 We first create an empty folder and its contents locally.
 Once done, we copy the folder to the {product-short} server.
 
-=== Folder Name
+==== Folder Name
 Naming the folder is a crucial first step.
 
 * Keeping the folder name same as the *hostname*, the customizations reflect on _all domains_ and, by extension, all the accounts on those domains.
@@ -84,7 +84,7 @@ zmprov gad
 For this document, we consider `mail.example.com` as the folder name.
 ====
 
-=== Folder contents
+==== Folder contents
 The folder (`mail.example.com` in our case) must have the following hierarchy and contents.
 
 TIP: Use `mkdir` to create new directories and `touch` to create new files.
@@ -127,7 +127,7 @@ mail.example.com
                      └── icon_512x512.png
 ----
 
-== Customize Logos
+=== Customize Logos
 The {product-short}'s {modern-client} uses the primary logo of your organization unless you specify a secondary logo.
 
 . Save the primary logo as `logo.svg`.
@@ -167,7 +167,7 @@ Refer to the below table for the *file name*, *size*, and *destination* of each 
 
 |===
 
-== Customizable Segments
+=== Customizable Segments
 
 Consider the below {product-short}'s {modern-client} screenshot.
 
@@ -191,7 +191,7 @@ Instructions to change them are in the section <<Customize Text & Links>>.
 The colors for items marked *5*, *6*, and *7* are customizable.
 Instructions to change these, and other colors, are in <<Customize Colors & Sizes>>.
 
-== Customize Text & Links
+=== Customize Text & Links
 
 . Copy and paste <<sample-config>> in `mail.example.com/config.json` 
 . To change the title text ( marked *1* in <<customizable-segments>>) edit the value against `"title"` in <<sample-config>>.
@@ -244,11 +244,11 @@ Instructions to change these, and other colors, are in <<Customize Colors & Size
 }
 -----------
 
-== Customize Colors & Sizes
+=== Customize Colors & Sizes
 
 This section handles colors and sizes of fonts, logos, and sidebars -- among other things.
 
-=== Palette.css
+==== Palette.css
 
 This file helps you to create a palette of colors to use throughout the application.
 
@@ -259,7 +259,7 @@ This file helps you to create a palette of colors to use throughout the applicat
 . Click *Copy*.
 . Paste the contents generated in `mail.example.com/palette.css`.
 
-=== Index.css
+==== Index.css
 
 Copy the below segment and paste *as is* in the `mail.example.com/index.css` file.
 Change the values to change various aspects of the {modern-client} as it appears to the user.
@@ -306,7 +306,7 @@ The number against some of the variables refer to the figure <<customizable-segm
 
 TIP: Make all color customizations (overrides) in `index.css` and not in `palette.css` to avoid palette overwrites.
 
-== Customizing the PWA
+=== Customizing the PWA
 
 This section helps customize certain aspects of Progressive Web App (PWA).
 For more information on PWAs, refer https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Introduction#What_is_a_Progressive_Web_App[What is a Progressive Web App].
@@ -429,12 +429,12 @@ For more information on PWAs, refer https://developer.mozilla.org/en-US/docs/Web
 WARNING: Do not change the values of `"orientation"`, `"display"` and `"start_url"`.
 
 
-== Customizing the Login Page
+=== Customizing the Login Page
 This section helps you change the way {product-short} {modern-client} login page appears to users.
 
 Before you begin login (or `ssh`) on the {product-short} server.
 
-=== Changing the Background Image
+==== Changing the Background Image
 
 . Copy a background image to
 +
@@ -453,7 +453,7 @@ Before you begin login (or `ssh`) on the {product-short} server.
 . Locate the entry `LoginScreen`.
 . Replace `new-back-ground-image.png` with the file name of the image you just copied.
 
-=== Changing the Logo
+==== Changing the Logo
 The {modern-client} references the logo it uses from :
 
 ----
@@ -472,7 +472,7 @@ TIP: To keep provisions for reverting to the default logo, rename the above file
 /opt/zimbra/jetty_base/webapps/zimbra/img/
 ----
 
-// === Advanced Customizations
+// ==== Advanced Customizations
 // Editing `login.jsp` can further customize the login page.
 // To change the password recovery screen, edit `PasswordRecovery.jsp`.
 // Edit `TwoFactorSetup.jsp` to change the way 2-factor authentication pages appear.
@@ -483,7 +483,7 @@ TIP: To keep provisions for reverting to the default logo, rename the above file
 
 // Once the upgrade completes, replace the upgraded file with the copies, you have.
 
-== Deployment Instructions
+=== Deployment Instructions
 
 . Navigate to and open the `mail.example.com` folder.
 . Edit `config.json` to change the `version`. Do not use a previously used value.
@@ -498,7 +498,7 @@ IMPORTANT: All instances of `mail.example.com` should be replaced with the folde
 . Copy `mail.example.com` to `{file-path}` on {product-short} server.
 
 [[mailbox-restart]]
-=== Restart {product-short} mailbox server
+==== Restart {product-short} mailbox server
 To apply the changes you have made, restart {product-short}'s mailbox server.
 
 . Login to your {product-short} installation as `root`.
