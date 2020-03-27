@@ -7,12 +7,12 @@
 :product-provider: Zimbra
 :product-version: 8.8.15
 :product-release-date: June 2019
-:copyright-year: 2019
+:copyright-year: 2020
 
 :imagesdir: images/
 :icons: font
 :title-page:
-:title-logo-image: image:zimbra-logo.jpg[]
+:title-logo-image: image:zimbra-logo.svg[]
 :favicon: images/favicon.ico
 :showlinks:
 :source-highlighter: coderay
@@ -29,12 +29,12 @@ endif::z9[]
 
 //Zimbra 9 Documentation (Pass z9 in build argument e.g. asciidoctor -a z9 zimbra-9-install.adoc)
 ifdef::z9[]
+:title-logo-image: image:zimbra-9-logo.svg[]
 :web-client: Classic Web App
 :modern-client: Modern Web App
 :web-app-term: Web App
 :product-version: 9.0.0
 :product-release-date: March, 2020
-:copyright-year: 2020
 // wrap {only-in-classic} in ifdef::z9[] one-liner to provide a standard NOTE, e.g.: ifdef::z9[NOTE: {only-in-classic}]
 :only-in-classic: This feature is supported only in the {web-client}.
 endif::z9[]
