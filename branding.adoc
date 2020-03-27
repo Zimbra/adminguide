@@ -1,0 +1,520 @@
+== Customizing {modern-client}
+
+====
+This section is applicable only for {modern-client}.
+====
+
+In this section, we guide you through customizing {modern-client} and deploying your customization.
+We're going to address customization by overriding dynamic layouts.
+
+IMPORTANT: Review your organization's branding guidelines for icons and colors to use in the {product-short}'s {modern-client}.
+
+=== What can be customized
+As a general rule, you can customize the following within the branding framework:
+
+* Logos
+* Color and border of various widgets such as Buttons, links, and Tabs
+* Text fonts, colors, and sizes
+* The basic appearance of the {modern-client}
+
+=== What cannot be customized
+There are several sections of the {modern-client} user interface that require a significant amount of Javascript coding to change. Customizing these segments is beyond the scope of this document:
+
+* Changing the behavior of something (e.g., a button)
+* Order of application tabs
+* Order of toolbar buttons
+* Adding new toolbar buttons
+* Adding search locations to the Search toolbar
+
+=== Setup
+
+Before we start customizing the {modern-client}, we need to create an empty {modern-client} bundle.
+
+You should also have the following knowledge and skillsets:
+
+* Familiarity with usage of linux terminal and commands
+* Familiarity with basic HTML and CSS concepts and associated terminologies
+* Familiarity with terms like font, font size, and line-height
+* Familiarity with logos, images, color codes, and other styling elements
+* Familiarity with your organization's branding guidelines
+
+== Creating an Empty Bundle
+We first create an empty folder and its contents locally.
+Once done, we copy the folder to the {product-short} server.
+
+=== Folder Name
+Naming the folder is a crucial first step.
+
+* Keeping the folder name same as the *hostname*, the customizations reflect on _all domains_ and, by extension, all the accounts on those domains.
+* If the folder name is the same as the *domain name*, the customizations appear on _all accounts on that domain_.
+
+Finding hostname::
+. Log in using `ssh` to your {product-short} server.
+. Switch to user `zimbra`.
++
+
+----
+su - zimbra
+----
+
+. Run this command to get the hostname.
++
+
+----
+zmhostname
+----
+
+Finding Domain Name::
+. Log in using `ssh` to your {product-short} server.
+. Switch to user `zimbra`.
++
+
+----
+su - zimbra
+----
+
+. Run this command to get the domain name(s).
++
+
+----
+zmprov gad
+----
+
+====
+For this document, we consider `mail.example.com` as the folder name.
+====
+
+=== Folder contents
+The folder (`mail.example.com` in our case) must have the following hierarchy and contents.
+
+TIP: Use `mkdir` to create new directories and `touch` to create new files.
+
+[[folder-structure]]
+.Files and Folder Hierarchy
+----
+mail.example.com
+   ├── config.json
+   ├── index.css
+   ├── palette.css
+   ├── assets
+   │   ├── favicon.ico
+   │   ├── icon.png
+   │   ├── icon.svg
+   │   ├── login-page-background.png
+   │   └── logo.svg
+   └── pwa
+        ├── manifest.json
+        └── icons
+              ├── icon_300x300.svg
+              ├── ios
+              │    ├── icon_16x16.png
+              │    ├── icon_32x32.png
+              │    ├── icon_57x57.png
+              │    ├── icon_72x72.png
+              │    ├── icon_114x114.png
+              │    └── icon_180x180.png
+              └── non-ios
+                     ├── icon_16x16.png
+                     ├── icon_32x32.png
+                     ├── icon_36x36.png
+                     ├── icon_48x48.png
+                     ├── icon_72x72.png
+                     ├── icon_96x96.png
+                     ├── icon_144x144.png
+                     ├── icon_150x150.png
+                     ├── icon_192x192.png
+                     ├── icon_256x256.png
+                     └── icon_512x512.png
+----
+
+== Customize Logos
+The {product-short}'s {modern-client} uses the primary logo of your organization unless you specify a secondary logo.
+
+. Save the primary logo as `logo.svg`.
+. Save the secondary logo as `secondarylogo.svg`.
+
+Along with the logo, you also need your organization's emblem to use it as an icon.
+
+Create multiple icons -- of different sizes -- using this emblem.
+Refer to the below table for the *file name*, *size*, and *destination* of each icon.
+
+[options="header", grid=rows, cols="~,~,~"]
+|===
+
+| Icon File name      | Icon Size (in px) | Destination Folder
+| `favicon.ico`       | 48x48             | `/mail.example.com/assets`
+| `icon.png`          | 512x512           | `/mail.example.com/assets`
+| `icon.svg`          | *NA*              | `/mail.example.com/assets`
+| `logo.svg`          | *NA*              | `/mail.example.com/assets`
+| `secondarylogo.svg` | *NA*              | `/mail.example.com/assets`
+| `icon_16x16.png`    | 16x16x            | `/mail.example.com/pwa/icons/ios`
+| `icon_32x32.png`    | 32x32x            | `/mail.example.com/pwa/icons/ios`
+| `icon_57x57.png`    | 57x57             | `/mail.example.com/pwa/icons/ios`
+| `icon_72x72.png`    | 72x72             | `/mail.example.com/pwa/icons/ios`
+| `icon_114x114.png`  | 114x114           | `/mail.example.com/pwa/icons/ios`
+| `icon_180x180.png`  | 180x180           | `/mail.example.com/pwa/icons/ios`
+| `icon_16x16.png`    | 16x16x            | `/mail.example.com/pwa/icons/non-ios`
+| `icon_32x32.png`    | 32x32x            | `/mail.example.com/pwa/icons/non-ios`
+| `icon_36x36.png`    | 36x36             | `/mail.example.com/pwa/icons/non-ios`
+| `icon_48x48.png`    | 48x48             | `/mail.example.com/pwa/icons/non-ios`
+| `icon_72x72.png`    | 72x72             | `/mail.example.com/pwa/icons/non-ios`
+| `icon_96x96.png`    | 96x96             | `/mail.example.com/pwa/icons/non-ios`
+| `icon_144x144.png`  | 144x144           | `/mail.example.com/pwa/icons/non-ios`
+| `icon_150x150.png`  | 150x150           | `/mail.example.com/pwa/icons/non-ios`
+| `icon_192x192.png`  | 192x192           | `/mail.example.com/pwa/icons/non-ios`
+| `icon_256x256.png`  | 256x256           | `/mail.example.com/pwa/icons/non-ios`
+| `icon_512x512.png`  | 512x512           | `/mail.example.com/pwa/icons/non-ios`
+
+|===
+
+== Customizable Segments
+
+Consider the below {product-short}'s {modern-client} screenshot.
+
+[[customizable-segments]]
+.Customizable components
+image::labeled-ss.svg[]
+
+This labeled screenshot shows the customizable segments of {modern-client}.
+
+. Title
+. Navigation bar containing the links
+. Left-side links on the navigation bar
+. Right-side links on the navigation bar
+. Left Sidebar
+. Right Sidebar
+. Header
+
+The items marked *1*, *2*, *3*, and *4* are text and links.
+Instructions to change them are in the section <<Customize Text & Links>>.
+
+The colors for items marked *5*, *6*, and *7* are customizable.
+Instructions to change these, and other colors, are in <<Customize Colors & Sizes>>.
+
+== Customize Text & Links
+
+. Copy and paste <<sample-config>> in `mail.example.com/config.json` 
+. To change the title text ( marked *1* in <<customizable-segments>>) edit the value against `"title"` in <<sample-config>>.
+. To replace the text *{product-family}* with your organization's name (`"Example"` in this case) throughout the application, change the value against`"clientName"` in <<sample-config>>.
+. To hide and remove the *Forgot Password* link, set `"disableForgotPassword"` as `"true"` in <<sample-config>>.
+. To insert links and hypertext in the navigation bar (*2*) edit `"left"`(*3*) and `"right"`(*4*) under `"nav"` in <<sample-config>>.
+** To remove the navigation bar altogether remove the below snippet:
+
+-----------
+"nav":
+  {
+    .
+    .
+    .
+  }
+-----------
+
+
+[[sample-config]]
+.Sample config.json
+[source,javascript]
+-----------
+{
+    "title": "Example Mail",
+    "version": "1",
+    "clientName": "Example",
+    "userHelpPath": "https://www.example.com/userguide/",
+    "nav": {
+        "left": [
+            {
+                "name": "Example Link 1",
+                "href": "https://www.example.com/1"
+            },
+            {
+                "name": "Example Link 2",
+                "href": "https://www.example.com/2"
+            }
+        ],
+        "right": [
+            {
+                "name": "Example Link 1",
+                "href": "https://www.example.com/1"
+            },
+            {
+                "name": "Example Link 2",
+                "href": "https://www.example.com/2"
+            }
+        ]
+    }
+}
+-----------
+
+== Customize Colors & Sizes
+
+This section handles colors and sizes of fonts, logos, and sidebars -- among other things.
+
+=== Palette.css
+
+This file helps you to create a palette of colors to use throughout the application.
+
+. Navigate to {palette-generator} and enter the https://en.wikipedia.org/wiki/Web_colors[hex code] for *Primary*, *Secondary* and *Tertiary* colors.
+. Specify hex code for colors associated with *Success*, *Informative*, *Warning*, and *Danger* messages.
+. Click *Generate*.
+. A ready styling template with color codes appears.
+. Click *Copy*.
+. Paste the contents generated in `mail.example.com/palette.css`.
+
+=== Index.css
+
+Copy the below segment and paste *as is* in the `mail.example.com/index.css` file.
+Change the values to change various aspects of the {modern-client} as it appears to the user.
+
+[source,css]
+----
+:root {
+     --sidebar-bg-color: var(--gray-lightest);
+     --rightbar-bg-color: var(--gray-lightest);
+     --line-height-base: 1.42857143;
+     --link-color: var(--brand-primary-500);
+     --link-hover-color: var(--brand-primary-800);
+     --link-hover-decoration: underline;
+     --logo-height: 32px;
+     --logo-max-width: 200px;
+     --header-bg: var(--gray-lightest);
+     --header-fg: var(--gray-darker);
+     --external-header-bg: var(--brand-tertiary-700);
+     --external-header-fg: #FFFFFF;
+}
+----
+
+The various variable names used are self-explanatory.
+However, the below table offers a brief description.
+The number against some of the variables refer to the figure <<customizable-segments>>.
+
+.`index.css` options
+[options="header", grid=rows, cols="1,2"]
+|===
+|Parameters                 |Description
+|`--sidebar-bg-color`   (*5*)       | Changes the background color of the pane that lists email and contact folders.
+|`--rightbar-bg-color`  (*6*)       | Change the background color of the right sidebar.
+|`--line-height-base`               | Change the base line-height that changes the line-height everywhere in the application.
+|`--link-color`                     | Change the link color.
+|`--link-hover-color`               | Change the link color on _mouse hover_.
+|`--link-hover-decoration`          | Change the way link behaves (underline, overline, or strikethrough) when _mouse hovers_.
+|`--logo-height`                    | Change the logo height. This value cannot be more than 72px.
+|`--logo-max-width`                 | Change the maximum width of the logo.
+|`--header-bg`          (*7*)       | Change the header background color.
+|`--header-fg`                      | Change header's text color.
+|`--external-header-bg`             | Change the navigation bar's background color.
+|`--external-header-fg`             | Change the navigation bar's text color.
+|===
+
+TIP: Make all color customizations (overrides) in `index.css` and not in `palette.css` to avoid palette overwrites.
+
+== Customizing the PWA
+
+This section helps customize certain aspects of Progressive Web App (PWA).
+For more information on PWAs, refer https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Introduction#What_is_a_Progressive_Web_App[What is a Progressive Web App].
+
+[[sample-manifest]]
+.Sample manifest.json
+[source, json]
+-----------
+{
+    "icons": [
+        {
+            "src": "/clients/mail.example.com/pwa/icons/icon_300x300.svg",
+            "sizes": "300x300",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_150x150.png",
+            "sizes": "150x150",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_48x48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_36x36.png",
+            "sizes": "36x36",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/non-ios/icon_16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/ios/icon_180x180.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/ios/icon_114x114.png",
+            "sizes": "114x114",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/ios/icon_72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/ios/icon_57x57.png",
+            "sizes": "57x57",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/ios/icon_32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "/clients/mail.example.com/pwa/icons/ios/icon_16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        }
+    ],
+    "name": "Example Mail",
+    "short_name": "Example Mail",
+    "orientation": "portrait",
+    "display": "standalone",
+    "start_url": "/",
+    "background_color": "#ffffff",
+    "theme_color": "#e92d28"
+}
+-----------
+
+. Copy and paste <<sample-manifest>> in `mail.example.com/pwa/manifest.json`.
+. Edit all instances of `mail.example.com` to the folder name as decided in the section <<Folder Name>>.
+. Edit `"name"` and `"short_name"` to have the same value as `"title"` from <<sample-config>>.
+** `"name"` represents the name of the web application as it appears to users in list of mobile applications.
+** `"short_name"` represents the name of the web application as it appears to users if there is not enough space to display `"name"`.
+. Set the `"background_color"` to `background-color` in <<Palette.css>>.
+. Set the `"theme_color"` to the same value as *primary* color in <<Palette.css>>.
+
+WARNING: Do not change the values of `"orientation"`, `"display"` and `"start_url"`.
+
+
+== Customizing the Login Page
+This section helps you change the way {product-short} {modern-client} login page appears to users.
+
+Before you begin login (or `ssh`) on the {product-short} server.
+
+=== Changing the Background Image
+
+. Copy a background image to
++
+
+----
+/opt/zimbra/jetty_base/webapps/zimbra/img/
+----
+
+. Open and edit
++
+
+----
+/opt/zimbra/jetty_base/webapps/zimbra/skins/_base/base3/skin.properties
+----
+
+. Locate the entry `LoginScreen`.
+. Replace `new-back-ground-image.png` with the file name of the image you just copied.
+
+=== Changing the Logo
+The {modern-client} references the logo it uses from :
+
+----
+/opt/zimbra/jetty_base/webapps/zimbra/img/new-logo.png
+----
+
+You have to overwrite this file with the logo you prefer to use.
+
+TIP: To keep provisions for reverting to the default logo, rename the above file (add `.old` to the filename).
+
+. Rename your organization's logo that you have as `new-logo.png`.
+. Copy this file to :
++
+
+----
+/opt/zimbra/jetty_base/webapps/zimbra/img/
+----
+
+// === Advanced Customizations
+// Editing `login.jsp` can further customize the login page.
+// To change the password recovery screen, edit `PasswordRecovery.jsp`.
+// Edit `TwoFactorSetup.jsp` to change the way 2-factor authentication pages appear.
+
+// IMPORTANT: To carry out customizations at this level, you need a working knowledge of HTML and CSS
+
+// Unfortunately, the changes you make to `login.jsp`, `PasswordRecovery.jsp`, and `TwoFactorSetup.jsp` may not survive upgrades to your {product-short} installation, as the new version may overwrite the customizations. To ensure the changes survive upgrades, copy the customized files to a different location before installing the upgrade.
+
+// Once the upgrade completes, replace the upgraded file with the copies, you have.
+
+== Deployment Instructions
+
+. Navigate to and open the `mail.example.com` folder.
+. Edit `config.json` to change the `version`. Do not use a previously used value.
+** Enter a unique positive number.
+** Use a new value every time for your customizations to reflect on users' {modern-client}.
+** _Enclose the text in quotes._
+. Save the file.
++
+
+IMPORTANT: All instances of `mail.example.com` should be replaced with the folder name as decided in the section <<Folder Name>>.
+
+. Copy `mail.example.com` to `{file-path}` on {product-short} server.
+
+[[mailbox-restart]]
+=== Restart {product-short} mailbox server
+To apply the changes you have made, restart {product-short}'s mailbox server.
+
+. Login to your {product-short} installation as `root`.
+. Switch to user `zimbra`.
++
+----
+su - zimbra
+----
+
+. Restart {product-short}'s mailbox server.
++
+
+----
+zmmailboxdctl restart
+----
+
+. Refresh {product-short}'s {modern-client} login page to see the changes
+
+NOTE: You might need to clear the cache if the changes do not appear.

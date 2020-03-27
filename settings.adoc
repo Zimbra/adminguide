@@ -30,6 +30,7 @@ endif::z9[]
 //Zimbra 9 Documentation (Pass z9 in build argument e.g. asciidoctor -a z9 zimbra-9-install.adoc)
 ifdef::z9[]
 :title-logo-image: image:zimbra-9-logo.svg[]
+:product-name: Zimbra 9
 :web-client: Classic Web App
 :modern-client: Modern Web App
 :web-app-term: Web App

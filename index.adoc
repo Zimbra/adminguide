@@ -78,6 +78,11 @@ include::cos.adoc[]
 include::customizingaccounts.adoc[]
 
 <<<
+ifdef::z9[]
+include::branding.adoc[]
+
+<<<
+endif::z9[]
 
 include::HAB.adoc[]
 
