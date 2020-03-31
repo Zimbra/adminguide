@@ -78,11 +78,6 @@ include::cos.adoc[]
 include::customizingaccounts.adoc[]
 
 <<<
-ifdef::z9[]
-include::branding.adoc[]
-
-<<<
-endif::z9[]
 
 include::HAB.adoc[]
 
@@ -122,6 +117,11 @@ include::legalrequests.adoc[]
 include::colorandlogo.adoc[]
 
 <<<
+ifdef::z9[]
+include::branding.adoc[]
+
+<<<
+endif::z9[]
 
 include::zimlets.adoc[]
 
