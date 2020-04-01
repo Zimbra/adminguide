@@ -123,11 +123,13 @@ apt-get install zimbra-connect
 Installing the Zimlet removes any Zimbra Chat components from the server automatically.
 
 === Migrating from Zimbra Talk to Zimbra Connect
-While Zimbra Talk and Zimbra Connect can coexist on a server, as their core components and Zimlets are compatible with each other, this is strongly discouraged as the two share the same Database, and to fully use Connect the database content must be migrated from Talk format to Connect format.
+
+Zimbra Talk and Zimbra Connect cannot coexist on a server, as their core components and Zimlets are incompatible with each other.
+To fully use Connect, the database content must be migrated from Talk format to Connect format.
 
 In order to migrate Talk data to Connect, use the `doImportChannels` command:
 
-....
+----
 [zimbra@mailserver ~]$ zxsuite connect doImportChannels
 Syntax:
    zxsuite connect doImportChannels [attr1 value1 [attr2 value2...]]
@@ -139,10 +141,10 @@ NAME                                   TYPE       EXPECTED VALUES
 delete_destination_before_import(O)    Boolean    true|false
 
 (M) == mandatory parameter, (O) == optional parameter
-....
+----
 
 This operation can execute multiple times, but it's a one-way process and cannot be reverted.
-Once users are switched to Connect (by disabling the Talk Zimlet and enabling the Connect Zimlet), it's not possible to move their Connect data back to Talk.
+Once the database content is migrated, uninstall Zimbra Talk and install Zimbra Connect.
 
 == URLs and Ports
 To build URLs and links (e.g., for External Shares) {zconnect-name} uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.
