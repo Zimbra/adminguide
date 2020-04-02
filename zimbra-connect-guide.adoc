@@ -150,7 +150,7 @@ Once the database content is migrated, uninstall Zimbra Talk and install Zimbra 
 === Uninstall Zimbra Talk
 Starting Zimbra 8.8.15 GA, `zimbra-connect` replaces `zimbra-talk` hence it is important to remove `zimbra-talk` before installing `zimbra-connect`.
 
-As root uninstall the package:
+As *root* uninstall the package:
 
 Redhat::
 ----
