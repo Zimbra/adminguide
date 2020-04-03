@@ -70,7 +70,7 @@ calendar entries, and tags from the Administration Console.
 Admin Console: ::
 *Home > Manage > Accounts -> _account_*
 
-Select an _account_, from the *Gear* icon select *View Mail*.  The user's {web-app} account opens in a new browser window.
+Select an _account_, from the *Gear* icon select *View Mail*.  The user's {web-app-term} account opens in a new browser window.
 
 This feature can be used to assist users who are having trouble with
 their mail account as you and the account user can be logged on to the
@@ -144,7 +144,7 @@ to remove the name.
 
 === Management Options for Owners of Distribution Lists
 
-You can add owners to distribution lists and they manage the list from their {web-app} account's Address Book, Distribution List folder. 
+You can add owners to distribution lists and they manage the list from their {web-app-term} account's Address Book, Distribution List folder. 
 Owners of a list can right-click a distribution list and click the *Edit Group* link to edit a list.
 
 Besides adding and deleting members, distribution list properties that

@@ -70,7 +70,7 @@ From there, you can select or deselect the features you do not want included in 
 Changes made at the account level override the rules in the COS assigned to the account.
 
 You can define the initial preferences for saving and viewing messages, in the *Preferences* page.
-You can also select a specific locale for the {web-app} view.
+You can also select a specific locale for the {web-app-term} view.
 If a locale is not specified, the browser locale is the default.
 
 For a description of the features and preferences, see <<Customizing Accounts>>.
@@ -358,8 +358,8 @@ Administrators can open the Administration Console without having to log on agai
 The default is 12 hours.
 
 |Auth token lifetime |
-Sets a browser cookie that contains the {web-app} auth token.
-User can open the {web-app} without having to log on again until the auth token expires.
+Sets a browser cookie that contains the {web-app-term} auth token.
+User can open the {web-app-term} without having to log on again until the auth token expires.
 The default is 2 days.
 When it expires, the login page is displayed and the user must log on to continue.
 
@@ -378,7 +378,7 @@ This forces the current session of the account to expire immediately.
 The defaultExternal COS is assigned to external virtual accounts that are created when external users accepts a {product-abbrev} provisioned users'
 invitation to share their calendar or briefcase items.
 
-This account is not provisioned on the server, but the external user can sign in to the {web-app}, create a display name and set a password to view the shared items.
+This account is not provisioned on the server, but the external user can sign in to the {web-app-term}, create a display name and set a password to view the shared items.
 The only folders available are for the content they have access to.
 
 The defaultExternal COS is configured with the following general features:

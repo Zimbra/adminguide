@@ -30,7 +30,7 @@ manage many of the enabled features as preferences.
 
 By default, users manage their own preferences, but you can
 administratively elect not to allow user modifications to their account
-preferences.  Currently supported {web-app} Email Messaging Features are listed
+preferences.  Currently supported {web-app-term} Email Messaging Features are listed
 and described in <<table_email_features,Email Features>>.
 
 [[table_email_features]]
@@ -81,7 +81,7 @@ See *_COS_ > Features -> Mail Features* container in the Admin Console.
 
 | Message priority |
 When enabled, users can set the priority of the message.  The recipient
-viewing from the {web-app} sees the priority flag if it is high or low.
+viewing from the {web-app-term} sees the priority flag if it is high or low.
 
 See *_COS_ > Features -> Mail Features* container in the Admin Console.
 
@@ -158,14 +158,14 @@ See *_COS_ > Features -> General Options* container in the Admin Console.
 
 |External POP access |
 When enabled, users can retrieve their POP accounts' email messages
-directly from their {web-app} account.  They add the external account address to
+directly from their {web-app-term} account.  They add the external account address to
 their account settings.
 
 See *_COS_ > Features -> Mail Features* container in the Admin Console.
 
 |External IMAP Access|
 When enabled, users can retrieve their IMAP accounts' email messages
-directly from their {web-app} account.  They can add the external account address
+directly from their {web-app-term} account.  They can add the external account address
 to their account settings.
 
 See *_COS_ > Features -> Mail Features* container in the Admin Console.
@@ -277,7 +277,7 @@ page.
 sound, highlight the Mail tab when a message arrives, and flash the
 browser.
 
-* Set the display language for the {web-app}.  If more than one language locale is
+* Set the display language for the {web-app-term}.  If more than one language locale is
 installed on {product-name}, users can select the locale that is
 different from the browser language settings.
 
@@ -527,12 +527,12 @@ For automatic polling, the polling interval can be set up in the COS or Account
 *Advanced* page, *Data Source > CalDAV polling interval* field.
 
 |Enable past due reminders |
-Users log into the {web-app}, the reminder notifications for the last two weeks
+Users log into the {web-app-term}, the reminder notifications for the last two weeks
 pop up for meeting reminders that were not dismissed.  When this is
 disabled, {product-name} silently dismisses the old reminders.
 
 |Enable toaster notification for new calendar events |
-A popup displays in the {web-app} when new calendar events are received.
+A popup displays in the {web-app-term} when new calendar events are received.
 
 |Allow sending cancellation email to organizer |
 
@@ -566,7 +566,7 @@ permission to invite the user.
 
 |Automatically add appointments when invited |
 When enabled, appointments are automatically added to user's default
-calendar and declined appointments display on the {web-app} calendar in a faded
+calendar and declined appointments display on the {web-app-term} calendar in a faded
 view.
 
 [NOTE]
@@ -621,7 +621,7 @@ by individual accounts.
 
 * *Limit users to one theme*
 +
-On the Features page, remove the check mark from *Change UI Themes*.  The {web-app} theme is the theme listed in Current UI theme field on the Themes page.
+On the Features page, remove the check mark from *Change UI Themes*.  The {web-app-term} theme is the theme listed in Current UI theme field on the Themes page.
 
 * *Let users access any of the installed Zimbra themes*
 +
@@ -732,11 +732,11 @@ folder's content.
 
 When internal users share a mail folder, a copy of the shared folder is
 put in the grantee's folder list on the Overview pane.  Users can manage
-their shared folders from their {web-app} Preferences Sharing page.
+their shared folders from their {web-app-term} Preferences Sharing page.
 
 === Configure SMS Notification
 
-The {web-app} *Preferences > Notification* page lets users configure an email
+The {web-app-term} *Preferences > Notification* page lets users configure an email
 address or SMS alert to their mobile device to receive a reminder message
 for a task or a meeting on their calendar.  Notification by SMS is disabled
 by default.
@@ -825,8 +825,8 @@ the feature from the COS or Admin Features page.
 
 === Adding Words to Spell Dictionary
 
-If {web-app} users frequently use words, abbreviations or acronyms that are
-marked as spelling errors during a {web-app} spell check, you can update the COS
+If {web-app-term} users frequently use words, abbreviations or acronyms that are
+marked as spelling errors during a {web-app-term} spell check, you can update the COS
 or domain attribute `zimbraPrefSpellIgnoreWord` with the words that should
 be ignored when spell check is run.
 

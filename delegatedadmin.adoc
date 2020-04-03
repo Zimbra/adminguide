@@ -416,7 +416,7 @@ Navigation pane.
 
 For domain administrators, all tasks are performed from the Administration
 Console. To facilitate easy log in, when a delegated administrator account
-is created, their {web-app} account can have a link to the Administration
+is created, their {web-app-term} account can have a link to the Administration
 Console.
 
 The link is created from the `zmprov` CLI

@@ -7,14 +7,14 @@ Outlook (ZCO). For ZCO configuration see
 <<setting_up_single_sign_on_options_for_zco,Setting Up Single Sign-On
 Options for ZCO>>.
 
-From the {web-app}, when users log on to their Intranet through Active Directory, they can enter their {web-app} mailbox without having to re-authenticate to Zimbra.
+From the {web-app-term}, when users log on to their Intranet through Active Directory, they can enter their {web-app-term} mailbox without having to re-authenticate to Zimbra.
 
-The {product-abbrev} server is configured to redirect users attempting to log on to the {web-app} to a URL under SPNEGO protection.
-The server asks for authentication with Kerberos through SPNEGO and users are redirected to their {web-app} mailbox.
-When users log out, they are redirected to a logout URL that displays a btn:[Launch] button. When users click it, they are directed to the {web-app} login page.
+The {product-abbrev} server is configured to redirect users attempting to log on to the {web-app-term} to a URL under SPNEGO protection.
+The server asks for authentication with Kerberos through SPNEGO and users are redirected to their {web-app-term} mailbox.
+When users log out, they are redirected to a logout URL that displays a btn:[Launch] button. When users click it, they are directed to the {web-app-term} login page.
 
 [NOTE]
-When users log on to their {web-app} accounts from the Internet, the {web-app} login page displays and they must enter their {web-app} password to log on.
+When users log on to their {web-app-term} accounts from the Internet, the {web-app-term} login page displays and they must enter their {web-app-term} password to log on.
 
 [IMPORTANT]
 If SPNEGO SSO is enabled on a domain, the browsers must be configured

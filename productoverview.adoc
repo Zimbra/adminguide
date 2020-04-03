@@ -446,8 +446,8 @@ Zimbra Offline Mode allows access to data -- without network connectivity --
 when using the {product-short} {web-client}.
 
 For example, if there is no server connectivity or if server connectivity
-is lost, the {web-app} automatically transitions to "`offline mode`".  When server
-connectivity is restored, the {web-app} automatically reverts to "`online mode`".
+is lost, the {web-app-term} automatically transitions to "`offline mode`".  When server
+connectivity is restored, the {web-app-term} automatically reverts to "`online mode`".
 
 The offline mode uses HTML5, which uses a caching capability that can be
 considered a super set of the normal browser caching.

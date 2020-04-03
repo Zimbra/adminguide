@@ -42,7 +42,7 @@ Documents in preview and attachments are shown in read-only mode with a simplifi
 
 Its main tasks are:
 
-* Change the btn:[Create] button in the {web-app} to the related Docs feature.
+* Change the btn:[Create] button in the {web-app-term} to the related Docs feature.
 * Change the preview feature to use Docs.
 * Allow the preview of documents.
 
