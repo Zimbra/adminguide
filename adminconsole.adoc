@@ -43,7 +43,7 @@ You can change the password - from either the Administration Console or the CLI 
 From the Administration Console, use the *Change Password* screen to set the new password string, and to define the policy for user password modifications.
 
 Admin Console: ::
-*Home > Manage > Accounts*
+*Home -> Manage -> Accounts*
 
 Double click select _user account_ *or* from the *Gear* icon, select *Change Password* from the popup menu.
 

@@ -38,10 +38,9 @@ An Active Directory service account is created in Domain for each mailstore serv
 . Create an Active Directory service account.
 This is the account used to generate the Kerberos keytab file that is added to the Zimbra server.
 
-.. Go to the Active Directory *Start > Programs > Administrative Tools >
-Active Directory Users and Computers* console.
+.. Go to the Active Directory *Start -> Programs -> Administrative Tools -> Active Directory Users and Computers* console.
 
-.. To create the service account, click the AD Domain name and from the expanded content right-click *Users* and select *New > User*.
+.. To create the service account, click the AD Domain name and from the expanded content right-click *Users* and select *New -> User*.
 Complete the New Object – User dialog.
 +
 * *Full name*: Enter the user display name for the AD service account.
@@ -330,30 +329,30 @@ The warning -- *This might void your warranty*, is now displayed.
 Enter a comma-delimited list of trusted domains or URLs.
 +
 Double-click `network.negotiate-auth.delegation-uris`.
-Enter `\http://,\https://`
+Enter `\http://,https://`
 +
 Double-click `network.negotiate-auth.trusted-uris`.
-Enter `\http://,\https://`
+Enter `\http://,https://`
 +
 _Or, to set specific URLs,_
 +
 Double-click `network.negotiate-auth.delegation-uris`.
 Enter the domain addresses.
-For example, `\http://mail1.example.com,\https://mail2.example.com`
+For example, `\http://mail1.example.com,https://mail2.example.com`
 +
 Double-click `network.negotiate-auth.trusted-uris`.
 Enter the domain addresses.
-For example, `\http://mail1.example.com,\https://mail2.example.com`
+For example, `\http://mail1.example.com,https://mail2.example.com`
 
 . Internet Explorer, Chrome, and Safari for computers running Windows
 
-.. In these browsers, go to *Tools > Internet Options > Security > Local Intranet >Sites*.
+.. In these browsers, go to *Tools -> Internet Options -> Security -> Local Intranet >Sites*.
 On the Sites dialog make sure all items are checked.
 
 ..  Select *Advanced*.
-Add the domain server (hostname) URL, both `\http://` and `\https://`
+Add the domain server (hostname) URL, both `http://` and `https://`
 .. Click *OK* to close the file.
-.. Go to *Tools > Options > Advanced > Security*. Locate and check *Enable Integrated Windows Authentication*.
+.. Go to *Tools -> Options -> Advanced -> Security*. Locate and check *Enable Integrated Windows Authentication*.
 
 .. Click *OK* and close the browser.
 

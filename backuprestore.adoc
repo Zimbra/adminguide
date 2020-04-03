@@ -466,7 +466,7 @@ occurrence of the field's value.
 ****
 
 Admin Console: ::
-*Home > Configure > Global Settings > Backup/Restore*
+*Home -> Configure -> Global Settings -> Backup/Restore*
 
 You can add additional recipient addresses or change the notification email
 address in the Administration Console.
@@ -631,8 +631,8 @@ The auto-grouped backup method is configured either from the
 Administration Console or from the CLI.
 
 Admin Console: ::
-*Home > Configure > Global Settings > Backup/Restore* or +
-*Home > Configure > Servers -> _server_ -> Backup/Restore*
+*Home -> Configure -> Global Settings -> Backup/Restore* or +
+*Home -> Configure -> Servers -> _server_ -> Backup/Restore*
 
 === Configuring Auto-Grouped Backup from the CLI
 

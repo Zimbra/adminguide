@@ -37,7 +37,7 @@ Currently supported {web-app-term} Email Messaging Features are listed and descr
 Enables the email application.
 Enabled by default.
 
-See *_COS_ > Features -> Major Features* container in the Admin Console.
+See *_COS_ -> Features -> Major Features* container in the Admin Console.
 
 |Conversations |
 Messages can be grouped into conversations by a common thread.
@@ -51,39 +51,39 @@ If this feature is enabled, conversation view is the default.
 You can change the default on the COS Preferences page.
 Users can also change the default.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |HTML compose |
 Users can compose email messages with an HTML editor.
 They can specify default font settings as a preference.
 
-See *_COS_ > Preferences -> Composing Mail* container in the Admin Console.
+See *_COS_ -> Preferences -> Composing Mail* container in the Admin Console.
 
 |Draft auto save interval |
 Frequency of saving draft messages.
 The default is every 30 seconds.
 Users cannot change the frequency, but they can turn off the save draft feature.
 
-See *_COS_ > Preferences -> Composing Mail* container in the Admin Console.
+See *_COS_ -> Preferences -> Composing Mail* container in the Admin Console.
 
 | Mail send later |
 When enabled, users can choose *Send Later* to send a message at a later time.
 The user configures the data and time for sending.
 Messages are saved in the Draft folder.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 | Message priority |
 When enabled, users can set the priority of the message.
 The recipient viewing from the {web-app-term} sees the priority flag if it is high or low.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Enable Attachment indexing |
 Attachments are indexed.
 Indexed attachments can be searched.
 
-See *_COS_ > Advanced -> Attachment Settings* container in the Admin Console.
+See *_COS_ -> Advanced -> Attachment Settings* container in the Admin Console.
 
 |Allow the user to specify a forwarding address |
 You can specify a default forwarding address that the user can use.
@@ -92,7 +92,7 @@ Users can change the forwarding address from their account Preferences tab.
 You can also specify forwarding addresses that are hidden from the user.
 A copy of a message sent to the account is immediately forwarded to the designated forwarding address.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Out of office reply |
 
@@ -100,7 +100,7 @@ Users can create an email message that automatically replies to incoming message
 By default a message is sent to each recipient only once every seven days, regardless of how many messages that person sends to the address.
 This setting can be changed in the COS Preferences page, *Out of office cache lifetime* field.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |New mail notification |
 Allows users the option to specify an address to be notified of new mail.
@@ -109,7 +109,7 @@ They can turn this feature on or off and designate an address from their account
 [NOTE]
 See <<custom_new_mail_notification,Customize the notification email>> for an example of changing the email template.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Persona |
 When enabled, users can create additional account names to manage different roles.
@@ -119,7 +119,7 @@ The minimum is 0, and the default is 20 (`zimbraIdentityMaxNumEntries`).
 
 ifdef::z9[NOTE: {only-in-classic}]
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Maximum length of mail signature |
 The maximum number of characters that can be in a signature.
@@ -127,34 +127,34 @@ The default is 1024 characters.
 
 The number of signatures users can create is configured in `zimbraSignatureMaxNumEntries`.
 
-See *_COS_ > Preferences -> Composing Mail* container in the Admin Console.
+See *_COS_ -> Preferences -> Composing Mail* container in the Admin Console.
 
 |Advanced search |
 Allows users to build a complex search by date, domain, status, tags, size, attachment, Zimlets, and folders.
 
-See *_COS_ > Features -> Search Features* container in the Admin Console.
+See *_COS_ -> Features -> Search Features* container in the Admin Console.
 
 |Saved searches |
 Users can save a search that they have previously executed or built.
 
-See *_COS_ > Features -> Search Features* container in the Admin Console.
+See *_COS_ -> Features -> Search Features* container in the Admin Console.
 
 |Initial search preference |
 When enabled, the default search mailbox can be changed.
 
-See *_COS_ > Features -> General Options* container in the Admin Console.
+See *_COS_ -> Features -> General Options* container in the Admin Console.
 
 |External POP access |
 When enabled, users can retrieve their POP accounts' email messages directly from their {product-short} account.
 They add the external account address to their account settings.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |External IMAP Access|
 When enabled, users can retrieve their IMAP accounts' email messages directly from their {product-short} account.
 They can add the external account address to their account settings.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Aliases for this account|
 You can create aliases for the account.
@@ -169,13 +169,13 @@ Spam check on a received message is completed before users' mail filters are run
 Message identified as spam are moved to the junk folder.
 To avoid having mail incorrectly marked as spam, users can create a spam whitelist from the Preferences Mail folder to identify email addresses that should not be marked as spam.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Flagging |
 Users can create flags and assign them to messages, contacts, and files in Briefcase folders.
 ifdef::z9[({only-in-classic})]
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Enable keyboard shortcuts |
 Users can use keyboard shortcuts within their mailbox.
@@ -187,39 +187,39 @@ The shortcut list can be viewed by typing kbd:[Ctrl]-kbd:[Q].
 endif::z9[]
 
 
-See *_COS_ > Preferences -> General Options* container in the Admin Console.
+See *_COS_ -> Preferences -> General Options* container in the Admin Console.
 
 |Global Address List (GAL) access |
 Users can access the company directory to find names for their email messages.
 
-See *_COS_ > Features -> General Features* container in the Admin Console.
+See *_COS_ -> Features -> General Features* container in the Admin Console.
 
 |Autocomplete from GAL |
 When enabled, users enter a few letters in their compose header and names listed in the GAL are displayed ranked by usage.
 See also <<autocomplete_ranks_names,Autocomplete Ranks Names>>.
 
-See *_COS_ > Features -> General Features* container in the Admin Console.
+See *_COS_ -> Features -> General Features* container in the Admin Console.
 
 |Offline support for {web-app-term} |
 When enabled, users can use the offline mode to access their data without network connectivity when using the {product-short} {either-web-client}.
 See also <<offline_mode,Offline Mode>>.
 
-See *_COS_ > Features -> General Features* container in the Admin Console.
+See *_COS_ -> Features -> General Features* container in the Admin Console.
 
 |IMAP access |
 Users can use third party mail applications to access their mailbox using the IMAP protocol.
 
-You can set the polling interval from the COS or Account *Advanced* page, *Data Source > IMAP* polling interval section.
+You can set the polling interval from the COS or Account *Advanced* page, *Data Source -> IMAP* polling interval section.
 The polling interval is not set by default.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |POP3 access |
 
 Users can use third party mail applications to access their mailbox using the POP protocol.
 When they retrieve their POP email messages, the messages and attachments are saved on the Zimbra server.
 
-Users can configure from their *Preferences > Mail* page
+Users can configure from their *Preferences -> Mail* page
 
 * How messages are downloaded.
 
@@ -228,10 +228,10 @@ Junk messages are downloaded to their Inbox.
 
 * How to delete messages from their POP account.
 
-You can set the polling interval from the COS or Account *Advanced* page, *Data Source > POP3* polling interval section.
+You can set the polling interval from the COS or Account *Advanced* page, *Data Source -> POP3* polling interval section.
 The polling interval is not set by default.
 
-See *_COS_ > Features -> Mail Features* container in the Admin Console.
+See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |=======================================================================
 
@@ -293,7 +293,7 @@ The attributes are `zimbraMailWhitelistMaxNumEntries` and `zimbraMailBlacklistMa
 ==== Using Import and Export to Save User's Data
 
 From the *Preferences Import/Export* page in the {web-client}
-ifdef::z9[or under *Accounts > Primary account* in the {modern-client}]
+ifdef::z9[or under *Accounts -> Primary account* in the {modern-client}]
 users may export all of their account data, including mail, contacts, calendar, and tasks.
 By selecting export options, they can export specific items in their account and save the data to their computer.
 
@@ -315,18 +315,18 @@ RSS feeds count against users' account quota.
 The default is to update the RSS data every 12 hours.
 Users can right-click on an RSS feed folder to manually load new feed.
 
-You can change the polling interval from the Administration Console the COS or Account *Advanced* page, *Data Source > RSS polling interval* section.
+You can change the polling interval from the Administration Console the COS or Account *Advanced* page, *Data Source -> RSS polling interval* section.
 
 == Contacts Features
 
-{prod-short} Contacts allows users to create multiple contact lists and add contact names automatically when mail is received or sent.
+{product-short} Contacts allows users to create multiple contact lists and add contact names automatically when mail is received or sent.
 Users can import contacts into their Address Book.
 
 [IMPORTANT]
 --
 To allow users to share their mail folders, address books, and calendars, enable Sharing on the *General Features* container:
 
-*Home > Configure > Class of Service -> _COS_ -> Features -> General Features*
+*Home -> Configure -> Class of Service -> _COS_ -> Features -> General Features*
 --
 
 .Address Book Features
@@ -351,8 +351,8 @@ Users can modify the following Address Book preferences from their account *Pref
 To set default behavior:
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Preferences* +
-*Home > Manage > Accounts -> _account_ -> Preferences*
+*Home -> Configure -> Class of Service -> _COS_ -> Preferences* +
+*Home -> Manage -> Accounts -> _account_ -> Preferences*
 
 * Enable auto adding of contacts to automatically add contacts to their Emailed Contact list when they send an email to a new address.
 
@@ -372,7 +372,7 @@ To allow users to share their calendars, address books, and Briefcase files, ena
 --
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Features -> General Features*
+*Home -> Configure -> Class of Service -> _COS_ -> Features -> General Features*
 
 .Calendar Features
 [cols="1,2a,1",options="header",]
@@ -433,7 +433,7 @@ You can also use this command to notify the organizer and/or all attendees when 
 Remote calendars are updated every 12 hours, by default.
 The frequency can be modified at the Admin Console.
 
-To modify the frequency of calendar updates in the Admin Console go to the desired COS or Account *Advanced* page, *Data Source > Calendar polling interval* field.
+To modify the frequency of calendar updates in the Admin Console go to the desired COS or Account *Advanced* page, *Data Source -> Calendar polling interval* field.
 
 === Disabling Attendee Edits to Appointments
 
@@ -487,7 +487,7 @@ When the default is Private, all incoming calendar invites are marked as private
 Apple iCal can be configured to access users' calendars using the CalDAV protocol.
 When enabled, shared calendars are displayed in users' iCal account's Delegation tab and they can delegate access to their calendars.
 
-For automatic polling, the polling interval can be set up in the COS or Account *Advanced* page, *Data Source > CalDAV polling interval* field.
+For automatic polling, the polling interval can be set up in the COS or Account *Advanced* page, *Data Source -> CalDAV polling interval* field.
 
 |Enable past due reminders |
 Users log into the {either-web-client}, the reminder notifications for the last two weeks pop up for meeting reminders that were not dismissed.
@@ -539,7 +539,7 @@ ifdef::z9[NOTE: This setting is not provided in the {modern-client}.]
 When enabled, declined appointments display on the {web-client} calendar in a faded view.
 
 [NOTE]
-This setting affects the {product} {web-client} only.
+This setting affects the {product-short} {web-client} only.
 Users viewing appointments in the {modern-client}, third-party calendar apps, and mobile devices might not see the declined events.
 
 |Notify of changes made via delegated access|
@@ -575,8 +575,8 @@ ifdef::z9[NOTE: {only-in-classic}]
 To enable or disable the Tasks feature:
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Features* +
-*Home > Manage > Accounts -> _account_ -> Features*
+*Home -> Configure -> Class of Service -> _COS_ -> Features* +
+*Home -> Manage -> Accounts -> _account_ -> Features*
 
 == {product-short} {web-client} User Interface Themes
 
@@ -621,7 +621,7 @@ for parameter descriptions.
 For an existing user account, you can apply 2FA settings from the *Advanced* options.
 
 Admin Console: ::
-*Home > Manage > Accounts*
+*Home -> Manage -> Accounts*
 
 Locate the *Two Factor Authentication* container within the editable configurations for an account:
 
@@ -645,7 +645,7 @@ To apply 2FA to a class of service, use the *Two Factor Authentication*
 container to set parameters.
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Advanced -> Two Factor Authentication*
+*Home -> Configure -> Class of Service -> _COS_ -> Advanced -> Two Factor Authentication*
 
 image::COS_2FAContainer.png[Class of Service Two Factor Authentication]
 
@@ -691,7 +691,7 @@ ifdef::z9[At this time, the {modern-client} supports share management from folde
 
 === Configure SMS Notification
 
-The {web-client} *Preferences > Notification* page lets users configure an email address or SMS alert to their mobile device to receive a reminder message for a task or a meeting on their calendar.
+The {web-client} *Preferences -> Notification* page lets users configure an email address or SMS alert to their mobile device to receive a reminder message for a task or a meeting on their calendar.
 Notification by SMS is disabled by default.
 
 SMS notification can be configured by domain, COS or for individual accounts.
@@ -761,7 +761,7 @@ endif::z9[]
 === Preferences Import/Export
 
 From the *Preferences Import/Export* page in the {web-client}
-ifdef::z9[or under *Accounts > Primary account* in the {modern-client}]
+ifdef::z9[or under *Accounts -> Primary account* in the {modern-client}]
 users may export all of their account data, including mail, contacts, calendar, and tasks.
 By selecting export options, they can export specific items in their account and save the data to their computer.
 

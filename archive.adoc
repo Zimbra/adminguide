@@ -203,7 +203,7 @@ the Administration Console.
 === Enable Archiving
 
 Admin Console: ::
-*Home > Configure > Global Settings > MTA*,
+*Home -> Configure -> Global Settings -> MTA*,
 from *Archiving Configuration* check *Enable archiving*
 
 Restart {product-abbrev} from the command line
@@ -219,7 +219,7 @@ and passwords, turn off spam and virus checks, and hide the archive
 accounts from GAL.
 
 Admin Console: ::
-*Home > Configure > Class of Service*, from the *Gear* icon select *New*
+*Home -> Configure -> Class of Service*, from the *Gear* icon select *New*
 
 . Change *Features* and *Preferences* as required for an Archiving COS.
 
@@ -316,7 +316,7 @@ Accounts with archiving enabled are counted against the number of
 Zimbra licenses purchased for archiving.  Archive mailboxes are listed
 in the Administration Console along with the live accounts. To see
 current license information, go to the Administration Console: +
-*Home > Configure > Global Settings > License*.
+*Home -> Configure -> Global Settings -> License*.
 
 === Creating an archive mailbox and assigning a COS
 
@@ -388,7 +388,7 @@ Navigation pane when the archiving package is added. To set up a cross-mailbox
 search you configure the following information.
 
 Admin Console: ::
-*Home > Tools and Migration > Search Mail*, from the *Gear* icon select *New*
+*Home -> Tools and Migration -> Search Mail*, from the *Gear* icon select *New*
 
 * *Server name*. The server name to be searched.
 

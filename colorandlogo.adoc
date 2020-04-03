@@ -109,7 +109,7 @@ message, right-click, or drop down menu selection.
 
 [NOTE]
 Changes to theme settings require the server theme cache to be flushed.  To
-flush a server, go to *Home > Configure > Servers* to get the list of
+flush a server, go to *Home -> Configure -> Servers* to get the list of
 servers.  Right-click on a server and select *Flush Cache* from the popup
 menu.
 
@@ -117,8 +117,8 @@ Use the *Customize the theme colors* container to set colors for your
 theme categories:
 
 Admin Console: ::
-*Home > Configure > Global Settings > Themes* or +
-*Home > Configure > Domains -> _domain_ -> Themes*
+*Home -> Configure -> Global Settings -> Themes* or +
+*Home -> Configure -> Domains -> _domain_ -> Themes*
 
 1.  Click on the field alongside the theme category to be modified, then
 use the popup color selector to define the color for your selection.
@@ -146,7 +146,7 @@ saved on another server or in a directory that is not overwritten when
 
 [NOTE]
 When you configure the *Customize the logo of the
-themes* section in the *Global Settings > Theme* page, all fields in
+themes* section in the *Global Settings -> Theme* page, all fields in
 this section must be completed to display the graphics correctly.
 
 The Zimlet icon that displays in the Advanced search toolbar and the
@@ -157,8 +157,8 @@ Use the *Customize the logo of the themes* container to a logo to
 accompany the theme:
 
 Admin Console: ::
-*Home > Configure > Global Settings > Themes* or +
-*Home > Configure > Domains -> _domain_ -> Themes*
+*Home -> Configure -> Global Settings -> Themes* or +
+*Home -> Configure -> Domains -> _domain_ -> Themes*
 
 .Logo Settings
 

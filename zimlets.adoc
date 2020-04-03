@@ -60,7 +60,7 @@ another COS directly, the COS displays the Zimlets but they are not
 enabled.
 
 Admin Console: ::
-*Home > Configure > Zimlets*, from the *Gear* icon select *Deploy*
+*Home -> Configure -> Zimlets*, from the *Gear* icon select *Deploy*
 
 // divide definition above from list below
 . Browse to the Zimlet you want to deploy, then click *Deploy*.
@@ -79,7 +79,7 @@ the toggle feature to choose if an installed Zimlet will be made
 available for users to choose from.
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Zimlets*
+*Home -> Configure -> Class of Service -> _COS_ -> Zimlets*
 
 .Zimlet Operational Status Settings.
 [cols="1,4",options="header",]
@@ -100,7 +100,7 @@ All deployed Zimlets will be enabled.
 
 [NOTE]
 Users can enable or disable optional Zimlets from their account’s
-*Preferences > Zimlets* page. If you select a Zimlet as mandatory, it
+*Preferences -> Zimlets* page. If you select a Zimlet as mandatory, it
 cannot be disabled by the user.
 
 === Undeploying a Zimlet
@@ -109,7 +109,7 @@ When a Zimlet is undeployed, it is removed from all COSs and then removed
 from the LDAP.
 
 Admin Console: ::
-*Home > Configure > Zimlets*
+*Home -> Configure -> Zimlets*
 
 . Select a _Zimlet_ to undeploy.
 . From the *Gear* icon menu select *Undeploy*.
@@ -123,7 +123,7 @@ allowed domains are already configured. If you download and deploy other
 Zimlets, you can add additional proxy domain names.
 
 Admin Console: ::
-*Home > Configure > Class of Service*
+*Home -> Configure -> Class of Service*
 
 . Select the _COS_ to edit.
 
@@ -141,7 +141,7 @@ Zimlet. The new Zimlet `zip` file should have the same name as the existing
 Zimlet `zip` file.
 
 Admin Console: ::
-*Home > Configure > Zimlets*, from the *Gear* icon select *Deploy*
+*Home -> Configure -> Zimlets*, from the *Gear* icon select *Deploy*
 
 . Check *Flush Zimlet cache,* so that the upgraded zimlet will be used.
 . Browse to the _Zimlet_ you want to upgrade, then click *Deploy*.

@@ -37,7 +37,7 @@ The following are required for ZCS voice service:
 ** *For Cisco:*
 *** *Cisco Unity Connection (UC) 8.5 and above*. Cisco UC generates the Voice URL used in the voice service configuration.
 *** *Cisco Unified Communications Manager (CUCM) 7.1(3):* Enable Web Dialer service for Click-to-Call functionality. Cisco CUCM generates the Call URL used in the voice service configuration.
-*** *Cisco Unified Presence Server (CUPS) 8.0:* Cisco CUPS requires Presence Web Service to be enabled, and an application user must be created for viewing the presence. This is done in Cisco Communications Manager (CUCM) > User Management. Cisco CUPS generates the Presence URL used in the voice service configuration.
+*** *Cisco Unified Presence Server (CUPS) 8.0:* Cisco CUPS requires Presence Web Service to be enabled, and an application user must be created for viewing the presence. This is done in Cisco Communications Manager (CUCM) -> User Management. Cisco CUPS generates the Presence URL used in the voice service configuration.
 *** *Cisco Jabber client provided to users for UC collaboration.*
 ** *For Mitel:*
 *** *Mitel Unified Communicator Advanced (Mitel UCA) 5.0.23.0 release and above.* Mitel UCA generates the URLs used in the voice service configuration.

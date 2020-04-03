@@ -1038,10 +1038,8 @@ md <example.com> zimbraAutoProvMode MANUAL
 == Managing Resources
 
 A resource is a location or equipment that can be scheduled for a meeting.
-Each meeting room location and other non-location specific resources such
-as AV equipment is set up as a resource account.  The *Manage >
-Resources* section in the Administration Console shows all resources that
-are configured for {product-name}.
+Each meeting room location and other non-location specific resources such as AV equipment is set up as a resource account. 
+The *Manage -> Resources* section in the Administration Console shows all resources that are configured for {product-name}.
 
 User accounts with the Calendar feature can select these resources for
 their meetings.  The resource accounts automatically accept or reject
@@ -1135,7 +1133,7 @@ series to work, both fields must be set to nonzero values.
 ==== Manage Resource Accounts
 
 You can log on to the resource account and set preferences for the
-resource.  The *Resource Accounts Preference > Calendar* can be configured
+resource.  The *Resource Accounts Preference -> Calendar* can be configured
 to let users manage the Resource's Calendar.  You can configure the
 following options to manage the resource.
 

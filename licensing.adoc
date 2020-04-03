@@ -105,7 +105,7 @@ installations have a 10 day grace period from the license issue date before
 requiring activation. Your license can be activated in the Administration Console.
 
 Admin Console: ::
-*Home > Configure > Global Settings > License*, from the *Gear* icon select
+*Home -> Configure -> Global Settings -> License*, from the *Gear* icon select
 *Activate License*
 
 Upgraded {product-name} versions require an immediate activation to
@@ -182,7 +182,7 @@ of accounts that can be created.
 
 Current license information, including the number of accounts purchased,
 the number of accounts used, and the expiration date, can be viewed from
-*Home > Configure > Global Settings > License*.
+*Home -> Configure -> Global Settings -> License*.
 
 == Managing Licenses
 
@@ -193,7 +193,7 @@ License* link on the toolbar activates the license.
 Current license information, including the license ID, the issue date,
 expiration date, number of accounts purchased, and the number of accounts
 used can be viewed from
-*Home > Configure > Global Settings > License*.
+*Home -> Configure -> Global Settings -> License*.
 
 === License Information
 
@@ -207,7 +207,7 @@ license.
 Current license information, including the license ID, the issue date,
 expiration date, number of accounts purchased, and the number of accounts
 used can be viewed from
-*Home > Configure > Global Settings > License*.
+*Home -> Configure -> Global Settings -> License*.
 
 
 When the number of accounts created is equal to the number of accounts
@@ -273,7 +273,7 @@ zmlicense
 ----
 
 Admin Console: ::
-*Home > Configure > Global Settings > License*
+*Home -> Configure -> Global Settings -> License*
 
 Updating a license:
 
@@ -281,7 +281,7 @@ Updating a license:
 Console.
 
 . Log on to the Administration Console, go to
-*Home > Configure > Global Settings > License*, from the *Gear* icon select
+*Home -> Configure -> Global Settings -> License*, from the *Gear* icon select
 *Update License*. The License Installation Wizard opens.
 
 . Browse to select the license file and click *Next*. The license file is

@@ -4,7 +4,7 @@
 == Status of User Accounts
 
 Admin Console: ::
-*Home > Manage > Accounts*
+*Home -> Manage -> Accounts*
 
 The status of an account determines whether a user can log in and receive mail.
 The account status is displayed on the *Accounts* pane of the Administration Console.
@@ -48,7 +48,7 @@ The administrator can remove the locked out status at any time.
 == Deleting an Account
 
 Admin Console: ::
-*Home > Manage > Accounts*
+*Home -> Manage -> Accounts*
 
 You can delete accounts from the Administration Console.
 This removes the account from the server, deletes the messages in the message store, and changes the number of accounts used against your license.
@@ -62,7 +62,7 @@ See also <<backup_and_restore,Backup and Restore>>.
 You can view a selected account’s mailbox content, including all folders, calendar entries, and tags from the Administration Console.
 
 Admin Console: ::
-*Home > Manage > Accounts -> _account_*
+*Home -> Manage -> Accounts -> _account_*
 
 Select an _account_, from the *Gear* icon select *View Mail*.  The user's {product-short} account opens in a new browser window.
 
@@ -142,7 +142,7 @@ Besides adding and deleting members, distribution list properties that owners ca
 Use steps in this section to create a distribution list:
 
 Admin Console: ::
-*Home > Manage > Distribution Lists*
+*Home -> Manage -> Distribution Lists*
 
 . From the *Gear* icon, click *New*.
 
@@ -258,7 +258,7 @@ You can grant rights to a distribution list or to a domain that defines who can 
 When users attempt to send to a distribution list that they are not authorized to use, a message is sent stating that they are not authorized to send messages to the recipient distribution list.
 
 [NOTE]
-The *Milter Server* must be enabled from *Home > Configure > Global Settings > MTA*.
+The *Milter Server* must be enabled from *Home -> Configure -> Global Settings -> MTA*.
 
 Restricting who can send messages to a distribution list to individuals or to a domain:
 
@@ -437,7 +437,7 @@ When you modify a distribution list, the members in the list are changed to refl
 You can create a dynamic distribution list with the admin console or with the CLI, as described in this section.
 
 Admin Console: ::
-*Home > Manage > Distribution Lists*.
+*Home -> Manage -> Distribution Lists*.
 
 . From the *Gear* icon, click *New*.
 

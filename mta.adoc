@@ -144,7 +144,7 @@ To use the Administration Console to configure Relay MTA for external
 delivery:
 
 Admin Console: ::
-*Home > Configure > Global Settings > MTA -> Network*
+*Home -> Configure -> Global Settings -> MTA -> Network*
 
 [IMPORTANT]
 To prevent mail loops, use caution when setting the relay host.
@@ -169,7 +169,7 @@ updates from ClamAV.
 You can change anti-virus settings at the Administration Console.
 
 Admin Console: ::
-*Home > Configure > Global Settings > AS/AV -> Anti-virus Settings*
+*Home -> Configure -> Global Settings -> AS/AV -> Anti-virus Settings*
 
 image::anti_virus_protection.png[Anti-Virus Protection]
 
@@ -242,7 +242,7 @@ You can change the spam percentage settings, and the subject prefix at
 the Administration Console.
 
 Admin Console: ::
-*Home > Configure > Global Settings > AS/AV -> Spam checking Settings*
+*Home -> Configure -> Global Settings -> AS/AV -> Spam checking Settings*
 
 image::spam_assassin.png[Spam Assassin Settings]
 
@@ -349,7 +349,7 @@ To use the Administration Console to set up MTA trusted networks as a
 global setting:
 
 Admin Console: ::
-*Home > Configure > Global Settings > MTA -> Network*
+*Home -> Configure -> Global Settings -> MTA -> Network*
 
 image::mta_network.png[MTA Trusted Networks]
 
@@ -358,7 +358,7 @@ a per server basis, first ensure that MTA trusted networks have been set
 up as global settings.
 
 Admin Console: ::
-*Home > Configure > Servers -> _server_ -> MTA -> Network*
+*Home -> Configure -> Servers -> _server_ -> MTA -> Network*
 
 image::mta_network_2.png[MTA Trusted Networks]
 
@@ -385,7 +385,7 @@ For global configuration, enable the milter server from the
 Administration Console:
 
 Admin Console: ::
-*Home > Configure > Global Settings > MTA -> Milter Server*
+*Home -> Configure -> Global Settings -> MTA -> Milter Server*
 
 image::mta_milter.png[MTA Milter Server]
 
@@ -393,7 +393,7 @@ Use the Administration Console to enable a specific milter server, and
 to set bind addressing for individual servers.
 
 Admin Console: ::
-*Home > Configure > Servers -> _server_ -> MTA -> Milter Server*
+*Home -> Configure -> Servers -> _server_ -> MTA -> Milter Server*
 
 image::mta_milter_2.png[MTA Milter Server]
 

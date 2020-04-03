@@ -11,7 +11,7 @@ A COS is a global object and is not restricted to a particular domain or set of 
 You can create and edit the classes of services from the Administration Console:
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_*
+*Home -> Configure -> Class of Service -> _COS_*
 
 == Managing Features and Settings with a COS
 
@@ -97,7 +97,7 @@ ifndef::z9[]
 The default time zone setting displayed in an account's Preferences tab is used to localize the time for received messages and calendar activities in the Standard web client.
 
 When the Standard web client is used, the time zone on the computer is not used to set the time a message is received or for calendar activities.
-Rather, the time zone setting in the *Preferences > Calendar Options* is used.
+Rather, the time zone setting in the *Preferences -> Calendar Options* is used.
 
 When using the Advanced web client, the time zone setting on the computer is used as the time stamp for received messages and for calendar activities, not the time zone setting on the *General Information* page.
 
@@ -133,7 +133,7 @@ If you set the quota to 0, accounts do not have a quota.
 To view account quotas for all accounts on a domain:
 
 Admin Console: ::
-*Home > Configure > Domains -> _domain_ -> Mailbox Quota*
+*Home -> Configure -> Domains -> _domain_ -> Mailbox Quota*
 
 ==== Notifying Users When Maximum Quota is Near
 
@@ -141,7 +141,7 @@ Users can be notified that their mailboxes are nearing their quota.
 The quota percentage can be set and the warning message text can be modified: Go to the *Quotas* container for a specified Class of Service:
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Advanced -> Quotas*
+*Home -> Configure -> Class of Service -> _COS_ -> Advanced -> Quotas*
 
 When the displayed/configured threshold is reached, a quota warning message is sent to the user.
 
@@ -170,7 +170,7 @@ When a domain quota is set, the effective quota for an account is the minimum qu
 To configure domain quotas, go to the *Domain Quota Setting* container for a specified domain:
 
 Admin Console: ::
-*Home > Configure > Domains -> _domain_ -> Advanced -> Domain Quota Setting*
+*Home -> Configure -> Domains -> _domain_ -> Advanced -> Domain Quota Setting*
 
 === Managing Excess Quota
 
@@ -217,7 +217,7 @@ You can either set this URL as a global setting or a per domain setting.
 
 Set the `zimbraChangePasswordURL` attribute to the URL of your password change page.
 
-*Change Password* in the {web-client} under *Preferences > General* links to this URL, and when passwords expire, users are sent to this page.
+*Change Password* in the {web-client} under *Preferences -> General* links to this URL, and when passwords expire, users are sent to this page.
 ifdef::z9[]
 In the {modern-client}, *Change Password* appears under the account avatar menu, and it will also link to the provided URL.
 endif::z9[]
@@ -236,7 +236,7 @@ Users can be locked out of their accounts if they fail to sign in after the maxi
 To set password policy, use the *Password* container for a specified Class of Service:
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Advanced -> Password*
+*Home -> Configure -> Class of Service -> _COS_ -> Advanced -> Password*
 
 The password settings that can be configured are listed below.
 
@@ -300,7 +300,7 @@ This type of policy is used to prevent password attacks.
 To set user login policy, use the *Filed Login Policy* container for a specified Class of Service:
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Advanced -> Failed Login Policy*
+*Home -> Configure -> Class of Service -> _COS_ -> Advanced -> Failed Login Policy*
 
 .Login Policy Options
 [cols="2",options="header",]

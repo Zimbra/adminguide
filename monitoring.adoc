@@ -60,7 +60,7 @@ These steps are not necessary for a single-node installation.
 === Reviewing Server Status
 
 Admin Console: ::
-*Home > Monitor*
+*Home -> Monitor*
 
 The *Server Status* page lists all servers and services, their
 status, and when the server status was last checked.  The servers include
@@ -73,7 +73,7 @@ can stop and start services from the Administration Console.
 === Enabling or Disabling Server Services
 
 Admin Console: ::
-*Home > Configure > Servers -> _server_*
+*Home -> Configure -> Servers -> _server_*
 
 Server services are enabled or disabled from the *Servers -> _server_*
 page.  Select *Services* in the Navigation pane and select to enable or
@@ -192,7 +192,7 @@ The {product-name} server collects many performance related
 statistics that can help you diagnose problems and load issues.
 
 Admin Console: ::
-*Home > Monitor > Advanced Statistics*
+*Home -> Monitor -> Advanced Statistics*
 
 The *Advanced Statistics* page includes advanced graphing
 options that lets you generate various charts based on statistical
@@ -440,7 +440,7 @@ Administration Console.
 === Viewing Mail Queues
 
 Admin Console: ::
-*Home > Monitor > Mail Queues*
+*Home -> Monitor -> Mail Queues*
 
 If you are having problems with mail delivery, you can view the mail queues
 from the *Mail Queues* page in the Administration Console to see if
@@ -501,7 +501,7 @@ on the Administration Console.  Mailbox Quota gives you an instant view of
 the Mailbox Size and Quota Used information for each account.
 
 Admin Console: ::
-*Home > Monitor > Server Statistics*
+*Home -> Monitor -> Server Statistics*
 
 // begin list
 . Select the *_server_* for which you want to view statistics.
@@ -520,8 +520,8 @@ reached, sends a message alerting users that they are about to reach their
 mailbox quota.
 
 Admin Console: ::
-*Home > Configure > Class of Service -> _COS_ -> Advanced* +
-*Home > Manage > Accounts -> _account_ -> Advanced*
+*Home -> Configure -> Class of Service -> _COS_ -> Advanced* +
+*Home -> Manage -> Accounts -> _account_ -> Advanced*
 
 // list
 . Scroll down to the Quota section.
@@ -1175,7 +1175,7 @@ Console.  The file is uploaded to the
 `/opt/zimbra/jetty/webapps/zimbra/downloads` folder.
 
 Admin Console: ::
-*Home > Tools and Migration > Client Upload*
+*Home -> Tools and Migration -> Client Upload*
 
 . Download the new ZCO file to a computer that you can access from
 *Client Upload* in the Administration Console
@@ -1198,7 +1198,7 @@ or run
 
 The `downloads/index.html` file is updated with the latest ZCO client
 version.  This new file can be downloaded from the ZCO link on the
-Administration Console *Home > Tools and Migration > Download* page.
+Administration Console *Home -> Tools and Migration -> Download* page.
 
 [NOTE]
 If you do not restart the server, the ZCO download link on the Zimbra

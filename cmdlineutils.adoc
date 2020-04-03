@@ -3097,7 +3097,7 @@ Security] for more information.
 * *HTTP*.  HTTP only, the user would browse to `\http://zimbra.domain.com`.
 
 * *HTTPS.* HTTPS only (default), the user would browse to `\https://zimbra.domain.com`.
-`\http://` is denied.
+`http://` is denied.
 
 * *Mixed* If the user goes to `http://` it will switch to `https://` for the
 login only,then will revert to `http://` for normal session traffic.  If the
@@ -3161,7 +3161,7 @@ continue to use HTTP even if the auth request is being sent unencrypted.
 
 Use `zmhsm` to start, stop (abort), and see the status of a HSM session.
 The threshold for when messages are moved to a storage volume is
-configured from the Administration Console, *Servers > Volumes* page.
+configured from the Administration Console, *Servers* -> *Volumes* page.
 
 ==== Syntax
 [source,bash]
@@ -3198,9 +3198,8 @@ The status of the last HSM session is displayed.
 
 === zmlicense
 
-Use `zmlicense` to view and install your Zimbra license.  The license can
-be viewed and installed from the Administration Console, *Global Settings >
-License* page.
+Use `zmlicense` to view and install your Zimbra license.
+The license can be viewed and installed from the Administration Console, *Global Settings -> License* page.
 
 ==== Syntax
 [source,bash]
@@ -3754,7 +3753,7 @@ server processes all requested accounts.  The default value is no.
 === zmvolume
 
 Use `zmvolume` to manage storage volumes from the CLI.  Note that volumes
-can be managed from the Administration Console, *Server > Volumes* page.
+can be managed from the Administration Console, *Server* -> *Volumes* page.
 
 ==== Syntax
 [source,bash]

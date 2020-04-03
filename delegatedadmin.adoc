@@ -372,7 +372,7 @@ administration account (grantee) is updated to reflect the change.
 Global administrators can revoke any rights granted to an administrator.
 
 Admin Console: ::
-*Home > Manage > Accounts*
+*Home -> Manage -> Accounts*
 
 Open the desired administrator account and click *Configure Grants*.
 
