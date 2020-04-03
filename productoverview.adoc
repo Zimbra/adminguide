@@ -429,28 +429,24 @@ Outlook on a Mac device. To enable EWS client access, see the Class of
 Service section. EWS is a separately licensed add-on feature.
 
 * *Messaging Application Programming Interface (MAPI)* synchronizes
-to Microsoft Outlook 2016/2013/2010 with full delegate, offline
+to supported versions of Microsoft Outlook with full delegate, offline
 access and support for S/MIME. Use the Zimbra Connector for Outlook to
 connect to {product-name} when using Microsoft Outlook on a Windows
 device. To enable MAPI (Microsoft Outlook) Connector, see the Class of
 Service section.
 
 * Support for all POP3, IMAP4, Calendaring Extensions to Web Distributed
-Authoring and Versioning (CalDAV), and vCard Extensions to Web Distributed
-Authoring and Versioning (CardDAV) clients.
+Authoring and Versioning (CalDAV), and vCard Extensions to Web Distributed Authoring and Versioning (CardDAV) clients.
 
 [[offline_mode]]
 == Offline Mode
 
-Zimbra Offline Mode allows access to data -- without network connectivity --
-when using the {product-short} {web-client}.
+Zimbra Offline Mode allows access to data -- without network connectivity -- when using the {product-short} {either-web-client}.
 
-For example, if there is no server connectivity or if server connectivity
-is lost, the {web-app} automatically transitions to "`offline mode`".  When server
-connectivity is restored, the {web-app} automatically reverts to "`online mode`".
+For example, if there is no server connectivity or if server connectivity is lost, the {web-app-term} automatically transitions to "`offline mode`". 
+When server connectivity is restored, the {web-app-term} automatically reverts to "`online mode`".
 
-The offline mode uses HTML5, which uses a caching capability that can be
-considered a super set of the normal browser caching.
+This offline mode uses the caching capability provided by HTML5 in modern browsers.
 
 == Security Measures
 

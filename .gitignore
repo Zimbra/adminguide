@@ -21,3 +21,4 @@ build/
 ehthumbs.db
 Thumbs.db
 .projectile
+.vscode/settings.json

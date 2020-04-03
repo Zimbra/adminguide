@@ -248,7 +248,7 @@ androidc1024711770
 SAMSUNG1239862958/user@domain.com
 ----
 
-In the example above, devices `androidc133785981` and `androidc1024711770` are allowed to sync entirely regardless of the account, while device `SAMSUNG1239862958` can only synchronise the `user@domain.com` account
+In the example above, devices `androidc133785981` and `androidc1024711770` are allowed to sync entirely regardless of the account, while device `SAMSUNG1239862958` can only synchronize the `\user@domain.com` account
 
 === ABQ "allow" Command
 This is a specific command for quarantined device, and sets device status to *Allowed*.

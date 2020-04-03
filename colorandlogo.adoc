@@ -53,7 +53,7 @@ a message or an item in the Overview pane.
 * The foreground color is the text color displayed. The default text
 color is black. The text color usually does not need to be changed.
 
-=== Replacing the {web-app} Logo
+=== Replacing the {web-client} Logo
 
 You can replace the logo with your company’s logo globally or per domain.
 
@@ -276,10 +276,10 @@ The company Web address that you want linked from the logo.
 
 |zimbraSkinLogoLoginBanner |
 The company logo file name that is displayed on the login and splash
-screens for the {web-app} and the {product-name} administration console.
+screens for the {web-client} and the {product-name} administration console.
 
 |zimbraSkinLogoAppBanner |
-The logo graphic file name for the graphic in the upper-left of the {web-app} application and the administration console.
+The logo graphic file name for the graphic in the upper-left of the {web-client} application and the administration console.
 
 |=======================================================================
 

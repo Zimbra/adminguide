@@ -3,11 +3,10 @@
 :toc:
 
 [NOTE]
-Starting with Zimbra 8.8, there are two versions of this feature.
-Zimbra 8.8 provides Standard and New Generation (NG) versions.
-Zimbra 8.7 and earlier include the Standard version, which is explained below.
-To use and enable the NG version of this feature with Zimbra 8.8,
-refer to the specific NG chapter later in this Guide.
+*Starting with Zimbra 8.8*, there are two versions of this feature, Standard and New Generation (NG) versions.
+Zimbra 8.7 and earlier included only the Standard version, which is explained below.
+To use and enable the NG version of this feature with Zimbra 8.8 and later, refer to the specific NG chapter later in this Guide.
+
 
 [WARNING]
 Standard Backup (aka Classic Backup) is deprecated and will be removed in the next release following Zimbra 8.8.12.
@@ -565,8 +564,8 @@ from now. You can specify day (`d`), month (`m`), or year (`y`).
 Each full or incremental backup is a backup session.
 
 Each backup session is labeled with date and time. For example, the
-label `full-20070712.155951.123` says this is a backup from July 12,
-2007 at 3:59:51.123.
+label `full-20210712.155951.123` says this is a backup from July 12,
+2021 at 3:59:51.123.
 
 [NOTE]
 The times set in the session label are GMT, not the local time. GMT is used
@@ -578,12 +577,12 @@ Use the `zmbackupquery` command to find full backup sessions.
 * To find a specific full backup session:
 [source,bash]
 ----
-zmbackupquery -lb full-20070712.155951.123
+zmbackupquery -lb full-20210712.155951.123
 ----
 * To find a full backup sessions since a specific date:
 [source,bash]
 ----
-zmbackupquery --type full --from "2007/01/01 12:45:45"
+zmbackupquery --type full --from "2021/01/01 12:45:45"
 ----
 * To find all full backup sessions in the backup directory:
 [source,bash]
@@ -594,7 +593,7 @@ zmbackupquery --type full
 time window
 [source,bash]
 ----
-zmbackupquery -a user1@example.com --type full --from "2007/07/05 12:01:15" --to "2007/07/12 17:01:45"
+zmbackupquery -a user1@example.com --type full --from "2021/07/05 12:01:15" --to "2021/07/12 17:01:45"
 ----
 
 [NOTE]
@@ -617,13 +616,13 @@ backup.
 * Stop the backup, if you know the label name
 [source,bash]
 ----
-zmbackupabort -lb full-20070712.155951.123 -s server1
+zmbackupabort -lb full-20210712.155951.123 -s server1
 ----
 * Stop the backup, if you do not know the label
 [source,bash]
 ----
 zmbackupquery
-zmbackupabort -s server1 -lb full-20070712.155951.123
+zmbackupabort -s server1 -lb full-20210712.155951.123
 ----
 
 == Backup using the Auto-Grouped Method
@@ -1133,7 +1132,7 @@ zmrestoreldap -lbs
 ====
 [source,bash]
 ----
-zmrestoreldap -lb full20061130135236
+zmrestoreldap -lb full20211130135236
 ----
 ====
 
@@ -1141,7 +1140,7 @@ zmrestoreldap -lb full20061130135236
 ====
 [source,bash]
 ----
-zmrestoreldap -lb full20061130135236 -a tac@abc.com jane@abc.com
+zmrestoreldap -lb full20211130135236 -a tac@abc.com jane@abc.com
 ----
 ====
 
@@ -1543,7 +1542,7 @@ You can now run the `zmplayredo` command to replay changes from 8:00:00.
 
 [source,bash]
 ----
-zmplayredo --fromTime "2008/10/17 08:00:00:000"
+zmplayredo --fromTime "2021/10/17 08:00:00:000"
 ----
 
 All data is brought forward to the current time and the standby site is

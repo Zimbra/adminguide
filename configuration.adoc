@@ -379,8 +379,7 @@ calendars.
 
 When users share a {product-name} folder, the default is to create
 the URL with the Zimbra server hostname and the Zimbra service host
-name. This is displayed as
-*https://server.domain.com/service/home/username/sharedfolder*. The
+name. This is displayed as `\https://server.domain.com/service/home/username/sharedfolder`. The
 attributes are generated as follows:
 
 * Hostname is server.zimbraServiceHostname
@@ -388,13 +387,12 @@ attributes are generated as follows:
 * Port is computed from the protocol
 
 When you configure a public service host name, this name is used instead of
-the server/service name, as
-*https://publicservicename.domain.com/home/username/sharedfolder*. The
+the server/service name, as `\https://publicservicename.domain.com/home/username/sharedfolder`. The
 attributes to be used are:
 
-* +zimbraPublicServiceHostname+
-* +zimbraPublicServiceProtocol+
-* +zimbraPublicServicePort+
+* `zimbraPublicServiceHostname`
+* `zimbraPublicServiceProtocol`
+* `zimbraPublicServicePort`
 
 You can use another FQDN as long as the name has a proper DNS entry to
 point at 'server' both internally and externally.
@@ -610,7 +608,7 @@ displayed in this wizard screen.
 |=======================================================================
 
 To open the {product-short} {web-client} log in page, users enter the virtual host
-name as the URL address. For example, *https://mail.company.com*.
+name as the URL address. For example, `\https://mail.company.com`.
 
 When the Zimbra login screen displays, users enter only their user name
 and password. The authentication request searches for a domain with that
@@ -689,10 +687,10 @@ start accepting email messages.
 === Adding a Domain Alias
 
 A domain alias allows different domain names to direct to a single domain
-address. For example, your domain is domain.com, but you want users to have
-an address of example.com, you can create example.com as the alias for the
-domain.com address. Sending mail to user@example.com is the same as sending
-mail to user@domain.com.
+address. For example, your domain is `domain.com`, but you want users to have
+an address of `example.com`, you can create `example.com` as the alias for the
+`domain.com` address. Sending mail to `\user@example.com` is the same as sending
+mail to `\user@domain.com`.
 
 [NOTE]
 A domain alias is a domain name just like your primary domain name. You
@@ -710,8 +708,8 @@ preserve behavior with previous releases.
 
 Per domain disclaimer support can be enabled using the following steps:
 
-. Create a new domain (e.g. example.com) and account (e.g.
-user2@example.com).
+. Create a new domain (e.g. `example.com`) and account (e.g.
+`\user2@example.com`).
 +
 [source,bash]
 ----
@@ -765,7 +763,7 @@ Generating disclaimers for domain example.com.
 ----
 /opt/zimbra/libexec/zmaltermimeconfig
 ----
-* To test, send an email from the account (e.g. user2@example.com) in
+* To test, send an email from the account (e.g. `\user2@example.com`) in
 html and plain text format
 
 * To verify, check emails received with correct HTML disclaimer and
@@ -1132,7 +1130,7 @@ information is similar to the following example.
 DKIM-Signature a=rsa-sha1; q=dns;
      d=example.com;
      i=user@eng.example.com;
-     s=jun2005.eng; c=relaxed/simple;
+     s=jun2021.eng; c=relaxed/simple;
      t=1117574938; x=1118006938;
      h=from:to:subject:date;
      b=dzdVyOfAKCdLXdJOc9G2q8LoXSlEniSbav+yuU4zGeeruD00lszZVoG4ZHRNiYzR
@@ -1575,9 +1573,7 @@ The Free/Busy feature allows users to view each other's calendars for
 efficiently scheduling meetings. You can set up free/busy scheduling across
 {product-abbrev} and Microsoft Exchange servers.
 
-{product-abbrev} can query the free/busy schedules of users on Microsoft Exchange 2003,
-2007, or 2010 servers and also can propagate the free/busy schedules of {product-abbrev}
-users to the Exchange servers.
+{product-abbrev} can query the free/busy schedules of users on supported Microsoft Exchange servers and also can propagate the free/busy schedules of {product-abbrev} users to the Exchange servers.
 
 To set free/busy interoperability, the Exchange systems must be set up as
 described in the Exchange Setup Requirements section, and the
@@ -1585,7 +1581,7 @@ described in the Exchange Setup Requirements section, and the
 configured. The easiest way to configure {product-name} is from the
 Administration Console.
 
-=== Exchange 2003/2007/2010 Setup Requirements
+=== Exchange Setup Requirements
 
 The following is required to set up the free/busy feature:
 
@@ -1596,7 +1592,7 @@ catalog must be available.
 of IIS on at least one of the Exchange servers.
 
 * Web interface to Exchange public folders needs to be available via
-IIS. (http://server/public/)
+IIS. (`\http://server/public/`)
 
 * {product-name} users must be provisioned as a contact on the AD
 using the same administrative group for each mail domain. This is required
@@ -1626,9 +1622,11 @@ Exchange.
 ** Microsoft Exchange Server Type, either *WebDav* or *ews*
 
 *** Select WebDAV to support free/busy with Exchange 2003 or Exchange 2007.
++
+NOTE: This is for information only, as these versions of Exchange are no longer supported.
 
 *** Select ews (Exchange Web Service) to support free/busy with Exchange
-2010, SP1.
+2010 SP1 and newer.
 
 * Include the Microsoft Exchange user name and password. This is the name
 of the account in Active Directory and password that has access to the
@@ -1760,11 +1758,11 @@ Global Settings override Domain settings
 *S/MIME* tab.
 
 . In the *Configuration Name* field, enter a name to identify the external
-LDAP server. Example, *companyLDAP_1*
+LDAP server. Example, `companyLDAP_1`
 . In the *LDAP URL* field, enter the LDAP server's URL. Example,
-*ldap://host.domain:3268*
+`ldap://host.domain:3268`
 . To use DN to bind to the external server, in the *S/MIME LDAP Bind DN*
-field, enter the bind DN. Example, *administrator@domain*
+field, enter the bind DN. Example, `administrator@domain`
 +
 If you want to use anonymous bind, leave the Bind ND and Bind password
 fields empty.
@@ -1772,7 +1770,7 @@ fields empty.
 . In the *S/MIME Ldap Search Base* field, enter the specific branch of the
 LDAP server that should be searched to find the certificates.
 +
-Example, *ou=Common Users, DC=host, DC=domain*
+Example, `ou=Common Users, DC=host, DC=domain`
 +
 Or, check *Automatically discover search base* to automatically discover
 the search base DNs. For this to work, the S/MIME Search Base field must be
@@ -1782,11 +1780,11 @@ empty.
 search. The filter template can contain the following conversion variables
 for expansion:
 +
-* %n - search key with @ (or without, if no @ was specified)
-* %u - with @ removed (For example, mail=%n)
+* `%n` - search key with `@` (or without, if no `@` was specified)
+* `%u` - with `@` removed (For example, `mail=%n`)
 . In the *S/MIME Ldap Attribute* field, enter attributes in the external
 LDAP server that contain users' S/MIME certificates. Multiple attributes
-can be separated by a comma (,).
+can be separated by a comma (`,`).
 +
 Example, "userSMIMECertificate, UserCertificate"
 . Click *Save*.
@@ -1897,7 +1895,9 @@ ifndef::z9[]
 === Implementing Hierarchical Storage Management (*)
 
 [NOTE]
-*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
+*Starting with Zimbra 8.8*, there are two versions of this feature, Standard and New Generation (NG) versions.
+Zimbra 8.7 and earlier included only the Standard version, which is explained below.
+To use and enable the NG version of this feature with Zimbra 8.8 and later, refer to the specific NG chapter later in this Guide.
 
 Hierarchical Storage Management (HSM) allows you to configure storage
 volumes for older messages. HSM is a process of moving older data from the

@@ -4,23 +4,20 @@
 
 Unified Communications (UC) is the integration of multiple modes of communication services, allowing users to receive communication from one service, such as voice mail, and respond using another service, such as Click-to-Call.
 
+ifdef::z9[IMPORTANT: {only-in-classic}]
+
 Zimbra uses real-time communications services such as voice, telephony and presence to inter-operate with non-real-time services such as email and voice mail. The Zimbra Collaboration Voice Service feature includes Visual Voice Mail, Click-to-Call, and Presence (Cisco only). Zimbra Collaboration uses Cisco or Mitel servers, as a third-party voice server, or UC server, to bridge calls between Zimbra Collaboration and the {product-short} {web-client}.
 
 *Note:* UC system administrators are responsible for configuring the UC server based on that UC server’s documentation.
 
-ifdef::z9[]
-[IMPORTANT]
-Voice Service is not available for the {modern-client}.
-endif::z9[]
+You enable the voice service from the administration console. Users use the voice service feature from the Voice tab in the {web-client}.
 
-You enable the voice service from the administration console. Users use the voice service feature from the Voice tab in the {web-app}.
-
-When users sign into the voice service from their {web-app} account, they are actually logging into a UC server. After the initial user set-up, the voice service is seamless and requires no additional account configuration.
+When users sign into the voice service from their {product-short} account, they are actually logging into a UC server. After the initial user set-up, the voice service is seamless and requires no additional account configuration.
 
 Voice service features include:
 
 * *Visual Voice Mail:* From the Voice tab, users can easily view and listen to voice mails and view details such as caller name, time details, and length of message. Users can call back the person that left the message, forward or reply to the message by email, save or delete the message, and select how to be notified of a new voice message. Supported audio formats include WAV and MP3.
-* *Click-to-Call:* The ability to make a phone call from a the {web-app} account. Users can highlight and click phone number in their email to dial, or select a contact’s phone number from their contact lists. The call is bridged from the registered physical or soft phone the user selects to use to call the recipient. Click-to-Call eliminates the use for a dial pad on a phone.
+* *Click-to-Call:* The ability to make a phone call from a the {product-short} account. Users can highlight and click phone number in their email to dial, or select a contact’s phone number from their contact lists. The call is bridged from the registered physical or soft phone the user selects to use to call the recipient. Click-to-Call eliminates the use for a dial pad on a phone.
 * *Click-to-Chat:* (Cisco clients only) The ability to chat with a contact using the Cisco Jabber client and ZCS. Users must have the recipient’s IM address stored in their contact information. They can then access the recipient’s contact card and click the IM link to initiate a chat session.
 * *Presence:* (Cisco clients only) The ability to display in real time the availability information about users or contacts. When using Cisco Jabber, users can manually set their presence status or it is automatically set for them. For example, when users are on a phone call their presence status is automatically set to “on a call”. Presence status is displayed as available, away, on a call, or do not disturb.
 
@@ -29,7 +26,7 @@ To create voice service, follow the order of configuration as follows:
 
   . Access URLs, as described in Using a Third-Party Unified Communications Server.
   . Create the voice service, as described in Creating the Voice/Chat Service.
-  . Enable the voice service and the voice feature, as described in Enabling the Voice/Chat Service. Enabling the voice feature allows the Voice tab to display in the {web-app}.
+  . Enable the voice service and the voice feature, as described in Enabling the Voice/Chat Service. Enabling the voice feature allows the Voice tab to display in the {web-client}.
   . Enable the appropriate Zimlets for the vendor server you are using, as described in Enabling the Voice/Chat Zimlets.
   
 == Voice Service Requirements
@@ -37,13 +34,13 @@ The following are required for ZCS voice service:
 
 * *Voice Service license:* A ZCS license with the voice service feature is required. To obtain this license, see the Zimbra Collaboration Server License section for more information.
 * *Unified Communications Server:* Third-Party Unified Communications server requirements for either Cisco or Mitel are listed below. URLs from the UC server are used in the configuration of the ZCS voice service, as described in Using a Third-Party Unified Communications Server.
-• *For Cisco:*
-•• *Cisco Unity Connection (UC) 8.5 and above*. Cisco UC generates the Voice URL used in the voice service configuration.
-•• *Cisco Unified Communications Manager (CUCM) 7.1(3):* Enable Web Dialer service for Click-to-Call functionality. Cisco CUCM generates the Call URL used in the voice service configuration.
-•• *Cisco Unified Presence Server (CUPS) 8.0:* Cisco CUPS requires Presence Web Service to be enabled, and an application user must be created for viewing the presence. This is done in Cisco Communications Manager (CUCM) > User Management. Cisco CUPS generates the Presence URL used in the voice service configuration.
-•• *Cisco Jabber client provided to users for UC collaboration.*
-• *For Mitel:*
-•• *Mitel Unified Communicator Advanced (Mitel UCA) 5.0.23.0 release and above.* Mitel UCA generates the URLs used in the voice service configuration.
+** *For Cisco:*
+*** *Cisco Unity Connection (UC) 8.5 and above*. Cisco UC generates the Voice URL used in the voice service configuration.
+*** *Cisco Unified Communications Manager (CUCM) 7.1(3):* Enable Web Dialer service for Click-to-Call functionality. Cisco CUCM generates the Call URL used in the voice service configuration.
+*** *Cisco Unified Presence Server (CUPS) 8.0:* Cisco CUPS requires Presence Web Service to be enabled, and an application user must be created for viewing the presence. This is done in Cisco Communications Manager (CUCM) > User Management. Cisco CUPS generates the Presence URL used in the voice service configuration.
+*** *Cisco Jabber client provided to users for UC collaboration.*
+** *For Mitel:*
+*** *Mitel Unified Communicator Advanced (Mitel UCA) 5.0.23.0 release and above.* Mitel UCA generates the URLs used in the voice service configuration.
 * *ZCS Zimlets:* Voice Preferences Zimlet, Cisco Click2Call Zimlet or Mitel Click2Call Zimlet  
   
 == Using a Third-Party Unified Communications Server
@@ -51,15 +48,15 @@ The ZCS Voice Service uses a third-party Unified Communications (UC) server to b
 
 == Cisco URLs
 
-* *Voice URL:* The Voice URL is the URL of the Cisco UC server. For example, https://xx.xx.xxx.xx. This URL is used by the ZCS server to fetch user’s voice mails from the Cisco UC server on behalf of users.
-* *Call URL:* The Call URL is the URL of the Cisco CUCM server. For example, https://xx.xx.xxx.xx/webdialer/services/WebdialerSoapService70. This URL is used by the ZCS Cisco Click2Call Zimlet to send requests to the Cisco CUCM server to bridge calls.
-* *Presence URL:* The Presence URL is the URL of the Cisco CUPS server and used to generate a session ID. For example, http://xx.xx.xxx.xx:8082/presence-service/users.This URL is used by the ZCS Email Zimlet to send fetch requests to the contact’s presence from the Cisco CUPS server.
+* *Voice URL:* The Voice URL is the URL of the Cisco UC server. For example, `\https://xx.xx.xxx.xx`. This URL is used by the ZCS server to fetch user’s voice mails from the Cisco UC server on behalf of users.
+* *Call URL:* The Call URL is the URL of the Cisco CUCM server. For example, `\https://xx.xx.xxx.xx/webdialer/services/WebdialerSoapService70`. This URL is used by the ZCS Cisco Click2Call Zimlet to send requests to the Cisco CUCM server to bridge calls.
+* *Presence URL:* The Presence URL is the URL of the Cisco CUPS server and used to generate a session ID. For example, `\http://xx.xx.xxx.xx:8082/presence-service/users`. This URL is used by the ZCS Email Zimlet to send fetch requests to the contact’s presence from the Cisco CUPS server.
 
 *Note:* Provision an application user name and password using the Cisco Unified Presence Server (CUPS).
 
 == Mitel URLs
-* *Voice URL:* The Voice URL is the URL of the Mitel server. For example https://xx.xx.xxx.xx. This URL is used by the ZCS server to fetch user’s voice mails from the Mitel Voice server on behalf of users.
-* *Call URL:* The Call URL is the URL of the Mitel server. For example, https://xx.xx.xxx.xx/webdialer/services/WebdialerSoapService70. This URL is used by the ZCS Mitel Click2Call Zimlet to send requests to the Mitel server to bridge calls.
+* *Voice URL:* The Voice URL is the URL of the Mitel server. For example `\https://xx.xx.xxx.xx`. This URL is used by the ZCS server to fetch user’s voice mails from the Mitel Voice server on behalf of users.
+* *Call URL:* The Call URL is the URL of the Mitel server. For example, `\https://xx.xx.xxx.xx/webdialer/services/WebdialerSoapService70`. This URL is used by the ZCS Mitel Click2Call Zimlet to send requests to the Mitel server to bridge calls.
 * *User URL:* The User URL is the URL of the Mitel server. This URL is used by ZCS for user identification/authentication.
 
 == Creating the Voice/Chat Service
@@ -83,7 +80,7 @@ If configuring Presence, you must generate a Presence Session ID.
   . Click *OK*. A presence session ID is generated and displays as the *Presence Session ID*.
   
 == Enabling the Voice/Chat Service
-After you create the voice/chat service for a domain, COS, or user, you must enable the voice/chat service. For COS and User accounts, you also enable the voice feature which displays the Voice tab in the {web-app}.  
+After you create the voice/chat service for a domain, COS, or user, you must enable the voice/chat service. For COS and User accounts, you also enable the voice feature which displays the Voice tab in the {web-client}.  
 
 == Enable Voice/Chat Service on a Domain
 For Voice/Chat service on a domain, enable the service on the Domains>General Information page.
@@ -102,7 +99,7 @@ For Voice/Chat service on a COS, you must first enable the voice/chat service an
   . Click the gear icon drop and select *Edit*.
   . On the General Information page, scroll down to *Voice and Chat* section and from the *Voice/Chat Service* drop-down menu select the voice service to enable.
   . In the Navigation pane, click *Features*.
-  . On the Features page, scroll down to *Voice and Chat Features* section and click *Enable Voice Feature*. This displays the Voice tab in the {web-app}.
+  . On the Features page, scroll down to *Voice and Chat Features* section and click *Enable Voice Feature*. This displays the Voice tab in the {web-client}.
   . Click *Save*.
 
 == Enable Voice/Chat Service on a User Account
@@ -113,10 +110,13 @@ For Voice/Chat service on a User Account, you must first enable the voice/chat s
   . Click the gear icon drop and select *Edit*.
   . On the General Information page, scroll down to *Voice and Chat* section.
   . From the *Voice/Chat Service* menu select the voice service to enable.
-  . Enter a *Chat/Voice Username* for the user. This is the user account name in the third-party UC server. If you do not provide a name, the default name is used. For example for email account “user1@domain.com”, the default voice username is “user1”.
+  . Enter a *Chat/Voice Username* for the user.
+  This is the user account name in the third-party UC server.
+  If you do not provide a name, the default name is used.
+  For example for email account `\user1@domain.com`, the default voice username is “user1”.
   . From the *Voice/Chat Service* menu select the voice service to enable.
   . In the Navigation pane, click *Features*.
-  . On the Features page, scroll down to *Voice and Chat Features* section and click *Enable Voice Feature*. This displays the Voice tab in the {web-app}.
+  . On the Features page, scroll down to *Voice and Chat Features* section and click *Enable Voice Feature*. This displays the Voice tab in the {web-client}.
   . Click *Save*.
   
 == Enabling the Voice/Chat Zimlets

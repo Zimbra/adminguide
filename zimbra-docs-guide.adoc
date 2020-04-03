@@ -42,8 +42,8 @@ Documents in preview and attachments are shown in read-only mode with a simplifi
 
 Its main tasks are:
 
-* Change the btn:[Create] button in the {web-app} to the related Docs feature.
-* Change the preview feature to use Docs.
+* Change the btn:[Create] button in the {either-web-client} to the related Docs feature.
+* Change the {web-client} preview feature to use Docs.
 * Allow the preview of documents.
 
 == Document Management Flow

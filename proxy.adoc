@@ -318,7 +318,7 @@ zmcontrol restart
 Zimbra Proxy can also reverse proxy HTTP requests to the right back-end
 server.
 
-For example, users can use a web browser to connect to the proxy server at https://mail.example.com. The connection from users whose mailboxes live on mbs1.example.com is proxied to mbs1.example.com by the proxy running on the mail.example.com server. The proxy also supports REST and CalDAV clients, Zimbra Connector for Outlook, and Zimbra Mobile Sync NG devices.
+For example, users can use a web browser to connect to the proxy server at `\https://mail.example.com`. The connection from users whose mailboxes live on mbs1.example.com is proxied to mbs1.example.com by the proxy running on the mail.example.com server. The proxy also supports REST and CalDAV clients, Zimbra Connector for Outlook, and Zimbra Mobile Sync NG devices.
 
 HTTP reverse proxy routes requests as follows:
 

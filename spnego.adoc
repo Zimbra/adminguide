@@ -1,83 +1,75 @@
 [appendix]
 = Configuring SPNEGO Single Sign-On
 
-The SPNEGO protocol mechanism can be configured on {product-abbrev} for single sign-on
-authentication to the {product-short} {web-client} and to the Zimbra Connector for
-Outlook (ZCO). For ZCO configuration see
-<<setting_up_single_sign_on_options_for_zco,Setting Up Single Sign-On
-Options for ZCO>>.
+The SPNEGO protocol mechanism can be configured on {product-abbrev} for single sign-on authentication to the {product-short} {web-client},
+ifdef::z9[{modern-client},]
+and to the Zimbra Connector for Outlook (ZCO).
+For ZCO configuration see <<setting_up_single_sign_on_options_for_zco,Setting Up Single Sign-On Options for ZCO>>.
 
-From the {web-app}, when users log on to their Intranet through Active Directory, they can enter their {web-app} mailbox without having to re-authenticate to Zimbra.
+When users have authenticated to their Intranet through Active Directory, they can enter their {product-short} mailbox using {either-web-client} without having to re-authenticate.
 
-The {product-abbrev} server is configured to redirect users attempting to log on to the {web-app} to a URL under SPNEGO protection.
-The server asks for authentication with Kerberos through SPNEGO and users are redirected to their {web-app} mailbox.
-When users log out, they are redirected to a logout URL that displays a btn:[Launch] button. When users click it, they are directed to the {web-app} login page.
+The {product-abbrev} server is configured to redirect users attempting to log on to the {either-web-client} to a URL under SPNEGO protection.
+The server asks for authentication with Kerberos through SPNEGO and users are redirected to their {product-short} mailbox.
+When users log out, they are redirected to a logout URL that displays a btn:[Launch] button.
+When users click it, they are directed to the {product-short} login page.
 
 [NOTE]
-When users log on to their {web-app} accounts from the Internet, the {web-app} login page displays and they must enter their {web-app} password to log on.
+When users log on to their {product-short} accounts from the _Internet_, the {product-short} login page displays and they must enter their {product-short} password to log on.
 
 [IMPORTANT]
-If SPNEGO SSO is enabled on a domain, the browsers must be configured
-correctly. See <<configure_your_browser,Configure Your
-Browser>>. Improperly configured browsers may pop up a user/pass dialog and
-if a user enters his correct AD domain username/password, he can still log
-into the Zimbra mailbox, and some browsers may display a "401 Unauthorized"
-error.
+If SPNEGO SSO is enabled on a domain, the browsers must be configured correctly.
+See <<configure_your_browser,Configure Your Browser>>.
+Improperly configured browsers may pop up a user/pass dialog and if a user enters his correct AD domain username/password, he can still log into the Zimbra mailbox, and some browsers may display a "401 Unauthorized" error.
 
 == Configuration Process
 
 . Create the Kerberos keytab file.
-* Create an Active Directory service account. This account is used to
-generate the Kerberos keytab file.
-* Add the service Principal Names (SPN) directory property for an Active
-Directory service account.
+* Create an Active Directory service account.
+This account is used to generate the Kerberos keytab file.
+* Add the service Principal Names (SPN) directory property for an Active Directory service account.
 * Create the keytab file.
 . Enable and configure the SPNEGO protocol on the {product-abbrev} server.
 . Configure browsers
 
 == Create the Kerberos Keytab File
 
-An Active Directory service account is created in Domain for each mailstore
-server.
+An Active Directory service account is created in Domain for each mailstore server.
 
-. Create an Active Directory service account. This is the account used to
-generate the Kerberos keytab file that is added to the Zimbra server.
+. Create an Active Directory service account.
+This is the account used to generate the Kerberos keytab file that is added to the Zimbra server.
 
 .. Go to the Active Directory *Start > Programs > Administrative Tools >
 Active Directory Users and Computers* console.
 
-.. To create the service account, click the AD Domain name and from the
-expanded content right-click *Users* and select *New > User*. Complete
-the New Object – User dialog.
+.. To create the service account, click the AD Domain name and from the expanded content right-click *Users* and select *New > User*.
+Complete the New Object – User dialog.
 +
-* *Full name*: Enter the user display name for the AC service
-account.  Recommend that the full name be the {product-abbrev} mailbox server name. +
+* *Full name*: Enter the user display name for the AD service account.
+Recommend that the full name be the {product-abbrev} mailbox server name.
++
 Example: *mail1*
 +
-* *User Logon Name*: This name is the value that is set for the
-`zimbraSpnegoAuthTargetName` server attribute in LDAP. Write it down. +
+* *User Logon Name*: This name is the value that is set for the `zimbraSpnegoAuthTargetName` server attribute in LDAP.
+Write it down.
++
 Example: *HTTP/mail1.example.com*
 +
-* *User Logon Name (pre-Windows2000):* This name is used for the
-`–mapUser` parameter in the `setspn` and `ktpass` commands. +
+* *User Logon Name (pre-Windows2000):* This name is used for the `–mapUser` parameter in the `setspn` and `ktpass` commands.
++
 Example: *mail1*
 +
 * Click *Next*.
 
-.. Enter and confirm the password. This password is used for the
-`–pass {AD-user-password}` parameter in the `ktpass` command,
-configured below.
+.. Enter and confirm the password.
+This password is used for the `–pass {AD-user-password}` parameter in the `ktpass` command, configured below.
 
-.. Check *Password never expires* and *User cannot change password*,
-and click *Next*.
+.. Check *Password never expires* and *User cannot change password*, and click *Next*.
 
-.. Click *Finish* to create the user. The service account name displays
-in the Users directory.
+.. Click *Finish* to create the user.
+The service account name displays in the Users directory.
 
-. Use the `setspn` command to map the mailbox server name as the
-service Principal Names (SPN) to the user account. The SPN is used in
-the process of mutual authentication between the client and the server
-hosting particular service.
+. Use the `setspn` command to map the mailbox server name as the service Principal Names (SPN) to the user account.
+The SPN is used in the process of mutual authentication between the client and the server hosting particular service.
 
 ..  From the command prompt, type `setspn –a {userlogonname} {serviceaccountname}`
 +
@@ -92,13 +84,12 @@ setspn –a HTTP/mail1.example.com mail1
 .. To verify that the SPN is registered, type `C:\>setspn –l \{accountname}` +
 A list of registered SPNs is displayed.
 
-. Create the keytab file used when signing into the Kerberos domain.  Use
-the `ktpass` tool from the Windows Server toolkit to create the Kerberos
-keytab.
+. Create the keytab file used when signing into the Kerberos domain.
+Use the `ktpass` tool from the Windows Server toolkit to create the Kerberos keytab.
 +
 [NOTE]
-A Kerberos keytab file contains a list of keys that are analogous to user
-passwords. Restrict and monitor permissions on any keytab files you create.
+A Kerberos keytab file contains a list of keys that are analogous to user passwords.
+Restrict and monitor permissions on any keytab files you create.
 +
 The command to type follows:
 +
@@ -110,35 +101,37 @@ ktpass -out {keytab-file-to-produce} -princ {Service-Principal-Name}@\{the-kerbe
 [cols="1m,4"]
 |=======================================================================
 |ktpass -out |
-The key is written to this output file. +
-Enter the directory location and keytab file name. The keytab file name is
-`jetty.keytab`. +
+The key is written to this output file.
++
+Enter the directory location and keytab file name.
+The keytab file name is `jetty.keytab`.
++
 For example, `C:\Temp\spengo\jetty.keytab`
 
 |-princ |
-This is the principal name. +
-Enter the service Principal Name as used in *Step 2* in Setting up the
-Microsoft Windows Active Directory Domain Controller section. +
+This is the principal name.
++
+Enter the service Principal Name as used in *Step 2* in Setting up the Microsoft Windows Active Directory Domain Controller section.
++
 For example, HTTP/mail1.example.com@COMPANY.COM
 
 |-mapUser |
-This maps `–princ` value to this user account. +
-Enter the AD service account user name entered in the *User Logon Name
-(pre-Windows2000)* set in *Step 1.b* in Setting up the Microsoft Windows
-Active Directory Domain Controller section.
+This maps `–princ` value to this user account.
++
+Enter the AD service account user name entered in the *User Logon Name (pre-Windows2000)* set in *Step 1.b* in Setting up the Microsoft Windows Active Directory Domain Controller section.
 
 |-mapOp |
-This sets the mapping. The value for this parameter is *set*
+This sets the mapping.
+The value for this parameter is *set*
 
 |-pass |
 This is the password to use.
 
-Enter the password entered in the *User Logon Name (pre-Windows2000)* set
-in *Step 1.c* in Setting up the Microsoft Windows Active Directory Domain
-Controller section.
+Enter the password entered in the *User Logon Name (pre-Windows2000)* set in *Step 1.c* in Setting up the Microsoft Windows Active Directory Domain Controller section.
 
 |-crypto |
-This is the cryptosystem to use. +
+This is the cryptosystem to use.
++
 Enter *RC4-HMAC-NT*
 
 |-pType |
@@ -169,22 +162,20 @@ Targeting domain controller: …
 ----
 ====
 
-. Transfer the keytab file (jetty.keytab) to the Zimbra server. Copy
-the file created in step 3 to the following Zimbra server location:
+. Transfer the keytab file (jetty.keytab) to the Zimbra server.
+Copy the file created in step 3 to the following Zimbra server location:
 `/opt/zimbra/data/mailboxd/spnego/jetty.keytab`.
 
 [IMPORTANT]
-Do not rename the `jetty.keytab` file. This file name is referenced from
-various configuration files.
+Do not rename the `jetty.keytab` file.
+This file name is referenced from various configuration files.
 
-Repeat steps 1 to 4 to create an create the keytab file (`jetty.keytab`)
-for each Zimbra mailstore server.
+Repeat steps 1 to 4 to create an create the keytab file (`jetty.keytab`) for each Zimbra mailstore server.
 
 == Configure {product-abbrev}
 
-SPNEGO attributes in Global Config and on each Zimbra server are configured
-and pre-authentication is set up for the domain. Use the zmprov commands to
-modify the Zimbra server.
+SPNEGO attributes in Global Config and on each Zimbra server are configured and pre-authentication is set up for the domain.
+Use the `zmprov` command to modify the Zimbra server.
 
 [NOTE]
 Only one Kerberos REALM is supported per {product-abbrev} installation.
@@ -197,10 +188,8 @@ command.
 |zimbraSpnegoAuthEnabled |Set to TRUE.
 
 |zimbraSpnegoAuthErrorURL |
-This is the URL users are redirected to when spnego auth fails. Setting it
-to `/zimbra/?ignoreLoginURL=1` will redirect user to the regular Zimbra
-login page, where user will be prompted for their zimbra user name and
-password.
+This is the URL users are redirected to when spnego auth fails.
+Setting it to `/zimbra/?ignoreLoginURL=1` will redirect user to the regular Zimbra login page, where user will be prompted for their zimbra user name and password.
 
 |zimbraSpnegoAuthRealm |
 The Kerberos realm in the domain controller.
@@ -216,8 +205,7 @@ To modify the global config attributes, type:
 ..  `zmprov mcf zimbraSpnegoAuthErrorURL '/zimbra/?ignoreLoginURL=1'`
 ..  `zmprov mcf zimbraSpnegoAuthRealm <COMPANY.COM>`
 
-. On each Zimbra server, modify the following global config attributes with
-the `zmprov ms` command.
+. On each Zimbra server, modify the following global config attributes with the `zmprov ms` command.
 +
 [cols="1m,2",options="",]
 |=======================================================================
@@ -225,8 +213,7 @@ the `zmprov ms` command.
 This is the user logon name from Step 1 B, User Logon Name.
 
 |zimbraSpnegoAuthPrincipal |
-Enter the user logon name set in `zimbraSpnegoAuthTargetName` and the
-address set in global config `zimbraSpnegoAuthRealm`
+Enter the user logon name set in `zimbraSpnegoAuthTargetName` and the address set in global config `zimbraSpnegoAuthRealm`
 
 Type as `zimbraSpnegoAuthTargetName@zimbraSpnegoAuthRealm`
 
@@ -245,12 +232,14 @@ To modify the server global config attributes, type:
 * Web client login URL and UAs
 * Web client logout URL and UAs
 
-..  Set up Kerberos Realm for the domain. This is the same realm set in the
-global config attribute `zimbraSpnegoAuthRealm`.  Type `zmprov md {domain}
+..  Set up Kerberos Realm for the domain.
+This is the same realm set in the global config attribute `zimbraSpnegoAuthRealm`.
+Type `zmprov md {domain}
 zimbraAuthKerberos5Realm {kerberosrealm}`
 
-..  Set up the virtual hosts for the domain. Virtual-hostname-* are
-the hostnames you can browse to for the {product-short} {web-client} UI. Type:
+..  Set up the virtual hosts for the domain.
+Virtual-hostname-* are the hostnames you can browse to for the {product-short} {web-client} UI.
+Type:
 +
 [source,bash]
 ----
@@ -260,23 +249,21 @@ zmprov md {domain} +zimbraVirtualHostname {virtual-hostname-1} +zimbraVirtualHos
 
 .. Setup the web client log in URL and UAs allowed for the login URL on the domain.
 +
-** Set the login URL. The login URL is the URL to redirect users to when the
-Zimbra auth token is expired. `zmprov md {domain} zimbraWebClientLoginURL
+** Set the login URL.
+The login URL is the URL to redirect users to when the Zimbra auth token is expired. `zmprov md {domain} zimbraWebClientLoginURL
 '../service/spnego'`
 ** Honor only supported platforms and browsers.
 +
-*zimbraWebClientLoginURLAllowedUA* is a multi-valued attribute,values
-are regex. If this is not set, all UAs are allowed. If multiple values
-are set, an UA is allowed as long as it matches any one of the values.
+*zimbraWebClientLoginURLAllowedUA* is a multi-valued attribute,values are regex.
+If this is not set, all UAs are allowed.
+If multiple values are set, an UA is allowed as long as it matches any one of the values.
 +
 [source,bash]
 ----
 zmprov md {domain} +zimbraWebClientLoginURLAllowedUA {UA-regex-1} +zimbraWebClientLoginURLAllowedUA {UA-regex-2} ...
 ----
 +
-For example, to honor `zimbraWebClientLoginURL` only for Firefox, Internet
-Explorer, Chrome, and Safari on computers running Windows, and Safari on
-Apple Mac computers, type the following commands.
+For example, to honor `zimbraWebClientLoginURL` only for Firefox, Internet Explorer, Chrome, and Safari on computers running Windows, and Safari on Apple Mac computers, type the following commands.
 +
 [source,bash]
 ----
@@ -287,11 +274,10 @@ zmprov md {domain} +zimbraWebClientLoginURLAllowedUA '._Windows._Safari.*'
 zmprov md {domain} +zimbraWebClientLoginURLAllowedUA '._Macintosh._Safari.*'
 ----
 
-..  Setup the web client logout URL and UAs allowed for the logout URL
-on the domain.
+..  Setup the web client logout URL and UAs allowed for the logout URL on the domain.
 +
-** Set the logout URL. The logout URL is the URL to redirect users to
-when users click Logout.
+** Set the logout URL.
+The logout URL is the URL to redirect users to when users click Logout.
 +
 [source,bash]
 ----
@@ -300,18 +286,16 @@ zmprov md {domain} zimbraWebClientLogoutURL '../?sso=1'
 +
 
 ** Honor only supported platforms and browsers.
-`zimbraWebClientLogoutURLAllowedUA` is a multi-valued attribute, values are
-regex. If this is not set, all UAs are allowed. If multiple values are set,
-an UA is allowed as long as it matches any one of the values.
+`zimbraWebClientLogoutURLAllowedUA` is a multi-valued attribute, values are regex.
+If this is not set, all UAs are allowed.
+If multiple values are set, an UA is allowed as long as it matches any one of the values.
 +
 [source,bash]
 ----
 zmprov md {domain} +zimbraWebClientLogoutURLAllowedUA {UA-regex-1} +zimbraWebClientLogoutURLAllowedUA {UA-regex-2} ...
 ----
 +
-For example, to honor zimbraWebClientLogoutURL only for Firefox,
-Internet Explorer, Chrome, and Safari on computers running Windows, and
-Safari on Apple Mac computers, type the following commands.
+For example, to honor zimbraWebClientLogoutURL only for Firefox, Internet Explorer, Chrome, and Safari on computers running Windows, and Safari on Apple Mac computers, type the following commands.
 +
 [source,bash]
 ----
@@ -324,61 +308,61 @@ zmprov md {domain} +zimbraWebClientLogoutURLAllowedUA '._Windows._Safari.*'
 [[configure_your_browser]]
 == Configure Your Browser
 
-When the SPNEGO SSO feature is enabled on your domain, user’s browsers must
-be configured properly. Improperly configured browsers will behave
-differently depending on the browser.
+When the SPNEGO SSO feature is enabled on your domain, user’s browsers must be configured properly.
+Improperly configured browsers will behave differently depending on the browser.
 
 The following browsers are supported:
 
-* For computers running Windows: Internet Explorer 10.0 or later, Edge, Firefox
-52 or later, Chrome, Safari
+* For computers running Windows:
+ifndef::z9[Internet Explorer 10.0 or later,]
+Edge, Firefox 52 or later, Chrome, Safari
 
 * Apple Mac computer: Safari
 
+Configuration steps:
+
 . Firefox browser for computers running Windows
 
-..  In Firefox browse to *about:config*. In the Firefox browser address
-field, type *about:config*. The warning -- *This might void your warranty*, is
-now displayed.
+..  In the Firefox browser address field, type `about:config`.
+The warning -- *This might void your warranty*, is now displayed.
 ..  Click *I’ll be careful, I promise!*
-..  Search in Filters, type *network.n*. Enter a comma-delimited list of
-trusted domains or URLs.
+..  Search in Filters, type `network.n`.
+Enter a comma-delimited list of trusted domains or URLs.
 +
-Double-click *network.negotiate-auth.delegation-uris*. Enter
-*http://,https://*
+Double-click `network.negotiate-auth.delegation-uris`.
+Enter `\http://,\https://`
 +
-Double-click *network.negotiate-auth.trusted-uris*. Enter
-*http://,https://*
+Double-click `network.negotiate-auth.trusted-uris`.
+Enter `\http://,\https://`
 +
 _Or, to set specific URLs,_
 +
-Double-click *network.negotiate-auth.delegation-uris*. Enter the domain
-addresses. For example, http://mail1.example.com,https://
-mail2.example.com
+Double-click `network.negotiate-auth.delegation-uris`.
+Enter the domain addresses.
+For example, `\http://mail1.example.com,\https://mail2.example.com`
 +
-Double-click *network.negotiate-auth.trusted-uris*. Enter the domain
-addresses. For example, http://mail1.example.com,https://
-mail2.example.com
+Double-click `network.negotiate-auth.trusted-uris`.
+Enter the domain addresses.
+For example, `\http://mail1.example.com,\https://mail2.example.com`
 
 . Internet Explorer, Chrome, and Safari for computers running Windows
 
-.. In these browsers, go to *Tools > Internet Options > Security > Local
-Intranet >Sites*. On the Sites dialog make sure all items are checked.
+.. In these browsers, go to *Tools > Internet Options > Security > Local Intranet >Sites*.
+On the Sites dialog make sure all items are checked.
 
-..  Select *Advanced*. Add the domain server (hostname) URL, both
-http:// and https://
+..  Select *Advanced*.
+Add the domain server (hostname) URL, both `\http://` and `\https://`
 .. Click *OK* to close the file.
-.. Go to *Tools > Options > Advanced > Security*. Locate and check
-*Enable Integrated Windows Authentication*.
+.. Go to *Tools > Options > Advanced > Security*. Locate and check *Enable Integrated Windows Authentication*.
 
 .. Click *OK* and close the browser.
 
-. Safari for Apple Mac computers. No configuration is necessary.
+. Safari for Apple Mac computers.
+No configuration is necessary.
 
 == Test your setup
 
-. On a Windows computer or an Apple Mac computer, log in to the
-computer as a domain user.
+. On a Windows computer or an Apple Mac computer, log in to the computer as a domain user.
 +
 Your token as a domain user will be saved on the computer.
 The token will be picked up by the SPNEGO-aware browser and sent to the Zimbra server in the Authorization header.
@@ -393,31 +377,21 @@ If SPNEGO auth fails, the user is redirected to an error URL.
 Make sure the following are true.
 
 * The browser is in the Intranet zone.
-* The user is accessing the server using a Hostname rather than IP
-address.
-* Integrated Windows authentication in Internet Explorer is enabled,
-and the host is trusted in Firefox.
+* The user is accessing the server using a Hostname rather than IP address.
+* Integrated Windows authentication in Internet Explorer is enabled, and the host is trusted in Firefox.
 * The server is not local to the browser.
 * The client’s Kerberos system is authenticated to a domain controller.
 
-* If the browser display the "401 Unauthorized", it's most likely that the
-browser either did not send another request with Authorization in response
-to the 401, or had sent an Authorization which is not using the
-GSS-API/SPNEGO scheme.
+* If the browser display the "401 Unauthorized", it's most likely that the browser either did not send another request with Authorization in response to the 401, or had sent an Authorization which is not using the GSS-API/SPNEGO scheme.
 +
-Check your browser settings, and make sure it is one of the supported
-browsers/platforms
+Check your browser settings, and make sure it is one of the supported browsers/platforms
 
-* If you are redirected to the error URL specified in
-`zimbraSpnegoAuthErrorURL`, that means The SPNEGO authentication sequence
-does not work.
+* If you are redirected to the error URL specified in `zimbraSpnegoAuthErrorURL`, that means The SPNEGO authentication sequence does not work.
 +
-Take a network trace, make sure the browser sends Authorization header in
-response to the 401. Make sure the Negotiate is using GSS-API/ SPNEGO, not
-NTLM (use a network packet decoder like Wireshark) .
+Take a network trace, make sure the browser sends Authorization header in response to the `401`.
+Make sure the Negotiate is using GSS-API/ SPNEGO, not NTLM (use a network packet decoder like _Wireshark_).
 +
-After verifying that the browser is sending the correct Negotiate, if it
-still does not work, turn on the following debug and check Zimbra logs:
+After verifying that the browser is sending the correct Negotiate, if it still does not work, turn on the following debug and check Zimbra logs:
 +
 --
 ** ADD "`-DDEBUG=true -Dsun.security.spnego.debug=all`" (note, not replace)
@@ -428,57 +402,42 @@ still does not work, turn on the following debug and check Zimbra logs:
 +
 Then restart the mailbox server.
 +
-Browse to the debug snoop page:
-http://{server}:{port}/spnego/snoop.jsp. See if you can access the
-snoop.jsp
+Browse to the debug snoop page (`\http://{server}:{port}/spnego/snoop.jsp`).
+See if you can access `snoop.jsp`.
 +
 Check zmmailboxd.out and mailox.log for debug output.
 
-** One of the errors at this stage could be because of clock skew on
-thejetty server. If this is the case, it should be shown in
-`zmmailboxd.out`. Fix the clock skew and try again.
+** One of the errors at this stage could be because of clock skew on the jetty server.
+If this is the case, it should be shown in `zmmailboxd.out`.
+Fix the clock skew and try again.
 
 == Configure Kerberos Auth with SPNEGO Auth
 
-Kerberos auth and SPNEGO can co-exists on a domain. Use case is using
-Kerberos as the mechanism for verifying user principal/password against a
-KDC, instead of the native Zimbra LDAP, when user cannot get in by SPNEGO.
+Kerberos auth and SPNEGO can co-exists on a domain.
+Use case is using Kerberos as the mechanism for verifying user principal/password against a KDC, instead of the native Zimbra LDAP, when user cannot get in by SPNEGO.
 
-When SPNEGO auth fails, users are redirected to the Zimbra sign in page if
-the browser is configured properly. Users can enter their Zimbra username
-and password on the sign in page to sign in manually. The Domain attribute
-`zimbraAuthMech` controls the mechanism for verifying passwords. If
-`zimbraAuthMech` is set to "kerberos5", The user name the user enters is
-usedto first identify a valid Zimbra user (users must be provisioned in the
-Zimbra LDAP), then from Zimbra user is mapped to a Kerberos principal, the
-Kerberos principal + password is then validated against a KDC. This KDC
-could be different from, or the same as, the KDC that the Active Directory
-domain controller (for SPNEGO auth) is running as.
+When SPNEGO auth fails, users are redirected to the Zimbra sign in page if the browser is configured properly.
+Users can enter their Zimbra username and password on the sign in page to sign in manually.
+The Domain attribute `zimbraAuthMech` controls the mechanism for verifying passwords.
+If `zimbraAuthMech` is set to "kerberos5", the user name the user enters is usedto first identify a valid Zimbra user (users must be provisioned in the Zimbra LDAP), then from Zimbra user is mapped to a Kerberos principal, the Kerberos principal + password is then validated against a KDC.
+This KDC could be different from, or the same as, the KDC that the Active Directory domain controller (for SPNEGO auth) is running as.
 
 [NOTE]
-Every Microsoft Active Directory domain controller acts as Kerberos
-KDC. For SPNEGO auth, KDC is not contacted from the mailbox server. The
-Kerberos token sent from the Authorization http header along with jetty's
-keytab file can identify/authenticate the user.
+Every Microsoft Active Directory domain controller acts as Kerberos KDC.
+For SPNEGO auth, KDC is not contacted from the mailbox server.
+The Kerberos token sent from the Authorization http header along with jetty's keytab file can identify/authenticate the user.
 
-For kerberos auth (`zimbraAuthMech*="kerberos5"`), the mailbox server
-needs to contact KDC to validate principal+password. For the java
-kerberos client (i.e. Zimbra mailbox server), the default realm and KDC
-for the realm is specify in a Kerberos config file. The location of this
-config file can be specified in JVM argument `java.security.krb5.conf`.
-If it is not specified, the default is `/etc/krb5.conf`. When SPNEGO is
-enabled in Zimbra, `java.security.krb5.conf` for the mailbox server is
-set to `/opt/zimbra/jetty/etc/krb5.ini`. Therefore, that is the
-effective file for configuring kerberos auth.
+For kerberos auth (`zimbraAuthMech*="kerberos5"`), the mailbox server needs to contact KDC to validate principal+password.
+For the java kerberos client (i.e. Zimbra mailbox server), the default realm and KDC for the realm is specify in a Kerberos config file.
+The location of this config file can be specified in JVM argument `java.security.krb5.conf`.
+If it is not specified, the default is `/etc/krb5.conf`.
+When SPNEGO is enabled in Zimbra, `java.security.krb5.conf` for the mailbox server is set to `/opt/zimbra/jetty/etc/krb5.ini`.
+Therefore, that is the effective file for configuring kerberos auth.
 
-`/opt/zimbra/jetty/etc/krb5.ini` is rewritten from
-`/opt/zimbra/jetty/etc/krb5.ini.in` each time when the mailbox server
-restarts. To configure, you need to modify the
-`/opt/zimbra/jetty/etc/krb5.ini.in` file, not
-`/opt/zimbra/jetty/etc/krb5.ini`.
+`/opt/zimbra/jetty/etc/krb5.ini` is rewritten from `/opt/zimbra/jetty/etc/krb5.ini.in` each time when the mailbox server restarts.
+To configure, you need to modify the `/opt/zimbra/jetty/etc/krb5.ini.in` file, not `/opt/zimbra/jetty/etc/krb5.ini`.
 
-Under [realms] section, kdc and admin_server are not set for SPNEGO auth,
-but they are required for kerberos auth.
+Under [realms] section, kdc and admin_server are not set for SPNEGO auth, but they are required for kerberos auth.
 
 To configure:
 
@@ -499,16 +458,14 @@ to
 }
 ----
 
-. Replace YOUR-KDC and YOUR-ADMIN-SERVER to the hostname on which the
-kdc/admin_server for kerberos auth is running.
+. Replace YOUR-KDC and YOUR-ADMIN-SERVER to the hostname on which the kdc/admin_server for kerberos auth is running.
 
 . Save the file and restart mailbox server.
 
-The restriction is the realm for SPNEGO and Kerberos auth must be the
-same. For SPNEGO auth, the Kerberos principal in the Authorization header
-is mapped to a unique Zimbra account. For Kerberos auth, the Zimbra account
-is mapped to a unique Kerberos principal. The mapping (by domain attribute
-`zimbraAuthKerberos5Realm`) is the same for both.
+The restriction is the realm for SPNEGO and Kerberos auth must be the same.
+For SPNEGO auth, the Kerberos principal in the Authorization header is mapped to a unique Zimbra account.
+For Kerberos auth, the Zimbra account is mapped to a unique Kerberos principal.
+The mapping (by domain attribute `zimbraAuthKerberos5Realm`) is the same for both.
 
 [[setting_up_single_sign_on_options_for_zco]]
 == Setting Up Single Sign-On Options for ZCO
@@ -516,15 +473,13 @@ is mapped to a unique Kerberos principal. The mapping (by domain attribute
 [NOTE]
 To use SSO, SPNEGO must be configured on the {product-abbrev} server to use this option.
 
-The single sign-on option works with a specific server. The server name
-used in the ZCO profile must match that in the SPNEGO configuration.  Make
-sure that the server name is incorporated into the `.msi` file prior to
-installation.
+The single sign-on option works with a specific server.
+The server name used in the ZCO profile must match that in the SPNEGO configuration.
+Make sure that the server name is incorporated into the `.msi` file prior to installation.
 
 To set up the single sign-on option in the `.msi` customization script:
 
-.  Set the server name to be the server name configured for SPNEGO, enter
-`-sn <spnegoserver.example.com>`.
+.  Set the server name to be the server name configured for SPNEGO, enter `-sn <spnegoserver.example.com>`.
 .  Set the password rule, enter `-pw 0`
 
 [source,bash]

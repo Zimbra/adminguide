@@ -45,7 +45,7 @@ From: userA@example.com
 To:userB@example.com
 Subject: New License Key
 Message-ID: <015f01c717fe$70f042d1$b1d6f61d@thom>
-Date: Mon, 04 Nov 2008 23:48:18 -0000
+Date: Mon, 04 Nov 2021 23:48:18 -0000
 
 Hi B,
 
@@ -67,7 +67,7 @@ Subject: New License Key
 Message-ID: <015f01c717fe$70f042d1$b1d6f61d@thom>
 X-Envelope-From: userA@example.com
 X-Envelope-To: userB@example.com
-Date: Mon, 04 Nov 2008 23:48:18 -0000
+Date: Mon, 04 Nov 2021 23:48:18 -0000
 
 Hi B,
 
@@ -263,7 +263,7 @@ created. The default value is `${USER} ${DATE}@${DOMAIN}.archive`.
 
 The archive account address would be similar to the following example:
 
-`user-20070510@example.com.archive`
+`user-20210510@example.com.archive`
 
 If you change the default value, you must use syntax that creates a valid
 email address. We recommend that you add `.archive` to all archive accounts

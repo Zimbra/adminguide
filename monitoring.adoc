@@ -258,7 +258,7 @@ to see if the DoSFilter was applied.
 ====
 [source,subs=+quotes]
 ----
-2013-01-15 15:52:20,426 WARN [qtp1635701107-91:https://x.x.x.x/
+2021-01-15 15:52:20,426 WARN [qtp1635701107-91:https://x.x.x.x/
 Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5ddddd3NR&DeviceType=iPhone&Cmd=FolderSync][name=zsupport2@domain.com;mid=64;ip=10.1.2.3;Cmd=FolderSync;DeviceID=Appl5K0113UN3NR;Version=12.1;] sync - *Service exception com.zimbra.common.service.ServiceException: error while proxying request to target server: HTTP/1.1 503 Service Unavailable*
 ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?User=zsupport2&DeviceId=Appl5K0113UN3NR&DeviceType=iPhone&Cmd=FolderSync:1358286740426:c5ca7f36bb0a038f Code:service.PROXY_ERROR Arg:(url, STR,"http://mail.domain.com:80/service/soap/SyncRequest"
 ----
@@ -270,7 +270,7 @@ ExceptionId:qtp1635701107-91:https://10.10.0.54:443/Microsoft-Server-ActiveSync?
 ====
 [source,subs=+quotes]
 ----
-2013-01-15 15:57:32.537:WARN:oejs.*DoSFilter:DOS ALERT*:ip=127.0.1.1,session=null,user=null
+2021-01-15 15:57:32.537:WARN:oejs.*DoSFilter:DOS ALERT*:ip=127.0.1.1,session=null,user=null
 ----
 ====
 
@@ -785,7 +785,7 @@ by default log entries in `mailbox.log` have the following Log4j pattern:
 ====
 This pattern consists of 6 blocks of data:
 
-* Date and time (e.g.: `2018-01-22 19:23:07,100`)
+* Date and time (e.g.: `2021-01-22 19:23:07,100`)
 * Log level (e.g. `INFO`)
 * Thread name (e.g. `[qtp1043351526-547:https:https://localhost:7071/service/admin/soap/DeleteAccountRequest]`, `[Index-9]`, etc.)
 * {product-name} context
@@ -839,7 +839,7 @@ The following key value pairs are currently supported and may be recorded in log
 * `oproto` -- originating protocol of request. This can be passed by internal components that make SOAP requests on behalf of a user (e.g. MTA)
 
 The example below is a record showing that
-on October 25, 2017, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP `10.1.1.136`.
+on October 25, 2021, 28 minutes after midnight, a POP3 client with IP address `222.173.186.17` has contacted the {product-name} server and that the request was proxied through a local proxy server with IP `10.1.1.136`.
 
 image:poplogmessage.png[Mailbox Log Entry for POP]
 
@@ -918,13 +918,13 @@ recorded.
 
 When your system crashes, locate the startup message and then look for
 errors before the startup message date.  This example shows an
-out-of-memory error on June 17, 2007.
+out-of-memory error on June 17, 2021.
 
 .Startup message
 ====
 [source,subs=+quotes]
 ----
-2007-06-25 01:56:18,725 INFO [main] [] soap - Servlet SoapServlet starting up
+2021-06-25 01:56:18,725 INFO [main] [] soap - Servlet SoapServlet starting up
 ----
 ====
 
@@ -934,7 +934,7 @@ Look for errors before the startup message.
 ====
 [source,subs=+quotes]
 ----
-2007-06-17 20:11:34,194 FATAL [btpool0-3335] [name=samd@example.com;aname=abcadmin@example.com;mid=142;ip=10.3.4.5;ua=zimbraConnectorForBES/5.0.207;] system - handler exception java.lang.OutOfMemoryError: PermGen space
+2021-06-17 20:11:34,194 FATAL [btpool0-3335] [name=samd@example.com;aname=abcadmin@example.com;mid=142;ip=10.3.4.5;ua=zimbraConnectorForBES/5.0.207;] system - handler exception java.lang.OutOfMemoryError: PermGen space
 ----
 ====
 
@@ -948,7 +948,7 @@ rejected as the address must be a fully-qualified address.
 ====
 [source,subs=+quotes]
 ----
-2007-06-25 10:47:43,008 INFO [*LmtpServer*-250]
+2021-06-25 10:47:43,008 INFO [*LmtpServer*-250]
 [name=bigen@example.com;mid=30;msgid=<1291804360.35481182793659172.JavaMail.root@example.com>;] *lmtp - rejecting message bigen@example.com: exception occurred*
 com.zimbra.cs.mailbox.MailServiceException: redirect to too failed
 at com.zimbra.cs.mailbox.MailServiceException.internal_SEND_FAILURE (MailServiceException.java:412)
@@ -989,7 +989,7 @@ Windows OS.  Permission was denied because it was not an admin account.
 ====
 [source,subs=+quotes]
 ----
-2007-06-25 09:16:11,483 INFO [btpool0-251] [ip=10.4.5.6;ua=zimbraWebClient - FFX.X (Win);] SoapEngine - *handler exception*
+2021-06-25 09:16:11,483 INFO [btpool0-251] [ip=10.4.5.6;ua=zimbraWebClient - FFX.X (Win);] SoapEngine - *handler exception*
 com.zimbra.common.service.ServiceException: permission denied: not an admin account
 at com.zimbra.common.service.ServiceException.PERM_DENIED(ServiceException.java:205)
 at com.zimbra.cs.service.admin.*Auth*.handle(*Auth*.java:103)
@@ -1006,7 +1006,7 @@ occurred while trying to connect siress@example.com.
 ====
 [source,subs=+quotes]
 ----
-mailbox.log.2007-06-19:2007-06-19 15:33:56,832 FATAL [*ImapServer*-2444] [name=sires@example.com;ip=127.0.0.1;] system - Fatal error occurred while handling connection
+mailbox.log.2021-06-19:2021-06-19 15:33:56,832 FATAL [*ImapServer*-2444] [name=sires@example.com;ip=127.0.0.1;] system - Fatal error occurred while handling connection
 ----
 ====
 
@@ -1317,9 +1317,9 @@ Type: incremental
 
 Status: completed
 
-Started: Fri, 2012/07/13 01:00:05.488 PDT
+Started: Fri, 2021/07/13 01:00:05.488 PDT
 
-Ended: Fri, 2012/07/13 01:10:09.842 PDT
+Ended: Fri, 2021/07/13 01:10:09.842 PDT
 
 Redo log sequence range: 2 ..  2
 

@@ -78,8 +78,8 @@ The total number of users who have the Advanced features active can be seen in t
 ....
 zimbra@129efa51bd95:~$ zxsuite core getLicenseInfo
 
-        dateStart                                           2019-06-11 00:00:00 UTC
-        dateEnd                                             2019-12-31 17:00:00 UTC
+        dateStart                                           2021-06-11 00:00:00 UTC
+        dateEnd                                             2021-12-31 17:00:00 UTC
         expired                                             false
         type                                                regular - Network Edition
         [...]

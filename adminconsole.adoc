@@ -23,7 +23,7 @@ See <<delegated_administration,Delegated Administration>> for more details.
 
 . To launch the Administration Console in a typical installation, use the following URL pattern.
 +
-`https://server.domain.com:7071/`
+`\https://server.domain.com:7071/`
 +
 [cols=",",options="header",]
 |====================================================
@@ -55,12 +55,6 @@ zmprov sp adminname@domain.com password
 ----
 
 === Customizing the Login and Logout Pages
-
-ifdef::z9[]
-====
-This section is applicable only for the {web-client}.
-====
-endif::z9[]
 
 A different login and logout page can be configured either as a global setting or as a domain setting.
 

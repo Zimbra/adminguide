@@ -891,7 +891,7 @@ exit
 === Lazy Mode Configuration
 Lazy mode auto provisioning automatically creates a new account after a
 user authenticates from an external authentication mechanisms (LDAP,
-preauth, Kerberos 5, and/or Spnego).
+preauth, Kerberos 5, and/or SPNEGO).
 
 . Log in to the {product-abbrev} server as zimbra and type `zmprov` at the command
 prompt.

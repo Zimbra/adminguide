@@ -440,7 +440,7 @@ notifications(O)           Email Address[,..]
 
 Usage example:
 
-zxsuite backup dorestoreonnewaccount John NewJohn `28/09/2012 10:15:10`
+zxsuite backup dorestoreonnewaccount John NewJohn `28/09/2021 10:15:10`
 Restores John's account in a new account named NewJohn
 ....
 
@@ -506,8 +506,8 @@ notifications(O)    Email Address[,..]
 
 Usage example:
 
-zxsuite backup doundelete John `08/10/2012 10:15:00` last
-Performs an undelete on John's account of all items created between 08/10/2012 10:15:00 and the latest data available
+zxsuite backup doundelete John `08/10/2021 10:15:00` last
+Performs an undelete on John's account of all items created between 08/10/2021 10:15:00 and the latest data available
 ....
 
 [[external-restore]]
@@ -783,11 +783,11 @@ Shows item with id = 1 belonging to account a7300a00-56ec-46c3-9773-c6ef7c4f3636
 
 Let's say a user moves one item to the trash:
 
-`2013-07-18 15:22:01,495 INFO  [btpool0-4361://localhost/service/soap/MsgActionRequest [name=\user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailop - moving Message (id=339) to Folder Trash (id=3)`
+`2021-07-18 15:22:01,495 INFO  [btpool0-4361://localhost/service/soap/MsgActionRequest [name=\user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailop - moving Message (id=339) to Folder Trash (id=3)`
 
 and then empties the trash.
 
-`2013-07-18 15:25:08,962 INFO  [btpool0-4364://localhost/service/soap/FolderActionRequest] [name=\user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailbox - Emptying 9 items from /Trash, removeSubfolders=true.`
+`2021-07-18 15:25:08,962 INFO  [btpool0-4364://localhost/service/soap/FolderActionRequest] [name=\user@domain.com;mid=2538;oip=258.236.789.647;ua=zclient/7.2.4_GA_2900;] mailbox - Emptying 9 items from /Trash, removeSubfolders=true.`
 
 She then calls the Administrator to restore the deleted item.
 Knowing the itemID and the email address, the Administrator runs the following as the `zimbra` user to restore the missing item:
@@ -1001,7 +1001,7 @@ You can change the `query` argument to display specific settings, e.g.
 zimbra@test:~$ zxsuite backup getServerConfig standard date last backup_path /opt/zimbra/backup/ng/ query serverConfig/zimbraMailMode/test.domain.com
 
 
-config date_______________________________________________________________________________________________28/02/2014 04:01:14 CET
+config date_______________________________________________________________________________________________28/02/2021 04:01:14 CET
 test.domain.com____________________________________________________________________________________________________________both
 ....
 
@@ -1021,7 +1021,7 @@ ATTENTION: These files contain the directories {zimbraHome}/conf/ and {zimbraHom
 
                 filename                                                    customizations_28_02_14#04_01_14.tar.gz
                 path                                                        /opt/zimbra/backup/ng/server/
-                modify date                                                 28/02/2014 04:01:14 CET
+                modify date                                                 28/02/2021 04:01:14 CET
 ....
 
 [[vms-and-snapshots]]
@@ -1208,15 +1208,15 @@ Searching for the broken item, setting the `backup_path` parameter to the import
 ....
 zimbra@test:~$ zxsuite backup getItem admin@example.com 24700 backup_path /mnt/import/ date all
        itemStates                              
-               start_date                                                  12/07/2013 16:35:44
+               start_date                                                  12/07/2021 16:35:44
                type                                                        message
                deleted                                                     true
                blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
-               start_date                                                  12/07/2013 17:04:33
+               start_date                                                  12/07/2021 17:04:33
                type                                                        message
                deleted                                                     true
                blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
-               start_date                                                  15/07/2013 10:03:26
+               start_date                                                  15/07/2021 10:03:26
                type                                                        message
                deleted                                                     true
                blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
@@ -1228,7 +1228,7 @@ If the item is an email, you are able to recover a standard `.eml` file through 
 
 ....
 /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
-              start_date                                                  15/07/2013 10:03:26
+              start_date                                                  15/07/2021 10:03:26
               type                                                        message
               deleted                                                     true
               blob path /mnt/import/items/c0/c0,gUlvzQfE21z6YRXJnNkKL85PrRHw0KMQUqo,pMmQ=
@@ -1246,15 +1246,15 @@ zimbra@test:~$ cat /tmp/restored.eml
 Return-Path: zimbra@test.example.com
 
 Received: from test.example.com (LHLO test.example.com) (192.168.1.123)
-by test.example.com with LMTP; Fri, 12 Jul 2013 16:35:43 +0200 (CEST)
+by test.example.com with LMTP; Fri, 12 Jul 2021 16:35:43 +0200 (CEST)
 
 Received: by test.example.com (Postfix, from userid 1001) id 4F34A120CC4; 
-Fri, 12 Jul 2013 16:35:43 +0200 (CEST)
+Fri, 12 Jul 2021 16:35:43 +0200 (CEST)
 To: admin@example.com
 From: admin@example.com
 Subject: Service mailboxd started on test.example.com
-Message-Id: <20130712143543.4F34A120CC4@test.example.com>
-Date: Fri, 12 Jul 2013 16:35:43 +0200 (CEST)
+Message-Id: <20210712143543.4F34A120CC4@test.example.com>
+Date: Fri, 12 Jul 2021 16:35:43 +0200 (CEST)
 
 Jul 12 16:35:42 test zmconfigd[14198]: Service status change: test.example.com mailboxd changed from stopped to running
 ....

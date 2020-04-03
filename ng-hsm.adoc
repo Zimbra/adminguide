@@ -1138,7 +1138,7 @@ HSM NG is compatible with the `Amazon S3 - Intelligent Tiering`
 storage class and will set the appropriate Intelligent Tiering flag on all files, as long as the option has been enabled on the volume.
 
 For more information about Intelligent Tiering, please refer to the
-https://aws.amazon.com/about-aws/whats-new/2018/11/s3-intelligent-tiering/[official Amazon S3
+https://aws.amazon.com/about-aws/whats-new/2021/11/s3-intelligent-tiering/[official Amazon S3
 Documentation].
 
 [[item-deduplication]]

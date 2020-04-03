@@ -638,7 +638,7 @@ zxsuite admin getMonthlyReport [attr1 value1 [attr2 value2...
 PARAMETER LIST
 
 NAME        TYPE       EXPECTED VALUES    DEFAULT
-month(O)    String     mm/yyyy            12/2012
+month(O)    String     mm/yyyy            12/2021
 local(O)    Boolean    true|false         false
 
 (M) == mandatory parameter, (O) == optional parameter
@@ -648,8 +648,8 @@ Usage example:
 zxsuite admin getMonthlyReport
 Shows the monthly report for the previous month
 
-zxsuite admin getMonthlyReport month 11/2012
-Shows the monthly report for the month '11/2012'
+zxsuite admin getMonthlyReport month 11/2021
+Shows the monthly report for the month '11/2021'
 
 ....
 
@@ -666,7 +666,7 @@ zxsuite admin doMonthlyReport [attr1 value1 [attr2 value2...
 PARAMETER LIST
 
 NAME        TYPE       EXPECTED VALUES    DEFAULT
-month(O)    String     mm/yyyy            12/2012
+month(O)    String     mm/yyyy            12/2021
 force(O)    Boolean    true|false         false
 
 (M) == mandatory parameter, (O) == optional parameter
@@ -676,7 +676,7 @@ Usage example:
 zxsuite admin doMonthlyReport
 Generates the monthly report for the previous month and saves it in the current Admin NG log path
 
-zxsuite admin doMonthlyReport month 01/2013
+zxsuite admin doMonthlyReport month 01/2021
 Generates a PARTIAL monthly report for the current month, without saving it to disk
 
 ** NOTE**

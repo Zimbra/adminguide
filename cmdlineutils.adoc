@@ -2134,7 +2134,7 @@ specified here.
 
 |--label |-lb |
 `<arg>` The label of the full backup session to query.  An example of a
-label is `backup200507121559510`.
+label is `backup202107121559510`.
 
 |--server |-s |
 `<arg>` Mail server host name.  For format, use either the plain host name
@@ -2161,15 +2161,15 @@ Specify date/time in one of these formats:
 
 [cols="m",options=""]
 |=======================================================================
-|2008/12/16 12:19:23
-|2008/12/16 12:19:23 257
-|2008/12/16 12:19:23.257
-|2008/12/16-12:19:23-257
-|2008/12/16-12:19:23
-|20081216.121923.257
-|20081216.121923
-|20081216121923257
-|20081216121923
+|2021/12/16 12:19:23
+|2021/12/16 12:19:23 257
+|2021/12/16 12:19:23.257
+|2021/12/16-12:19:23-257
+|2021/12/16-12:19:23
+|20211216.121923.257
+|20211216.121923
+|20211216121923257
+|20211216121923
 |=======================================================================
 
 Specify year, month, date, hour, minute, second, and optionally
@@ -2428,7 +2428,7 @@ zmrestoreldap {-lb <arg>} {-t <arg>} [options]
 |Short Name |Description
 
 |-lb |
-`<arg>` Session label to restore from.  For example, `full200612291821113`.
+`<arg>` Session label to restore from.  For example, `full202112291821113`.
 
 |-t |
 `<arg>` Specifies the backup target location.  The default is
@@ -3094,20 +3094,20 @@ Certificate Store.  See the Zimbra Wiki article
 https://wiki.zimbra.com/wiki/ZCO_Connection_Security[ZCO Connection
 Security] for more information.
 
-* *HTTP*.  HTTP only, the user would browse to http://zimbra.domain.com.
+* *HTTP*.  HTTP only, the user would browse to `\http://zimbra.domain.com`.
 
-* *HTTPS.* HTTPS only (default), the user would browse to
-https://zimbra.domain.com.  http:// is denied.
+* *HTTPS.* HTTPS only (default), the user would browse to `\https://zimbra.domain.com`.
+`\http://` is denied.
 
-* *Mixed* If the user goes to http:// it will switch to https:// for the
-login only,then will revert to http:// for normal session traffic.  If the
-user browses to https://, then the user will stay https://
+* *Mixed* If the user goes to `http://` it will switch to `https://` for the
+login only,then will revert to `http://` for normal session traffic.  If the
+user browses to `https://`, then the user will stay `https://`
 
-* *Both* A user can go to http:// or https:// and will keep that mode for
+* *Both* A user can go to `http://` or `https://` and will keep that mode for
 the entire session.
 
-* *Redirect* Like mixed if the user goes to http:// it will switch to
-https:// but they will stay https:// for their entire session.
+* *Redirect* Like mixed if the user goes to `http://` it will switch to
+`https://` but they will stay `https://` for their entire session.
 
 All modes use TLS encryption for back-end administrative traffic.
 
@@ -3482,10 +3482,8 @@ BLOB>` and `<END OF BLOB>` marking the start and end of the blob.
 
 === zmskindeploy
 
-Use `zmskindeploy` to simplify the process of deploying skins in the {web-app}.  This
-tool processes the skin deployment, enables the skin for all users of the
-the {web-app} deployment, and restarts the web server so that it recognizes the new
-skin.
+Use `zmskindeploy` to simplify the process of deploying skins for the {web-client}.
+This tool processes the available skins, enables them for all users of the {product-short} deployment, and restarts the web server so that it recognizes the new skins.
 ////
 //Linked wiki article is for ZCS prior to 8.x.
 For more information about this tool, see
@@ -3500,8 +3498,7 @@ zmskindeploy <path/to/skin/dir/or/zipfile>
 
 === zmsoap
 
-Use `zmsoap` to print mail, account, and admin information in the SOAP
-format.
+Use `zmsoap` to print mail, account, and admin information in the SOAP format.
 
 ==== Syntax
 [source,bash]

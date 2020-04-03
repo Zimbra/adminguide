@@ -3,7 +3,9 @@
 :toc:
 
 [NOTE]
-*Starting with Zimbra 8.8, there are two versions of this feature. Zimbra 8.8 provides Standard and New Generation (NG) versions. Zimbra 8.7 and earlier include the Standard version, which is explained below. To use and enable the NG version of this feature with Zimbra 8.8, refer to the specific NG chapter later in this Guide.
+*Starting with Zimbra 8.8*, there are two versions of this feature, Standard and New Generation (NG) versions.
+Zimbra 8.7 and earlier included only the Standard version, which is explained below.
+To use and enable the NG version of this feature with Zimbra 8.8 and later, refer to the specific NG chapter later in this Guide.
 
 The global administrator can create different delegated administrator
 roles.
@@ -395,7 +397,7 @@ different targets.
 
 == Predefined Delegated Administrator Role
 
-The following preconfigured administrator groups are created
+The following pre-configured administrator groups are created
 automatically. You can assign administrator accounts to these groups.
 
 === Domain Administration Group
@@ -416,7 +418,7 @@ Navigation pane.
 
 For domain administrators, all tasks are performed from the Administration
 Console. To facilitate easy log in, when a delegated administrator account
-is created, their {web-app} account can have a link to the Administration
+is created, their {web-client} account can have a link to the Administration
 Console.
 
 The link is created from the `zmprov` CLI
@@ -424,6 +426,8 @@ The link is created from the `zmprov` CLI
 ----
 zmprov md {server.example.com} zimbraWebClientAdminReference {https://server.example.com:7071/}
 ----
+
+ifdef::z9[NOTE: {only-in-classic}]
 
 === Distribution List Administration Group
 
