@@ -257,7 +257,7 @@ Create a Microsoft Azure Application::
 
 . Under Supported account types, select Accounts in any organizational directory and personal Microsoft account.
 
-. Adjust and add the following Redirect URL (Replace "<hostname>" with the public hostname of your Zimbra server):
+. Adjust and add the following Redirect URL (Replace "<hostname>" with the public hostname of your {product-name} server):
 
 ..  `\https://<hostname>/service/extension/oauth2/authenticate/outlook`
 
@@ -265,7 +265,7 @@ Create a Microsoft Azure Application::
 
 . Navigate to the Manage section: Authentication via the left navigation menu.
 
-. Select Add URI then adjust and add the following Redirect URL (Replace "<hostname>" with the public hostname of your Zimbra server), then click Save:
+. Select Add URI then adjust and add the following Redirect URL (Replace "<hostname>" with the public hostname of your {product-name} server), then click Save:
 
 ..  `\https://<hostname>/%40zimbra/service/extension/oauth2/authenticate/outlook`
 
@@ -326,7 +326,7 @@ Create a Slack Application::
 
 ..  users:read.email
 
-. Adjust and add the following Redirect URLs (Replace "<hostname>" with the public hostname of your Zimbra server):
+. Adjust and add the following Redirect URLs (Replace "<hostname>" with the public hostname of your {product-name} server):
 
 ..  `\https://<hostname>/service/extension/oauth2/authenticate/slack`
 
@@ -357,21 +357,21 @@ Create a Zoom Application::
 
 . Navigate to the App Credentials section via the left navigation menu.
 
-. Add the following Redirect URL to the Production section (Replace "<hostname>" with the public hostname of your Zimbra server):
+. Add the following Redirect URL to the Production section (Replace "<hostname>" with the public hostname of your {product-name} server):
 
-..  https://<hostname>/service/extension/oauth2/authenticate/zoom
+..  `\https://<hostname>/service/extension/oauth2/authenticate/zoom`
 
-. Add the following Whitelist URLs (Replace "<hostname>" with the public hostname of your Zimbra server):
+. Add the following Whitelist URLs (Replace "<hostname>" with the public hostname of your {product-name} server):
 
-..  https://<hostname>/service/extension/oauth2/authenticate/zoom
+..  `\https://<hostname>/service/extension/oauth2/authenticate/zoom`
 
-..  https://<hostname>/@zimbra/service/extension/oauth2/authenticate/zoom
+..  `\https://<hostname>/@zimbra/service/extension/oauth2/authenticate/zoom`
 
 . Navigate to the Information section via the left navigation menu.
 
-. Configure the Deauthorization Notification Endpoint URL (Replace "<hostname>" with the public hostname of your Zimbra server):
+. Configure the Deauthorization Notification Endpoint URL (Replace "<hostname>" with the public hostname of your {product-name} server):
 
-..  https://<hostname>/service/extension/oauth2/deauthorization/zoom
+..  `\https://<hostname>/service/extension/oauth2/deauthorization/zoom`
 
 . Navigate to the Scopes section via the left navigation menu.
 
