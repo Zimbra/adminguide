@@ -126,6 +126,11 @@ endif::z9[]
 include::zimlets.adoc[]
 
 <<<
+ifdef::z9[]
+include::zimlets-modern-app.adoc[]
+
+<<<
+endif::z9[]
 
 include::voice-service.adoc[]
 

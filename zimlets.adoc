@@ -1,16 +1,19 @@
 [[zimlets]]
+ifndef::z9[]
 = Zimlets
 :toc:
+endif::z9[]
 
-Zimlets are a mechanism to integrate {product-abbrev} with different third-party
-applications to enhance the user experience from the {product-short} {web-client}.
-With Zimlets, users can look at information and interact with the
-third-party application from within their email messages. Zimlets can be
-made available from the {product-short} {web-client} Overview Pane to users by
-modifying the Class of Service (COS).
+ifdef::z9[]
+= Zimlets for {web-client}
+:toc:
+endif::z9[]
 
-{product-abbrev} includes several predefined Zimlets. You can also create Zimlets or
-download them from the Zimlet Gallery located on the Zimbra Web site.
+Zimlets are a mechanism to integrate {product-abbrev} with different third-party applications to enhance the user experience from the {product-short} {web-client}.
+With Zimlets, users can look at information and interact with the third-party application from within their email messages.
+Zimlets can be made available from the {product-short} {web-client} Overview Pane to users by modifying the Class of Service (COS).
+
+{product-abbrev} includes several predefined Zimlets. You can also create Zimlets or download them from the Zimlet Gallery located on the Zimbra Web site.
 
 Predefined Zimlets when enabled let users preview the following:
 
@@ -315,3 +318,4 @@ the Extensions from the Zimbra Gallery section.
 
 To develop your own custom Zimlets, see the Zimlet Developers Guide on
 the Zimbra Wiki at https://wiki.zimbra.com.
+
