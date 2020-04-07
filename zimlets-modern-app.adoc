@@ -1,4 +1,4 @@
-= Zimlets for Modern Web App
+= Configuring Zimlets for Modern Web App
 
 Zimlets are plugins which enhance the {modern-client}'s functionalities.
 The zimlets need to be configured and authorized before you can use them with the {modern-client}.
