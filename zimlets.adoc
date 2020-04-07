@@ -5,7 +5,7 @@ ifndef::z9[]
 endif::z9[]
 
 ifdef::z9[]
-= Zimlets for {web-client}
+= Configuring Zimlets for {web-client}
 :toc:
 endif::z9[]
 

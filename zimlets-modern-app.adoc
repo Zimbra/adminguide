@@ -163,7 +163,7 @@ Create a Dropbox Application::
 
 . Visit link:https://www.dropbox.com/developers/apps/[Dropbox App Console]
 
-. Choose Create app
+. Choose Create app.
 
 . Choose Dropbox API with Full Dropbox access, name your app, then click create app.
 
@@ -302,7 +302,7 @@ Configure the new Application Credentials in {product-name}::
 Create a Slack Application::
 +
 
-. Visit Slack App Management
+. Visit https://api.slack.com/apps[Slack App Management]
 
 . Configure the Basic Information section after creating the Application.
 
@@ -349,7 +349,7 @@ Create a Zoom Application::
 
 . Sign-in to Zoom as your organization‘s owner or an organization account with the developer role.
 
-. Visit Zoom App Management
+. Visit https://marketplace.zoom.us/user/build[Zoom App Management]
 
 . Choose Develop → Build App → OAuth → Create
 
