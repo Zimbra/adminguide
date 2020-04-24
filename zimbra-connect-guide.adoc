@@ -192,15 +192,28 @@ Zimbra Connect features can be enabled and disabled via the `zxsuite config` com
 
 {zconnect-name} features are available on all browsers officially supported by the {product-short} {web-client}, with some client-side limitations:
 
-[cols=",,,,",options="header",]
-|======================================================
-|Browser |Quick Access Sidebar |Connect Tab |Videochat |Screen sharing
-|Internet Explorer 11+ |No |No |No |No
-|Microsoft Edge |Yes |Yes |No |No
-|Mozilla Firefox |Yes |Yes |Yes |Yes
-|Google Chrome |Yes |Yes |Yes |Yes (w/ extension)
-|Safari |Yes |Yes |Yes |No
-|======================================================
+[cols="1a,1a,1a,1a" options="header"]
+|===
+|Browser |Version |OS |Supported
+4+|
+|*Microsoft Edge (Chromium)* |*Latest* |*Windows* |icon:check-circle[role=green] *Yes*
+|*Microsoft Edge (Chromium)* |Others |Windows |icon:check-circle[role=yellow] Limited
+|*Microsoft Edge (EdgeHTML)* |Any |Windows |icon:times-circle[role=red] No
+|*Internet Explorer* |Any |Windows |icon:times-circle[role=red] No
+4+|
+|*Mozilla Firefox* |*Latest* |*Windows/Linux/OSX* |icon:check-circle[role=green] *Yes*
+|*Mozilla Firefox* |ESR |Windows/Linux/OSX |icon:check-circle[role=green] Yes
+|*Mozilla Firefox* |Others |Windows/Linux/OSX |icon:check-circle[role=yellow] Limited
+4+|
+|*Google Chrome* |*Latest* |*Windows/Linux/OSX* |icon:check-circle[role=green] *Yes*
+|*Google Chrome* |Others |Windows/Linux/OSX |icon:check-circle[role=yellow] Limited
+4+|
+|*Safari* |*Latest* |*OSX* |icon:check-circle[role=green] *Yes*
+|*Safari* |Others |OSX |icon:check-circle[role=yellow] Limited
+|===
+
+While likely to work, items marked as "icon:check-circle[role=yellow] Limited" are only supported on the browser's two previous stable releases to the current one.
+
 
 Google Chrome users must install the "Zextras Companion" extension to use the Screen Sharing feature, publicly available in the Chrome Web Store.
 
