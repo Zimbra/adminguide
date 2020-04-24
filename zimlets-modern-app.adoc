@@ -42,7 +42,7 @@ zmprov mcf +zimbraOAuthConsumerAPIScope '<scope><delimiter><scope><delimiter>. .
 === Client Examples
 ==== Dropbox Example
 
-NOTE: The following is required configuration for dropbox, which has no additional scope requirements.
+NOTE: The following is required configuration for dropbox.
 
 ----
 zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/dropbox:dropbox'
@@ -53,61 +53,24 @@ See <<Setting Up Dropbox>> for instructions on obtaining a *Client Id*, and *Cli
 
 ==== Google Example
 
-NOTE: The following is required basic google configuration. Additionally, configure one or more of the scopes described below.
+NOTE: The following is required basic google configuration.
 
 ----
 zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/google:google'
 zmprov mcf +zimbraOAuthConsumerCredentials 'yourGoogleClientIdHere:yourGoogleClientSecretHere:google'
-----
-
-===== Google Drive Scope Configuration
-
-The following scopes are required for google drive. The scopes are only applied when authorization is performed for the noop scope.
-
-----
 zmprov mcf +zimbraOAuthConsumerAPIScope 'https://www.googleapis.com/auth/drive:google_noop'
-----
-
-===== Google Contacts Scope Configuration
-
-The following scopes are required for google contacts. The scopes are only applied when authorization is performed for the contact scope.
-
-----
-zmprov mcf +zimbraOAuthConsumerAPIScope 'profile+https://www.googleapis.com/auth/contacts.readonly:google_contact'
-----
-
-===== Google Calendar Scope Configuration
-
-The following scopes are required for google calendar. The scopes are only applied when authorization is performed for the caldav scope.
-
-----
-zmprov mcf +zimbraOAuthConsumerAPIScope 'profile+https://www.googleapis.com/auth/calendar:google_caldav'
 ----
 
 See <<Setting Up Google Drive>> for instructions on obtaining a *Client Id* and *Client Secret*.
 
 ==== Microsoft Example
 
-NOTE: The following is required basic microsoft configuration. Additionally, configure one or more of the scopes described below.
+NOTE: The following is required basic microsoft configuration.
 
 ----
 zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/outlook:outlook'
-----
-
-===== Microsoft OneDrive Scope Configuration
-
-The following scopes are required for microsoft one drive. The scopes are only applied when authorization is performed for the noop scope.
-
-----
+zmprov mcf +zimbraOAuthConsumerCredentials 'yourMSClientIdHere:yourMSClientSecretHere:outlook'
 zmprov mcf +zimbraOAuthConsumerAPIScope 'profile+User.Read+Files.ReadWrite.All:outlook_noop'
-----
-
-===== Microsoft Outlook Contacts Scope Configuration
-
-The following scopes are required for outlook contacts. The scopes are only applied when authorization is performed for the contact scope.
-
-----
-zmprov mcf +zimbraOAuthConsumerAPIScope 'https%3A%2F%2Foutlook.office.com%2Fcontacts.read:outlook_contact'
 ----
 
 See <<Setting Up OneDrive>> for instructions on obtaining a Client Id, and Client Secret.
@@ -289,7 +252,12 @@ Create a Microsoft Azure Application::
 
 . Select New client secret, add a description, and no expiration.
 
-..  Repeat this task, removing previously created entries, until a Value containing no : is created (secret must not contain colons for compatibility reasons), then click Save.
+. Repeat this task, removing previously created entries, until a `Value` without a `:` is created (secret must not contain colons for compatibility reasons), then click *Save*.
++
+
+Configure the new Application Credentials in Zimbra
+
+. Acquire the `Application (client) ID` from the `Overview` via the left navigation menu, and `Client Secret` from the *Manage* section: `Certificates & secrets` via the left navigation menu.
 
 Configure the new Application Credentials in {product-name}::
 +

@@ -1,3 +1,6 @@
+:palette-generator: https://zm-x-theme-generator.netlify.com/[palette generator]
+:file-path: /opt/zimbra/jetty/webapps/zimbra/modern/clients/
+
 == Customizing {modern-client}
 
 ====
@@ -39,8 +42,10 @@ You should also have the following knowledge and skillsets:
 * Familiarity with your organization's branding guidelines
 
 === Creating an Empty Bundle
+====
 We first create an empty folder and its contents locally.
-Once done, we copy the folder to the {product-short} server.
+Once done with the customizations, we copy this folder to the {product-short} server at `{file-path}`.
+====
 
 ==== Folder Name
 Naming the folder is a crucial first step.
