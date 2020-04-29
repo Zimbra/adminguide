@@ -213,12 +213,6 @@ RBH::
     be blocked, because the servers are either known to be spammers, or are
     unsecured and exploited by spammers.
 
-ifdef::z9[]
-Responsive (web app)::
-    This approach to design ensures that the application displays and functions well on a variety of devices and window or screen sizes.
-    The {modern-client} is a Responsive Web App, facilitating a consistent user experience on any screen.
-endif::z9[]
-
 Redo Logs::
     Detailed transaction log for the {product-name} server, used for replay and
     replication.

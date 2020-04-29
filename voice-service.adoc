@@ -4,8 +4,6 @@
 
 Unified Communications (UC) is the integration of multiple modes of communication services, allowing users to receive communication from one service, such as voice mail, and respond using another service, such as Click-to-Call.
 
-ifdef::z9[IMPORTANT: {only-in-classic}]
-
 Zimbra uses real-time communications services such as voice, telephony and presence to inter-operate with non-real-time services such as email and voice mail. The Zimbra Collaboration Voice Service feature includes Visual Voice Mail, Click-to-Call, and Presence (Cisco only). Zimbra Collaboration uses Cisco or Mitel servers, as a third-party voice server, or UC server, to bridge calls between Zimbra Collaboration and the {product-short} {web-client}.
 
 *Note:* UC system administrators are responsible for configuring the UC server based on that UC server’s documentation.

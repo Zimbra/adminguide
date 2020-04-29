@@ -6,11 +6,7 @@ You can change the logo and base colors of the {product-short} {web-client} them
 without having to customize individual {product-name} themes.  This
 can be done from the administration console or the CLI.
 
-// ifdef::z9[NOTE: {only-in-classic}]
-
 == Changing Theme Color and Logos on the {product-short} {web-client}
-
-ifdef::z9[NOTE: This sections deals with customizations related to {web-client}. For customizations related to the {modern-client}, refer to <<branding.adoc#_customizing_modern_web_app, Customizing {modern-client}>>]
 
 Base colors for themes, and custom logos can be configured as a global
 setting or as a domain setting.

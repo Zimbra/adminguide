@@ -16,13 +16,11 @@ You can monitor usages and manage the following license types.
 |Accounts limit |
 Accounts you can create.
 
-ifndef::z9[]
 |Mobile accounts limit |
 Accounts that can have the native mail mobile feature enabled.
 
 |Touch Client accounts limit |
 Accounts that can have the touch client mobile feature enabled.
-endif::[]
 
 |MAPI accounts limit |
 Accounts that can use {product-short} Connector for Microsoft Outlook (ZCO).
@@ -45,11 +43,6 @@ The archive feature installation is required.
 == {product-short} License Requirements
 
 A {product-short} license is required to create accounts in the {product-edition-commercial} of {product-name}.
-
-ifdef::z9[]
-[IMPORTANT]
-A {product-short} license is required to use the {modern-client} in {product-name}'s {product-edition-commercial}.
-endif::z9[]
 
 To try out {product-name}, you can obtain trial versions free of charge.
 Once you are ready to install a production environment, you need to purchase a subscription or a perpetual license.
@@ -216,14 +209,8 @@ The following is a list of some of the major functions that are no longer availa
 * High-Fidelity Document Preview
 * Zimbra Connector for Outlook
 * S/MIME
-ifdef::z9[]
-* {modern-client}
-endif::z9[]
-
-ifndef::z9[]
 If you do not plan to renew your license, you can regain the ability to create or delete accounts by downgrading to {product-name} free and open-source software (FOSS).
 You should choose the same version of FOSS that you are currently running on the {product-name} Network Edition for this transition, after which you can upgrade to the latest version of {product-name} FOSS.
-endif::z9[]
 
 === Renewal
 

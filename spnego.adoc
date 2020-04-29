@@ -1,9 +1,7 @@
 [appendix]
 = Configuring SPNEGO Single Sign-On
 
-The SPNEGO protocol mechanism can be configured on {product-abbrev} for single sign-on authentication to the {product-short} {web-client},
-ifdef::z9[{modern-client},]
-and to the Zimbra Connector for Outlook (ZCO).
+The SPNEGO protocol mechanism can be configured on {product-abbrev} for single sign-on authentication to the {product-short} {web-client}, and to the Zimbra Connector for Outlook (ZCO).
 For ZCO configuration see <<setting_up_single_sign_on_options_for_zco,Setting Up Single Sign-On Options for ZCO>>.
 
 When users have authenticated to their Intranet through Active Directory, they can enter their {product-short} mailbox using {either-web-client} without having to re-authenticate.
@@ -318,8 +316,7 @@ Improperly configured browsers exhibit different behaviors depending on the brow
 The following browsers are supported:
 
 * For computers running Windows:
-ifndef::z9[Internet Explorer 10.0 or later,]
-Edge, Firefox 52 or later, Chrome, Safari
+Internet Explorer 10.0 or later, Edge, Firefox 52 or later, Chrome, Safari
 
 * Apple Mac computer: Safari
 

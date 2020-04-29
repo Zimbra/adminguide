@@ -8,11 +8,6 @@ This chapter describes the features and user preferences that can be configured 
 Mailbox features are enabled for {product-short} {web-client} users.
 When IMAP or POP clients are used, users might not have these features available.
 
-ifdef::z9[]
-[IMPORTANT]
-Some features mentioned in the following sections may not be currently available for the {modern-client}. 
-endif::z9[]
-
 == Messaging and Collaboration Applications
 
 Your COS configuration and assignment of a COS to accounts determines the default settings for account features and the restrictions to be applied to groups of accounts.
@@ -117,8 +112,6 @@ Account aliases can be selected for the *From* name of messages sent from that p
 The number of personas that can be created is configurable depending on your requirements.
 The minimum is 0, and the default is 20 (`zimbraIdentityMaxNumEntries`).
 
-ifdef::z9[NOTE: {only-in-classic}]
-
 See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Maximum length of mail signature |
@@ -173,19 +166,12 @@ See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Flagging |
 Users can create flags and assign them to messages, contacts, and files in Briefcase folders.
-ifdef::z9[({only-in-classic})]
 
 See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 |Enable keyboard shortcuts |
 Users can use keyboard shortcuts within their mailbox.
 The shortcut list can be viewed in the {web-client} from the Username drop-down menu.
-
-ifdef::z9[]
-Keyboard shortcuts are always available in the {modern-client}.
-The shortcut list can be viewed by typing kbd:[Ctrl]-kbd:[Q].
-endif::z9[]
-
 
 See *_COS_ -> Preferences -> General Options* container in the Admin Console.
 
@@ -240,13 +226,11 @@ See *_COS_ -> Features -> Mail Features* container in the Admin Console.
 
 The autocomplete feature displays names ranked with the most frequently recalled contact listed at the top.
 If the contact name that appears first should not be listed at the top, the user can click *Forget* and the contact names are re-ranked.
-ifdef::z9[({web-client} only.)]
 
 ==== Email Preferences that Users Manage
 
 The default behavior for many of the preferences listed in this section can be set from either the COS or the Accounts Preferences page.
 Users can modify the following mail preferences from their account Preferences 
-ifdef::z9[or Settings]
 in the {either-web-client}.
 
 * How often, in minutes, that the Web Client checks for new messages:
@@ -254,32 +238,23 @@ in the {either-web-client}.
 *Check for new mail every...*
 
 * Set or change email message alerts.
-ifndef::z9[Alerts can be set up to play a sound, highlight the Mail tab when a message arrives, and flash the browser.]
-ifdef::z9[Alerts can be set up to play a sound, highlight the Mail tab when a message arrives, and flash the browser, depending on which {web-app-term} they use.]
+Alerts can be set up to play a sound, highlight the Mail tab when a message arrives, and flash the browser.
 
 * Set the display language for the {both-web-clients}.
 If more than one language locale is installed on {product-name}, users can select a locale that is different from the browser language settings.
 
-ifdef::z9[]
-IMPORTANT: The {modern-client} currently supports a subset of the languages available in the {web-client}, and will fallback to US English if the user's language locale is not yet supported.
-endif::z9[]
-
 * Whether to save copies of outbound messages to the Sent folder.
 
 * Whether to save a local copy of a message that is forwarded or to have it deleted from their mailbox.
-ifdef::z9[(Only the {web-client} can manage this setting currently.)]
 
 * Whether to compose messages in a separate window.
-ifdef::z9[({only-in-classic})]
 
 * Whether to view mail as HTML for messages that include HTML or to view messages as plain text.
-ifdef::z9[({only-in-classic})]
 
 * Whether to send a read receipt when it is requested.
 
 * Adjust the default font size for printed messages.
 The default is 12 points.
-ifdef::z9[({only-in-classic})]
 
 * Users can set up their own Spam mail options of whitelist and blacklist email addresses that are used to filter incoming message from their Preferences Mail folder.
 The default maximum number of whitelist and blacklist addresses is 100 on each list.
@@ -292,9 +267,7 @@ The attributes are `zimbraMailWhitelistMaxNumEntries` and `zimbraMailBlacklistMa
 
 ==== Using Import and Export to Save User's Data
 
-From the *Preferences Import/Export* page in the {web-client}
-ifdef::z9[or under *Accounts -> Primary account* in the {modern-client}]
-users may export all of their account data, including mail, contacts, calendar, and tasks.
+From the *Preferences Import/Export* page in the {web-client} users may export all of their account data, including mail, contacts, calendar, and tasks.
 By selecting export options, they can export specific items in their account and save the data to their computer.
 
 The account data is saved as a tar-gzipped (`.tgz`) archive file so that it can be imported to restore their account.
@@ -377,7 +350,7 @@ Admin Console: ::
 .Calendar Features
 [cols="1,2a,1",options="header",]
 |=======================================================================
-|Calendar Feature |Description |COS/Account Tabs
+| Calendar Feature | Description | COS/Account Tabs
 
 |Calendar |
 Lets users maintain their calendar, schedule meetings, delegate access to their calendar, create multiple personal calendars, and more.  |
@@ -386,29 +359,21 @@ Features
 |Group Calendar |
 When Group Calendar is not checked, users can create personal appointments and accept invitations to meetings only.
 The Find Attendees, Schedule and Find Resources tabs are not displayed.
-
-ifdef::z9[NOTE: Group Calendar features are always available in the {modern-client}.]
 | Features
 
 |Nested Calendars |
 Calendars can be nested within {product-short} folders like Mail, Contact, and Calendar folders.
 The administrator creates a nested list of calendars using CLI.
-A nested calendar grouping can be imported through migration as well.
-See example below.
-
-ifdef::z9[NOTE: {only-in-classic}]
-|
-
+A nested calendar grouping can be imported through migration as well.|
 |Time zone |
 Sets the time zone to use for Calendar scheduling.
-Domain admins set this in the Accounts, General Information page.  | Preferences
+Domain admins set this in the Accounts, General Information page. |
+Preferences
 
 |Forward calendar invitation to specific addresses |
 
 You can specify email addresses to forward a user's calendar invitations.
 Users can also specify forwarding address from the Preferences Calendar folder.
-
-ifdef::z9[NOTE: {only-in-classic}]
 
 The account the invitation is forwarded to must have admin privileges on the shared calendar to reply to the invitation.
 | Accounts Forwarding
@@ -416,11 +381,14 @@ The account the invitation is forwarded to must have admin privileges on the sha
 |=======================================================================
 
 
-Create a calendar nested under the "Calendar Name" folder:
+====
+Example::
+To create a calendar nested under the "Calendar Name" folder:
 [source,bash]
 ----
 zmmailbox -z -m user1 cf -V appointment "/Calendar Name/Sub Calendar"
 ----
+====
 
 === Troubleshooting Calendar Appointment Problems
 
@@ -445,8 +413,6 @@ You can modify the COS attribute `zimbraPrefCalendarApptAllowAtendeeEdit` to pre
 ----
 zmprov mc <cosname> zimbraPrefCalendarApptAllowAtendeeEdit FALSE
 ----
-
-ifdef::z9[NOTE: {only-in-classic}]
 
 === Setting Other User Calendar Preferences
 
@@ -496,14 +462,10 @@ When this is disabled, {product-name} silently dismisses the old reminders.
 |Enable toaster notification for new calendar events |
 A popup displays in the {web-client} when new calendar events are received.
 
-ifdef::z9[NOTE: {only-in-classic}]
-
 |Allow sending cancellation email to organizer |
 
 When users receive an invitation they cannot attend at the scheduled time, they have the option to click *Propose New Time* and select another time.
 The meeting organizer receives an email with the proposed time.
-
-ifdef::z9[NOTE: {only-in-classic}]
 
 |Automatically add invites with PUBLISH method |
 A calendar invitation email should have `method=REQUEST` in the calendar object but some third-party email clients incorrectly set `method=PUBLISH`.
@@ -516,46 +478,28 @@ Invites that have been forwarded to users are automatically added to the forward
 |Flash browser title on appointment reminder |
 When appointment reminders pop up, the browser flashes until the user closes the pop-up.
 
-ifdef::z9[NOTE: {only-in-classic}]
-
 |Enable audible appointment notification |
 When an appointment reminder pops up, users can be notified by a beep on their computer.
 Users must have either QuickTime or Windows Media installed.
-
-ifdef::z9[NOTE: {only-in-classic}]
 
 |Auto-decline invites from users who are denied from inviting this user |
 Users can configure who can send them calendar invites.
 When enabled, an auto-reply message is sent to those users to let them know they do not have permission to invite the user.
 
-ifdef::z9[NOTE: {only-in-classic}]
-
 |Automatically add appointments when invited |
 When enabled, appointments are automatically added to user's Primary calendar.
-
-ifdef::z9[NOTE: This setting is not provided in the {modern-client}.]
 
 |Show declined meetings |
 When enabled, declined appointments display on the {web-client} calendar in a faded view.
 
-[NOTE]
-This setting affects the {product-short} {web-client} only.
-Users viewing appointments in the {modern-client}, third-party calendar apps, and mobile devices might not see the declined events.
-
 |Notify of changes made via delegated access|
 Users that delegated their calendar are notified of changes made to an appointment by a delegated access grantee.
-
-ifdef::z9[NOTE: This setting is not provided in the {modern-client}.]
 
 |Always show the mini-calendar |
 The mini-calendar automatically displays in the Calendar view.
 
-ifdef::z9[NOTE: This setting is not provided in the {modern-client}.]
-
 |Use the QuickAdd dialog when creating new appointments |
 When is enabled, the QuickAdd dialog displays when users double-click or drag on the calendar in the {product-short} {web-client}.
-
-ifdef::z9[QuickAdd is always available in the {modern-client}.]
 
 |Show time zone list in appointment view |
 When enabled, a time zones list displays in the event editor along with event time, giving them the opportunity to change time zones while making appointments.
@@ -570,8 +514,6 @@ Zimbra Tasks lets users create to-do lists and manage tasks through to completio
 To allow users to share their Task lists, enable Sharing in the Features page.
 Task lists can be shared with individuals, groups, and the public.
 
-ifdef::z9[NOTE: {only-in-classic}]
-
 To enable or disable the Tasks feature:
 
 Admin Console: ::
@@ -584,8 +526,6 @@ The appearance of the {product-short} {web-client} user interface can be changed
 A number of Zimbra themes are included with {product-abbrev}, and you can create others.
 You can select a theme to be the default and the themes that users can select to customize their user experience.
 To develop themes, see <<Color and Logo Management>>.
-
-ifdef::z9[NOTE: {only-in-classic}]
 
 The following theme usage options can be configured either from COS or by individual accounts.
 
@@ -687,8 +627,6 @@ They can share with internal users who can be given complete manager access, ext
 When internal users share a mail folder, a copy of the shared folder is put in the grantee's folder list on the Overview pane.
 Users can manage their shared folders from their {web-client} Preferences Sharing page.
 
-ifdef::z9[At this time, the {modern-client} supports share management from folder and calendar context menus only.]
-
 === Configure SMS Notification
 
 The {web-client} *Preferences -> Notification* page lets users configure an email address or SMS alert to their mobile device to receive a reminder message for a task or a meeting on their calendar.
@@ -702,15 +640,11 @@ Users select a region and a carrier when setting up their SMS alert.
 The list of SMS/email gateways is in *ZmSMS.properties*.
 You can customize this list to add SMS/email gateways that are not listed.
 
-ifdef::z9[NOTE: {only-in-classic}]
-
 === Configure Attachment Viewing
 
 You can set attachment viewing rules as a global setting, by COS, or for a specific account.
 The global setting takes precedence over COS and account Settings.
 You can select from four options.
-
-ifdef::z9[NOTE: The {modern-client} always provides Hi-Def Attachment Previews, with no user settings required.]
 
 .Attachment Viewing Features
 [cols="1,2a,1",options="header",]
@@ -746,23 +680,14 @@ Users can click the Back and Forward arrows in the browser, or close their brows
 
 * If this preference is not checked, the question is not asked.
 
-ifdef::z9[NOTE: This setting is not provided in the {modern-client}.]
-
 === Enabling the Check Box for the Web Client
 
 If *Show selection checkbox for selecting email, contact, voicemail items in a list view for batch operations* is enabled, when users view email messages,contacts, and tasks lists in the Content pane, a check box displays for each item.
 Users can select items and then perform an action such as mark as read/unread, move to a specific folder, drag and drop to a folder, delete, and tag for all those selected items.
 
-ifdef::z9[]
-[NOTE]
-Checkboxes are enabled by default on the {modern-client}.
-endif::z9[]
-
 === Preferences Import/Export
 
-From the *Preferences Import/Export* page in the {web-client}
-ifdef::z9[or under *Accounts -> Primary account* in the {modern-client}]
-users may export all of their account data, including mail, contacts, calendar, and tasks.
+From the *Preferences Import/Export* page in the {web-client} users may export all of their account data, including mail, contacts, calendar, and tasks.
 By selecting export options, they can export specific items in their account and save the data to their computer.
 
 The account data is saved as a tar-gzipped (`.tgz`) archive file so that it can be imported to restore their account.
@@ -783,5 +708,3 @@ To configure words to ignore for a domain:
 ----
 zmprov md example.com +zimbraPrefSpellIgnoreWord <word> +zimbraPrefSpellIgnoreWord <word2>
 ----
-
-ifdef::z9[NOTE: {only-in-classic}]

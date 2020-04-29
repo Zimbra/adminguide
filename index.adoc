@@ -99,10 +99,7 @@ include::monitoring.adoc[]
 
 <<<
 
-ifndef::z9[]
-
 include::backuprestore.adoc[]
-endif::z9[]
 
 <<<
 
@@ -117,11 +114,6 @@ include::legalrequests.adoc[]
 include::colorandlogo.adoc[]
 
 <<<
-ifdef::z9[]
-include::branding.adoc[]
-
-<<<
-endif::z9[]
 
 include::zimlets.adoc[]
 
@@ -169,11 +161,9 @@ include::zimbra-connect-guide.adoc[]
 
 <<<
 
-ifndef::z9[]
 :leveloffset: -1
 include::zimbra-drive-open-guide.adoc[]
 :leveloffset: +1
-endif::z9[]
 
 <<<
 

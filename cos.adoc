@@ -26,13 +26,7 @@ From a COS, you can manage the following functions:
 
 * Advanced settings including attachment settings, quotas, and password login policies.
 
-ifndef::z9[]
 * Web Client Versions (Advanced and Standard).
-endif::z9[]
-
-ifdef::z9[]
-* Web App Versions ({modern-client} and {web-client}).
-endif::z9[]
 
 * Web Services and Desktop Clients (EWS, MAPI and more).
 
@@ -82,18 +76,11 @@ By default, Preferences are enabled, and your users can modify the default prefe
 As the Administrator, you can disable Preferences.
 As a result, the Preferences page will not display in users mailboxes: they therefore cannot modify the default configuration for features that are set up for their accounts.
 
-ifdef::z9[]
-[NOTE]
-A user can change their Preferences in the {modern-client} under Settings.
-Disabling Preferences does not have any impact on the {modern-client}.
-endif::z9[]
-
 [[setting_default_time_zone]]
 === Setting Default Time Zone
 
 // Prior to Zimbra 9, the Standard (HTML) client used a "Default Time Zone" parameter to control the UI. 
 // That does not apply to the Advanced (AJAX / Classic) client or the Zimbra X / Modern client.
-ifndef::z9[]
 The default time zone setting displayed in an account's Preferences tab is used to localize the time for received messages and calendar activities in the Standard web client.
 
 When the Standard web client is used, the time zone on the computer is not used to set the time a message is received or for calendar activities.
@@ -103,13 +90,6 @@ When using the Advanced web client, the time zone setting on the computer is use
 
 Because the advanced web client and the Standard web client do not use the same time zone source to render messages, you might notice that a message displayed on multiple clients will be stamped with different times.
 You can avoid this by setting the computer time zone and the web client time zone set to the same time.
-endif::z9[]
-// else...
-ifdef::z9[]
-When using the {web-client} or the {modern-client}, the time zone setting on the computer is used as the time stamp for displaying received messages and for calendar activities.
-
-The Time Zone value in Calendar settings is used only to identify where the Working Hours start and end times are anchored, and how they appear in Free / Busy information.
-endif::z9[]
 
 == Using Server Pools
 
@@ -218,9 +198,6 @@ You can either set this URL as a global setting or a per domain setting.
 Set the `zimbraChangePasswordURL` attribute to the URL of your password change page.
 
 *Change Password* in the {web-client} under *Preferences -> General* links to this URL, and when passwords expire, users are sent to this page.
-ifdef::z9[]
-In the {modern-client}, *Change Password* appears under the account avatar menu, and it will also link to the provided URL.
-endif::z9[]
 
 Modifying the password for the domain:
 [source,bash]
@@ -384,8 +361,3 @@ The only folders available are for the content they have access to.
 The `defaultExternal` COS is configured with the following general features:
 Change password, Change UI themes, HTML compose, Export and Search.
 None of the major features are configured.
-
-ifdef::z9[]
-[IMPORTANT]
-The {modern-client} does not currently support login by external users.
-endif::z9[]

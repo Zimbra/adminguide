@@ -1685,8 +1685,6 @@ Currently, there are two different methods for providing the S/MIME feature
 . The old client based solution which requires Java 1.6 SE deployed on the client machine
 . The new server based solution which does not require Java on the client machine. The server performs all the cryptographic operations. (Recommended)
 
-ifdef::z9[NOTE: {only-in-classic}]
-
 === Setting up for using the S/MIME feature using the client based solution
 
 ==== Prerequisites
@@ -1891,7 +1889,6 @@ the previous volume.
 A current volume cannot be deleted, and message volumes that have messages
 referencing the volume cannot be deleted.
 
-ifndef::z9[]
 === Implementing Hierarchical Storage Management (*)
 
 [NOTE]
@@ -1960,7 +1957,6 @@ Modifying batch size on a server:
 ----
 zmprov ms `zmhostname` zimbraHsmBatchSize <num>
 ----
-endif::z9[]
 
 == Email Retention Management
 
