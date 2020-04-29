@@ -538,9 +538,11 @@ ifdef::z9[NOTE: This setting is not provided in the {modern-client}.]
 |Show declined meetings |
 When enabled, declined appointments display on the {web-client} calendar in a faded view.
 
+ifdef::z9[]
 [NOTE]
 This setting affects the {product-short} {web-client} only.
 Users viewing appointments in the {modern-client}, third-party calendar apps, and mobile devices might not see the declined events.
+endif::z9[]
 
 |Notify of changes made via delegated access|
 Users that delegated their calendar are notified of changes made to an appointment by a delegated access grantee.
