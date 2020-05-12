@@ -170,7 +170,7 @@ The proxy configuration must be re-generated after adding one or more Zimbra Doc
 The new docs nodes' addresses get distributed via LDAP, so no manual configuration is needed.
 
 == Licensing
-.Zimbra Docs will be available on every NG for the same amount users allowed by the Network Edition license.
+.Zimbra Docs will be available on every NG for the same amount of users allowed by the {product-name} {product-version} license.
 The standalone installer is released under the MPLv2 license while the extension and Zimlet are under a proprietary license.
 
 == Removal

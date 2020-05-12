@@ -3484,7 +3484,7 @@ BLOB>` and `<END OF BLOB>` marking the start and end of the blob.
 Use `zmskindeploy` to simplify the process of deploying skins for the {web-client}.
 This tool processes the available skins, enables them for all users of the {product-short} deployment, and restarts the web server so that it recognizes the new skins.
 ////
-//Linked wiki article is for ZCS prior to 8.x.
+//Linked wiki article is for {product-name} prior to 8.x.
 For more information about this tool, see
 https://wiki.zimbra.com/index.php?title=About_Creating_ZCS_Themes.
 ////

@@ -1552,7 +1552,7 @@ expected when the restore process is being carried out.
 
 == Notes on Ephemeral Data
 
-As of ZCS 8.8, ephemeral data is not backed up as part of the backup process.
+As of {product-name} 8.8, ephemeral data is not backed up as part of the backup process.
 Since auth tokens are ephemeral attributes, the implication is that clients
 accessing accounts restored after deletion will need to re-authenticate;
 auth tokens generated prior to the backup will no longer work.

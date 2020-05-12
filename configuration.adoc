@@ -1685,7 +1685,7 @@ Currently, there are two different methods for providing the S/MIME feature
 . The old client based solution which requires Java 1.6 SE deployed on the client machine
 . The new server based solution which does not require Java on the client machine. The server performs all the cryptographic operations. (Recommended)
 
-ifdef::z9[NOTE: {only-in-classic}]
+NOTE: {only-in-classic}
 
 === Setting up for using the S/MIME feature using the client based solution
 
@@ -1890,77 +1890,6 @@ the previous volume.
 
 A current volume cannot be deleted, and message volumes that have messages
 referencing the volume cannot be deleted.
-
-ifndef::z9[]
-=== Implementing Hierarchical Storage Management (*)
-
-[NOTE]
-*Starting with Zimbra 8.8*, there are two versions of this feature, Standard and New Generation (NG) versions.
-Zimbra 8.7 and earlier included only the Standard version, which is explained below.
-To use and enable the NG version of this feature with Zimbra 8.8 and later, refer to the specific NG chapter later in this Guide.
-
-Hierarchical Storage Management (HSM) allows you to configure storage
-volumes for older messages. HSM is a process of moving older data from the
-primary volume to the current secondary volume based on the age of the
-data.
-
-To manage your disk utilization, implement a global HSM policy or a HSM
-policy for each mailbox server. The policy configured on individual servers
-overrides the policy configured as the global policy.
-
-Email messages and the other items in the account are moved from the
-primary volume to the current secondary volume based on the HSM policy.
-Users are not aware of any change and do not see any noticeable differences
-when opening older items that have been moved.
-
-The default global HSM policy moves messages and document files more than
-30 days old to the secondary volume. You can also select to move tasks,
-appointments, and contacts. The schedule for moving can be set for items
-older than a specified number of days, months, weeks, hours, minutes.
-
-In addition to selecting different items to move, you can use the search
-query language to set up other HSM policies.
-
-For example: to include all messages marked as spam in messages moved to
-the current secondary volume, you would add the following to the policy:
-*message:in:junk before:-[x] days*.
-
-[NOTE]
-The search string can be added to the default policy or you can write a new
-policy.
-
-==== Scheduling HSM Sessions
-
-Sessions to move messages to the secondary volume are scheduled in your
-cron table. From the Administration Console, when you select a server, you
-can manually start a HSM session, monitor HSM sessions, and abort HSM
-sessions that are in progress from the Volumes page.
-
-You can manually start an HSM session from the server's *Gear* icon.
-
-When you abort a session and then restart the process, the HSM session
-looks for entries in the primary store that meet the HSM age criteria.  Any
-entries that were moved in the previous run would be excluded, as they
-would no longer exist in the primary store.
-
-HSM jobs can be configured to be a specific batch size. The
-`zimbraHsmBatchSize` attribute can be configured either as a global setting
-or per server to specify the maximum number of items to move during a
-single HSM operation. The default value is 10000. If the limit is exceeded
-the HSM operation is repeated until all qualifying items are moved.
-
-Global batch size modification:
-[source,bash]
-----
-zmprov mcf zimbraHsmBatchSize <num>
-----
-
-Modifying batch size on a server:
-[source,bash]
-----
-zmprov ms `zmhostname` zimbraHsmBatchSize <num>
-----
-endif::z9[]
 
 == Email Retention Management
 

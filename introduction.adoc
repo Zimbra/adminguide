@@ -21,18 +21,14 @@ This document might occasionally note when other tools are available in the mark
 
 == Support and Contact Information
 
-Visit https://www.zimbra.com[*www.zimbra.com*] to join the community and to be a part of building the best open source messaging solution.
-We appreciate your feedback and suggestions.
-
-* Contact sales@zimbra.com to purchase {product-name}
-* Network Edition customers can contact support at support@zimbra.com
-* Explore the https://forums.zimbra.org/[Zimbra Forums] for answers to installation or configurations problems
-* Join the https://forums.zimbra.org/[Zimbra Forums] to participate and learn more about the {product-name}
+* Contact {product-short} Sales to purchase {product-name} {product-version}.
+* {product-name} customers can contact support at **support@zimbra.com**.
+* Explore the https://forums.zimbra.org/[{product-short} Forums] for answers to installation or configuration problems.
+* Join the {product-short} Community Forum, to participate and learn more about {product-name}.
+* Send an email to **feedback@zimbra.com** to let us know what you like about the product and what you would like to see in the product.
+If you prefer, post your ideas to the {product-short} Forum.
 
 For additional product information, the following resources are available:
 
 * https://wiki.zimbra.com[Zimbra Wiki]
 * https://wiki.zimbra.com/wiki/Security_Center[Security Center]
-
-Let us know what you like about the product and what you would like to see in the product.
-Post your ideas to the Zimbra Forum.

@@ -45,7 +45,7 @@ that is assigned to the account.
 
 --
 [WARNING]
-ZCS Account Migration within the Zimbra Admin UI is no longer supported,
+{product-name} Account Migration within the Zimbra Admin UI is no longer supported,
 with End of Technical Guidance set for 17 December 2019.
 We recommend https://zimbra.audriga.com/[Audriga's self-service migration solution]
 as a preferred alternative for all account migrations.

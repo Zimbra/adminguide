@@ -380,9 +380,7 @@ To allow a higher level of control over synchronization, users are allowed to ch
 To enable mobile synchronization for a shared folder:
 
 * Log in to the {product-short} {web-client}.
-ifdef::z9[]
 You cannot view or change synchronization settings using the {modern-client}.
-endif::z9[]
 
 * Right-click the shared folder you want to sync.
 * Select `Folder Sync Settings` in the drop-down menu.

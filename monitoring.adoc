@@ -1309,7 +1309,7 @@ When configuring the type of backups that should be run, you can set up to
 receive notification about the results of a backup session.
 
 ----
-Subject: ZCS BackupReport:SUCCESS
+Subject: {product-name} BackupReport:SUCCESS
 
 Server: <server>
 

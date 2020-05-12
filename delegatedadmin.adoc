@@ -427,7 +427,7 @@ The link is created from the `zmprov` CLI
 zmprov md {server.example.com} zimbraWebClientAdminReference {https://server.example.com:7071/}
 ----
 
-ifdef::z9[NOTE: {only-in-classic}]
+NOTE: {only-in-classic}
 
 === Distribution List Administration Group
 
