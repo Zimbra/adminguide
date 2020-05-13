@@ -23,3 +23,6 @@
 :product-release-date: March, 2020
 // wrap {only-in-classic} in ifdef::z9[] one-liner to provide a standard NOTE, e.g.: ifdef::z9[NOTE: {only-in-classic}]
 :only-in-classic: This feature is supported only in the {web-client}. 
+//Branding
+:palette-generator: https://zm-x-theme-generator.netlify.com/[palette generator]
+:file-path: /opt/zimbra/jetty/webapps/zimbra/modern/clients/
