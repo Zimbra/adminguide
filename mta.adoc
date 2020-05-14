@@ -62,7 +62,7 @@ its contents are indexed so that all elements can be searched.
 
 == Zimbra MTA Deployment
 
-{product-abbrev} includes a precompiled version of Postfix to route and relay mail
+{product-short} includes a precompiled version of Postfix to route and relay mail
 and manage attachments. Postfix receives inbound messages via SMTP,
 performs anti-virus and anti-spam filtering and hands off the mail
 messages to the {product-name} server via LMTP.
@@ -82,7 +82,7 @@ filtering might be duplicated between an edge MTA and the Zimbra MTA.
 === Postfix Configuration Files
 
 Zimbra modified Postfix files -- main.cf and master.cf -- specifically to work
-with {product-abbrev}:
+with {product-short}:
 
 * *main.cf* -- Modified to include the LDAP tables. The `zmconfigd` in
 the Zimbra MTA pulls data from the Zimbra LDAP and modifies the Postfix
@@ -158,7 +158,7 @@ Anti-Virus (ClamAV) and SpamAssassin scanners.
 
 === Anti-Virus Protection
 
-ClamAV software is the virus protection engine enabled for each {product-abbrev}
+ClamAV software is the virus protection engine enabled for each {product-short}
 server.
 
 The anti-virus software is configured to put messages that have been
@@ -265,13 +265,13 @@ their junk folder. A copy of these marked messages is sent to the
 appropriate spam training mailbox.
 
 At installation, a spam/ham cleanup filter is configured on only the
-first MTA. The {product-abbrev} spam training tool, `zmtrainsa`, is configured to
+first MTA. The {product-short} spam training tool, `zmtrainsa`, is configured to
 automatically retrieve these messages and train the spam filter. The
 `zmtrainsa` script empties these mailboxes each day.
 
 [NOTE]
 --
-New installations of {product-abbrev} limit spam/ham training to the first
+New installations of {product-short} limit spam/ham training to the first
 MTA installed. If you uninstall or move this MTA, you will need to
 enable spam/ham training on another MTA, as one host should have this
 enabled to run `zmtrainsa --cleanup`.
@@ -339,7 +339,7 @@ The email is silently discarded (not delivered).
 |====
 
 [[setting_up_trusted_netorks]]
-*Setting Up Trusted Networks:* The {product-abbrev} configuration allows
+*Setting Up Trusted Networks:* The {product-short} configuration allows
 relaying only for the local network, but you can configure trusted networks
 that are allowed to relay mail. You set the MTA trusted networks as a
 global setting, but you can configure trusted networks as a server
@@ -907,4 +907,4 @@ The *corrupt* queue stores damaged unreadable messages.
 
 You can monitor the mail queues for delivery problems from the
 Administration Console. See
-<<monitoring_zcs_servers,Monitoring {product-abbrev} Servers>>.
+<<monitoring_zcs_servers,Monitoring {product-short} Servers>>.

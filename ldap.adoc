@@ -12,7 +12,7 @@ directory server.
 Server.  Contact support for information on specific directory
 implementation scenarios.
 
-The LDAP server is installed when {product-abbrev} is installed.  Each
+The LDAP server is installed when {product-short} is installed.  Each
 server has its own LDAP entry that includes attributes specifying operating
 parameters.  In addition, a global configuration object sets defaults for
 any server whose entry does not specify every attribute.
@@ -437,7 +437,7 @@ server.
 === Flush the Cache for Themes and Locales
 
 When you add or change theme (skin) property files and locale resource
-files for {product-abbrev} on a server, you must flush the cache to make
+files for {product-short} on a server, you must flush the cache to make
 the new content available.
 
 .To flush skins:
@@ -459,7 +459,7 @@ the change is effective immediately on the server to which the modification
 is done.  On the other servers, the LDAP entries are automatically updated
 after a period of time if the attributes are cached.
 
-The default {product-abbrev} setting to update the server is 15 minutes.
+The default {product-short} setting to update the server is 15 minutes.
 The caching period is configured on local config key.
 
 .To change the setting:

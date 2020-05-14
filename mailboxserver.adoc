@@ -173,7 +173,7 @@ generate its own logging output. Local logs are in `/opt/zimbra/log`.
 
 Selected {product-name} log messages generate SNMP traps, which you
 can capture using any SNMP monitoring software.
-See <<monitoring_zcs_servers,Monitoring {product-abbrev} Servers>>.
+See <<monitoring_zcs_servers,Monitoring {product-short} Servers>>.
 
 [NOTE]
 System logs, redo logs, and backup sessions should be on separate disks to

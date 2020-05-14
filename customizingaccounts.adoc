@@ -572,7 +572,7 @@ Admin Console: ::
 == {product-short} {web-client} User Interface Themes
 
 The appearance of the {product-short} {web-client} user interface can be changed.
-A number of Zimbra themes are included with {product-abbrev}, and you can create others.
+A number of Zimbra themes are included with {product-short}, and you can create others.
 You can select a theme to be the default and the themes that users can select to customize their user experience.
 To develop themes, see <<Color and Logo Management>>.
 

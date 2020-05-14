@@ -153,7 +153,7 @@ anti-virus and anti-spam components.
 
 |Zimbra Proxy |
 Zimbra Proxy is a high-performance reverse proxy service for passing
-IMAP[S]/POP[S]/HTTP[S] client requests to other internal {product-abbrev}
+IMAP[S]/POP[S]/HTTP[S] client requests to other internal {product-short}
 services.This package is normally installed on the MTA server(s) or on its
 own independent server(s). When the zimbra-proxy package is installed, the
 proxy feature is enabled by default. Installing the Zimbra Proxy is highly

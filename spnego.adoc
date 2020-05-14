@@ -1,7 +1,7 @@
 [appendix]
 = Configuring SPNEGO Single Sign-On
 
-The SPNEGO protocol mechanism can be configured on {product-abbrev} for single sign-on authentication to the {product-short} {web-client},
+The SPNEGO protocol mechanism can be configured on {product-short} for single sign-on authentication to the {product-short} {web-client},
 {modern-client},
 and to the Zimbra Connector for Outlook (ZCO).
 For ZCO configuration see <<setting_up_single_sign_on_options_for_zco,Setting Up Single Sign-On Options for ZCO>>.
@@ -10,7 +10,7 @@ When users have authenticated to their Intranet through Active Directory, they c
 
 image::SPNEGO-Architecture.png[SPNEGO Architecture]
 
-The {product-abbrev} server configuration will redirect users attempting to log on to the {either-web-client} to a URL under SPNEGO protection.
+The {product-short} server configuration will redirect users attempting to log on to the {either-web-client} to a URL under SPNEGO protection.
 The server asks for authentication with Kerberos through SPNEGO, and redirects users to their {product-short} mailbox.
 When users log out, they get redirected to a logout URL that displays a btn:[Launch] button.
 When users click it, they get directed to the {product-short} login page.
@@ -31,7 +31,7 @@ Some other browsers may display a "401 Unauthorized" error in that situation.
 You use this account to generate the Kerberos keytab file.
 * Add the service Principal Names (SPN) directory property for an Active Directory service account.
 * Create the keytab file.
-. Enable and configure the SPNEGO protocol on the {product-abbrev} server.
+. Enable and configure the SPNEGO protocol on the {product-short} server.
 . Configure browsers
 
 == Create the Kerberos Keytab File
@@ -49,7 +49,7 @@ Complete the New Object – User dialog.
 image::Zimbra-spnego-001.png[AD New User]
 +
 * *Full name*: Enter the user display name for the AD service account.
-We recommend using the {product-abbrev} mailbox server name as the full name.
+We recommend using the {product-short} mailbox server name as the full name.
 +
 Example: *Zimbra SPNEGO*.
 +
@@ -183,13 +183,13 @@ Many configuration files reference this filename.
 
 Repeat steps 1 to 4 to create an create the keytab file (`jetty.keytab`) for each Zimbra mailstore server.
 
-== Configure {product-abbrev}
+== Configure {product-short}
 
 SPNEGO attributes get configured in Global Config and on each Zimbra server, and domain pre-authentication gets configured for the domain.
 Use the `zmprov` command to modify the Zimbra server.
 
 [NOTE]
-A {product-abbrev} installation may support only one Kerberos REALM.
+A {product-short} installation may support only one Kerberos REALM.
 
 . Modify the following global config attributes, with the `zmprov mcf`
 command.
@@ -478,7 +478,7 @@ The mapping (by domain attribute `zimbraAuthKerberos5Realm`) is the same for bot
 == Setting Up Single Sign-On Options for ZCO
 
 [NOTE]
-To use SSO, SPNEGO must be configured on the {product-abbrev} server to use this option.
+To use SSO, SPNEGO must be configured on the {product-short} server to use this option.
 
 The single sign-on option works with a specific server.
 The server name used in the ZCO profile must match that in the SPNEGO configuration.

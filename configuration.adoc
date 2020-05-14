@@ -2,7 +2,7 @@
 = Managing Configuration
 :toc:
 
-The {product-abbrev} components are configured during the initial installation of the
+The {product-short} components are configured during the initial installation of the
 software. After the installation, you can manage the following components
 from either the Administration Console or using the CLI utility.
 
@@ -499,7 +499,7 @@ associated with this feature is *zmgsautil.*
 
 ==== Creating Additional GALsync Accounts
 
-When {product-abbrev} is configured with more than one server, you can add an additional
+When {product-short} is configured with more than one server, you can add an additional
 GAL sync account for each server.
 
 Admin Console: ::
@@ -944,7 +944,7 @@ Administrator console Interface address on which HTTPS server listens
 |=======================================================================
 
 
-=== Managing SSL Certificates for {product-abbrev}
+=== Managing SSL Certificates for {product-short}
 
 A certificate is the digital identity used for secure communication between
 different hosts or clients and servers. Certificates are used to certify
@@ -1052,9 +1052,9 @@ Certificates display for different Zimbra services such as LDAP, mailboxd, MTA a
 === Maintaining Valid Certificates
 
 It is important to keep your SSL certificates valid to ensure clients and
-environments work properly, as the {product-abbrev} system can become non-functional if
+environments work properly, as the {product-short} system can become non-functional if
 certificates are allowed to expire. You can view deployed SSL certificates
-from the {product-abbrev} administrator console, including their validation days. It is
+from the {product-short} administrator console, including their validation days. It is
 suggested that certificates are checked periodically, so you know when they
 expire and to maintain their validity.
 
@@ -1114,7 +1114,7 @@ message delivery.
 You can add a DKIM digital signature to outgoing email messages,
 associating the message with a domain name of your organization. You can
 enable DKIM signing for any number of domains that are being hosted by
-{product-abbrev}. It is not required for all domains to have DKIM signing enabled for
+{product-short}. It is not required for all domains to have DKIM signing enabled for
 the feature to work.
 
 DKIM defines an authentication mechanism for email using
@@ -1148,7 +1148,7 @@ To set up DKIM you must run the CLI zmdkimkeyutil to generate the DKIM keys
 and selector. You then update the DNS server with the selector which is the
 public key.
 
-. Log in to the {product-abbrev} server and as zimbra:
+. Log in to the {product-short} server and as zimbra:
 +
 [source,bash]
 ----
@@ -1209,7 +1209,7 @@ Good practice is to leave the previous TXT record in DNS for a period of
 time so that email messages that were signed with the previous key can
 still be verified.
 
-Log in to the {product-abbrev} server and as zimbra:
+Log in to the {product-short} server and as zimbra:
 [source,bash]
 ----
 /opt/zimbra/libexec/zmdkimkeyutil -u -d <example.com>
@@ -1233,7 +1233,7 @@ table for `-d`, `-s`, and `-x` descriptions.
 /opt/zimbra/common/sbin/opendkim-testkey -d <example.com> -s <0E9F184A-9577-11E1-AD0E-2A2FBBAC6BCB> -x /opt/zimbra/conf/opendkim.conf
 ----
 
-=== Remove DKIM Signing from {product-abbrev}
+=== Remove DKIM Signing from {product-short}
 
 Removing DKIM signing deletes the DKIM data from LDAP, and new email messages are no longer signed for the domain. When you remove DKIM from the domain, it is a good practice to leave the previous TXT record in DNS for some time so that email messages that were signed with the previous key can still be verified.
 
@@ -1254,7 +1254,7 @@ the domain, selector, private key, public signature and identity:
 
 == Anti-spam Settings
 
-{product-abbrev} uses SpamAssassin to control spam. SpamAssassin uses predefined rules
+{product-short} uses SpamAssassin to control spam. SpamAssassin uses predefined rules
 as well as a Bayes database to score messages. Zimbra evaluates spam as a percentage value. Messages tagged between 33%-75% spam are delivered to the user's junk folder. Messages tagged above 75% are not sent to the user and are discarded.
 
 You can change the anti-spam settings.
@@ -1321,8 +1321,8 @@ specifically mark as spam by sending them to their junk folder or not spam
 by removing them from their junk folder. A copy of these marked messages is
 sent to the appropriate spam training mailbox.
 
-When {product-abbrev} is installed, the spam/ham cleanup filter is configured on only
-the first MTA. The {product-abbrev} spam training tool, *zmtrainsa*, is configured to
+When {product-short} is installed, the spam/ham cleanup filter is configured on only
+the first MTA. The {product-short} spam training tool, *zmtrainsa*, is configured to
 automatically retrieve these messages and train the spam filter. The
 *zmtrainsa script* is enabled through a crontab job to feed mail to the
 SpamAssassin application, allowing SpamAssassin to 'learn' what signs are
@@ -1331,7 +1331,7 @@ each day.
 
 [NOTE]
 --
-New installs of {product-abbrev} limit spam/ham training to the first MTA installed. If
+New installs of {product-short} limit spam/ham training to the first MTA installed. If
 you uninstall or move this MTA, you will need to enable spam/ham training
 on another MTA, as one host should have this enabled to run `zmtrainsa
 --cleanup`.
@@ -1346,7 +1346,7 @@ zmlocalconfig -e zmtrainsa_cleanup_host=TRUE
 
 === Disabling the Spam Training Mailboxes
 
-The {product-abbrev} default is that all users can give feedback when they add or remove
+The {product-short} default is that all users can give feedback when they add or remove
 items from their junk folder.
 
 If you do not want users to train the spam filter you can disable this
@@ -1496,7 +1496,7 @@ zmprov mcf \
 === Setting Global Rule for Messages Marked as Both Spam and Whitelist
 
 When you use a third-party application to filter messages for spam before
-messages are received by {product-abbrev}, the {product-abbrev} global rule is to send all messages
+messages are received by {product-short}, the {product-short} global rule is to send all messages
 that are marked by the third-party as spam to the junk folder. This
 includes messages that are identified as spam and also identified as
 whitelisted.
@@ -1571,9 +1571,9 @@ Updates are obtained via HTTP from the ClamAV website.
 
 The Free/Busy feature allows users to view each other's calendars for
 efficiently scheduling meetings. You can set up free/busy scheduling across
-{product-abbrev} and Microsoft Exchange servers.
+{product-short} and Microsoft Exchange servers.
 
-{product-abbrev} can query the free/busy schedules of users on supported Microsoft Exchange servers and also can propagate the free/busy schedules of {product-abbrev} users to the Exchange servers.
+{product-short} can query the free/busy schedules of users on supported Microsoft Exchange servers and also can propagate the free/busy schedules of {product-short} users to the Exchange servers.
 
 To set free/busy interoperability, the Exchange systems must be set up as
 described in the Exchange Setup Requirements section, and the
@@ -1596,7 +1596,7 @@ IIS. (`\http://server/public/`)
 
 * {product-name} users must be provisioned as a contact on the AD
 using the same administrative group for each mail domain. This is required
-only for {product-abbrev} to Exchange free/busy replication.
+only for {product-short} to Exchange free/busy replication.
 
 * For {product-name} to Exchange free/busy replication, the Exchange
 user email address must be provisioned in the account attribute
@@ -1650,11 +1650,11 @@ ADSI Edit tool and search the *legacyExchangeDN* attribute for the `o=` ,
 
 === {product-name} to {product-name} Free/Busy Interoperability
 
-You can set up free/busy interoperability between {product-abbrev} servers.  Free/Busy
+You can set up free/busy interoperability between {product-short} servers.  Free/Busy
 interoperability is configured on each server.
 
 [NOTE]
-Each server must be running {product-abbrev} 8.0.x or later.
+Each server must be running {product-name} 8.0.x or later.
 
 . Enter the server host names and ports.
 +
@@ -1710,7 +1710,7 @@ not, they see an error asking them to install it.
 
 ==== S/MIME License
 
-You must have a {product-abbrev} license that is enabled for S/MIME.
+You must have a {product-short} license that is enabled for S/MIME.
 
 ==== Enable S/MIME Feature
 

@@ -3,7 +3,7 @@ include::settings.adoc[]
 :document-title: Administrator Guide
 = {product-name} {document-title}
 {product-release-date}
-{product-name} {product-version}, revised {localdate}
+{product-name} {product-version}
 
 :leveloffset: +1
 

@@ -1225,7 +1225,7 @@ the last incremental backup has run.
 .  Change the hostname and IP address on the old server to something
 else. Do not turn off the server.
 
-=== Install {product-abbrev} on a New Server
+=== Install {product-short} on a New Server
 
 Before you begin, make sure that the new server is correctly configured
 with the IP address and hostname and that {product-name} is
@@ -1463,7 +1463,7 @@ target area
 Because the redo log for current transactions is not available, the
 mailbox server is returned to the state of the last archived redo log.
 
-.  After the offline restore is complete, start {product-abbrev}.
+.  After the offline restore is complete, start {product-name} server.
 +
 [source,bash]
 ----

@@ -351,7 +351,7 @@ This forces the current session of the account to expire immediately.
 
 == Managing Default External COS
 
-The `defaultExternal` COS is assigned to external virtual accounts that are created when external users accepts a {product-abbrev} provisioned users'
+The `defaultExternal` COS is assigned to external virtual accounts that are created when external users accepts a {product-short} provisioned users'
 invitation to share their calendar or briefcase items.
 
 This account is not provisioned on the server, but the external user can sign in to the {web-client}, create a display name and set a password to view the shared items.
