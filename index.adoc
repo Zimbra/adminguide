@@ -3,7 +3,7 @@ include::settings.adoc[]
 :document-title: Administrator Guide
 = {product-name} {document-title}
 {product-release-date}
-{product-short} {product-edition-commercial} V {product-version}, revised {localdate}
+{product-name} {product-version}, revised {localdate}
 
 :leveloffset: +1
 
@@ -116,6 +116,10 @@ include::branding.adoc[]
 <<<
 
 include::zimlets.adoc[]
+
+<<<
+
+include::zimlets-modern-app.adoc[]
 
 <<<
 
