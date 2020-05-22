@@ -3,6 +3,26 @@
 Zimlets are plugins which enhance the {modern-client}'s functionalities.
 The zimlets need to be configured and authorized before you can use them with the {modern-client}.
 
+{modern-client} lists only the modern zimlets.
+
+== Default zimlets in {modern-client}
+
+Default Zimlets, for {modern-client}, let users perform the following tasks:
+
+* Restore contacts from previous backups
+
+* Add additional signatures for replies, forwards, or new emails
+
+* Detect dates from given content and provide event list of that day on mouse hover
+
+* Use {product-short} as a link:https://en.wikipedia.org/wiki/Progressive_web_application[progressive web app]
+
+* Subscribe to external calendar feeds
+
+* Add an option in settings to change default client in {product-short}
+
+TIP: Zimlets developed for {modern-client} have *(Modern)* in description.
+
 == Configuring LDAP
 
 This section is a basic guide to configuring the necessary LDAP properties for `zm-oauth-social`.

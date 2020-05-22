@@ -3,11 +3,18 @@
 :toc:
 
 Zimlets are a mechanism to integrate {product-short} with different third-party applications to enhance the user experience from the {product-short} {web-client}.
-With Zimlets, users can look at information and interact with the third-party application from within their email messages. Zimlets can be made available from the {product-short} {web-client} Overview Pane to users by modifying the Class of Service (COS).
+With Zimlets, users can look at information and interact with the third-party application from within their email messages.
+Zimlets can be made available from the {product-short} {web-client} Overview Pane to users by modifying the Class of Service (COS).
+
+{web-client} lists only the classic zimlets.
 
 {product-short} includes several predefined Zimlets. You can also create Zimlets or download them from the Zimlet Gallery located on the Zimbra Web site.
 
-== Default zimlets in {web-client} 
+In *Admin Console* -> *Home* -> *Configure* -> *Zimlets*, zimlets developed for {modern-client} have *(Modern)* in *Description*.
+
+== Default zimlets in {web-client}
+
+{web-client} lists only th
 
 Predefined Zimlets, when enabled, let users preview the following in {web-client}:
 
@@ -20,22 +27,6 @@ Predefined Zimlets, when enabled, let users preview the following in {web-client
 * Right-click on a date to schedule a meeting.
 
 * Right-click on a name, address, or phone number to update address book information.
-
-== Default zimlets in {modern-client} 
-
-Default Zimlets, for {modern-client}, let users perform the following tasks:
-
-* Restore contacts from previous backups
-
-* Add additional signatures for replies, forwards, or new emails
-
-* Detect dates from given content and provide event list of that day on mouse hover.
-
-* Use {product-short} as a link:https://en.wikipedia.org/wiki/Progressive_web_application[progressive web app]
-
-* Subscribe to external calendar feeds 
-
-* Add an option in settings to change default client in {product-short} 
 
 == Managing Zimlets from the Administration Console
 
@@ -53,7 +44,7 @@ installs the Zimlet files on the server, enables the Zimlet and makes it availab
 * Undeploy a Zimlet, which removes it from the COS listings and the Zimlets list but does not uninstall the Zimlet from the server.
 
 [NOTE]
-You cannot uninstall the Zimlet from the Administration Console.
+You cannot uninstall a Zimlet from the Administration Console.
 
 === Deploying Custom Zimlets
 
