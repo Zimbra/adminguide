@@ -47,6 +47,11 @@ Naming the folder is a crucial first step.
 
 * Keeping the folder name same as the *hostname*, the customizations reflect on _all domains_ and, by extension, all the accounts on those domains.
 * If the folder name is the same as the *domain name*, the customizations appear on _all accounts on that domain_.
+* In case there is a virtual host setup, the folder name must be the domain name on which you have configured the virtual host.
++
+====
+For Example, consider a domain named `example.com` that has a virtual host `mail.example.com`; in such a case, you must create a folder *mail.example.com*.
+====
 
 Finding hostname::
 . Log in using `ssh` to your {product-short} server.
