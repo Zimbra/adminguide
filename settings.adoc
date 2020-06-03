@@ -1,5 +1,5 @@
 :product-name: Zimbra Collaboration
-:product-short: Zimbra 9
+:product-short: Zimbra
 :product-family: Zimbra
 :product-provider: Zimbra
 :copyright-year: {localyear}
