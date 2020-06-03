@@ -2,7 +2,7 @@
 :product-short: Zimbra 9
 :product-family: Zimbra
 :product-provider: Zimbra
-:copyright-year: 2020
+:copyright-year: {localyear}
 :imagesdir: images/
 :icons: font
 :title-page:

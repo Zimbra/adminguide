@@ -687,7 +687,7 @@ Customization replaces all instances of the Zimbra product name and logo.
 .End User Desktop Applications and Utilities / Migration and Import Tools
 [cols=",a"]
 |=================================================
-|*{product Connector for Outlook (32 bits)* +
+|*Zimbra Connector for Outlook (32 bits)* +
 *Zimbra Connector for Outlook (64 bit) (User Instructions)* |
 This application enables Outlook to synchronize calendar, contacts, and mail with the {product-short} server and access {product-name}'s business features.
 Address books, Contacts, Calendars, Tasks, and mail are synced directly with the {product-name} server.

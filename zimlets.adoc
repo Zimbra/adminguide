@@ -2,62 +2,53 @@
 = Zimlets
 :toc:
 
-Zimlets are a mechanism to integrate {product-short} with different third-party
-applications to enhance the user experience from the {product-short} {web-client}.
-With Zimlets, users can look at information and interact with the
-third-party application from within their email messages. Zimlets can be
-made available from the {product-short} {web-client} Overview Pane to users by
-modifying the Class of Service (COS).
+Zimlets are a mechanism to integrate {product-short} with different third-party applications to enhance the user experience from the {product-short} {web-client}.
+With Zimlets, users can look at information and interact with the third-party application from within their email messages.
+Zimlets can be made available from the {product-short} {web-client} Overview Pane to users by modifying the Class of Service (COS).
 
-{product-short} includes several predefined Zimlets. You can also create Zimlets or
-download them from the Zimlet Gallery located on the Zimbra Web site.
+{web-client} lists only the classic zimlets.
 
-Predefined Zimlets when enabled let users preview the following:
+{product-short} includes several predefined Zimlets. You can also create Zimlets or download them from the Zimlet Gallery located on the Zimbra Web site.
+
+In *Admin Console* -> *Home* -> *Configure* -> *Zimlets*, zimlets developed for {modern-client} have *(Modern)* in *Description*.
+
+== Default zimlets in {web-client}
+
+{web-client} lists only th
+
+Predefined Zimlets, when enabled, let users preview the following in {web-client}:
 
 * Mouse over a date or time and see what is in calendar.
 
-* Mouse over a name or email address and see details from the address book
-for this name.
+* Mouse over a name or email address and see details from the address book for this name.
 
 * Right-click on a phone number to make a call with your soft-phone.
 
 * Right-click on a date to schedule a meeting.
 
-* Right-click on a name, address, or phone number to update address book
-information.
-
-For information about creating Zimlets, see the Zimlet Development section
-on the Zimbra Wiki.
+* Right-click on a name, address, or phone number to update address book information.
 
 == Managing Zimlets from the Administration Console
 
-The following Zimlet management tasks are available from the Zimbra
-Administration Console.
+The following Zimlet management tasks are available from the Zimbra Administration Console.
 
 * Deploy a Zimlet, which creates the Zimlet entry in the LDAP server,
-installs the Zimlet files on the server, enables the Zimlet and makes it
-available to the members of the default COS.
+installs the Zimlet files on the server, enables the Zimlet and makes it available to the members of the default COS.
 
 * Make a Zimlet available or not available per COS or account.
 
 * Make a Zimlet mandatory.
 
-* Disable a Zimlet, which leaves it on the server, but the Zimlet is not
-used.
+* Disable a Zimlet, which leaves it on the server, but the Zimlet is not used.
 
-* Undeploy a Zimlet, which removes it from the COS listings and the Zimlets
-list but does not uninstall the Zimlet from the server.
+* Undeploy a Zimlet, which removes it from the COS listings and the Zimlets list but does not uninstall the Zimlet from the server.
 
 [NOTE]
-You cannot uninstall the Zimlet from the Administration Console.
+You cannot uninstall a Zimlet from the Administration Console.
 
 === Deploying Custom Zimlets
 
-You can download and deploy custom Zimlets from the Zimlet Gallery located
-on the Zimbra Web site. When a Zimlet is deployed, it is available
-immediately to everyone in the default COS. If a Zimlet is not deployed to
-another COS directly, the COS displays the Zimlets but they are not
-enabled.
+You can download and deploy custom Zimlets from the Zimlet Gallery located on the Zimbra Web site. When a Zimlet is deployed, it is available immediately to everyone in the default COS. If a Zimlet is not deployed to another COS directly, the COS displays the Zimlets but they are not enabled.
 
 Admin Console: ::
 *Home -> Configure -> Zimlets*, from the *Gear* icon select *Deploy*
@@ -65,8 +56,7 @@ Admin Console: ::
 // divide definition above from list below
 . Browse to the Zimlet you want to deploy, then click *Deploy*.
 +
-The Zimlet deploys to the server. A dialog displays indicating the server
-name where the Zimlet is deployed and the status of the deployment.
+The Zimlet deploys to the server. A dialog displays indicating the server name where the Zimlet is deployed and the status of the deployment.
 
 . Click *Finish*.
 +
@@ -74,9 +64,7 @@ Verify the Zimlet is enabled by viewing the Zimlets page.
 
 === Enable, Disable, or Make Zimlets Mandatory
 
-You can enable, disable, or make Zimlets mandatory. You can also use
-the toggle feature to choose if an installed Zimlet will be made
-available for users to choose from.
+You can enable, disable, or make Zimlets mandatory. You can also use the toggle feature to choose if an installed Zimlet will be made available for users to choose from.
 
 Admin Console: ::
 *Home -> Configure -> Class of Service -> _COS_ -> Zimlets*
@@ -87,8 +75,7 @@ Admin Console: ::
 |Setting |Description
 
 |Mandatory |
-Zimlet will always be enabled in user accounts. Users do not see these
-Zimlets on their Zimlet page.
+Zimlet will always be enabled in user accounts. Users do not see these Zimlets on their Zimlet page.
 
 |Disabled |
 Zimlet will not be immediately available to users in the associated COS.
@@ -100,13 +87,11 @@ All deployed Zimlets will be enabled.
 
 [NOTE]
 Users can enable or disable optional Zimlets from their account’s
-*Preferences -> Zimlets* page. If you select a Zimlet as mandatory, it
-cannot be disabled by the user.
+*Preferences -> Zimlets* page. If you select a Zimlet as mandatory, it cannot be disabled by the user.
 
 === Undeploying a Zimlet
 
-When a Zimlet is undeployed, it is removed from all COSs and then removed
-from the LDAP.
+When a Zimlet is undeployed, it is removed from all COSs and then removed from the LDAP.
 
 Admin Console: ::
 *Home -> Configure -> Zimlets*
@@ -117,10 +102,7 @@ Admin Console: ::
 
 === Adding Proxy-Allowed Domains to a Zimlet
 
-Proxy Allowed Domains lets you configure which external domains can be
-accessed through a Zimlet. For the Zimlets that are included in {product-short}, proxy
-allowed domains are already configured. If you download and deploy other
-Zimlets, you can add additional proxy domain names.
+Proxy Allowed Domains lets you configure which external domains can be accessed through a Zimlet. For the Zimlets that are included in {product-short}, proxy allowed domains are already configured. If you download and deploy other Zimlets, you can add additional proxy domain names.
 
 Admin Console: ::
 *Home -> Configure -> Class of Service*
@@ -136,9 +118,7 @@ section.
 
 === Upgrading a Zimlet
 
-Use the same steps as deploying a new Zimlet to upgrade a customized
-Zimlet. The new Zimlet `zip` file should have the same name as the existing
-Zimlet `zip` file.
+Use the same steps as deploying a new Zimlet to upgrade a customized Zimlet. The new Zimlet `zip` file should have the same name as the existing Zimlet `zip` file.
 
 Admin Console: ::
 *Home -> Configure -> Zimlets*, from the *Gear* icon select *Deploy*
@@ -149,20 +129,16 @@ Admin Console: ::
 
 == Managing Zimlets from the Command Line Interface
 
-The following Zimlet management tasks are available from the command line
-interface.
+The following Zimlet management tasks are available from the command line interface.
 
 === Deploying Zimlets
 
-When a Zimlet is deployed, it is available immediately to everyone in
-the default COS. If a Zimlet is not deployed to another COS directly,
+When a Zimlet is deployed, it is available immediately to everyone in the default COS. If a Zimlet is not deployed to another COS directly,
 the COS displays the Zimlets but they are not enabled.
 
-Deploy a Zimlet using the CLI, including modifying the COS before
-deploying.
+Deploy a Zimlet using the CLI, including modifying the COS before deploying.
 
-. Select a Zimlet and copy the Zimlet `zip` file to `/tmp` folder on your
-Zimbra server.
+. Select a Zimlet and copy the Zimlet `zip` file to `/tmp` folder on your Zimbra server.
 
 . Login as the zimbra user `su - zimbra`
 
@@ -176,8 +152,7 @@ zmzimletctl deploy /tmp/<zimlet>.zip
 === Adding Proxy Allowed Domains to a Zimlet
 
 When deploying a Zimlet, the COS attributes, `zimbraProxyAllowedDomains`,
-must be set for the domain address that the Zimlet might call to get
-information.
+must be set for the domain address that the Zimlet might call to get information.
 
 To set the `zimbraProxyAllowedDomains` attribute, type:
 [source,bash]
@@ -191,8 +166,7 @@ This must be applied to all COSs that have your Zimlet enabled.
 
 === Deploying a Zimlet and Granting Access to a COS
 
-Use steps in this section to deploy a Zimlet to one or more COSs other than
-the default:
+Use steps in this section to deploy a Zimlet to one or more COSs other than the default:
 
 . Login as zimbra user: su – zimbra
 . Copy the Zimlet file from Gallery to */tmp* folder.
@@ -210,16 +184,14 @@ zmzimletctl deploy /tmp/<zimlet>.zip
 zmzimletctl acl <zimletname> <cosname1> grant
 ----
 +
-This will grant permission to `cosname1`. You can also grant access to more
-than one COS on the same command line:
+This will grant permission to `cosname1`. You can also grant access to more than one COS on the same command line:
 +
 [source,bash]
 ----
 zmzimletctl acl <zimletname> <cosname1> grant <cosname2> grant
 ----
 
-. To allow this zimlet to use the allowed proxy domains, run the following
-on each COS and add the allowed domains.
+. To allow this zimlet to use the allowed proxy domains, run the following on each COS and add the allowed domains.
 +
 [source,bash]
 ----
@@ -243,9 +215,7 @@ installed in LDAP, and those available by COS.
 
 Some Zimlets may require additional configuration after they are deployed.
 
-The Zimlet configuration template allows you to make changes on the
-configuration template and then install the new configuration file on the
-Zimbra server.
+The Zimlet configuration template allows you to make changes on the configuration template and then install the new configuration file on the Zimbra server.
 
 Use steps in this section to change a Zimlet configuration:
 
@@ -256,16 +226,12 @@ Use steps in this section to change a Zimlet configuration:
 zmzimletctl getConfigTemplate <zimlet.zip>
 ----
 
-. Make the required changes in the template, taking care to change only the
-required areas, then save the file.
+. Make the required changes in the template, taking care to change only the required areas, then save the file.
 +
 [NOTE]
-If you have more than one custom Zimlet, rename the config template.xml
-file before updating the configuration in LDAP so that files are not
-overwritten.
+If you have more than one custom Zimlet, rename the config template.xml file before updating the configuration in LDAP so that files are not overwritten.
 
-. Use the `zmzimletctl` command to update the configuration in the LDAP.  If
-you changed the name of the configuration template, replace
+. Use the `zmzimletctl` command to update the configuration in the LDAP.  If you changed the name of the configuration template, replace
 `config_template.xml` with the new name.
 +
 [source,bash]
@@ -275,8 +241,7 @@ zmzimletctl configure config_template.xml
 
 === Upgrading a Zimlet
 
-Upgrading a customized Zimlet is performed by using the same steps as those
-used to deploy a new Zimlet.
+Upgrading a customized Zimlet is performed by using the same steps as those used to deploy a new Zimlet.
 
 [NOTE]
 The new Zimlet `zip` file should be named identically to the existing Zimlet
@@ -294,8 +259,7 @@ replacing the older version.
 zmzimletctl deploy <zimlet.zip file name>
 ----
 +
-The Zimlet is copied to the `/opt/zimbra/zimlets-deployed` folder. If
-your Zimlet includes a `.jsp` file, the `.jsp` file is also copied to the
+The Zimlet is copied to the `/opt/zimbra/zimlets-deployed` folder. If your Zimlet includes a `.jsp` file, the `.jsp` file is also copied to the
 `/opt/zimbra/jetty/webapps/zimlet/<zimletnamefolder>`.
 
 . To ensure availability of the newer version, flush the cache:
@@ -307,11 +271,8 @@ zmprov flushCache zimlet
 
 === Using the Zimbra Gallery
 
-You can download and deploy Zimlets from the Zimlet Gallery located on the
-Zimbra web site. Go to https://www.zimbra.org/extend/ and scroll through
-the Extensions from the Zimbra Gallery section.
+You can download and deploy Zimlets from the Zimlet Gallery located on the Zimbra web site. Go to https://www.zimbra.org/extend/ and scroll through the Extensions from the Zimbra Gallery section.
 
 === Developing Customized Zimlets
 
-To develop your own custom Zimlets, see the Zimlet Developers Guide on
-the Zimbra Wiki at https://wiki.zimbra.com.
+To develop your own custom Zimlets, see the Zimlet Developers Guide on the Zimbra Wiki at https://wiki.zimbra.com.
