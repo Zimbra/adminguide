@@ -148,7 +148,9 @@ To avoid warning messages from the toolkit, enter this value.
 |=======================================================================
 --
 
-. Using `ktpass` to create a jetty.keytab file
+. Using `ktpass` to create a `jetty.keytab` file
++
+--
 ====
 [source,bash]
 ----
@@ -170,8 +172,9 @@ Targeting domain controller:
     keysize 71 HTTP HTTP/mail1.example.com@MY_COMPANY.COM ptype 1 (KRB5_NT_PRINCIPAL) vno3 etype 0x17 (RC4-HMAC) keylength 16 (0xc383f6a25f1e195d5aef495c980c2bfe)
 ----
 ====
-+
+
 image::Zimbra-spnego-003.png[`spnegofile.keytab`]
+--
 +
 . Transfer the keytab file (jetty.keytab) to the Zimbra server.
 Copy the file created in step 3 to the following Zimbra server location:
