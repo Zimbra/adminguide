@@ -313,6 +313,31 @@ Resets John's Appl79032X2WA4S device SyncState
 [[advanced-settings]]
 == Advanced Settings
 
+[[mobile-ng-dos-filter]]
+=== Mobile NG DoS Filter
+Mobile NG includes a dedicated DoS Filter component to improve both security and stability. The filter will kick in whenever a device exceeds the chosen connection rate over time and will "jail" the device for a set period of time, refusing any connections from it.
+
+This improves both security, helping to prevent Denial of Service attacks, and stability by blocking clients that are performing too many requests due to bugs or malfunctioning saving resources for all other clients.
+
+WARNING: The Mobile DoS filter is disabled by default, and can be enabled as needed via CLI.
+
+==== Configuration
+The Mobile DoS Filter is entirely configured via CLI, using the following NG attributes:
+
+* `mobileAntiDosServiceEnabled`: enable the Mobile DoS Filter service. Default `false`;
+* `mobileAntiDosServiceJailDuration`: duration (in milliseconds) of synchronization "jail". Default 600000;
+* `mobileAntiDosServiceTimeWindow` interval of time to calculate the connection ratio. The jail is triggered if a device sends more than `mobileAntiDosServiceMaxRequests` requests in this time window. Default 30000ms;
+* `mobileAntiDosServiceMaxRequests` maximum number of requests received within `mobileAntiDosServiceTimeWindow` milliseconds). Default 150;
+
+All attributes are set at global level with `zxsuite config global set|get|clear`. Specific info for each property can be obtained via `zxsuite config info attribute [propertyname]`.
+
+==== How Mobile DoS Filter works
+When the anti-dos service is running and `mobileAntiDosMaxRequests` is greater than 0, the system stores in memory the timestamp of the last `mobileAntiDosMaxRequests` requests. If the maximum number of request timestamps has been stored and all stored requests are within the time window, all new requests from this device/account are dropped for `mobileAntiDosJailDuration` milliseconds.
+
+When the rate has been exceeded, a warning is sent via email to admin and added to server notifications.
+
+NOTE: Issuing the command `zxsuite mobile doRestartService anti-dos` will reset all jails and counters.
+
 [[mobile-ng-performance-tuning]]
 === Mobile NG Performance Tuning
 
