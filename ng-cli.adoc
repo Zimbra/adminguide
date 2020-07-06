@@ -31,7 +31,7 @@ Good for scripting.
 * --progress - Prints the operation's feedback directly to STDOUT. Press
 Ctrl+C to interrupt the output. The operation itself won't be
 interrupted.
-* --sync - Runs the command in synchronous mode, waiting for the operation's execution to end and returning an exit code relevant with the operation's result among the following: 
+* --sync - Runs the command in synchronous mode, waiting for the operation's execution to end and returning an exit code relevant with the operation's result among the following:
   ** 0 - Successful
   ** 1 - Failed
   ** 2 - Stopped
@@ -310,10 +310,10 @@ Backup NG Commands
 ::
   *doBackupLDAP* - Backup LDAP
 
-`zxsuite backup doBackupLDAP`		
+`zxsuite backup doBackupLDAP`
 
 ::
-  *doRestartService* - Restart one given service 
+  *doRestartService* - Restart one given service
 
 `zxsuite backup doRestartService {service_name}`
 
@@ -401,7 +401,7 @@ HSM NG CLI
 
 Basic Usage:
 
-zxsuite powerstore \{action} [options]
+zxsuite hsm \{action} [options]
 
 [[hsm-ng-commands]]
 HSM NG Commands
@@ -410,129 +410,129 @@ HSM NG Commands
 ::
   *+setHsmPolicy* - Add an additional policy to HSM.
 
-`zxsuite powerstore +setHsmPolicy {hsm_policy}`
+`zxsuite hsm +setHsmPolicy {hsm_policy}`
 
 ::
   *addS3Store* - Add an S3 compatible store
 
-`zxsuite powerstore addS3Store {Name of the zimbra store} [attr1 value1 [attr2 value2...`
+`zxsuite hsm addS3Store {Name of the zimbra store} [attr1 value1 [attr2 value2...`
 
 ::
   *doCheckBlobs* - Start the doCheckBlobs operation.
 
-`zxsuite powerstore doCheckBlobs {start} [attr1 value1 [attr2 value2...`
+`zxsuite hsm doCheckBlobs {start} [attr1 value1 [attr2 value2...`
 
 ::
   *doCreateVolume* - Create a volume on the server
 
-`zxsuite powerstore doCreateVolume {primary|secondary|index} {volume_name} {volume_path} {true|false} {compression_threshold_bytes}`
+`zxsuite hsm doCreateVolume {primary|secondary|index} {volume_name} {volume_path} {true|false} {compression_threshold_bytes}`
 
 ::
   *doDeduplicate* - Start a deduplication operation.
 
-`zxsuite powerstore doDeduplicate {volume_name} [attr1 value1 [attr2 value2...`
+`zxsuite hsm doDeduplicate {volume_name} [attr1 value1 [attr2 value2...`
 
 ::
   *doDeleteVolume* - Delete a specific volume on the server
 
-`zxsuite powerstore doDeleteVolume {volume_id}`
+`zxsuite hsm doDeleteVolume {volume_id}`
 
 ::
   *doMoveBlobs* - Start the doMoveBlob operation.
 
-`zxsuite powerstore doMoveBlobs [attr1 value1 [attr2 value2...`
+`zxsuite hsm doMoveBlobs [attr1 value1 [attr2 value2...`
 
 ::
   *doRemoveHsmPolicy* - Remove a policy from HSM.
 
-`zxsuite powerstore doRemoveHsmPolicy {hsm_policy}`
+`zxsuite hsm doRemoveHsmPolicy {hsm_policy}`
 
 ::
   *doRestartService* - restart a given service
 
-`zxsuite powerstore doRestartService {service_name}`
+`zxsuite hsm doRestartService {service_name}`
 
 ::
   *doStartService* - start a given service
 
-`zxsuite powerstore doStartService {service_name}`
+`zxsuite hsm doStartService {service_name}`
 
 ::
   *doStopAllOperations* - Stops all running operations and empties the
   operations queue
 
-`zxsuite powerstore doStopAllOperations`
+`zxsuite hsm doStopAllOperations`
 
 ::
   *doStopOperation* - Stop a single running operation
 
-`zxsuite powerstore doStopOperation {operation_uuid}`
+`zxsuite hsm doStopOperation {operation_uuid}`
 
 ::
   *doStopService* - stop a given service
 
-`zxsuite powerstore doStopService {service_name}`
+`zxsuite hsm doStopService {service_name}`
 
 ::
   *doUpdateVolume* - Update a specific volume on the server
 
-`zxsuite powerstore doUpdateVolume {volume_id} [attr1 value1 [attr2 value2...`
+`zxsuite hsm doUpdateVolume {volume_id} [attr1 value1 [attr2 value2...`
 
 ::
   *doVolumeToVolumeMove* - Start the doMoveVolumeBlobs operation.
 
-`zxsuite powerstore doVolumeToVolumeMove {source_volume_name} {destination_volume_name}`
+`zxsuite hsm doVolumeToVolumeMove {source_volume_name} {destination_volume_name}`
 
 ::
   *getAllOperations* - Displays all running and queued operations
 
-`zxsuite powerstore getAllOperations [attr1 value1 [attr2 value2...`
+`zxsuite hsm getAllOperations [attr1 value1 [attr2 value2...`
 
 ::
   *getAllVolumes* - Prints all the volumes present in the server
 
-`zxsuite powerstore getAllVolumes`
+`zxsuite hsm getAllVolumes`
 
 ::
   *getHsmPolicy* - Prints all the policies
 
-`zxsuite powerstore getHsmPolicy`
+`zxsuite hsm getHsmPolicy`
 
 ::
   *getProperty* - Get configuration properties
 
-`zxsuite powerstore getProperty [attr1 value1 [attr2 value2...`
+`zxsuite hsm getProperty [attr1 value1 [attr2 value2...`
 
 ::
   *getServices* - show current status of all services for this module
 
-`zxsuite powerstore getServices`
+`zxsuite hsm getServices`
 
 ::
   *getVolumeStats* - Show space occupation, number of items and blobs
   contained in a volume
 
-`zxsuite powerstore getVolumeStats {volume_id} [attr1 value1 [attr2 value2...`
+`zxsuite hsm getVolumeStats {volume_id} [attr1 value1 [attr2 value2...`
 
 ::
   *monitor* - Monitor a running operation
 
-`zxsuite powerstore monitor {operation_uuid} [attr1 value1 [attr2 value2...`
+`zxsuite hsm monitor {operation_uuid} [attr1 value1 [attr2 value2...`
 
 ::
   *setHSMPolicy* - Set the default HSM policy
 
-`zxsuite powerstore setHSMPolicy {hsm_policy}`
+`zxsuite hsm setHSMPolicy {hsm_policy}`
 
 ::
   *setProperty* - Set configuration property
 
-`zxsuite powerstore setProperty {property_name} {property_value}`
+`zxsuite hsm setProperty {property_name} {property_value}`
 
 ::
   *testS3Connection* - Test the connection to an S3 bucket.
 
-`zxsuite powerstore testS3Connection {s3BucketConfigurationUuid}`
+`zxsuite hsm testS3Connection {s3BucketConfigurationUuid}`
 
 [[admin-ng-cli]]
 Admin NG CLI
