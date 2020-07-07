@@ -1599,7 +1599,7 @@ compress(O)                Boolean          true|false                          
 checkDigest(O)             Boolean          if false skip digest calculation and check           true
 overwrite(O)               Boolean          true|false                                           false
 threads(O)                 Integer                                                               1
-hsm(O)                     Boolean          true|false                                           true
+hsm(O)                     Boolean          true|false                                           false
 notifications(O)           Email Address
 ignore_partial(O)          Boolean          true|false                                           false
 drop_network_backup(O)     Boolean          true|false                                           false
