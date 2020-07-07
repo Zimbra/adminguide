@@ -44,6 +44,7 @@ While likely to work, items marked as "icon:check-circle[role=yellow] Limited" a
 * File search
 * Folder-based navigation
 * Quick "stateful" navigation
+* File Versioning
 
 === Backend
 * Option to store files on dedicated Zimbra volumes
@@ -153,6 +154,30 @@ Top-to-bottom, the InfoBox contains:
 * Share information
 * Creation and edit information
 * A customizable "Description" field
+
+=== File Versioning
+File versioning keeps track of all the versions of files stored in {zdrivev2-name} and allows end users to recover and download previous file versions.
+
+To access the versioning menu of a file, simply right-click the file and select "File Versions" from the drop down menu.
+
+image::drive_versioning_menu.png[Access File Versioning]
+
+image::drive_versioning.png[Drive Versioning Menu]
+
+The File Versioning Menu lists all stored versions of a file, sorted by date descending, and allows to open, download or permanently store each single version through the "options" button on the right side of every entry. On top of this, it is also allows to upload a new version or to purge all existing versions using the "Upload Version" and "Purge Versions" buttons at the bottom of the window.
+
+NOTE: Files can only be opened for editing if Zimbra Docs is installed and the file type is supported.
+
+By default, Zimbra Drive will save 20 versions for each file for up to 90 days. This can be changed by setting the following NG properties at global, COS or account level:
+
+* `driveMaxVersionRetentionDays`: maximum retention time in days. Value between 0 (no time limit) and 365. Default 90.
+* `driveMaxVersionNumber`: maximum number of versions to store. When reached, any newer version will replace the oldest one as in a FIFO queue. Value 0 (no limit) or higher. Default 20.
+
+E.g.
+
+* To set the maximum retention duration to 120 at global level, run `zxsuite config global set attribute driveMaxVersionRetentionDays value 120`
+* To set the maximum number of stored version to 5 for the user@example.com account, run `zxsuite config account set user@example.com  attribute driveMaxVersionNumber value 5`
+* To reset the maximum retention duration at global level, run `zxsuite config global empty attribute driveMaxVersionRetentionDays`
 
 == Technical information
 === File Storage
