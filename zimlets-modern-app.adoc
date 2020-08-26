@@ -378,3 +378,47 @@ Configure the new Application Credentials in {product-name}::
 
 . Acquire the App key and App Secret from the Settings tab.
 . See <<Configuring LDAP>>.
+
+== Setting up Jitsi Videoconferencing Solution-Beta (Early access)
+Jitsi is a fully encrypted, 100% open-source, video conferencing solution. Jitsi integration is available in the Modern Web App allowing end-users to set up video conferencing directly in their calendar; i.e. just click a button to add a Jitsi link to a meeting invite and then launch into that video meeting. 
+
+Administrators must install/enable the zimlet and define what video server instance they plan to use. Administrators can deploy their own Jitsi video server instance. Even if administrators have not set up a Jitsi server instance, the Jitsi integration zimlet can use Jitsi's publicly available free video conferencing solution to schedule meetings for the end users. 
+
+For more information, please visit:
+
+. To set up your own Jitsi server - https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-start
+
+. End-user guide for Jitsi integration zimlet - https://zimbra.github.io/userguide/zcloud/userguide-zcloud.html
+
+IMPORTANT: No configuration changes are required if Jitsi’s publicly available free video conferencing solution is used for setting up events.
+
+Steps to set up your organization's Jitsi server URL in the Jitsi zimlet::
+
+In this example, we will assume your organization's Jitsi server URL as https://my-org-jitsi-server.com.
+
+. The following CLI commands need to be run as zimbra user.
++
+[source,bash]
+----
+su - zimbra
+----
+. Go to /opt/zimbra/zimlets-deployed/zimbra-zimlet-jitsi.
+. Edit config_template.xml and change the value of jitUrl parameter to https://my-org-jitsi-server.com.
+. Example of the global block in the file after the update.
++
+[source,bash]
+----
+   <global>
+       <property name="jitsiUrl"> https://my-org-jitsi-server.com</property>
+   </global>
+----
+
+. Execute these commands to apply the changes:
++
+[source,bash]
+----
+zmzimletctl configure config_template.xml
+zmprov fc all 
+----
+
+NOTE: For already logged in users, they will have to reload the Modern UI to apply configuration changes.
