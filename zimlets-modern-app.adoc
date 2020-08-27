@@ -398,24 +398,22 @@ In this example, we will assume your organization's Jitsi server URL as https://
 
 . The following CLI commands need to be run as zimbra user.
 +
-[source,bash]
 ----
 su - zimbra
 ----
++
 . Go to /opt/zimbra/zimlets-deployed/zimbra-zimlet-jitsi.
 . Edit config_template.xml and change the value of jitUrl parameter to https://my-org-jitsi-server.com.
 . Example of the global block in the file after the update.
 +
-[source,bash]
 ----
    <global>
        <property name="jitsiUrl"> https://my-org-jitsi-server.com</property>
    </global>
 ----
-
++
 . Execute these commands to apply the changes:
 +
-[source,bash]
 ----
 zmzimletctl configure config_template.xml
 zmprov fc all 
