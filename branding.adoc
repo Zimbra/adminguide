@@ -50,7 +50,7 @@ Naming the folder is a crucial first step.
 * In case there is a virtual host setup, the folder name must be the domain name on which you have configured the virtual host.
 +
 ====
-For Example, consider a domain named `example.com` that has a virtual host `mail.example.com`; in such a case, you must create a folder *mail.example.com*.
+For Example, consider a domain named `example.com` that has a virtual host `mail.example.com`; in such a case, you must create a folder named *mail.example.com*.
 ====
 
 Finding hostname::

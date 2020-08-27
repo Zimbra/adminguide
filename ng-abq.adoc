@@ -104,6 +104,82 @@ changed, the device's sync state will be reset.
 This was designed to make sure the user knows what’s happening, the alternative being forcing the synchronization to fail with no descriptive
 response for the user itself – which would likely cause a significant overhead on support calls.
 
+== Custom ABQ emails
+Quarantine and block dummy emails can be customized by using the `zxsuite mobile setABQMessage` message command.
+
+Messages can be customized globally or by domain, and multiple languages can be set.
+
+The `zxsuite mobile setABQMessage` command accepts the following parameters:
+
+[cols="4*"]
+|===
+h|Parameter h|Type h|Value h|Default
+
+|configLevel
+|string
+|global,domain
+|global
+
+|domain
+|string
+|
+|only if config != global
+
+|messageClass
+|enum
+|blocked,quarantined
+|
+
+|language
+|enum
+|locale (e.g. "en-us")
+|system default
+
+|from
+|string
+|
+|Admin Address
+
+|reply_to
+|string
+|
+|N/A
+
+|subject
+|string
+|
+|Built-in default
+
+|body_plain
+|string
+|
+|Built-in default
+
+|body_plain_file
+|path
+|Path to the file to use as plain text body
+|N/A
+
+|body_html
+|string
+|
+|Built-in default
+
+|body_html_file
+|path
+|Path to the file to use as html body
+|N/A
+|===
+
+.Setup Example
+Given two files, `/tmp/quarantine_body.txt` and `/tmp/quarantine_body.html` containing the French language plaintext and html message bodies and the `support@domain.com` support email address, the following command will set the quarantine message for the `domain.com` domain without affecting other domains or users:
+
+`zxsuite mobile setABQMessage domain domain.com quarantined fr from support@domain.com body_plain_file /tmp/quarantine_body.txt body_html_file /tmp/quarantine_body.html`
+
+WARNING: Before being able to customize the ABQ messages, a default must be set using `default` as the language in the command, e.g. +
+ +
+`zxsuite mobile setABQMessage global quarantined default [...]`
+
 == Notifications
 Administrators can be notified via email of quarantined devices at a specific interval defined by the `abqNotificationsInterval` NG
 configuration attribute, expressed in milliseconds:
