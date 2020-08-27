@@ -5,7 +5,7 @@ Zimbra Archiving and Discovery is an optional feature that enables
 archiving of messages that were delivered to or sent by {product-name} and
 to search across mailboxes.
 
-The installation of the archiving feature provides the {product-abbrev} discovery tool
+The installation of the archiving feature provides the {product-name} discovery tool
 (also known as cross mailbox search) and sets the attributes that allow
 archiving to be enabled on the Zimbra MTAs.
 
@@ -206,7 +206,7 @@ Admin Console: ::
 *Home -> Configure -> Global Settings -> MTA*,
 from *Archiving Configuration* check *Enable archiving*
 
-Restart {product-abbrev} from the command line
+Restart {product-short} from the command line
 [source,bash]
 ----
 zmcontrol restart

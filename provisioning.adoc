@@ -45,7 +45,7 @@ that is assigned to the account.
 
 --
 [WARNING]
-ZCS Account Migration within the Zimbra Admin UI is no longer supported,
+{product-name} Account Migration within the Zimbra Admin UI is no longer supported,
 with End of Technical Guidance set for 17 December 2019.
 We recommend https://zimbra.audriga.com/[Audriga's self-service migration solution]
 as a preferred alternative for all account migrations.
@@ -53,10 +53,10 @@ as a preferred alternative for all account migrations.
 
 You can provision multiple accounts at one time using the Account Migration
 Wizard from the Administration Console.  You can import accounts from
-either a generic IMAP server or from another {product-abbrev} server.
+either a generic IMAP server or from another {product-short} server.
 
 [NOTE]
-Only accounts on {product-abbrev} 7.2 or later can be migrated to {product-abbrev} 8.
+Only accounts on {product-name} 7.2 or later can be migrated to {product-name} 8.
 
 You can also import account names to provision from an XML file that you
 create.
@@ -68,7 +68,7 @@ data.
 
 Whether you get the account records from an LDAP directory or use an XML
 file, you need to set the password requirements for the newly provisioned
-accounts.  The options are to have {product-abbrev} randomly create passwords for each
+accounts.  The options are to have {product-short} randomly create passwords for each
 account or to set the same password on each account.  You have the option
 to force users to change the password when they sign in the first time.
 
@@ -84,7 +84,7 @@ article about split domains at https://wiki.zimbra.com/wiki/Split_Domain.
 
 === Migrating Accounts from a Zimbra Server
 
-To migrate accounts from a server running {product-abbrev} 7.2 or later to {product-abbrev} 8.
+To migrate accounts from a server running {product-name} 7.2 or later to {product-name} 8.
 
 Admin Console: ::
 *Home -> 3 Add Accounts -> 3. Migration and Co-existence*
@@ -184,7 +184,7 @@ Configure the subsections of the LDAP forest to search.
 The *Account Migration Wizard* connects to the directory server and
 generates a report showing the number of domains found; number of accounts
 found on the server and how many of those accounts are already created on
-{product-abbrev}.  This dialog also shows the password options you configured.
+{product-short}.  This dialog also shows the password options you configured.
 
 .  Review the report generated and then click *Next*.  The accounts are
 provisioned on the {product-name} server.
@@ -293,7 +293,7 @@ Configure the subsections of the LDAP forest to search.
 +
 The Migration Wizard connects to the directory server and generates a
 report showing the number of domains found; number of accounts found on the
-server and how many of those accounts are already created on {product-abbrev}.  This
+server and how many of those accounts are already created on {product-short}.  This
 dialog also shows the password options you configured.
 
 . Review the report generated and then click *Next*.  The accounts are
@@ -345,7 +345,7 @@ want to import by either selecting the accounts to import data or by using
 an XML file to select the accounts.
 
 [NOTE]
-Ensure that accounts are provisioned on the {product-abbrev} server before attempting
+Ensure that accounts are provisioned on the {product-short} server before attempting
 this procedure.
 
 Admin Console: ::
@@ -434,7 +434,7 @@ The following example shows an XML file that is used to provision multiple
 email accounts for externally hosted domain without importing mail.
 
 In this example, the `zimbraMailTransport` attribute of newly provisioned
-accounts will be set to point to external SMTP server instead of the {product-abbrev}
+accounts will be set to point to external SMTP server instead of the {product-short}
 server.
 
 [source,xml]
@@ -466,7 +466,7 @@ server.
 
 The following example shows an XML file that is used to import email for
 one account via IMAP from a gmail account without provisioning the email
-account in {product-abbrev}.  The account must be provisioned on {product-abbrev} before running this
+account in {product-short}.  The account must be provisioned on {product-short} before running this
 type of XML file.
 
 [source,xml]
@@ -500,8 +500,8 @@ provisioning methods.
 === Overview
 
 When an external LDAP authentication mechanism - such as external LDAP
-authentication, preauth, or SPNEGO - is configured for a {product-abbrev} domain, you
-can set up {product-abbrev} to automatically create user accounts on {product-abbrev}.  Primary email
+authentication, preauth, or SPNEGO - is configured for a {product-short} domain, you
+can set up {product-short} to automatically create user accounts on {product-short}.  Primary email
 address and account attributes are mapped from an external directory. You
 can configure how and when new accounts should be created from the external
 directory data.
@@ -513,7 +513,7 @@ Three modes are supported for auto-provisioning configuration.
 |Mode |Description
 
 |Eager |
-{product-abbrev} polls the external directory for accounts to auto provision.  For this
+{product-short} polls the external directory for accounts to auto provision.  For this
 mode, you configure how often the external directory is polled for new
 users, the maximum number of users to process at each interval, and which
 domains are scheduled for account auto provision on specified servers.
@@ -524,7 +524,7 @@ Guidelines are provided in
 | Lazy |
 If a user logs into the {web-client} the first time through one of the authentication
 mechanisms supported for auto provisioning, and if the user does not exist
-in the {product-abbrev} directory, a new account is automatically created in {product-abbrev} for
+in the {product-short} directory, a new account is automatically created in {product-short} for
 this user.
 
 Guidelines are provided in
@@ -555,7 +555,7 @@ that COS is determined for manually provisioned accounts:
 * If a COS is defined for the domain, this COS is assigned to the accounts
 that are created.
 
-* If a domain COS is not defined, the {product-abbrev} default COS is assigned.
+* If a domain COS is not defined, the {product-short} default COS is assigned.
 
 You can configure a *Welcome* email message to be sent to newly created
 accounts.  The subject and body of this email can be configured with
@@ -667,23 +667,23 @@ created in Zimbra.  Listener can be plugged in as a server
 extension to handle tasks like updating the account auto provision
 status in the external LDAP directory.
 +
-At each eager provision interval, {product-abbrev} does an LDAP search
+At each eager provision interval, {product-short} does an LDAP search
 based on the value configured in `zimbraAutoProvLdapSearchFilter`.
 Returned entries from this search are candidates to be auto
 provisioned in this batch.  The `zimbraAutoProvLdapSearchFilter`
 should include an assertion that will only hit entries in the external
-directory that have not yet been provisioned in {product-abbrev},
+directory that have not yet been provisioned in {product-short},
 otherwise it's likely the same entries will be repeated pulled in to
-{product-abbrev}.  After an account is auto provisioned in
-{product-abbrev},
+{product-short}.  After an account is auto provisioned in
+{product-short},
 `com.zimbra.cs.account.Account.AutoProvisionListener.postCreate
 (Domain domain, Account acct, String external DN)` will be called by
 the auto provisioning framework.  Customer can implement the
-AutoProvisionListener interface in a {product-abbrev} server extension
+AutoProvisionListener interface in a {product-short} server extension
 and get their `AutoProvisionListener.postCreate()` get called.  The
 implementation of customer's post Create method can be, for example,
 setting an attribute in the external directory on the account just
-provisioned in {product-abbrev}.  The attribute can be included as a
+provisioned in {product-short}.  The attribute can be included as a
 condition in the `zimbraAutoProvLdapSearchFilter`, so the entry won't
 be returned again by the LDAP search in the next interval.
 
@@ -740,12 +740,12 @@ provision thread will be started.
 [[eager_mode_configuration]]
 === Eager Mode Configuration
 
-With Eager mode, {product-abbrev} polls the external directory for accounts to auto
+With Eager mode, {product-short} polls the external directory for accounts to auto
 provision.  You configure how often the external directory is polled for
 new users, the maximum number of users to process at each interval, and the
 domains to be scheduled for account auto-provisioning on specified servers.
 
-. Log in to the {product-abbrev} server as zimbra and type `zmprov` at the command
+. Log in to the {product-short} server as zimbra and type `zmprov` at the command
 prompt.
 +
 [source,bash]
@@ -848,17 +848,17 @@ placeholders.
 
 . (Optional) Define the attribute name that is mapped to the local part of
 the account name on the external directory.  This is used to define the
-account name on {product-abbrev}.  If this is not specified, the local part of the
-account name is the principal user name used to authenticate to {product-abbrev}.
+account name on {product-short}.  If this is not specified, the local part of the
+account name is the principal user name used to authenticate to {product-short}.
 +
 [source,bash]
 ----
 md <example.com> zimbraAutoProvAccountNameMap <value>
 ----
 
-. (Optional) Map the attribute values from the external entry to the {product-abbrev}
+. (Optional) Map the attribute values from the external entry to the {product-short}
 account attributes.  If this is not set up, no attributes from the external
-directory are populated in the {product-abbrev} directory.  The value is mapped in the
+directory are populated in the {product-short} directory.  The value is mapped in the
 form of `{external attribute}={zimbra attribute}`.
 +
 [IMPORTANT]
@@ -866,7 +866,7 @@ Invalid mapping configuration will cause the account creating to fail.
 +
 To map the "sn" value on the external entry to "displayName" on the
 Zimbra account and map description value on the external entry to
-description on the {product-abbrev} account, type
+description on the {product-short} account, type
 +
 [source,bash]
 ----
@@ -893,7 +893,7 @@ Lazy mode auto provisioning automatically creates a new account after a
 user authenticates from an external authentication mechanisms (LDAP,
 preauth, Kerberos 5, and/or SPNEGO).
 
-. Log in to the {product-abbrev} server as zimbra and type `zmprov` at the command
+. Log in to the {product-short} server as zimbra and type `zmprov` at the command
 prompt.
 
 . Enable LAZY mode,
@@ -987,23 +987,23 @@ Refer to <<auto_provisioning_placeholders,Placeholders>> for supported
 placeholders.
 
 . (Optional) Identify the attribute name on the external entry that
-contains the local part of the account name to be provisioned in {product-abbrev}.  If
+contains the local part of the account name to be provisioned in {product-short}.  If
 this is not specified, the local part of the account name is the principal
-user used to authenticate to {product-abbrev}.
+user used to authenticate to {product-short}.
 +
 [source,bash]
 ----
 md <example.com> zimbraAutoProvAccountNameMap <value>
 ----
 
-. (Optional) Map the attribute values from the external entry to the {product-abbrev}
+. (Optional) Map the attribute values from the external entry to the {product-short}
 account attributes.  If this is not set up, no attributes from the external
-directory are populated in the {product-abbrev} directory.  Value is in the form of
+directory are populated in the {product-short} directory.  Value is in the form of
 `{external attribute}={zimbra attribute}`.
 +
 To map the *sn* value on the external entry to *displayName* on the Zimbra
 account and map description value on the external entry to description on
-the {product-abbrev} account, type as
+the {product-short} account, type as
 +
 [source,bash]
 ----
@@ -1025,7 +1025,7 @@ md <example.com> zimbraAutoProvNotificationFromAddress <name@example.com>
 Use the Manual Mode setting to disable auto provisioning with an external
 LDAP server.
 
-. Log in to the {product-abbrev} server as zimbra and type `zmprov` at the
+. Log in to the {product-short} server as zimbra and type `zmprov` at the
 command prompt.
 
 . Enable MANUAL mode:

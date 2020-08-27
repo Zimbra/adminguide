@@ -6,143 +6,101 @@ You can change the logo and base colors of the {product-short} {web-client} them
 without having to customize individual {product-name} themes.  This
 can be done from the administration console or the CLI.
 
-// ifdef::z9[NOTE: {only-in-classic}]
-
 == Changing Theme Color and Logos on the {product-short} {web-client}
 
-ifdef::z9[NOTE: This sections deals with customizations related to {web-client}. For customizations related to the {modern-client}, refer to <<branding.adoc#_customizing_modern_web_app, Customizing {modern-client}>>]
+NOTE: This sections deals with customizations related to {web-client}.
+For customizations related to the {modern-client}, refer to <<branding.adoc#_customizing_modern_web_app, Customizing {modern-client}>>
 
-Base colors for themes, and custom logos can be configured as a global
-setting or as a domain setting.
+Base colors for themes, and custom logos can be configured as a global setting or as a domain setting.
 
-* When the global settings are changed, the changes apply to themes on all
-servers.
+* When the global settings are changed, the changes apply to themes on all servers.
 
-* When the domain settings are changed, the base color and logos for themes
-on the domain are changed.
+* When the domain settings are changed, the base color and logos for themes on the domain are changed.
 
-If global settings and domain-level settings for theme base colors or logos
-are not identical, the domain values are displayed for the domain.
+If global settings and domain-level settings for theme base colors or logos are not identical, the domain values are displayed for the domain.
 
 [IMPORTANT]
-If the logo and base colors are customized in multi-domain {product-name}
-environments, you must set a virtual host as the base color: logo
-attributes are displayed based on the Host header sent by the browser.
+If the logo and base colors are customized in multi-domain {product-name} environments, you must set a virtual host as the base color: logo attributes are displayed based on the Host header sent by the browser.
 
 [NOTE]
-Various Zimbra themes are included with {product-name}.  Some of
-these themes - such as lemongrass, Hot Rod, and Waves - have been designed
-with graphics or color codes that do not change when you modify the base
-color.  You might want to disable those themes from user’s Theme
-preferences selection.
+Various themes are included with {product-name}.
+Some of these themes - such as lemongrass, Hot Rod, and Waves - have been designed with graphics or color codes that do not change when you modify the base
+color.
+You might want to disable those themes from user’s Theme preferences selection.
 
 === Customizing Base Theme Colors
 
 The following base colors in {product-short} {web-client} themes can be changed:
 
 * The primary background color displayed in the client.
-+
-This color is the background of the page. Variants of the color are used
-for buttons, background color of the Content and panes, tabs, and
-selection highlight. In the following image, the background color
-displays with the logo, the variant of the background color displays in
-the login area.
+This color is the background of the page.
+Variants of the color are used for buttons, background color of the Content and panes, tabs, and selection highlight.
+In the following image, the background color displays with the logo, the variant of the background color displays in the login area.
+
 * The secondary color is the color used for the toolbar.
-* The selection color is the color displayed for a selected item such as
-a message or an item in the Overview pane.
-* The foreground color is the text color displayed. The default text
-color is black. The text color usually does not need to be changed.
+* The selection color is the color displayed for a selected item such as a message or an item in the Overview pane.
+* The foreground color is the text color displayed.
+The default text color is black.
+The text color usually does not need to be changed.
 
 === Replacing the {web-client} Logo
 
 You can replace the logo with your company’s logo globally or per domain.
 
-[NOTE]
-*_License Policy for Logo Replacement_* +
-_The Zimbra Public License does not allow removing the Zimbra logo in
-the {product-short} {web-client}. Only Network Edition customers can replace Zimbra
-logos that display in the {product-short} {web-client}. Therefore, only customers
-of the Network Edition should use these instructions. Additional
-information about the license usage can be found at https://www.zimbra.com/license/._
-
 ==== Graphics to Replace
 
-The following logo files can be changed. Your logos must be the same
-size as specified here or the image might not display correctly.
-These graphic files can be saved on another server or in a directory
-that is not overwritten when {product-name} is upgraded.
+The following logo files can be changed. Your logos must be the same size as specified here or the image might not display correctly.
+These graphic files can be saved on another server or in a directory that is not overwritten when {product-name} is upgraded.
 
-* Company logo that displays on the login and splash screens for {product-short} {web-client} and the {product-name} administration console. The
-dimension of the graphic must be exactly 300 x 30.
-* Small company logo in the upper-left of the {product-short} {web-client}
-application and the administration console. The dimension of the graphic
-must be exactly 170 x 35.
+* Company logo that displays on the login and splash screens for {product-short} {web-client} and the {product-name} administration console.
+The dimension of the graphic must be exactly 300 x 30.
+* Small company logo in the upper-left of the {product-short} {web-client} application and the administration console. The dimension of the graphic must be exactly 170 x 35.
 * Company Web address that links from the company logos.
 
 ==== Graphics not replaced
 
-The icon that displays in the Advanced search toolbar and the
-favicon.ico that displays in the URL browser address field cannot be
-changed at this time.
+The icon that displays in the Advanced search toolbar and the `favicon.ico` that displays in the URL browser address field cannot be changed at this time.
 
 === Using the Admin Console to Modify Theme Colors and Logo
 
-On the administration console, the Global Settings and the Domains
-settings include a Themes page that can be configured to customize the
-color scheme and to add a company logo and logo URL. You upload your
-company logo to be used on the {product-short} {web-client} and administration
-console pages.
+On the administration console, the Global Settings and the Domains settings include a Themes page that can be configured to customize the color scheme and to add a company logo and logo URL.
+You upload your company logo to be used on the {product-short} {web-client} and administration console pages.
 
 ==== Changing Base Theme Colors
 
-You can either select colors from popup view of predefined colors, or
-enter the six-digit hexadecimal color value for an exact color match to
-set theme colors for the following categories:
+You can either select colors from popup view of predefined colors, or enter the six-digit hexadecimal color value for an exact color match to set theme colors for the following categories:
 
 * Foreground, which is the text color.
-* Background, which is the primary background color displayed in the
-client.
-* Secondary, which is the color used for the toolbar and selection
-headers in the pane.
-* Selection, which is the color displayed for a selected item such as a
-message, right-click, or drop down menu selection.
+* Background, which is the primary background color displayed in the client.
+* Secondary, which is the color used for the toolbar and selection headers in the pane.
+* Selection, which is the color displayed for a selected item such as a message, right-click, or drop down menu selection.
 
 [NOTE]
-Changes to theme settings require the server theme cache to be flushed.  To
-flush a server, go to *Home -> Configure -> Servers* to get the list of
-servers.  Right-click on a server and select *Flush Cache* from the popup
-menu.
+Changes to theme settings require the server theme cache to be flushed.
+To flush a server, go to *Home -> Configure -> Servers* to get the list of servers.
+Right-click on a server and select *Flush Cache* from the popup menu.
 
-Use the *Customize the theme colors* container to set colors for your
-theme categories:
+Use the *Customize the theme colors* container to set colors for your theme categories:
 
 Admin Console: ::
 *Home -> Configure -> Global Settings -> Themes* or +
 *Home -> Configure -> Domains -> _domain_ -> Themes*
 
-1.  Click on the field alongside the theme category to be modified, then
-use the popup color selector to define the color for your selection.
+1.  Click on the field alongside the theme category to be modified, then use the popup color selector to define the color for your selection.
 +
-You can either click directly on a color, or use the entry field to
-write the hexadecimal value of the color. In either case, your selection
-will be displayed in the field.
-+
-If you opt out of your color selections, click *reset all theme colors*
-to discard your settings.
+You can either click directly on a color, or use the entry field to write the hexadecimal value of the color.
+In either case, your selection will be displayed in the field.
+If you opt out of your color selections, click *reset all theme colors* to discard your settings.
 
-2.  Navigating away from this page results in query for save of the
-settings.
+2.  Navigating away from this page results in query for save of the settings.
 +
 Click *Yes* (to save) or *No* (to discard your settings).
 
 ==== Adding Your Logo
 
-You can replace the {product-name} logo with your company’s logo
-globally or per domain from the appropriate Themes page. Your logos must
-be the same size as specified in the *Graphics to Replace*
-section or the images might not display correctly. The graphic files are
-saved on another server or in a directory that is not overwritten when
-{product-name} is upgraded.
+You can replace the {product-name} logo with your company’s logo globally or per domain from the appropriate Themes page.
+Your logos must be the same size as specified in the *Graphics to Replace* section or the images might not display correctly.
+The graphic files are saved on another server or in a directory that is not overwritten when {product-name} is upgraded.
 
 [NOTE]
 When you configure the *Customize the logo of the

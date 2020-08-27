@@ -88,7 +88,7 @@ zmprov md <domain> zimbraAdminConsoleLogoutURL <https://example.com>
 
 == Managing Tasks
 
-Most {product-abbrev} tasks - such as creating accounts and Classes of Service, Server Status Monitoring, Domain management, Backup Scheduling, and Session management - can be managed from the Administration Console.
+Most {product-short} tasks - such as creating accounts and Classes of Service, Server Status Monitoring, Domain management, Backup Scheduling, and Session management - can be managed from the Administration Console.
 
 Other configuration and maintenance tasks require the use of the Zimbra CLI because you cannot perform them in the Administration Console.
 For example: starting and stopping services and managing the local server configuration.
@@ -647,8 +647,8 @@ Check <<#zimbra-pst-migration, Zimbra PST Migration>> to migrate Outlook PSTs to
 .Administrator Tools and Migration Options
 [cols=",a"]
 |=================================================
-|*{product-abbrev} Migration Wizard for Exchange/PST (32 bit)* +
-*{product-abbrev} Migration Wizard for Exchange/PST (64 bit)* |
+|*{product-name} Migration Wizard for Exchange/PST (32 bit)* +
+*{product-name} Migration Wizard for Exchange/PST (64 bit)* |
 Get `zip` files to perform a server-to-server migration of mail, calendar, and contacts from Microsoft Exchange or PST file to the {product-name} Server.
 --
 [WARNING]
@@ -657,7 +657,7 @@ We recommend https://zimbra.audriga.com/[_audriga_'s self-service migration solu
 as a preferred alternative for all account migrations.
 --
 
-|*{product-abbrev} Migration Wizard for Domino* |
+|*{product-name} Migration Wizard for Domino* |
 --
 [WARNING]
 This package is deprecated!
@@ -665,7 +665,7 @@ We recommend https://zimbra.audriga.com/[Audriga's self-service migration soluti
 as a preferred alternative for all account migrations.
 --
 
-|*Legacy {product-abbrev} Migration Wizard for Exchange* |
+|*Legacy {product-name} Migration Wizard for Exchange* |
 --
 [WARNING]
 This package is deprecated!
@@ -689,9 +689,8 @@ Customization replaces all instances of the Zimbra product name and logo.
 |=================================================
 |*Zimbra Connector for Outlook (32 bits)* +
 *Zimbra Connector for Outlook (64 bit) (User Instructions)* |
-This application enables the user's Outlook to synchronize calendar, contacts, and mail with the {product-abbrev} server.
-The Zimbra Connector for Microsoft Outlook (ZCO) allows users of Microsoft Outlook to connect to the {product-abbrev} server to access {product-abbrev} business features.
-Address books, Contacts, Calendars, Tasks, and mail are synced directly with the {product-abbrev} server.
+This application enables Outlook to synchronize calendar, contacts, and mail with the {product-short} server and access {product-name}'s business features.
+Address books, Contacts, Calendars, Tasks, and mail are synced directly with the {product-name} server.
 
 |*(Legacy) Microsoft Outlook PST Import Tool* |
 --

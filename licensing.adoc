@@ -16,14 +16,6 @@ You can monitor usages and manage the following license types.
 |Accounts limit |
 Accounts you can create.
 
-ifndef::z9[]
-|Mobile accounts limit |
-Accounts that can have the native mail mobile feature enabled.
-
-|Touch Client accounts limit |
-Accounts that can have the touch client mobile feature enabled.
-endif::[]
-
 |MAPI accounts limit |
 Accounts that can use {product-short} Connector for Microsoft Outlook (ZCO).
 
@@ -44,12 +36,10 @@ The archive feature installation is required.
 [[License_Requirements]]
 == {product-short} License Requirements
 
-A {product-short} license is required to create accounts in the {product-edition-commercial} of {product-name}.
+A {product-short} license is required to create accounts in {product-name} {product-version}.
 
-ifdef::z9[]
 [IMPORTANT]
-A {product-short} license is required to use the {modern-client} in {product-name}'s {product-edition-commercial}.
-endif::z9[]
+A {product-short} license is required to use the {modern-client} in {product-name} {product-version}.
 
 To try out {product-name}, you can obtain trial versions free of charge.
 Once you are ready to install a production environment, you need to purchase a subscription or a perpetual license.
@@ -111,7 +101,7 @@ When you delete an account, the license account limit reflects the change.
 
 == License Activation
 
-All {product-edition-commercial} installations require license activation.
+All {product-name} {product-version} installations require license activation.
 New installations have a 10 day grace period from the license issue date before requiring activation.
 You can activate your license in the Administration Console.
 
@@ -163,7 +153,7 @@ If the license starting date is in the future, the {product-name} server default
 If the license ending date has passed and is within the 30 day grace period, all license-limited features are still enabled, but administrators may see license renewal prompts.
 
 | Expired |
-If the license ending date has passed and the 30 day grace period expired, the {product-name} server defaults to the feature set of the {product-edition-foss}.
+{product-short} does not include a FOSS binary release; therefore, there is no mechanism to fallback to FOSS. If the license ending date has passed, the 30 day grace period has expired, and users decide *not* to obtain a new license, they can resolve these issues by building the {product-short} binaries and installing them on top of their existing {product-short} system.
 
 |=======================================================================
 
@@ -205,25 +195,10 @@ Admin Console: ::
 
 === License Expiration
 
-When your {product-name} Network Edition License expires, a license expiration warning appears in the administrative console and web interface for all users.
+When your {product-name} {product-version} License expires, a license expiration warning appears in the administrative console and web interface for all users.
 From the date of the license expiration, there is a 30-day grace period during which the administrator sees the warning message, but no features are disabled.
 
-Upon expiration of the grace period, the server reverts to the feature set of the Open Source Edition.
-The following is a list of some of the major functions that are no longer available upon license expiration:
-
-* Backup/Restore
-* Exchange Web Services (EWS) -- _a separately licensed add-on_
-* High-Fidelity Document Preview
-* Zimbra Connector for Outlook
-* S/MIME
-ifdef::z9[]
-* {modern-client}
-endif::z9[]
-
-ifndef::z9[]
-If you do not plan to renew your license, you can regain the ability to create or delete accounts by downgrading to {product-name} free and open-source software (FOSS).
-You should choose the same version of FOSS that you are currently running on the {product-name} Network Edition for this transition, after which you can upgrade to the latest version of {product-name} FOSS.
-endif::z9[]
+{product-short} does not include a FOSS binary release; therefore, there is no mechanism to fallback to FOSS. If the license ending date has passed, the 30 day grace period has expired, and users decide *not* to obtain a new license, they can resolve these issues by building the {product-short} binaries and installing them on top of their existing {product-short} system.
 
 === Renewal
 
@@ -264,11 +239,11 @@ Your license information is updated automatically, and the cached account licens
 == License Reconciliation and Data Collection Notice
 
 IMPORTANT: By consenting to the End-User License Agreement, you grant Synacor Inc.
-and certain of its licensees permission to collect licensing and non-personally-identifiable usage data from your {product-name} {product-edition-commercial} server.
+and certain of its licensees permission to collect licensing and non-personally-identifiable usage data from your {product-name} {product-version} server.
 
 During installation, upgrades, and periodically while in use, the {product-name} server transmits information for reconciliation of billing and license data.
 
-Permission for this data collection is granted under sections 11.4 and 11.6 of the End User License Agreement for {product-edition-commercial}.
+Permission for this data collection is granted under sections 11.4 and 11.6 of the End User License Agreement for {product-name} {product-version}.
 Copies of the license can be found at https://www.zimbra.com/legal/licensing/.
 
 The data that is being collected consists of elements of the current license information and is governed by Synacor's Privacy Policy, which can be found at https://www.synacor.com/privacy-policy/.

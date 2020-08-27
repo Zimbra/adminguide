@@ -4,51 +4,7 @@
 
 This chapter provides information about the Product Life Cycle stages of Zimbra components.
 
-ifndef::z9[]
-
 == Component Deprecation Statements
-
-
-[cols="40,60",options="header",grid="rows"]
-|=======================================================================
-|Component |Deprecation Statement
-
-|IMAPD
-|IMAPD was released as Beta with Zimbra 8.8.5, and has not been released as Stable. It has been deprecated.
-
-|ZCS Migration Wizard for Exchange
-|This tool is supported only for PST file import, with End of Technical Guidance set for 31 December 2020.
-We recommend https://zimbra.audriga.com[Audriga's self-service migration solution] as a preferred alternative for all account migrations.
-
-|ZCS Migration Wizard for Domino
-|Deprecated
-
-|ZCS Account Migration
-|ZCS Account Migration within the Zimbra Admin UI is no longer supported, with End of Technical Guidance set for 17 December 2019.
-
-|Enterprise modules
-|Zimbra Classic HSM, Classic Backup, and Classic Mobile are deprecated and will be removed in the next release of Zimbra 8.8.
-Installations that have not yet migrated to new Network Edition NG Modules or ZSP are encouraged to do so.
-
-|Zimbra Desktop
-|This desktop user client is no longer supported, with End of Technical Guidance set for 1 October 2019.
-
-|Zimbra Touch Client
-|Deprecated
-
-|Zimbra Mobile Client
-|Deprecated
-
-|HTML Client
-|No longer supported, with End of Technical Guidance set for 1 July 2022.
-
-|=======================================================================
-
-endif::z9[]
-
-ifdef::z9[]
-== Component Deprecation Statements
-
 
 [cols="40,60",options="header",grid="rows"]
 |=======================================================================
@@ -57,14 +13,14 @@ ifdef::z9[]
 |IMAPD
 |Removed
 
-|ZCS Migration Wizard for Exchange
+|{product-name} Migration Wizard for Exchange
 |This tool is supported only for PST file import, with End of Technical Guidance set for 31 December 2020.
 We recommend https://zimbra.audriga.com[Audriga's self-service migration solution] as a preferred alternative for all account migrations.
 
-|ZCS Migration Wizard for Domino
+|{product-name} Migration Wizard for Domino
 |Removed
 
-|ZCS Account Migration
+|{product-name} Account Migration
 |Removed
 
 |Enterprise modules
@@ -83,5 +39,3 @@ We recommend https://zimbra.audriga.com[Audriga's self-service migration solutio
 |Removed
 
 |=======================================================================
-
-endif::z9[]

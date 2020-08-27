@@ -4,6 +4,8 @@
 
 == What is {zconnect-name}
 
+IMPORTANT: `zimbra-connect` replaces `zimbra-talk` in {product-short}.
+
 // Conditionally include version introduction, to only appear in specified release
 ifeval::["{product-version}" == "8.8.15"]
 New for {product-name} {product-version},
@@ -70,7 +72,8 @@ The main differences between {zconnect-name} and Zimbra Talk V2 implementation a
 
 == Licensing
 
-{zconnect-name} is licensed on a per-user basis. License information is included in the Network Edition license file just as for any other Zimbra NE feature.
+{zconnect-name} is licensed on a per-user basis.
+License information is included in the {product-name} {product-version} license file just as for any other feature.
 Global Admins can enable its Advanced features for any number of users up to the limit allowed by the license, and only "advanced" users count towards any licensing limit.
 
 The total number of users who have the Advanced features active can be seen in the output of the `zxsuite core getLicenseInfo` command under `teamChatActiveCount`:
@@ -91,7 +94,7 @@ This count is updated every 15 minutes.
 
 == Zimbra Chat and {zconnect-name}
 
-Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist in any Zimbra NE infrastructure.
+Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist in any {product-name} {product-version} infrastructure.
 The Zimbra Chat zimlet gets uninstalled during the installation process of the {zconnect-name} Zimlet package.
 However, {zconnect-name} includes all _basic_ IM features provided by Zimbra Chat, which automatically gets enabled for all users who don’t have access to the _advanced_ {zconnect-name} features.
 _Advanced_ users can use all of the product’s features with other _advanced_ users and can use 1-to-1 Instant Messaging with _basic_ users.
@@ -121,46 +124,6 @@ apt-get install zimbra-connect
 ....
 
 Installing the Zimlet removes any Zimbra Chat components from the server automatically.
-
-=== Migrating from Zimbra Talk to Zimbra Connect
-
-Zimbra Talk and Zimbra Connect are neither compatible nor interoperable, meaning that the two products cannot coexist in any Zimbra NE infrastructure.
-To use Connect, the database content must first be migrated from Talk format to Connect format.
-
-In order to migrate Talk data to Connect, use the `doImportChannels` command:
-
-----
-[zimbra@mailserver ~]$ zxsuite connect doImportChannels
-Syntax:
-   zxsuite connect doImportChannels [attr1 value1 [attr2 value2...]]
-
-
-PARAMETER LIST
-
-NAME                                   TYPE       EXPECTED VALUES
-delete_destination_before_import(O)    Boolean    true|false
-
-(M) == mandatory parameter, (O) == optional parameter
-----
-
-NOTE: This operation can execute multiple times, but it's a one-way process and cannot be reverted.
-
-Once the database content is migrated, uninstall Zimbra Talk and install Zimbra Connect.
-
-=== Uninstall Zimbra Talk
-Starting Zimbra 8.8.15 GA, `zimbra-connect` replaces `zimbra-talk` hence it is important to remove `zimbra-talk` before installing `zimbra-connect`.
-
-As *root* uninstall the package:
-
-Redhat::
-----
-yum remove zimbra-talk
-----
-
-Ubuntu::
-----
-apt-get remove zimbra-talk
-----
 
 == URLs and Ports
 To build URLs and links (e.g., for External Shares) {zconnect-name} uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.

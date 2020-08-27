@@ -1,8 +1,8 @@
 [[monitoring_zcs_servers]]
-= Monitoring {product-abbrev} Servers
+= Monitoring {product-short} Servers
 :toc:
 
-The {product-name} ({product-abbrev}) includes the following to
+The {product-name} ({product-short}) includes the following to
 help you monitor the Zimbra servers, usage, and mail flow:
 
 * Zimbra Logger package to capture and display server statistics and server
@@ -243,7 +243,7 @@ The denial-of-service filter (DoSFilter) limits exposure to requests
 flooding over HTTP/HTTPS.  The DoSFilter throttles clients sending a large number of
 requests over a short period of time.
 
-DosFilter is only applied to HTTP and HTTPS requests, in other words, it does not affect requests for any other protocols like POP3, IMAP or SMTP. You can modify the configuration to accommodate your specific environmental needs. DoSFilter is enabled by default on {product-abbrev}. Disabling the DoSFilter is not recommended. For information on preventing multiple failed login attempts see <<cos.adoc#passwordpolicy,Password Policy>>
+DosFilter is only applied to HTTP and HTTPS requests, in other words, it does not affect requests for any other protocols like POP3, IMAP or SMTP. You can modify the configuration to accommodate your specific environmental needs. DoSFilter is enabled by default on {product-short}. Disabling the DoSFilter is not recommended. For information on preventing multiple failed login attempts see <<cos.adoc#passwordpolicy,Password Policy>>
 
 === Identifying False Positives
 
@@ -342,9 +342,9 @@ Type:
 zmmailboxdctl restart
 ----
 
-=== Tuning Considerations for {product-abbrev} 8.0.3 and later
+=== Tuning Considerations for {product-name} 8.0.3 and later
 
-* *{product-abbrev} Member Servers* -- {product-abbrev} servers under the control of a single
+* *{product-short} Member Servers* -- {product-short} servers under the control of a single
 masterLDAP server are automatically whitelisted by IP address.  These hosts
 are discovered using a *GetAllServersRequest*.  Type as `zmprov gas`.
 
@@ -658,7 +658,7 @@ direct output to another location.  Go to the
 https://logging.apache.org/log4j/2.x/[Log4j website] for information about
 using `log4j`.
 
-{product-abbrev} does not check the log4j changes.  To remove all account loggers and
+{product-short} does not check the log4j changes.  To remove all account loggers and
 reloads in `/opt/zimbra/conf/log4j.properties`, use the `zmprov
 resetAllLoggers` command.
 
@@ -1124,7 +1124,7 @@ When the MariaDB database is checked, running this report can consume a
 significant amount of I/O.  This should not present a problem, but if you
 find that running this report does affect your operation, you can change
 the frequency with which zmbintegrityreport is run.  See
-<<zcs_crontab_jobs,{product-abbrev} Crontab Jobs>>.
+<<zcs_crontab_jobs,{product-short} Crontab Jobs>>.
 
 == Checking for {product-name} Software Updates
 
@@ -1136,7 +1136,7 @@ Updates*.
 
 The dates and times {product-name} checked for updates is saved to the
 *Updates* tab and an email notification is sent out until you update the
-{product-abbrev} version.  If you do not want to receive an email
+{product-short} version.  If you do not want to receive an email
 notification of updates, disable *Send notification email when updates are
 available*.
 
@@ -1169,8 +1169,8 @@ changed.
 
 The Zimbra Connector for Microsoft Outlook (ZCO) msi file is available from
 the Zimbra Utilities Downloads page on the Administration Console.  When a
-newer version of ZCO is released before a new version of {product-abbrev}, you can
-upload the newer ZCO msi file to the {product-abbrev} server from the Administration
+newer version of ZCO is released before a new version of {product-short}, you can
+upload the newer ZCO msi file to the {product-short} server from the Administration
 Console.  The file is uploaded to the
 `/opt/zimbra/jetty/webapps/zimbra/downloads` folder.
 
@@ -1182,7 +1182,7 @@ Admin Console: ::
 
 . Click *Browse* to locate the ZCO file to upload.
 
-. Restart {product-abbrev}:
+. Restart {product-short}:
 +
 [source,bash]
 ----
@@ -1305,8 +1305,7 @@ command failed $!
 
 === Backup completion notification
 
-When configuring the type of backups that should be run, you can set up to
-receive notification about the results of a backup session.
+When configuring the type of backups that should be run, you can set up to receive notification about the results of a backup session.
 
 ----
 Subject: ZCS BackupReport:SUCCESS

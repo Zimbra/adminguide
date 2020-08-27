@@ -48,7 +48,7 @@ High performance distributed memory object caching system in which routing
 information is cached to enable increased performance.
 
 |Zimbra Proxy Route Lookup Handler |
-Servelet—located on the {product-abbrev} mailbox server—that handles queries for the
+Servelet—located on the {product-short} mailbox server—that handles queries for the
 user account route information. This routing information consists of the
 server and port number where the user account resides.
 
@@ -127,7 +127,7 @@ using the Zimbra Mailbox Ports.
 .Proxy Ports
 [cols=","]
 |====================================================
-|*Zimbra Proxy Ports (External to {product-abbrev})* |*Port*
+|*Zimbra Proxy Ports (External to {product-short})* |*Port*
 
 |HTTP |80
 
@@ -141,7 +141,7 @@ using the Zimbra Mailbox Ports.
 
 |IMAPS (Secure IMAP) |993
 
-|*Zimbra Mailbox Ports (Internal to {product-abbrev})* |*Port*
+|*Zimbra Mailbox Ports (Internal to {product-short})* |*Port*
 
 |Route Lookup Handler |7072
 
@@ -421,7 +421,7 @@ with the specific mode: *http*, *https*, *both*, *redirect*, *mixed*.
 
 ==== Setting Up a Single Node for HTTP Proxy
 
-Use steps in this section if Zimbra proxy is installed along with {product-abbrev} on
+Use steps in this section if Zimbra proxy is installed along with {product-short} on
 the same server.
 
 . On each zimbra mailbox server that you want to proxy with, enable
@@ -506,7 +506,7 @@ back-end server took when a user’s mailbox did not reside on the server
 that the user logged in to. The default value of FALSE redirected the user
 if the user was logging in on the incorrect backend host.
 
-On a multiserver {product-abbrev}, if a load balanced name was needed to create a
+On a multiserver {product-short}, if a load balanced name was needed to create a
 friendly landing page, a user would always have to be redirected. In that
 case, `zimbra_auth_always_send_refer` was set to TRUE.
 
@@ -516,7 +516,7 @@ nginx reverse proxy.
 
 === Setting Proxy Trusted IP Addresses
 
-When a proxy is configured with {product-abbrev}, each proxy server’s IP
+When a proxy is configured with {product-short}, each proxy server’s IP
 address must be configured in LDAP attribute `zimbraMailTrustedIP` to
 identify the proxy addresses as trusted when users log in through the
 proxy. The proxy IP address is added to the `X-Forwarded-For` header

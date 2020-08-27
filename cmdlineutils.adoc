@@ -209,7 +209,7 @@ Find the hostname of the Zimbra server
 Start, stop and status of a HSM session.
 
 |zmitemdatafile |
-Extracts and packs tgz files that {product-abbrev} uses for REST import/export
+Extracts and packs `tgz` files that {product-short} uses for REST import/export
 
 |zmjava |
 Execute Java with Zimbra-specific environment settings
@@ -270,7 +270,7 @@ Support tool that dumps an item's metadata in a human-readable form
 Start, stop, and restart the Zimbra milter server if enabled
 
 |zmmtaconfigdctl |
-Beginning in {product-abbrev} 7.0, this command is not used.  Use `zmconfigdctl`.
+Beginning in {product-name} 7.0, this command is not used.  Use `zmconfigdctl`.
 
 |zmmtactl |
 Start, stop, or find the status of the MTA
@@ -399,7 +399,7 @@ running the CLI command.  To change this, type
 
 [IMPORTANT]
 The default locale on the zimbra user system account is LANG=C.  This
-setting is necessary for starting {product-abbrev} services.  Changing the default
+setting is necessary for starting {product-short} services.  Changing the default
 LANG=C setting may cause performance issues with amavisd-new.
 
 === zmprov (Provisioning)
@@ -2464,7 +2464,7 @@ zmcontrol [ -v -h ] command [args]
 |Long Name |Short Name |Description
 
 | | -v |
-Displays {product-abbrev} software version.
+Displays {product-short} software version.
 
 | |-h |
 Displays the usage options for this command.
@@ -2717,7 +2717,7 @@ only.
 This CLI command used with options changes other passwords.
 
 For better security and audit trails the following passwords are generated
-in {product-abbrev}:
+in {product-short}:
 
 * *LDAP Admin password*.  This is the master LDAP password.
 
@@ -3120,7 +3120,7 @@ Note, `mailboxd` has to be stopped and restarted for the change to take effect.
 
 [NOTE]
 If you switch to HTTPS, you use the self-signed certificate generated
-during {product-abbrev} installation in /opt/zimbra/ssl/zimbra/server/server.crt.  For
+during {product-short} installation in /opt/zimbra/ssl/zimbra/server/server.crt.  For
 ZCO users, secure ZCO profiles will display Certificate Trust dialogs
 unless the root CA certificate is deployed to the server.  For more
 information about ZCO certificates, see the Zimbra Wiki page
@@ -3484,7 +3484,7 @@ BLOB>` and `<END OF BLOB>` marking the start and end of the blob.
 Use `zmskindeploy` to simplify the process of deploying skins for the {web-client}.
 This tool processes the available skins, enables them for all users of the {product-short} deployment, and restarts the web server so that it recognizes the new skins.
 ////
-//Linked wiki article is for ZCS prior to 8.x.
+//Linked wiki article is for {product-name} prior to 8.x.
 For more information about this tool, see
 https://wiki.zimbra.com/index.php?title=About_Creating_ZCS_Themes.
 ////
@@ -3641,7 +3641,7 @@ zmstatctl start|stop|status|rotate
 
 === zmthrdump
 
-Use `zmthrdump` to invoke a thread dump in the {product-abbrev} server process and
+Use `zmthrdump` to invoke a thread dump in the {product-short} server process and
 print the output file.  This command also gives the option of saving the
 thread dump to a file and inserts a timestamp on the logfile.
 
@@ -3885,7 +3885,7 @@ you have to make changes to Zimbra proxy after it has been installed.
 See <<zimbra_proxy_server,Zimbra Proxy Server>>.
 
 [NOTE]
-Previous to {product-abbrev} 6.0, this command was called `zmproxyinit`.
+Previous to {product-name} 6.0, this command was called `zmproxyinit`.
 
 ==== Syntax
 [source,bash]

@@ -1,0 +1,424 @@
+= Configuring Zimlets for Modern Web App
+
+Zimlets are plugins which enhance the {modern-client}'s functionalities.
+The zimlets need to be configured and authorized before you can use them with the {modern-client}.
+
+{modern-client} lists only the modern zimlets.
+
+== Default zimlets in {modern-client}
+
+Default Zimlets, for {modern-client}, let users perform the following tasks:
+
+* Restore contacts from previous backups
+
+* Add additional signatures for replies, forwards, or new emails
+
+* Detect dates from given content and provide event list of that day on mouse hover
+
+* Use {product-short} as a link:https://en.wikipedia.org/wiki/Progressive_web_application[progressive web app]
+
+* Subscribe to external calendar feeds
+
+* Add an option in settings to change default client in {product-short}
+
+TIP: Zimlets developed for {modern-client} have *(Modern)* in description.
+
+== Configuring LDAP
+
+This section is a basic guide to configuring the necessary LDAP properties for `zm-oauth-social`.
+Assumes basic {product-name} CLI knowledge.
+
+The following examples may be used as a starting point for configuring the required LDAP properties to enable use of the zm-oauth services.
+
+As the {product-name} user, these properties can be applied globally as in the following examples, or applied to specific domains.
+
+=== Basic Info
+
+==== Basic Template For User OAuth Token Configuration
+
+`zimbraOAuthConsumerRedirectUri` is the app's relay during the oauth flow (i.e. where the social media site will send the user with a one-time use code to continue the oauth flow).
+The left part of the LDAP value must match the app's whitelist.
+
+----
+zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://<zimbra-hostname>:<port>/service/extension/oauth2/authenticate/<client>:<client>'
+----
+
+`zimbraOAuthConsumerCredentials` is the app's credentials -- provided by the social media app setup.
+`verification_token` may be left out for all clients except Zoom.
+These credentials tie the oauth flow to a specific app.
+The clientId is used by an end-user to request an oauth code, then the clientId + clientSecret are both used by the {product-name} server to exchange that code for an access_token.
+
+----
+zmprov mcf +zimbraOAuthConsumerCredentials '<clientId>:<clientSecret>[:<verification_token>]:<client>'
+----
+
+zimbraOAuthConsumerAPIScope is the app's required scopes for the specified auth type (caldav,contact,noop).
+These scopes determine what permissions are requested from an authorizing user during the social media site leg of the oauth flow.
+
+----
+zmprov mcf +zimbraOAuthConsumerAPIScope '<scope><delimiter><scope><delimiter>. . .:<client>_<type>'
+----
+
+=== Client Examples
+==== Dropbox Example
+
+NOTE: The following is required configuration for dropbox.
+
+----
+zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/dropbox:dropbox'
+zmprov mcf +zimbraOAuthConsumerCredentials 'yourDropboxClientIdHere:yourDropboxClientSecretHere:dropbox'
+----
+
+See <<Setting Up Dropbox>> for instructions on obtaining a *Client Id*, and *Client Secret*.
+
+==== Google Example
+
+NOTE: The following is required basic google configuration.
+
+----
+zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/google:google'
+zmprov mcf +zimbraOAuthConsumerCredentials 'yourGoogleClientIdHere:yourGoogleClientSecretHere:google'
+zmprov mcf +zimbraOAuthConsumerAPIScope 'https://www.googleapis.com/auth/drive:google_noop'
+----
+
+See <<Setting Up Google Drive>> for instructions on obtaining a *Client Id* and *Client Secret*.
+
+==== Microsoft Example
+
+NOTE: The following is required basic microsoft configuration.
+
+----
+zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/outlook:outlook'
+zmprov mcf +zimbraOAuthConsumerCredentials 'yourMSClientIdHere:yourMSClientSecretHere:outlook'
+zmprov mcf +zimbraOAuthConsumerAPIScope 'profile+User.Read+Files.ReadWrite.All:outlook_noop'
+----
+
+See <<Setting Up OneDrive>> for instructions on obtaining a Client Id, and Client Secret.
+
+==== Slack Example
+
+NOTE: The following is required configuration for slack. The scopes are only applied when authorization is performed for the noop scope.
+
+----
+zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/slack:slack'
+zmprov mcf +zimbraOAuthConsumerCredentials 'yourSlackClientIdHere:yourSlackClientSecretHere:slack'
+zmprov mcf +zimbraOAuthConsumerAPIScope 'groups:write,team:read,users:read,users:read.email,chat:write,mpim:write:slack_noop'
+----
+
+See <<Setting Up Slack>> for instructions on obtaining a *Client Id* and *Client Secret*.
+
+==== Zoom Example
+
+NOTE: The following is required configuration for zoom. The scopes are only applied when authorization is performed for the noop scope.
+
+----
+zmprov mcf +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/zoom:zoom'
+zmprov mcf +zimbraOAuthConsumerCredentials 'yourZoomClientIdHere:yourZoomClientSecretHere:yourZoomVerificationTokenHere:zoom'
+zmprov mcf +zimbraOAuthConsumerAPIScope 'meeting:write:zoom_noop'
+zmprov mc default +zimbraProxyAllowedDomains 'api.zoom.us'
+----
+
+The last line of the above code block allows {product-name} to perform proxy requests for the Zoom zimlet to the Zoom API on behalf of default class of service {product-name} accounts.
+This is necessary for the Zoom Zimlet's basic operations.
+If users on other class of services should have access, this may be applied on those as well.
+
+See <<Setting Up Zoom>> for instructions on obtaining a Client Id, Client Secret, and Verification Token.
+
+==== Domain Configuration
+
+==== Details
+
+Configuring the credentials of a single domain will override the credentials inherited from global configuration for that domain. Because of this, it is possible to configure just the credentials, and allow the domain to inherit the redirect uri and scopes if neither of these configurations should differ between the global and domain app.
+
+==== Dropbox Example
+
+NOTE: The following is an example for applying dropbox app credentials, which has no additional scope requirements, on the {product-name} domain `example.zimbra.com`:
+
+----
+zmprov md example.zimbra.com +zimbraOAuthConsumerRedirectUri 'https://your.mail.server.host.here/service/extension/oauth2/authenticate/dropbox:dropbox'
+zmprov md example.zimbra.com +zimbraOAuthConsumerCredentials 'yourDropboxClientIdHere:yourDropboxClientSecretHere:dropbox'
+----
+
+== Setting Up Dropbox
+
+Create a Dropbox Application::
++
+
+. Visit link:https://www.dropbox.com/developers/apps/[Dropbox App Console]
+
+. Choose Create app.
+
+. Choose Dropbox API with Full Dropbox access, name your app, then click create app.
+
+. Adjust and configure the following Redirect URLs in the OAuth 2 section:
+
+.. `\https://<hostname>/service/extension/oauth2/authenticate/dropbox`
+
+.. `\https://<hostname>/@zimbra/service/extension/oauth2/authenticate/dropbox`
+
+. Adjust and configure the relevant hostnames in the Chooser/saver domains section.
+
+. Fill out the application Branding information and descriptions.
+
+. Click Enable additional users so that others may authorize with the app.
+
+Configure the new Application Credentials in {product-name}::
++
+
+. Acquire the App key and App Secret from the Settings tab.
+. See <<Configuring LDAP>>.
+
+== Setting Up Google Drive
+
+Create a Google APIs Application::
++
+
+. Visit link:https://console.developers.google.com/[Google API Console].
+
+. Select Select a project from the project dropdown menu in the top navigation bar.
+
+. Select New Project.
+
+. Configure the project name (and optionally organization location).
+
+. Select + Enable APIs and Services
+
+. Search for Google Drive then select Google Drive API.
+
+. Select Enable.
+
+. Select Google APIs to return to the APIs & Services menu.
+
+. Navigate to the APIs & Services section: OAuth consent screen via the left navigation menu.
+
+. Choose either internal or external application type, then configure the basic application information.
+
+. Select Add scope then enable all of the scopes related to Google Drive.
+
+. Add your mail server’s host as an authorized domain.
+
+. Select Save.
+
+. Navigate to the APIs & Services section: Credentials via the left navigation menu.
+
+. Select + Create Credentials, then select OAuth client ID.
+
+. Choose Web application as the Application type.
+
+. Configure the application name.
+
+. Under Authorized JavaScript origins select + Add URI then adjust and add your mail server’s hostname (Replace "hostname" with the public hostname of your {product-name} server):
+
+.. `\https://hostname`
+
+. Under Authorized redirect URIs select + Add URI then adjust and add the following redirect URIs (Replace "<hostname>" with the public hostname of your {product-name} server):
+
+.. `\https://<hostname>/service/extension/oauth2/authenticate/google`
+
+.. `\https://<hostname>/@zimbra/service/extension/oauth2/authenticate/google`
+
+. Select Create, then copy the Client ID and Client Secret.
+
+Configure the new Application Credentials in {product-name}::
++
+
+. Acquire the App key and App Secret from the Settings tab.
+. See <<Configuring LDAP>>.
+
+== Setting Up OneDrive
+
+Create a Microsoft Azure Application::
++
+
+. Visit link:https://portal.azure.com/[Azure Portal].
+
+. Search for and select App Registrations.
+
+. Select New registration.
+
+. Configure the application name.
+
+. Under Supported account types, select Accounts in any organizational directory and personal Microsoft account.
+
+. Adjust and add the following Redirect URL (Replace "<hostname>" with the public hostname of your {product-name} server):
+
+..  `\https://<hostname>/service/extension/oauth2/authenticate/outlook`
+
+. Select Register.
+
+. Navigate to the Manage section: Authentication via the left navigation menu.
+
+. Select Add URI then adjust and add the following Redirect URL (Replace "<hostname>" with the public hostname of your {product-name} server), then click Save:
+
+..  `\https://<hostname>/%40zimbra/service/extension/oauth2/authenticate/outlook`
+
+. Navigate to the Manage section: API Permissions via the left navigation menu.
+
+. Add the required Microsoft Graph Delegated Permissions, then click Save:
+
+..  email
+
+..  offline_access
+
+..  openid
+
+..  profile
+
+..  Files.ReadWrite.All
+
+..  User.Read
+
+. Navigate to the Manage section: Certificates & secrets via the left navigation menu.
+
+. Select New client secret, add a description, and no expiration.
+
+. Repeat this task, removing previously created entries, until a `Value` without a `:` is created (secret must not contain colons for compatibility reasons), then click *Save*.
++
+
+Configure the new Application Credentials in Zimbra
+
+. Acquire the `Application (client) ID` from the `Overview` via the left navigation menu, and `Client Secret` from the *Manage* section: `Certificates & secrets` via the left navigation menu.
+
+Configure the new Application Credentials in {product-name}::
++
+
+. Acquire the App key and App Secret from the Settings tab.
+. See <<Configuring LDAP>>.
+
+== Setting Up Slack
+
+Create a Slack Application::
++
+
+. Visit https://api.slack.com/apps[Slack App Management]
+
+. Configure the Basic Information section after creating the Application.
+
+. Navigate to the Features section: OAuth & Permissions via the left navigation menu.
+
+. Add the required Bot Token Scopes:
+
+..  chat:write
+
+. Add the required User Token Scopes:
+
+..  chat:write
+
+..  groups:write
+
+..  mpim:write
+
+..  team:read
+
+..  users:read
+
+..  users:read.email
+
+. Adjust and add the following Redirect URLs (Replace "<hostname>" with the public hostname of your {product-name} server):
+
+..  `\https://<hostname>/service/extension/oauth2/authenticate/slack`
+
+..  `\https://<hostname>/@zimbra/service/extension/oauth2/authenticate/slack`
+
+. Configure the Bot Name in Features section: App Home.
+
+Configure the new Application Credentials in {product-name}::
++
+
+. Acquire the App key and App Secret from the Settings tab.
+. See <<Configuring LDAP>>.
+
+== Setting Up Zoom
+
+IMPORTANT: For Zoom to work with {product-name}, the server must have ephemeral storage configured.
+
+Create a Zoom Application::
++
+
+. Sign-in to Zoom as your organization‘s owner or an organization account with the developer role.
+
+. Visit https://marketplace.zoom.us/user/build[Zoom App Management]
+
+. Choose Develop → Build App → OAuth → Create
+
+. Configure the App name, turn on User-managed app, leave on the intent to publish, then click Create.
+
+. Navigate to the App Credentials section via the left navigation menu.
+
+. Add the following Redirect URL to the Production section (Replace "<hostname>" with the public hostname of your {product-name} server):
+
+..  `\https://<hostname>/service/extension/oauth2/authenticate/zoom`
+
+. Add the following Whitelist URLs (Replace "<hostname>" with the public hostname of your {product-name} server):
+
+..  `\https://<hostname>/service/extension/oauth2/authenticate/zoom`
+
+..  `\https://<hostname>/@zimbra/service/extension/oauth2/authenticate/zoom`
+
+. Navigate to the Information section via the left navigation menu.
+
+. Configure the Deauthorization Notification Endpoint URL (Replace "<hostname>" with the public hostname of your {product-name} server):
+
+..  `\https://<hostname>/service/extension/oauth2/deauthorization/zoom`
+
+. Navigate to the Scopes section via the left navigation menu.
+
+. Add the required Scopes:
+
+..  meeting:write
+
+..  user:read
+
+. Navigate to the Submit section via the left navigation menu.
+
+. Generate a Publishable URL then leave the Submit page (do not submit the app if using for a single Zoom Organization account).
+
+Configure the new Application Credentials in {product-name}::
++
+
+. Acquire the App key and App Secret from the Settings tab.
+. See <<Configuring LDAP>>.
+
+== Setting up Jitsi Videoconferencing Solution-Beta (Early access)
+Jitsi is a fully encrypted, 100% open-source, video conferencing solution. Jitsi integration is available in the Modern Web App allowing end-users to set up video conferencing directly in their calendar; i.e. just click a button to add a Jitsi link to a meeting invite and then launch into that video meeting. 
+
+Administrators must install/enable the zimlet and define what video server instance they plan to use. Administrators can deploy their own Jitsi video server instance. Even if administrators have not set up a Jitsi server instance, the Jitsi integration zimlet can use Jitsi's publicly available free video conferencing solution to schedule meetings for the end users. 
+
+For more information, please visit:
+
+. To set up your own Jitsi server - https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-start
+
+. End-user guide for Jitsi integration zimlet - https://zimbra.github.io/userguide/zcloud/userguide-zcloud.html
+
+IMPORTANT: No configuration changes are required if Jitsi’s publicly available free video conferencing solution is used for setting up events.
+
+Steps to set up your organization's Jitsi server URL in the Jitsi zimlet::
+
+In this example, we will assume your organization's Jitsi server URL as https://my-org-jitsi-server.com.
+
+. The following CLI commands need to be run as zimbra user.
++
+[source,bash]
+----
+su - zimbra
+----
+. Go to /opt/zimbra/zimlets-deployed/zimbra-zimlet-jitsi.
+. Edit config_template.xml and change the value of jitUrl parameter to https://my-org-jitsi-server.com.
+. Example of the global block in the file after the update.
++
+[source,bash]
+----
+   <global>
+       <property name="jitsiUrl"> https://my-org-jitsi-server.com</property>
+   </global>
+----
+
+. Execute these commands to apply the changes:
++
+[source,bash]
+----
+zmzimletctl configure config_template.xml
+zmprov fc all 
+----
+
+NOTE: For already logged in users, they will have to reload the Modern UI to apply configuration changes.

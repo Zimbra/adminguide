@@ -1,38 +1,19 @@
 :product-name: Zimbra Collaboration
-:product-abbrev: ZCS
-:product-edition-commercial: Network Edition
-:product-edition-foss: Open Source Edition
 :product-short: Zimbra
 :product-family: Zimbra
 :product-provider: Zimbra
-:product-version: 8.8.15
-:product-release-date: June 2019
-:copyright-year: 2020
-
+:copyright-year: {localyear}
 :imagesdir: images/
 :icons: font
 :title-page:
-:title-logo-image: image:zimbra-logo.svg[]
+:title-logo-image: image:zimbra-9-logo.svg[]
 :favicon: images/favicon.ico
 :showlinks:
 :source-highlighter: coderay
 :toc: left
-:toclevels: 2
+:toclevels: 3
 // Enable experimental features for btn:[button-name] macro
 :experimental:
-
-ifndef::z9[]
-:web-client: Web Client
-:web-app-term: Web Client
-:only-in-classic:
-:either-web-client: {web-client}
-:both-web-clients: {web-client}
-endif::z9[]
-
-//Zimbra 9 Documentation (Pass z9 in build argument e.g. asciidoctor -a z9 zimbra-9-install.adoc)
-ifdef::z9[]
-:title-logo-image: image:zimbra-9-logo.svg[]
-:product-name: Zimbra 9
 :web-client: Classic Web App
 :modern-client: Modern Web App
 :web-app-term: Web App
@@ -41,7 +22,8 @@ ifdef::z9[]
 :product-version: 9.0.0
 :product-release-date: March, 2020
 // wrap {only-in-classic} in ifdef::z9[] one-liner to provide a standard NOTE, e.g.: ifdef::z9[NOTE: {only-in-classic}]
-:only-in-classic: This feature is supported only in the {web-client}.
+:only-in-classic: This feature is supported only in the {web-client}. 
+//Branding
 endif::z9[]
 :palette-generator: https://zm-x-theme-generator.netlify.com/[palette generator]
 :file-path: /opt/zimbra/jetty/webapps/zimbra/modern/clients/ 

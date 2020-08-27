@@ -21,4 +21,6 @@ build/
 ehthumbs.db
 Thumbs.db
 .projectile
+.project
 .vscode/settings.json
+/ja_jp/
