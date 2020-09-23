@@ -1,3 +1,4 @@
+ifndef::z9[]
 Zimbra Chat
 ------------
 
@@ -176,6 +177,8 @@ the appropriate section of this guide.
 If you can’t find a solution for the exception in the FAQ,
 please report the issue through the appropriate channels, including the complete
 exception information.
+
+endif::z9[]
 
 [[sect:tools]]
 Tools
