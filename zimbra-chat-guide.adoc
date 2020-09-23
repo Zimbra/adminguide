@@ -287,6 +287,7 @@ zmprov getAccount user@domain.tld zimbraZimletUserProperties
 
 ------------------------------------------------------------
 
+ifndef::z9[]
 [[sect:faq]]
 F.A.Q.
 ~~~~~~
@@ -562,3 +563,4 @@ xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@36
 xxxx-xx-xx xx:xx:xx.xxx:INFO:oejs.SetUIDListener:main: Opened ServerConnector@54d9d12d{SSL-http/1.1}{0.0.0.0:7071}
 
 ------------------------------------------------------------------------------------------------------------------
+endif::z9[]
