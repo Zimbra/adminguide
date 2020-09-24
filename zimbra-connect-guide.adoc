@@ -92,6 +92,38 @@ zimbra@129efa51bd95:~$ zxsuite core getLicenseInfo
 
 This count is updated every 15 minutes.
 
+ifdef::z9[]
+== {zconnect-name}
+
+{zconnect-name} includes all _basic_ IM features, which automatically gets enabled for all users who don’t have access to the _advanced_ {zconnect-name} features.
+_Advanced_ users can use all of the product’s features with other _advanced_ users and can use 1-to-1 Instant Messaging with _basic_ users.
+_Basic_ users can use 1-to-1 features with all other users.
+
+All users start as _Basic_ users.
+Global and Delegated admins can enable _Advanced_ features.
+
+== {zconnect-name} Zimlet installation
+
+The {zconnect-name} Zimlet is available in the Zimbra repository and can be easily installed and upgraded through the operating system's package manager.
+
+=== {zconnect-name} Zimlet installation on Red Hat and CentOS
+
+To install the Zimlet on Red Hat and CentOS, run:
+
+....
+yum install zimbra-connect
+....
+
+=== {zconnect-name} Zimlet installation on Ubuntu
+
+To install the Zimlet on Ubuntu, run:
+
+....
+apt-get install zimbra-connect
+....
+endif::z9[]
+
+ifndef::z9[]
 == Zimbra Chat and {zconnect-name}
 
 Zimbra Chat and {zconnect-name} are neither compatible nor interoperable, meaning that the two products cannot coexist in any {product-name} {product-version} infrastructure.
@@ -124,6 +156,7 @@ apt-get install zimbra-connect
 ....
 
 Installing the Zimlet removes any Zimbra Chat components from the server automatically.
+endif::z9[]
 
 == URLs and Ports
 To build URLs and links (e.g., for External Shares) {zconnect-name} uses the default Zimbra settings for the domain of the account in use - the `zimbraPublicServiceHostname` property is used for the URL itself while the `zimbraPublicServicePort` property is used for the port.
