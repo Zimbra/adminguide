@@ -379,6 +379,67 @@ Configure the new Application Credentials in {product-name}::
 . Acquire the App key and App Secret from the Settings tab.
 . See <<Configuring LDAP>>.
 
+== Setting up NextCloud
+
+For easy understanding of the steps, we will refer to following examples throughout the section:
+
+NextCloud Server - nextcloud.server.com
+
+Zimbra Server - myzimbra.server.com
+
+Domain - example.com
+
+NOTE: You can skip step #1 if you already have NextCloud server setup available.
+
+. Setup a NextCloud server by following this video - https://www.youtube.com/watch?v=QXfsi0pwgYw
+
+. Install NextCloud zimlet and its dependencies on Zimbra Server:
+.. To install on Red Hat and CentOS, run:
++
+----
+yum install zimbra-zimlet-nextcloud
+----
++
+.. To install on Ubuntu, run:
++
+----
+apt-get install zimbra-zimlet-nextcloud
+----
++
+.. Restart zmmailbox server:
++
+----
+su - zimbra
+zmmailboxdctl restart
+----
++
+. On NextCloud server, update the below configuration in `/etc/httpd/conf.d/nextcloud-ssl.conf`
++
+----
+RewriteEngine On
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+----  
++
+. Login to NextCloud server URL https://nextcloud.server.com and navigate to Settings -> Administration -> Security.
++
+.. In *Brute-force IP whitelist* section, specify the Zimbra server's IP Range.
+.. In *OAuth 2.0 clients* section, specify the Name and Redirection URL of the Zimbra server. For e.g.:
++
+Specify Name - `My Zimbra Server`
++
+Specify Redirection URL - `https://myzimbra.server.com/service/extension/oauth2/authenticate/nextcloud`
++
+.. Copy the *Client Identifier* and *Client Secret* fields for the above entered Client. This will be used to update LDAP related configuration in the next step.
++
+. To enable NextCloud for domain _example.com_, add LDAP entries for it by executing the following commands:
++
+----
+zmprov md example.com zimbraOAuthConsumerCredentials <Client Identifier>:<Client Secret>:nextcloud
+zmprov md example.com zimbraOAuthConsumerRedirectUri https://myzimbra.server.com/service/extension/oauth2/authenticate/nextcloud:nextcloud
+zmprov md example.com zimbraOAuthConsumerAPIScope  'https://nextcloud.server.com/nextcloud/index.php:nextcloud_noop'
+----
+
 == Setting up Jitsi Videoconferencing Solution-Beta (Early access)
 Jitsi is a fully encrypted, 100% open-source, video conferencing solution. Jitsi integration is available in the Modern Web App allowing end-users to set up video conferencing directly in their calendar; i.e. just click a button to add a Jitsi link to a meeting invite and then launch into that video meeting. 
 
