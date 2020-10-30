@@ -121,7 +121,64 @@ A `Mobile Password` will not be valid for Webmail/POP3/IMAP/SMTP logins, and the
 [[how-to-set-a-mobile-password-for-a-mailbox]]
 === How to Set a Mobile Password for a Mailbox
 
-Setting a mobile password is easy:
+**Zimbra 8.8.15 patch 16+, 9.0.0 patch9+ (Classic UI)**
+Starting from Zimbra 8.8.15p16 and 9.0.0p9, Mobile Passwords are now managed by the user via the new Auth Zimlet, which can be installed by running `zxsuite auth deployZimlet`.
+
+Once the Zimlet is deployed and enabled, the user can create a new Mobile Password following this steps:
+
+* Open the Zextras Auth Zimlet and click on "New Password";
+* Enter an easy to remember identifier for the password in the "Password Label" field and select "Text code" as the Password Type;
+* Click "Next";
+* The new Mobile Password will be displayed;
+
+WARNING: Mobile Passwords are randomly generated and cannot be displayed again after the creation is complete.
+
+* Click on "Done" to close the Zextras Auth window. An entry for the new Mobile Password is now visible in the "Active Passwords" list of the Zextras Auth Zimlet.
+
+Admins can also create a Mobile Password from the CLI, use the `zxsuite auth credential` command with the following attributes:
+
+* password: enter the password you wish to set as the Mobile Password
+* label: enter the label for the Mobile Password
+* service: use `eas` to set a Mobile Password
+
+E.g.
+To add the `gn89hg95hvmn59..]` Mobile Password to the `john.doe@domain.com` account, labeled as "Personal Phone", run:
+
+`zxsuite auth credential add john.doe@domain.com password "gn89hg95hvmn59..]" label "Personal Phone" service eas`
+
+The system will confirm the success of the operation and display all the password's information:name: value
+
+----
+Credential correctly added
+
+        values
+            generated                                               0
+            created                                                 1603120995372
+            label                                                   Personal Phone
+            id                                                      Fr2jM
+            services
+
+                    service                                                         EAS
+            hash                                                    +Crk6YcPL7IapCg6xfT6oXWP977uTeZdJTVQDQZd+Io=
+            enabled                                                 true
+            algorithm                                               SHA256
+        text_data
+            auth_method                                             password
+            password                                                gn89hg95hvmn59..]
+            user                                                    john.doe@domain.com
+----
+
+=== List existing Mobile Passwords
+Any user can see the list of active Mobile Passwords in the Zextras Auth Zimlet. Each entry of the list displays the label of the password, its status, the service it is valid for and its creation date.
+
+Specifically, all passwords valid for the "EAS" service are Mobile Passwords.
+
+System Administrators, on the other hand, can view an extended list of all credentials, including Mobile Passwords,
+
+=== Editing a Mobile Password
+While a Mobile Password itself cannot be edited, the System Administrator can edit its label and properties using the `zxsuite auth credential update command`
+
+**versions up to 8.8.15 patch15 and 9.0.0 patch8**
 
 * Open the Zimbra Administration Console.
 * Right-click the user for which you want to set a Mobile Password and select `Edit`.
@@ -129,6 +186,30 @@ Setting a mobile password is easy:
 * Enter the desired password in the `Mobile password` field and enter it again in the `Confirm mobile password` field.
 You can also choose to generate a random mobile password by clicking btn:[Generate random password].
 * btn:[Save].
+
+== Application Password (QR Code)
+
+The Auth Zimlet can speed up and manage Application logins, such as those for the Drive and Team/Connect apps made by Zextras.
+
+This is achieved through the creation of a QR Code in the Zimbra WebClient, which the user can then scan from the App's login page to log in.
+
+WARNING: QR Codes are a one-time credential only, meaning that once generated it will grant access to the app until the relevant credential itself is deleted from the account.
+Once generated, the QR Code can only be viewed once.
+
+=== Creating a new QR Code Credential
+While, as all credentials, QR Codes can be created from both the Zextras Auth Zimlet and Zextras CLI, only the former allows the user to use the QR code itself so the latter will not be taken into consideration in this guide.
+
+==== Creating a QR Code Credential from the Zextras Auth Zimlet
+To create a new QR Code, open the Auth Zimlet and click on "New Password";:
+
+* Enter an easy to remember identifier for the password in the "Password Label" field and select "QR code" as the Password Type;
+* Click "Next";
+* The new QR Code will be displayed;
+
+WARNING: QR Codes are randomly generated and cannot be displayed again after the creation is complete.
+
+* Click on "Done" to close the Auth Zimlet. An entry for the new QR Code is now visible in the "Active Passwords" list of the Auth Zimlet.
+
 
 [[mobile-device-management-a.k.a.-mobile-provisioning]]
 == Mobile Device Management a.k.a. Mobile Provisioning
