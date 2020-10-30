@@ -1,6 +1,220 @@
 [[backup-ng-guide]]
 = Backup NG
 
+== The Backup Path
+
+Backup NG stores its data in the so called "Backup Path", which can either be:
+
+* A local directory or mountpoint (default, /opt/zimbra/backup/)
+* A third party S3 volume
+
+=== Metadata and Blobs
+Backup NG separates the items' BLOBs from the items' Metatadata:
+
+* BLOB: a file containing the item itself, such as the headers and body of an email.
+* Metadata: a file containing all information and transactions of an item, such as the folder in which it is stored and when it was moved there.
+
+TIP: This split is made to provide faster search and interaction times along with additional security. +
+Both BLOBs and Metadata are stored in the same backup path, but in different subdirectories.
+
+
+Whether the backup is local or remote, the system will read from and write to the path in real time via  the RealTime Scanner, during scheduled operations such as the SmartScan and Purge and during Restores.
+
+Most read and write operations affect the items' metadata, which are constantly updated on every new change, while BLOBs are only written when a new item is created and during restores. On average, the metadata makes up the 10% of the total backup disk usage but the 80% of read operations.
+
+=== Backup Path Structure
+Both local and remote Backup Paths use the same basic structure:
+
+----
+/opt/zimbra/backup/
+|-- accounts
+|-- backupstat
+|-- items
+|-- lock_a8aad4af-6b1d-4a6b-8493-95979826c548
+`-- server
+----
+
+[cols="2a,1a,2a,2a" options="header", width="75%"]
+|===
+|Name | Type | Description | Content
+
+|`accounts`
+|Directory
+|Stores all Backup Metadata.
+a| * Local: one subfolder for each account on the server named after the account's Zimbra ID
+* Remote: one compressed file for each account on the server named after the account's Zimbra ID.
+
+|`backupstat`
+|File
+|Contains the basic backup usage information, such as the first and latest SmartScan date.
+|Raw data
+
+|`items`
+|Directory
+|Contains all item BLOBs.
+|Compressed Blobs, stored into subdirectories named after the last two character's of the item's hash.
+
+|`lock_[serverID]`
+|File
+|Marks the Backup Path as belonging to the server, and prevents other servers to use the same Backup Path.
+|Always stored in the local Backup Path, even when Remote Backup is enabled
+
+|`server`
+|Directory
+|Contains server and other configs as well as LDAP backups, all done by the SmartScan
+|Compressed files, named `[component]_DD_MM_YY#hh_mm_ss.tar.gz`
+
+|===
+
+== Backup on a Local Disk
+This is the default Backup NG setting, where all backup files are saved in a local directory (by default, `/opt/zimbra/backup/`).
+
+In order to be eligible to be used as the Backup Path, a directory must:
+
+* Be both readable and writable by the "zimbra" user.
+* Use a case sensitive filesystem.
+
+=== Setting the Backup Path
+
+The Backup Path can be set both via GUI and via CLI:
+
+* Via GUI: in the "Backup" section of the NG Administration Zimlet, under "Backup Path".
+* Via CLI: using the `zxsuite config server` command to change the `ZxBackup_DestPath` config key.
+
+WARNING: Backup paths are unique and not reusable. Copying a Backup Path to a new server and setting it as its current Backup Path will return an error, and forcing this in any way by tampering with the backup file will cause corruption of both old and new backup data.
+
+== Backup on a Third Party Store
+Backup NG also allows to store its data on a third party S3 bucket or on an NFS/Fuse share.
+
+The standard local Backup Path will still be used to store metadata, a copy of which will then be uploaded to S3 every night, while BLOBs will be stored in the bucket straight away.
+
+This allows to effectively split the live data, keeping the metadata on a local disk and the BLOBs on a remote storage.
+Due to the fact that Metadata usually makes up the 10% of the backup space but the 90% of the total read/write operations, this design ensures a good level of performances (especially on metadata I/O heavy tasks, such as the Purge and the SmartScan) even when the largest part of the data is hosted remotely.
+
+WARNING: Even when backing up on a Third Party Store, the local Backup Path will still be used for metadata and to cache BLOB writes.
+
+=== Metadata management
+While BLOBs are momentarily cached on the local disk and uploaded to the remote volume as soon as possible, metadata are stored locally in the Backup Path.
+
+An incremental copy of all metadata to the remote volume is performed every time the scheduled SmartScan runs, and every time a SmartScan is manually executed with the `deep true` option.
+
+It is also possible to force a metadata upload using the `remote_metadata_upload` option in the following commands:
+
+* doSmartScan
+* doAccountScan
+* doBackupServerCustomizations
+* doBackupLDAP
+* doBackupCluster
+
+Remote metadata can be fetched to perform a Disaster Recovery or to update/fix local metadata with the `zxsuite backup retrieveMetadataFromArchive` command to download the latest metadata available in the remote storage to the Backup Path.
+
+=== Data stored in a Third-party storage
+Data is stored in third-party storages using a structure very similar to the one of the Backup Path:
+
+....
+|-- accounts
+|-- items
+|-- server
+`-- backupstat
+....
+
+The only difference in how the content is saved is that all metadata for a mailbox are compressed within a single `.tar.gz` file instead of being stored uncompressed and spread across multiple subfolders.
+
+=== How to backup on S3
+
+*New Backup NG users* who don't have an initialized backup just need to run the `zxsuite backup setBackupVolume S3` command to set up the S3 backup. Running it without any further argument will display the full usage message:
+
+----
+zxsuite backup setBackupVolume S3 [attr1 value1 [attr2 value2...]]
+
+NAME                              TYPE       EXPECTED VALUES
+bucket_name(O)                    String     Amazon AWS bucket
+access_key(O)                     String     Service username
+secret(O)                         String     Service password
+volume_prefix(O)                  String     Prefix to the server id used in all objects keys (Volume configuration)
+bucket_configuration_id(O)        String     UUID for already existing S3 service credentials (zxsuite config global get attribute s3BucketConfigurations)
+region(O)                         String     Amazon AWS Region
+url(O)                            String     S3 API compatible service url (ex: s3api.service.com)
+prefix(O)                         String     Prefix added to blobs keys (Bucket configuration)
+use_infrequent_access(O)          Boolean    true|false
+infrequent_access_threshold(O)    String
+use_intelligent_tiering(O)        Boolean    true|false
+----
+
+*Existing Backup NG users*, on the other hand, must use the `zxsuite backup migrateBackupVolume S3` command to setup the S3 backup and migrate their current data to it.
+
+----
+zxsuite backup migrateBackupVolume S3
+
+PARAMETER LIST
+
+NAME                              TYPE       EXPECTED VALUES                                                                                                  DEFAULT
+bucket_name(O)                    String     Amazon AWS bucket
+access_key(O)                     String     Service username
+secret(O)                         String     Service password
+volume_prefix(O)                  String     Prefix to the server id used in all objects keys (Volume configuration)
+bucket_configuration_id(O)        String     UUID for already existing S3 service credentials (zxsuite config global get attribute s3BucketConfigurations)
+region(O)                         String     Amazon AWS Region
+url(O)                            String     S3 API compatible service url (ex: s3api.service.com)
+prefix(O)                         String     Prefix added to blobs keys (Bucket configuration)
+use_infrequent_access(O)          Boolean    true|false
+infrequent_access_threshold(O)    String
+use_intelligent_tiering(O)        Boolean    true|false
+threads(O)                        Integer                                                                                                                     10
+
+(M) == mandatory parameter, (O) == optional parameter
+
+Usage example:
+
+zxsuite backup migrateBackupVolume S3 bucket_configuration_id {uuid}
+----
+
+**In both cases** the command will create a bucket if provided with all the required information, or will use an existing bucket if the `bucket_configuration_id` parameter is used.
+
+WARNING: While similar in concept, Backup NG and HSM NG buckets are not compatible with each other - if HSM NG data is stored in a bucket it is not possible to store Backup data on the same bucket and vice-versa.
+
+==== S3 Backup in a multi-mailbox environment
+
+In multi-mailbox environments, it's not necessary to create multiple buckets: enter the bucket configuration information when enabling the remote backup on the first server and then just use the `bucket_configuration_id` and `prefix` parameters to store other server's data on a separate directory of the same storage.
+
+Example:
+
+On Server 1, set up the S3 backup by creating a new bucket:
+
+----
+zxsuite backup setBackupVolume S3 \
+  bucket_name "Backup Bucket"
+  access_key a1b2c3e4 \
+  secret f5g6h7i8j9k0
+  region EuWest \
+  url s3api.myvendor.com
+  volume_prefix "server1" \
+----
+
+After the backup is created, list all buckets and take note of the `bucket_configuration_id` of the backup bucket:
+
+`zxsuite hsm listBuckets`
+
+On Server 2, set up the S3 backup using the previously created bucket:
+
+----
+zxsuite backup setBackupVolume S3 bucket_configuration_id vw12xy34z56 volume_prefix "server 2"
+----
+
+=== How to backup on NFS/Fuse
+
+While at a first glance it might seem that due to the need of a local mountpoint specifically setting up the backup for NFS or FUSE has little utility, the backend differences in metadata handling ensure a greater degree of data safety.
+
+Splitting the high-access metadata from the BLOBs ensures that disk failures, such as when the share becomes briefly available, are better handled thanks to the local cache granting a higher backup resilience.
+
+To backup on "Local" shares such as NFS or Fuse, first mount the share and then use the appropriate command based on your need:
+
+* No pre-existing backup: `zxsuite backup setBackupVolume Local`
+* Running backup: `zxsuite backup migrateBackupVolume Local`
+
+Both commands only require a single argument, which is the path to the local mountpoint of the NFS/FUSE share.
+
+
 [[real-time-scan]]
 == Real-Time Scan
 
@@ -159,7 +373,7 @@ To start a SmartScan via the Administration Zimlet,
 [[starting-the-scan-via-the-cli]]
 ==== Starting the Scan via the CLI
 
-To start a FullScan via the CLI, use the `doSmartScan` command:
+To start a SmartScan via the CLI, use the `doSmartScan` command:
 
 ....
 Syntax:
@@ -1488,7 +1702,7 @@ Specific differences between SingleStore and MultiStore environments are:
 
 Backup and Restore in a Multistore environment works exactly like in a SingleStore environment.
 
-The different servers are configured and managed separately via the Administration Zimlet, but certain operations like Live Full Scan and Stop All Operations can be 'broadcast' to all the mailstores via the `zxsuite_ CLI` using the `--hostname all_servers` option.
+The different servers are configured and managed separately via the Administration Zimlet, but certain operations like SmartScan and Stop All Operations can be 'broadcast' to all the mailstores via the `zxsuite_ CLI` using the `--hostname all_servers` option.
 Backup NG settings support this, too.
 (See the CLI wiki page for more details.)
 
