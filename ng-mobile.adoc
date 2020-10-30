@@ -109,7 +109,7 @@ User-level settings override COS-level settings.
 [[mobile-passwords-and-you]]
 === Mobile Passwords and You
 
-The `Mobile Password` feature allows Global and Delegated Admins to set an additional password for an account to be used for Exchange ActiveSync authentications only.
+The `Mobile Password` feature allows to set an additional password for an account to be used for Exchange ActiveSync authentications only.
 
 The main benefits of using this feature are:
 
@@ -123,6 +123,8 @@ A `Mobile Password` will not be valid for Webmail/POP3/IMAP/SMTP logins, and the
 
 **Zimbra 8.8.15 patch 16+, 9.0.0 patch9+ (Classic UI)**
 Starting from Zimbra 8.8.15p16 and 9.0.0p9, Mobile Passwords are now managed by the user via the new Auth Zimlet, which can be installed by running `zxsuite auth deployZimlet`.
+
+TIP: This new Mobile Password management system allows the user to set multiple independent Mobile Passwords for an account, to be used with different devices.
 
 Once the Zimlet is deployed and enabled, the user can create a new Mobile Password following this steps:
 
