@@ -118,6 +118,11 @@ The main benefits of using this feature are:
 
 A `Mobile Password` will not be valid for Webmail/POP3/IMAP/SMTP logins, and the account password will not be valid for mobile logins.
 
+== Data Storage
+Both Mobile Passwords and QR Code data is saved in a local HSQL database.
+
+All passwords, tokens and sensitive information are stored in hashed form using the SHA256 algorithm using auto-generated keys and no credential or sensitive information is ever stored cleartext.
+
 [[how-to-set-a-mobile-password-for-a-mailbox]]
 === How to Set a Mobile Password for a Mailbox
 
@@ -148,7 +153,7 @@ To add the `gn89hg95hvmn59..]` Mobile Password to the `john.doe@domain.com` acco
 
 `zxsuite auth credential add john.doe@domain.com password "gn89hg95hvmn59..]" label "Personal Phone" service eas`
 
-The system will confirm the success of the operation and display all the password's information:name: value
+The system will confirm the success of the operation and display all the password's information:
 
 ----
 Credential correctly added
@@ -198,6 +203,15 @@ This is achieved through the creation of a QR Code in the Zimbra WebClient, whic
 WARNING: QR Codes are a one-time credential only, meaning that once generated it will grant access to the app until the relevant credential itself is deleted from the account.
 Once generated, the QR Code can only be viewed once.
 
+=== QR Code Requirements
+The QR Code Application Password feature requires the following properties to be set at domain level in order to be functional:
+
+* `zimbraPublicServiceHostname`
+* `zimbraPublicServicePort`
+* `zimbraPublicServiceProtocol`
+
+Should one or more of the properties be unset, a notification will be delivered to the Admin reporting the affected domains and their missing properties.
+
 === Creating a new QR Code Credential
 While, as all credentials, QR Codes can be created from both the Zextras Auth Zimlet and Zextras CLI, only the former allows the user to use the QR code itself so the latter will not be taken into consideration in this guide.
 
@@ -211,7 +225,6 @@ To create a new QR Code, open the Auth Zimlet and click on "New Password";:
 WARNING: QR Codes are randomly generated and cannot be displayed again after the creation is complete.
 
 * Click on "Done" to close the Auth Zimlet. An entry for the new QR Code is now visible in the "Active Passwords" list of the Auth Zimlet.
-
 
 [[mobile-device-management-a.k.a.-mobile-provisioning]]
 == Mobile Device Management a.k.a. Mobile Provisioning
