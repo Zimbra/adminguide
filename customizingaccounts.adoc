@@ -8,6 +8,8 @@ This chapter describes the features and user preferences that can be configured 
 Mailbox features are enabled for {product-short} {web-client} users.
 When IMAP or POP clients are used, users might not have these features available.
 
+IMPORTANT: Offline mode is no more supported for Chrome versions 85 and above (affects *Joule8815-Patch16* onwards). Users can still continue to use Offline mode in previous browser versions.
+
 == Messaging and Collaboration Applications
 
 Your COS configuration and assignment of a COS to accounts determines the default settings for account features and the restrictions to be applied to groups of accounts.
