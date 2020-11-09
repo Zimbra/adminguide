@@ -417,7 +417,9 @@ Authoring and Versioning (CalDAV), and vCard Extensions to Web Distributed Autho
 [[offline_mode]]
 == Offline Mode
 
-Zimbra Offline Mode allows access to data -- without network connectivity -- when using the {product-short} {either-web-client}.
+IMPORTANT: For {web-client}, Offline mode is no more supported for Chrome versions 85 and above (affects *Kepler9-Patch9* and *Joule8815-Patch16* onwards). Users can still continue to use Offline mode in previous browser versions.
+
+Zimbra Offline Mode allows access to data -- without network connectivity -- when using the {product-short} {modern-client}.
 
 For example, if there is no server connectivity or if server connectivity is lost, the {web-app-term} automatically transitions to "`offline mode`". 
 When server connectivity is restored, the {web-app-term} automatically reverts to "`online mode`".
