@@ -11,7 +11,7 @@ When IMAP or POP clients are used, users might not have these features available
 [IMPORTANT]
 Some features mentioned in the following sections may not be currently available for the {modern-client}. 
 
-IMPORTANT: For {web-client}, Offline mode is no more supported for Chrome versions 85 and above (affects *Kepler9-Patch9* and *Joule8815-Patch16* onwards). Users can still continue to use Offline mode in previous browser versions.
+IMPORTANT: For {web-client}, Offline mode is no more supported for Chrome versions 85 and above (affects *Kepler9-Patch9* onwards). Users can still continue to use Offline mode in previous browser versions.
 
 == Messaging and Collaboration Applications
 
