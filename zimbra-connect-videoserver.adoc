@@ -1,0 +1,231 @@
+:zconnect-name: Zimbra Connect
+= {zconnect-name} Video Server
+:toc:
+
+The {zconnect-name} Video Server is a WebRTC stream aggregator that improves Connect's performance by merging and decoding/re-encoding all streams in a Meeting.
+
+While the default WebRTC creates one incoming and one outgoing stream per meeting participant, with the {zconnect-name} Video Server, each client will only have one aggregated inbound stream and one aggregated outbound stream. This applies for both video and audio.
+
+====
+E.g. - 5 people meeting
+
+* Without Video Server: each client generates 4x outgoing video/audio streams and receives 4 incoming video/audio streams
+* With Video Server: each client generates 1 outgoing video/audio stream and receives 1 incoming video/audio stream
+
+[options="header"]
+|===
+| Video Server | Incoming Connections | Outgoing Connections
+| No | 4 (1 from each other client) | 4 (1 to each other client)
+| Yes | 1 | 1
+|===
+====
+By default, the Video Server uses conservative Codecs (VP8 and Opus) to ensure the broadest compatibility, but more codecs can be enabled. It also splits the Webcam and Screen Sharing streams and reserves the same bandwidth for both.
+
+A properly set up Video Server will supersede the need of a TURN server, provided that all clients can reach the Video Server's public IP and that UDP traffic is not filtered.
+
+WARNING: The {zconnect-name} Video Server is still in Beta stage, and thus only a single server is allowed per Zimbra infrastructure.
+
+== Requirements
+The {zconnect-name} Video Server must be installed on a dedicated server and has the following requirements:
+
+*System*
+
+* Minimum 4 CPU cores, suggested at least 8 to handle more than 100 users at the same time
+* 1024mb of ram + 1mb of ram for each connected user
+
+TIP: The {zconnect-name} Video Server mainly scales on the CPU, so more CPU cores and power means more connected users.
+
+*Network*
+
+* A public IP
+* A publicly resolvable FQDN
+* With the default settings, 200kb/s (0.2 mb/s) bandwidth for each connected user
+* WebSockets
+
+*Ports*
+
+* The mailbox server will establish a WebSocket on port 8188 to communicate with the Video Server
+* Clients will use a random UDP port between 20000 and 40000
+
+== Client Configuration
+No client configuration is needed, as the Connect Zimlet will autonomously detect whether a video server is set up an use it if available.
+
+== Installation
+
+* Download the installer package
+* Copy the installer package to the server
+* Unpack the installer package with `tar zxvf videoserver-[OS]-installer.tgz`
+* Enter the unpacked direcotry: `cd videoserver-installer`
+* Run the installation script: `./install.sh`
+----
+root@196252589efe:~/videoserver-installer# ./install.sh
+
+This script will install VideoServer, and all its runtime
+dependencies onto the running system.
+
+To complete the process a working network connection is required.
+
+
+System will be modified, would you like to proceed? [Y]
+----
+
+* The installer will first check for the needed dependencies and install any missing ones:
+----
+software-properties-common not found. Would you like to install it? [Y]
+
+[...]
+The following additional packages will be installed:
+  cron dirmngr distro-info-data gnupg gnupg-l10n gnupg-utils gpg gpg-agent gpg-wks-client gpg-wks-server gpgconf gpgsm iso-codes libapt-inst2.0 libasn1-8-heimdal libassuan0 libgssapi3-heimdal
+  libhcrypto4-heimdal libheimbase1-heimdal libheimntlm0-heimdal libhx509-5-heimdal libkrb5-26-heimdal libksba8 libldap-2.4-2 libldap-common libnpth0 libroken18-heimdal libsasl2-2 libsasl2-modules
+  libsasl2-modules-db libwind0-heimdal lsb-release pinentry-curses powermgmt-base python-apt-common python3-apt python3-software-properties unattended-upgrades
+Suggested packages:
+  anacron logrotate checksecurity exim4 | postfix | mail-transport-agent dbus-user-session pinentry-gnome3 tor parcimonie xloadimage scdaemon isoquery libsasl2-modules-gssapi-mit
+  | libsasl2-modules-gssapi-heimdal libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql lsb pinentry-doc python3-apt-dbg python-apt-doc bsd-mailx default-mta | mail-transport-agent needrestart
+The following NEW packages will be installed:
+  cron dirmngr distro-info-data gnupg gnupg-l10n gnupg-utils gpg gpg-agent gpg-wks-client gpg-wks-server gpgconf gpgsm iso-codes libapt-inst2.0 libasn1-8-heimdal libassuan0 libgssapi3-heimdal
+  libhcrypto4-heimdal libheimbase1-heimdal libheimntlm0-heimdal libhx509-5-heimdal libkrb5-26-heimdal libksba8 libldap-2.4-2 libldap-common libnpth0 libroken18-heimdal libsasl2-2 libsasl2-modules
+  libsasl2-modules-db libwind0-heimdal lsb-release pinentry-curses powermgmt-base python-apt-common python3-apt python3-software-properties software-properties-common unattended-upgrades
+0 upgraded, 39 newly installed, 0 to remove and 4 not upgraded.
+[...]
+----
+
+* You will be then prompted to install the actual Video Server packages:
+----
+Would you like to install VideoServer? [Y]
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Note, selecting 'zimbra-ffmpeg' instead of '/root/videoserver-installer/packages/zimbra-ffmpeg_4.3.1-1_amd64.deb'
+Note, selecting 'zimbra-libfdk-aac' instead of '/root/videoserver-installer/packages/zimbra-libfdk-aac_2.0.1-1_amd64.deb'
+Note, selecting 'zimbra-libnice' instead of '/root/videoserver-installer/packages/zimbra-libnice_0.1.18-1_amd64.deb'
+Note, selecting 'zimbra-libopus' instead of '/root/videoserver-installer/packages/zimbra-libopus_1.3.1-1_amd64.deb'
+Note, selecting 'zimbra-libsrtp' instead of '/root/videoserver-installer/packages/zimbra-libsrtp_2.3.0-1_amd64.deb'
+Note, selecting 'zimbra-libusrsctp' instead of '/root/videoserver-installer/packages/zimbra-libusrsctp_0.9.3.0-1_amd64.deb'
+Note, selecting 'zimbra-libvpx' instead of '/root/videoserver-installer/packages/zimbra-libvpx_1.9.0-1_amd64.deb'
+Note, selecting 'zimbra-libwebsockets' instead of '/root/videoserver-installer/packages/zimbra-libwebsockets_4.1.4-1_amd64.deb'
+Note, selecting 'zimbra-videoserver-confs' instead of '/root/videoserver-installer/packages/zimbra-videoserver-confs_0.10.5-1_amd64.deb'
+Note, selecting 'zimbra-videoserver' instead of '/root/videoserver-installer/packages/zimbra-videoserver_0.10.5-1_amd64.deb'
+[...]
+----
+
+* Once all packages are installed, you will be asked the **Public IP Address** of the Zimbra infrastructure that uses this video server:
+----
+Configuring zimbra-videoserver
+------------------------------
+
+
+
+Please insert the Public IP server to bind with.
+
+.: Public IP server :.
+----
+
+* This is the only bit of configuration required. The installer will set up the Video Server and then return two commands that must be executed on any Mailbox Server of the infrastructure to set up the connection with the Video Server and enable it for all servers:
+----
+Please execute these commands in a mailbox node as zimbra user to complete the setup of the video server:
+
+zxsuite config global set attribute teamVideoServerSharedSecret value [SERVER HASH]
+zxsuite config global set attribute teamVideoServerHostname value [HOSTNAME]:8188
+----
+
+== Service Control
+The Video Server service can be controlled through the `zxsuite connect` CLI from any mailbox server.
+
+To stop the service run `zxsuite connect doStopService team-videoserver-pool`, to start it run `zxsuite connect doStartService team-videoserver-pool`.
+
+To check the Video Server's status, run `zxsuite connect clusterstatus`:
+
+----
+[zimbra@mail ~]$ zxsuite connect clusterstatus
+
+        isFullySynced                                       true
+        servers
+        meeting_servers
+            <ip_videoserver>:8188
+                id                                                          123
+                hostname                                                    <ip_videoserver>:8188
+                status                                                      online
+                last_failure
+                num_meetings                                                -1
+----
+
+Should the remote Video Server be offline or unreachable, an output similar to the following will be displayed:
+
+----
+[zimbra@mail ~]$ zxsuite connect clusterstatus
+
+[...]
+                status                                                      offline
+                last_failure
+                num_meetings                                                -1
+----
+
+== Bandwidth and Codecs
+
+=== Video Bandwidth
+The administrator can set the webcam stream quality and the screenshare stream quality specifing the relative bitrate __in Kbps__. The values must be at least 100 Kbps and can be increased as desired.
+
+Higher values mean more quality but more used bandwidth.
+
+* `zxsuite config global set attribute teamChatWebcamBitrateCap value 200`: is the command for the webcam stream quality/bandwidth
+
+* `zxsuite config global set attribute teamChatScreenBitrateCap value 200`: is the command for the screenshare stream qualitybandwidth
+
+TIP: By default both the webcam bandwidth and the screen sharing bandwidth are set to 200 Kbps.
+
+=== Video Codecs
+By default, the VP8 video codec is used. This is to ensure the best compatibility, as this codec is available in all supported browsers, but other codecs can be enabled:
+
+* AV1: `zxsuite config global set attribute teamChatVideoCodecAV1 value true`
+* H264: `zxsuite config global set attribute teamChatVideoCodecH264 value true`
+* H265: `zxsuite config global set attribute teamChatVideoCodecH265 value true`
+* VP8: `zxsuite config global set attribute teamChatVideoCodecVP8 value true`
+* VP9: `zxsuite config global set attribute teamChatVideoCodecVP9 value true`
+
+Only one codec can be enabled at the time, so before enabling a new codec remember to disable the previous one using the same command as the one in the list above but substituting `value true` with `value false`.
+
+====
+E.g. to enable the H264 codec run:
+
+`zxsuite config global set attribute teamChatVideoCodecVP8 value false`
+
+`zxsuite config global set attribute teamChatVideoCodecH264 value true`
+====
+
+=== Audio Codec
+The audio codec used by the {zconnect-name} Video Server is Opus. No other codecs are supported, as Opus is currently the only reliable one available across all supported browsers.
+
+== Advanced settings
+The following settings influence the audio experience,
+
+=== Audio Quality
+The administrator can set the Opus audio quality by setting the sampling rate (in Hz) in the `teamChatAudioSamplingRate` global attribute.
+
+The available values are:
+
+* 8000  -> represents the narrowband bandwidth
+* 12000 -> represents the mediumband bandwidth
+* 16000 -> represents the wideband bandwidth
+* 24000 -> represents the superwideband bandwidth
+* 48000 -> represents the fullband bandwidth
+
+(see: https://en.wikipedia.org/wiki/Opus_(audio_format)#Bandwidth_and_sampling_rate )
+
+The 16000 Hz is the default value.
+
+==== Audio Sensitivity
+The administrator can optimize the audio sensitivity with these two commands:
+
+`zxsuite config global set attribute teamChatAudioLevelSensitivity value 25`
+
+`zxsuite config global set attribute teamChatAudioSamplingSensitivityInterval value 2`
+
+The audio level sensitivity defines how much the audio should be normalized between all the audio sources.
+The value has a range between 0 and 100 where 0 represents the audio muted and 100 the maximum audio level (too loud).
+
+By default the value is set to 25.
+
+The audio sampling sensitivity interval defines the interval in seconds used to compute the audio sensitivity level.
+By default the value is set to 2 seconds, this means that the video server normalizes the audio level considering the audio sources of the last 2 seconds.
+
+The value should be at least 0.
