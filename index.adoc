@@ -161,6 +161,10 @@ include::zimbra-connect-guide.adoc[]
 
 <<<
 
+include::zimbra-connect-videoserver.adoc[]
+
+<<<
+
 :leveloffset: -1
 include::zimbra-drive-open-guide.adoc[]
 :leveloffset: +1
