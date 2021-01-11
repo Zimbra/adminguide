@@ -165,6 +165,10 @@ include::zimbra-connect-guide.adoc[]
 
 <<<
 
+include::zimbra-connect-videoserver.adoc[]
+
+<<<
+
 include::zimbra-drivev2-guide.adoc[]
 
 <<<
