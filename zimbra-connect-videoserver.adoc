@@ -47,11 +47,45 @@ TIP: The {zconnect-name} Video Server mainly scales on the CPU, so more CPU core
 * The mailbox server will establish a WebSocket on port 8188 to communicate with the Video Server
 * Clients will use a random UDP port between 20000 and 40000
 
+=== Hostname configuration
+In order for the installer to be fully functional, it's advised to set up the Video Server's hostname internally using `hostnamectl` before the installation in order to avoid a wrong or short-form hostname to be passed on from the OS to the Installer and to update the `/etc/hosts` and `/etc/hostnames` files accordingly to make the change permanent.
+
+e.g.
+
+```
+sudo hostnamectl set-hostname hostname.domain.tld
+
+sudo vi /etc/hostname
+  video-hostname.domain.tld
+
+sudo vi /etc/hosts
+  127.0.0.1 localhost
+  ...
+  xxx.yyy.zzz.zzz video-hostname.domain.tld
+  ...
+```
+
+Based on your system configuration, a system or service restart will be needed to apply the new configuration.
+
+Adding the appropriate information to the /etc/hosts file the mailbox server will also ensure the correct resolution of the Video Server.
+
+e.g.
+
+./etc/hosts (mailbox)
+```
+...
+xxx.yyy.zzz.zzz video-hostname.domain.tls
+...
+```
+
+It's not necessary to add the mailbox server to the `/etc/hosts` of the Video Server as the connection is one way only, mailbox to video.
+
 == Client Configuration
 No client configuration is needed, as the Connect Zimlet will autonomously detect whether a video server is set up an use it if available.
 
 == Installation
 
+* Update your OS and packages through `apt-update && apt-upgrade` (Ubuntu) or `yum update` (CentOS)
 * Download the installer package
 * Copy the installer package to the server
 * Unpack the installer package with `tar zxvf videoserver-[OS]-installer.tgz`
@@ -108,7 +142,7 @@ Note, selecting 'zimbra-videoserver' instead of '/root/videoserver-installer/pac
 [...]
 ----
 
-* Once all packages are installed, you will be asked the **Public IP Address** of the Zimbra infrastructure that uses this video server:
+* Once all packages are installed, you will be asked the **Public IP Address** of the video server itself:
 ----
 Configuring zimbra-videoserver
 ------------------------------
@@ -229,3 +263,24 @@ The audio sampling sensitivity interval defines the interval in seconds used to 
 By default the value is set to 2 seconds, this means that the video server normalizes the audio level considering the audio sources of the last 2 seconds.
 
 The value should be at least 0.
+
+== Uninstallation
+
+In order to uninstall the Video Server, use the system's package manager to remove the following packages:
+
+`zimbra-libvpx, zimbra-libopus, zimbra-libfdk-aac, zimbra-ffmpeg, zimbra-libwebsockets, zimbra-libsrtp, zimbra-libnice, zimbra-libusrsctp, zimbra-videoserver`
+
+On CentOS, run:
+
+```
+sudo systemctl stop videoserver.service
+sudo systemctl disable videoserver.service
+sudo yum remove zimbra-libvpx zimbra-libopus zimbra-libfdk-aac zimbra-ffmpeg zimbra-libwebsockets zimbra-libsrtp zimbra-libnice zimbra-libusrsctp zimbra-videoserver
+```
+On Ubuntu, run:
+
+```
+sudo systemctl stop videoserver.service
+sudo systemctl disable videoserver.service
+sudo apt remove zimbra-libvpx zimbra-libopus zimbra-libfdk-aac zimbra-ffmpeg zimbra-libwebsockets zimbra-libsrtp zimbra-libnice zimbra-libusrsctp zimbra-videoserver
+```
