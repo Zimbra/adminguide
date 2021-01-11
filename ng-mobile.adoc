@@ -126,7 +126,8 @@ All passwords, tokens and sensitive information are stored in hashed form using 
 [[how-to-set-a-mobile-password-for-a-mailbox]]
 === How to Set a Mobile Password for a Mailbox
 
-**Zimbra 8.8.15 patch 16+, 9.0.0 patch9+ (Classic UI)**
+**Zimbra 8.8.15 patch 16+**
+**Zimbra 9.0.0 patch9+ (Classic UI)**
 Starting from Zimbra 8.8.15p16 and 9.0.0p9, Mobile Passwords are now managed by the user via the new Auth Zimlet, which can be installed by running `zxsuite auth doDeployAuthZimlet`.
 
 TIP: This new Mobile Password management system allows the user to set multiple independent Mobile Passwords for an account, to be used with different devices.
@@ -175,6 +176,16 @@ Credential correctly added
             user                                                    john.doe@domain.com
 ----
 
+**versions up to 8.8.15 patch15**
+**versions up to 9.0.0 patch8**
+
+* Open the Zimbra Administration Console.
+* Right-click the user for which you want to set a Mobile Password and select `Edit`.
+* In the `Mobile` tab within the user's settings, check the `Enable mobile password` checkbox.
+* Enter the desired password in the `Mobile password` field and enter it again in the `Confirm mobile password` field.
+You can also choose to generate a random mobile password by clicking btn:[Generate random password].
+* btn:[Save].
+
 === List existing Mobile Passwords
 Any user can see the list of active Mobile Passwords in the Zextras Auth Zimlet. Each entry of the list displays the label of the password, its status, the service it is valid for and its creation date.
 
@@ -184,15 +195,6 @@ System Administrators, on the other hand, can view an extended list of all crede
 
 === Editing a Mobile Password
 While a Mobile Password itself cannot be edited, the System Administrator can edit its label and properties using the `zxsuite auth credential update command`
-
-**versions up to 8.8.15 patch15 and 9.0.0 patch8**
-
-* Open the Zimbra Administration Console.
-* Right-click the user for which you want to set a Mobile Password and select `Edit`.
-* In the `Mobile` tab within the user's settings, check the `Enable mobile password` checkbox.
-* Enter the desired password in the `Mobile password` field and enter it again in the `Confirm mobile password` field.
-You can also choose to generate a random mobile password by clicking btn:[Generate random password].
-* btn:[Save].
 
 == Application Password (QR Code)
 
