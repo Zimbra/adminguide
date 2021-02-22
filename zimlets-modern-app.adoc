@@ -481,3 +481,34 @@ zmprov fc all
 ----
 
 NOTE: For already logged in users, they will have to reload the Modern UI to apply configuration changes.
+
+== Setting up Signature Template
+The Signature Template Zimlet offers a globally configured email signature template that users can use to configure their email signature. This way all users in an organization can have a uniform signature.
+
+The Administrator must install the zimlet and enable it for the users.
+
+NOTE: In case of images in HTML, those should be on a public URL that does not change, as that will be fetched by the recipients.
+
+. The following CLI commands need to be run as zimbra user.
++
+----
+su - zimbra
+----
++
+. Copy and paste the below config file in `/tmp/zimbra-zimlet-signature-template.xml`:
++
+----
+<zimletConfig name="zimbra-zimlet-signature-template" version="0.0.1">
+    <global>
+        <property name="htmlTemplate">PGRpdj48c3BhbiBzdHlsZT0iY29sb3I6ICNlMDNlMmQ7Ij48c3Ryb25nPk5BTUU8L3N0cm9uZz48L3NwYW4+PC9kaXY+PGRpdj48ZW0+PHNwYW4gc3R5bGU9ImNvbG9yOiAjN2U4YzhkOyI+RlVOQ1RJT048L3NwYW4+PC9lbT48YnIvPjxici8+PGltZyBzcmM9Imh0dHBzOi8vczIyLnE0Y2RuLmNvbS80NzYzMjUxMzcvZmlsZXMvZGVzaWduL3N5bmFjb3ItbG9nby0yMDE2LXJnYi5wbmciPjwvaW1nPjwvZGl2Pgo=</property>
+    </global>
+</zimletConfig>
+----
++
+. Use base64 decoder to decode the *htmlTemplate* value. 
+. Make the required changes in *htmlTemplate* block. Re-encode it and paste it in `/tmp/zimbra-zimlet-signature-template.xml`
+. Deploy the changes:
++
+----
+zmzimletctl configure  /tmp/zimbra-zimlet-signature-template.xml
+----

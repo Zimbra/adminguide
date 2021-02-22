@@ -123,6 +123,10 @@ include::zimlets-modern-app.adoc[]
 
 <<<
 
+include::zimlets-rocketchat-guide.adoc[]
+
+<<<
+
 include::voice-service.adoc[]
 
 <<<
