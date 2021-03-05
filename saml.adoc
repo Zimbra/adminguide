@@ -1,0 +1,125 @@
+= Zimbra Single Sign-On using SAML with SimpleSAMLphp
+Did you know that Zimbra supports SAML single sign-on? SAML is an open standard that allows you to have a single login page for all applications in your organization. SAML is a Zimbra Network Edition feature. Once you have set-up your SAML portal you can easily add [Multi Factor Authentication](multi-factor authentication).
+
+== Set up Zimbra SP in SimpleSAMLphp
+
+In SAML terms applications are called Service Providers or SP's. The service that provides your user database and takes care of your authentication is in SAML terms called Identity Provider or IDP. Usually, you only have one IDP and as many SP's as you have applications. In this example, we will set-up Zimbra as a SAML SP and use SimpleSAMLphp as IDP. This is the configuration needed on SimpleSAMLphp (in `/etc/simplesamlphp/metadata/saml20-sp-remote.php`):
+
+----
+$metadata['https://zm-zimbra9.barrydegraaff.tk/service/extension/samlreceiver'] = array(
+         'simplesaml.attributes'	 => true,
+            'debug' => TRUE,
+             'AssertionConsumerService' => 'https://zm-zimbra9.barrydegraaff.tk/service/extension/samlreceiver',
+             'SingleLogoutService' => 'https://zm-zimbra9.barrydegraaff.tk/service/extension/samlslo',
+             'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+             'authproc' => array (
+                     10 => array(
+             'class' => 'saml:AttributeNameID',
+             'attribute' => 'emailAddress',
+             'Format' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+              ),
+          )
+     );
+----
+
+You will also need to get the X.509 public certificate that is used for signing the SAML request from the IDP to Zimbra. You will need to download it and save it on your Zimbra server. This guide will assume you store your cert in `/tmp/idpcert.pem`, don't forget to `chown zimbra:zimbra /tmp/idpcert.pem`. If you followed the SimpleSAMLphp setup guide you can find the certificate at `/etc/simplesamlphp/cert/server.crt`.
+
+== Set up Zimbra
+
+Add the file `/opt/zimbra/conf/saml/saml-config.properties` to configure SAML in Zimbra add the contents:
+----
+# Issuer
+     saml_sp_entity_id=https://zm-zimbra9.barrydegraaff.tk/service/extension/samlreceiver
+     # Login receiver for the service provider
+     saml_acs=https://zm-zimbra9.barrydegraaff.tk/service/extension/samlreceiver
+     # Name ID format for the IDP to use in the SAMLResponse
+     saml_name_id_format=urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+     # Date format for issue instant
+     saml_date_format_instant=yyyy-MM-dd'T'HH:mm:ss'Z'
+     # Identity provider login endpoint for redirect method
+     saml_redirect_login_destination=https://saml.barrydegraaff.tk/simplesaml/saml2/idp/SSOService.php?spentityid=https://zm-zimbra9.barrydegraaff.tk/service/extension/samlreceiver
+     # Identity provider login endpoint for POST method
+     saml_post_login_destination=
+     # Identity provider logout endpoint for redirect method
+     saml_redirect_logout_destination=https://saml.barrydegraaff.tk/simplesaml/saml2/idp/SingleLogoutService.php
+     # Identity provider logout endpoint for POST method
+     saml_post_logout_destination=
+     # Logout redirect page if we are the landing page logout endpoint
+     saml_landing_logout_redirect_url=/
+     # Disable the audience path check
+     saml_skip_audience_restriction=true
+     # URL to send the user with error_code, error_msg query params. Default results in HTTP error code pages.
+     saml_error_redirect_url=
+     # The SAML logout document encoding, and SAML login receiver parameter encoding.
+     saml_document_encoding=ASCII
+     # Set to true to disable the audience path check.
+     saml_skip_audience_restriction=false
+     # The redirect location to send the user if their Zimbra account is not active.
+     saml_inactive_account_redirect_url
+----
+
+From command line as user `root`, copy the *samlextn.jar* and set up the IDP certificate:
+----
+mkdir /opt/zimbra/lib/ext/saml
+cp /opt/zimbra/extensions-network-extra/saml/samlextn.jar /opt/zimbra/lib/ext/saml/
+su - zimbra
+cat /tmp/idpcert.pem |xargs -0 zmprov md exampledomain.com zimbraMyoneloginSamlSigningCert
+zmprov mcf zimbraCsrfRefererCheckEnabled FALSE
+zmmailboxdctl restart
+----
+
+== Create users
+
+Your user accounts must be manually created in Zimbra and be available in your IDP user database. It is important that the E-mail attribute in your IDP is set exactly the same as the Zimbra account name. Or the user will not be able to log-in. If it does not work run a `tail -f /opt/zimbra/log/*` while doing the authentication request and dig through to log to find out what the issue may be. Keywords to grep for: SAML, Audience and assertion.
+
+== Configurable Properties in `saml-config.properties` 
+
+The samlextn.jar uses a property file located at: `${zimbra_home}/conf/saml/saml-config.properties`.
+
+The following properties are supported:
+[cols="1m,2m,1m,1m",options="header",]
+|=======================================================================
+|*Key* |*Description*| *Default*| *Optional*
+
+|saml_sp_entity_id|Issuer||
+
+|saml_acs|Login receiver for the service provider||
+
+|saml_redirect_login_destination|Identity provider login endpoint for redirect method||
+
+|saml_redirect_logout_destination|Identity provider logout endpoint for redirect method||
+
+|saml_post_login_destination|Identity provider login endpoint for POST method (unused)||√
+
+|saml_post_logout_destination|Identity provider logout endpoint for POST method (unused)||√
+
+|saml_name_id_format|Name ID format for the IDP to use in the SAMLResponse|`urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`|√
+
+|saml_date_format_instant|Date format for issue instant|`yyyy-MM-dd'T'HH:mm:ss'Z'`|√
+
+|saml_error_redirect_url|URL to send the user with i`error_code`, `error_msg` query params. Default results in HTTP error code pages.||√
+
+|saml_landing_logout_redirect_url|Logout redirect landing page if we are the last logout service.| `/`|√
+
+|saml_document_encoding|The SAML logout document encoding, and SAML login receiver parameter encoding.|`ASCII`|√
+
+|saml_skip_audience_restriction|Set to true to disable the audience path check.|`false`|√
+
+|saml_inactive_account_redirect_url|The redirect location to send the user if their Zimbra account is not active.|`/service/extension/samllogout`|√
+
+|=======================================================================
+
+== SLO Endpoint
+
+In case you need to support SLO initiated from the IDP you need the SLO URL: `https://zimbraserver.example.com/service/extension/samlslo`
+
+Also if you want to trigger the IDP to log-out when the user clicks logout in Zimbra you have to configure Zimbra to use this log-out URL: `https://zimbraserver.example.com/service/extension/samllogout`.
+
+== CsrfRefererCheck
+
+On Zimbra 9 in most cases, you will need to disable CsrfRefererCheck for the SAML and restart Mailbox service to work.
+----
+su - zimbra
+zmprov mcf zimbraCsrfRefererCheckEnabled FALSE
+zmmailboxdctl restart
+----

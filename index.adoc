@@ -197,6 +197,10 @@ include::ng-abq-soap.adoc[]
 
 <<<
 
+include::saml.adoc[]
+
+<<<
+
 include::glossary.adoc[]
 
 <<<

@@ -1585,7 +1585,7 @@ WARNING: If the HSM NG module is installed and enabled, this command replaces th
 *Syntax*
 ....
 Syntax:
-   zxsuite hsm doMailboxMove {an account name: john@example.com or a domain name: example.com} {destinationHost} [attr1 value1 [attr2 value2...]]
+   zxsuite hsm doMailboxMove {destinationHost} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
@@ -1609,9 +1609,27 @@ read_error_threshold(O)    Integer
 
 Usage example:
 
-zxsuite HSM NG domailboxmove john@example.com mail2.example.com
+zxsuite hsm doMailboxMove mail2.example.com accounts john@example.com stages data,account
 Move mailbox for account john@example.com to mail2.example.com host
 ....
+
+.Parameter List
+|===
+|destinationHost(M)|The host where the mailbox must be moved to.
+|accounts(O)|Comma separated list of mailbox(es) to move. Can be combined with the "domains" option.
+|domains(O)| Comma separated list of domain(s) to move. Can be combined with the "accounts" option.
+|input_file(O)|File containing the list of mailboxes to move, one per line.
+|stages(O)|The stages of the move to perform among blobs, backup, data, account. The "Data" stage will move both blobs and backup, while the "account" stage will effectively move the mailbox information.
+|compress(O)|Whether to compress the moved blobs on the destination host or not.
+|checkDigest(O)|Whether to check item digests during the move or not. Safer but slower.
+|overwrite(O)|Whether to overwrite previously moved items for the same mailbox.
+|threads(O)|Number of threads to use for the move. Higher threads mean faster moves but with more impact on the system's performances.
+|hsm(O)|Whether to apply the HSM policies on the destination host when moving the blobs.
+|notifications(O)|Comma separated list of email addresses to notify about the outcome of the operation.
+|ignore_partial(O)|Ignore previous move attempts.
+|drop_network_backup(O)|Delete Legacy Backup data during the move
+|read_error_threshold(O)|Maximum amount of read I/O errors to allow before stopping the operation.
+|===
 
 *doMailboxMove Details*
 
