@@ -1589,21 +1589,23 @@ Syntax:
 
 PARAMETER LIST
 
-NAME                       TYPE             EXPECTED VALUES                                      DEFAULT
-destinationHost(M)         String
-accounts(O)                String[,..]      john@example.com,smith@example.com[,...]
-domains(O)                 String[,..]      example.com,test.com[,...]
-input_file(O)              String
-stages(O)                  String[,..]      blobs|backup|data|account data=blobs+backup[,...]    blobs,backup,account
-compress(O)                Boolean          true|false                                           true
-checkDigest(O)             Boolean          if false skip digest calculation and check           true
-overwrite(O)               Boolean          true|false                                           false
-threads(O)                 Integer                                                               1
-hsm(O)                     Boolean          true|false                                           false
-notifications(O)           Email Address
-ignore_partial(O)          Boolean          true|false                                           false
-drop_network_backup(O)     Boolean          true|false                                           false
-read_error_threshold(O)    Integer
+NAME                           TYPE             EXPECTED VALUES                                      DEFAULT
+destinationHost(M)             String
+accounts(O)                    String[,..]      john@example.com,smith@example.com[,...]
+domains(O)                     String[,..]      example.com,test.com[,...]
+input_file(O)                  String
+stages(O)                      String[,..]      blobs|backup|data|account data=blobs+backup[,...]    blobs,backup,account
+compress(O)                    Boolean          true|false                                           true
+checkDigest(O)                 Boolean          if false skip digest calculation and check           false
+overwrite(O)                   Boolean          true|false                                           true
+threads(O)                     Integer                                                               1
+hsm(O)                         Boolean          true|false                                           false
+notifications(O)               Email Address
+ignore_partial(O)              Boolean          true|false                                           false
+drop_network_backup(O)         Boolean          true|false                                           false
+read_error_threshold(O)        Integer
+blob_destination_volume(O)     String           current_primary|current_secondary|6                  current_primary
+drive_destination_volume(O)    String           drive_primary|drive_secondary|same_as_blob|7         same_as_blob
 
 (M) == mandatory parameter, (O) == optional parameter
 
