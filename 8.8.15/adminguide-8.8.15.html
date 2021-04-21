@@ -17,7 +17,7 @@
 <div class="details">
 <span id="author" class="author">June 2019</span><br>
 <span id="revnumber">version Zimbra Network Edition V 8.8.15,</span>
-<span id="revdate">revised 2021-03-05</span>
+<span id="revdate">revised 2021-04-21</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -331,6 +331,8 @@
 <li><a href="#from-the-zimbra-cli-1">From the Zimbra CLI</a></li>
 <li><a href="#enable-for-single-user">Enable Mobile NG for a Single User</a></li>
 <li><a href="#the-mobile-password-feature">The Mobile Password Feature</a></li>
+<li><a href="#_data_storage">Data Storage</a></li>
+<li><a href="#_application_password_qr_code">Application Password (QR Code)</a></li>
 <li><a href="#mobile-device-management-a.k.a.-mobile-provisioning">Mobile Device Management a.k.a. Mobile Provisioning</a></li>
 <li><a href="#syncstates">SyncStates</a></li>
 <li><a href="#advanced-settings">Advanced Settings</a></li>
@@ -360,6 +362,7 @@
 <li><a href="#_abq_modes">ABQ Modes</a></li>
 <li><a href="#_abq_mode_control">ABQ Mode Control</a></li>
 <li><a href="#_dummy_data">Dummy data</a></li>
+<li><a href="#_custom_abq_emails">Custom ABQ emails</a></li>
 <li><a href="#_notifications">Notifications</a></li>
 <li><a href="#_abq_cli">ABQ CLI</a></li>
 </ul>
@@ -29014,7 +29017,7 @@ Mounting the export folder via SSHFS to the destination server might not be a go
 <div class="sect3">
 <h4 id="mobile-passwords-and-you">Mobile Passwords and You</h4>
 <div class="paragraph">
-<p>The <code>Mobile Password</code> feature allows Global and Delegated Admins to set an additional password for an account to be used for Exchange ActiveSync authentications only.</p>
+<p>The <code>Mobile Password</code> feature allows to set an additional password for an account to be used for Exchange ActiveSync authentications only.</p>
 </div>
 <div class="paragraph">
 <p>The main benefits of using this feature are:</p>
@@ -29033,10 +29036,19 @@ Mounting the export folder via SSHFS to the destination server might not be a go
 <p>A <code>Mobile Password</code> will not be valid for Webmail/POP3/IMAP/SMTP logins, and the account password will not be valid for mobile logins.</p>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_data_storage">Data Storage</h3>
+<div class="paragraph">
+<p>Both Mobile Passwords and QR Code data is saved in a local HSQL database.</p>
+</div>
+<div class="paragraph">
+<p>All passwords, tokens and sensitive information are stored in hashed form using the SHA256 algorithm using auto-generated keys and no credential or sensitive information is ever stored cleartext.</p>
+</div>
 <div class="sect3">
 <h4 id="how-to-set-a-mobile-password-for-a-mailbox">How to Set a Mobile Password for a Mailbox</h4>
 <div class="paragraph">
-<p>Setting a mobile password is easy:</p>
+<p><strong>versions up to 8.8.15 patch15</strong></p>
 </div>
 <div class="ulist">
 <ul>
@@ -29057,6 +29069,213 @@ You can also choose to generate a random mobile password by clicking <b class="b
 <p><b class="button">Save</b>.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p><strong>Zimbra 8.8.15 patch 16+</strong>
+Starting from Zimbra 8.8.15-Patch16, Mobile Passwords are now managed by the user via the new Auth Zimlet, which can be installed by running <code>zxsuite auth doDeployAuthZimlet</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+This new Mobile Password management system allows the user to set multiple independent Mobile Passwords for an account, to be used with different devices.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once the Zimlet is deployed and enabled, the user can create a new Mobile Password following this steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the Zextras Auth Zimlet and click on "New Password";</p>
+</li>
+<li>
+<p>Enter an easy to remember identifier for the password in the "Password Label" field and select "Text code" as the Password Type;</p>
+</li>
+<li>
+<p>Click "Next";</p>
+</li>
+<li>
+<p>The new Mobile Password will be displayed;</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Mobile Passwords are randomly generated and cannot be displayed again after the creation is complete.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on "Done" to close the Zextras Auth window. An entry for the new Mobile Password is now visible in the "Active Passwords" list of the Zextras Auth Zimlet.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Admins can also create a Mobile Password from the CLI, use the <code>zxsuite auth credential</code> command with the following attributes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>password: enter the password you wish to set as the Mobile Password</p>
+</li>
+<li>
+<p>label: enter the label for the Mobile Password</p>
+</li>
+<li>
+<p>service: use <code>eas</code> to set a Mobile Password</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>E.g.
+To add the <code>gn89hg95hvmn59..]</code> Mobile Password to the <code>john.doe@domain.com</code> account, labeled as "Personal Phone", run:</p>
+</div>
+<div class="paragraph">
+<p><code>zxsuite auth credential add <a href="mailto:john.doe@domain.com">john.doe@domain.com</a> password "gn89hg95hvmn59..]" label "Personal Phone" service eas</code></p>
+</div>
+<div class="paragraph">
+<p>The system will confirm the success of the operation and display all the password&#8217;s information:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Credential correctly added
+
+        values
+            generated                                               0
+            created                                                 1603120995372
+            label                                                   Personal Phone
+            id                                                      Fr2jM
+            services
+
+                    service                                                         EAS
+            hash                                                    +Crk6YcPL7IapCg6xfT6oXWP977uTeZdJTVQDQZd+Io=
+            enabled                                                 true
+            algorithm                                               SHA256
+        text_data
+            auth_method                                             password
+            password                                                gn89hg95hvmn59..]
+            user                                                    john.doe@domain.com</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_list_existing_mobile_passwords">List existing Mobile Passwords</h4>
+<div class="paragraph">
+<p>Any user can see the list of active Mobile Passwords in the Zextras Auth Zimlet. Each entry of the list displays the label of the password, its status, the service it is valid for and its creation date.</p>
+</div>
+<div class="paragraph">
+<p>Specifically, all passwords valid for the "EAS" service are Mobile Passwords.</p>
+</div>
+<div class="paragraph">
+<p>System Administrators, on the other hand, can view an extended list of all credentials, including Mobile Passwords,</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_editing_a_mobile_password">Editing a Mobile Password</h4>
+<div class="paragraph">
+<p>While a Mobile Password itself cannot be edited, the System Administrator can edit its label and properties using the <code>zxsuite auth credential update command</code></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_application_password_qr_code">Application Password (QR Code)</h3>
+<div class="paragraph">
+<p>The Auth Zimlet can speed up and manage Application logins, such as those for the Drive and Team/Connect apps made by Zextras.</p>
+</div>
+<div class="paragraph">
+<p>This is achieved through the creation of a QR Code in the Zimbra WebClient, which the user can then scan from the App&#8217;s login page to log in.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+QR Codes are a one-time credential only, meaning that once generated it will grant access to the app until the relevant credential itself is deleted from the account.
+Once generated, the QR Code can only be viewed once.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_qr_code_requirements">QR Code Requirements</h4>
+<div class="paragraph">
+<p>The QR Code Application Password feature requires the following properties to be set at domain level in order to be functional:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>zimbraPublicServiceHostname</code></p>
+</li>
+<li>
+<p><code>zimbraPublicServicePort</code></p>
+</li>
+<li>
+<p><code>zimbraPublicServiceProtocol</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Should one or more of the properties be unset, a notification will be delivered to the Admin reporting the affected domains and their missing properties.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_creating_a_new_qr_code_credential">Creating a new QR Code Credential</h4>
+<div class="paragraph">
+<p>While, as all credentials, QR Codes can be created from both the Zextras Auth Zimlet and Zextras CLI, only the former allows the user to use the QR code itself so the latter will not be taken into consideration in this guide.</p>
+</div>
+<div class="sect4">
+<h5 id="_creating_a_qr_code_credential_from_the_zextras_auth_zimlet">Creating a QR Code Credential from the Zextras Auth Zimlet</h5>
+<div class="paragraph">
+<p>To create a new QR Code, open the Auth Zimlet and click on "New Password";:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Enter an easy to remember identifier for the password in the "Password Label" field and select "QR code" as the Password Type;</p>
+</li>
+<li>
+<p>Click "Next";</p>
+</li>
+<li>
+<p>The new QR Code will be displayed;</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+QR Codes are randomly generated and cannot be displayed again after the creation is complete.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on "Done" to close the Auth Zimlet. An entry for the new QR Code is now visible in the "Active Passwords" list of the Auth Zimlet.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -31989,21 +32208,23 @@ If the HSM NG module is installed and enabled, this command replaces the old <co
 
 PARAMETER LIST
 
-NAME                       TYPE             EXPECTED VALUES                                      DEFAULT
-destinationHost(M)         String
-accounts(O)                String[,..]      john@example.com,smith@example.com[,...]
-domains(O)                 String[,..]      example.com,test.com[,...]
-input_file(O)              String
-stages(O)                  String[,..]      blobs|backup|data|account data=blobs+backup[,...]    blobs,backup,account
-compress(O)                Boolean          true|false                                           true
-checkDigest(O)             Boolean          if false skip digest calculation and check           true
-overwrite(O)               Boolean          true|false                                           false
-threads(O)                 Integer                                                               1
-hsm(O)                     Boolean          true|false                                           true
-notifications(O)           Email Address
-ignore_partial(O)          Boolean          true|false                                           false
-drop_network_backup(O)     Boolean          true|false                                           false
-read_error_threshold(O)    Integer
+NAME                           TYPE             EXPECTED VALUES                                      DEFAULT
+destinationHost(M)             String
+accounts(O)                    String[,..]      john@example.com,smith@example.com[,...]
+domains(O)                     String[,..]      example.com,test.com[,...]
+input_file(O)                  String
+stages(O)                      String[,..]      blobs|backup|data|account data=blobs+backup[,...]    blobs,backup,account
+compress(O)                    Boolean          true|false                                           true
+checkDigest(O)                 Boolean          if false skip digest calculation and check           false
+overwrite(O)                   Boolean          true|false                                           true
+threads(O)                     Integer                                                               1
+hsm(O)                         Boolean          true|false                                           false
+notifications(O)               Email Address
+ignore_partial(O)              Boolean          true|false                                           false
+drop_network_backup(O)         Boolean          true|false                                           false
+read_error_threshold(O)        Integer
+blob_destination_volume(O)     String           current_primary|current_secondary|6                  current_primary
+drive_destination_volume(O)    String           drive_primary|drive_secondary|same_as_blob|7         same_as_blob
 
 (M) == mandatory parameter, (O) == optional parameter
 
@@ -32836,6 +33057,123 @@ changed, the device&#8217;s sync state will be reset.</p>
 <div class="paragraph">
 <p>This was designed to make sure the user knows what’s happening, the alternative being forcing the synchronization to fail with no descriptive
 response for the user itself – which would likely cause a significant overhead on support calls.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_abq_emails">Custom ABQ emails</h3>
+<div class="paragraph">
+<p>Quarantine and block dummy emails can be customized by using the <code>zxsuite mobile setABQMessage</code> message command.</p>
+</div>
+<div class="paragraph">
+<p>Messages can be customized globally or by domain, and multiple languages can be set.</p>
+</div>
+<div class="paragraph">
+<p>The <code>zxsuite mobile setABQMessage</code> command accepts the following parameters:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">configLevel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">global,domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">global</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">only if config != global</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">messageClass</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enum</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">blocked,quarantined</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enum</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locale (e.g. "en-us")</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">system default</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">from</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Admin Address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reply_to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">subject</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Built-in default</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">body_plain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Built-in default</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">body_plain_file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the file to use as plain text body</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">body_html</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Built-in default</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">body_html_file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the file to use as html body</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<div class="title">Setup Example</div>
+<p>Given two files, <code>/tmp/quarantine_body.txt</code> and <code>/tmp/quarantine_body.html</code> containing the French language plaintext and html message bodies and the <code>support@domain.com</code> support email address, the following command will set the quarantine message for the <code>domain.com</code> domain without affecting other domains or users:</p>
+</div>
+<div class="paragraph">
+<p><code>zxsuite mobile setABQMessage domain domain.com quarantined fr from <a href="mailto:support@domain.com">support@domain.com</a> body_plain_file /tmp/quarantine_body.txt body_html_file /tmp/quarantine_body.html</code></p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Before being able to customize the ABQ messages, a default must be set using <code>default</code> as the language in the command, e.g.<br>
+<br>
+<code>zxsuite mobile setABQMessage global quarantined default [&#8230;&#8203;]</code>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -34892,7 +35230,7 @@ the full list of available commands.</p>
 <p>Basic Usage:</p>
 </div>
 <div class="paragraph">
-<p>zxsuite powerstore {action} [options]</p>
+<p>zxsuite hsm {action} [options]</p>
 </div>
 <div class="sect4">
 <h5 id="hsm-ng-commands">HSM NG Commands</h5>
@@ -34901,70 +35239,70 @@ the full list of available commands.</p>
   <strong>+setHsmPolicy</strong> - Add an additional policy to HSM.</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore +setHsmPolicy {hsm_policy}</code></p>
+<p><code>zxsuite hsm +setHsmPolicy {hsm_policy}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>addS3Store</strong> - Add an S3 compatible store</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore addS3Store {Name of the zimbra store} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm addS3Store {Name of the zimbra store} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doCheckBlobs</strong> - Start the doCheckBlobs operation.</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doCheckBlobs {start} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm doCheckBlobs {start} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doCreateVolume</strong> - Create a volume on the server</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doCreateVolume {primary|secondary|index} {volume_name} {volume_path} {true|false} {compression_threshold_bytes}</code></p>
+<p><code>zxsuite hsm doCreateVolume {primary|secondary|index} {volume_name} {volume_path} {true|false} {compression_threshold_bytes}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doDeduplicate</strong> - Start a deduplication operation.</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doDeduplicate {volume_name} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm doDeduplicate {volume_name} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doDeleteVolume</strong> - Delete a specific volume on the server</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doDeleteVolume {volume_id}</code></p>
+<p><code>zxsuite hsm doDeleteVolume {volume_id}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doMoveBlobs</strong> - Start the doMoveBlob operation.</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doMoveBlobs [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm doMoveBlobs [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doRemoveHsmPolicy</strong> - Remove a policy from HSM.</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doRemoveHsmPolicy {hsm_policy}</code></p>
+<p><code>zxsuite hsm doRemoveHsmPolicy {hsm_policy}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doRestartService</strong> - restart a given service</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doRestartService {service_name}</code></p>
+<p><code>zxsuite hsm doRestartService {service_name}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doStartService</strong> - start a given service</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doStartService {service_name}</code></p>
+<p><code>zxsuite hsm doStartService {service_name}</code></p>
 </div>
 <div class="paragraph">
 <p>::
@@ -34972,70 +35310,70 @@ the full list of available commands.</p>
   operations queue</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doStopAllOperations</code></p>
+<p><code>zxsuite hsm doStopAllOperations</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doStopOperation</strong> - Stop a single running operation</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doStopOperation {operation_uuid}</code></p>
+<p><code>zxsuite hsm doStopOperation {operation_uuid}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doStopService</strong> - stop a given service</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doStopService {service_name}</code></p>
+<p><code>zxsuite hsm doStopService {service_name}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doUpdateVolume</strong> - Update a specific volume on the server</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doUpdateVolume {volume_id} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm doUpdateVolume {volume_id} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>doVolumeToVolumeMove</strong> - Start the doMoveVolumeBlobs operation.</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore doVolumeToVolumeMove {source_volume_name} {destination_volume_name}</code></p>
+<p><code>zxsuite hsm doVolumeToVolumeMove {source_volume_name} {destination_volume_name}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>getAllOperations</strong> - Displays all running and queued operations</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore getAllOperations [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm getAllOperations [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>getAllVolumes</strong> - Prints all the volumes present in the server</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore getAllVolumes</code></p>
+<p><code>zxsuite hsm getAllVolumes</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>getHsmPolicy</strong> - Prints all the policies</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore getHsmPolicy</code></p>
+<p><code>zxsuite hsm getHsmPolicy</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>getProperty</strong> - Get configuration properties</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore getProperty [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm getProperty [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>getServices</strong> - show current status of all services for this module</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore getServices</code></p>
+<p><code>zxsuite hsm getServices</code></p>
 </div>
 <div class="paragraph">
 <p>::
@@ -35043,35 +35381,35 @@ the full list of available commands.</p>
   contained in a volume</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore getVolumeStats {volume_id} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm getVolumeStats {volume_id} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>monitor</strong> - Monitor a running operation</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore monitor {operation_uuid} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
+<p><code>zxsuite hsm monitor {operation_uuid} [attr1 value1 [attr2 value2&#8230;&#8203;</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>setHSMPolicy</strong> - Set the default HSM policy</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore setHSMPolicy {hsm_policy}</code></p>
+<p><code>zxsuite hsm setHSMPolicy {hsm_policy}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>setProperty</strong> - Set configuration property</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore setProperty {property_name} {property_value}</code></p>
+<p><code>zxsuite hsm setProperty {property_name} {property_value}</code></p>
 </div>
 <div class="paragraph">
 <p>::
   <strong>testS3Connection</strong> - Test the connection to an S3 bucket.</p>
 </div>
 <div class="paragraph">
-<p><code>zxsuite powerstore testS3Connection {s3BucketConfigurationUuid}</code></p>
+<p><code>zxsuite hsm testS3Connection {s3BucketConfigurationUuid}</code></p>
 </div>
 </div>
 </div>
@@ -48795,7 +49133,7 @@ such an address may be &#8220;automatically trusted&#8221;.</p>
 <div id="footer">
 <div id="footer-text">
 Version Zimbra Network Edition V 8.8.15<br>
-Last updated 2021-03-05 19:41:36 +0530
+Last updated 2021-04-21 15:59:57 +0530
 </div>
 </div>
 <link rel="stylesheet" href="./coderay-asciidoctor.css">
