@@ -1585,7 +1585,7 @@ WARNING: If the HSM NG module is installed and enabled, this command replaces th
 *Syntax*
 ....
 Syntax:
-   zxsuite hsm doMailboxMove {an account name: john@example.com or a domain name: example.com} {destinationHost} [attr1 value1 [attr2 value2...]]
+   zxsuite hsm doMailboxMove {destinationHost} [attr1 value1 [attr2 value2...]]
 
 PARAMETER LIST
 
@@ -1599,7 +1599,7 @@ compress(O)                Boolean          true|false                          
 checkDigest(O)             Boolean          if false skip digest calculation and check           true
 overwrite(O)               Boolean          true|false                                           false
 threads(O)                 Integer                                                               1
-hsm(O)                     Boolean          true|false                                           false
+hsm(O)                     Boolean          true|false                                           true
 notifications(O)           Email Address
 ignore_partial(O)          Boolean          true|false                                           false
 drop_network_backup(O)     Boolean          true|false                                           false
@@ -1609,7 +1609,7 @@ read_error_threshold(O)    Integer
 
 Usage example:
 
-zxsuite HSM NG domailboxmove john@example.com mail2.example.com
+zxsuite hsm doMailboxMove mail2.example.com accounts john@example.com stages data,account
 Move mailbox for account john@example.com to mail2.example.com host
 ....
 
