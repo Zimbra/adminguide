@@ -126,7 +126,6 @@ All passwords, tokens and sensitive information are stored in hashed form using 
 [[how-to-set-a-mobile-password-for-a-mailbox]]
 === How to Set a Mobile Password for a Mailbox
 
-**versions up to 8.8.15 patch15**
 **versions up to 9.0.0 patch8**
 
 * Open the Zimbra Administration Console.
@@ -136,9 +135,8 @@ All passwords, tokens and sensitive information are stored in hashed form using 
 You can also choose to generate a random mobile password by clicking btn:[Generate random password].
 * btn:[Save].
 
-**Zimbra 8.8.15 patch 16+**
 **Zimbra 9.0.0 patch9+ (Classic UI)**
-Starting from Zimbra 8.8.15p16 and 9.0.0p9, Mobile Passwords are now managed by the user via the new Auth Zimlet, which can be installed by running `zxsuite auth doDeployAuthZimlet`.
+Starting from Zimbra 9.0.0-P9, Mobile Passwords are now managed by the user via the new Auth Zimlet, which can be installed by running `zxsuite auth doDeployAuthZimlet`.
 
 TIP: This new Mobile Password management system allows the user to set multiple independent Mobile Passwords for an account, to be used with different devices.
 
