@@ -23,8 +23,6 @@ By default, the Video Server uses conservative Codecs (VP8 and Opus) to ensure t
 
 A properly set up Video Server will supersede the need of a TURN server, provided that all clients can reach the Video Server's public IP and that UDP traffic is not filtered.
 
-WARNING: The {zconnect-name} Video Server is still in Beta stage, and thus only a single server is allowed per Zimbra infrastructure.
-
 == Requirements
 The {zconnect-name} Video Server must be installed on a dedicated server and has the following requirements:
 
