@@ -274,6 +274,11 @@ When enabled, users can change their password at any time within the password ag
 
 The feature is controlled by a local config attribute `zimbra_block_common_passwords_enabled` and the default value is set to `FALSE`.
 
+When this feature is enabled, it will also prevent end users from setting their password to a commonly used password via these options:
+
+* *Profile -> Change Password* in Modern Web App at the top right corner.
+* *Forgot Password* option on the Login page. (If the *Forgot Password* feature is enabled for the user).
+
 ==== Enabling Block Common Passwords feature
 
 . Login as `zimbra` user:
@@ -292,6 +297,7 @@ zmmailboxdctl restart
 ----
 
 After enabling this feature, if you try to create a user, _Password is invalid_ error is displayed and the user is not created.
+
 
 == Managing Login Policies
 
