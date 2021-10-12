@@ -268,6 +268,31 @@ When enabled, users can change their password at any time within the password ag
 
 |=======================================================================
 
+=== Block Common Passwords
+
+*Block Common Passwords* feature enables an organization to restrict the use of the commonly used passwords when creating users. The list of the common passwords is maintained on the server which is referred to when an administrator tries to create a user with a commonly used password. 
+
+The feature is controlled by a local config attribute `zimbra_block_common_passwords_enabled` and the default value is set to `FALSE`.
+
+==== Enabling Block Common Passwords feature
+
+. Login as `zimbra` user:
+----
+su - zimbra
+----
+
+. Set the localconfig `zimbra_block_common_passwords_enabled` value to `TRUE`:
+----
+zmlocalconfig -e zimbra_block_common_passwords_enabled=TRUE
+----
+
+. Restart mailbox service:
+----
+zmmailboxdctl restart
+----
+
+After enabling this feature, if you try to create a user, _Password is invalid_ error is displayed and the user is not created.
+
 == Managing Login Policies
 
 You can set the maximum number of failed login attempts before the account is locked out for the specified lockout time.
@@ -303,6 +328,7 @@ If this is set to 0, the user can continue attempts to authenticate, no matter h
 The default is 1 hour.
 
 |=======================================================================
+
 
 [[about_two_factor_auth]]
 === About 2 Factor Authentication
