@@ -378,7 +378,7 @@ zmprov rvr dl <dlname@example.com> gst <someone@foo.com> "" sendToDistList
 
 ==== Enabling View of Distribution List Members for AD Accounts
 
-To view Active Directory distribution list members in messages or in the address book, the GAL group handler for Active Directory must be configured in the {product-abbrev} GALsync account for each Active Directory.
+To view Active Directory distribution list members in messages or in the address book, the GAL group handler for Active Directory must be configured in the {product-short} GALsync account for each Active Directory.
 
 Use steps in this section to update the GALsync account for each Active Directory.
 This configuration requires that you know the GALsync account name and all data sources on that GALsync account.

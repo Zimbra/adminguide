@@ -1,6 +1,6 @@
 [appendix]
 [[zcs_crontab_jobs]]
-= {product-abbrev} Crontab Jobs
+= {product-short} Crontab Jobs
 
 The crontab is used to schedule commands to be executed periodically on the
 Zimbra servers.
@@ -29,13 +29,13 @@ When an asterisk (*) is displayed, it means all possible values for the
 field. For example, an asterisk in the hour time field would be
 equivalent to "every hour".
 
-== {product-abbrev} Cron Jobs
+== {product-short} Cron Jobs
 
-You can view the {product-abbrev} crontab by logging on as zimbra and typing
+You can view the {product-short} crontab by logging on as zimbra and typing
 `crontab -l`.
 
 === Scheduled jobs
-The following cron jobs are scheduled to run for {product-abbrev}:
+The following cron jobs are scheduled to run for {product-short}:
 
 ==== Log pruning
 
@@ -87,7 +87,7 @@ statements. This script is run 1:30 a.m. on Sunday.
 corruption and will notify the administrator if any corruption is found.
 When this is run, it may consume a significant amount of I/O. If you find
 that it is an issue, you may want to change the frequency with which
-`zmdbintegrityreport` is run by editing the {product-abbrev} crontab entry.
+`zmdbintegrityreport` is run by editing the {product-short} crontab entry.
 This report runs at 11:00 p.m. Sundays.
 
 Large sites may opt to disable this by setting:
@@ -98,7 +98,7 @@ zmlocalconfig -e zmdbintegrityreport_disabled=TRUE
 
 If you choose to disable this, it is recommended that the integrity report
 be run by hand during the normal maintenance windows and prior to running
-any {product-abbrev} upgrades.
+any {product-short} upgrades.
 
 ==== Monitor for multiple mysqld to prevent corruption
 

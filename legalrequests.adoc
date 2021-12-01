@@ -108,7 +108,7 @@ The attachments get saved in the format that they were delivered.
 
 === Creating a Mailbox Snapshot `zip` File
 
-You must be logged into the {product-abbrev} Administration Console to create the `zip` file. You create a query for one account at a time.
+You must be logged into the {product-short} Administration Console to create the `zip` file. You create a query for one account at a time.
 
 . In the Administration Console address field of the browser, after the port number *7071/*, type:
 +
@@ -120,7 +120,7 @@ image::mailbox_snapshot_zip_file.png[Address Bar]
 +
 In the above example, the search query is requesting a `zip` file of all accounts called `user1`.
 +
-You can use any search operators supported for searching in {product-abbrev}.
+You can use any search operators supported for searching in {product-short}.
 For example, you can search by folder (`in:folder_name`), by sender's name (`from:<someone>`), and you can use multiple search terms. 
 See the Search Tips wiki page for keyword examples, https://wiki.zimbra.com/wiki/Search_Tips.
 

@@ -126,10 +126,8 @@ serving the static UI content like html/css pages, and mail server
 running 'service' webapp serving all the SOAP requests. These servers
 are running in split mode.
 
-ifdef::z9[]
 [IMPORTANT]
 The {modern-client} does not currently support {product-short} Web Application Server Split configuration.
-endif::z9[]
 
 The Web Application Server Split benefits include:
 
@@ -175,7 +173,7 @@ generate its own logging output. Local logs are in `/opt/zimbra/log`.
 
 Selected {product-name} log messages generate SNMP traps, which you
 can capture using any SNMP monitoring software.
-See <<monitoring_zcs_servers,Monitoring {product-abbrev} Servers>>.
+See <<monitoring_zcs_servers,Monitoring {product-short} Servers>>.
 
 [NOTE]
 System logs, redo logs, and backup sessions should be on separate disks to

@@ -1,6 +1,6 @@
 [#zimbra-pst-migration]
 == Zimbra PST Migration Wizard
-The Zimbra PST Migration Wizard helps migrate Microsoft Outlook personal folders (`PST`) files to Zimbra Collaboration (ZCS).
+The Zimbra PST Migration Wizard helps migrate Microsoft Outlook personal folders (`PST`) files to Zimbra Collaboration.
 
 The tool runs in two modes:
 
@@ -35,9 +35,9 @@ An administrator creates the account for you on the Zimbra Collaboration Server 
 . In the *Destination* dialog, box, enter below details.
  Hostname:: This is the domain name of the Zimbra server.
  Port:: The port number used by the server is usually `80` for non-secure connections and `443` for secure connections.
- Use Secure Connection:: Select the option for SSL secure communication with ZCS.
- Username::  Enter your ZCS account email address as *\name@domain.com*.
- Password:: Enter your ZCS account password.
+ Use Secure Connection:: Select the option for SSL secure communication with {product-short}.
+ Username::  Enter your {product-name} account email address as *\name@domain.com*.
+ Password:: Enter your {product-name} account password.
  . Click *Next*.
 
 [#select-options]
