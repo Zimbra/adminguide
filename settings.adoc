@@ -39,7 +39,7 @@ ifdef::z9[]
 :either-web-client: {web-client} or {modern-client}
 :both-web-clients: {web-client} and {modern-client}
 :product-version: 9.0.0
-:product-release-date: March, 2020
+:product-release-date: 
 // wrap {only-in-classic} in ifdef::z9[] one-liner to provide a standard NOTE, e.g.: ifdef::z9[NOTE: {only-in-classic}]
 :only-in-classic: This feature is supported only in the {web-client}.
 endif::z9[]
