@@ -5,10 +5,6 @@ Zimbra Open Drive is a client that interfaces Zimbra to third party products and
 
 NOTE: Prior to version 8.8.11, Zimbra Open Drive was known as Zimbra Drive.
 
-Zimbra Open Drive currently works with:
-
-* Nextcloud
-* ownCloud
 
 WARNING: Data on Zimbra Open Drive is not hosted on the Zimbra server or on any other
 Zimbra product. Likewise, the data is not managed by Zimbra or any incorporated
