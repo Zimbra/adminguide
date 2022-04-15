@@ -7,7 +7,7 @@
 :product-provider: Zimbra
 :product-version: 8.8.15
 :product-release-date: June 2019
-:copyright-year: 2020
+:copyright-year: 2019-2022
 
 :imagesdir: images/
 :icons: font
@@ -39,9 +39,9 @@ ifdef::z9[]
 :either-web-client: {web-client} or {modern-client}
 :both-web-clients: {web-client} and {modern-client}
 :product-version: 9.0.0
-:product-release-date: 
+:product-release-date:
 // wrap {only-in-classic} in ifdef::z9[] one-liner to provide a standard NOTE, e.g.: ifdef::z9[NOTE: {only-in-classic}]
 :only-in-classic: This feature is supported only in the {web-client}.
 endif::z9[]
 :palette-generator: https://zm-x-theme-generator.netlify.com/[palette generator]
-:file-path: /opt/zimbra/jetty/webapps/zimbra/modern/clients/ 
+:file-path: /opt/zimbra/jetty/webapps/zimbra/modern/clients/
