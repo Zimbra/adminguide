@@ -7,7 +7,7 @@
 :product-provider: Zimbra
 :product-version: 8.8.15
 :product-release-date: June 2019
-:copyright-year: 2020
+:copyright-year: 2019-2022
 
 :imagesdir: images/
 :icons: font
