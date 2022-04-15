@@ -1,10 +1,16 @@
 Zimbra Open Drive
 -----------------
 
+WARNING: *_Zimbra Open Drive has been deprecated and replaced with Zimbra Drive V2.  If attempting to use Zimbra Open Drive, there are known issues with connecting to the latest versions of Nextcloud and ownCloud which will not be addressed._* 
+
 Zimbra Open Drive is a client that interfaces Zimbra to third party products and services.
 
 NOTE: Prior to version 8.8.11, Zimbra Open Drive was known as Zimbra Drive.
 
+Zimbra Open Drive currently works with:
+
+* Nextcloud
+* ownCloud
 
 WARNING: Data on Zimbra Open Drive is not hosted on the Zimbra server or on any other
 Zimbra product. Likewise, the data is not managed by Zimbra or any incorporated
