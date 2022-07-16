@@ -47,6 +47,10 @@ include::mta.adoc[]
 
 <<<
 
+include::external-warning.adoc[]
+
+<<<
+
 include::proxy.adoc[]
 
 <<<

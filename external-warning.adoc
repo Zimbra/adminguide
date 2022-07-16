@@ -1,0 +1,37 @@
+== Message banner for mails from external domains
+
+*Joule-Patch-32* onwards, a message banner in the mails can be added for the mails coming from external domains. This will help users to identify the mails originating outside their organization. The feature is controlled by a localconfig attribute and by default it is disabled.
+
+Following are the details of the attributes:
+
+* `zimbra_external_email_warning_enabled` - Attribute to enable/disable the feature.
+
+* `zimbra_external_email_warning_message` - Attribute to customize the message to be displayed in the mails.
+
+Following are the instructions to be executed as zimbra user:
+
+1. Enabling the feature:
+
+ su - zimbra
+ zmlocalconfig -e zimbra_external_email_warning_enabled=true
+
+2. Restart mailbox service:
+ 
+ zmmailboxdctl restart
+
+When a user receives mail from an external domain, the message banner will get displayed at the top of the message body.
+
+=== Modifying the message
+The message for external domains can also be modified.
+
+Following are the instructions:
+
+1. Edit the localconfig attribute `zimbra_external_email_warning_message` with the new message:
+
+ zmlocalconfig -e zimbra_external_email_warning_message="The external domain warning has been edited"
+
+2. Restart mailbox service:
+
+ zmmailboxdctl restart
+
+When a user receives mail from an external domain, the edited message banner will get displayed at the top of the message body.
