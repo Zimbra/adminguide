@@ -143,6 +143,8 @@ organizational unitとして_{product-family}OU_を作成します。
 
  zmprov addHABGroupMember accounts@example.com john.smith@example.com
 
+IMPORTANT: ユーザーが存在していることを確認してから、グループへの追加操作を行ってください。
+
 [#CreateSortOrder]
 === 年功序列を設定する
 HAB でグループが表示する順番を指定します。年功序列が高いグループが他のグループより先表示されます。
@@ -207,7 +209,7 @@ image::HABStructure-zimbra.png[]
 ==== 使用例
 _example.com_ のドメインにあるすべての OU リストを表示します。
 
- zmprov listHABOrgUnit example.com ZimbraOU
+ zmprov listHABOrgUnit example.com
 
 [#rename-OU]
 === 部門名 (OU) の名前を更新する
