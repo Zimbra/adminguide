@@ -134,6 +134,8 @@ This example adds the users _Jane Doe_ and _John Smith_ to the group named _Corp
 
  zmprov addHABGroupMember accounts@example.com john.smith@example.com
 
+IMPORTANT: Before adding users, make sure that they are are already created.
+
 [#CreateSortOrder]
 === Set Sort Order
 Configure the sort order for groups in the HAB. Groups with higher seniority index appear above groups with lower seniority index.
@@ -196,7 +198,7 @@ There can be multiple organizational units in a domain. This command lists all t
  zmprov listHABOrgUnit <domain name of OU>
 
 ==== Example
- zmprov listHABOrgUnit example.com ZimbraOU
+ zmprov listHABOrgUnit example.com
 
 ==== Explanation
 All OUs in _example.com_ listed.
