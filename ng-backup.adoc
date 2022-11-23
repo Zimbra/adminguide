@@ -40,7 +40,7 @@ A warning gets displayed after enabling the Real-Time Scanner, prompting you to 
 The `ZxBackup_RealTimeScanner` property of the Backup NG module must be set to `true` to enable the Real-Time Scanner via the CLI:
 
 ....
-zxsuite backup setProperty ZxBackup_RealTimeScanner TRUE
+zxsuite config set server `zmhostname` ZxBackup_RealTimeScanner TRUE
 ....
 
 [[disabling-the-real-time-scanner]]
@@ -59,7 +59,7 @@ zxsuite backup setProperty ZxBackup_RealTimeScanner TRUE
 The `ZxBackup_RealTimeScanner` property of the Backup NG module must be set to `false` to disable the Real-Time Scanner via the CLI:
 
 ....
-zxsuite backup setProperty ZxBackup_RealTimeScanner FALSE
+zxsuite config set server `zmhostname` ZxBackup_RealTimeScanner FALSE
 ....
 
 [[why-should-i-disable-the-real-time-scanner]]
