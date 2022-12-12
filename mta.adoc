@@ -201,7 +201,7 @@ To enable scanning in a multi-node environment:
 ----
 zmprov ms <mta_server> zimbraClamAVBindAddress <mta_server>
 zmprov mcf zimbraAttachmentsScanURL clam://<mta_server>:3310/
-zmprov mcf zimbraAttachmentsScanEnabled TRUE
+zmprov ms <mailbox_server> zimbraAttachmentsScanEnabled TRUE
 ----
 
 === Anti-Spam Protection
