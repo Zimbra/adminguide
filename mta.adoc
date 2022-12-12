@@ -189,7 +189,7 @@ To enable scanning, using a single node:
 [source, bash]
 ----
 zmprov mcf zimbraAttachmentsScanURL clam://localhost:3310/
-zmprov mcf zimbraAttachmentsScanEnabled TRUE
+zmprov ms `zmhostname` zimbraAttachmentsScanEnabled TRUE
 ----
 
 To enable scanning in a multi-node environment:
