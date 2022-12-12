@@ -1,6 +1,6 @@
 == Message banner for mails from external domains
 
-*Kepler-Patch-25* and *Joule-Patch-32* onwards, a message banner in the mails can be added for the mails coming from external domains. This will help users to identify the mails originating outside their organization. The feature is controlled by a localconfig attribute and by default it is disabled.
+*Kepler-Patch-25*, a message banner in the mails can be added for the mails coming from external domains. This will help users to identify the mails originating outside their organization. The feature is controlled by a localconfig attribute and by default it is disabled.
 
 Following are the details of the attributes:
 
