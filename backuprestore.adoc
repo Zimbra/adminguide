@@ -1289,7 +1289,8 @@ you do not do this, `zmrestoreoffline` will have errors. As `zimbra`, type:
 +
 [source,bash]
 ----
-rm -rf /opt/zimbra/db/data/* /opt/zimbra/libexec/zmmyinit
+$ rm -rf /opt/zimbra/db/data/*
+$ /opt/zimbra/libexec/zmmyinit
 ----
 +
 The MariaDB service is now running.
