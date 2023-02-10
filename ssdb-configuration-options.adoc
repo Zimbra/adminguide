@@ -4,6 +4,8 @@
 
 {product-name} packages do not include SSDB server and {product-name} installation and configuration utilities do not alter SSDB configuration. To install the latest version of SSDB, follow instructions provided by SSDB developer community in http://ssdb.io/docs/install.html[SSDB Installation Documentation]. Please note, that {product-name} has been tested with SSDB version 1.9.5. In order to install SSDB 1.9.5, download  https://github.com/ideawu/ssdb/tree/stable-1.9.5[stable-1.9.5.zip] instead of https://github.com/ideawu/ssdb/archive/master.zip[master.zip] when following http://ssdb.io/docs/install.html[SSDB installation instructions].
 
+WARNING: SSDB does not have encryption or authentication support, this means you have to protect access to it at the network level.
+
 [[ssdb_configuration_options]]
 == Overview of Configuration Options
 
@@ -553,6 +555,16 @@ particular key always get routed to the same master-slave pair.
 One such product is https://github.com/twitter/twemproxy[twemproxy]
 from https://github.com/twitter[Twitter].
 
+== Invalidate all user sessions
+
+Depending on your environment running this command will take some time, there will not be a progress indication. Use the cd command to change into the SSDB installation directory:
+
+----
+./ssdb-cli -h 127.0.0.1 -p 8888
+flushdb
+----
+
+SSDB replication may be affected, so it is best to first break replication and run this command on a single master of SSDB and then resume SSDB replication.
 
 == LDAP Attributes
 
