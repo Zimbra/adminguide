@@ -440,6 +440,8 @@ zmprov md example.com zimbraOAuthConsumerRedirectUri https://myzimbra.server.com
 zmprov md example.com zimbraOAuthConsumerAPIScope  'https://nextcloud.server.com/nextcloud/index.php:nextcloud_noop'
 ----
 
+IMPORTANT: *zimbraOAuthConsumerAPIScope* holds the URL to your Nextcloud instance, in our example we have set-up Nextcloud in a folder /nextcloud on nextcloud.server.com. If your Nextcloud is installed directly in the root / of your domain, make sure to use _https://nextcloud.server.com/index.php:nextcloud_noop_ as *zimbraOAuthConsumerAPIScope*.
+
 == Setting up Jitsi Videoconferencing Solution
 Jitsi is a fully encrypted, 100% open-source, video conferencing solution. Jitsi integration is available in the Modern Web App allowing end-users to set up video conferencing directly in their calendar; i.e. just click a button to add a Jitsi link to a meeting invite and then launch into that video meeting. 
 
