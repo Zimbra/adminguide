@@ -556,15 +556,14 @@ One such product is https://github.com/twitter/twemproxy[twemproxy]
 from https://github.com/twitter[Twitter].
 
 == Invalidate all user sessions
-
-Depending on your environment running this command will take some time, there will not be a progress indication. Use the cd command to change into the SSDB installation directory:
+[red]#Depending on your environment running this command will take some time, there will not be a progress indication. Use the cd command to change into the SSDB installation directory:#
 
 ----
 ./ssdb-cli -h 127.0.0.1 -p 8888
 flushdb
 ----
 
-SSDB replication may be affected, so it is best to first break replication and run this command on a single master of SSDB and then resume SSDB replication.
+[red]#SSDB replication may be affected, so it is best to first break replication and run this command on a single master of SSDB and then resume SSDB replication.#
 
 == LDAP Attributes
 
