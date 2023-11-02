@@ -330,7 +330,7 @@ Configure the new Application Credentials in {product-name}::
 
 == Setting Up Zoom
 
-IMPORTANT: For Zoom to work with {product-name}, the server must have ephemeral storage configured.
+IMPORTANT: For Zoom to work with {product-name}, the server must have https://wiki.zimbra.com/wiki/Ssdb[ephemeral storage configured].
 
 Create a Zoom Application::
 +
